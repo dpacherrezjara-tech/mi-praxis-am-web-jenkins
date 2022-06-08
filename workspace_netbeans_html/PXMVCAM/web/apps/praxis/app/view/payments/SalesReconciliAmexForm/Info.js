@@ -4119,6 +4119,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
+                                                text: 'Adjustment', dataIndex: 'SADJUST', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.SADJUST_TOTAL, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
                                                 text: 'MSI',
                                                 defaults: {
                                                     menuDisabled: true,
