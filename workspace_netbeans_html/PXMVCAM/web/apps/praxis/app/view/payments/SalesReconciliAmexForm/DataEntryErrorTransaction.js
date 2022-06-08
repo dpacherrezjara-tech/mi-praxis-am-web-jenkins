@@ -1096,6 +1096,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
+                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";

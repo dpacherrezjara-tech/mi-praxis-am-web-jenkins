@@ -55,6 +55,7 @@ public class A4116Filter extends A4116 {
     public double TGROSAMOUC_TOTAL = 0;
     public double VATCOMMSIC_TOTAL = 0;
     public double DISCAMOUN_CB_TOTAL = 0;
+    public double SADJUST_TOTAL = 0;
     public double SVFOPS_TOTAL = 0;
     public double SFEEAMOUC_TOTAL = 0;
     public double SFEEAMOU_TOTAL = 0;
@@ -71,6 +72,7 @@ public class A4116Filter extends A4116 {
     public double NETAMOUNC = 0;
     public double DISCAMOSC = 0;
     public double GROSAMOUN_CB = 0;
+    public double SADJUST = 0.0;
 
     public double totGROSAMOUN = 0;
     public double totTGROSAMOUN = 0;
@@ -159,7 +161,7 @@ public class A4116Filter extends A4116 {
     public String A1531CAPL = "";
     public String A1531CFOP = "";
     public String A1531TTARJ = "";
-    public double A1531VFOP = 0.0;
+    public double A1531VFOP = 0.0;    
     public double tot_VFOP = 0.0;
     public double tot_VFOPB = 0.0;
 

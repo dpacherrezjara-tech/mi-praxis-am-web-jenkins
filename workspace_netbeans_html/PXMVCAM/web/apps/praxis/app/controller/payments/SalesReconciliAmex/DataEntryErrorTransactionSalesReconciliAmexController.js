@@ -66,7 +66,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         if (this.p.rowIndex < 19) {
             rec = all.getAt(rowIndex + 1);
             this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
-            this.bean = this.p.rec.data;
+            if (this.p.rec.data === null) {
+                Ext.getCmp(prototype.id + '-dataEntryError').close();
+            } else {
+                this.bean = this.p.rec.data;
+            }
             this.getData();
             //this.winDataEntry('U', rec, all, rowIndex);
         }
@@ -463,7 +467,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var suma_montos = 0;
         var monto_venta = 0;
         for (var j = 0; j < this.lstSendManual.length; j++) {
-            suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP;
+            suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP + this.lstSendManual[j].SADJUST;
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
@@ -786,7 +790,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         for (var i = 0; i < store_gridInfoScan.data.length; i++) {
             var dataRow1 = store_gridInfoScan.data.items[i];
             this.lstSendManual.push(dataRow1.data);
-            this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP;
+            this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP + dataRow1.data.SADJUST;
         }
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();

@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
-        
+
         month = '05';
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
@@ -327,7 +327,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_SCARDN22 = Ext.getCmp(prototype.id + '-txtCC22').getValue();
         me.bean.IN_AUTHS = Ext.getCmp(prototype.id + '-txtAuthS').getValue();
         me.bean.IN_AUTHE = Ext.getCmp(prototype.id + '-txtAuthE').getValue();
-        
+
 
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
 
@@ -412,6 +412,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 this.setGridDataMainAdjustment();
                 break;
             case 'ER':
+                if ((Ext.getCmp(prototype.id + '-txtPNRError').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC1').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC2').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthE').getValue() !== '')) {
+                    me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+                    me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue();
+                    
+                    var beanString = JSON.stringify(me.bean);
+                    searchParamsMainSettlement = {
+                        beanString: beanString,
+                        bean: me.bean
+                    };
+                }
                 this.setGridDataMainErrorTransaction();
                 break;
         }
@@ -592,8 +602,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }
     },
     filterSettlement: function () {
-        this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
-        this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+        this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
         this.beanFilterSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanFilterSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanFilterSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
@@ -1792,12 +1802,48 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }
     },
     btnClear_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        /*Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');*/
+        Ext.getCmp(prototype.id + '-txtPNR').setValue('');
+        Ext.getCmp(prototype.id + '-txtCC11').setValue('');
+        Ext.getCmp(prototype.id + '-txtCC22').setValue('');
+        Ext.getCmp(prototype.id + '-txtAuthS').setValue('');
+        Ext.getCmp(prototype.id + '-txtPNRError').setValue('');
+        Ext.getCmp(prototype.id + '-txtCC1').setValue('');
+        Ext.getCmp(prototype.id + '-txtCC2').setValue('');
+        Ext.getCmp(prototype.id + '-txtAuthE').setValue('');
+        
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
+        
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
+        
+        Ext.getCmp(prototype.id + '-cmbSTVAL').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbSTVAL').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSTVAL').resumeEvents();
+        
+        Ext.getCmp(prototype.id + '-cmbErrorCode').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
+        Ext.getCmp(prototype.id + '-cmbErrorCode').resumeEvents();
+        
+        Ext.getCmp(prototype.id + '-cmbComplement').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbComplement').setValue('');
+        Ext.getCmp(prototype.id + '-cmbComplement').resumeEvents();
+        
+        Ext.getCmp(prototype.id + '-cmbTDOCError').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbTDOCError').setValue('S');
+        Ext.getCmp(prototype.id + '-cmbTDOCError').resumeEvents();
+        
+        Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
+        Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
     },
     btnExcel_click: function (obj, e) {
 

@@ -2245,6 +2245,7 @@ public class SalesReconciliAmexDAO {
         double DISCAMOUIC_TOTAL = 0;
         double VATCOMMSIC_TOTAL = 0;
         double DISCAMOUN_CB_TOTAL = 0;
+        double SADJUST_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -2310,6 +2311,7 @@ public class SalesReconciliAmexDAO {
                 DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
                 DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
+                SADJUST_TOTAL = rst.getDouble("SADJUST_TOTAL");
             }
             rst.close();
 
@@ -2352,6 +2354,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
                     beanTkt.DISCRATE_IMPORT = rst.getDouble("DISCRATE_IMPORT");
                     //beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
+                    beanTkt.SADJUST = rst.getDouble("SADJUST");
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                     beanTkt.GROSAMOUN_CB = rst.getDouble("GROSAMOUN_CB");
                     beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
@@ -2421,6 +2424,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
                     beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
+                    beanTkt.SADJUST_TOTAL = SADJUST_TOTAL;
 
                     beanTkt.A1531TTARJ = "AX";
                     beanTkt.FDESGLOSE = "1";
@@ -3245,7 +3249,7 @@ public class SalesReconciliAmexDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -3267,9 +3271,10 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(14, beanDet.A720FECVTA.trim());
                     cstmt01.setString(15, beanDet.A720SEQ.trim());
                     cstmt01.setString(16, beanDet.A720GRUPO.trim());
-                    cstmt01.setString(17, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(18, Functions.getFechaActual());
-                    cstmt01.setString(19, Functions.getHoraActual());
+                    cstmt01.setDouble(17, beanDet.SADJUST);
+                    cstmt01.setString(18, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(19, Functions.getFechaActual());
+                    cstmt01.setString(20, Functions.getHoraActual());
 
                     cstmt01.execute();
                 }
@@ -3495,6 +3500,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
+                beanRec.SADJUST = rst.getDouble("SADJUST");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
                 beanRec.tot_VFOPB = rst.getDouble("tot_VFOPB");
                 beanRec.FDUPLI = rst.getInt("FDUPLI");
