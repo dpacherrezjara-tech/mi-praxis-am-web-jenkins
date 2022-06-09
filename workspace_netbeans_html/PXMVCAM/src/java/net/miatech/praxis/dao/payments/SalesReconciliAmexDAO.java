@@ -2689,10 +2689,10 @@ public class SalesReconciliAmexDAO {
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
-        hmDescFCOMPL.put("1", "PLUSGRADE");
-        hmDescFCOMPL.put("2", "LIGAS");
-        hmDescFCOMPL.put("3", "TABLET");
-        hmDescFCOMPL.put("4", "BPO");
+        hmDescFCOMPL.put("1", "Match"); //PLUSGRADE
+        hmDescFCOMPL.put("2", "Match"); //LIGAS
+        hmDescFCOMPL.put("3", "Match"); //TABLET
+        hmDescFCOMPL.put("4", "Match"); //BPO
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");

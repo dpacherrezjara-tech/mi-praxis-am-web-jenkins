@@ -220,7 +220,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             data: [
                 ["", "All"],
                 ["Y", "Complements"],
-                ["N", "No Complements"]
+                ["N", "No Complements"],
+                ["P", "Plusgrade"],
+                ["L", "Ligas"],
+                ["T", "Tablet"]
             ]
         }));
         cmbComplement.setValue("");
