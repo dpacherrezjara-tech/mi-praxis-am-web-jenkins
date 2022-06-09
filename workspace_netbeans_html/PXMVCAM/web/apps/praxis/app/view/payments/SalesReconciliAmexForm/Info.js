@@ -4591,7 +4591,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Document <br> Type', dataIndex: 'descTDOC', width: 70,
+                                            {text: 'Document<br>Type', dataIndex: 'descTDOC', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
                                                     return value;
@@ -4630,6 +4630,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Description', dataIndex: 'DES_SMERCHANT', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;background-color:#FCF6DC";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Flag<br>Complement', dataIndex: 'descFCOMPL', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#FCF6DC";
                                                             return value;
