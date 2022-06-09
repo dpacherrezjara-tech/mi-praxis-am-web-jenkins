@@ -1143,6 +1143,41 @@ public class OwnerlessCouponController extends BaseController {
 
     }
 
+    @RequestMapping(value = "load_A1413")
+    public @ResponseBody
+    String load_A1413(ModelMap map, HttpServletRequest request) {
+        
+        System.out.println("-------------- OwnerlessCouponController : load_A1413-------------");
+        
+        A1413Filter bean;
+        A1413Filter filter = new A1413Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+        String type = "";
+
+        try {
+            logic = new OwnerlessCouponLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            beanString = request.getParameter("beanString");
+            type = request.getParameter("type");
+            
+            filter = gson.fromJson(beanString, A1413Filter.class);
+            bean = logic.loadSQP04497(filter, type);
+            
+            map.put("success", true);
+            map.put("bean", bean);
+
+        } catch (SQLException e) {
+            logError.error(e.getMessage());
+        } catch (Exception e) {
+            logError.error(e.getMessage());
+        }
+
+        return new Gson().toJson(map);
+    }
+    
+    
 //    public JavaToFlexResponse insertFavoriteMenu(A2149 filter) {//camviar A1939Filter
 //        A2149 objRtn;
 //        JavaToFlexResponse resp = new JavaToFlexResponse();

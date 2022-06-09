@@ -64,4 +64,8 @@ public class OwnerlessCouponLogic {
     public A2149 deleteFavoriteMenu(A2149 filter) throws Exception {
         return ownerlessCouponDAO.deleteFavoriteMenu(filter);
     }
+    
+    public A1413Filter loadSQP04497(A1413Filter filter, String type) throws SQLException, Exception {
+        return ownerlessCouponDAO.loadSQP04497(filter, type);
+    }
 }

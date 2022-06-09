@@ -13,8 +13,11 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
     ticketNumber: '',
     optionCheck: '',
     me: '',
+    bean: '',
     gridActual: '',
+    type: '',
     searchParams: {},
+    searchParams_load: {},
     setContext: function() {
         me = this;
     },
@@ -56,10 +59,15 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             },
             '#OwnerlessCouponForm-btn-pag-last': {
                 click: this.pagLast
-            }
+            },
+//            '#OwnerlessCouponForm-btnProcess': {
+//                click: this.btnProcess_click
+//            },
+            '#OwnerlessCouponForm-btnFilter': {
+                click: this.btnProcess_click
+            },
 
             //-----------------Eventos Especificos -------------------
-            ,
             '#OwnerlessCouponForm-cmbDateFromYear': {
                 afterrender: this.afterRenderYear,
                 select: this.selectComboFromYear
@@ -148,8 +156,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
         comboToYear.bindStore(storeComboDataYear);
         comboToYear.setValue(obj.getValue());
-    }
-    ,
+    },
     selectComboFromMonth: function(obj) {
         var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
         comboToMonth.setValue(obj.getValue());
@@ -166,13 +173,11 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
                 comboFromMonth.setValue(obj.getValue());
             }
         }
-    }
-    ,
+    },
     selectComboFromDay: function(obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
-    }
-    ,
+    },
     setStoreData: function() {
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataYear2 = win.getStoreYear2(false, this.fecha.getFullYear());
@@ -200,8 +205,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         }));
         cmbStatus.setValue("P");
 
-    }
-    ,
+    },
     btnSearch_click: function(obj, e) {
         var ticketNumber = Ext.getCmp(prototype.id + '-textTicket');
         this.setFormatParameter();
@@ -384,8 +388,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
         }
-    }
-    ,
+    },
     btnClear_click: function(obj, e) {
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
         var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
@@ -434,11 +437,10 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             global.getFile(prototype.url + '/getXLSXCanceled?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&txtNVLO=' + searchParams.txtNVLO);
         }
         
-    }
-    ,
-    btnFilter_click: function(obj) {
+    },
+    btnProcess_click: function(obj) {
         
-        var option = Ext.getCmp(prototype.id + '-contentFilter');
+        var option = Ext.getCmp(prototype.id + '-boxProcess');
         if (option.isVisible()) {
             option.setVisible(false);
         } else {
@@ -466,14 +468,16 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             });
         }
 
-    }
-    ,
+    },
     btnAdd_click: function(obj, e) {
         this.winDataEntry('I');
     },
+    
+    
     /**
      * Metodos usados para editar
-     * */
+     **/
+    
     onEditClick: function(grid, rowIndex, colIndex) {
 
         var rec = grid.getStore().getAt(rowIndex);
@@ -509,10 +513,72 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             }).show();
         }
 
+    },
+    
+    setFormatParameter_load: function() {
+        
+        me.bean = {};
+        me.bean.A1413FVLOB = Ext.getCmp(prototype.id + '-txtA1413FVLOB').getValue();
+        me.bean.A1413NVLOB = Ext.getCmp(prototype.id + '-txtA1413NVLOB').getValue();
+        me.bean.A1413FROM = Ext.getCmp(prototype.id + '-txtA1413FROM').getValue();
+        me.bean.A1413TO = Ext.getCmp(prototype.id + '-txtA1413TO').getValue();
+                
+        var beanString = JSON.stringify(me.bean);
+        searchParams_load = {
+            bean: me.bean,
+            beanString: beanString
+        };
+        
+    },
+    
+    onLoadA1413: function(parm_t, b , c , d, e, f) {
+        
+        this.setFormatParameter_load();
 
-
+        me.type = parm_t;
+        Ext.Ajax.request({
+            url: prototype.url + '/load_A1413',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
+            params: {beanString: searchParams_load.beanString, type: me.type},
+            success: function(response, options) {
+                Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                
+                if (res.success) {
+                    if(me.type === '1'){
+                        Ext.Msg.show({
+                            title: '.: PRAXIS :.',
+                            msg: res.bean.strDescripcion + ' Are you sure to load ?',
+                            buttons: Ext.MessageBox.YESNO,
+                            scope: this,
+                            icon: Ext.MessageBox.QUESTION,
+                            modal: true,
+                            fn: function(btn) {
+                                if (btn === 'yes') {
+                                    me.onLoadA1413('2')
+                                }
+                            }
+                        });
+                    }else if(me.type === '2'){
+                        global.Msg({msg: res.bean.strDescripcion, icon: 1});
+                    }
+                }else {
+                    global.Msg({msg: "Error load " + me.type , icon: 0});
+                }
+            },
+            failure: function(response, opts) {
+                Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                console.log('server-side failure with status code ' + response.status);                        
+            }
+        });
+                
 
     },
+    
+    
     /*     
      * Funciones para la paginacion     
      */
