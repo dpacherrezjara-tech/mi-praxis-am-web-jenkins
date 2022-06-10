@@ -55,6 +55,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         this.onLoadData();
         this.setStoresGrids();
     },
+    onLoadCargaData: function () {
+        this.onLoadData();
+        this.setStoresGrids();
+    },
     setStoresGrids: function () {
         var grid01 = Ext.getCmp(prototype.id01 + '-gridtkt');
         var grid02 = Ext.getCmp(prototype.id01 + '-gridtktAGENT');
@@ -98,13 +102,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         ComboEstatus.setValue('');
     },
     onSabreStatusClick: function () {
-
+         var me = this;
+        rec = me.view.params.rec;
         var win = new Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormSabreEstatus({
             params: {
                 rec_preme: Ext.getCmp(prototype.id01 + '-txtPreme').getValue(),
                 rec_number: Ext.getCmp(prototype.id01 + '-txtNumber').getValue(),
                 rec_tkt: Ext.getCmp(prototype.id01 + '-txtSNumber').getValue(),
-                rec_aplidate: Ext.getCmp(prototype.id01 + '-txtAplidate').getValue()
+                rec_aplidate: Ext.getCmp(prototype.id01 + '-txtAplidate').getValue(),
+                rec_flagsoli: rec.get('A3389FLAG')
             }
         });
         win.show();
