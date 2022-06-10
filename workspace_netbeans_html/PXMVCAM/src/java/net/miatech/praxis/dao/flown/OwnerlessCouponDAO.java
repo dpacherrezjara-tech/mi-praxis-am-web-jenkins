@@ -929,7 +929,7 @@ public class OwnerlessCouponDAO {
 
         try {
 
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04497(?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04497(?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -941,16 +941,17 @@ public class OwnerlessCouponDAO {
             cs.setString(3, filter.A1413NVLOB.trim());
             cs.setString(4, filter.A1413FROM.trim());
             cs.setString(5, filter.A1413TO.trim());
-            cs.setString(6, type);
-            cs.setString(7, "");
+            cs.setString(6, session.getUserView().getCustomerInfo().USR);
+            cs.setString(7, type);
+            cs.setString(8, "");
 
             cs.execute();
 
             //Obteniendo el mensaje de error ===================================    
-            if (cs.getString(7) != null) {
+            if (cs.getString(8) != null) {
                 beanCons = new A1413Filter();
 //                msj = cs.getString(6).trim();
-                beanCons.strDescripcion = cs.getString(7).trim();
+                beanCons.strDescripcion = cs.getString(8).trim();
                 beanCons.FFLOWN = type;
             }
 
