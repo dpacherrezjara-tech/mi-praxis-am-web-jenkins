@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A3389Filter;
@@ -453,7 +454,7 @@ public class BwrQueryRefundController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15,CH_16;
 
             row = sheet.createRow(vj);
 
@@ -473,23 +474,25 @@ public class BwrQueryRefundController extends BaseController {
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
+            CH_16 = row.createCell(16);
 
-            CH_00.setCellValue("Document");
-            CH_01.setCellValue("Ticket");
-            CH_02.setCellValue("IATA");
-            CH_03.setCellValue("Agency");
-            CH_04.setCellValue("Application date");
-            CH_05.setCellValue("Authorise / Reject date");
-            CH_06.setCellValue("Time");
-            CH_07.setCellValue("Country");
-            CH_08.setCellValue("Cur.");
-            CH_09.setCellValue("Net");
-            CH_10.setCellValue("Passenger");
-            CH_11.setCellValue("Auditor");
-            CH_12.setCellValue("Reason BSP");
-            CH_13.setCellValue("Sales audit");
-            CH_14.setCellValue("Status");
-            CH_15.setCellValue("Days");
+            CH_00.setCellValue("Channel");
+            CH_01.setCellValue("Document");
+            CH_02.setCellValue("Ticket");
+            CH_03.setCellValue("IATA");
+            CH_04.setCellValue("Agency");
+            CH_05.setCellValue("Application date");
+            CH_06.setCellValue("Authorise / Reject date");
+            CH_07.setCellValue("Time");
+            CH_08.setCellValue("Country");
+            CH_09.setCellValue("Cur.");
+            CH_10.setCellValue("Net");
+            CH_11.setCellValue("Passenger");
+            CH_12.setCellValue("Auditor");
+            CH_13.setCellValue("Reason BSP");
+            CH_14.setCellValue("Sales audit");
+            CH_15.setCellValue("Status");
+            CH_16.setCellValue("Days");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -507,6 +510,7 @@ public class BwrQueryRefundController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -524,6 +528,7 @@ public class BwrQueryRefundController extends BaseController {
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
+            CH_16.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -546,21 +551,23 @@ public class BwrQueryRefundController extends BaseController {
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
 
-                CH_00.setCellValue(lst.get(vi).A3389NUMER);
-                CH_01.setCellValue(lst.get(vi).A3389TKT);
-                CH_02.setCellValue(lst.get(vi).A3389IATA);
-                CH_03.setCellValue(lst.get(vi).A3389NOMAGENCY);
-                CH_04.setCellValue(lst.get(vi).A3389FAPPI);
-                CH_05.setCellValue(lst.get(vi).A3389FAUTO);
-                CH_06.setCellValue(lst.get(vi).A3389HAUTO);
-                CH_07.setCellValue(lst.get(vi).A3389PAIS);
-                CH_08.setCellValue(lst.get(vi).A3389MDA);
-                CH_09.setCellValue(lst.get(vi).A3389TOTAL);
-                CH_10.setCellValue(lst.get(vi).A3389PAX);
-                CH_11.setCellValue(lst.get(vi).A3389REGAS);
-                CH_12.setCellValue(lst.get(vi).A3389RAAG);
-                CH_13.setCellValue(lst.get(vi).A3389STATO);
+                CH_00.setCellValue(lst.get(vi).A3389CHANEL);
+                CH_01.setCellValue(lst.get(vi).A3389NUMER);
+                CH_02.setCellValue(lst.get(vi).A3389TKT);
+                CH_03.setCellValue(lst.get(vi).A3389IATA);
+                CH_04.setCellValue(lst.get(vi).A3389NOMAGENCY);
+                CH_05.setCellValue(lst.get(vi).A3389FAPPI);
+                CH_06.setCellValue(lst.get(vi).A3389FAUTO);
+                CH_07.setCellValue(lst.get(vi).A3389HAUTO);
+                CH_08.setCellValue(lst.get(vi).A3389PAIS);
+                CH_09.setCellValue(lst.get(vi).A3389MDA);
+                CH_10.setCellValue(lst.get(vi).A3389TOTAL);
+                CH_11.setCellValue(lst.get(vi).A3389PAX);
+                CH_12.setCellValue(lst.get(vi).A3389REGAS);
+                CH_13.setCellValue(lst.get(vi).A3389RAAG);
+                CH_14.setCellValue(lst.get(vi).A3389STATO);
 
                 switch ((lst.get(vi).A3389FLAG).trim()) {
                     case "A":
@@ -606,8 +613,8 @@ public class BwrQueryRefundController extends BaseController {
                         vl_A3389FLAG = "CPN EVALUATION";
                         break;
                 }
-                CH_14.setCellValue(vl_A3389FLAG);
-                CH_15.setCellValue(lst.get(vi).A3389DIAS);
+                CH_15.setCellValue(vl_A3389FLAG);
+                CH_16.setCellValue(lst.get(vi).A3389DIAS);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -625,6 +632,7 @@ public class BwrQueryRefundController extends BaseController {
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -634,8 +642,8 @@ public class BwrQueryRefundController extends BaseController {
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
-            //sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(3, true);
+            //sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
@@ -643,7 +651,7 @@ public class BwrQueryRefundController extends BaseController {
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
-            sheet.autoSizeColumn(12, true);
+            //sheet.autoSizeColumn(12, true);
             //sheet.autoSizeColumn(13, true);
             //sheet.autoSizeColumn(14, true);
             //sheet.autoSizeColumn(15, true);
@@ -806,14 +814,17 @@ public class BwrQueryRefundController extends BaseController {
     public @ResponseBody
     String searchSabreLst(ModelMap map, HttpServletRequest request) {
         A3908Filter filter = new A3908Filter();
+        String result="";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
             BwrQueryRefundLogic logic = new BwrQueryRefundLogic();
             logic.setSession(this.serverSession.getServerSession());
+            if(filter.IN_TIPO.equals("1")){
+                result = upload_s3(filter.IN_PREME.trim());
+            }
             List<A3908Filter> lst_search = logic.searchSabreLst(filter);
-
+            
             map.put("success", true);
             map.put("data", lst_search);
         } catch (SQLException e) {
@@ -824,6 +835,25 @@ public class BwrQueryRefundController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
+    }
+    
+   public String upload_s3(String IN_PREME) throws SQLException, Exception {
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+
+        Unirest.setTimeouts(3600000, 3600000);
+        HashMap bodyData = new HashMap<>();
+        bodyData.put("preme", IN_PREME);
+
+        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/refund/usos_sabre/")
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(bodyData))
+                .asJson();
+
+        String error_msg = response.getBody().getObject().get("error").toString();
+          // si es error es distinto de cero hay problem 
+        return error_msg;
+
     }
 
 }

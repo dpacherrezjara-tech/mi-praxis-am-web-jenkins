@@ -122,6 +122,7 @@ public class BsplinkReportsStatisticsdetDAO {
                 objRtn.A3389TCODE = rs01.getString("PAYMETRFND");
                 objRtn.A3401STATU = rs01.getString("A3401STATU");
                 objRtn.A3401RAAG = rs01.getString("A3401RAAG");
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
                 //MONTOS
                 objRtn.A3389TARIF = rs01.getDouble("A3389TARIF");
                 objRtn.A3389COMIS = rs01.getDouble("A3389COMIS");

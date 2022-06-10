@@ -154,6 +154,7 @@ public class BwrBSPLINKRFNDDAO {
                 objRtn.A3389HAUTO = rs01.getString("A3389HAUTO");
                 objRtn.A3389PGNA = rs01.getString("A3389PGNA");
                 objRtn.A3389TKTDUPLI2 = rs01.getString("A3389TKTDUPLIS");
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
 
                 objRtn.A3389FREJE = rs01.getString("A3389FREJE");
                 objRtn.A3389HRERR = rs01.getString("A3389HRERR");
