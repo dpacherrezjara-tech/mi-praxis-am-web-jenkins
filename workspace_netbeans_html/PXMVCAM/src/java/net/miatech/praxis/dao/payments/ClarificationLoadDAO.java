@@ -74,16 +74,25 @@ public class ClarificationLoadDAO {
             br = new BufferedReader(new FileReader(ruta));
             String line = br.readLine();
 
-            for (int i = 0; i < line.length(); i++) {
-                if (strBanco.equals("EL")) {
-                    cantReg1++;
-                } else {
-                    if (!line.toUpperCase().contains("TOTAL")) {
-                        cantReg1++;
-                    }
-                }
-            }
+//            for (int i = 0; i < line.length(); i++) {
+//                if (strBanco.equals("EL")) {
+//                    cantReg1++;
+//                } else {
+//                    if (!line.toUpperCase().contains("TOTAL")) {
+//                        cantReg1++;
+//                    }
+//                }
+//            }
 
+            while (null != line) {
+                cantReg1++;
+                line = br.readLine();
+            }
+            
+            br = new BufferedReader(new FileReader(ruta));
+            line = br.readLine();
+            
+            
             while (null != line) {
 
                 cantReg++;

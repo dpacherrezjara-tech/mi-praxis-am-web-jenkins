@@ -504,11 +504,12 @@ public class ClarificationLoadController extends BaseController {
 
                                     if(filaTotal == false){
                                         if(rowAB > 0 && colAB == 5){
-                                            //FECHA DE APLICACIÓN (02/10/2017)
+                                            //FECHA DE APLICACIÓN (02/10/2017)... se tiene que convertir a YYYY-MM-DD
                                             if(row.getCell(colAB).getCellType() == 1){
                                                 tmp = formatter.formatCellValue(row.getCell(colAB));
                                             }else{
-                                                tmp = new SimpleDateFormat("dd/MM/yyyy").format(row.getCell(colAB).getDateCellValue());
+//                                                tmp = new SimpleDateFormat("dd/MM/yyyy").format(row.getCell(colAB).getDateCellValue());
+                                                tmp = new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(colAB).getDateCellValue());
                                             }
 
                                             if(tmp.trim().equals("")){
