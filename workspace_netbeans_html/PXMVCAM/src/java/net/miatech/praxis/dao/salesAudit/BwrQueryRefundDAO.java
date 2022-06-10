@@ -696,6 +696,7 @@ public class BwrQueryRefundDAO {
                 objRtn.A3908PAIS = rs01.getString("A3908PAIS");
                 objRtn.A3908STATO = rs01.getString("A3908STATO");
                 objRtn.A3908HCAMB = rs01.getString("A3908HCAMB");
+                objRtn.A3908FLAG = rs01.getInt("A3908FLAG");
 
                 lstRtn.add(objRtn);
 

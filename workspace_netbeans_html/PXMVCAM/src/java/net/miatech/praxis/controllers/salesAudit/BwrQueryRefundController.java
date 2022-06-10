@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A3389Filter;
@@ -813,14 +814,17 @@ public class BwrQueryRefundController extends BaseController {
     public @ResponseBody
     String searchSabreLst(ModelMap map, HttpServletRequest request) {
         A3908Filter filter = new A3908Filter();
+        String result="";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
             BwrQueryRefundLogic logic = new BwrQueryRefundLogic();
             logic.setSession(this.serverSession.getServerSession());
+            if(filter.IN_TIPO.equals("1")){
+                result = upload_s3(filter.IN_PREME.trim());
+            }
             List<A3908Filter> lst_search = logic.searchSabreLst(filter);
-
+            
             map.put("success", true);
             map.put("data", lst_search);
         } catch (SQLException e) {
@@ -831,6 +835,25 @@ public class BwrQueryRefundController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
+    }
+    
+   public String upload_s3(String IN_PREME) throws SQLException, Exception {
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+
+        Unirest.setTimeouts(3600000, 3600000);
+        HashMap bodyData = new HashMap<>();
+        bodyData.put("preme", IN_PREME);
+
+        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/refund/usos_sabre/")
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(bodyData))
+                .asJson();
+
+        String error_msg = response.getBody().getObject().get("error").toString();
+          // si es error es distinto de cero hay problem 
+        return error_msg;
+
     }
 
 }
