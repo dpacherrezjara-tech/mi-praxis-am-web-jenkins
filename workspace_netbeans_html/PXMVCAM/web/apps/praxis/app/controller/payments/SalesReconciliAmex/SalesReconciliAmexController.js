@@ -425,7 +425,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         bean: me.bean
                     };
                 }
-                this.setGridDataMainErrorTransaction();
+                this.setGridDataSummaryTransactionError();
                 break;
         }
     },
@@ -469,14 +469,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridMainAdjustment').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin13').bindStore(storeGridDatas);
     },
-    setGridDataMainErrorTransaction: function () {
+    setGridDataSummaryTransactionError: function () {
         win.lblUser_toolTip("Estructura: A4116");
-        me.panelActual = '-boxMainErrorTransaction';
+        me.panelActual = '-boxSummaryTransactionError';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
-                url: prototype.url + '/searchErrorTransaction'
+                url: prototype.url + '/searchSummaryTransactionError'
             }, listeners: {
                 beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
@@ -501,9 +501,91 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         });
         global.clear();
+        Ext.getCmp(prototype.id + '-gridSummaryTransactionError').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridSummaryTransactionError').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
+    },
+    setGridDataFiltroPDATE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "PDATE";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroTNCM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "TNCM";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroTNCP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "TNCP";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroCPLM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "CPLM";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroCPLP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "CPLP";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroCTAM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "CTAM";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroCTAP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "CTAP";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroCLIM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "CLIM";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroCLIP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "CLIP";
+        me.searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataMainErrorTransaction: function () {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxMainErrorTransaction';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        win.lblUser_toolTip("Estructura: A4116");
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchErrorTransaction'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParamsMainSettlement;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin18');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        var data = obj.data.items[0].data;
+//                        console.log(obj);                        
+                    }
+                }
+            }
+        });
+        global.clear();
         Ext.getCmp(prototype.id + '-gridMainErrorTransaction').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridMainErrorTransaction').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin18').bindStore(storeGridDatas);
     },
     setGridDataMainSettlement: function () {
         win.lblUser_toolTip("Estructura: A4116");
