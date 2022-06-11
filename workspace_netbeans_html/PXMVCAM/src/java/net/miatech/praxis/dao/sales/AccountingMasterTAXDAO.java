@@ -52,7 +52,7 @@ public class AccountingMasterTAXDAO {
         int PAGINIT = 1, totPAGS = 0, totRowsPag = 20, totRows = -1;
 
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX127S02A1741(?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04484(?,?,?,?,?,?,?,?,?,?,?)}"; // PX127S02A1741
 
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
@@ -141,6 +141,7 @@ public class AccountingMasterTAXDAO {
                 objRtn.A1741FFIN = (rst.getString("A1741FFIN").equals("99999999") ? "" : Functions.getMonthConvertDate(rst.getString("A1741FFIN")));
                 objRtn.A1741CTRL = rst.getString("A1741CTRL").trim();
                 objRtn.A1741TPTAX = rst.getString("A1741TPTAX").trim();
+                objRtn.A1741INTNU = rst.getString("A1741INTNU").trim();
 
                 objRtn.A1741REGIS = rst.getString("A1741REGIS").trim();
                 objRtn.A1741FREGI = Functions.getMonthConvertDate(rst.getString("A1741FREGI").trim());
@@ -172,7 +173,7 @@ public class AccountingMasterTAXDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX127S02A1741(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04484(?,?,?,?,?,?,?,?,?,?,?)}"; // PX127S02A1741
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -239,6 +240,7 @@ public class AccountingMasterTAXDAO {
                 objRtn.A1741FFIN = (rs01.getString("A1741FFIN").equals("99999999") ? "" : Functions.getMonthConvertDate(rs01.getString("A1741FFIN")));
                 objRtn.A1741CTRL = rs01.getString("A1741CTRL").trim();
                 objRtn.A1741TPTAX = rs01.getString("A1741TPTAX").trim();
+                objRtn.A1741INTNU = rs01.getString("A1741INTNU").trim();
 
                 objRtn.A1741REGIS = rs01.getString("A1741REGIS").trim();
                 objRtn.A1741FREGI = Functions.getMonthConvertDate(rs01.getString("A1741FREGI").trim());
@@ -283,7 +285,7 @@ public class AccountingMasterTAXDAO {
     public String accountMasterTaxMaintance(A1741Filter filter, String strOption) {
         String STR_RESULT = "";
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX127S03A1741(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04485(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX127S03A1741
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
@@ -313,6 +315,7 @@ public class AccountingMasterTAXDAO {
             cs.setString(25, filter.A1741TPTAX);
             cs.setString(26, filter.IN_A1741FINI_OLD);
             cs.setString(27, filter.IN_A1741FFIN_OLD);
+            cs.setString(28, filter.A1741INTNU);
             cs.execute();
 
             rst = cs.getResultSet();

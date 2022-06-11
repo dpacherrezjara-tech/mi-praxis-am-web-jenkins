@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
     },
     afterRender: function(){
         this.p = this.view.params;
+        console.log('OPTION-->' + this.p.action);
         switch( this.p.action ){
             case 'U':
                 this.getDataInputs(this.p.rec);
@@ -29,6 +30,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
                 Ext.getCmp(prototype.id + '-cmbA1741TPTAX').setValue("");
                 Ext.getCmp(prototype.id + '-cmbCurrency2').setValue("");
                 Ext.getCmp(prototype.id + '-cmbA1741CTRL').setValue("");
+                Ext.getCmp(prototype.id + '-cmbINTNU').setValue("");
                 Ext.getCmp(prototype.id + '-cmbCountry2').focus();
                 break;
         }
@@ -46,6 +48,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
         Ext.getCmp(prototype.id + '-cmbA1741CTRL').setValue(rec.get('A1741CTRL'));
         Ext.getCmp(prototype.id + '-cmbA1741TPTAX').setValue(rec.get('A1741TPTAX'));
         Ext.getCmp(prototype.id + '-cmbA1741TIPO').setValue(rec.get('A1741TIPO'));
+        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1741INTNU')=== 'YES' ? 'Y' : 'N');
         
         Ext.getCmp(prototype.id + '-txtTax').setValue(rec.get('A1741CODE'));
         Ext.getCmp(prototype.id + '-txtA1741CIA').setValue(rec.get('A1741CIA'));
@@ -140,6 +143,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
         var cmbA1741TPTAX = Ext.getCmp(prototype.id + '-cmbA1741TPTAX').getValue();
         var cmbCurrency = Ext.getCmp(prototype.id + '-cmbCurrency2').getValue();
         var txtTax = Ext.getCmp(prototype.id + '-txtTax').getValue();
+        var cmbINTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         
         var txtA1741CIA = Ext.getCmp(prototype.id + '-txtA1741CIA').getValue();
         var txtA1741CTA = Ext.getCmp(prototype.id + '-txtA1741CTA').getValue();
@@ -147,13 +151,13 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
         var txtA1741EQUI = Ext.getCmp(prototype.id + '-txtA1741EQUI').getValue();
         var txtA1741ICIA = Ext.getCmp(prototype.id + '-txtA1741ICIA').getValue();
         
-        if( cmbA1741TIPO ==="" || cmbA1741CTRL === "" || cmbA1741TPTAX ===""|| cmbCurrency ===""|| txtTax ===""){
+        if( cmbINTNU ==="" || cmbA1741TIPO ==="" || cmbA1741CTRL === "" || cmbA1741TPTAX ===""|| cmbCurrency ===""|| txtTax ===""){
             bvalida = false;
         }
 //        if( txtTax.length > 3){
 //            bvalida = false;
 //        }
-        if(txtA1741CIA==="" || txtA1741CTA ==="" || txtA1741SCTA ==="" || txtA1741EQUI ==="" || txtA1741ICIA ===""){
+        if( cmbINTNU ==="" || txtA1741CIA==="" || txtA1741CTA ==="" || txtA1741SCTA ==="" || txtA1741EQUI ==="" || txtA1741ICIA ===""){
             bvalida = false;
         }
         return bvalida;
@@ -263,6 +267,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
         var A1741MONED = Ext.getCmp(prototype.id + '-cmbCurrency2').getValue();
         var A1741CTRL = Ext.getCmp(prototype.id + '-cmbA1741CTRL').getValue();
         var A1741TPTAX = Ext.getCmp(prototype.id + '-cmbA1741TPTAX').getValue();
+        var A1741INTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         
         var A1741CIA = Ext.getCmp(prototype.id + '-txtA1741CIA').getValue();
         var A1741UNIDA = Ext.getCmp(prototype.id + '-txtA1741UNIDA').getValue();
@@ -283,6 +288,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
             A1741TIPO: A1741TIPO,
             A1741PAIS: A1741PAIS,
             A1741CODE: A1741CODE,
+            A1741INTNU: A1741INTNU,
             A1741MONED: A1741MONED,
             A1741CIA: A1741CIA,
             A1741UNIDA: A1741UNIDA,

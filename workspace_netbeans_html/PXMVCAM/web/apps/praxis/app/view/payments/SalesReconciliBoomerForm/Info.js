@@ -315,7 +315,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Settlement', dataIndex: 'SVFOPS', width: 100,
+                                                        text: 'Settlement', dataIndex: 'SVFOPS', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -328,7 +328,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Commission', dataIndex: 'TOTCOMISI', width: 100,
+                                                        text: 'Commission', dataIndex: 'TOTCOMISI', width: 85,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -341,7 +341,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT', dataIndex: 'IVA', width: 100,
+                                                        text: 'VAT', dataIndex: 'IVA', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -354,7 +354,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Total<br>Discount', dataIndex: 'TOT_DESC', width: 100,
+                                                        text: 'Total<br>Discount', dataIndex: 'TOT_DESC', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -367,7 +367,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Net<br>Amount', dataIndex: 'NET', width: 100,
+                                                        text: 'Net<br>Amount', dataIndex: 'NET', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -380,7 +380,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Sale', dataIndex: 'SVFOP', width: 100,
+                                                        text: 'Sale', dataIndex: 'SVFOP', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -392,10 +392,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
+                                                    {
+                                                        text: 'Import', dataIndex: 'IMPORT', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
+                                                        }, /*summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totIMPORT, '0,000.00') + '<b>';
+                                                         }*/
+                                                    },
                                                 ]
                                             },
                                             {
-                                                text: 'Diff.', dataIndex: 'difSVFOP', width: 100,
+                                                text: 'Sett vs<br>Sales Diff.', dataIndex: 'difSVFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                                     if (value < 0) {
@@ -413,7 +426,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'PNR', dataIndex: 'SPNR', width: 100,
+                                                text: 'Import vs<br>Sales Diff.', dataIndex: 'difIMPORT', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+
+                                                    if (value < 0) {
+                                                        metaData.style = "text-align:right;background-color:#FF6F6F";
+                                                    } else {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    }
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, /*summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                 var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                 metaData.style = 'text-align:right; margin-right:3px ';
+                                                 return '<b>' + Ext.util.Format.number(data.totdifIMPORT, '0,000.00') + '<b>';
+                                                 }*/
+                                            },
+                                            {
+                                                text: 'ADM', dataIndex: 'REVCON', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'SPNR', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -428,7 +466,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Code', dataIndex: 'SCARCOD', width: 70,
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#b2e1ff;";
                                                             return value;
@@ -442,7 +480,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Author.', dataIndex: 'SAUTHOC', width: 70,
+                                                        text: 'Author.', dataIndex: 'SAUTHOC', width: 55,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#b2e1ff;";
                                                             return value;
@@ -462,7 +500,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1185,
+                            width: 1585,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -472,12 +510,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetailByPNR',
-                                    width: 1185,
+                                    width: 1585,
                                     height: 630,
                                     columnLines: true,
-                                    features: [{
+                                    /*features: [{
                                             ftype: 'summary'
-                                        }],
+                                        }],*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -511,7 +549,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'desSTVAL', width: 150,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
+                                                    if (value !== 'Match') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    } else {
+                                                        metaData.style = "text-align:left;";
+                                                    }
+
                                                     return value;
                                                 }
                                             },
@@ -552,7 +595,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Settlement', dataIndex: 'SVFOPS', width: 100,
+                                                        text: 'Settlement', dataIndex: 'SVFOPS', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -565,7 +608,59 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Sale', dataIndex: 'SVFOP', width: 100,
+                                                        text: 'Commission', dataIndex: 'TOTCOMISI', width: 85,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
+                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailByPNR').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTOTCOMISI, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT', dataIndex: 'IVA', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
+                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailByPNR').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totIVA, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Total<br>Discount', dataIndex: 'TOT_DESC', width: 70,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
+                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailByPNR').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTOT_DESC, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Net<br>Amount', dataIndex: 'NET', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
+                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailByPNR').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totNET, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Sale', dataIndex: 'SVFOP', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
@@ -577,12 +672,30 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
+                                                    {
+                                                        text: 'Import', dataIndex: 'IMPORT', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
+                                                        }, /*summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDetailByPNR').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totIMPORT, '0,000.00') + '<b>';
+                                                         }*/
+                                                    },
                                                 ]
                                             },
                                             {
-                                                text: 'Diff.', dataIndex: 'difSVFOP', width: 100,
+                                                text: 'Sett vs<br>Sales Diff.', dataIndex: 'difSVFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+
+                                                    if (value < 0) {
+                                                        metaData.style = "text-align:right;background-color:#FF6F6F";
+                                                    } else {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    }
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                     //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                     return value;
@@ -593,7 +706,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'PNR', dataIndex: 'SPNR', width: 100,
+                                                text: 'Import vs<br>Sales Diff.', dataIndex: 'difIMPORT', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+
+                                                    if (value < 0) {
+                                                        metaData.style = "text-align:right;background-color:#FF6F6F";
+                                                    } else {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    }
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, /*summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                 var data = Ext.getCmp(prototype.id + '-gridDetailByPNR').getStore().getData().items[0].data;
+                                                 metaData.style = 'text-align:right; margin-right:3px ';
+                                                 return '<b>' + Ext.util.Format.number(data.totdifIMPORT, '0,000.00') + '<b>';
+                                                 }*/
+                                            },
+                                            {
+                                                text: 'ADM', dataIndex: 'REVCON', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'SPNR', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -608,7 +746,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Code', dataIndex: 'SCARCOD', width: 70,
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#b2e1ff;";
                                                             return value;
@@ -622,7 +760,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Author.', dataIndex: 'SAUTHOC', width: 70,
+                                                        text: 'Author.', dataIndex: 'SAUTHOC', width: 55,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#b2e1ff;";
                                                             return value;
@@ -630,6 +768,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     }
                                                 ]
                                             }
+
                                         ]
                                     }
                                 },
@@ -3691,7 +3830,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     return value;
                                                 }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[0].data;
-                                                        metaData.style = 'text-align:right; margin-right:3px ';
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                 }
                                             },

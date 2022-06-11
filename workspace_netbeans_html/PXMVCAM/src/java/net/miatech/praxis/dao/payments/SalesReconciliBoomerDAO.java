@@ -579,7 +579,15 @@ public class SalesReconciliBoomerDAO {
 
                     beanTkt.SVFOP = rst.getLong("SVFOP");
                     beanTkt.SVFOPS = rst.getLong("SVFOPS");
+                    beanTkt.IMPORT = rst.getLong("IMPORT");
                     beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                    beanTkt.difIMPORT = rst.getLong("SVFOP") - rst.getLong("IMPORT");
+
+                    if (beanTkt.difIMPORT < 0) {
+                        beanTkt.REVCON = "NC";
+                    } else {
+                        beanTkt.REVCON = "ND";
+                    }
 
                     beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                     beanTkt.IVA = rst.getLong("IVA");
@@ -635,6 +643,14 @@ public class SalesReconciliBoomerDAO {
         A2324Filter beanTkt;
         long lngTotCant = 0, lngQtyDoc = 0;
         double dblSVFOP = 0;
+
+        long totSVFOP = 0;
+        long totSVFOPS = 0;
+        long totTOTCOMISI = 0;
+        long totIVA = 0;
+        long totTOT_DESC = 0;
+        long totNET = 0;
+
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Accepted");
         hmDescEstados.put("2", "Rejected");
@@ -667,11 +683,13 @@ public class SalesReconciliBoomerDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-//                lngTotCant += rst.getLong("CANT");
-//                lngQtyDoc += rst.getLong("QTYDOC");
-//                dblSVFOP += rst.getDouble("SVFOP");
-
                 beanTkt = new A2324Filter();
+                beanTkt.strFecFiltro = filter.strFecFiltro.trim();
+                beanTkt.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                beanTkt.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                beanTkt.IN_TDOC = filter.IN_TDOC.trim();
+
+//                    beanTkt.DATE = rst.getString("DATE").trim();
                 beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 beanTkt.SDATE = rst.getString("SDATE").trim();
                 beanTkt.TDOC = rst.getString("TDOC").trim();
@@ -684,6 +702,8 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.desSTVAL = "Sales w/o Payment SB";
                 } else if (beanTkt.STVAL.equals("4")) {
                     beanTkt.desSTVAL = "Match Difference";
+                } else if (beanTkt.STVAL.equals("5")) {
+                    beanTkt.desSTVAL = "Match Manual";
                 } else {
                     beanTkt.desSTVAL = "";
                 }
@@ -694,120 +714,39 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.TIPOTAR = rst.getString("TIPOTAR").trim();
+                beanTkt.COMMENT = rst.getString("COMMENT").trim();
                 beanTkt.CODEBANK = rst.getString("CODEBANK").trim();
                 beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
                 beanTkt.SVFOP = rst.getLong("SVFOP");
-//                    beanTkt.totSVFOP = totSVFOP;
+                beanTkt.SVFOPS = rst.getLong("SVFOPS");
+                beanTkt.IMPORT = rst.getLong("IMPORT");
+                beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                beanTkt.difIMPORT = rst.getLong("SVFOP") - rst.getLong("IMPORT");
+
+                if (beanTkt.difIMPORT < 0) {
+                    beanTkt.REVCON = "NC";
+                } else {
+                    beanTkt.REVCON = "ND";
+                }
+
+                beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
+                beanTkt.IVA = rst.getLong("IVA");
+                beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
+                beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+
+                beanTkt.totSVFOP = totSVFOP;
+                beanTkt.totSVFOPS = totSVFOPS;
+                beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+
+                beanTkt.totTOTCOMISI = totTOTCOMISI;
+                beanTkt.totIVA = totIVA;
+                beanTkt.totTOT_DESC = totTOT_DESC;
+                beanTkt.totNET = totNET;
 
                 lstTkts.add(beanTkt);
             }
             rst.close();
-
-//            if (cstmt.getMoreResults()) {
-//                rst = cstmt.getResultSet();
-//
-//                while (rst.next()) {
-//
-//                    beanTkt = new A2324Filter();
-//                    beanTkt.strFecFiltro = filter.strFecFiltro.trim();
-//                    beanTkt.strFormatDate = filter.strFormatDate.trim();
-//                    beanTkt.IN_SDATE = filter.IN_SDATE.trim();
-//                    beanTkt.IN_TDOC = filter.IN_TDOC.trim();
-//                    beanTkt.IN_CARDN1 = filter.IN_CARDN1.trim();
-//                    beanTkt.IN_CARDN2 = filter.IN_CARDN2.trim();
-//                    beanTkt.IN_CARDC = filter.IN_CARDC.trim();
-//                    beanTkt.IN_STVAL = filter.IN_STVAL.trim();
-//                    beanTkt.IN_BSTVAL = filter.IN_BSTVAL.trim();
-//                    beanTkt.SCARCOD = filter.SCARCOD.trim();
-//                    beanTkt.strDescCard = filter.strDescCard.trim();
-//                    beanTkt.SORIG = filter.SORIG.trim();
-//                    beanTkt.IN_MERCHN = filter.IN_MERCHN.trim();
-//                    beanTkt.IN_AGENT = filter.IN_AGENT.trim();
-//                    beanTkt.IN_BANK = filter.IN_BANK.trim();
-//
-//                    beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
-//                    beanTkt.CCIA = rst.getString("CCIA").trim();
-//                    beanTkt.FORMA = rst.getString("FORMA").trim();
-//                    beanTkt.SERIE = rst.getString("SERIE").trim();
-//
-//                    beanTkt.SAGENT = rst.getString("SAGENT").trim();
-//                    //beanTkt.strDescStatus = rst.getString("NOMAGENT").trim();
-//                    beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
-//                    if (beanTkt.strPEM.trim().equals("01")) {
-//                        beanTkt.strPEM = "Manual";
-//                    } else if (beanTkt.strPEM.trim().equals("05")) {
-//                        beanTkt.strPEM = "Chip EMV";
-//                    } else if (beanTkt.strPEM.trim().equals("80")) {
-//                        beanTkt.strPEM = "Fallback";
-//                    } else if (beanTkt.strPEM.trim().equals("90")) {
-//                        beanTkt.strPEM = "Deslizada";
-//                    }
-//                    beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
-//                    beanTkt.SCARDN = rst.getString("SCARDN").trim();
-//                    beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
-//                    beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
-//                    beanTkt.SVFOP = rst.getDouble("SVFOP");
-//                    //beanTkt.lngQTYDOC = rst.getLong("QTYDOC");
-//                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
-//                    //beanTkt.strDescCountry = rst.getString("NAMES").trim();
-//
-//                    beanTkt.TDOC = rst.getString("TDOC").trim();
-//                    beanTkt.SDATE = rst.getString("SDATE").trim();
-//                    if (beanTkt.strFLOAD.trim().equals("M")) {
-//                        beanTkt.strFLOAD = "Manual";
-//                    }
-//                    /*beanTkt.MERCHN = rst.getString("MERCHN").trim();
-//                    if (rst.getString("NMERCHN") != null && !rst.getString("NMERCHN").trim().equals("-")) {
-//                        beanTkt.strDescMerchn = rst.getString("NMERCHN").trim();
-//                    }*/
-//
-//                    //**********************************************************
-//                    if (!filter.IN_BSTVAL.trim().equals("")) {
-//                        estado = hmDescEstadosTit.get(beanTkt.IN_BSTVAL).toString();
-//                    }
-//
-//                    if (filter.IN_STVAL.trim().equals("1")) {
-//                        estado = "Match";
-//                    } else if (filter.IN_STVAL.trim().equals("2")) {
-//                        estado = "Settlement w/o Paying";
-//                    } else if (filter.IN_STVAL.trim().equals("3")) {
-//                        estado = "Paying w/o Settlement";
-//                    } /*else if (filter.IN_STVAL.trim().equals("4")) {
-//                     estado = "Match with Differences";
-//                     } */ else if (filter.IN_STVAL.trim().equals("4")) {
-//                        estado = "Match Manual";
-//                    }
-//
-//                    strTitulo += beanTkt.SDATE + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " *** " + estado + " ***";
-//                    beanTkt.strTitulo = strTitulo;
-//
-//                    beanTkt.REFBOOMER = rst.getString("REFBOOMER").trim();
-//                    beanTkt.BCURRENCY = rst.getString("BCURRENCY").trim();
-//                    beanTkt.DAMOUNT = rst.getDouble("DAMOUNT");
-//                    beanTkt.BCURRENCY = rst.getString("BCURRENCY").trim();
-//                    beanTkt.BCARCOD = rst.getString("BCARCOD").trim();
-//                    beanTkt.BCARDN = rst.getString("BCARDN").trim();
-//                    /*if (rst.getString("DESCERROR") != null && !rst.getString("DESCERROR").trim().equals("")) {
-//                        beanTkt.strDescripcion = rst.getString("CERROR").trim() + " : " + rst.getString("DESCERROR").trim();
-//                    } else {
-//                        beanTkt.strDescripcion = "(**) : (Empty)";
-//                    }*/
-//                    
-//                    beanTkt.SPNR = rst.getString("SPNR").trim();
-//                    
-//                    beanTkt.lngTotQACCB = lngTotCant;
-//                    beanTkt.lngTotQTYDOC = lngQtyDoc;
-//                    beanTkt.dblTotSVFOP = dblSVFOP;
-//                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
-//                    beanTkt.page.PAGROW = filter.page.PAGROW;
-//                    beanTkt.page.TOTPAG = filter.page.TOTPAG;
-//                    beanTkt.page.TOTROW = filter.page.TOTROW;
-//
-//                    lstTkts.add(beanTkt);
-//                }
-//                rst.close();
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1195,7 +1134,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.AMTSET = filter.AMTSET;
                     beanTkt.totSVFOP_COMPLEMENTO = totSVFOP - filter.AMTSET;
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
-                    
+
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY");
                     beanTkt.SVFOP = rst.getLong("SVFOP");
                     SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTkt.SVFOP;
@@ -1239,8 +1178,8 @@ public class SalesReconciliBoomerDAO {
                         beanTktComplement.SPNR = rst.getString("SPNR");
                         beanTktComplement.totSVFOP = totSVFOP;
                         beanTktComplement.totSVFOP_COMPLEMENTO = totSVFOP - filter.AMTSET;
-                        
-                        beanTktComplement.SVFOP = Math.abs(SVFOP - beanTkt.SVFOP);                        
+
+                        beanTktComplement.SVFOP = Math.abs(SVFOP - beanTkt.SVFOP);
                         //SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTktComplement.SVFOP;
                         beanTktComplement.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
 
@@ -1541,10 +1480,18 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.IVA = rst.getLong("IVA");
                     beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
                     beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    
+                    beanTkt.SVFOP = rst.getLong("SVFOP");
+                    beanTkt.SVFOPS = rst.getLong("SVFOPS");
+                    beanTkt.IMPORT = rst.getLong("IMPORT");
+                    beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                    beanTkt.difIMPORT = rst.getLong("SVFOP") - rst.getLong("IMPORT");
 
-                    beanTkt.totSVFOP = totSVFOP;
-                    beanTkt.totSVFOPS = totSVFOPS;
-                    beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+                    if (beanTkt.difIMPORT < 0) {
+                        beanTkt.REVCON = "NC";
+                    } else {
+                        beanTkt.REVCON = "ND";
+                    }
 
                     beanTkt.totTOTCOMISI = totTOTCOMISI;
                     beanTkt.totIVA = totIVA;
