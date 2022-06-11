@@ -73,6 +73,7 @@ public class A2324Filter extends A2324 {
     public String ABCDA = "";
     public String SCURRENCYA = "";
     public String FSELECA = "";
+    public String REVCON = "";
     public double GENCOMIPAY = 0.0;
     public double totGENCOMIPAY = 0.0;
     public double COMISIPROV = 0.0;
@@ -89,6 +90,8 @@ public class A2324Filter extends A2324 {
     public double totTOT_DESC = 0.0;
     public double NET = 0.0;    
     public double totNET = 0.0;    
+    public double difIMPORT = 0.0;    
+    public double IMPORT = 0.0;    
 
     //BOOMER
     public String TDOCB = "";
