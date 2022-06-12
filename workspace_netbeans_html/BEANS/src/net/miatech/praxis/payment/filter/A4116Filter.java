@@ -124,6 +124,7 @@ public class A4116Filter extends A4116 {
     
     //Summary Error
     public String IN_DRILLDOWN = "";
+    public String IN_DRILLDOWN_DATE = "";
     public String PDATE = "";
     public int TNCM = 0;
     public int TNCP = 0;
