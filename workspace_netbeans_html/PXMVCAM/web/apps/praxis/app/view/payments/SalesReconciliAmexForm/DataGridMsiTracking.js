@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
     title: 'MSI Tracking - Grid Data',
     header: true,
     height: 160,
-    width: 1230,
+    width: 1370,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMsiTracking',
-                                    height: 150,                                    
+                                    height: 150,
                                     columnLines: true,
                                     plugins: [
                                         {
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                         },
                                         items: [
                                             /*{
-                                                text: 'Passenger Name', dataIndex: 'A720PAX', width: 280,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
-                                                    return value;
-                                                },
-                                                editor: {xtype: 'textfield', editable: false}
-                                            },*/
+                                             text: 'Passenger Name', dataIndex: 'A720PAX', width: 280,
+                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:left;";
+                                             return value;
+                                             },
+                                             editor: {xtype: 'textfield', editable: false}
+                                             },*/
                                             {
                                                 text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100,
                                             },
@@ -84,6 +84,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                             },
                                             {
                                                 text: 'Business<br>Date', dataIndex: 'BSUMDATE', width: 100,
+                                            },
+                                            {
+                                                text: 'Installment',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Plan', dataIndex: 'NBRINSTA', width: 70,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Number', dataIndex: 'INSTANBR', width: 70,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
                                                 text: 'PNR', dataIndex: 'SPNR', width: 80
@@ -117,10 +139,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                                 text: 'Number', dataIndex: 'SCARDN', width: 120
                                             },
                                             {
-                                                text: 'Approval<br>Code', dataIndex: 'SAUTHOC', width: 80, 
+                                                text: 'Approval<br>Code', dataIndex: 'SAUTHOC', width: 80,
                                             },
                                             {
-                                                text: 'Submission<br>Merchant ID', dataIndex: 'SMERCHID', width: 100, 
+                                                text: 'Submission<br>Merchant ID', dataIndex: 'SMERCHID', width: 100,
                                             },
                                         ]
                                     }

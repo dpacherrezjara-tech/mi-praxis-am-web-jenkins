@@ -2670,7 +2670,7 @@ public class SalesReconciliAmexDAO {
 
         return objRtn;
     }
-    
+
     // ---------------------------------------------------------------------------------------------------------------
     public List<A4116Filter> loadPX570SQP04357(A4116Filter filter) throws SQLException, Exception {
 
@@ -2946,17 +2946,17 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
-    
+
     // ---------------------------------------------------------------------------------------------------------------
     public List<A4116Filter> loadPX570SQP04468(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
-        Integer TNCM_TOTAL = 0 , TNCP_TOTAL = 0;
-        Integer CPLM_TOTAL = 0 , CPLP_TOTAL = 0;
-        Integer CTAM_TOTAL = 0 , CTAP_TOTAL = 0;
-        Integer CLIM_TOTAL = 0 , CLIP_TOTAL = 0;
-        Integer TGP_TOTAL = 0 , TGM_TOTAL = 0;
+        Integer TNCM_TOTAL = 0, TNCP_TOTAL = 0;
+        Integer CPLM_TOTAL = 0, CPLP_TOTAL = 0;
+        Integer CTAM_TOTAL = 0, CTAP_TOTAL = 0;
+        Integer CLIM_TOTAL = 0, CLIP_TOTAL = 0;
+        Integer TGP_TOTAL = 0, TGM_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3004,7 +3004,7 @@ public class SalesReconciliAmexDAO {
                 CLIM_TOTAL = rst.getInt("CLIM");
                 CLIP_TOTAL = rst.getInt("CLIP");
                 TGM_TOTAL = rst.getInt("TGM");
-                TGP_TOTAL = rst.getInt("TGP");                
+                TGP_TOTAL = rst.getInt("TGP");
             }
             rst.close();
 
@@ -3028,7 +3028,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.CLIP = rst.getInt("CLIP");
                     beanTkt.TGM = rst.getInt("TGM");
                     beanTkt.TGP = rst.getInt("TGP");
-                    
+
                     //TOTALES
                     beanTkt.TNCM_TOTAL = TNCM_TOTAL;
                     beanTkt.TNCP_TOTAL = TNCP_TOTAL;
@@ -3040,19 +3040,19 @@ public class SalesReconciliAmexDAO {
                     beanTkt.CLIP_TOTAL = CLIP_TOTAL;
                     beanTkt.TGM_TOTAL = TGM_TOTAL;
                     beanTkt.TGP_TOTAL = TGP_TOTAL;
-                    
-                    if (beanTkt.TGM > 0){
+
+                    if (beanTkt.TGM > 0) {
                         double match = beanTkt.TGM;
                         double pending = beanTkt.TGP;
-                        beanTkt.PENDING_PERCENTAGE = pending*100/match;
+                        beanTkt.PENDING_PERCENTAGE = pending * 100 / match;
                     }
-                    
-                    if(beanTkt.TGM_TOTAL > 0){
+
+                    if (beanTkt.TGM_TOTAL > 0) {
                         double match_total = beanTkt.TGM_TOTAL;
                         double pending_total = beanTkt.TGP_TOTAL;
-                        beanTkt.PENDING_PERCENTAGE_TOTAL = pending_total*100/match_total;
+                        beanTkt.PENDING_PERCENTAGE_TOTAL = pending_total * 100 / match_total;
                     }
-                    
+
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;
@@ -3873,6 +3873,9 @@ public class SalesReconciliAmexDAO {
                 } else {
                     beanTkt.descSTVAL = rst.getString("STVAL").trim();
                 }
+
+                beanTkt.INSTANBR = rst.getString("INSTANBR");
+                beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
 
                 lstTkts.add(beanTkt);
             }
