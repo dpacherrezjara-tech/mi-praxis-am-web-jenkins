@@ -934,7 +934,7 @@ public class OwnerlessCouponDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.registerOutParameter(7, Types.VARCHAR);
+            cs.registerOutParameter(8, Types.VARCHAR);
 
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.A1413FVLOB.trim());
