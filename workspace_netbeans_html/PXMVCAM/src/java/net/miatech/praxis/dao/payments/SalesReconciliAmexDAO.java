@@ -2670,7 +2670,7 @@ public class SalesReconciliAmexDAO {
 
         return objRtn;
     }
-
+    
     // ---------------------------------------------------------------------------------------------------------------
     public List<A4116Filter> loadPX570SQP04357(A4116Filter filter) throws SQLException, Exception {
 
@@ -2720,17 +2720,17 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(12, Types.INTEGER);
-            cstmt.registerOutParameter(13, Types.INTEGER);
             cstmt.registerOutParameter(14, Types.INTEGER);
             cstmt.registerOutParameter(15, Types.INTEGER);
+            cstmt.registerOutParameter(16, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -2743,17 +2743,19 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(9, filter.IN_TDOCError);
             cstmt.setString(10, filter.IN_SCARDN1.trim() + '%' + filter.IN_SCARDN2.trim() + '%');
             cstmt.setString(11, filter.IN_AUTHE);
-            cstmt.setInt(12, filter.page.PAGNUM);
-            cstmt.setInt(13, filter.page.PAGROW);
-            cstmt.setInt(14, filter.page.TOTPAG);
-            cstmt.setInt(15, filter.page.TOTROW);
+            cstmt.setString(12, filter.IN_DRILLDOWN);
+            cstmt.setString(13, filter.IN_DRILLDOWN_DATE);
+            cstmt.setInt(14, filter.page.PAGNUM);
+            cstmt.setInt(15, filter.page.PAGROW);
+            cstmt.setInt(16, filter.page.TOTPAG);
+            cstmt.setInt(17, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(12);
-            filter.page.PAGROW = cstmt.getInt(13);
-            filter.page.TOTPAG = cstmt.getInt(14);
-            filter.page.TOTROW = cstmt.getInt(15);
+            filter.page.PAGNUM = cstmt.getInt(14);
+            filter.page.PAGROW = cstmt.getInt(15);
+            filter.page.TOTPAG = cstmt.getInt(16);
+            filter.page.TOTROW = cstmt.getInt(17);
 
             cstmt.execute();
 
@@ -2906,10 +2908,151 @@ public class SalesReconciliAmexDAO {
 
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
+                        beanTkt.DES_CERROR = "";
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
 
+                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                    beanTkt.page.PAGROW = filter.page.PAGROW;
+                    beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                    beanTkt.page.TOTROW = filter.page.TOTROW;
+
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------------
+    public List<A4116Filter> loadPX570SQP04468(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+        Integer TNCM_TOTAL = 0 , TNCP_TOTAL = 0;
+        Integer CPLM_TOTAL = 0 , CPLP_TOTAL = 0;
+        Integer CTAM_TOTAL = 0 , CTAP_TOTAL = 0;
+        Integer CLIM_TOTAL = 0 , CLIP_TOTAL = 0;
+        Integer TGP_TOTAL = 0 , TGM_TOTAL = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04468(?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM);
+            cstmt.setString(3, filter.IN_DATETO);
+            cstmt.setString(4, filter.IN_CERROR);
+            cstmt.setString(5, filter.IN_COMPLEMENT);
+            cstmt.setString(6, filter.IN_TDOCError);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                TNCM_TOTAL = rst.getInt("TNCM");
+                TNCP_TOTAL = rst.getInt("TNCP");
+                CPLM_TOTAL = rst.getInt("CPLM");
+                CPLP_TOTAL = rst.getInt("CPLP");
+                CTAM_TOTAL = rst.getInt("CTAM");
+                CTAP_TOTAL = rst.getInt("CTAP");
+                CLIM_TOTAL = rst.getInt("CLIM");
+                CLIP_TOTAL = rst.getInt("CLIP");
+                TGM_TOTAL = rst.getInt("TGM");
+                TGP_TOTAL = rst.getInt("TGP");                
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                    beanTkt = new A4116Filter();
+                    beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
+                    beanTkt.IN_DATETO = filter.IN_DATETO.trim();
+                    beanTkt.IN_DATE = filter.IN_DATE.trim();
+
+                    beanTkt.PAYDATE = rst.getString("PAYDATE");
+                    beanTkt.TNCM = rst.getInt("TNCM");
+                    beanTkt.TNCP = rst.getInt("TNCP");
+                    beanTkt.CPLM = rst.getInt("CPLM");
+                    beanTkt.CPLP = rst.getInt("CPLP");
+                    beanTkt.CTAM = rst.getInt("CTAM");
+                    beanTkt.CTAP = rst.getInt("CTAP");
+                    beanTkt.CLIM = rst.getInt("CLIM");
+                    beanTkt.CLIP = rst.getInt("CLIP");
+                    beanTkt.TGM = rst.getInt("TGM");
+                    beanTkt.TGP = rst.getInt("TGP");
+                    
+                    //TOTALES
+                    beanTkt.TNCM_TOTAL = TNCM_TOTAL;
+                    beanTkt.TNCP_TOTAL = TNCP_TOTAL;
+                    beanTkt.CPLM_TOTAL = CPLM_TOTAL;
+                    beanTkt.CPLP_TOTAL = CPLP_TOTAL;
+                    beanTkt.CTAM_TOTAL = CTAM_TOTAL;
+                    beanTkt.CTAP_TOTAL = CTAP_TOTAL;
+                    beanTkt.CLIM_TOTAL = CLIM_TOTAL;
+                    beanTkt.CLIP_TOTAL = CLIP_TOTAL;
+                    beanTkt.TGM_TOTAL = TGM_TOTAL;
+                    beanTkt.TGP_TOTAL = TGP_TOTAL;
+                    
+                    if (beanTkt.TGM > 0){
+                        double match = beanTkt.TGM;
+                        double pending = beanTkt.TGP;
+                        beanTkt.PENDING_PERCENTAGE = pending*100/match;
+                    }
+                    
+                    if(beanTkt.TGM_TOTAL > 0){
+                        double match_total = beanTkt.TGM_TOTAL;
+                        double pending_total = beanTkt.TGP_TOTAL;
+                        beanTkt.PENDING_PERCENTAGE_TOTAL = pending_total*100/match_total;
+                    }
+                    
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;

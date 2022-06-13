@@ -57,7 +57,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
+                if(this.bean.CERROR === ''){
+                    Ext.getCmp(prototype.id + '-btn-update').hide();
+                } else {
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                }                
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;

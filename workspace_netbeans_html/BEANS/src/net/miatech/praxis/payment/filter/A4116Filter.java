@@ -121,7 +121,36 @@ public class A4116Filter extends A4116 {
     public String FSELEC = "";
     public Integer FDUPLI = 0;
     public Integer FDUPLIB = 0;
-
+    
+    //Summary Error
+    public String IN_DRILLDOWN = "";
+    public String IN_DRILLDOWN_DATE = "";
+    public String PDATE = "";
+    public int TNCM = 0;
+    public int TNCP = 0;
+    public int CPLM = 0;
+    public int CPLP = 0;
+    public int CTAM = 0;
+    public int CTAP = 0;
+    public int CLIM = 0;
+    public int CLIP = 0;
+    public int TGP = 0;
+    public int TGM = 0;
+    
+    public int TNCM_TOTAL = 0;
+    public int TNCP_TOTAL = 0;
+    public int CPLM_TOTAL = 0;
+    public int CPLP_TOTAL = 0;
+    public int CTAM_TOTAL = 0;
+    public int CTAP_TOTAL = 0;
+    public int CLIM_TOTAL = 0;
+    public int CLIP_TOTAL = 0;
+    public int TGP_TOTAL = 0;
+    public int TGM_TOTAL = 0;
+        
+    public double PENDING_PERCENTAGE = 0;
+    public double PENDING_PERCENTAGE_TOTAL = 0;       
+    
     //Flag contabilizado
     public double TGROSAMOUN_ACCOUNTED = 0;
     public double TGROSAMOUN_TO_DEBUG = 0;
@@ -174,6 +203,6 @@ public class A4116Filter extends A4116 {
     public Pagination page = new Pagination();
     
 
-    
+
     
 }
