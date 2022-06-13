@@ -2908,6 +2908,7 @@ public class SalesReconciliAmexDAO {
 
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
+                        beanTkt.DES_CERROR = "";
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
@@ -2955,6 +2956,7 @@ public class SalesReconciliAmexDAO {
         Integer CPLM_TOTAL = 0 , CPLP_TOTAL = 0;
         Integer CTAM_TOTAL = 0 , CTAP_TOTAL = 0;
         Integer CLIM_TOTAL = 0 , CLIP_TOTAL = 0;
+        Integer TGP_TOTAL = 0 , TGM_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3001,6 +3003,8 @@ public class SalesReconciliAmexDAO {
                 CTAP_TOTAL = rst.getInt("CTAP");
                 CLIM_TOTAL = rst.getInt("CLIM");
                 CLIP_TOTAL = rst.getInt("CLIP");
+                TGM_TOTAL = rst.getInt("TGM");
+                TGP_TOTAL = rst.getInt("TGP");                
             }
             rst.close();
 
@@ -3022,6 +3026,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.CTAP = rst.getInt("CTAP");
                     beanTkt.CLIM = rst.getInt("CLIM");
                     beanTkt.CLIP = rst.getInt("CLIP");
+                    beanTkt.TGM = rst.getInt("TGM");
+                    beanTkt.TGP = rst.getInt("TGP");
+                    
                     //TOTALES
                     beanTkt.TNCM_TOTAL = TNCM_TOTAL;
                     beanTkt.TNCP_TOTAL = TNCP_TOTAL;
@@ -3031,7 +3038,21 @@ public class SalesReconciliAmexDAO {
                     beanTkt.CTAP_TOTAL = CTAP_TOTAL;
                     beanTkt.CLIM_TOTAL = CLIM_TOTAL;
                     beanTkt.CLIP_TOTAL = CLIP_TOTAL;
-
+                    beanTkt.TGM_TOTAL = TGM_TOTAL;
+                    beanTkt.TGP_TOTAL = TGP_TOTAL;
+                    
+                    if (beanTkt.TGM > 0){
+                        double match = beanTkt.TGM;
+                        double pending = beanTkt.TGP;
+                        beanTkt.PENDING_PERCENTAGE = pending*100/match;
+                    }
+                    
+                    if(beanTkt.TGM_TOTAL > 0){
+                        double match_total = beanTkt.TGM_TOTAL;
+                        double pending_total = beanTkt.TGP_TOTAL;
+                        beanTkt.PENDING_PERCENTAGE_TOTAL = pending_total*100/match_total;
+                    }
+                    
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;

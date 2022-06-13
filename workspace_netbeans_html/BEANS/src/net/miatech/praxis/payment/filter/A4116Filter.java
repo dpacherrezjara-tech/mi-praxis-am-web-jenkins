@@ -134,6 +134,8 @@ public class A4116Filter extends A4116 {
     public int CTAP = 0;
     public int CLIM = 0;
     public int CLIP = 0;
+    public int TGP = 0;
+    public int TGM = 0;
     
     public int TNCM_TOTAL = 0;
     public int TNCP_TOTAL = 0;
@@ -143,6 +145,11 @@ public class A4116Filter extends A4116 {
     public int CTAP_TOTAL = 0;
     public int CLIM_TOTAL = 0;
     public int CLIP_TOTAL = 0;
+    public int TGP_TOTAL = 0;
+    public int TGM_TOTAL = 0;
+        
+    public double PENDING_PERCENTAGE = 0;
+    public double PENDING_PERCENTAGE_TOTAL = 0;       
     
     //Flag contabilizado
     public double TGROSAMOUN_ACCOUNTED = 0;

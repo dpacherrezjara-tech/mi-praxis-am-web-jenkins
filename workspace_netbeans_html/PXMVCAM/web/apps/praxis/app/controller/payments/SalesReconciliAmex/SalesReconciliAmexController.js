@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["PRDA", "Processing Date"],
+                //["PRDA", "Processing Date"],
                 ["PAYDATE", "Payment Date"]
             ]
         }));
@@ -519,6 +519,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroPDATE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "PDATE";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -529,6 +530,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement = {};
         this.beanSettlement.IN_DRILLDOWN = "TNCM";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -538,6 +540,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroTNCP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TNCP";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -547,6 +550,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroCPLM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CPLM";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -556,6 +560,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroCPLP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CPLP";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -565,6 +570,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroCTAM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CTAM";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -574,6 +580,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroCTAP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CTAP";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -583,6 +590,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroCLIM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CLIM";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -592,6 +600,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setGridDataFiltroCLIP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CLIP";
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
+        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
+        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
+        searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroTGP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "TGP";
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
+        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
+        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
+        searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataMainErrorTransaction();
+    },
+    setGridDataFiltroTGM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "TGM";
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
