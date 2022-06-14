@@ -185,11 +185,12 @@ Ext.define('Ext.Praxis.controller.sales.FareBasis.FareBasisController', {
             modal: true,
             fn: function(btn) {
                 if (btn === 'ok') {
-                    this.exportExcel();
+                    this.ValidationDownloadExcel();
                 }
             }
         });
     },
+   
     exportExcel: function() {
         this.setParams();
         global.getFile(prototype.url + '/getXLSX?IN_OPCION=' + searchParams.IN_OPCION + '&IN_AIRLIN=' + searchParams.IN_AIRLIN + '&IN_FBASIS=' + searchParams.IN_FBASIS);
@@ -202,6 +203,36 @@ Ext.define('Ext.Praxis.controller.sales.FareBasis.FareBasisController', {
         } else {
             option.setVisible(true);
         }
+    },
+    ValidationDownloadExcel: function (rec) {
+        this.setParams();
+        var me = this;
+        Ext.Ajax.request({
+            url: prototype.url + '/ValidationDownload',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {
+                IN_OPCION: searchParams.IN_OPCION,
+                IN_AIRLIN: searchParams.IN_AIRLIN,
+                IN_FBASIS: searchParams.IN_FBASIS
+            },
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var int_result = res.int_result;
+                if(int_result>100000)
+                {
+                     global.Msg({
+                            msg: 'Report cannot be exported, please contact system administrator.'
+                        });
+                }
+                else
+                {
+                    me.exportExcel();
+                }
+                Ext.getBody().unmask();
+            }
+        });
     },
     /**
      * Metodos usados para el CRUD
