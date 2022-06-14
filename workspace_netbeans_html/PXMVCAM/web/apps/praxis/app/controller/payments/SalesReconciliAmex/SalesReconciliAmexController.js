@@ -44,6 +44,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     paramsDetailDetTktSettlement: {},
     paramsDetailPricing: {},
     searchParamsMainSettlement: {},
+    searchParamsXlsMainSettlement: {},
     paramsDetailSettlement: {},
     paramsDetailDetSettlement: {},
     searchParamsFilterSettlement: {},
@@ -2012,7 +2013,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     btnExcel_click: function (obj, e) {
 
-        this.setFormatParameter();
+        //this.setFormatParameter();
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -2034,6 +2035,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }
     },
     exportExcel: function () {
+        searchParamsXlsMainSettlement = Object.create(searchParamsMainSettlement);
         this.setFormatParameter();
         console.log(me.panelActual);
         switch (me.panelActual) {
@@ -2068,7 +2070,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 global.getFile(prototype.url + '/getXLSXMainAdjustment?beanString=' + searchParams.beanString);
                 break;
             case  '-boxMainErrorTransaction':
-                global.getFile(prototype.url + '/getXLSXMainErrorTransactiont?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSXMainErrorTransactiont?beanString=' + searchParamsXlsMainSettlement.beanString);
+                break;
+            case  '-boxSummaryTransactionError':
+                global.getFile(prototype.url + '/getXLSXSummaryErrorTransactiont?beanString=' + searchParamsMainSettlement.beanString);
                 break;
         }
     },
