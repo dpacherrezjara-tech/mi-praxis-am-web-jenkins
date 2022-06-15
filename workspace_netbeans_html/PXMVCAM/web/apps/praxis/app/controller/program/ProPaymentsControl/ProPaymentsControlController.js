@@ -241,7 +241,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 ["6", "By Iata"],
                 ["7", "By USA/States"],
                 ["8", "By Fare/Tax"],
-                ["9", "By Bank (*)"],
+//                ["9", "By Bank (*)"],
                 ["10", "By POS Entry Mode"],
                 ["11", "By Phase Status"],
                 ["12", "General Total"],
@@ -508,6 +508,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     
     // <editor-fold defaultstate="collapsed" desc="search">
     search: function () {
+        
+        console.log('---------------- search --------------');
+        
         win.lblUser_toolTip("Estructura: A3020");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -559,16 +562,40 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totdiff2').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totperc3').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
                         }
-//                        me.setWidthPie();
+                        
+                        // -------------------- Grafico --------------------------
+            
+                            
+            
+//                        me.onCreateChart();
+//                        Ext.getCmp(prototype.id + '-graficosAños').bindStore(storeGridDatas);
+                        
                     }
                 }
             });
             global.clear();
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-            
-            me.onCreateChart();
             Ext.getCmp(prototype.id + '-graficosAños').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-graficosAñosAmount').bindStore(storeGridDatas);
+            
         }
+    },
+    
+    displayChart_ByMonth: function (a,b,c,d) {
+        
+        var rbg_Type_tc = Ext.getCmp(prototype.id + '-rbgFlagaa').getValue().rbgFlag;
+
+        switch (rbg_Type_tc) {
+            case 'Cpn':
+                Ext.getCmp(prototype.id + '-graficosAños').show();
+                Ext.getCmp(prototype.id + '-graficosAñosAmount').hide();
+                break;
+            case 'Amt':
+                Ext.getCmp(prototype.id + '-graficosAños').hide();
+                Ext.getCmp(prototype.id + '-graficosAñosAmount').show();
+                break;
+        }
+        
     },
     
     onAxisLabelRender: function (axis, label, layoutContext) {
