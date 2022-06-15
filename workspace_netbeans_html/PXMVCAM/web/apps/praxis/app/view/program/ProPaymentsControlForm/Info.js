@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                 bodyStyle: 'background: transparent;',
                 border: false,
                 width: 1770,
-                height: 'auto',
+//                height: 900,
                 align: 'center'
             },
             items: [
@@ -38,13 +38,13 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             xtype: 'panel',
                             id: prototype.id + '-panelGridData',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            border: true,
-                            height: 'auto',
-                            width: 1012,
-                            margin: '0 0 0 0 ',
+                            border: false,
+//                            height: 800,
+                            width: 1500,
+                            margin: '20 0 0 0 ',
                             layout: {
-                                type: 'vbox'
-//                                align: 'center'
+                                type: 'vbox',
+                                align: 'center'
                             },
                             items: [
                                 {
@@ -141,7 +141,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tickets', dataIndex: 'QTYA', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                                    metaData.style = "text-align:right;background-color:#c9daf5;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
                                                                 }
@@ -149,7 +149,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Amount', dataIndex: 'SVFOPUSA', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                                    metaData.style = "text-align:right;background-color:#c9daf5;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
                                                                 }
@@ -169,7 +169,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Tickets', dataIndex: 'diff1', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right";
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         }
@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Amount', dataIndex: 'diff2', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right";
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         }
@@ -185,7 +185,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: '%', dataIndex: 'perc3', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right";
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         }
@@ -249,7 +249,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                     xtype: 'panel',
                                     width: '100%',
                                     layout: 'hbox',
-                                    margin: '0 0 2 0',
+                                    border: false,
+                                    margin: '10 0 2 0',
                                     bodyStyle: 'background: transparent;"',
                                     defaults: {
                                         margin: '4 0'
@@ -259,46 +260,204 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {
                                             xtype: 'radiogroup',
                                             id:prototype.id+'-rbgFlagaa',
+                                            margin: '0 0 0 500',
                                             items: [
-                                                { boxLabel: '<b style="color:#046AAA;">Tickets</b>', inputValue: 'Cla', name: 'rbgFlag', checked: true},
+                                                { boxLabel: '<b style="color:#046AAA;">Tickets</b>', inputValue: 'Cpn', name: 'rbgFlag', checked: true},
                                                 {xtype: 'tbspacer', width: 20},
-                                                { boxLabel: '<b style="color:#046AAA;">Amounts</b>', inputValue: 'Chg', name: 'rbgFlag',width: 80}
-                                            ]
+                                                { boxLabel: '<b style="color:#046AAA;">Amounts</b>', inputValue: 'Amt', name: 'rbgFlag',width: 80}
+                                            ],
+                                            listeners: {
+                                                change: 'displayChart_ByMonth'
+                                            }
                                         }
                                     ]
                                 },
+                                
                                 //PANEL DE GRAFICOS
+                                
                                 {
-                                    xtype: 'panel', 
-//                                    title: 'Charts per year',
-                                    id: prototype.id + '-graficos',
+                                    xtype: 'panel',
                                     hidden: false,
+                                    margin: '5 0 5 0',
+                                    border: false,
                                     layout: {
-                                        type: 'hbox'
+                                        type: 'vbox',
+                                        aling: 'center'
                                     },
-                                    border: true,
-                                    width: 1030, 
-                                    autoScroll: true,
-                                    height: 430,
                                     bodyStyle: 'background-color: transparent;',
-                                    defaults: {
-                                        border: false,
-                                        padding: '0px 5px 0px 5px'
-                                    },
-                                    padding: '1px 5px 1px 5px',
-                                    items: [{
+                                    items: [
+                                        {
                                             xtype: 'panel',
-                                            id: prototype.id + '-chart',
-                                            height: 430,
-                                            width: 1010
-                                        },
-//                                        {
-//                                            xtype: 'panel',
-//                                            id: prototype.id + '-chart2',
-//                                            height: 415,
-//                                           width: '50%'
-//                                        }
-
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 5',
+                                            border: true,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-graficosAños',
+                                                    width: 1500,
+                                                    border: false,
+                                                    height: 400,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Total Tickets by Sales Date ',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['QTY1','QTYA', 'diff1'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+        //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Sales Date',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: ['Sales','Conciliation', 'Pending'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['QTY1','QTYA', 'diff1'],
+                                                            colors: ['#c6f7cd', '#0066ff', '#CC0000'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1000
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'QTY1') {
+                                                                        label = 'Sales';
+                                                                    } else if (ctx.field === 'QTYA') {
+                                                                        label = 'Conciliation';
+                                                                    } else if (ctx.field === 'diff1') {
+                                                                        label = 'Pending';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                },
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-graficosAñosAmount',
+                                                    width: 1500,
+                                                    hidden: true,
+                                                    border: false,
+                                                    height: 400,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Total Amount by Sales Date \n\ USD',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['SVFOPUS1','SVFOPUSA', 'diff2'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' $' + Ext.util.Format.number((value / 1000000), '0') + 'M';
+                                                                    } else {
+                                                                        return  ' $' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+        //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Sales Date',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: ['Sales','Conciliation', 'Pending'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['SVFOPUS1','SVFOPUSA', 'diff2'],
+                                                            colors: ['#c6f7cd', '#0066ff', '#CC0000'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1000
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'SVFOPUS1') {
+                                                                        label = 'Sales';
+                                                                    } else if (ctx.field === 'SVFOPUSA') {
+                                                                        label = 'Conciliation';
+                                                                    } else if (ctx.field === 'diff2') {
+                                                                        label = 'Pending';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                }
+                                            ]
+                                        }
                                     ]
                                 }
                             

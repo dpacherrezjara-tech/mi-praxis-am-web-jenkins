@@ -66,7 +66,7 @@ public class ProPaymentsControlController extends BaseController {
     @RequestMapping(value = "search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- ProPaymentsControl : Search-------------");
+        System.out.println("-------------- ProPaymentsControl : search-------------");
         map.put("success", true);
         List<A3020Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
