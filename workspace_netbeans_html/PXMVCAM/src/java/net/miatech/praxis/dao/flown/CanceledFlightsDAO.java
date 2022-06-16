@@ -39,32 +39,33 @@ public class CanceledFlightsDAO {
         List<A3778Filter> lstRtn = new ArrayList<>(0);
         A3778Filter objRtn;
        
-        strSQL = "{CALL " + session.getMainLibrary() + ".SQP04419(?,?,?,?,?,?,?,?,?)}";
+        strSQL = "{CALL " + session.getMainLibrary() + ".SQP04419(?,?,?,?,?,?,?,?,?,?)}";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.registerOutParameter(6, Types.INTEGER);
             cs.registerOutParameter(7, Types.INTEGER);
             cs.registerOutParameter(8, Types.INTEGER);
             cs.registerOutParameter(9, Types.INTEGER);
+            cs.registerOutParameter(10, Types.INTEGER);
 
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
             cs.setInt(2, filter.IN_TIPOFECHA);
             cs.setString(3, filter.IN_FECHA_FROM.trim());
             cs.setString(4, filter.IN_FECHA_TO.trim());
             cs.setString(5, filter.IN_NFLIGHT.trim());
-            cs.setInt(6, filter.page.PAGNUM);
-            cs.setInt(7, filter.page.PAGROW);
-            cs.setInt(8, filter.page.TOTPAG);
-            cs.setInt(9, filter.page.TOTROW);
+            cs.setString(6, filter.IN_STVAL.trim());
+            cs.setInt(7, filter.page.PAGNUM);
+            cs.setInt(8, filter.page.PAGROW);
+            cs.setInt(9, filter.page.TOTPAG);
+            cs.setInt(10, filter.page.TOTROW);
 
             cs.execute();
 
-            filter.page.PAGNUM = cs.getInt(6);
-            filter.page.PAGROW = cs.getInt(7);
-            filter.page.TOTPAG = cs.getInt(8);
-            filter.page.TOTROW = cs.getInt(9);
+            filter.page.PAGNUM = cs.getInt(7);
+            filter.page.PAGROW = cs.getInt(8);
+            filter.page.TOTPAG = cs.getInt(9);
+            filter.page.TOTROW = cs.getInt(10);
 
             rst = cs.getResultSet();
 
@@ -74,12 +75,17 @@ public class CanceledFlightsDAO {
                 objRtn.DFLIGHT = rst.getString("DFLIGHT");
                 objRtn.NFLIGHT = rst.getString("NFLIGHT");
                 objRtn.STVAL = rst.getString("STVAL");
+                if (rst.getString("STVAL").equals("1")) {
+                    objRtn.STVAL = "Cancelado";
+                } else if (rst.getString("TFLIGH").equals("3")) {
+                    objRtn.STVAL = "Operado";
+                }
                 objRtn.CDEPART = rst.getString("CDEPART");
                 objRtn.CARRIVA = rst.getString("CARRIVA");
-//                objRtn.LOCDEP = rst.getLong("LOCDEP");
-//                objRtn.LOCARR = rst.getLong("LOCARR");
-//                objRtn.UTCDEP = rst.getLong("UTCDEP");
-//                objRtn.UTCARR = rst.getLong("UTCARR");
+                objRtn.LOCDEP = rst.getString("LOCDEP");
+                objRtn.LOCARR = rst.getString("LOCARR");
+                objRtn.UTCDEP = rst.getString("UTCDEP");
+                objRtn.UTCARR = rst.getString("UTCARR");
                 objRtn.USCR = rst.getString("USCR");
                 objRtn.FECR = rst.getString("FECR");
                 objRtn.HOCR = rst.getString("HOCR");

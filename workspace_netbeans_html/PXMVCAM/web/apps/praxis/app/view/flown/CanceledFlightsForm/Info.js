@@ -102,7 +102,7 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Info', {
                                         text: 'Time Local <br> Depart', dataIndex: 'LOCDEP', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescORIG+'"';
+                                                   
                                                     return value;
                                                 }
                                     },
@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Info', {
                                         text: 'UTC Local <br> Arrival', dataIndex: 'LOCARR', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescORIG+'"';
+                                                    
                                                     return value;
                                                 }
                                     },
@@ -118,7 +118,7 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Info', {
                                         text: 'UTC Local <br> Depart', dataIndex: 'UTCDEP', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescORIG+'"';
+                                                    
                                                     return value;
                                                 }
                                     },
@@ -126,7 +126,7 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Info', {
                                         text: 'UTC Local <br> Arrival', dataIndex: 'UTCARR', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescORIG+'"';
+                                                    
                                                     return value;
                                                 }
                                     },
@@ -134,7 +134,7 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Info', {
                                         text: 'User create', dataIndex: 'USCR', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescORIG+'"';
+                                                    
                                                     return value;
                                                 }
                                     },

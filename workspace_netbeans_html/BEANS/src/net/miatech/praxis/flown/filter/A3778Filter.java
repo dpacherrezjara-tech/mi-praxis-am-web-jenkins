@@ -156,8 +156,9 @@ public class A3778Filter extends A3778 {
     public double AVRG_PLA = 0;
     public double AVRG_SUD = 0;
     public double AVRG_USA = 0;
-    public long LOCDEP = 0;
-    public long LOCARR = 0;
-    public long UTCDEP = 0;
-    public long UTCARR = 0;
+    public String LOCDEP = "";
+    public String LOCARR = "";
+    public String UTCDEP = "";
+    public String UTCARR = "";
+    
 }

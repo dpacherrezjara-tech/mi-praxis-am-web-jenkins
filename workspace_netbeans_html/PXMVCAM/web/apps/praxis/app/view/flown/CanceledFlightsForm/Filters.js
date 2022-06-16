@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Filters', {
                 // <editor-fold defaultstate="collapsed" desc="boxSearchFilter">
                 {
                     xtype: 'panel',
-                    id: prototype.id+'-boxSearchFilter',
+                    id: prototype.id + '-boxSearchFilter',
                     width: prototype.widthContenedor,
                     hidden: true,
                     layout: 'hbox',
@@ -267,14 +267,32 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Filters', {
                                 keypress: 'onTextKeypress',
                                 //BuscarNumber_keyDownHandler
                             }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbSTATUS',
+                            fieldLabel: 'Type',
+                            labelAlign: 'left',
+                            queryMode: 'local',
+                            editable: false,
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            caseSensitive: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            labelWidth: 45,
+                            width: 150
+
                         }
                     ]
                 },
-                // </editor-fold>
-                
-                // <editor-fold defaultstate="collapsed" desc="panel">
-                
-                // </editor-fold>
+                        // </editor-fold>
+
+                        // <editor-fold defaultstate="collapsed" desc="panel">
+
+                        // </editor-fold>
             ]
         }
     ]
