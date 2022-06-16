@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
     },
     btnClear_click: function (obj, e) {
         // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
-        
+        this.setStoreData();
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="Clear Grilla">
@@ -122,6 +122,7 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
         Ext.getCmp(prototype.id + '-lbl-currentPage').setText("1");
         Ext.getCmp(prototype.id + '-lbl-pageCount').setText("0");
         Ext.getCmp(prototype.id + '-lbl-total').setText("0");
+        this.btnSearch_click();
         // </editor-fold>
 //        Ext.getCmp(prototype.id+'-boxSearchFilter').hide();
     },
