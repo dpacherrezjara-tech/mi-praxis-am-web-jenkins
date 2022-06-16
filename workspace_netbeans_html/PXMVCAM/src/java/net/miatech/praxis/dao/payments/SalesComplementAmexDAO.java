@@ -137,8 +137,12 @@ public class SalesComplementAmexDAO {
                 bean.CERROR = rst.getString("CERROR").trim();
                 bean.DES_CERROR = rst.getString("DES_CERROR").trim();
                 
-                bean.DIFF_AMOUNT = bean.SVFOPS - bean.AMOUNTOFF;
-                
+                if(bean.QTYTKT > 1) {
+                    bean.DIFF_AMOUNT = bean.SVFOPS - bean.SVFOP;
+                } else {
+                    bean.DIFF_AMOUNT = bean.SVFOPS - bean.AMOUNTOFF;
+                }
+                                                
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
                 bean.page.TOTPAG = filter.page.TOTPAG;
