@@ -25,134 +25,42 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
         this.btnSearch_click();
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
-    onFromYearChange: function (combo, newValue, oldValue, eOpts) {
-        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
-        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
-        if (newValue !== '') {
-            if (newValue > comboToYear.getValue()) {
-                comboToYear.setValue(newValue);
-            }
-            if (this.getValue("cmbDateFromMonth") === '02') {
-                var comboFromDay = Ext.getCmp(prototype.id + '-cmbDateFromDay');
-                var store = win.getStoreDays2(true, newValue, 1);
-                comboFromDay.bindStore(store);
-                comboFromDay.setValue('');
-            }
-        } else {
-            comboToYear.setValue(newValue);
-            comboToMonth.setValue(newValue);
-        }
+    cbxDateFromYear_changeHandler: function() {
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue());
     },
-    onToYearChange: function (combo, newValue, oldValue, eOpts) {
-        var comboFromYear = Ext.getCmp(prototype.id + '-cmbDateFromYear');
-        if (newValue !== '') {
-            if (comboFromYear.getValue() !== '') {
-                if (newValue < comboFromYear.getValue()) {
-                    comboFromYear.setValue(newValue);
-                }
-            } else
-                comboFromYear.setValue(newValue);
-            if (this.getValue("cmbDateToMonth") === '02') {
-                var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
-                var store = win.getStoreDays2(true, newValue, 1);
-                comboToDay.bindStore(store);
-                comboToDay.setValue('');
-            }
-        } else {
-            comboFromYear.setValue(newValue);
-        }
+    cbxDateFromMonth_changeHandler: function() {
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue());
     },
-    onFromMonthChange: function (combo, newValue, oldValue, eOpts) {
-        var comboFromDay = Ext.getCmp(prototype.id + '-cmbDateFromDay');
-        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
-        if (newValue !== '') {
-            var store = win.getStoreDays2(true, this.getValue("cmbDateFromYear"), Number(newValue) - 1);
-            comboFromDay.bindStore(store);
-            comboFromDay.setValue('');
-
-            if (this.getValue("cmbDateFromYear") === this.getValue("cmbDateToYear")) {
-                if (newValue > comboToMonth.getValue()) {
-                    comboToMonth.setValue(newValue);
-                }
-            }
-        } else {
-            comboToMonth.setValue(newValue);
-            comboFromDay.setValue(newValue);
-        }
+    cbxDateFromDay_changeHandler: function() {
+        Ext.getCmp(prototype.id + '-cmbDateToDay').setValue(Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue());
     },
-    onToMonthChange: function (combo, newValue, oldValue, eOpts) {
-        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
-        var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
-        if (newValue !== '') {
-            var store = win.getStoreDays2(true, this.getValue("cmbDateToYear"), Number(newValue) - 1);
-            comboToDay.bindStore(store);
-            comboToDay.setValue('');
-
-            if (this.getValue("cmbDateFromYear") === this.getValue("cmbDateToYear")) {
-                if (comboFromMonth.getValue() !== '') {
-                    if (newValue < comboFromMonth.getValue()) {
-                        comboFromMonth.setValue(newValue);
-                    }
-                } else
-                    comboFromMonth.setValue(newValue);
-            }
-        } else {
-            comboFromMonth.setValue(newValue);
-            comboToDay.setValue(newValue);
-        }
-    },
-    onFromDayChange: function (combo, newValue, oldValue, eOpts) {
-        var comboFromDay = Ext.getCmp(prototype.id + '-cmbDateFromDay');
-        var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
-        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
-        if (newValue !== '') {
-            if (comboFromMonth.getValue() === '') {
-                comboFromMonth.setValue("01");
-                comboFromDay.setValue(newValue);
-            }
-        } else {
-            comboToDay.setValue(newValue);
-        }
-    },
-    onToDayChange: function (combo, newValue, oldValue, eOpts) {
-        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateFromDay');
-        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
-        var comboFromDay = Ext.getCmp(prototype.id + '-cmbDateFromDay');
-        if (newValue !== '') {
-            if (comboToMonth.getValue() === '') {
-                comboToMonth.setValue("01");
-                comboToDay.setValue(newValue);
-            }
-        } else {
-            comboFromDay.setValue(newValue);
-        }
-    },
+    
     setStoreData: function () {
-        var storeComboDataYear = win.getStoreYear(false);
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
-        Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
-
-        var storeComboDataMonth = win.getStoreMonth(true);
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
-
-        var days = new Array();
-        days.push(['', 'All']);
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(
-                Ext.create('Ext.data.ArrayStore', {
-                    autoLoad: true,
-                    data: days,
-                    fields: ['code', 'name']
-                })
-                );
-        Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(
-                Ext.create('Ext.data.ArrayStore', {
-                    autoLoad: true,
-                    data: days,
-                    fields: ['code', 'name']
-                })
-                );
         
+        var month = this.fecha.getMonth() + 1;
+
+        if (month < 10) {
+            month = '0' + month;
+        }
+        
+        var storeComboDataYear = win.getStoreYear(false);
+        var storeComboDataMonth = win.getStoreMonth(true);
+        var storeComboDataDay = win.getStoreDays(true);
+
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
+        Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
+
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
+
         var cmbSTATUS = Ext.getCmp(prototype.id + '-cmbSTATUS');
         cmbSTATUS.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -206,14 +114,7 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
     },
     btnClear_click: function (obj, e) {
         // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue("");
-        Ext.getCmp(prototype.id + '-cmbDateToDay').setValue("");
-//        var mes = new Date().getMonth()+1;
-//        if(mes < 10) mes = "0"+mes;
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue("");
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue("");
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(new Date().getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(new Date().getFullYear());
+        
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="Clear Grilla">
@@ -238,27 +139,17 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
         me.bean = {};
 
-        var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
-        var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
-        var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
-        var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
-        var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
-        var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+         me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue()+
+                Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
 
-
-        if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
-            dayFrom.setValue('');
-            dayTo.setValue('');
-        } else {
-            if (dayTo.getValue() === null || dayTo.getValue() === '') {
-                dayTo.setValue(31);
-            }
-        }
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue()+
+                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
         me.bean.IN_NFLIGHT = Ext.getCmp(prototype.id + '-txtNumber').getValue();
 
-        me.bean.IN_FECHA_FROM = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
-        me.bean.IN_FECHA_TO = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
+        
         me.bean.IN_TIPOFECHA = 1;
         me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTATUS').getValue();
 
@@ -267,16 +158,14 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
             bean: me.bean,
             beanString: beanString
         };
-        console.log(searchParams);
-        _path = prototype.url + '/getXLSX?' +
-                'IN_FECHA_FROM=' + searchParams.IN_FECHA_FROM + '&' +
-                'IN_FECHA_TO=' + searchParams.IN_FECHA_TO + '&' +
-                'NFLIGHT=' + searchParams.NFLIGHT + '&';
+        console.log(beanString);
+        
     },
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function () {
+        win.lblUser_toolTip("Estructura: A3778");
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/search'

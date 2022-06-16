@@ -77,7 +77,7 @@ public class CanceledFlightsDAO {
                 objRtn.STVAL = rst.getString("STVAL");
                 if (rst.getString("STVAL").equals("1")) {
                     objRtn.STVAL = "Cancelado";
-                } else if (rst.getString("TFLIGH").equals("3")) {
+                } else if (rst.getString("STVAL").equals("3")) {
                     objRtn.STVAL = "Operado";
                 }
                 objRtn.CDEPART = rst.getString("CDEPART");
