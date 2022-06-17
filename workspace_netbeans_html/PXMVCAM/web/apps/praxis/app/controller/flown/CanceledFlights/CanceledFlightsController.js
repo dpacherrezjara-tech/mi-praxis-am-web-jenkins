@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "none"],
+                ["", "All"],
                 ["1", "Cancelado"],
                 ["3", "Operado"],
             ]
@@ -97,20 +97,26 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
         else
             option.setVisible(true);
     },
-    btnExcel_click: function (obj, e) {
+    
+    btnExcel_click: function(obj, e) {
+
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
+            msg: 'Download File ?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function (btn) {
+            fn: function(btn) {
                 if (btn === 'ok') {
                     this.exportExcel();
                 }
             }
         });
+    },
+    exportExcel: function() {
+        this.setFormatParameter();
+        global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
     },
     btnClear_click: function (obj, e) {
         // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
@@ -199,11 +205,6 @@ Ext.define('Ext.Praxis.controller.flown.CanceledFlights.CanceledFlightsControlle
     },
     // </editor-fold>
 
-    exportExcel: function () {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            global.getFile(_path);
-        }
-    },
 
     // <editor-fold defaultstate="collapsed" desc="Filters Usos">
     onUpperValue: function (field, newValue, oldValue) {
