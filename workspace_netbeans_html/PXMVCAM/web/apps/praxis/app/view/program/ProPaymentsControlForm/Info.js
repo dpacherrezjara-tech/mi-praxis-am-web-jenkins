@@ -274,7 +274,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 },
                                 
                                 //PANEL DE GRAFICOS
-                                
                                 {
                                     xtype: 'panel',
                                     hidden: false,
@@ -5276,7 +5275,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Total', dataIndex: 'QTYCHGBK', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#fff7d9;";
+                                                                    metaData.style = "text-align:right;background-color:#a4c5f5;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
                                                                 }
@@ -5284,7 +5283,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'AMTCHGBU', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#fff7d9;";
+                                                                    metaData.style = "text-align:right;background-color:#a4c5f5;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5303,7 +5302,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Total', dataIndex: 'QTYCLARR', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#e0f5ff;";
+                                                                    metaData.style = "text-align:right;background-color:#fff7d9;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
                                                                 }
@@ -5311,7 +5310,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'AMTREVCU', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#e0f5ff;";
+                                                                    metaData.style = "text-align:right;background-color:#fff7d9;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5393,7 +5392,176 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-dblTotAMTBANKtot'},
                                         {width: 60, id: prototype.id + '-lblTotper'}
                                     ]
-                                }      
+                                },
+                                
+                                //PANEL DE GRAFICOS
+                                {
+                                    xtype: 'panel',
+                                    hidden: false,
+                                    margin: '5 0 5 0',
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        aling: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 5',
+                                            border: true,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-displayChart_ByClarification01',
+                                                    width: 800,
+                                                    border: false,
+                                                    height: 400,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Total Amount \n\ USD ',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['dblAMTCLARU','AMTCHGBU'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+        //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: '',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: ['ChargedBack','Received'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['dblAMTCLARU','AMTCHGBU'],
+                                                            colors: ['#c6f7cd', '#0066ff'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1000
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'dblAMTCLARU') {
+                                                                        label = 'ChargedBack';
+                                                                    } else if (ctx.field === 'AMTCHGBU') {
+                                                                        label = 'Received';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            padding: '5 10 0 0',
+                                            width: 531,
+//                                            height: 400,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'polar',
+//                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                                    id: prototype.id + '-displayChart_ByClarification02',
+                                                    width: 531,
+                                                    border: true,
+                                                    margin: '0 0 0 5',
+                                                    innerPadding: 90,
+                                                    height: 350,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Total - Amount USD',
+//                                                            fieldStyle: 'font-size:5px',
+                                                            alignTo: 'center'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['rotate', 'itemhighlight'],
+//                                                    legend: {
+//                                                        docked: 'bottom',
+//                                                        background: '#E3EAEF'
+//                                                    },
+                                                    series: [{
+                                                            type: 'pie3d',
+                                                            angleField: 'AMOUNT_ON_PERCENT',
+                                                            colors: ['#50d464', '#0066ff'],
+                                                            label: {
+                                                                field: 'LABEL',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 0;
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            highlight: true,
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'AMOUNT_ON_PERCENT') {
+                                                                        label = 'Total Received';
+                                                                    } else {
+                                                                        label = 'Total ChargedBack';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' - ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') +  '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                }
                             ]
                         },
                         // </editor-fold>
