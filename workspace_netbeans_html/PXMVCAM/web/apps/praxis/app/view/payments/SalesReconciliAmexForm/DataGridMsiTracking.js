@@ -1,3 +1,11 @@
+var storeComboMsi = Ext.create('Ext.data.SimpleStore', {
+    fields: ['code', 'name'],
+    data: [
+        ["", "None"],
+        ["1", "Match"],
+        ["5", "Match Manual"]
+    ]
+});
 Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataGridMsiTrackingForm',
@@ -7,8 +15,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
     controller: 'DataGridMsiTrackingController',
     title: 'MSI Tracking - Grid Data',
     header: true,
-    height: 160,
-    width: 1370,
+    height: 480,
+    width: 1490,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -49,11 +57,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                 width: '100%'
                             },
                             items: [
-                                // <editor-fold defaultstate="collapsed" desc="gridData">
+                                // <editor-fold defaultstate="collapsed" desc="gridMsiTracking">
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMsiTracking',
-                                    height: 150,
+                                    height: 460,
                                     columnLines: true,
                                     plugins: [
                                         {
@@ -113,6 +121,29 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                             {
                                                 text: 'Document<br>Type', dataIndex: 'descTDOC', width: 80
                                             },
+                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',
+                                                renderer: function (value, meta, record, row, col) {
+                                                    meta.style = "background-color:#fae2a0;";
+                                                    switch (value) {
+                                                        case '':
+                                                            return 'None';
+                                                        case '1':
+                                                            return 'Match';
+                                                        case '5':
+                                                            return 'Match Manual';
+                                                        default:
+                                                            return 'None';
+                                                    }
+                                                },
+                                                editor: {
+                                                    xtype: 'combo',
+                                                    store: storeComboMsi,
+                                                    editable: false,
+                                                    valueField: 'code',
+                                                    displayField: 'name',
+                                                    value: '',
+                                                }
+                                            },
                                             {
                                                 text: 'Status<br>Settlement vs Sales', dataIndex: 'descSTVAL', width: 160
                                             },
@@ -148,6 +179,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                     }
                                 },
                                 // </editor-fold>
+
                             ]
                         }
                     ]
@@ -155,5 +187,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
             ]
         }
     ],
+    dockedItems: [
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            ui: 'footer',
+            margin: '10 0 10 0',
+            layout: {
+                pack: 'center'
+            },
+            fieldStyle: 'text-align:center',
+            defaults: {
+                scale: 'medium'
+            },
+            items: [
+                {
+                    text: 'Update',
+                    id: prototype.id + '-btn-msi-update',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onMsiUpdateClick'
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    id: prototype.id + '-btn-msi-cancel',
+                    iconCls: 'prx-icon-cancel',
+                    listeners: {
+                        click: 'onMsiCancelClick'
+                    }
+                }
+            ]
+        }
+    ]
 }
 );

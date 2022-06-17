@@ -683,7 +683,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchErrorTransaction")
     public @ResponseBody
     String searchErrorTransaction(ModelMap map, HttpServletRequest request) {
@@ -733,12 +733,12 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchSummaryTransactionError")
     public @ResponseBody
     String searchSummaryTransactionError(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- SalesReconciliAmex : searchSummaryTransactionError-------------");
-        
+
         map.put("success", true);
         List<A4116Filter> lst = this.getListSummaryTransactionError(request, false);
         System.out.println("Total : " + lst.size());
@@ -945,6 +945,43 @@ public class SalesReconciliAmexController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             msj = logic.loadPX570SQP04361(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "MaintenanceMsi")
+    public @ResponseBody
+    String MaintenanceMsi(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceMsi-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4116Filter filter = new A4116Filter();
+            A4116Filter result = new A4116Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX570SQP04469(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -7584,5 +7621,5 @@ public class SalesReconciliAmexController extends BaseController {
         return lst;
 
     }
-    
+
 }
