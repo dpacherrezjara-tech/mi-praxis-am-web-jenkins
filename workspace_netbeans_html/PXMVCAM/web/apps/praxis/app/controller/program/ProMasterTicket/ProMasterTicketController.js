@@ -3659,6 +3659,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         win.enabled('btnPayment', false);
         win.enabled('btnPNR', false);
         
+        win.setValue('lblMP1', '');
+        win.setValue('lblMP2', '');
         
         //Ext.getCmp(prototype.id+'-btnFacsimil0').hide();
         Ext.getCmp(prototype.id+'-btnDelivery0').hide();
