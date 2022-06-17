@@ -1008,7 +1008,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 855,
+                            width: 870,
                             height: 245,
                             hidden: false,
                             bodyStyle: 'background:#E5ECEF;',
@@ -1017,7 +1017,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 855,
+                                    width: 870,
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1130,13 +1130,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
-                                                editor: {xtype: 'textfield', editable: false},
+                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,                                                
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
                                                     return value;
-                                                }
+                                                },
+                                                editor: {xtype: 'textfield', editable: false},
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
                                                 editor: {xtype: 'textfield', editable: false},

@@ -3449,6 +3449,68 @@ public class SalesReconciliAmexDAO {
         return msj;
     }
 
+    public String loadPX570SQP04469(A4116Filter filter) throws SQLException, Exception {
+
+        A4116Filter objRtn = new A4116Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+        List<A4116Filter> lstSendManual = filter.lstSendManual;
+        A4116Filter beanDet;
+        String msj = "";
+
+        Connection cnx = null;
+        try {            
+            //Cambiar Status a las transacciones
+            if (lstSendManual != null && lstSendManual.size() > 0) {
+                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?)}";
+                cstmt01 = cnx.prepareCall(SQLCLL02);
+                for (int i = 0; i < lstSendManual.size(); i++) {
+                    beanDet = lstSendManual.get(i);
+
+                    cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                    cstmt01.setString(2, beanDet.PRDA.trim());
+                    cstmt01.setString(3, beanDet.PAYDATE.trim());
+                    cstmt01.setString(4, beanDet.BSUMDATE.trim());
+                    cstmt01.setString(5, beanDet.SMERCHID.trim());
+                    cstmt01.setString(6, beanDet.IDITEMS.trim());
+                    cstmt01.setString(7, beanDet.IDITEMT.trim());
+                    cstmt01.setString(8, beanDet.NEWSTVAL.trim());
+                    cstmt01.setString(9, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(10, Functions.getFechaActual());
+                    cstmt01.setString(11, Functions.getHoraActual());
+
+                    cstmt01.execute();
+                }
+            }
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
     public List<A4116Filter> loadPX570SQP04414(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
@@ -3874,6 +3936,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.descSTVAL = rst.getString("STVAL").trim();
                 }
 
+                beanTkt.IDITEMS = rst.getString("IDITEMS");
+                beanTkt.IDITEMT = rst.getString("IDITEMT");
+                
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
 
