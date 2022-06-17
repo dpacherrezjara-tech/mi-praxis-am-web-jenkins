@@ -83,7 +83,7 @@ public class CanceledFlightsController extends BaseController {
 
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A3778Filter.class);
-            
+
             filter.page.TOTROW = -1;
             filter.page.START = 0;
             filter.page.LIMIT = 0;
@@ -110,195 +110,149 @@ public class CanceledFlightsController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "/getXLSX")
+    public @ResponseBody
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Report : getXLSX");
+        String fileNameDownload = String.format("Report Flights Cancelled - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<A3778Filter> listaData = this.getListA3778(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report Flights Cancelled");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+            // ====== CREANDO TITULOS ======================================
 
-//    @RequestMapping(value = "getXLSX")
-//    public @ResponseBody
-//    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-//        List<A3778Filter> listaData;
-//        filter = new A3778Filter();
-//        filter.page.TOTROW = -1;
-//        filter.page.START = 0;
-//        filter.page.LIMIT = 0;
-//        
-//        String fileNameDownload = String.format("Coupon 409 - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-//        
-//        try {
-//            Workbook workbook = null;
-//            File file = File.createTempFile(fileNameDownload, ".xlsx");
-//
-//            filter.IN_FECHA_FROM = request.getParameter("IN_FECHA_FROM");
-//            filter.IN_FECHA_TO = request.getParameter("IN_FECHA_TO");
-//            filter.FLAG_ORDERBY = request.getParameter("FLAG_ORDERBY");
-//            filter.NFLIGHT = request.getParameter("NFLIGHT");
-//            filter.IN_TKT = request.getParameter("IN_TKT");
-//            
-//            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
-//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-//            filter.page.PAGROW = 20;
-//            start = (start != 0 ? start : 0);
-//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-//
-//            logic = new Coupon409Logic();
-//            logic.setSession((IServerSession) serverSession.getServerSession());
-//            listaData = logic.loadPX089SQP0002(filter);
-//            
-//            // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
-//            workbook = new XSSFWorkbook();
-//            Sheet sheet = workbook.createSheet("Coupon 409");
-//            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-////            CellStyle headerStyle = workbook.createCellStyle();
-//            CellStyle bodyStyle = workbook.createCellStyle();
-//            Font headerFont = workbook.createFont();
-//            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-//            headerFont.setColor(IndexedColors.BLACK.getIndex());
-//
-//            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-//            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-//            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-//            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-//            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-////            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
-//            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-//            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-//            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-//            headerStyle.setFont(headerFont);
-//            
-//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//            // </editor-fold>
-//
-//            Integer vi = 0;
-//            Integer vj = 0;
-//            Iterator iter = listaData.iterator();
-//
-//            // <editor-fold defaultstate="collapsed" desc="Creación de Títulos">
-//            Row row = sheet.createRow(vj);
-//
-//            Cell CH1_00 = row.createCell(0);
-//            CH1_00.setCellValue("RN");
-//            Cell CH1_01 = row.createCell(1);
-//            CH1_01.setCellValue("PRDA");
-//            Cell CH1_02 = row.createCell(2);
-//            CH1_02.setCellValue("SERIE");
-//            Cell CH1_03 = row.createCell(3);
-//            CH1_03.setCellValue("Flight Information");
-//            Cell CH1_06 = row.createCell(6);
-//
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 6));
-//
-//            CH1_00.setCellStyle(headerStyle);
-//            CH1_01.setCellStyle(headerStyle);
-//            CH1_02.setCellStyle(headerStyle);
-//            CH1_03.setCellStyle(headerStyle);
-//            CH1_06.setCellStyle(headerStyle);
-//
-////            sheet.autoSizeColumn(0, true);
-////            sheet.autoSizeColumn(1, true);
-////            sheet.autoSizeColumn(2, true);
-////            sheet.autoSizeColumn(3, true);
-//
-//            ++vj;
-//            
-//            Row row2 = sheet.createRow(vj);
-//
-//            Cell CH2_00 = row2.createCell(0);
-//            Cell CH2_01 = row2.createCell(1);
-//            Cell CH2_02 = row2.createCell(2);
-//            Cell CH2_03 = row2.createCell(3);
-//            CH2_03.setCellValue("Number");
-//            Cell CH2_04 = row2.createCell(4);
-//            CH2_04.setCellValue("Date");
-//            Cell CH2_05 = row2.createCell(5);
-//            CH2_05.setCellValue("Orig");
-//            Cell CH2_06 = row2.createCell(6);
-//            CH2_06.setCellValue("Dest");
-//
-//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
-//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
-//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
-//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 6));
-//
-//            CH2_00.setCellStyle(headerStyle);
-//            CH2_01.setCellStyle(headerStyle);
-//            CH2_02.setCellStyle(headerStyle);
-//            CH2_03.setCellStyle(headerStyle);
-//            CH2_04.setCellStyle(headerStyle);
-//            CH2_05.setCellStyle(headerStyle);
-//            CH2_06.setCellStyle(headerStyle);
-//
-////            sheet.autoSizeColumn(3, true);
-////            sheet.autoSizeColumn(4, true);
-////            sheet.autoSizeColumn(5, true);
-////            sheet.autoSizeColumn(6, true);
-//
-//            ++vj;
-//            // </editor-fold>
-//            
-//            while (iter.hasNext()) {
-//                row = sheet.createRow(vj);
-//                
-//                // <editor-fold defaultstate="collapsed" desc="Iterativo">
-//                Cell cell50 = row.createCell(0);
-//                Cell cell51 = row.createCell(1);
-//                Cell cell52 = row.createCell(2);
-//                Cell cell53 = row.createCell(3);
-//                Cell cell54 = row.createCell(4);
-//                Cell cell55 = row.createCell(5);
-//                Cell cell56 = row.createCell(6);
-//
-//                cell50.setCellValue(listaData.get(vi).RN);
-//                cell51.setCellValue(listaData.get(vi).PRDA);
-//                cell52.setCellValue(listaData.get(vi).SERIE);
-//                cell53.setCellValue(listaData.get(vi).NFLIGHT);
-//                cell54.setCellValue(listaData.get(vi).strFormatDate3);
-//                cell55.setCellValue(listaData.get(vi).CDEPART);
-//                cell56.setCellValue(listaData.get(vi).CARRIVA);
-//
-//                cell50.setCellStyle(bodyStyle);
-//                cell51.setCellStyle(bodyStyle);
-//                cell52.setCellStyle(bodyStyle);
-//                cell53.setCellStyle(bodyStyle);
-//                cell54.setCellStyle(bodyStyle);
-//                cell55.setCellStyle(bodyStyle);
-//                cell56.setCellStyle(bodyStyle);
-//
-//                sheet.autoSizeColumn(0, true);
-//                sheet.autoSizeColumn(1, true);
-//                sheet.autoSizeColumn(2, true);
-//                sheet.autoSizeColumn(3, true);
-//                sheet.autoSizeColumn(4, true);
-//                sheet.autoSizeColumn(5, true);
-//                sheet.autoSizeColumn(6, true);
-//                // </editor-fold>
-//                
-//                iter.next();
-//                ++vi;
-//                ++vj;
-//            }
-//
-//            response.setContentType("application/vnd.openxml");
-//            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-//
-//            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-//            workbook.write(response.getOutputStream());
-//            fos.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new SpringException(e);
-//        }
-//    }
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+            Cell CH1_6 = row1.createCell(6);
+            Cell CH1_7 = row1.createCell(7);
+            Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
+
+            CH1_0.setCellValue("Flight Date");
+            CH1_1.setCellValue("Number Flight");
+            CH1_2.setCellValue("Status");
+            CH1_3.setCellValue("Departure Airport");
+            CH1_4.setCellValue("Arrival Airport");
+            CH1_5.setCellValue("Time Local Depart");
+            CH1_6.setCellValue("UTD Local Arrival");
+            CH1_7.setCellValue("UTC Local Depart");
+            CH1_8.setCellValue("UTC Local Arrival");
+            CH1_9.setCellValue("User Create");
+            CH1_10.setCellValue("Date Create");
+            CH1_11.setCellValue("Hour Create");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+            CH1_6.setCellStyle(headerStyle);
+            CH1_7.setCellStyle(headerStyle);
+            CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+                Cell rcell6 = row1.createCell(6);
+                Cell rcell7 = row1.createCell(7);
+                Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
+
+                rcell0.setCellValue(listaData.get(vi).DFLIGHT);
+                rcell1.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell2.setCellValue(listaData.get(vi).STVAL);
+                rcell3.setCellValue(listaData.get(vi).CDEPART);
+                rcell4.setCellValue(listaData.get(vi).CARRIVA);
+                rcell5.setCellValue(listaData.get(vi).LOCDEP);
+                rcell6.setCellValue(listaData.get(vi).LOCARR);
+                rcell7.setCellValue(listaData.get(vi).UTCDEP);
+                rcell8.setCellValue(listaData.get(vi).UTCARR);
+                rcell9.setCellValue(listaData.get(vi).USCR);
+                rcell10.setCellValue(listaData.get(vi).FECR);
+                rcell11.setCellValue(listaData.get(vi).HOCR);
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+
 }
