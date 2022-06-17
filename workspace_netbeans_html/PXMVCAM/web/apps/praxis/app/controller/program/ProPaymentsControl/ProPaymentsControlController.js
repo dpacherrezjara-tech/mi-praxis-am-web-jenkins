@@ -439,19 +439,15 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             var selPOS = Ext.getCmp(prototype.id + '-rbgPEM').getValue().rbgPEM;
             switch(selPOS){
                 case 'MONTH':
-//                    roScrDashboardPayment.searchPOSMonth(bean);
                     this.searchPOSMonth();
                     break;
                 case 'POS':
-//                    roScrDashboardPayment.searchPOS(bean);
                     this.searchPOS();
                     break;
             }
 	}else if(typeSearch === '11' || typeSearch === '12'){   //By Phase Status
             this.searchPhasesStatus();
 	}else if(typeSearch === '13'){
-//            flagExcel = false;
-//            Reiniciar_Paginacion();
             var chkTOT = Ext.getCmp(prototype.id + '-chkTOT').getValue();
             console.log(chkTOT);
             if(!chkTOT){
@@ -466,15 +462,18 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 var opx = Ext.getCmp(prototype.id + '-rbgType').getValue();
                 me.beanCLAtot.IN_TDOC = opx.rbgTDOC;
                 var opf = Ext.getCmp(prototype.id + '-rbgFlag').getValue();
+                
+                if(opf.rbgFlag === undefined){
+                    opf.rbgFlag = 'MONTH';
+                }
+                
                 me.beanCLAtot.IN_SELECT = opf.rbgFlag;
 
                 var beanString = JSON.stringify(me.beanCLAtot);
                 searchParamsClari = {
                     beanString: beanString,
                     bean: me.beanCLAtot
-                };   
-//                console.log(searchParams);
-//                roScrDashboardPayment.searchClarificationTOT(beanCLAtot);
+                };
                 this.searchClarificationTOT();
             }else{
                 me.beanCLA = {};
@@ -495,13 +494,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                     beanString: beanString,
                     bean: me.beanCLA
                 }; 
-//                roScrDashboardPayment.searchClarification(beanCLA);
+
                 this.searchClarification();
                 
             }
 	}
         else {
-//            roScrDashboardPayment.search(bean);
             this.search();
 	}
     },
@@ -1659,7 +1657,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         win.lblUser_toolTip("Estructura: A2342/A2343");
         
         var IN_SELECT = Ext.getCmp(prototype.id + '-rbgFlag').getValue().rbgFlag;
-        if(IN_SELECT === 'MONTH'){
+        console.log(IN_SELECT);
+        if(IN_SELECT === 'MONTH' || IN_SELECT === undefined ){
             
             me.panelActual = '-boxMainDataCLAtot';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -1690,8 +1689,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                     msg: 'Data not found.'
                                 });
                             } else {
+                                console.log(obj.data);
+                                var lstTemp = [];
                                 var data = obj.data.items[0].data;
-    //                            console.log(data);
+//                                console.log(data);
                                 
                                 Ext.getCmp(prototype.id + '-adgTitFechatot').setText(tit_IN_DATE);
                                 
@@ -1709,18 +1710,39 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 Ext.getCmp(prototype.id + '-lblTotperAns').setText(Ext.util.Format.number(data.TotperAnsw, '0,000') + '%');
                                 Ext.getCmp(prototype.id + '-lblTotperNoAns').setText(Ext.util.Format.number(data.TotperNoAnsw, '0,000') + '%');
                                 Ext.getCmp(prototype.id + '-lblTotper').setText(Ext.util.Format.number(data.totper, '0,000') + '%');
+                                
+                                console.log(data);
+                                
+                                var sum = data.dblTotAMTCLARU - data.dblTotAMTBANK;
+                                var item = {};
+                                
+                                item.LABEL = 'Total Received - ' + Ext.util.Format.number(sum, '0,000.00');
+                                item.AMOUNT_ON_PERCENT = sum;
+                                lstTemp.push(item);
+                                
+                                item = {};
+                                item.LABEL = 'Total ChargedBack - ' + Ext.util.Format.number(data.dblTotAMTBANK, '0,000.00');
+                                item.AMOUNT_ON_PERCENT = data.dblTotAMTBANK;
+                                lstTemp.push(item);
+                                
+
+                                var storeData1er = Ext.create('Ext.data.Store', {
+                                    data: lstTemp,
+                                    autoLoad: true
+                                });
+                                Ext.getCmp(prototype.id + '-displayChart_ByClarification02').bindStore(storeData1er);
+                                
+                                
                             }
-    //                        me.setWidthPie();
                         }
                     }
                 });
 
                 global.clear();
                 Ext.getCmp(prototype.id + '-gridDataCLAtot').bindStore(storeGridDatas);
-    //            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+                Ext.getCmp(prototype.id + '-displayChart_ByClarification01').bindStore(storeGridDatas);
             }
         }else{
-            console.log('JOCKYLANDER');
             me.panelActual = '-boxGroupDataCLAtot';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
             
