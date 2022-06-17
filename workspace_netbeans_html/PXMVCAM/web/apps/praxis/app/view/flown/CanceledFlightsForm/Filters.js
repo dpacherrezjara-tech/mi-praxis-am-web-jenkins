@@ -46,206 +46,127 @@ Ext.define('Ext.Praxis.view.flown.CanceledFlightsForm.Filters', {
                     },
                     items: [
                         {xtype: 'tbspacer', width: 7},
-                        // <editor-fold defaultstate="collapsed" desc="Combo Date">
-                        {
-                            xtype: 'label',
-                            html: '<strong style="color:#000;">Flight Date</strong>',
-                            id: prototype.id + '-lblFlightDate',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
-                        },
-                        {xtype: 'tbspacer', width: 8},
-                        {
-                            xtype: 'label',
-                            html: 'From:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
-                        },
-                        {xtype: 'tbspacer', width: 4},
+                        //<editor-fold defaultstate="collapsed" desc="cmbDate">
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromYear',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            forceSelection: true,
-                            caseSensitive: false,
+                            id: prototype.id+'-cmbDateFromYear',
+                            fieldStyle: 'text-align: left;',
+                            disabled: false,
                             editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 80,
-                            hiddenLabel: false,
-                            listConfig: {maxHeight: 111},
-                            listeners: {
-                                change: 'onFromYearChange',
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[0-9]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                }
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromMonth',
+                            fieldLabel: 'From',
+                            width: 120,
+                            labelWidth: 45,
                             labelAlign: 'right',
                             queryMode: 'local',
                             triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: false,
-                            valueField: 'code',
+                            valueField: 'code', 
                             displayField: 'name',
+//                            listConfig: {maxHeight: 111, minWidth: 70},
+                            maxLength: 4,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            listeners: {
+                                change: 'cbxDateFromYear_changeHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id+'-cmbDateFromMonth',
+                            fieldStyle: 'text-align: left;',
+                            disabled: false,
+                            editable: false,
+                            fieldLabel: '',
+                            width: 65,
                             labelWidth: 0,
-                            width: 80,
-                            anchor: '100%',
-//                            listConfig: {maxHeight: 111},
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {minWidth: 60},
+                            maxLength: 3,
+                            enforceMaxLength: true,
                             listeners: {
-                                change: 'onFromMonthChange',
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[a-zA-Z]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                }
+                                change: 'cbxDateFromMonth_changeHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromDay',
+                            id: prototype.id+'-cmbDateFromDay',
+                            fieldStyle: 'text-align: left;',
                             labelAlign: 'right',
                             queryMode: 'local',
                             triggerAction: 'all',
                             editable: false,
                             autoSelect: false,
                             enableKeyEvents: true,
-                            caseSensitive: false,
-                            valueField: 'code',
-                            displayField: 'name',
+                            caseSensitive: true,
+                            valueField: 'code', displayField: 'name',
                             emptyText: 'All',
                             labelWidth: 0,
-                            width: 80,
+                            width: 60,
                             anchor: '100%',
-                            listConfig: {maxHeight: 111},
+                            listConfig: {maxHeight: 111, minWidth: 60},
                             listeners: {
-                                change: 'onFromDayChange',
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[0-9]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                }
+                                change: 'cbxDateFromDay_changeHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            html: 'To:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
-                        },
-                        {xtype: 'tbspacer', width: 4},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbDateToYear',
+                            id: prototype.id+'-cmbDateToYear',
+                            fieldStyle: 'text-align: left;',
+                            disabled: false,
+                            editable: false,
+                            fieldLabel: 'To',
+                            width: 106,
+                            labelWidth: 31,
+                            labelAlign: 'left',
                             queryMode: 'local',
                             triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            forceSelection: true,
-                            caseSensitive: false,
-                            editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 80,
-                            hiddenLabel: false,
-                            listConfig: {maxHeight: 111},
-                            listeners: {
-                                change: 'onToYearChange',
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[0-9]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                }
-                            }
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {maxHeight: 111, minWidth: 70},
+                            maxLength: 4,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/
                         },
-                        {xtype: 'tbspacer', width: 4},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbDateToMonth',
+                            id: prototype.id+'-cmbDateToMonth',
+                            fieldStyle: 'text-align: left;',
+                            disabled: false,
+                            editable: false,
+                            fieldLabel: '',
+                            width: 65,
+//                            labelWidth: 0,
                             labelAlign: 'right',
                             queryMode: 'local',
                             triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            labelWidth: 0,
-                            width: 80,
-                            anchor: '100%',
-//                            listConfig: {maxHeight: 111},
-                            listeners: {
-                                change: 'onToMonthChange',
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[a-zA-Z]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                }
-                            }
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {minWidth: 60},
+                            maxLength: 3,
+                            enforceMaxLength: true
                         },
-                        {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbDateToDay',
+                            id: prototype.id+'-cmbDateToDay',
+                            fieldStyle: 'text-align: left;',
                             labelAlign: 'right',
                             queryMode: 'local',
                             triggerAction: 'all',
-                            editable: false,
+                            editable:false,
                             autoSelect: false,
                             enableKeyEvents: true,
-                            caseSensitive: false,
-                            valueField: 'code',
-                            displayField: 'name',
+                            caseSensitive: true,
+                            valueField: 'code', displayField: 'name',
                             emptyText: 'All',
                             labelWidth: 0,
-                            width: 80,
+                            width: 60,
                             anchor: '100%',
-                            listConfig: {maxHeight: 111},
-                            listeners: {
-                                change: 'onToDayChange',
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[0-9]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                }
-                            }
+                            listConfig: {maxHeight: 111, minWidth: 60}
                         },
-                        // </editor-fold>
+                        
                         {xtype: 'tbspacer', width: 40},
                         {
                             xtype: 'label',
