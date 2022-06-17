@@ -366,12 +366,12 @@ public class FareBasisController extends BaseController {
             
             for (vi = 0; vi < len; vi++) {
                 //titulos en la primera fila
-                
+         
                 if ( vi == 0 ){
-                    cadena = "Nbr,Airline,TPM,Fare Basis,T. Type,Class,Season,Week,Day,RBD,GI,User,Last Date";
+                    cadena = "Nbr,Airline,Fare Basis,T. Type,Class,Season,Week,Day,RBD,GI,User,Last Date";
+                    writer.println("" + cadena );
                 }
-                writer.println("" + cadena );
-                
+
                 cadena = "";                                
                 cadena += "" + lstPX0094S01A007.get(vi).RN + ",";
                 cadena += "" + lstPX0094S01A007.get(vi).A721AIRLIN + ",";
@@ -385,7 +385,7 @@ public class FareBasisController extends BaseController {
                 cadena += "" + lstPX0094S01A007.get(vi).A721GI + ",";
                 cadena += "" + lstPX0094S01A007.get(vi).A721REGIST + ",";
                 cadena += "" + lstPX0094S01A007.get(vi).A721VIGEN;
-
+              
                 writer.println("" + cadena );
             }
             writer.flush();
