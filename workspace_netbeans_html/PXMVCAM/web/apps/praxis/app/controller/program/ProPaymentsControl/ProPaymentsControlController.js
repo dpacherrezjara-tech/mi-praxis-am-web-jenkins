@@ -445,7 +445,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                     this.searchPOS();
                     break;
             }
-	}else if(typeSearch === '11' || typeSearch === '12'){   //By Phase Status
+	}else if(typeSearch === '11' || typeSearch === '12'){   //By Phase Status - General Totals
             this.searchPhasesStatus();
 	}else if(typeSearch === '13'){
             var chkTOT = Ext.getCmp(prototype.id + '-chkTOT').getValue();
@@ -1598,6 +1598,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                     msg: 'Data not found.'
                                 });
                             } else {
+                                var lstNew = [];
                                 var data = obj.data.items[0].data;
     //                            console.log(data);
 
@@ -1639,6 +1640,29 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 }
                                 
                                 Ext.getCmp(prototype.id + '-totPP_Perc41').setText('100%');
+                                
+                                // ------------------------------ GRAFICO ---------------------------------
+                                
+                                
+                                var data = obj.data.items[0].data;
+                                var list = obj.data;
+                                console.log(list);
+                                
+                                
+                                for (var i = 0; i < 6; i++) {
+                                    var item = {};
+                                    item.perc4 = list.items[i].data.perc4;
+                                    item.strDescription = list.items[i].data.strDescription + ' - ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
+                                    lstNew.push(item);
+                                    
+                                }
+
+                                var storeDataNew = Ext.create('Ext.data.Store', {
+                                    data: lstNew,
+                                    autoLoad: true
+                                });
+                                Ext.getCmp(prototype.id + '-displayPayChart01').bindStore(storeDataNew);
+                                
                             }
     //                        me.setWidthPie();
                         }
@@ -1647,7 +1671,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                 global.clear();
                 Ext.getCmp(prototype.id + '-gridDataPhasesStatus1').bindStore(storeGridDatas);
-//                Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+//                Ext.getCmp(prototype.id + '-displayPayChart01').bindStore(storeGridDatas);
             }
         }
     },
