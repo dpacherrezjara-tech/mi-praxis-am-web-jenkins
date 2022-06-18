@@ -4041,12 +4041,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             id: prototype.id + '-boxMainDataPhases1',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            height: 497,
+//                            height: 497,
                             width: 1764,
                             margin: '0 0 0 0 ',
                             layout: {
-                                type: 'vbox'
-//                                align: 'center'
+                                type: 'vbox',
+                                align: 'center'
                             },
                             items: [
                                 {
@@ -4066,7 +4066,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Country',
+                                                text: 'Country2222',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -4381,7 +4381,112 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 90, id: prototype.id + '-totdiff31', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci3', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'}
                                     ]
-                                }      
+                                },
+                                //PANEL DE GRAFICOS
+                                {
+                                    xtype: 'panel',
+                                    hidden: false,
+                                    margin: '5 0 5 0',
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+//                                        align: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 5',
+                                            border: true,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'center'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-displayPayChart01',
+                                                    width: 1300,
+                                                    border: false,
+                                                    height: 400,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Country percent',
+                                                            alignTo: 'center'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['perc4'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+//                                                            renderer: function (obj, value) {
+//                                                                if (value > 1) {
+//                                                                    if ((value / 1000).toString().length > 3) {
+//                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+//                                                                    } else {
+//                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+//                                                                    }
+//                                                                } else {
+//                                                                    return value;
+//                                                                }
+//                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+        //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Country',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: ['Country'],
+                                                            xField: 'strDescription',
+                                                            yField: ['perc4'],
+                                                            colors: ['#0066ff'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1000
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'perc4') {
+//                                                                        label = 'ChargedBack';
+                                                                    } else if (ctx.field === 'AMTCHGBU') {
+//                                                                        label = 'Received';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                },
+                                            ]
+                                        },
+                                    ]
+                                }
+                                
                             ]
                         },
                         // </editor-fold>
