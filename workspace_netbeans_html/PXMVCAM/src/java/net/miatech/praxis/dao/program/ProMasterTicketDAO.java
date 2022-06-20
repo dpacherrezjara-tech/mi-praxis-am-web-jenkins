@@ -70,7 +70,7 @@ public class ProMasterTicketDAO {
         ResultSet rstst01 = null, rstst02 = null;
         
         CallableStatement cstmt01 = null;
-        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs22 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null, rs22 = null;
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
         String SQLQRY01 = "SELECT"
                 + "   A720CIAI,A720FORMAI,A720SERIEI"
@@ -673,12 +673,18 @@ public class ProMasterTicketDAO {
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
-                                                                            rs22 = cstmt01.getResultSet();
-                                                                            while (rs22.next()) {
-                                                                                objRtn22 = new PX040S01A720ResultSet22();
-                                                                                objRtn22.fileA4121.SCARDN = rs15.getString("SCARDN");
-                                                                                objRtn22.fileA4121.SAUTHOC = rs15.getString("SAUTHOC");
-                                                                                filter.lstResultSet22.add(objRtn22);
+                                                                            rs16 = cstmt01.getResultSet();
+                                                                            while (rs16.next()) {
+                                                                                
+                                                                            }
+                                                                            if (cstmt01.getMoreResults()) {
+                                                                                rs22 = cstmt01.getResultSet();
+                                                                                while (rs22.next()) {
+                                                                                    objRtn22 = new PX040S01A720ResultSet22();
+                                                                                    objRtn22.fileA4121.SCARDN = rs22.getString("SCARDN").trim();
+                                                                                    objRtn22.fileA4121.SAUTHOC = rs22.getString("SAUTHOC").trim();
+                                                                                    filter.lstResultSet22.add(objRtn22);
+                                                                                }
                                                                             }
                                                                         }
                                                                     }

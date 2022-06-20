@@ -3136,8 +3136,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 paramsResultSet22 = me01.filterTKT.lstResultSet22[i22];
                                 if(i22==0)
                                 {                                    
-                                    SCARDN1 = paramsResultSet22.filefileA4121.SCARDN;
-                                    SAUTHOC1 = paramsResultSet22.filefileA4121.SCARDN;
+                                    SCARDN1 = paramsResultSet22.fileA4121.SCARDN;
+                                    SAUTHOC1 = paramsResultSet22.fileA4121.SCARDN;
                                     if(SCARDN1!=='' && SAUTHOC1!=='')
                                     {
                                         win.setValue('lblMP1', 'Conciliate');
@@ -3149,8 +3149,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 }
                                 if(i22==1)
                                 {
-                                    SCARDN2 = paramsResultSet22.filefileA4121.SCARDN;
-                                    SAUTHOC2 = paramsResultSet22.filefileA4121.SCARDN;
+                                    SCARDN2 = paramsResultSet22.fileA4121.SCARDN;
+                                    SAUTHOC2 = paramsResultSet22.fileA4121.SCARDN;
                                     if(SCARDN2!=='' && SAUTHOC2!=='')
                                     {
                                         win.setValue('lblMP2', 'Conciliate');

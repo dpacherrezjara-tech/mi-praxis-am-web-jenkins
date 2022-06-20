@@ -2611,7 +2611,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     id: prototype.id + '-lblMP1',
                                                                                     value: '',
                                                                                     readOnly: true,
-                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:right;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
+                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
                                                                                     width: 90
                                                                                 }
                                                                             ]
@@ -2637,7 +2637,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     id: prototype.id + '-lblMP2',
                                                                                     value: '',
                                                                                     readOnly: true,
-                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:right;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
+                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
                                                                                     width: 90
                                                                                 }
                                                                             ]
