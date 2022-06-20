@@ -349,7 +349,7 @@ public class A4164Filter extends A4164 {
     
     public String SAUTHOC1 = "";
     public String SCARCOD1 = "";        
-
+    public String IN_PLUSGRADE = "";
     //A2240
     //A2240
     public double TOTALCHRG_1 = 0;
@@ -414,7 +414,7 @@ public class A4164Filter extends A4164 {
     public Pagination page = new Pagination();
     public String IN_DIFF = "";
     
-
+    
     public String bufferToString(String ccust) {
 
         String strValue = "";

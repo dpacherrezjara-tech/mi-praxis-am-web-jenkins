@@ -405,6 +405,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                         },
                                         items: [
                                             {
+                                                text: 'Plusgrade ID', dataIndex: 'IN_PLUSGRADE', width: 100
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'SPNR', width: 100
+                                            },
+                                            {
                                                 text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -463,6 +469,40 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 text: 'Agent', dataIndex: 'SAGENT', width: 80
                                             },
                                             {
+                                                text: 'Credit Card',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 80
+                                                    },
+                                                    {
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 120
+                                                    },
+                                                    {
+                                                        text: 'Auth', dataIndex: 'SAUTHOC', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Cur.', dataIndex: 'SCURRENCY', width: 60
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'SVFOP', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataPGTkt').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.SVFOP_TOT, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
                                                 text: 'Reason',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -487,43 +527,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'Sub Code', dataIndex: 'RFIS1', width: 80
                                                     },
                                                 ]
-                                            },
-                                            {
-                                                text: 'Credit Card',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Code', dataIndex: 'SCARCOD', width: 80
-                                                    },
-                                                    {
-                                                        text: 'Number', dataIndex: 'SCARDN', width: 120
-                                                    },
-                                                    {
-                                                        text: 'Auth', dataIndex: 'SAUTHOC', width: 80
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Cur.', dataIndex: 'SCURRENCY', width: 60
-                                            },
-                                            {
-                                                text: 'Amount', dataIndex: 'SVFOP', width: 120,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataPGTkt').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.SVFOP_TOT, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'PNR', dataIndex: 'SPNR', width: 120
                                             },
                                         ]
                                     }
