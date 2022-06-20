@@ -132,38 +132,48 @@
         </group>
         <group name="PRAXIS AM HTML"/>
         <group name="PRAXIS AM GIT">
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/flown/AccountingMasterFlownController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/FareBasisLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/interline/AccountingMasterInterli/DataEntryAccountingMasterInterliController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/AccountingMasterFlownForm/DataEntry.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/classes/CurrentSession.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/FareBasisForm/Info.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/AccountingMasterFlownForm/AccountingMasterFlownForm.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/FlightConciliationDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/DefaultController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/program/ProMasterTicketLogic.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/SalesReportForm/DataEntryRfnd.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/AccountingMasterFlown/DataEntryAccountingMasterFlownController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/DataEntry.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterSales/DataEntryAccountingMasterSalesController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/AccountingMasterTAXDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/flown/RevenueByOperationController.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/AccountingMasterTAXLogic.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/SalesGroupManagementForm/Info.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/RevenueByOperationDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/flown/FlightConciliationLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/AccountingMasterSalesLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/AgentsMasterFileDAO.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/SalesReportDAO.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/AccountingMasterFlownDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/FareBasisController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/RevenueByOperation/RevenueByOperationController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/RevenueByOperationForm/Info.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/SalesReportControoller.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaReportForm/Info.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/FareBasis/FareBasisController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/AccountingMasterSalesForm/Info.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/Info.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/AccountingMasterTAXController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/resources/js/global.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/AccountingMasterSalesController.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/AccountingMasterFlownForm/Info.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/program/ProMasterTicketController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/AgentsMasterFileLogic.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/flown/RevenueByOperationLogic.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/ProMasterTicketController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/FareBasisDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/DataEntryProMasterTicketController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/AccountingMasterSalesDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/AccountingMasterSalesForm/DataEntry.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/FareBasis/DataEntryFareBasisController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/AccountingMasterSalesForm/Filters.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/SalesReport/DataEntryRfndController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/program/ProMasterTicketDAO.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
         </group>
     </open-files>
 </project-private>
