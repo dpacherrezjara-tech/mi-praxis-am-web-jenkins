@@ -3127,6 +3127,42 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 strA1531VFOP += paramsResultSet09.fileA1531.A1531VFOP;
                             }
                         }
+                        var SCARDN1 = '';
+                        var SCARDN2 = '';
+                        var SAUTHOC1 = '';
+                        var SAUTHOC2 = '';
+                        if(me01.filterTKT.lstResultSet22.length > 0){
+                            for(var i22 = 0; i22 < me01.filterTKT.lstResultSet22.length; i22++){
+                                paramsResultSet22 = me01.filterTKT.lstResultSet22[i22];
+                                if(i22==0)
+                                {                                    
+                                    SCARDN1 = paramsResultSet22.fileA4121.SCARDN;
+                                    SAUTHOC1 = paramsResultSet22.fileA4121.SCARDN;
+                                    if(SCARDN1!=='' && SAUTHOC1!=='')
+                                    {
+                                        win.setValue('lblMP1', 'Conciliate');
+                                    }
+                                    else
+                                    {
+                                        win.setValue('lblMP1', 'Pending');
+                                    }
+                                }
+                                if(i22==1)
+                                {
+                                    SCARDN2 = paramsResultSet22.fileA4121.SCARDN;
+                                    SAUTHOC2 = paramsResultSet22.fileA4121.SCARDN;
+                                    if(SCARDN2!=='' && SAUTHOC2!=='')
+                                    {
+                                        win.setValue('lblMP2', 'Conciliate');
+                                    }
+                                    else
+                                    {
+                                        win.setValue('lblMP2', 'Pending');
+                                    }
+                                }
+                                
+                            }
+                        }
                         win.setValue('lblFOP4MoreAmount', Ext.util.Format.number(strA1531VFOP, '0,000.00'));
                         
                         nPosition1 = 0;
@@ -3659,6 +3695,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         win.enabled('btnPayment', false);
         win.enabled('btnPNR', false);
         
+        win.setValue('lblMP1', '');
+        win.setValue('lblMP2', '');
         
         //Ext.getCmp(prototype.id+'-btnFacsimil0').hide();
         Ext.getCmp(prototype.id+'-btnDelivery0').hide();
