@@ -3454,6 +3454,7 @@ public class SalesReconciliAmexDAO {
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
+        String NEW_CERROR = "";
         //lstSendManual
         List<A4116Filter> lstSendManual = filter.lstSendManual;
         A4116Filter beanDet;
@@ -3464,8 +3465,23 @@ public class SalesReconciliAmexDAO {
             //Cambiar Status a las transacciones
             if (lstSendManual != null && lstSendManual.size() > 0) {
                 cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
+                
+                for (int i = 0; i < lstSendManual.size(); i++) {
+                    beanDet = lstSendManual.get(i);
+                    
+                    if(beanDet.STVAL.equals("1")){
+                        if(beanDet.NBRINSTA == 0){
+                            NEW_CERROR = "87";
+                        } else {
+                            NEW_CERROR = "86";
+                        }
+                        break;
+                    }
+                    
+                }
+                
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
 
@@ -3477,9 +3493,10 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(6, beanDet.IDITEMS.trim());
                     cstmt01.setString(7, beanDet.IDITEMT.trim());
                     cstmt01.setString(8, beanDet.NEWSTVAL.trim());
-                    cstmt01.setString(9, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(10, Functions.getFechaActual());
-                    cstmt01.setString(11, Functions.getHoraActual());
+                    cstmt01.setString(9, NEW_CERROR);
+                    cstmt01.setString(10, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(11, Functions.getFechaActual());
+                    cstmt01.setString(12, Functions.getHoraActual());
 
                     cstmt01.execute();
                 }
