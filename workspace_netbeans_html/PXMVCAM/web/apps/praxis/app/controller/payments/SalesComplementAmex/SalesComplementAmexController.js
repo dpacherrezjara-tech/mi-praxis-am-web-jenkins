@@ -237,9 +237,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
 
         this.beanPGTkt.IN_SDATES = rowData.data.SDATES;
         this.beanPGTkt.IN_SPNR = rowData.data.PNR;
-
+        this.beanPGTkt.IN_PLUSGRADE = rowData.data.PLUSGRAID;
+        
         console.log(this.beanPGTkt);
-
+       
         //me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
         me.paramsDetailPGTkt.beanString = JSON.stringify(this.beanPGTkt);
         this.setGridDataDetPGTkt();
