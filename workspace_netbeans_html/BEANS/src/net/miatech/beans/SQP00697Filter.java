@@ -49,6 +49,8 @@ public class SQP00697Filter {
     public String IN_DATE_TO = "";
     public String IN_IATA = "";
     public String IN_CAPL = "";
+    public String SCARDN = "";
+    public String SAUTHOC = "";
     public Pagination page = new Pagination();
     
     public String bufferToString(String ccust, String strTicket, String strPag, String comodin) {
