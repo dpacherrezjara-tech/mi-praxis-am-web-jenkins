@@ -408,7 +408,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 text: 'Plusgrade ID', dataIndex: 'IN_PLUSGRADE', width: 100
                                             },
                                             {
-                                                text: 'PNR', dataIndex: 'SPNR', width: 100
+                                                text: 'PNR', dataIndex: 'SPNR', width: 80
                                             },
                                             {
                                                 text: 'Sales',
