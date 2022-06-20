@@ -571,6 +571,21 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         text: 'PNR', dataIndex: 'A720PNR', width: 80,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
+                                                        text: 'Status MP', dataIndex: 'SCARDN', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            console.log('file:');
+                                                            //console.log(record.data.SAUTHOC.trim());
+                                                            //console.log(record.data.SCARDN.trim());
+                                                            var result = '';
+                                                            if(record.data.SAUTHOC !=='' && record.data.SCARDN !=='')
+                                                                result = 'Conciliate';
+                                                            else
+                                                                result = 'Pending';
+                                                            return result;
+                                                        }
+                                                    },
+                                                    {
                                                         xtype: 'actioncolumn',
                                                         text: 'Edit',
                                                         width: 39,

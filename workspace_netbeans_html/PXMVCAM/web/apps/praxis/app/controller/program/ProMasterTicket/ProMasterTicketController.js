@@ -3131,6 +3131,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         var SCARDN2 = '';
                         var SAUTHOC1 = '';
                         var SAUTHOC2 = '';
+                        win.setValue('lblMP1', 'Pending');
+                        win.setValue('lblMP2', 'Pending');
                         if(me01.filterTKT.lstResultSet22.length > 0){
                             for(var i22 = 0; i22 < me01.filterTKT.lstResultSet22.length; i22++){
                                 paramsResultSet22 = me01.filterTKT.lstResultSet22[i22];
@@ -3142,10 +3144,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                     {
                                         win.setValue('lblMP1', 'Conciliate');
                                     }
-                                    else
-                                    {
-                                        win.setValue('lblMP1', 'Pending');
-                                    }
                                 }
                                 if(i22==1)
                                 {
@@ -3154,10 +3152,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                     if(SCARDN2!=='' && SAUTHOC2!=='')
                                     {
                                         win.setValue('lblMP2', 'Conciliate');
-                                    }
-                                    else
-                                    {
-                                        win.setValue('lblMP2', 'Pending');
                                     }
                                 }
                                 
