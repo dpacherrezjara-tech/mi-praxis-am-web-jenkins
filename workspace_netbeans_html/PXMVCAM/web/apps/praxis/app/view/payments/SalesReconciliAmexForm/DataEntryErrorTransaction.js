@@ -1215,6 +1215,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 30,
+                                                text: '',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-add',
+                                                        tooltip: 'Create adjustment',
+                                                        handler: 'onAdjust'
+                                                    }
+                                                ]
+                                            },
                                             /*{
                                              text: 'Select',
                                              xtype: 'checkcolumn',
