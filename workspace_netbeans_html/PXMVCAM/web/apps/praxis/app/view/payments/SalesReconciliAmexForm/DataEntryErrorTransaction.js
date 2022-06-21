@@ -882,7 +882,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                 },
                             ]
-                        },
+                        },                        
                         {
                             xtype: 'panel',
                             id: prototype.id + '-panelScanCard',
@@ -998,6 +998,39 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     tooltip: 'Add',
                                     listeners: {
                                         click: 'clear_keyDownHandler'
+                                    }
+
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelMsiTracing',
+                            layout: 'hbox',
+                            hidden: true,
+                            border: false,
+                            margin: '0 2 0 100',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},                                
+                                {
+                                    xtype: 'label',
+                                    text: 'MSI Tracking',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-update',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'MSI Tracking',
+                                    listeners: {
+                                        click: 'msiTracking_keyDownHandler'
                                     }
 
                                 },

@@ -23,7 +23,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
         meDE = this;
-
         this.lstSendManual = [];
         this.lstBlocked = [];
 
