@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
     closable: false,
     closeAction: 'hide',
     height: 640,
-    width: 1200,
+    width: 1300,
     resizable: false,
     layout: 'fit',
     modal: true,
