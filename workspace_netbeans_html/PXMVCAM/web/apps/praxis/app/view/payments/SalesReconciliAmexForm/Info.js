@@ -6652,6 +6652,129 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                         },
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-boxMainChangePayment',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            height: 'auto',
+                            width: 1475,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridMainChangePayment',
+                                    width: 1475,
+                                    columnLines: true,
+//                                    features: [{
+//                                        ftype: 'summary'
+//                                    }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100,
+                                            },
+                                            {
+                                                text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 100,
+                                            },
+                                            {
+                                                text: 'Business<br>Date', dataIndex: 'BSUMDATE', width: 100,
+                                            },
+                                            {
+                                                text: 'Installment',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Plan', dataIndex: 'NBRINSTA', width: 70,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Number', dataIndex: 'INSTANBR', width: 70,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'SPNR', width: 80
+                                            },
+                                            {
+                                                text: 'Document<br>Type', dataIndex: 'descTDOC', width: 80
+                                            },
+                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',
+                                                renderer: function (value, meta, record, row, col) {
+                                                    meta.style = "background-color:#fae2a0;";
+                                                    switch (value) {
+                                                        case '':
+                                                            return 'None';
+                                                        case '1':
+                                                            return 'Match';
+                                                        case '5':
+                                                            return 'Match Manual';
+                                                        default:
+                                                            return 'None';
+                                                    }
+                                                },
+//                                                editor: {
+//                                                    xtype: 'combo',
+//                                                    store: storeComboMsi,
+//                                                    editable: false,
+//                                                    valueField: 'code',
+//                                                    displayField: 'name',
+//                                                    value: '',
+//                                                }
+                                            },
+                                            {
+                                                text: 'Status<br>Settlement vs Sales', dataIndex: 'descSTVAL', width: 160
+                                            },
+                                            {
+                                                text: 'Curr.', dataIndex: 'PCURRENCY', width: 80,
+                                            },
+                                            {
+                                                text: 'Transact<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Number', dataIndex: 'SCARDN', width: 120
+                                            },
+                                            {
+                                                text: 'Approval<br>Code', dataIndex: 'SAUTHOC', width: 80,
+                                            },
+                                            {
+                                                text: 'Submission<br>Merchant ID', dataIndex: 'SMERCHID', width: 100,
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
                             id: prototype.id + '-pie',
                             layout: {
                                 type: 'hbox',
