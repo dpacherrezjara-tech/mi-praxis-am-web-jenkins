@@ -1880,8 +1880,8 @@ public class ProMasterTicketDAO {
                 objRtn.A720PNR = rs01.getString("A720PNR");
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
-                objRtn.SCARDN = rs01.getString("SCARDN") == null ? "" : rs01.getString("SCARDN").trim();
-                objRtn.SAUTHOC = rs01.getString("SAUTHOC") == null ? "" : rs01.getString("SAUTHOC").trim();
+                objRtn.SCARDN = rs01.getString("SCARDN");
+                objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 lstRtn.add(objRtn);
             }
         } finally {
@@ -1948,8 +1948,8 @@ public class ProMasterTicketDAO {
                 objRtn.A1531MFOP = rs01.getString("A1531MFOP");
                 objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
-                objRtn.SCARDN = rs01.getString("SCARDN") == null ? "" : rs01.getString("SCARDN").trim();
-                objRtn.SAUTHOC = rs01.getString("SAUTHOC") == null ? "" : rs01.getString("SAUTHOC").trim();
+                objRtn.SCARDN = rs01.getString("SCARDN");
+                objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 lstRtn.add(objRtn);
             }
         }catch(SQLException e){
