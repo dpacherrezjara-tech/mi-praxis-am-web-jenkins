@@ -575,13 +575,17 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             console.log('file:');
-                                                            //console.log(record.data.SAUTHOC.trim());
+                                                            console.log(record.data);
                                                             //console.log(record.data.SCARDN.trim());
                                                             var result = '';
-                                                            if(record.data.SAUTHOC !=='' && record.data.SCARDN !=='')
-                                                                result = 'Conciliate';
-                                                            else
-                                                                result = 'Pending';
+                                                            //if(record.data.SCARDN!==null)
+                                                            if(record.data.hasOwnProperty('SCARDN'))
+                                                            {
+                                                                if(record.data.SAUTHOC !=='' && record.data.SCARDN !=='')
+                                                                    result = 'Conciliate';
+                                                                else
+                                                                    result = 'Pending';
+                                                            }
                                                             return result;
                                                         }
                                                     },

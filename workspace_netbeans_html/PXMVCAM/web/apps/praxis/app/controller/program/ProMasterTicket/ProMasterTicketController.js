@@ -3131,8 +3131,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         var SCARDN2 = '';
                         var SAUTHOC1 = '';
                         var SAUTHOC2 = '';
-                        win.setValue('lblMP1', 'Pending');
-                        win.setValue('lblMP2', 'Pending');
+                        //win.setValue('lblMP1', 'Pending');
+                        //win.setValue('lblMP2', 'Pending');
                         if(me01.filterTKT.lstResultSet22.length > 0){
                             for(var i22 = 0; i22 < me01.filterTKT.lstResultSet22.length; i22++){
                                 paramsResultSet22 = me01.filterTKT.lstResultSet22[i22];
