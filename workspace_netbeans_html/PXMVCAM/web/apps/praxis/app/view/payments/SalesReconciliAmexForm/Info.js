@@ -3368,7 +3368,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {text: 'Auth.', dataIndex: 'SAUTHOC', width: 70},
                                             {text: 'Installment<br>Plan', dataIndex: 'NBRINSTA', width: 90},
                                             {text: 'Installment<br>Number', dataIndex: 'INSTANBR', width: 90},
-                                            {
+                                            /*{
                                                 text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
@@ -3378,23 +3378,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
-                                            },
-                                            {
-                                                text: 'Amount <br> w/o Discount', dataIndex: 'TGROSAMOUN', width: 100, hidden: true,
-                                                listeners: {
-//                                                    click: 'onGridDetBankS'
-                                                },
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
-                                                }
-                                            },
+                                            },*/                                            
                                             /*{
                                              text: 'Commission',
                                              defaults: {
@@ -3806,7 +3790,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             },
                                                         ]
                                                     },
-                                                    {
+                                                    /*{
                                                         text: 'First Inst. <br> Amou.Conc', dataIndex: 'FINSAMOUC', width: 100, hidden: true,
                                                         listeners: {
                                                             //                                                    click: 'onGridDetBankS'
@@ -3831,7 +3815,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
 //                                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
-                                                    },
+                                                    },*/
                                                 ]
                                             },
                                             {

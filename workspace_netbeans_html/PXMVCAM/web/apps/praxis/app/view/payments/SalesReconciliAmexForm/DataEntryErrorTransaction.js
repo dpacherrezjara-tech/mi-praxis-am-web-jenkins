@@ -1,3 +1,11 @@
+var storeComboMsi = Ext.create('Ext.data.SimpleStore', {
+    fields: ['code', 'name'],
+    data: [
+        ["1", "Ajuste 1"],
+        ["2", "Ajuste 2"],
+        ["3", "Ajuste 3"]
+    ]
+});
 Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryErrorTransactionSalesReconciliAmexForm',
@@ -187,32 +195,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtINSTANBR',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 5}
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '0 2 0 20',
-                            items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
-                                {
-                                    xtype: 'label',
-                                    text: 'Flag Compl.',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtFCOMPL',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -714,9 +696,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100
                                 },
                                 {xtype: 'tbspacer', width: 30},
-                                {xtype: 'tbspacer', width: 120},
+                                {
+                                    xtype: 'label',
+                                    text: 'Flag Compl.',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
                                 {xtype: 'tbspacer', width: 10},
-                                {xtype: 'tbspacer', width: 100},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFCOMPL',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
@@ -882,7 +876,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                 },
                             ]
-                        },                        
+                        },
                         {
                             xtype: 'panel',
                             id: prototype.id + '-panelScanCard',
@@ -1012,7 +1006,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             margin: '0 2 0 100',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
-                                {xtype: 'tbspacer', width: 7},                                
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'MSI Tracking',
@@ -1041,17 +1035,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 870,
+                            width: 905,
                             height: 245,
                             hidden: false,
+                            autoScroll: true,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 100',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 870,
-                                    height: 220,
+                                    width: 891,
+                                    height: 180,
 //                                    hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -1163,7 +1158,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,                                                
+                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1242,30 +1237,119 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                         ]
                                     }
                                 },
+                                {xtype: 'tbspacer', height: 5},
                                 {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 150},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Sum Amount',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 90
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataAdjustment',
+                                    width: 870,
+                                    height: 60,
+                                    hidden: true,
+                                    columnLines: true,
+                                    hideHeaders: true,
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
                                         },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-txtSumAmount',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 70,
-                                        },
-                                    ]
+                                        items: [
+                                            {text: 'Status', dataIndex: 'STMANUAL', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    value = 'Adjustment';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Credit Card',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 115,
+                                                        editor: {xtype: 'textfield', editable: false},
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
+                                                        editor: {xtype: 'textfield', editable: false},
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'PNR', dataIndex: 'A720PNR', width: 62,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                },
+                                                editor: {xtype: 'textfield', editable: false},
+                                            },
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                        ]
+                                    }
                                 },
                             ]
                         },
@@ -1427,6 +1511,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             width: 70,
                                         },
                                     ]
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 2 0 180',
+                            //bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 150},
+                                {
+                                    xtype: 'label',
+                                    text: 'Sum Amount',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSumAmount',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 70,
                                 },
                             ]
                         },

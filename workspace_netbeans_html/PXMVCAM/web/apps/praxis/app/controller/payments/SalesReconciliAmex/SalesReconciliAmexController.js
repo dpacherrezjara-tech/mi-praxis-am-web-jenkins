@@ -440,7 +440,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case 'CP':
                 this.setGridDataChangePayment();
-            break;
+                break;
         }
     },
     setGridDataMainAdjustment: function () {
@@ -494,7 +494,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }, listeners: {
                 beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                     obj.proxy.extraParams = searchParamsMainSettlement;
+                    obj.proxy.extraParams = searchParamsMainSettlement;
                 },
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -510,7 +510,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     } else {
                         var data = obj.data.items[0].data;
                         console.log(data);
-                        
+
                     }
                 }
             }
@@ -807,8 +807,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }
     },
     filterSettlement: function () {
-        this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
-        this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        if (Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '') {
+            this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+            this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        } else {
+            this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+            this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        }
+
         this.beanFilterSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanFilterSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanFilterSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();

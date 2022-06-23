@@ -14,6 +14,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     dataObtain: {},
     lstSendManual: [],
     lstBlocked: [],
+    lstAdjustment: [],
     beanSettlementTktsDetail: {},
     paramsDetailDEDetTktSettlement: {},
     sumAmount: 0,
@@ -25,6 +26,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         meDE = this;
         this.lstSendManual = [];
         this.lstBlocked = [];
+        this.lstAdjustment = [];
         this.setValue('de-txtSumAmount', this.sumAmount);
         //this.setValue('de-txtSumAmountBlocked', this.sumAmountBlocked);
 
@@ -855,5 +857,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 //                lstCountry: me.lstCountry
             }
         }).show();
+    },
+    onAdjust: function(grid, rowIndex, colIndex) {
+        Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+        var rec = grid.getStore().getAt(rowIndex).data;
     }
 });
