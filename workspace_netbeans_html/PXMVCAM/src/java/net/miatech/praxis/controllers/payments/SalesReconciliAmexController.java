@@ -4696,7 +4696,7 @@ public class SalesReconciliAmexController extends BaseController {
 
             CH1_0.setCellValue("Payment");
             CH1_1.setCellValue("Transaction");
-            CH1_2.setCellValue("Passed");
+            CH1_2.setCellValue("Diff.");
             CH1_3.setCellValue("Status");
             CH1_4.setCellValue("");
             CH1_5.setCellValue("Transaction");
@@ -5125,7 +5125,7 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).TRANSDATE);
                 rcell2.setCellValue(listaData.get(vi).PASSED_DAYS);
-                rcell3.setCellValue(listaData.get(vi).desCERROR);
+                rcell3.setCellValue(listaData.get(vi).desCERROIN);
                 rcell4.setCellValue(listaData.get(vi).descSTVAL);
                 rcell5.setCellValue(listaData.get(vi).RECTYPE);
                 rcell6.setCellValue(listaData.get(vi).QTYTKT);
@@ -5334,7 +5334,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.autoSizeColumn(38, true);
 
             //============================================
-            response.setContentType("application/vnd.openxml");
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
             FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
