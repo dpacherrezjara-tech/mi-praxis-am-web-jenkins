@@ -684,7 +684,6 @@ public class ClarificationLoadController extends BaseController {
 
             } //if filedata
             
-            msjError ="error";
             if(!msjError.equals("")){
                 msj = msjError;
             }else{

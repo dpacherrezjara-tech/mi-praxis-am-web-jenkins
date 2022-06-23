@@ -170,7 +170,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 ["ODS", "ODS"],
                 //["OCR", "OCR"],
                 ["EMD", "EMD"],
-                ["EMDN", "EMD Delta"],
+//                ["EMDN", "EMD Delta"],
                 ["VCR", "VCR"],
                 ["VCRJ", "VCRJ"],
                 ["ISR", "TCN (ISR)"]
