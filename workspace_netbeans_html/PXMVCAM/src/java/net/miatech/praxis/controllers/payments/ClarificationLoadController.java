@@ -574,7 +574,7 @@ public class ClarificationLoadController extends BaseController {
                                 noOfColu = row.getLastCellNum();
                             }
                             
-                            valueS = formatter.formatCellValue(row.getCell(4));     //NUM_CTA
+                            valueS = formatter.formatCellValue(row.getCell(0));     //NUM_CTA
                             valueTOT = formatter.formatCellValue(row.getCell(5));   //NUM_REF
                             
                             if(rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") == -1 ) {
@@ -684,6 +684,7 @@ public class ClarificationLoadController extends BaseController {
 
             } //if filedata
             
+            msjError ="error";
             if(!msjError.equals("")){
                 msj = msjError;
             }else{

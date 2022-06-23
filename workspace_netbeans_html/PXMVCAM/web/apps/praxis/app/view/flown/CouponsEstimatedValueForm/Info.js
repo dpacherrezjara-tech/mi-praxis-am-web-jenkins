@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
         {
             region: 'center',
             id: prototype.id + '-regionCenterGrid01',
-            width: 1295,
+            width: 1395,
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -200,7 +200,8 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                         columns: [
                                             {text: 'Date', width: 80, dataIndex: 'strFormatFVTA'}
                                         ]
-                                    }
+                                    },
+                                    {id:'EstimatedValue-col01_flag',text: 'Flag', width: 40, dataIndex: 'strDescSTNEW',hidden: true}
 
                                     /*
 

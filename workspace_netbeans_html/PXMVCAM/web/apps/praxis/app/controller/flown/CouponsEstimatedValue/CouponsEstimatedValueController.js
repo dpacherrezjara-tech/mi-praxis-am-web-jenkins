@@ -187,6 +187,14 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
     btnSearch_click: function(obj, e) {
 
         this.setFormatParameter();
+        if(Ext.getCmp(prototype.id + '-cmbFvalAC').getValue()==='D' ){
+            Ext.getCmp(prototype.id + '-gridData').setWidth(1331);
+            Ext.getCmp('EstimatedValue-col01_flag').show();
+        }else{
+            Ext.getCmp(prototype.id + '-gridData').setWidth(1291);
+            Ext.getCmp('EstimatedValue-col01_flag').hide();
+        }
+            
         this.setGridData(obj, e);
     },
     setFormatParameter: function() {
