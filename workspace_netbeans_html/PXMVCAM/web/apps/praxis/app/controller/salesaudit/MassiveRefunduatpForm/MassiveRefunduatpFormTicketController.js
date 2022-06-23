@@ -145,6 +145,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'J':
                 vl_FLAG = 'TICKET EXCH';
                 break;
+            case 'K':
+                vl_FLAG = 'INVALID CPN';
+                break;
         }
         if (String(rec.get('A4076STAT')) === 'F' || String(rec.get('A4076STAT')) === 'C') {
             grid03.show();
@@ -154,7 +157,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             grid02.hide();
             btnSave.hide();
         } else {
-            if (String(rec.get('A4076FLAG')) === 'J' || String(rec.get('A4076FLAG')) === 'G' || String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R' || String(rec.get('A4076FLAG')) === 'I') {
+            if (String(rec.get('A4076FLAG')) === 'J' || String(rec.get('A4076FLAG')) === 'K' || String(rec.get('A4076FLAG')) === 'G' || String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R' || String(rec.get('A4076FLAG')) === 'I') {
                 grid03.show();
                 grid04.show();
                 //
