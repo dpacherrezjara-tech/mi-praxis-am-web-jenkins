@@ -193,6 +193,7 @@ public class CouponsEstimatedValueDAO {
 
                     objRtn.A1437RCOMI = (objRtn.VCPMX > 0) ? objRtn.VCPMX * objRtn.TCMUS : 0.00;  //valor mxn
                     objRtn.VCPUS = (double) Math.round(objRtn.A1437RCOMI * 100) / 100;
+                    objRtn.strDescSTNEW=filter.IN_FVAL;
 
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;
