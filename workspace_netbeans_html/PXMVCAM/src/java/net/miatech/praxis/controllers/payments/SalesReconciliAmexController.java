@@ -9,13 +9,17 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +35,7 @@ import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
 import net.miatech.beans.SQP00697Filter;
+import net.miatech.praxis.classes.ZipFiles;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -6413,6 +6418,89 @@ public class SalesReconciliAmexController extends BaseController {
             FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
             workbook.write(response.getOutputStream());
             fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    @RequestMapping(value = "/getTXTSettlementDetail")
+    public @ResponseBody
+    void getTXTSettlementDetail(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String serverPath = request.getSession().getServletContext().getRealPath("/");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");
+            String path = sdf.format(new Date());
+            ZipFiles zipFiles = new ZipFiles();
+            List<File> srcfile = new ArrayList<File>();
+
+            srcfile.add(downloadTXTSettlementDetail(request));
+
+            File zipfile = new File(serverPath + path + ".zip");
+            zipFiles.zipFiles(srcfile, zipfile);
+            zipFiles.downFile(response, serverPath, path + ".zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public File downloadTXTSettlementDetail(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_SettlementDetail");
+
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+
+        String fileNameDownload = String.format("Forecast Coupon Detail" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+
+        try {
+
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<A4116Filter> lst = this.getListDetSettlement(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+
+            cadena = "Payment Date|Sales Date|Diff. Days|Status Reconciliation Settlement|Status Settlement vs Sales|Transaction Type|Qty Tkts|Invoice Refer. Number(PNR)|PNR|Document Type|Indust.Speci.Ref.Nbr|Card Number|Auth|Installment Plan|Installment Number|Sales Amount|Transaction Amount|";
+
+            writer.println("" + cadena);
+
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena += lst.get(vi).DATE + "|";
+                cadena += lst.get(vi).TRANSDATE + "|";
+                cadena += lst.get(vi).PASSED_DAYS + "|";
+                cadena += lst.get(vi).desCERROIN + "|";
+                cadena += lst.get(vi).descSTVAL + "|";
+                cadena += lst.get(vi).RECTYPE + "|";
+                cadena += lst.get(vi).QTYTKT + "|";
+                cadena += lst.get(vi).INVORNBR + "|";
+                cadena += lst.get(vi).SPNR + "|";
+                cadena += lst.get(vi).descTDOC + "|";
+                cadena += lst.get(vi).ISREFNBR + "|";
+                cadena += lst.get(vi).SCARDN + "|";
+                cadena += lst.get(vi).SAUTHOC + "|";
+                cadena += lst.get(vi).NBRINSTA + "|";
+                cadena += lst.get(vi).INSTANBR + "|";
+                cadena += lst.get(vi).SVFOPS + "|";
+                cadena += lst.get(vi).TGROSAMOUN + "|";
+                //cadena += df_2.format(lst.get(vi).VALOR) + "|";
+
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+
+            return file;
 
         } catch (IOException e) {
             throw new SpringException(e);
