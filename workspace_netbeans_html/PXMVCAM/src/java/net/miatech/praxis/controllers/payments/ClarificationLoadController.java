@@ -6,9 +6,11 @@
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -101,10 +103,18 @@ public class ClarificationLoadController extends BaseController {
                 msjResult = uploadFile(dataFile, banco);
 
             }else{
-                    // ------------------------------------------------------------------------
-                    // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
-                    // ------------------------------------------------------------------------
-                    msjUpload = uploadPrev(excelfile, banco, input);
+                
+                    if(banco.equals("BX") && input.equals("C")){
+                        byte[] fileDataBX = excelfile.getBytes();
+                        msjUpload = uploadBanamexCSV(fileDataBX, banco, input);
+                    }else{
+                        
+                        // ------------------------------------------------------------------------
+                        // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
+                        // ------------------------------------------------------------------------
+                        msjUpload = uploadPrev(excelfile, banco, input);
+                    }
+                
                 map.put("successUp", true);
                 map.put("msjUpload", msjUpload);
             }
@@ -120,6 +130,115 @@ public class ClarificationLoadController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
+    }
+    
+    private String uploadBanamexCSV (byte[] bytes, String banco,String input) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        String msj = "", msjError="" ,valueS = "",valueTOT="",filaCompleta="",tmp="";
+        int noOfColu = 0;
+        BufferedReader br = null;
+        List<String> listaExcelString = new ArrayList<String>(0);
+        boolean correct = true;
+        try {
+            String strSesion = UUID.randomUUID().toString();
+            String strNomExcel = "BanamexCsv." + strSesion + ".csv";
+            
+            String strArchivo = "C:\\Windows\\Temp\\" + strNomExcel;
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            
+            fs.write(bytes);
+            fs.flush();
+            fs.close();
+         
+            
+            br = new BufferedReader(new FileReader(strArchivo));
+            String line = br.readLine();
+
+            while (null != line) {
+                line = br.readLine();
+                
+                String [] fields = line.split(";");
+                noOfColu = fields.length;
+                
+                valueS = fields[4];     //NUM_CTA
+                valueTOT = fields[5];  //NUM_REF
+
+                
+                if (valueTOT.toUpperCase().indexOf("TOTAL") > -1){
+                    break;
+                }
+                
+                if(valueTOT.toUpperCase().indexOf("TOTAL") == -1 ) {
+
+                    if(valueS.trim().length() != 16 && valueS.trim().length() != 15  ){
+                       correct = false;
+
+                       msjError = "Error. Invalid format. TOO LONG CREDIT CARD. Please contact AM.";
+                       break;
+                    }
+                }
+                if(msjError.equals("")){
+                    /*Validacion 1era Fecha columna A*/
+                    tmp = fields[0];
+                    msjError = validarFecha(tmp,"A");
+                }
+                if(msjError.equals("")){
+                    /*Validacion 1era Fecha columna H*/
+                    tmp = fields[7];
+                    msjError = validarFecha(tmp,"H");
+                }
+                
+                if(!msjError.trim().equals("")){
+                    msj = msjError;
+                    break;
+                }
+                
+                filaCompleta = line.replaceAll(";", ",");
+                
+                listaExcelString.add(filaCompleta+",");
+            }
+            
+            
+            ClarificationLoadLogic logic = new ClarificationLoadLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            if(msj.equals("")){
+                msj = upload(listaExcelString, banco, input);
+            }
+            
+            //Eliminar temporal           
+            archivo.delete();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = "Se produjo un error al intentar subir el archivo.";
+        }
+
+        return msj;
+        
+    }
+    private String validarFecha(String fecha,String columna){
+        String msjError ="";
+        
+        
+        if(fecha.trim().equals("")){
+            msjError = "Error. Remittance Date is Empty. Please contact AM. (Column "+columna+  ")";
+
+        }else if(fecha.indexOf("N/A") >= 0){
+            msjError = "Error. Remittance Date incorrect format (N/A). Please contact AM. (Column "+columna+  ")";
+
+        }else if(fecha.equals("99/99/9999") || fecha.equals("99-99-9999")){
+            msjError = "Error. Invalid Remittance Date. Please contact AM. (Column "+columna+  ")";
+
+        }else if(fecha.length() != 10){
+            msjError = "Error. Format Date Invalid. Please contact AM. (Column "+columna+  ")";
+
+        }
+        
+        return msjError;
     }
     
     private String uploadCSV(byte[] bytes, String strBanco) throws Exception {
@@ -474,7 +593,7 @@ public class ClarificationLoadController extends BaseController {
                     }
                 }else{
                     //==================================================================================
-                    //INICIO BANAMEX ===================================================================
+                    //INICIO BANAMEX (Aclaraciones se maneja CSV )===================================================================
                     
                     if(input.equals("N")){                        
                         // <editor-fold defaultstate="collapsed" desc="BANAMEX - Avisos()">
@@ -557,123 +676,126 @@ public class ClarificationLoadController extends BaseController {
                         
                         //</editor-fold>
                     }else{
+                        msjError="BANAMEX ahora entra por csv";
                         // <editor-fold defaultstate="collapsed" desc="BANAMEX - Aclaraciones()">
-                        int rowB = -1;
-                        String valueS = "";
-                        String valueTOT = "";
-                        boolean correct = true;
-                        int noOfColu = 0;
-                        
-                        // se recorre cada fila hasta el final
-                        while (rowIterator.hasNext()) {
-                            Row row = rowIterator.next();
-                            rowB++;
-                            i++;
-                            
-                            if(i == 1){
-                                noOfColu = row.getLastCellNum();
-                            }
-                            
-                            valueS = formatter.formatCellValue(row.getCell(0));     //NUM_CTA
-                            valueTOT = formatter.formatCellValue(row.getCell(5));   //NUM_REF
-                            
-                            if(rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") == -1 ) {
-                                        
-                                if(valueS.trim().length() != 16 && valueS.trim().length() != 15  ){
-                                   correct = false;
-
-                                   msjError = "Error. Invalid format. TOO LONG CREDIT CARD. Please contact AM.";
-                                }
-                            }
-                            
-                            filaCompleta = "";
-                            
-                            if (rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") > -1){
-                                break;
-                            }
-                            
-                            if(correct){
-                                for (int colB = 0; colB < noOfColu; colB++) {
-                                    String cellValueB = "";
-                                    if(row.getCell(colB) != null){
-                                        msjError = "";
-                                        tmp = "";
-                                        tmp = formatter.formatCellValue(row.getCell(colB));
-
-                                        if(colB == 0 && tmp.equals("")){
-                                            filaTotal = true;
-                                        }
-                                        
-                                        if(filaTotal == false){
-                                            if(rowB > 0 && colB == 0){
-                                                //FECHA_REME (04/10/2017)
-                                                tmp = formatter.formatCellValue(row.getCell(colB));
-
-                                                if(tmp.trim().equals("")){
-                                                    msjError = "Error. Remittance Date is Empty. Please contact AM. (Column A)";
-
-                                                }else if(tmp.indexOf("N/A") >= 0){
-                                                    msjError = "Error. Remittance Date incorrect format (N/A). Please contact AM. (Column A)";
-
-                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
-                                                    msjError = "Error. Invalid Remittance Date. Please contact AM. (Column A)";
-
-                                                }else if(tmp.length() == 10){
-                                                    cellValueB = tmp;
-
-                                                }else{
-                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column A)";
-    //                                                cellValueB = excelFloatToDate(Number(tmp));
-//                                                    if(cellValueB.equals("Error")){
-//                                                        msjError = "Error. Remittance Date incorrect format. Please contact AM. (Column A)";
-//                                                    }
-                                                }
-                                            }else if(rowB > 0 && colB == 7){
-                                                //FECHA_VENT (16/09/2017)
-                                                tmp = formatter.formatCellValue(row.getCell(colB));
-
-                                                if(tmp.trim().equals("")){
-                                                    msjError = "Error. Sales Date is Empty. Please contact AM. (Column H)";
-
-                                                }else if(tmp.indexOf("N/A") >= 0){
-                                                    msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column H)";
-
-                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
-                                                    msjError = "Error. Invalid Sales Date. Please contact AM. (Column H)";
-
-                                                }else if(tmp.length() == 10){
-                                                    cellValueB = tmp;
-
-                                                }else{
-                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column H)";
-//                                                    cellValueB = excelFloatToDate(Number(tmp));
-//                                                    if(cellValueB.equals("Error")){
-//                                                        msjError = "Error. Sales Date incorrect format. Please contact AM. (Column H)";
-//                                                    }
-                                                }
-
-                                            } else{
-                                                cellValueB = formatter.formatCellValue(row.getCell(colB));
-                                            }
-                                        }else{
-                                            break;
-                                        }
-                                        
-                                        if(!msjError.equals("")){
-                                            break;
-                                        }else{
-                                            filaCompleta += cellValueB + ',';
-                                        }
-                                    }// Cell is null
-                                } // for noOfColu
-                                
-                                if(!msjError.equals("")){
-                                    break;
-                                }else{
-                                    listaExcelString.add(filaCompleta);
-                                }
-                            } //if correct
-                        } //while
+                        /*BANAMEX ACLARACIONES SE MANEJA MEDIANTE CSV(;) debido a columnas internas que venian en los insumos XLS 
+                          miércoles, 22 de junio de 2022 18:01 Elizabeth*/
+//                        int rowB = -1;
+//                        String valueS = "";
+//                        String valueTOT = "";
+//                        boolean correct = true;
+//                        int noOfColu = 0;
+//                        
+//                        // se recorre cada fila hasta el final
+//                        while (rowIterator.hasNext()) {
+//                            Row row = rowIterator.next();
+//                            rowB++;
+//                            i++;
+//                            
+//                            if(i == 1){
+//                                noOfColu = row.getLastCellNum();
+//                            }
+//                            
+//                            valueS = formatter.formatCellValue(row.getCell(4));     //NUM_CTA
+//                            valueTOT = formatter.formatCellValue(row.getCell(5));   //NUM_REF
+//                            
+//                            if(rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") == -1 ) {
+//                                        
+//                                if(valueS.trim().length() != 16 && valueS.trim().length() != 15  ){
+//                                   correct = false;
+//
+//                                   msjError = "Error. Invalid format. TOO LONG CREDIT CARD. Please contact AM.";
+//                                }
+//                            }
+//                            
+//                            filaCompleta = "";
+//                            
+//                            if (rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") > -1){
+//                                break;
+//                            }
+//                            
+//                            if(correct){
+//                                for (int colB = 0; colB < noOfColu; colB++) {
+//                                    String cellValueB = "";
+//                                    if(row.getCell(colB) != null){
+//                                        msjError = "";
+//                                        tmp = "";
+//                                        tmp = formatter.formatCellValue(row.getCell(colB));
+//
+//                                        if(colB == 0 && tmp.equals("")){
+//                                            filaTotal = true;
+//                                        }
+//                                        
+//                                        if(filaTotal == false){
+//                                            if(rowB > 0 && colB == 0){
+//                                                //FECHA_REME (04/10/2017)
+//                                                tmp = formatter.formatCellValue(row.getCell(colB));
+//
+//                                                if(tmp.trim().equals("")){
+//                                                    msjError = "Error. Remittance Date is Empty. Please contact AM. (Column A)";
+//
+//                                                }else if(tmp.indexOf("N/A") >= 0){
+//                                                    msjError = "Error. Remittance Date incorrect format (N/A). Please contact AM. (Column A)";
+//
+//                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+//                                                    msjError = "Error. Invalid Remittance Date. Please contact AM. (Column A)";
+//
+//                                                }else if(tmp.length() == 10){
+//                                                    cellValueB = tmp;
+//
+//                                                }else{
+//                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column A)";
+//    //                                                cellValueB = excelFloatToDate(Number(tmp));
+////                                                    if(cellValueB.equals("Error")){
+////                                                        msjError = "Error. Remittance Date incorrect format. Please contact AM. (Column A)";
+////                                                    }
+//                                                }
+//                                            }else if(rowB > 0 && colB == 7){
+//                                                //FECHA_VENT (16/09/2017)
+//                                                tmp = formatter.formatCellValue(row.getCell(colB));
+//
+//                                                if(tmp.trim().equals("")){
+//                                                    msjError = "Error. Sales Date is Empty. Please contact AM. (Column H)";
+//
+//                                                }else if(tmp.indexOf("N/A") >= 0){
+//                                                    msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column H)";
+//
+//                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+//                                                    msjError = "Error. Invalid Sales Date. Please contact AM. (Column H)";
+//
+//                                                }else if(tmp.length() == 10){
+//                                                    cellValueB = tmp;
+//
+//                                                }else{
+//                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column H)";
+////                                                    cellValueB = excelFloatToDate(Number(tmp));
+////                                                    if(cellValueB.equals("Error")){
+////                                                        msjError = "Error. Sales Date incorrect format. Please contact AM. (Column H)";
+////                                                    }
+//                                                }
+//
+//                                            } else{
+//                                                cellValueB = formatter.formatCellValue(row.getCell(colB));
+//                                            }
+//                                        }else{
+//                                            break;
+//                                        }
+//                                        
+//                                        if(!msjError.equals("")){
+//                                            break;
+//                                        }else{
+//                                            filaCompleta += cellValueB + ',';
+//                                        }
+//                                    }// Cell is null
+//                                } // for noOfColu
+//                                
+//                                if(!msjError.equals("")){
+//                                    break;
+//                                }else{
+//                                    listaExcelString.add(filaCompleta);
+//                                }
+//                            } //if correct
+//                        } //while
                     } //else Aclaraciones
                     //</editor-fold>
                     
