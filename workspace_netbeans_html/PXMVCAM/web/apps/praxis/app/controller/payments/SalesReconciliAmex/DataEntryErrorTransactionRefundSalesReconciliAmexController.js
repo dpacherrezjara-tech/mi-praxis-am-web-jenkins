@@ -56,11 +56,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                if(this.bean.CERROR === ''){
+                if (['1', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
+                    Ext.getCmp(prototype.id + '-panelScanCard').hide();
+                    Ext.getCmp(prototype.id + '-panelScan').hide();
+                    Ext.getCmp(prototype.id + '-panelMsiTracing').show();
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
-                }                
+                }
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
@@ -126,8 +129,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-
-        this.getBreakdownDataGrid();
+        
+        if (['1', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
+            this.getBreakdownDataGridForMatch();
+        } else {
+            this.getBreakdownDataGrid();
+        }  
     },
     obtainData: function () {
 //        console.log('obtainData');
@@ -227,6 +234,47 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
                 meDE.getDataGrid(meDE.beanResult);
                 //meDE.calcularMontos();
+            }
+        });
+    },
+    getBreakdownDataGridForMatch: function () {
+        this.beanSettlementTktsDetail = {};
+        this.beanSettlementTktsDetail.DATE = this.bean.DATE;
+        this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
+        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
+        this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
+        this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
+        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
+        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
+        this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
+        this.beanSettlementTktsDetail.IN_FREGLA = this.bean.FREGLA;
+        this.beanSettlementTktsDetail.IN_SCARDN = this.bean.SCARDN;
+        this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
+        this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
+        this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
+        Ext.Ajax.request({
+            url: prototype.url + '/searchDetTktSettlement',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+            params: {beanString: meDE.paramsDetailDEDetTktSettlement},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanInfo = res.data;
+                for (var i = 0; i < res.data.length; i++) {
+                    meDE.lstSendManual.push(res.data[i]);
+                }
+
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
+                        Ext.create('Ext.data.Store', {data: meDE.lstSendManual, autoLoad: true})
+                        );
+
+                //meDE.getDataGrid(meDE.beanResult);
+                meDE.calcularMontos();
             }
         });
     },

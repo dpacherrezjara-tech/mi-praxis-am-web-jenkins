@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         if (this.p.rowIndex < 19) {
             rec = all.getAt(rowIndex + 1);
             this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
-            if (this.p.rec.data === null) {
+            if (this.p.rec === null) {
                 Ext.getCmp(prototype.id + '-dataEntryError').close();
             } else {
                 this.bean = this.p.rec.data;
@@ -159,7 +159,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             this.getBreakdownDataGridForMatch();
         } else {
             this.getBreakdownDataGrid();
-        }                        
+        }
     },
     formato: function (numero) {
         var d, e;
@@ -210,6 +210,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 beanTemp.lstSendManual.push(this.lstSendManual[i])
             }
         }
+
+        var gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+        for (var i = 0; i < gridDataAdjustment.data.length; i++) {
+            this.lstAdjustment[i].CERROR = gridDataAdjustment.data.items[i].data.CERROR;
+            this.lstAdjustment[i].A1531NREF = gridDataAdjustment.data.items[i].data.A1531NREF;
+            this.lstAdjustment[i].A1531CAPL = gridDataAdjustment.data.items[i].data.A1531CAPL;
+            this.lstAdjustment[i].A1531VFOP = gridDataAdjustment.data.items[i].data.A1531VFOP;
+            this.lstAdjustment[i].A720PNR = gridDataAdjustment.data.items[i].data.A720PNR;
+            this.lstAdjustment[i].A1531TKT = gridDataAdjustment.data.items[i].data.A1531TKT;
+            this.lstAdjustment[i].A720FECVTA = gridDataAdjustment.data.items[i].data.A720FECVTA;
+            this.lstAdjustment[i].A720SEQ = gridDataAdjustment.data.items[i].data.A720SEQ;
+            this.lstAdjustment[i].A720GRUPO = gridDataAdjustment.data.items[i].data.A720GRUPO;
+            this.lstAdjustment[i].STMANUAL = 'Adjustment';
+            beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data)
+        }
+
         //console.log(beanTemp);
 
     },
@@ -299,7 +315,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 for (var i = 0; i < res.data.length; i++) {
                     meDE.lstSendManual.push(res.data[i]);
                 }
-                
+
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
                         Ext.create('Ext.data.Store', {data: meDE.lstSendManual, autoLoad: true})
                         );
@@ -522,6 +538,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var monto_venta = 0;
         for (var j = 0; j < this.lstSendManual.length; j++) {
             suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP + this.lstSendManual[j].SADJUST;
+        }
+
+        for (var i = 0; i < this.lstAdjustment.length; i++) {
+            suma_montos = suma_montos + this.lstAdjustment[i].A1531VFOP;
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
@@ -846,6 +866,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             this.lstSendManual.push(dataRow1.data);
             this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP + dataRow1.data.SADJUST;
         }
+
+        for (var i = 0; i < this.lstAdjustment.length; i++) {
+            this.sumAmount = this.sumAmount + this.lstAdjustment[i].A1531VFOP;
+        }
+
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
     },
@@ -858,8 +883,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             }
         }).show();
     },
-    onAdjust: function(grid, rowIndex, colIndex) {
-        Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
-        var rec = grid.getStore().getAt(rowIndex).data;
+    onAdjust: function (grid, rowIndex, colIndex) {
+
+        if (this.sumAmount < this.bean.TGROSAMOUN) {
+            this.lstAdjustment = [];
+            Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+            var rec = Object.create(grid.getStore().getAt(rowIndex).data);
+
+            rec.A1531VFOP = this.bean.TGROSAMOUN - this.sumAmount;
+            rec.tot_VFOP = this.bean.TGROSAMOUN - this.sumAmount;
+            rec.A720AGENTE = $('#menuUser').text();
+            rec.CERROR = '01';
+
+            this.lstAdjustment.push(rec);
+
+            Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                    Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                    );
+            this.calcularMontos();
+        } else {
+            global.Msg({msg: 'The sum amount is higher or equal than the transaction amount.'});
+        }
+
     }
 });
