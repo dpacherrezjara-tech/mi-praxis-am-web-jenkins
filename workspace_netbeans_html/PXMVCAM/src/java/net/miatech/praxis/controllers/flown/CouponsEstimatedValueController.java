@@ -196,10 +196,7 @@ public class CouponsEstimatedValueController extends BaseController {
             Cell CH1_15 = row.createCell(15);
             Cell CH1_16 = row.createCell(16);
             Cell CH1_17 = row.createCell(17);
-            Cell CH1_18 = null;
-            if(listaData.get(0).strDescSTNEW.equals("D")){
-               CH1_18 = row.createCell(18);
-            }
+            Cell CH1_18 = row.createCell(18);
 
             CH1_00.setCellValue("Tickets");
             CH1_01.setCellValue("Seq");
@@ -218,9 +215,7 @@ public class CouponsEstimatedValueController extends BaseController {
             CH1_15.setCellValue("Exch.");
             CH1_16.setCellValue("Estimated Value");
             CH1_17.setCellValue("Create");
-            if(listaData.get(0).strDescSTNEW.equals("D")){
-                CH1_18.setCellValue("Flag");
-            }
+            CH1_18.setCellValue("Flag");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -240,9 +235,7 @@ public class CouponsEstimatedValueController extends BaseController {
             CH1_15.setCellStyle(headerStyle);
             CH1_16.setCellStyle(headerStyle);
             CH1_17.setCellStyle(headerStyle);
-            if(listaData.get(0).strDescSTNEW.equals("D")){
-                CH1_18.setCellStyle(headerStyle);
-            }
+            CH1_18.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -262,9 +255,7 @@ public class CouponsEstimatedValueController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
-            if(listaData.get(0).strDescSTNEW.equals("D")){
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 18, 18));
-            }
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 18, 18));
 
             //*******************
             
@@ -343,10 +334,7 @@ public class CouponsEstimatedValueController extends BaseController {
                 Cell rcel25 = row.createCell(15);
                 Cell rcel26 = row.createCell(16);
                 Cell rcel27 = row.createCell(17);
-                Cell rcel28 = null;
-                if(listaData.get(0).strDescSTNEW.equals("D")){
-                    rcel28 = row.createCell(18);
-                }
+                Cell rcel28 = row.createCell(18);
 
                 rcell0.setCellValue(listaData.get(vi).strTicket);
                 rcell1.setCellValue(listaData.get(vi).SEQ);
@@ -366,9 +354,7 @@ public class CouponsEstimatedValueController extends BaseController {
                 rcel25.setCellValue(listaData.get(vi).TCMUS);
                 rcel26.setCellValue(listaData.get(vi).VCPUS);
                 rcel27.setCellValue(listaData.get(vi).strFormatFVTA);
-                if(listaData.get(0).strDescSTNEW.equals("D")){
-                    rcel28.setCellValue(listaData.get(vi).strDescSTNEW);
-                }
+                rcel28.setCellValue(listaData.get(vi).strDescSTNEW);
 
                 iter.next();
                 ++vi;
@@ -392,9 +378,7 @@ public class CouponsEstimatedValueController extends BaseController {
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
-            if(listaData.get(0).strDescSTNEW.equals("D")){
-                sheet.autoSizeColumn(18, true);
-            }
+            sheet.autoSizeColumn(18, true);
             /**
              * fileNameDownload = Nombre de descarga
              */
