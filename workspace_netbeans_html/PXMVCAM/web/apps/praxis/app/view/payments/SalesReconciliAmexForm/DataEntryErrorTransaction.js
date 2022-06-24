@@ -1,9 +1,9 @@
-var storeComboMsi = Ext.create('Ext.data.SimpleStore', {
+var storeComboAdj = Ext.create('Ext.data.SimpleStore', {
     fields: ['code', 'name'],
     data: [
-        ["1", "Ajuste 1"],
-        ["2", "Ajuste 2"],
-        ["3", "Ajuste 3"]
+        ["01", "Ajuste 1"],
+        ["02", "Ajuste 2"],
+        ["03", "Ajuste 3"]
     ]
 });
 Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
@@ -1049,6 +1049,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
+                                    plugins: [
+                                        {
+                                            ptype: 'cellediting',
+                                            clicksToEdit: 1
+                                        }
+                                    ],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1119,7 +1125,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
-                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 70,
+                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 55,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1237,14 +1243,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                         ]
                                     }
                                 },
-                                {xtype: 'tbspacer', height: 5},
+                                {xtype: 'tbspacer', height: 2},
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAdjustment',
-                                    width: 870,
+                                    width: 880,
                                     height: 60,
                                     hidden: true,
                                     columnLines: true,
+                                    plugins: [
+                                        {
+                                            ptype: 'cellediting',
+                                            clicksToEdit: 1
+                                        }
+                                    ],
                                     hideHeaders: true,
                                     columns: {
                                         defaults: {
@@ -1293,7 +1305,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
-                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 70,
+                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 55,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1346,6 +1358,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     metaData.style = "text-align:center;";
 
                                                     return value;
+                                                }
+                                            },
+                                            {text: 'Adjustment Type', width: 100, dataIndex: 'CERROR',
+                                                renderer: function (value, meta, record, row, col) {
+                                                    meta.style = "background-color:#fae2a0;";
+                                                    switch (value) {
+                                                        case '':
+                                                            return 'Ajuste 1';
+                                                        case '01':
+                                                            return 'Ajuste 1';
+                                                        case '02':
+                                                            return 'Ajuste 2';
+                                                        case '03':
+                                                            return 'Ajuste 3';
+                                                        default:
+                                                            return 'Ajuste 1';
+                                                    }
+                                                },
+                                                editor: {
+                                                    xtype: 'combo',
+                                                    store: storeComboAdj,
+                                                    editable: false,
+                                                    valueField: 'code',
+                                                    displayField: 'name',
+                                                    value: '',
                                                 }
                                             },
                                         ]

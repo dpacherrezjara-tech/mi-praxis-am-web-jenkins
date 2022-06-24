@@ -1928,6 +1928,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjustment");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -2584,6 +2585,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjustment");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04466(?,?,?,?,?,?,?,?,?)}";
 
@@ -2716,6 +2718,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjustment");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3127,6 +3130,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjustment");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -3392,7 +3396,7 @@ public class SalesReconciliAmexDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -3415,9 +3419,11 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(15, beanDet.A720SEQ.trim());
                     cstmt01.setString(16, beanDet.A720GRUPO.trim());
                     cstmt01.setDouble(17, beanDet.SADJUST);
-                    cstmt01.setString(18, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(19, Functions.getFechaActual());
-                    cstmt01.setString(20, Functions.getHoraActual());
+                    cstmt01.setString(18, beanDet.CERROR);
+                    cstmt01.setString(19, beanDet.STMANUAL);
+                    cstmt01.setString(20, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(21, Functions.getFechaActual());
+                    cstmt01.setString(22, Functions.getHoraActual());
 
                     cstmt01.execute();
                 }
@@ -3899,6 +3905,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjustment");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -4014,6 +4021,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjustment");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
