@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                             padding: '20 0 0 0',
                             id: prototype.id + '-gridData',
                             height: 540,
-                            width: 1291,
+                            width: 1331,
                             columnLines: true,
                             resizable: false,
                             columns: {
@@ -201,7 +201,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             {text: 'Date', width: 80, dataIndex: 'strFormatFVTA'}
                                         ]
                                     },
-                                    {id:'EstimatedValue-col01_flag',text: 'Flag', width: 40, dataIndex: 'strDescSTNEW',hidden: true}
+                                    {text: 'Flag', width: 40, dataIndex: 'strDescSTNEW'}
 
                                     /*
 
