@@ -1,7 +1,7 @@
 var storeComboAdj = Ext.create('Ext.data.SimpleStore', {
     fields: ['code', 'name'],
     data: [
-        ["01", "Ajuste 1"],
+        ["01", "DIFERENCIA LIQUIDACION VS SALE"],
         ["02", "Ajuste 2"],
         ["03", "Ajuste 3"]
     ]
@@ -1035,17 +1035,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 905,
+                            width: 956,
                             height: 245,
                             hidden: false,
                             autoScroll: true,
                             bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 100',
+                            margin: '10 2 12 40',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 891,
+                                    width: 952,
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1077,10 +1077,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                                     if (record.data.FDESGLOSE === '1') {
                                                         value = 'Concil.'
+                                                    }                                                    
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Doc.<br>Type', dataIndex: 'descTDOC', width: 61,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    if (record.data.TDOC === 'A') {
+                                                        metaData.tdAttr = 'data-qtip="' + record.data.desCERROR + '"';
                                                     }
                                                     return value;
                                                 }
                                             },
+                                            /*{text: 'Adj.<br>Type', dataIndex: 'desCERROR', width: 65,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },*/
                                             {
                                                 text: 'Credit Card',
                                                 defaults: {
@@ -1247,7 +1262,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAdjustment',
-                                    width: 880,
+                                    width: 952,
                                     height: 60,
                                     hidden: true,
                                     columnLines: true,
@@ -1360,20 +1375,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Adjustment Type', width: 100, dataIndex: 'CERROR',
+                                            {text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
                                                 renderer: function (value, meta, record, row, col) {
                                                     meta.style = "background-color:#fae2a0;";
                                                     switch (value) {
                                                         case '':
-                                                            return 'Ajuste 1';
+                                                            return 'DIFERENCIA LIQUIDACION VS SALE';
                                                         case '01':
-                                                            return 'Ajuste 1';
+                                                            return 'DIFERENCIA LIQUIDACION VS SALE';
                                                         case '02':
                                                             return 'Ajuste 2';
                                                         case '03':
                                                             return 'Ajuste 3';
                                                         default:
-                                                            return 'Ajuste 1';
+                                                            return 'DIFERENCIA LIQUIDACION VS SALE';
                                                     }
                                                 },
                                                 editor: {
