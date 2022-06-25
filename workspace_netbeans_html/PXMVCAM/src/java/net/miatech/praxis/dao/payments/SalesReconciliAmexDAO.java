@@ -1923,12 +1923,13 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
+        hmDescReglas.put("5", "Transact.");
 
         HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
-        hmDescTDOC.put("A", "Adjustment");
+        hmDescTDOC.put("A", "Adjust.");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -2224,6 +2225,12 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        
+        HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
+        hmDescTDOC.put("", "");
+        hmDescTDOC.put("S", "Sales");
+        hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjust.");
 
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
@@ -2363,12 +2370,13 @@ public class SalesReconciliAmexDAO {
                     beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
+                    beanTkt.desCERROR = rst.getString("desCERROR").trim();
 
-                    if (beanTkt.CERROR.equals("")) {
+                    /*if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
                     } else {
                         beanTkt.desCERROR = "Difference";
-                    }
+                    }*/
 
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
@@ -2397,6 +2405,13 @@ public class SalesReconciliAmexDAO {
                         beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                     } else {
                         beanTkt.descSTVAL = rst.getString("STVAL").trim();
+                    }
+                    
+                    beanTkt.TDOC = rst.getString("TDOC").trim();
+                    if (hmDescTDOC.containsKey(rst.getString("TDOC").trim())) {
+                        beanTkt.descTDOC = hmDescTDOC.get(rst.getString("TDOC").trim()).toString();
+                    } else {
+                        beanTkt.descTDOC = rst.getString("TDOC").trim();
                     }
 
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
@@ -2573,6 +2588,7 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
+        hmDescReglas.put("5", "Transact.");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -2585,7 +2601,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
-        hmDescTDOC.put("A", "Adjustment");
+        hmDescTDOC.put("A", "Adjust.");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04466(?,?,?,?,?,?,?,?,?)}";
 
@@ -2713,12 +2729,13 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
+        hmDescReglas.put("5", "Transact.");
 
         HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
-        hmDescTDOC.put("A", "Adjustment");
+        hmDescTDOC.put("A", "Adjust.");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3118,6 +3135,7 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
+        hmDescReglas.put("5", "Transact.");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -3130,7 +3148,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
-        hmDescTDOC.put("A", "Adjustment");
+        hmDescTDOC.put("A", "Adjust.");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -3900,12 +3918,13 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
+        hmDescReglas.put("5", "Transact.");
 
         HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
-        hmDescTDOC.put("A", "Adjustment");
+        hmDescTDOC.put("A", "Adjust.");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -4016,12 +4035,13 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
+        hmDescReglas.put("5", "Transact.");
 
         HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
-        hmDescTDOC.put("A", "Adjustment");
+        hmDescTDOC.put("A", "Adjust.");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");

@@ -426,7 +426,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     this.bean.IN_AUTHE = Ext.getCmp(prototype.id + '-txtAuthE').getValue();
                     this.bean.IN_CERROR = "";
                     this.bean.IN_COMPLEMENT = "";
-                    this.bean.IN_TDOCError = "";
+                    this.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
+                    //this.bean.IN_TDOCError = "";
 
                     var beanString = JSON.stringify(this.bean);
                     searchParamsMainSettlement = {

@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                if (['1', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
+                if (['1','5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
@@ -130,7 +130,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
         
-        if (['1', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
+        if (['1','5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
             this.getBreakdownDataGridForMatch();
         } else {
             this.getBreakdownDataGrid();
