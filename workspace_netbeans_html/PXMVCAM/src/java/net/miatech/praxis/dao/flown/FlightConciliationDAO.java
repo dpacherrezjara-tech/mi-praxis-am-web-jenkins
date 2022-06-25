@@ -2289,6 +2289,83 @@ public class FlightConciliationDAO {
         return result;
     }
 
+    public A3729Filter SQP04400(List<A3729Filter> lstTKT) throws Exception {
+        //REALIZA UPDATE EN A3729.
+
+        boolean correct = false;
+        A3729Filter result = new A3729Filter();;
+        List<A3729Filter> lst_tkt_error = new ArrayList<A3729Filter>();
+        int QTY_UPDATE = 0;
+
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04400(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            for (int i = 0; i < lstTKT.size(); ++i) {
+
+                A3729Filter item = lstTKT.get(i);
+                try {
+                    cstmt.registerOutParameter(19, Types.INTEGER);
+
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt.setString(2, item.DFLIGHT.trim());
+                    cstmt.setString(3, item.NFLIGHT.trim());
+                    cstmt.setString(4, item.LNAME.trim());
+                    cstmt.setString(5, item.FNAME.trim());
+                    cstmt.setString(6, item.TPAX.trim());
+                    cstmt.setString(7, item.CHAIR.trim());
+                    cstmt.setString(8, item.strTicket.trim());
+                    cstmt.setString(9, item.STVAL.trim());
+                    cstmt.setString(10, item.CDEPART.trim());
+                    cstmt.setString(11, item.CARRIVA.trim());
+                    cstmt.setString(12, item.STVCR.trim());
+                    cstmt.setString(13, item.FSABRE.trim());
+                    cstmt.setString(14, item.STASABR.trim());
+                    cstmt.setString(15, item.CUPON.trim());
+                    cstmt.setString(16, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(17, Functions.getFechaActual());
+                    cstmt.setString(18, Functions.getHoraActual());
+                    cstmt.setInt(19, 0);
+
+                    cstmt.execute();
+
+                    item.qty_update = cstmt.getInt(19);
+                    QTY_UPDATE += item.qty_update;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            result.qty_update = QTY_UPDATE;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return result;
+    }
+    
     public String SQP04320(A3729Filter filter) throws SQLException, Exception {
         //REALIZA UPDATE  DE UN REGISTRO EN LA TABLA A3729.
 

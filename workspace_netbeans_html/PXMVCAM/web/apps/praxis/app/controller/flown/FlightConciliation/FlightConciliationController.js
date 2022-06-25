@@ -1449,7 +1449,45 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
         
     },
-
+    
+    onFileLoad_INF: function() {
+        
+        var me = this;
+        var file = Ext.getCmp(prototype.id + '-file_INF').getValue();
+        console.log(file);
+        
+        if (file === '') {
+            Ext.MessageBox.alert('PRAXIS', "::: Select only one file. Please :::", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.id + '-file_INF').focus();", 100);
+            });
+            return;
+        }
+        
+        var form = Ext.getCmp(prototype.id + '-form-01_INF').getForm();
+        form.submit({
+            url: prototype.url + '/updateCouponA3729_INF',
+            waitMsg: 'Uploading your sure to upload the file...',
+            params: {fileName: file},
+            success: function (fp, o) {
+                var res = Ext.decode(o.response.responseText);
+                console.log(res);
+                
+                if (res.success) {
+                    var msjResult = res.objResult.qty_update;
+                    global.Msg({msg: 'Updated ' + msjResult + ' tickets.' });
+                }else{
+                    global.Msg({msg: "Error Excel Load"});
+                }
+//                Ext.getCmp(prototype.id+'-btn-upload_INF').enable(true);
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+        
+    },
+    
     exportExcel: function(_path) {
         console.log('exportExcel');
         console.log(_path);
