@@ -585,7 +585,7 @@ public class SalesReconciliBoomerDAO {
 
                     if (beanTkt.difIMPORT < 0) {
                         beanTkt.REVCON = "NC";
-                    } else {
+                    } else if (beanTkt.difIMPORT > 0) {
                         beanTkt.REVCON = "ND";
                     }
 
@@ -726,7 +726,7 @@ public class SalesReconciliBoomerDAO {
 
                 if (beanTkt.difIMPORT < 0) {
                     beanTkt.REVCON = "NC";
-                } else {
+                } else if (beanTkt.difIMPORT > 0) {
                     beanTkt.REVCON = "ND";
                 }
 
@@ -1488,7 +1488,7 @@ public class SalesReconciliBoomerDAO {
 
                     if (beanTkt.difIMPORT < 0) {
                         beanTkt.REVCON = "NC";
-                    } else {
+                    } else if (beanTkt.difIMPORT > 0) {
                         beanTkt.REVCON = "ND";
                     }
 
