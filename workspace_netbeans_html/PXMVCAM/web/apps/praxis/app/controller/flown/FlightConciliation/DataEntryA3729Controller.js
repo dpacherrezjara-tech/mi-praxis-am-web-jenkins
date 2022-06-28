@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 //                }
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
+                Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
@@ -304,7 +304,30 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     onCancelClick: function(btn) {
         this.view.close();
     },
-
+    
+    onDeleteClick: function (btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to delete ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    var beanTemp = {};
+                    this.llenarData(beanTemp);
+                    beanTemp.option = 'D';
+                   // beanTemp.CCUST = this.p.bean.CCUST;
+                
+                  //  beanTemp.beanString = JSON.stringify(meDE.beanResult);
+                    this.validTktExists(beanTemp);
+                    
+                }
+            }
+        });
+    },
+    
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA3729">
     MaintenanceA3729: function(beanTemp) {
         
@@ -330,7 +353,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                     if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
-
                 } else
                     global.Msg({msg: ''});
             }
