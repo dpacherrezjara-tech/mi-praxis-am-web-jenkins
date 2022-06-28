@@ -292,7 +292,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
         var txtCTA = Ext.getCmp(prototype.id + '-txtCTA').getValue();
         var txtSCTA = Ext.getCmp(prototype.id + '-txtSCTA').getValue();
         var txtEQUI = Ext.getCmp(prototype.id + '-txtEQUI').getValue();
-        var txtICIA = Ext.getCmp(prototype.id + '-txtUNIDA').getValue();
+        var txtICIA = Ext.getCmp(prototype.id + '-txtICIA').getValue();
         
         var txtStartDate = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtStartDate').getValue(), 'Ymd');
         var txtEndDate = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtEndDate').getValue(), 'Ymd');
