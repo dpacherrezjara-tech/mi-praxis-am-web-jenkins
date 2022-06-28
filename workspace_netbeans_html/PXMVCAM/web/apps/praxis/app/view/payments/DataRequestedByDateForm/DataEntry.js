@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
     title: 'PNR - Form',
     header: true,
     height: 640,
-    width: 1200,
+    width: 1320,
     resizable: false,
     layout: 'fit',
     modal: true,
