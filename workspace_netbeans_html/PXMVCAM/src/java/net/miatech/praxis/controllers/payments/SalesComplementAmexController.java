@@ -377,6 +377,7 @@ public class SalesComplementAmexController extends BaseController {
             Cell CH1_25 = row1.createCell(25);
             Cell CH1_26 = row1.createCell(26);
             Cell CH1_27 = row1.createCell(27);
+            Cell CH1_28 = row1.createCell(28);
 
             CH1_0.setCellValue("Plusgrade ID");
             CH1_1.setCellValue("Token");
@@ -398,14 +399,15 @@ public class SalesComplementAmexController extends BaseController {
             CH1_17.setCellValue("");
             CH1_18.setCellValue("");
             CH1_19.setCellValue("Qty");
-            CH1_20.setCellValue("PNR");
-            CH1_21.setCellValue("EMD");
-            CH1_22.setCellValue("Accounting");
-            CH1_23.setCellValue("");
-            CH1_24.setCellValue("Error");
-            CH1_25.setCellValue("");
-            CH1_26.setCellValue("Add Pax");
-            CH1_27.setCellValue("");
+            CH1_20.setCellValue("Plusgrade");
+            CH1_21.setCellValue("PNR");
+            CH1_22.setCellValue("EMD");
+            CH1_23.setCellValue("Accounting");
+            CH1_24.setCellValue("");
+            CH1_25.setCellValue("Error");
+            CH1_26.setCellValue("");
+            CH1_27.setCellValue("Add Pax");
+            CH1_28.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -435,20 +437,21 @@ public class SalesComplementAmexController extends BaseController {
             CH1_25.setCellStyle(headerStyle);
             CH1_26.setCellStyle(headerStyle);
             CH1_27.setCellStyle(headerStyle);
+            CH1_28.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 21, 21));
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 18));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 25));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 26, 27));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 26));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 27, 28));
             ++vj;
             //============================================
 
@@ -482,6 +485,7 @@ public class SalesComplementAmexController extends BaseController {
             Cell CH2_25 = row2.createCell(25);
             Cell CH2_26 = row2.createCell(26);
             Cell CH2_27 = row2.createCell(27);
+            Cell CH2_28 = row2.createCell(28);
 
             CH2_0.setCellValue("");
             CH2_1.setCellValue("");
@@ -503,14 +507,15 @@ public class SalesComplementAmexController extends BaseController {
             CH2_17.setCellValue("Country");
             CH2_18.setCellValue("Date");
             CH2_19.setCellValue("Tkts");
-            CH2_20.setCellValue("");
-            CH2_21.setCellValue("Number");
-            CH2_22.setCellValue("Date");
-            CH2_23.setCellValue("ID");
-            CH2_24.setCellValue("Code");
-            CH2_25.setCellValue("Description");
-            CH2_26.setCellValue("EMD Number");
-            CH2_27.setCellValue("Ticket Number");
+            CH2_20.setCellValue("VS Chargeback");
+            CH2_21.setCellValue("");
+            CH2_22.setCellValue("Number");
+            CH2_23.setCellValue("Date");
+            CH2_24.setCellValue("ID");
+            CH2_25.setCellValue("Code");
+            CH2_26.setCellValue("Description");
+            CH2_27.setCellValue("EMD Number");
+            CH2_28.setCellValue("Ticket Number");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -540,6 +545,7 @@ public class SalesComplementAmexController extends BaseController {
             CH2_25.setCellStyle(headerStyle);
             CH2_26.setCellStyle(headerStyle);
             CH2_27.setCellStyle(headerStyle);
+            CH2_28.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -576,6 +582,7 @@ public class SalesComplementAmexController extends BaseController {
                 Cell rcell25 = row1.createCell(25);
                 Cell rcell26 = row1.createCell(26);
                 Cell rcell27 = row1.createCell(27);
+                Cell rcell28 = row1.createCell(28);
 
                 rcell0.setCellValue(listaData.get(vi).PLUSGRAID);
                 rcell1.setCellValue(listaData.get(vi).PAYTOKEN);
@@ -597,14 +604,15 @@ public class SalesComplementAmexController extends BaseController {
                 rcell17.setCellValue(listaData.get(vi).SCOUNTRY);
                 rcell18.setCellValue(listaData.get(vi).SDATES);
                 rcell19.setCellValue(listaData.get(vi).QTYTKT);
-                rcell20.setCellValue(listaData.get(vi).PNR);
-                rcell21.setCellValue(listaData.get(vi).EMDNUMBER);
-                rcell22.setCellValue(listaData.get(vi).FCONT);
-                rcell23.setCellValue(listaData.get(vi).IDCON);
-                rcell24.setCellValue(listaData.get(vi).CERROR);
-                rcell25.setCellValue(listaData.get(vi).DES_CERROR);
-                rcell26.setCellValue(listaData.get(vi).ADDPAXEMD);
-                rcell27.setCellValue(listaData.get(vi).ADDPAXTKT);
+                rcell20.setCellValue(listaData.get(vi).descFAMEXCHG);
+                rcell21.setCellValue(listaData.get(vi).PNR);
+                rcell22.setCellValue(listaData.get(vi).EMDNUMBER);
+                rcell23.setCellValue(listaData.get(vi).FCONT);
+                rcell24.setCellValue(listaData.get(vi).IDCON);
+                rcell25.setCellValue(listaData.get(vi).CERROR);
+                rcell26.setCellValue(listaData.get(vi).DES_CERROR);
+                rcell27.setCellValue(listaData.get(vi).ADDPAXEMD);
+                rcell28.setCellValue(listaData.get(vi).ADDPAXTKT);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -638,6 +646,7 @@ public class SalesComplementAmexController extends BaseController {
             sheet.autoSizeColumn(25, true);
             sheet.autoSizeColumn(26, true);
             sheet.autoSizeColumn(27, true);
+            sheet.autoSizeColumn(28, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

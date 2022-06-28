@@ -149,20 +149,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Sale',
-                                             id: prototype.id + '-adgTitFecha',
-                                             defaults: {
-                                             menuDisabled: true,
-                                             sortable: false,
-                                             align: 'center'
-                                             },
-                                             columns: [
-                                             {
-                                             text: 'Date', dataIndex: 'SDATE', width: 100
-                                             }
-                                             ]
-                                             },*/
                                             {
                                                 text: 'Credit Card',
                                                 defaults: {
@@ -286,6 +272,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                     }
                                                 }
+                                            },
+                                            {
+                                                text: 'Plusgrade',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'VS Chargeback', dataIndex: 'descFAMEXCHG', width: 100
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'PNR', dataIndex: 'PNR', width: 80,

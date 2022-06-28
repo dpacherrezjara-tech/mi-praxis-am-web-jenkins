@@ -71,6 +71,7 @@ public class A4124 {
     public String STVAL = "";
     public String FCONT = "";
     public String IDCON = "";
+    public String FAMEXCHG = "";
     public int QTYTKT = 0;
     public String CERROR = "";
     public String USCR = "";
