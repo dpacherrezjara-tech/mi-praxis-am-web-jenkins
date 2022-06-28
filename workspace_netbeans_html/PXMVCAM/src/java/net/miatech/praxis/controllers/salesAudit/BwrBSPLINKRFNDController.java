@@ -317,7 +317,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
                 CH_09.setCellValue(lst.get(vi).A3389TOTAL);
                 CH_10.setCellValue(lst.get(vi).A3389PAX);
                 CH_11.setCellValue(lst.get(vi).A3389REGAS);
-                CH_12.setCellValue(lst.get(vi).A3389RAAG);
+                CH_12.setCellValue(lst.get(vi).A3389RACN);
                 CH_13.setCellValue(lst.get(vi).A3389STATO);
                 CH_14.setCellValue(lst.get(vi).A3389FLAG);
                 CH_15.setCellValue(lst.get(vi).A3389DIAS);

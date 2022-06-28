@@ -344,6 +344,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTCARD1 = Float.parseFloat(getCellValue(currentRow.getCell(11)));
                                         fileA4076.A4076MONTCARD1 = fijarNumero(fileA4076.A4076MONTCARD1);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTCARD1 = Integer.valueOf(getCellValue(currentRow.getCell(11)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTCARD1 = Float.parseFloat(getCellValue(currentRow.getCell(11)));
                                 //fileA4076.A4076MONTCARD1 = fijarNumero(fileA4076.A4076MONTCARD1);
@@ -402,6 +405,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTCARD2 = Float.parseFloat(getCellValue(currentRow.getCell(15)));
                                         fileA4076.A4076MONTCARD2 = fijarNumero(fileA4076.A4076MONTCARD2);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTCARD2 = Integer.valueOf(getCellValue(currentRow.getCell(15)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTCARD2 = Float.parseFloat(getCellValue(currentRow.getCell(15)));
                                 //fileA4076.A4076MONTCARD2 = fijarNumero(fileA4076.A4076MONTCARD2);
@@ -424,6 +430,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076TARTK = Float.parseFloat(getCellValue(currentRow.getCell(17)));
                                         fileA4076.A4076TARTK = fijarNumero(fileA4076.A4076TARTK);
+                                        break;
+                                    default:
+                                        fileA4076.A4076TARTK = Double.parseDouble(getCellValue(currentRow.getCell(17)));
                                         break;
                                 }
                                 //fileA4076.A4076TARTK = Float.parseFloat(getCellValue(currentRow.getCell(17)));
@@ -457,6 +466,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076EQVTK = Float.parseFloat(getCellValue(currentRow.getCell(19)));
                                         fileA4076.A4076EQVTK = fijarNumero(fileA4076.A4076EQVTK);
+                                        break;
+                                    default:
+                                        fileA4076.A4076EQVTK = Double.parseDouble(getCellValue(currentRow.getCell(19)));
                                         break;
                                 }
                                 //fileA4076.A4076EQVTK = Float.parseFloat(getCellValue(currentRow.getCell(19)));
@@ -507,6 +519,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX1 = Float.parseFloat(getCellValue(currentRow.getCell(22)));
                                         fileA4076.A4076MONTAX1 = fijarNumero(fileA4076.A4076MONTAX1);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX1 = Double.parseDouble(getCellValue(currentRow.getCell(22)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX1 = Float.parseFloat(getCellValue(currentRow.getCell(22)));
                                 //fileA4076.A4076MONTAX1 = fijarNumero(fileA4076.A4076MONTAX1);
@@ -546,6 +561,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX2 = Float.parseFloat(getCellValue(currentRow.getCell(25)));
                                         fileA4076.A4076MONTAX2 = fijarNumero(fileA4076.A4076MONTAX2);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX2 = Double.parseDouble(getCellValue(currentRow.getCell(25)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX2 = Float.parseFloat(getCellValue(currentRow.getCell(25)));
@@ -588,6 +606,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX3 = Float.parseFloat(getCellValue(currentRow.getCell(28)));
                                         fileA4076.A4076MONTAX3 = fijarNumero(fileA4076.A4076MONTAX3);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX3 = Double.parseDouble(getCellValue(currentRow.getCell(28)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX3 = Float.parseFloat(getCellValue(currentRow.getCell(28)));
                                 //fileA4076.A4076MONTAX3 = fijarNumero(fileA4076.A4076MONTAX3);
@@ -628,6 +649,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX4 = Float.parseFloat(getCellValue(currentRow.getCell(31)));
                                         fileA4076.A4076MONTAX4 = fijarNumero(fileA4076.A4076MONTAX4);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX4 = Double.parseDouble(getCellValue(currentRow.getCell(31)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX4 = Float.parseFloat(getCellValue(currentRow.getCell(31)));
@@ -670,6 +694,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX5 = Float.parseFloat(getCellValue(currentRow.getCell(34)));
                                         fileA4076.A4076MONTAX5 = fijarNumero(fileA4076.A4076MONTAX5);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX5 = Double.parseDouble(getCellValue(currentRow.getCell(34)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX5 = Float.parseFloat(getCellValue(currentRow.getCell(34)));
                                 //fileA4076.A4076MONTAX5 = fijarNumero(fileA4076.A4076MONTAX5);
@@ -710,6 +737,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX6 = Float.parseFloat(getCellValue(currentRow.getCell(37)));
                                         fileA4076.A4076MONTAX6 = fijarNumero(fileA4076.A4076MONTAX6);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX6 = Double.parseDouble(getCellValue(currentRow.getCell(37)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX6 = Float.parseFloat(getCellValue(currentRow.getCell(37)));
@@ -752,6 +782,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX7 = Float.parseFloat(getCellValue(currentRow.getCell(40)));
                                         fileA4076.A4076MONTAX7 = fijarNumero(fileA4076.A4076MONTAX7);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX7 = Double.parseDouble(getCellValue(currentRow.getCell(40)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX7 = Float.parseFloat(getCellValue(currentRow.getCell(40)));
                                 //fileA4076.A4076MONTAX7 = fijarNumero(fileA4076.A4076MONTAX7);
@@ -792,6 +825,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX8 = Float.parseFloat(getCellValue(currentRow.getCell(43)));
                                         fileA4076.A4076MONTAX8 = fijarNumero(fileA4076.A4076MONTAX8);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX8 = Double.parseDouble(getCellValue(currentRow.getCell(43)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX8 = Float.parseFloat(getCellValue(currentRow.getCell(43)));
@@ -834,6 +870,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX9 = Float.parseFloat(getCellValue(currentRow.getCell(46)));
                                         fileA4076.A4076MONTAX9 = fijarNumero(fileA4076.A4076MONTAX9);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX9 = Double.parseDouble(getCellValue(currentRow.getCell(46)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX9 = Float.parseFloat(getCellValue(currentRow.getCell(46)));
                                 //fileA4076.A4076MONTAX9 = fijarNumero(fileA4076.A4076MONTAX9);
@@ -875,6 +914,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX10 = Float.parseFloat(getCellValue(currentRow.getCell(49)));
                                         fileA4076.A4076MONTAX10 = fijarNumero(fileA4076.A4076MONTAX10);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX10 = Double.parseDouble(getCellValue(currentRow.getCell(49)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX10 = Float.parseFloat(getCellValue(currentRow.getCell(49)));
                                 //fileA4076.A4076MONTAX10 = fijarNumero(fileA4076.A4076MONTAX10);
@@ -914,6 +956,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX11 = Float.parseFloat(getCellValue(currentRow.getCell(52)));
                                         fileA4076.A4076MONTAX11 = fijarNumero(fileA4076.A4076MONTAX11);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX11 = Double.parseDouble(getCellValue(currentRow.getCell(52)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX11 = Float.parseFloat(getCellValue(currentRow.getCell(52)));
@@ -956,6 +1001,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX12 = Float.parseFloat(getCellValue(currentRow.getCell(55)));
                                         fileA4076.A4076MONTAX12 = fijarNumero(fileA4076.A4076MONTAX12);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX12 = Double.parseDouble(getCellValue(currentRow.getCell(55)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX12 = Float.parseFloat(getCellValue(currentRow.getCell(55)));
                                 //fileA4076.A4076MONTAX12 = fijarNumero(fileA4076.A4076MONTAX12);
@@ -997,6 +1045,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX13 = Float.parseFloat(getCellValue(currentRow.getCell(58)));
                                         fileA4076.A4076MONTAX13 = fijarNumero(fileA4076.A4076MONTAX13);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX13 = Double.parseDouble(getCellValue(currentRow.getCell(58)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX13 = Float.parseFloat(getCellValue(currentRow.getCell(58)));
                                 //fileA4076.A4076MONTAX13 = fijarNumero(fileA4076.A4076MONTAX13);
@@ -1036,6 +1087,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX14 = Float.parseFloat(getCellValue(currentRow.getCell(61)));
                                         fileA4076.A4076MONTAX14 = fijarNumero(fileA4076.A4076MONTAX14);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX14 = Double.parseDouble(getCellValue(currentRow.getCell(61)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX14 = Float.parseFloat(getCellValue(currentRow.getCell(61)));
@@ -1078,6 +1132,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX15 = Float.parseFloat(getCellValue(currentRow.getCell(64)));
                                         fileA4076.A4076MONTAX15 = fijarNumero(fileA4076.A4076MONTAX15);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX15 = Double.parseDouble(getCellValue(currentRow.getCell(64)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX15 = Float.parseFloat(getCellValue(currentRow.getCell(64)));
                                 //fileA4076.A4076MONTAX15 = fijarNumero(fileA4076.A4076MONTAX15);
@@ -1117,6 +1174,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076MONTAX16 = Float.parseFloat(getCellValue(currentRow.getCell(67)));
                                         fileA4076.A4076MONTAX16 = fijarNumero(fileA4076.A4076MONTAX16);
+                                        break;
+                                    default:
+                                        fileA4076.A4076MONTAX16 = Double.parseDouble(getCellValue(currentRow.getCell(67)));
                                         break;
                                 }
                                 //fileA4076.A4076MONTAX16 = Float.parseFloat(getCellValue(currentRow.getCell(67)));
@@ -1160,6 +1220,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX17 = Float.parseFloat(getCellValue(currentRow.getCell(70)));
                                         fileA4076.A4076MONTAX17 = fijarNumero(fileA4076.A4076MONTAX17);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX17 = Double.parseDouble(getCellValue(currentRow.getCell(70)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX17 = Float.parseFloat(getCellValue(currentRow.getCell(70)));
                                 //fileA4076.A4076MONTAX17 = fijarNumero(fileA4076.A4076MONTAX17);
@@ -1200,6 +1263,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076MONTAX18 = Float.parseFloat(getCellValue(currentRow.getCell(73)));
                                         fileA4076.A4076MONTAX18 = fijarNumero(fileA4076.A4076MONTAX18);
                                         break;
+                                    default:
+                                        fileA4076.A4076MONTAX18 = Double.parseDouble(getCellValue(currentRow.getCell(73)));
+                                        break;
                                 }
                                 //fileA4076.A4076MONTAX18 = Float.parseFloat(getCellValue(currentRow.getCell(73)));
                                 //fileA4076.A4076MONTAX18 = fijarNumero(fileA4076.A4076MONTAX18);
@@ -1224,6 +1290,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         case Cell.CELL_TYPE_STRING:
                                             fileA4076.A4076NETO = Float.parseFloat(getCellValue(currentRow.getCell(74)));
                                             fileA4076.A4076NETO = fijarNumero(fileA4076.A4076NETO);
+                                            break;
+                                        default:
+                                            fileA4076.A4076NETO = Double.parseDouble(getCellValue(currentRow.getCell(74)));
                                             break;
                                     }
 
@@ -1250,6 +1319,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                         fileA4076.A4076COMI = Float.parseFloat(getCellValue(currentRow.getCell(76)));
                                         fileA4076.A4076COMI = fijarNumero(fileA4076.A4076COMI);
                                         break;
+                                    default:
+                                        fileA4076.A4076COMI = Double.parseDouble(getCellValue(currentRow.getCell(76)));
+                                        break;
                                 }
                                 //fileA4076.A4076COMI = Float.parseFloat(getCellValue(currentRow.getCell(76)));
                                 //fileA4076.A4076COMI = fijarNumero(fileA4076.A4076COMI);
@@ -1269,6 +1341,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     case Cell.CELL_TYPE_STRING:
                                         fileA4076.A4076TAXCO = Float.parseFloat(getCellValue(currentRow.getCell(78)));
                                         fileA4076.A4076TAXCO = fijarNumero(fileA4076.A4076TAXCO);
+                                        break;
+                                    default:
+                                        fileA4076.A4076TAXCO = Double.parseDouble(getCellValue(currentRow.getCell(78)));
                                         break;
                                 }
                                 //fileA4076.A4076TAXCO = Float.parseFloat(getCellValue(currentRow.getCell(78)));

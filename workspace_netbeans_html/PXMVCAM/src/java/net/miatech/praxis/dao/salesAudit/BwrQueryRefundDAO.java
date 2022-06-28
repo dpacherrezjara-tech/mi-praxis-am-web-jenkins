@@ -5,6 +5,7 @@
  */
 package net.miatech.praxis.dao.salesAudit;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,10 +16,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
 import net.miatech.beans.SaleAudit.A3389Filter;
-import net.miatech.beans.SaleAudit.A3390Filter;
 import net.miatech.beans.SaleAudit.A3908Filter;
-import net.miatech.praxis.SaleAudit.A3389;
-import net.miatech.praxis.SaleAudit.A3390;
 import net.miatech.praxis.SaleAudit.A3391;
 import net.miatech.praxis.SaleAudit.A3392;
 import net.miatech.praxis.SaleAudit.A3401;
@@ -29,6 +27,9 @@ import net.miatech.praxis.SaleAudit.A3408;
 import net.miatech.utils.Functions;
 import net.miatech.utils.TimeFormatToday;
 import net.miatech.utils.WorkStation;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -141,7 +142,14 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389MDA = rs01.getString("A3389MDA");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
                 objRtn.A3389PAX = rs01.getString("A3389PAX");
-                objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                if (objRtn.A3389PAIS.equals("CN")) {
+                    objRtn.A3389RAAG = StringEscapeUtils.escapeJava(rs01.getString("A3389RACN"));
+                     objRtn.A3389RACN = rs01.getString("A3389RACN");
+                } else {
+                    objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                     objRtn.A3389RACN = rs01.getString("A3389RAAG");
+                }
+                //objRtn.A3389RAAG = BwrQueryRefundDAO.toUnicode(rs01.getString("A3389RAAG"));//BwrQueryRefundDAO.toUnicode(rs01.getString("A3389RAAG"));
                 objRtn.A3389REGAS = rs01.getString("A3389REGAS");
                 objRtn.A3389FLAG = rs01.getString("A3389FLAG");
                 objRtn.A3389STATO = rs01.getString("A3389STATO");
@@ -192,6 +200,37 @@ public class BwrQueryRefundDAO {
             pasarGarbageCollector();
         }
         return lstRtn;
+    }
+
+    public static String matchChineseCharacters(String source) {
+        // comment <a> 
+        String reg = "<a((?!comment).)*?>([^<>]*?[\\u4e00-\\u9fa5]+[^<>]*?)+(?=</a>)";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(source);
+        StringBuilder character = new StringBuilder();
+        while (matcher.find()) {
+            String result = matcher.group();
+            System.out.println(result);
+            // ， 
+            String reg1 = "[\\u4e00-\\u9fa5]+";
+            Pattern p1 = Pattern.compile(reg1);
+            Matcher m1 = p1.matcher(result);
+            while (m1.find()) {
+                character.append(m1.group());
+            }
+            //System.out.println(character.toString());
+        }
+        return character.toString();
+    }
+
+    public static String toUnicode(String s) {
+        String as[] = new String[s.length()];
+        String s1 = "";
+        for (int i = 0; i < s.length(); i++) {
+            as[i] = Integer.toHexString(s.charAt(i) & 0xffff);
+            s1 = s1 + "\\u" + as[i];
+        }
+        return s1;
     }
 
     public A3389Filter SearchQueryRFNDetail(A3389Filter filter) throws SQLException, Exception {

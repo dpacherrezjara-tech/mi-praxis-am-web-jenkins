@@ -39,6 +39,7 @@ public class A3389 {
     public String A3389FLAG;
     public String A3389PGNA;
     public String A3389RAAG;
+    public String A3389RACN;
     public String A3389RAAR;
     public String A3389RAUD;
     public String A3389RAPR;
@@ -133,6 +134,13 @@ public class A3389 {
 
     public double A3389CANT;
 
+    public String getA3389RACN() {
+        return A3389RACN;
+    }
+
+    public void setA3389RACN(String A3389RACN) {
+        this.A3389RACN = A3389RACN;
+    }
     public String getA3401STATU() {
         return A3401STATU;
     }

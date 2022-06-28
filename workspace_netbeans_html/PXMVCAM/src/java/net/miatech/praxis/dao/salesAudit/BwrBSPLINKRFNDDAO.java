@@ -27,6 +27,7 @@ import net.miatech.praxis.classes.ProMail;
 import net.miatech.utils.TimeFormatToday;
 import net.miatech.utils.WorkStation;
 import net.miatech.utils.Functions;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -141,7 +142,14 @@ public class BwrBSPLINKRFNDDAO {
                 objRtn.A3389MDA = rs01.getString("A3389MDA");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
                 objRtn.A3389PAX = rs01.getString("A3389PAX");
-                objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                if (objRtn.A3389PAIS.equals("CN")) {
+                    objRtn.A3389RAAG = StringEscapeUtils.escapeJava(rs01.getString("A3389RACN"));
+                    objRtn.A3389RACN = rs01.getString("A3389RACN");
+                } else {
+                    objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                    objRtn.A3389RACN = rs01.getString("A3389RAAG");
+                }
+                //objRtn.A3389RAAG = rs01.getString("A3389RAAG");
                 objRtn.A3389REGAS = rs01.getString("A3389REGAS");
                 objRtn.A3389FLAG = rs01.getString("A3389FLAG");
                 objRtn.A3389STATO = rs01.getString("A3389STATO");

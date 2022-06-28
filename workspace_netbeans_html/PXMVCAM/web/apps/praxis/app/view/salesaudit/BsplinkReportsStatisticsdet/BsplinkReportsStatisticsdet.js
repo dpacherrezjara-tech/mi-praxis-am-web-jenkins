@@ -465,7 +465,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatisticsdet.BsplinkReport
                                                         text: 'Reason BSP',
                                                         dataIndex: 'A3389RAAG',
                                                         width: 100,
-                                                        renderer: 'onRendererColumntdAttr'
+                                                        renderer: 'onRendererColumnReason'
                                                     },
                                                     {
                                                         text: 'Reason AM',

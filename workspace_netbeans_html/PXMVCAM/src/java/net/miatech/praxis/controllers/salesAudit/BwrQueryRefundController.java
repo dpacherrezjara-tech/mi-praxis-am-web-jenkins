@@ -566,7 +566,7 @@ public class BwrQueryRefundController extends BaseController {
                 CH_10.setCellValue(lst.get(vi).A3389TOTAL);
                 CH_11.setCellValue(lst.get(vi).A3389PAX);
                 CH_12.setCellValue(lst.get(vi).A3389REGAS);
-                CH_13.setCellValue(lst.get(vi).A3389RAAG);
+                CH_13.setCellValue(lst.get(vi).A3389RACN);
                 CH_14.setCellValue(lst.get(vi).A3389STATO);
 
                 switch ((lst.get(vi).A3389FLAG).trim()) {
