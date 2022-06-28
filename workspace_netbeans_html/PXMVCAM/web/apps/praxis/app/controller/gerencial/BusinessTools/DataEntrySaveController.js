@@ -142,9 +142,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.DataEntrySaveControlle
                 campo = arr2[z].data["campo"];
                 AscDesc = arr2[z].data["DownUp"] === 'DESC' ? '1' : '0';
                 if (z === 0) {
-                    SaveSelect += campo + '*' + order + '*' + AscDesc + '*' + z;
+                    SaveSelect += campo + '#' + order + '#' + AscDesc + '#' + z;
                 } else {
-                    SaveSelect += ';' + campo + '*' + order + '*' + AscDesc + '*' + z;
+                    SaveSelect += ';' + campo + '#' + order + '#' + AscDesc + '#' + z;
                 }
             }
         }
