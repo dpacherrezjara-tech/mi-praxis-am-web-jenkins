@@ -148,8 +148,13 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                 msg: 'You must enter all required fields.',
                 fn: function() {}
             });
-        } else { 
-            Ext.Msg.show({
+        } else {
+            var txtA1740FINI2 = Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue();
+            var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
+            
+            console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
+            if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
+                Ext.Msg.show({
                 title: '.:PRAXIS:.',
                 msg: 'Are you sure to insert ?',
                 buttons: Ext.MessageBox.YESNO,
@@ -162,7 +167,27 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                         this.crud();
                     }
                 }
-            });
+                }); 
+            }else{
+                global.Msg({
+                msg: 'End date must be greater than start date.',
+                fn: function() {}
+                });
+            }
+            /*Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to insert ?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'yes') {
+                        this.view.params.action = "I";
+                        this.crud();
+                    }
+                }
+            }); */
         }
     },
     onUpdateClick: function(btn) {
@@ -174,6 +199,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                 fn: function() {}
             });
         } else { 
+            var txtA1740FINI2 = Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue();
+            var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
+            
+            console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
+            if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
             Ext.Msg.show({
                 title:'.:PRAXIS:.',
                 msg: 'Are you sure to update ?',
@@ -189,6 +219,28 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                     }
                 }
             });
+            }else{
+                global.Msg({
+                msg: 'End date must be greater than start date.',
+                fn: function() {}
+                });
+            }
+
+//            Ext.Msg.show({
+//                title:'.:PRAXIS:.',
+//                msg: 'Are you sure to update ?',
+//                buttons: Ext.MessageBox.YESNO,
+//                scope: this,
+//                animateTarget: btn,
+//                icon: Ext.MessageBox.QUESTION,
+//                modal: true,
+//                fn: function(btn){
+//                    if (btn === 'yes'){
+//                        this.view.params.action = "U";
+//                        this.crud();
+//                    }
+//                }
+//            });
         }
     },
     onDeleteClick: function(btn) {
