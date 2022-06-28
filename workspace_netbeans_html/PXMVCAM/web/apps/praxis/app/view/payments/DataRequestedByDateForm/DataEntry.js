@@ -5,13 +5,13 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
         'Ext.Praxis.controller.payments.DataRequestedByDate.DataEntryDataRequestedByDateController'
     ],
     controller: 'DataEntryDataRequestedByDateController',
-    title:'PNR - Form',
-    header:true,
+    title: 'PNR - Form',
+    header: true,
     height: 640,
-    width: 1200,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    width: 1320,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
     border: false,
     defaults: {
         border: false
@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            id: prototype.id+'-1-boxSearchFilter',
+                                            id: prototype.id + '-1-boxSearchFilter',
                                             bodyStyle: 'background: #E3EAF9;"',
                                             layout: 'hbox',
                                             border: true,
@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 {xtype: 'tbspacer', width: 15},
                                                 {
                                                     xtype: 'combo',
-                                                    id: prototype.id+'-1-cbxSearchBy',
+                                                    id: prototype.id + '-1-cbxSearchBy',
                                                     store: new Ext.data.SimpleStore({
                                                         fields: ['code', 'name'],
                                                         data: [
@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 {xtype: 'tbspacer', width: 10},
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-Box_Option01',
+                                                    id: prototype.id + '-1-Box_Option01',
                                                     bodyStyle: 'background: transparent;',
                                                     layout: 'hbox',
                                                     padding: '9 0 0 0',
@@ -120,12 +120,12 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtTicketCia',
+                                                            id: prototype.id + '-1-txtTicketCia',
                                                             fieldStyle: 'text-align:center;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
                                                             maxLength: 3,
-                                                            width: 40,      
+                                                            width: 40,
                                                             value: '',
                                                             listeners: {
                                                                 change: 'onUpperValue',
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtTicketForSer',
+                                                            id: prototype.id + '-1-txtTicketForSer',
                                                             fieldStyle: 'text-align:center;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -153,7 +153,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 },
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-Box_Option02',
+                                                    id: prototype.id + '-1-Box_Option02',
                                                     bodyStyle: 'background: transparent;',
                                                     layout: 'hbox',
                                                     padding: '9 0 0 0',
@@ -168,7 +168,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtPassenger',
+                                                            id: prototype.id + '-1-txtPassenger',
                                                             fieldStyle: 'text-align:left;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 },
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-Box_Option03',
+                                                    id: prototype.id + '-1-Box_Option03',
                                                     bodyStyle: 'background: transparent;',
                                                     layout: 'hbox',
                                                     padding: '9 0 0 0',
@@ -199,7 +199,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtPNR',
+                                                            id: prototype.id + '-1-txtPNR',
                                                             fieldStyle: 'text-align:center;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -215,7 +215,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 },
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-Box_Option04',
+                                                    id: prototype.id + '-1-Box_Option04',
                                                     bodyStyle: 'background: transparent;',
                                                     layout: 'hbox',
                                                     padding: '9 0 0 0',
@@ -230,7 +230,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtNREF_P1',
+                                                            id: prototype.id + '-1-txtNREF_P1',
                                                             fieldStyle: 'text-align:center;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -246,7 +246,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtNREF_F1',
+                                                            id: prototype.id + '-1-txtNREF_F1',
                                                             fieldStyle: 'text-align:center;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -262,7 +262,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtNREF_P2',
+                                                            id: prototype.id + '-1-txtNREF_P2',
                                                             fieldStyle: 'text-align:center;',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -279,7 +279,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 },
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-Box_OptionDates',
+                                                    id: prototype.id + '-1-Box_OptionDates',
                                                     bodyStyle: 'background: transparent;',
                                                     layout: 'hbox',
                                                     padding: '9 0 0 0',
@@ -293,7 +293,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'datefield',
-                                                            id:prototype.id+'-1-txtFromDate',
+                                                            id: prototype.id + '-1-txtFromDate',
                                                             fieldStyle: 'text-align:center',
                                                             format: 'Y/m/d',
                                                             formatText: '',
@@ -313,7 +313,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'datefield',
-                                                            id:prototype.id+'-1-txtToDate',
+                                                            id: prototype.id + '-1-txtToDate',
                                                             fieldStyle: 'text-align:center',
                                                             format: 'Y/m/d',
                                                             formatText: '',
@@ -333,7 +333,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         {xtype: 'tbspacer', width: 4},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtIATA',
+                                                            id: prototype.id + '-1-txtIATA',
                                                             fieldStyle: 'text-align:center',
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -351,16 +351,16 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                 //<editor-fold defaultstate="collapsed" desc="boxPaginacion">
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-boxPaginacion',
+                                                    id: prototype.id + '-1-boxPaginacion',
                                                     bodyStyle: 'background: transparent;',
                                                     width: 100,
                                                     border: false,
-                                                    hidden:true,
+                                                    hidden: true,
                                                     padding: '8 0 0 0',
                                                     items: [
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.id+'-1-btn-pag-first',
+                                                            id: prototype.id + '-1-btn-pag-first',
                                                             iconCls: 'prx-icon-pagination-first',
                                                             style: 'background: transparent;',
                                                             tooltip: 'First Page',
@@ -372,7 +372,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.id+'-1-btn-pag-previous',
+                                                            id: prototype.id + '-1-btn-pag-previous',
                                                             iconCls: 'prx-icon-pagination-previous',
                                                             style: 'background: transparent;',
                                                             tooltip: 'Previous Page',
@@ -383,7 +383,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.id+'-1-btn-pag-next',
+                                                            id: prototype.id + '-1-btn-pag-next',
                                                             iconCls: 'prx-icon-pagination-next',
                                                             style: 'background: transparent;',
                                                             tooltip: 'Next Page',
@@ -394,7 +394,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.id+'-1-btn-pag-last',
+                                                            id: prototype.id + '-1-btn-pag-last',
                                                             iconCls: 'prx-icon-pagination-last',
                                                             style: 'background: transparent;',
                                                             tooltip: 'Last Page',
@@ -406,7 +406,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         },
                                                         {
                                                             xtype: 'pagingtoolbar',
-                                                            id: prototype.id+'-1-paggin',
+                                                            id: prototype.id + '-1-paggin',
                                                             pageSize: 10,
                                                             border: false,
                                                             displayInfo: false,
@@ -426,7 +426,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.id+'-1-btnSearch',
+                                                                    id: prototype.id + '-1-btnSearch',
                                                                     iconCls: 'prx-icon-search',
                                                                     tooltip: 'Search',
                                                                     listeners: {
@@ -444,7 +444,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.id+'-1-btnClear',
+                                                                    id: prototype.id + '-1-btnClear',
                                                                     iconCls: 'prx-icon-clear',
                                                                     tooltip: 'Clear Options',
                                                                     listeners: {
@@ -453,7 +453,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.id+'-1-btnBack',
+                                                                    id: prototype.id + '-1-btnBack',
                                                                     iconCls: 'prx-icon-back',
                                                                     tooltip: 'Back',
                                                                     listeners: {
@@ -472,7 +472,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                 {xtype: 'tbspacer', height: 5},
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id+'-1-boxMainData',
+                                    id: prototype.id + '-1-boxMainData',
                                     border: false,
                                     flex: 3,
                                     layout: {
@@ -486,15 +486,15 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                         // <editor-fold defaultstate="collapsed" desc="gridData">
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id+'-1-gridData',
+                                            id: prototype.id + '-1-gridData',
                                             height: 487,
                                             columnLines: true,
                                             plugins: [
-                                                { 
+                                                {
                                                     ptype: 'cellediting',
                                                     clicksToEdit: 1
                                                 }
-                                            ],                                            
+                                            ],
                                             columns: {
                                                 defaults: {
                                                     menuDisabled: true,
@@ -506,18 +506,21 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         text: 'Nbr', dataIndex: 'ROYKEY', width: 35, hidden: true
                                                     },
                                                     {
-                                                        text: 'Passenger Name', dataIndex: 'A720PAX', flex: 1,//width: 280,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        text: 'Passenger Name', dataIndex: 'A720PAX', width: 280,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         },
-                                                        editor:{ xtype:'textfield', editable: false }
+                                                        editor: {xtype: 'textfield', editable: false}
                                                     },
                                                     {
-                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150, editor: {xtype: 'textfield', editable: false}
                                                     },
                                                     {
-                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 120, editor: {xtype: 'textfield', editable: false}
+                                                    },
+                                                    {
+                                                        text: 'Approved Code', dataIndex: 'IN_IATA', width: 120, editor: {xtype: 'textfield', editable: false}
                                                     },
                                                     {
                                                         text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60
@@ -526,29 +529,27 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                         text: 'Issue Date', dataIndex: 'A720FECVTA', width: 80
                                                     },
                                                     {
-                                                        text: 'IATA', dataIndex: 'A720AGENTE', width: 80, editor:{ xtype:'textfield', editable: false }
+                                                        text: 'IATA', dataIndex: 'A720AGENTE', width: 80, editor: {xtype: 'textfield', editable: false}
                                                     },
                                                     {
                                                         text: 'Fare', dataIndex: 'A720TARIFA', width: 120,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Amount', dataIndex: 'A1531VFOP', width: 130,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
-                                                        },                                                        
+                                                        }
                                                     },
                                                     {
                                                         text: 'Cur', dataIndex: 'A720MONEDA', width: 40
                                                     },
                                                     {
-                                                        text: 'PNR', dataIndex: 'A720PNR', width: 80,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'PNR', dataIndex: 'A720PNR', width: 80, editor: {xtype: 'textfield', editable: false}
                                                     },
                                                     {
                                                         xtype: 'actioncolumn',
@@ -570,7 +571,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                         // <editor-fold defaultstate="collapsed" desc="pie">
                                         {
                                             xtype: 'panel',
-                                            id: prototype.id+'-1-pie',
+                                            id: prototype.id + '-1-pie',
                                             border: true,
                                             hidden: true,
                                             height: 25,
@@ -597,7 +598,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
                                                             width: 50
                                                         },
                                                         {
-                                                            id: prototype.id+'-1-lblPagActual',
+                                                            id: prototype.id + '-1-lblPagActual',
                                                             text: '1',
                                                             width: 50
                                                         },
@@ -606,7 +607,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
 //                                                            width: 50
 //                                                        },
                                                         {
-                                                            id: prototype.id+'-1-lblPagTotal',
+                                                            id: prototype.id + '-1-lblPagTotal',
                                                             text: '0',
                                                             hidden: true,
                                                             width: 50
@@ -617,7 +618,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
 //                                                            width: 80
 //                                                        },
                                                         {
-                                                            id: prototype.id+'-1-lblRowsTotal',
+                                                            id: prototype.id + '-1-lblRowsTotal',
                                                             text: '0',
                                                             hidden: true,
                                                             width: 50
@@ -636,30 +637,30 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntry', {
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 }
             ]
         }
     ]
-  }
+}
 );
