@@ -179,7 +179,8 @@ public class DataRequestedByDateDAO {
                         & CARDNBR.equals(rs01.getString("CARDNBR").trim())
                         & AUTHNBR.equals(rs01.getString("AUTHNBR").trim())
                         & PNR.equals(rs01.getString("PNR").trim())) {
-                    objRtn.AUTAMOUNT = 0;
+                    //objRtn.AUTAMOUNT = 0;
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
                 } else {
                     objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
                     MERCHANT = rs01.getString("MERCHN").trim();
@@ -575,7 +576,7 @@ public class DataRequestedByDateDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
+        String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
 
         Connection cnx = null;
         try {
@@ -590,6 +591,7 @@ public class DataRequestedByDateDAO {
             cstmt01.setString(6, filter.IN_DATE_FROM);
             cstmt01.setString(7, filter.IN_DATE_TO);
             cstmt01.setString(8, filter.IN_IATA);
+            cstmt01.setString(9, ""); //IN_CAPL
 
             cstmt01.execute();
 
@@ -606,6 +608,7 @@ public class DataRequestedByDateDAO {
                 objRtn.A720TARIFA = rs01.getDouble("A720TARIFA");
                 objRtn.A720MONEDA = rs01.getString("A720MONEDA");
                 objRtn.A720PNR = rs01.getString("A720PNR");
+                objRtn.IN_IATA = rs01.getString("A1531CAPL"); // Deberías ser A1531CAPL en lugar de IN_IATA
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 lstRtn.add(objRtn);
