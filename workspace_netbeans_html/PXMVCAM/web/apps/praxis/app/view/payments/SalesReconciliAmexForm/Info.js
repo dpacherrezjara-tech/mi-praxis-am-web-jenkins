@@ -1242,11 +1242,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 metaData.style = "text-align:center;background-color:#BAC9F4;";
                                                             } else {
                                                                 metaData.style = "text-align:center;";
-                                                            }
+                                                            }                                                                                                                        
 
                                                             metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
-                                                            value = '<b>' + value + '</b>';
-                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            if (data.desCERROR === 'Sub Total' || data.desCERROR === 'Adjustment') {
+                                                                return value;
+                                                            } else {
+                                                                value = '<b>' + value + '</b>';
+                                                                return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            }                                                            
                                                         }
                                                     },
                                                     {text: 'Status', dataIndex: 'desCERROR', width: 75,
@@ -4801,7 +4805,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
-                                            sortable: false,
+                                            sortable: true,
                                             align: 'center'
                                         },
                                         items: [

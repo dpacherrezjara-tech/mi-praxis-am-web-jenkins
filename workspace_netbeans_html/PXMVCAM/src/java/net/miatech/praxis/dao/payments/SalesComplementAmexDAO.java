@@ -123,6 +123,11 @@ public class SalesComplementAmexDAO {
                 } else if (bean.STVAL.equals("2")) {
                     bean.descSTVAL = "Accounted";
                 }
+                
+                bean.FAMEXCHG = rst.getString("FAMEXCHG").trim();
+                if (bean.FAMEXCHG.equals("1")) {
+                    bean.descFAMEXCHG = "Match";
+                }
 
                 bean.FCONT = rst.getString("FCONT").trim();
                 bean.IDCON = rst.getString("IDCON").trim();

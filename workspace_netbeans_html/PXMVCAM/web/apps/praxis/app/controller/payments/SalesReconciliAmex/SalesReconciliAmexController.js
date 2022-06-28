@@ -1285,6 +1285,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetTransaction: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+        if (rowData.data.desCERROR === 'Sub Total' || rowData.data.desCERROR === 'Adjustment') {
+            return 0;
+        }
 
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetTransaction';
