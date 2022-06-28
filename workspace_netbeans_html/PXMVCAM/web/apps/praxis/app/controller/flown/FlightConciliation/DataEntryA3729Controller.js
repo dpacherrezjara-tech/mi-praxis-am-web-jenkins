@@ -350,9 +350,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                     Ext.getCmp(prototype.id + '-DataEntryA3729').unmask();
                     Ext.getCmp(prototype.id + '-DataEntryA3729').close();
                     
-                    if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
+//                    if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                    }
+//                    }
                 } else
                     global.Msg({msg: ''});
             }
