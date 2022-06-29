@@ -890,8 +890,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     onAdjust: function (grid, rowIndex, colIndex) {
 
-        if (this.sumAmount < this.bean.TGROSAMOUN) {
-            this.lstAdjustment = [];
+        if (this.sumAmount === this.bean.TGROSAMOUN) {
+            global.Msg({msg: 'The sum amount is equal to transaction amount.'});            
+        } else {
+            //this.lstAdjustment = [];
             Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
             var rec = Object.create(grid.getStore().getAt(rowIndex).data);
 
@@ -906,8 +908,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
                     );
             this.calcularMontos();
-        } else {
-            global.Msg({msg: 'The sum amount is higher or equal than the transaction amount.'});
         }
 
     }
