@@ -469,6 +469,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     meDE.lstSendManual = [];
                     meDE.lstBlocked = [];
+                    meDE.lstAdjustment = [];                    
+                    Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                    Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
+                    );
+                    Ext.getCmp(prototype.id + '-gridDataAdjustment').hide();
                     meDE.onNextClick();
                 } else {
                     global.Msg({msg: res.msjOption});

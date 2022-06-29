@@ -228,6 +228,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbComplement.setValue("");
+        
+        var cmbRecType = Ext.getCmp(prototype.id + '-cmbRecType');
+        cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "Transact."],
+                ["2", "Chargeback"]
+            ]
+        }));
+        cmbRecType.setValue("1");
 
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
          cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -324,6 +335,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        me.bean.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
@@ -2060,6 +2072,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
+        
+        Ext.getCmp(prototype.id + '-cmbRecType').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbRecType').setValue('1');
+        Ext.getCmp(prototype.id + '-cmbRecType').resumeEvents();
     },
     btnExcel_click: function (obj, e) {
 

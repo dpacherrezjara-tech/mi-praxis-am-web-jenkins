@@ -253,6 +253,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                     items: [
                         {
                             xtype: 'combo',
+                            fieldLabel: 'Rec. Type',
+                            id: prototype.id + '-cmbRecType',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 100,
+                            width: 180,
+                            hiddenLabel: false,
+                            listeners: {
+                                change: 'rbChangeType'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
                             fieldLabel: 'Reconcil. Sett.',
                             id: prototype.id + '-cmbErrorCodesRecSett',
                             queryMode: 'local',
