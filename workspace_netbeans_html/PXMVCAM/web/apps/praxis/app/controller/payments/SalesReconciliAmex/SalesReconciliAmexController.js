@@ -228,6 +228,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbComplement.setValue("");
+        
+        var cmbRecType = Ext.getCmp(prototype.id + '-cmbRecType');
+        cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "Transact."],
+                ["2", "Chargeback"]
+            ]
+        }));
+        cmbRecType.setValue("1");
 
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
          cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -324,6 +335,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        me.bean.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
@@ -406,7 +418,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
-                if ((Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '')) {
+                if ((Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbRecType').getValue() !== '1')) {
                     this.filterSettlement();
                 } else {
                     this.setGridDataMainSettlement();
@@ -824,6 +836,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanFilterSettlement.IN_SCARDN11 = Ext.getCmp(prototype.id + '-txtCC11').getValue();
         this.beanFilterSettlement.IN_SCARDN22 = Ext.getCmp(prototype.id + '-txtCC22').getValue();
         this.beanFilterSettlement.IN_AUTHS = Ext.getCmp(prototype.id + '-txtAuthS').getValue();
+        this.beanFilterSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanFilterSettlement);
 
         if (me.panelActual !== '-boxDetSettlement') {
@@ -911,6 +924,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        this.beanSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
 
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataDetSettlement();
@@ -2060,6 +2074,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
+        
+        Ext.getCmp(prototype.id + '-cmbRecType').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbRecType').setValue('1');
+        Ext.getCmp(prototype.id + '-cmbRecType').resumeEvents();
     },
     btnExcel_click: function (obj, e) {
 
