@@ -1816,10 +1816,10 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if(me01.filterTKT.lstResultSet11.length > 0){
                             for(var i11 = 0; i11 < me01.filterTKT.lstResultSet11.length; i11++){
                                 paramsResultSet11 = me01.filterTKT.lstResultSet11[i11];
-                                if(paramsResultSet11.fileA1692.SEQ.trim()!=='' && paramsResultSet11.fileA1692.SEQ.trim()!=='XX')
+                                if(paramsResultSet11.fileA1692.SEQRO.trim()!=='' && paramsResultSet11.fileA1692.SEQRO.trim()!=='XX')
                                 {
                                     strTKTIND = (paramsResultSet11.fileA1692.SERIE.length === 6) ? paramsResultSet11.fileA1692.SERIE.substr(4, 2) : '';
-                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet11.fileA1692.SEQ.trim();
+                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet11.fileA1692.SEQRO.trim();
                                     me01.gridDataTktRealUsesAC.push({
                                         TKTIND : strTKTIND,
                                         STATUS : STR_MATCH,
@@ -1884,10 +1884,10 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if(me01.filterTKT.lstResultSet12.length > 0){
                             for(i11 = 0; i11 < me01.filterTKT.lstResultSet12.length; i11++){
                                 paramsResultSet12 = me01.filterTKT.lstResultSet12[i11];
-                                if(paramsResultSet12.fileA1818.SEQ.trim()!=='' && paramsResultSet12.fileA1818.SEQ.trim()!=='XX')
+                                if(paramsResultSet12.fileA1818.SEQRO.trim()!=='' && paramsResultSet12.fileA1818.SEQRO.trim()!=='XX')
                                 {
                                     strTKTIND = (paramsResultSet12.fileA1818.SERIE.length === 6) ? paramsResultSet12.fileA1818.SERIE.substr(4, 2) : '';
-                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet12.fileA1818.SEQ.trim();
+                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet12.fileA1818.SEQRO.trim();
                                     me01.gridDataTktRealUsesAC.push({
                                         TKTIND : strTKTIND,
                                         STATUS : STR_MATCH,
@@ -2463,7 +2463,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if(me01.filterTKT.lstResultSet11.length > 0){
                             for(var i11 = 0; i11 < me01.filterTKT.lstResultSet11.length; i11++){
                                 paramsResultSet11 = me01.filterTKT.lstResultSet11[i11];
-                                if(paramsResultSet11.fileA1692.SEQ.trim()==='' || paramsResultSet11.fileA1692.SEQ.trim()==='XX')
+                                if(paramsResultSet11.fileA1692.SEQRO.trim()==='' || paramsResultSet11.fileA1692.SEQRO.trim()==='XX')
                                 {
                                     strTKTIND = (paramsResultSet11.fileA1692.SERIE.length === 6) ? paramsResultSet11.fileA1692.SERIE.substr(4, 2) : '';
                                     //me01.filterTKT.VP_A1716SEQF = paramsResultSet11.fileA1692.SEQ.trim();
@@ -2531,7 +2531,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if(me01.filterTKT.lstResultSet12.length > 0){
                             for(i11 = 0; i11 < me01.filterTKT.lstResultSet12.length; i11++){
                                 paramsResultSet12 = me01.filterTKT.lstResultSet12[i11];
-                                if(paramsResultSet12.fileA1818.SEQ.trim()==='' || paramsResultSet12.fileA1818.SEQ.trim()==='XX')
+                                if(paramsResultSet12.fileA1818.SEQRO.trim()==='' || paramsResultSet12.fileA1818.SEQRO.trim()==='XX')
                                 {
                                     strTKTIND = (paramsResultSet12.fileA1818.SERIE.length === 6) ? paramsResultSet12.fileA1818.SERIE.substr(4, 2) : '';
                                     //me01.filterTKT.VP_A1716SEQF = paramsResultSet12.fileA1818.SEQ.trim();
