@@ -4820,7 +4820,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'DATE', width: 90,
+                                                        text: 'Date', dataIndex: 'DATE', width: 85,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
@@ -4854,7 +4854,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 115,
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 85,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background-color:#B2FAC6;";
@@ -4880,7 +4880,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 columns: [
                                                     {text: 'Code', dataIndex: 'CERROR', width: 45},
                                                     {
-                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 220,
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 210,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left";
                                                             return value;
@@ -4908,7 +4908,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Flag<br>Complement', dataIndex: 'descFCOMPL', width: 90,
+                                                    {text: 'Flag<br>Complement', dataIndex: 'descFCOMPL', width: 90, hidden:true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#FCF6DC";
                                                             return value;
@@ -5014,7 +5014,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 90,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -5029,7 +5029,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return '<b>' + Ext.util.Format.number(data.TGROSAMOUN_TOTAL, '0,000.00') + '<b>';
                                                 }
                                             },
-                                            {text: 'MSI',
+                                            {text: 'MSI',hidden:true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -5086,7 +5086,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Commission Base',
+                                                text: 'Commission Base',hidden:true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -5138,7 +5138,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Reconciliation Transaction',
+                                                text: 'Result Reconciliation Transaction',hidden:true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
