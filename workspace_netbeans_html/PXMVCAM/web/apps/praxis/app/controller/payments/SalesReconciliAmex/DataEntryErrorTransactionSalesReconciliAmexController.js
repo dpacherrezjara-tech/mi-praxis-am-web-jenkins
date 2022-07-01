@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     paramsDetailDEDetTktSettlement: {},
     sumAmount: 0,
     sumAmountBlocked: 0,
+    gridAdjustmentRowIndex: 10,
     // </editor-fold>
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
@@ -55,7 +56,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                if (['1','5','6', '7'].indexOf(this.bean.STVAL) >= 0) {
+                if (['1', '5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
@@ -155,7 +156,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.formato(this.beanResult.HOUP));
-        if (['1','5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
+        if (['1', '5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
             this.getBreakdownDataGridForMatch();
         } else {
             this.getBreakdownDataGrid();
@@ -469,10 +470,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     meDE.lstSendManual = [];
                     meDE.lstBlocked = [];
-                    meDE.lstAdjustment = [];                    
+                    meDE.lstAdjustment = [];
                     Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-                    Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
-                    );
+                            Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
+                            );
                     Ext.getCmp(prototype.id + '-gridDataAdjustment').hide();
                     meDE.onNextClick();
                 } else {
@@ -546,7 +547,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
 
         for (var i = 0; i < this.lstAdjustment.length; i++) {
-            suma_montos = suma_montos + this.lstAdjustment[i].A1531VFOP;
+            suma_montos = suma_montos + parseFloat(this.lstAdjustment[i].A1531VFOP);
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
@@ -873,7 +874,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
 
         for (var i = 0; i < this.lstAdjustment.length; i++) {
-            this.sumAmount = this.sumAmount + this.lstAdjustment[i].A1531VFOP;
+            this.sumAmount = this.sumAmount + parseFloat(this.lstAdjustment[i].A1531VFOP);
         }
 
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
@@ -891,7 +892,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onAdjust: function (grid, rowIndex, colIndex) {
 
         if (this.sumAmount === this.bean.TGROSAMOUN) {
-            global.Msg({msg: 'The sum amount is equal to transaction amount.'});            
+            global.Msg({msg: 'The sum amount is equal to transaction amount.'});
         } else {
             //this.lstAdjustment = [];
             Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
@@ -910,5 +911,68 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             this.calcularMontos();
         }
 
+    },
+    /*onChangeAmountAdjustment: function(e, eOpts){
+     console.log(e.value);
+     if (eOpts.getKey() === 13) {
+     
+     console.log('change');
+     }        
+     },*/
+    onBlurAmountAdjustment: function (textfield, target, options) {
+        console.log(textfield.value);
+        console.log(target);
+        console.log(options);
+        console.log('change blur');
+
+        //Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore().sync();
+        //Ext.getCmp(prototype.id + '-gridDataAdjustment').getView().refresh();
+
+        var gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+
+        for (var i = 0; i < gridDataAdjustment.data.length; i++) {
+            console.log(gridDataAdjustment.data.items[i].data.A1531VFOP);
+            this.lstAdjustment[i].A1531VFOP = parseFloat(gridDataAdjustment.data.items[i].data.A1531VFOP);
+            this.lstAdjustment[i].tot_VFOP = parseFloat(gridDataAdjustment.data.items[i].data.A1531VFOP);
+            console.log(this.lstAdjustment[i].A1531VFOP);
+        }
+
+        Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                );
+        console.log(gridDataAdjustment.data.items[0].data.A1531VFOP)
+        //this.calcularMontos();
+        console.log(gridDataAdjustment.data.items[0].data.A1531VFOP)
+
+        //Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore().data.items[0].data.A1531VFOP
+    },
+    refreshValuesAdjustment: function (field, e, eOpts) {                
+        this.lstAdjustment = [];
+        var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+        for (var c = 0; c < store_gridDataAdjustment.data.length; c++) {
+            var dataRow = store_gridDataAdjustment.data.items[c];
+            console.log(dataRow.data.A1531VFOP);
+            this.lstAdjustment.push(dataRow.data);
+        }
+        Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                );
+        this.calcularMontos();
+    },
+    eventKeyAdjustment: function(e, eOpts){
+        if (eOpts.getKey() === 13) {
+            /*console.log(meDE.gridAdjustmentRowIndex);
+            var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+            console.log(store_gridDataAdjustment.data.items[0].data.A1531VFOP);
+            console.log(store_gridDataAdjustment.data.items[0].data.A1531TKT);*/
+            
+            this.lstAdjustment[meDE.gridAdjustmentRowIndex].A1531VFOP = parseFloat(e.value);
+            this.lstAdjustment[meDE.gridAdjustmentRowIndex].tot_VFOP = parseFloat(e.value);
+            
+            /*Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+            );*/
+            this.calcularMontos();
+        }        
     }
 });
