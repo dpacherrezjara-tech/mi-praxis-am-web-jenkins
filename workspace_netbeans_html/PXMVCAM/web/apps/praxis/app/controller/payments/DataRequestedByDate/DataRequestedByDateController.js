@@ -721,6 +721,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 this.setFormatParameterInteract();
                 global.getFile(prototype.url + '/getXLSXInteractSabre?beanString=' + searchParams.beanString);
                 break;
+            case  '-panelGridDifference':
+                this.setFormatParameterDifference();
+                global.getFile(prototype.url + '/getXLSXDifference?beanString=' + searchParams.beanString);
+                break;    
         }
     },
     btnFilter_click: function(obj) {
