@@ -3004,7 +3004,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setInt(8, filter.page.PAGROW);
             cstmt.setInt(9, filter.page.TOTPAG);
             cstmt.setInt(10, filter.page.TOTROW);
-
+            
             cstmt.execute();
 
             filter.page.PAGNUM = cstmt.getInt(7);
@@ -4052,24 +4052,55 @@ public class SalesReconciliAmexDAO {
         hmDescFCOMPL.put("2", "LIGAS");
         hmDescFCOMPL.put("3", "TABLET");
         hmDescFCOMPL.put("4", "BPO");
+        
+        int contador = 0;
+        String SCARDN = "";
+        double TGROSAMOUN = 0;
+        boolean color = true;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420()}";
-
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?)}";
+            
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.execute();
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+        
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM);
+            cstmt.setString(3, filter.IN_DATETO);
+            
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
 
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            
+            cstmt.execute();
+            
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
 
                 beanTkt = new A4116Filter();
+                
+                if (contador == 0) {                    
+                    TGROSAMOUN = Math.abs(rst.getDouble("TGROSAMOUN"));
+                    SCARDN = rst.getString("SCARDN").trim();
+                }
 
                 beanTkt.PRDA = rst.getString("PRDA").trim();
                 beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -4093,12 +4124,29 @@ public class SalesReconciliAmexDAO {
                 } else {
                     beanTkt.descSTVAL = rst.getString("STVAL").trim();
                 }
-
                 
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+                
+                if( !(SCARDN.equals(rst.getString("SCARDN").trim()) && TGROSAMOUN == Math.abs(rst.getDouble("TGROSAMOUN"))) ){
+                    TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    SCARDN = rst.getString("SCARDN").trim();
+                    color = !color;
+                }
+                
+                if (color) {
+                    beanTkt.COLOR = "#91b9fa";
+                } else {
+                    beanTkt.COLOR = "#e6ecf5";
+                }
+                
+                beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                beanTkt.page.PAGROW = filter.page.PAGROW;
+                beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                beanTkt.page.TOTROW = filter.page.TOTROW;
 
                 lstTkts.add(beanTkt);
+                contador++;
             }
             rst.close();
 

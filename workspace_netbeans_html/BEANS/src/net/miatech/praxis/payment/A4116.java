@@ -97,6 +97,7 @@ public class A4116 {
     public String descSTCONL = "";
     public String FDESGLOSE = "";
     public String NEWSTVAL = "";
+    public String COLOR = "";
     
     //Variables del Sistema
     public String USCR = "";
