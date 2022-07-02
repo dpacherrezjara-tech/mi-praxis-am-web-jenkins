@@ -3004,7 +3004,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setInt(8, filter.page.PAGROW);
             cstmt.setInt(9, filter.page.TOTPAG);
             cstmt.setInt(10, filter.page.TOTROW);
-
+            
             cstmt.execute();
 
             filter.page.PAGNUM = cstmt.getInt(7);
@@ -4056,15 +4056,36 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420()}";
-
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?)}";
+            
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.execute();
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+        
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM);
+            cstmt.setString(3, filter.IN_DATETO);
+            
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
 
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            
+            cstmt.execute();
+            
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
@@ -4097,6 +4118,11 @@ public class SalesReconciliAmexDAO {
                 
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+                
+                beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                beanTkt.page.PAGROW = filter.page.PAGROW;
+                beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                beanTkt.page.TOTROW = filter.page.TOTROW;
 
                 lstTkts.add(beanTkt);
             }

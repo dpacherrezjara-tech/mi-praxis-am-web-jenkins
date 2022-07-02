@@ -6644,7 +6644,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1475,
+                            width: 1345,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -6702,7 +6702,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {
                                                 text: 'Document<br>Type', dataIndex: 'descTDOC', width: 80
                                             },
-                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',
+                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',hidden:true,
                                                 renderer: function (value, meta, record, row, col) {
                                                     meta.style = "background-color:#fae2a0;";
                                                     switch (value) {
@@ -6729,6 +6729,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 text: 'Status<br>Settlement vs Sales', dataIndex: 'descSTVAL', width: 160
                                             },
                                             {
+                                                text: 'Credit Card', dataIndex: 'SCARDN', width: 120
+                                            },
+                                            {
+                                                text: 'Approval<br>Code', dataIndex: 'SAUTHOC', width: 80,
+                                            },
+                                            {
                                                 text: 'Curr.', dataIndex: 'PCURRENCY', width: 80,
                                             },
                                             {
@@ -6746,12 +6752,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
-                                            },
-                                            {
-                                                text: 'Number', dataIndex: 'SCARDN', width: 120
-                                            },
-                                            {
-                                                text: 'Approval<br>Code', dataIndex: 'SAUTHOC', width: 80,
                                             },
                                             {
                                                 text: 'Submission<br>Merchant ID', dataIndex: 'SMERCHID', width: 100,
