@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                                 }
                                             },
                                             {
-                                                text: 'Error Description', dataIndex: 'DES_CERROR ', width: 210
+                                                text: 'Error Description', dataIndex: 'DES_CERROR', width: 210
                                             },
                                             {
                                                 text: 'Status<br>Settlement vs Sales', dataIndex: 'descSTVAL', width: 135

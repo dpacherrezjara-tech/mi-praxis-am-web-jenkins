@@ -3980,7 +3980,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.descSTVAL = rst.getString("STVAL").trim();
                 }
 
-                beanTkt.DES_CERROR = rst.getString("DES_CERROR");
+                beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
                 
                 beanTkt.IDITEMS = rst.getString("IDITEMS");
                 beanTkt.IDITEMT = rst.getString("IDITEMT");
