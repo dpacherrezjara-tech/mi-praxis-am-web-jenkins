@@ -85,13 +85,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                              editor: {xtype: 'textfield', editable: false}
                                              },*/
                                             {
-                                                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100,
+                                                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 85,
                                             },
                                             {
-                                                text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 100,
+                                                text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 85,
                                             },
                                             {
-                                                text: 'Business<br>Date', dataIndex: 'BSUMDATE', width: 100,
+                                                text: 'Business<br>Date', dataIndex: 'BSUMDATE', width: 85,
                                             },
                                             {
                                                 text: 'Installment',
@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                             {
                                                 text: 'Document<br>Type', dataIndex: 'descTDOC', width: 80
                                             },
-                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',
+                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',hidden:true,
                                                 renderer: function (value, meta, record, row, col) {
                                                     meta.style = "background-color:#fae2a0;";
                                                     switch (value) {
@@ -145,10 +145,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                                 }
                                             },
                                             {
-                                                text: 'Status<br>Settlement vs Sales', dataIndex: 'descSTVAL', width: 160
+                                                text: 'Error Description', dataIndex: 'DES_CERROR', width: 210
                                             },
                                             {
-                                                text: 'Curr.', dataIndex: 'PCURRENCY', width: 80,
+                                                text: 'Status<br>Settlement vs Sales', dataIndex: 'descSTVAL', width: 135
+                                            },
+                                            {
+                                                text: 'Curr.', dataIndex: 'PCURRENCY', width: 70,
                                             },
                                             {
                                                 text: 'Transact<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
@@ -202,7 +205,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
             },
             items: [
                 {
-                    text: 'Update',
+                    text: 'Update',hidden:true,
                     id: prototype.id + '-btn-msi-update',
                     iconCls: 'prx-icon-update',
                     listeners: {

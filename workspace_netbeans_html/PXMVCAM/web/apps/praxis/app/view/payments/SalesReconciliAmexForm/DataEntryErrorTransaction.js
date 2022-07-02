@@ -1077,7 +1077,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                                     if (record.data.FDESGLOSE === '1') {
                                                         value = 'Concil.'
-                                                    }                                                    
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -1091,11 +1091,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             /*{text: 'Adj.<br>Type', dataIndex: 'desCERROR', width: 65,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
-                                                }
-                                            },*/
+                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:center;";
+                                             return value;
+                                             }
+                                             },*/
                                             {
                                                 text: 'Credit Card',
                                                 defaults: {
@@ -1328,14 +1328,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
-                                                editor: {xtype: 'textfield', editable: true, allowBlank: false},
+                                            {header: 'Amount', dataIndex: 'A1531VFOP', width: 70, xtype: 'gridcolumn',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
-                                                }
+                                                },
+                                                listeners: {
+                                                    click: function(obj, metaData, rowNum, columnNum, obj2, rowData){
+                                                            meDE.gridAdjustmentRowIndex = rowNum;
+                                                        },
+                                                },
+                                                editor: {
+                                                    xtype: 'textfield',
+                                                    editable: true,
+                                                    allowBlank: false,
+                                                    enableKeyEvents: true,
+                                                    maskRe: /[0-9.]/,
+                                                    selectOnFocus: true,
+                                                    listeners: {
+                                                        /*blur: function (field, e, eOpts) {
+                                                            var newVal = field.getValue().trim();
+                                                            field.setValue(newVal);
+                                                            meDE.refreshValuesAdjustment(self, e, eOpts);
+                                                        }*/                                                        
+                                                        specialkey: 'eventKeyAdjustment',
+                                                        
+                                                    }
+                                                },
                                             },
                                             {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
