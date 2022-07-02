@@ -4052,6 +4052,11 @@ public class SalesReconciliAmexDAO {
         hmDescFCOMPL.put("2", "LIGAS");
         hmDescFCOMPL.put("3", "TABLET");
         hmDescFCOMPL.put("4", "BPO");
+        
+        int contador = 0;
+        String SCARDN = "";
+        double TGROSAMOUN = 0;
+        boolean color = true;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4091,6 +4096,11 @@ public class SalesReconciliAmexDAO {
             while (rst.next()) {
 
                 beanTkt = new A4116Filter();
+                
+                if (contador == 0) {                    
+                    TGROSAMOUN = Math.abs(rst.getDouble("TGROSAMOUN"));
+                    SCARDN = rst.getString("SCARDN").trim();
+                }
 
                 beanTkt.PRDA = rst.getString("PRDA").trim();
                 beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -4114,10 +4124,21 @@ public class SalesReconciliAmexDAO {
                 } else {
                     beanTkt.descSTVAL = rst.getString("STVAL").trim();
                 }
-
                 
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+                
+                if( !(SCARDN.equals(rst.getString("SCARDN").trim()) && TGROSAMOUN == Math.abs(rst.getDouble("TGROSAMOUN"))) ){
+                    TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    SCARDN = rst.getString("SCARDN").trim();
+                    color = !color;
+                }
+                
+                if (color) {
+                    beanTkt.COLOR = "#91b9fa";
+                } else {
+                    beanTkt.COLOR = "#e6ecf5";
+                }
                 
                 beanTkt.page.PAGNUM = filter.page.PAGNUM;
                 beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -4125,6 +4146,7 @@ public class SalesReconciliAmexDAO {
                 beanTkt.page.TOTROW = filter.page.TOTROW;
 
                 lstTkts.add(beanTkt);
+                contador++;
             }
             rst.close();
 
