@@ -385,7 +385,6 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 //            roScrDashboardPayment.searchCard(bean);
 	    this.searchCard();
 	}else if(typeSearch === '4'){
-//            roScrDashboardPayment.searchChannel(bean);
             this.searchChannel();
 	}else if(typeSearch === '5'){
 	    
@@ -897,6 +896,31 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totdiff1_CH').setText(Ext.util.Format.number(data.totdiff1, '0,000'));
                             Ext.getCmp(prototype.id + '-totdiff2_CH').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totperc3_CH').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
+                            
+                            
+                            // ------------------------------- GRAFICO -----------------------------------------------
+//                            displayChart06_Channel();
+                            
+                            var list = obj.data;
+                            console.log(list);
+                            
+                            var lstNew_CH = [];
+                            for (var i = 0; i < list.length; i++) {
+                                var item = {};
+                                item.perc1 = list.items[i].data.perc1;
+                                item.strDescription = list.items[i].data.strDescription + ' , ' + Ext.util.Format.number(item.perc1, '0,000.00') + '%';
+//                                if(Ext.util.Format.number(item.perc1, '0,000.00') > 0){
+                                    lstNew_CH.push(item);
+//                                }
+
+                            }
+
+                            var storeDataNew_CH = Ext.create('Ext.data.Store', {
+                                data: lstNew_CH,
+                                autoLoad: true
+                            });
+                            Ext.getCmp(prototype.id + '-displayChart06_Channel').bindStore(storeDataNew_CH);
+
                         }
 //                        me.setWidthPie();
                     }
@@ -905,7 +929,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataChannel').bindStore(storeGridDatas);
-//            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+//            Ext.getCmp(prototype.id + '-displayChart06_Channel').bindStore(storeGridDatas);
         }
     },
     // </editor-fold>
@@ -1652,7 +1676,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 for (var i = 0; i < 6; i++) {
                                     var item = {};
                                     item.perc4 = list.items[i].data.perc4;
-                                    item.strDescription = list.items[i].data.strDescription + ' - ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
+                                    item.strDescription = list.items[i].data.strDescription + ' , ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
                                     lstNew.push(item);
                                     
                                 }

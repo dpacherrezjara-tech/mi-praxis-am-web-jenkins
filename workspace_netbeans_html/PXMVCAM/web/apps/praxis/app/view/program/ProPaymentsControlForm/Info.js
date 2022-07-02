@@ -859,7 +859,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             xtype: 'panel',
                             id: prototype.id + '-boxMainDataChannel',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            border: true,
+                            border: false,
                             height: 'auto',
                             width: 852,
                             margin: '0 0 0 0 ',
@@ -1025,7 +1025,77 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-totdiff2_CH'},
                                         {width: 60, id: prototype.id + '-totperc3_CH'}
                                     ]
-                                }      
+                                },
+                                
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '10 0 0 0',
+                                    width: 852,
+                                    border: false,
+                                    layout: {
+                                        type: 'vbox'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'polar',
+//                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-displayChart06_Channel',
+                                            width: 852,
+                                            border: false,
+                                            margin: '0 0 0 0',
+                                            innerPadding: 60,
+                                            height: 383,
+                                            background: '#E3EAEF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Channels',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
+                                            series: [{
+                                                type: 'pie3d',
+                                                angleField: 'perc1',
+                                                colors: ['#EC3838', '#ff9900', '#339933', '0066ff'],
+//                                                colors: ['#c6f7cd', '#0066ff', '#CC0000'],
+                                                label: {
+                                                    field: 'strDescription',
+                                                    renderer: function (value, b, callout) {
+                                                        callout.calloutWidth = 0;
+                                                        return value.substring(value.indexOf(',') + 1);
+                                                    }
+                                                },
+                                                highlight: true,
+//                                                tooltip: {
+//                                                    trackMouse: true,
+//                                                    height: 28,
+//                                                    renderer: function(toolTip, record, ctx) {
+//                                                        console.log(ctx.field);
+//                                                        var label = '';
+//                                                            if (ctx.field.includes('ASR')) {
+//                                                                label = 'ASR';
+//                                                            } else if (ctx.field.includes('BSP')) {
+//                                                                label = 'BSP';
+//                                                            } else if (ctx.field.includes('ASR')) {
+//                                                                label = 'ASR';
+//                                                            } else if (ctx.field.includes('Manual')) {
+//                                                                label = 'Manual';
+//                                                            }
+//                                                        toolTip.setHtml(label + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '%' + '</b>');
+//                                                    }
+//                                                }
+                                            }]
+                                        }
+                                    ]
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -3151,7 +3221,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             xtype: 'panel',
                             id: prototype.id + '-boxMainDataPhases',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            border: true,
+                            border: false,
                             height: 997,
                             width: 1434,
                             margin: '0 0 0 0 ',
@@ -3434,9 +3504,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
 //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
                                             id: prototype.id + '-displayChart08_Country',
                                             width: 1454,
-                                            border: true,
+                                            border: false,
                                             margin: '0 0 0 0',
-                                            innerPadding: 90,
+                                            innerPadding: 50,
                                             height: 383,
                                             background: '#E3EAEF',
                                             captions: {
@@ -3449,16 +3519,20 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 duration: 200
                                             },
                                             interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
                                             series: [{
                                                 type: 'pie3d',
                                                 angleField: 'perc4',
                                                 colors: ['#EC3838', '#ff9900', '#339933'],
                                                 label: {
-                                                    field: 'strDescription'
+                                                    field: 'strDescription',
+                                                    renderer: function (value, b, callout) {
+                                                        callout.calloutWidth = 0;
+                                                        return value.substring(value.indexOf(',') + 1);
+                                                    }
                                                 },
                                                 highlight: true,
                                                 tooltip: {
@@ -4470,15 +4544,15 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             tooltip: {
                                                                 trackMouse: true,
                                                                 height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-                                                                    var label = '';
-                                                                    if (ctx.field === 'perc4') {
-//                                                                        label = 'ChargedBack';
-                                                                    } else if (ctx.field === 'AMTCHGBU') {
-//                                                                        label = 'Received';
-                                                                    }
-                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
-                                                                }
+//                                                                renderer: function (toolTip, record, ctx) {
+//                                                                    var label = '';
+//                                                                    if (ctx.field === 'perc4') {
+////                                                                        label = 'ChargedBack';
+//                                                                    } else if (ctx.field === 'AMTCHGBU') {
+////                                                                        label = 'Received';
+//                                                                    }
+//                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+//                                                                }
                                                             }
                                                         }]
                                                 },
