@@ -597,6 +597,8 @@ public class ProMasterTicketDAO {
                                                                 objRtn12.fileA1818.FORMA = rs12.getString("FORMA");
                                                                 objRtn12.fileA1818.SERIE = rs12.getString("SERIE");
                                                                 objRtn12.fileA1818.CUPON = rs12.getString("CUPON");
+                                                                objRtn12.fileA1818.SEQ = rs12.getString("SEQ");
+                                                                objRtn12.fileA1818.SEQRO = rs12.getString("SEQRO");
                                                                 objRtn12.fileA1818.CDEPART = rs12.getString("CDEPART");
                                                                 objRtn12.fileA1818.CARRIVA = rs12.getString("CARRIVA");
                                                                 objRtn12.fileA1818.CARR = rs12.getString("CARR");
@@ -2844,6 +2846,8 @@ public class ProMasterTicketDAO {
                                                                 objRtn12.fileA1818.FORMA = rs12.getString("FORMA");
                                                                 objRtn12.fileA1818.SERIE = rs12.getString("SERIE");
                                                                 objRtn12.fileA1818.CUPON = rs12.getString("CUPON");
+                                                                objRtn12.fileA1818.SEQ = rs12.getString("SEQ");
+                                                                objRtn12.fileA1818.SEQRO = rs12.getString("SEQRO");
                                                                 objRtn12.fileA1818.CDEPART = rs12.getString("CDEPART");
                                                                 objRtn12.fileA1818.CARRIVA = rs12.getString("CARRIVA");
                                                                 objRtn12.fileA1818.CARR = rs12.getString("CARR");
