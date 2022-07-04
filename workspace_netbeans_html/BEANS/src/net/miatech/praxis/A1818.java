@@ -16,6 +16,7 @@ public class A1818 {
     public String CUPON = "";
     public String DCHEQ = "";
     public String SEQ = "";
+    public String SEQRO = "";
     public String STVAL = "";
     public String FTE = "";
     public String FLOAD = "";
