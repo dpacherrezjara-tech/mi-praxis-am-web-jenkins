@@ -1916,6 +1916,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -2226,6 +2227,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
         
         HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
         hmDescTDOC.put("", "");
@@ -2577,6 +2579,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
 
         HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
         hmDescSTCONL.put("", "");
@@ -2723,6 +2726,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -3124,6 +3128,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
 
         HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
         hmDescSTCONL.put("", "");
@@ -3912,6 +3917,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -4031,6 +4037,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -4061,33 +4068,35 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?,?,?)}";
             
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(4, Types.INTEGER);
-            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
         
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
             cstmt.setString(3, filter.IN_DATETO);
+            cstmt.setString(4, filter.IN_STVAL_CP.trim());
+            cstmt.setString(5, filter.IN_TDOC_CP.trim());
             
-            cstmt.setInt(4, filter.page.PAGNUM);
-            cstmt.setInt(5, filter.page.PAGROW);
-            cstmt.setInt(6, filter.page.TOTPAG);
-            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
 
             cstmt.execute();
             
-            filter.page.PAGNUM = cstmt.getInt(4);
-            filter.page.PAGROW = cstmt.getInt(5);
-            filter.page.TOTPAG = cstmt.getInt(6);
-            filter.page.TOTROW = cstmt.getInt(7);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
             
             cstmt.execute();
             

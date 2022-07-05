@@ -3,7 +3,7 @@ var storeComboAdj = Ext.create('Ext.data.SimpleStore', {
     data: [
         ["01", "DIFERENCIA LIQUIDACION VS SALE"],
         ["02", "PAGO DUPLICADO"],
-        ["03", "Ajuste 3"]
+        ["03", "ADM/AVISOS DE CARGO"]
     ]
 });
 Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
@@ -1408,7 +1408,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                         case '02':
                                                             return 'PAGO DUPLICADO';
                                                         case '03':
-                                                            return 'Ajuste 3';
+                                                            return 'ADM/AVISOS DE CARGO';
                                                         default:
                                                             return 'DIFERENCIA LIQUIDACION VS SALE';
                                                     }

@@ -19,6 +19,8 @@ public class A4116Filter extends A4116 {
     public String RN = "";
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
+    public String IN_STVAL_CP = "";
+    public String IN_TDOC_CP = "";
     public String IN_STCONL = "";
     public String IN_DATE = "";
     public String IN_DATE_VALUE = "";
