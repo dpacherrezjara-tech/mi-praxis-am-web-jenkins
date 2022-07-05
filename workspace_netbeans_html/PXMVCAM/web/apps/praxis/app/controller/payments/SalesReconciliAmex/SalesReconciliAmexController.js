@@ -185,10 +185,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["4", "Match with Differences"],
                 ["5", "Match Manual"],
                 ["6", "Forced Match"],
-                ["7", "Compensation Match"]
+                ["7", "Compensation Match"],
+                ["8", "Pending RFND"]
             ]
         }));
         cmbSTVAL.setValue("");
+        
+        var cmbSTVALCP = Ext.getCmp(prototype.id + '-cmbSTVALCP');
+        cmbSTVALCP.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["1", "Match"],
+                ["6", "Forced Match"],
+                ["8", "Pending RFND"]
+            ]
+        }));
+        cmbSTVALCP.setValue("");
 
         var cmbTDOC = Ext.getCmp(prototype.id + '-cmbTDOC');
         cmbTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -201,6 +215,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbTDOC.setValue("");
+        
+        var cmbTDOCCP = Ext.getCmp(prototype.id + '-cmbTDOCCP');
+        cmbTDOCCP.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["S", "Sales"],
+                ["R", "Refund"]
+            ]
+        }));
+        cmbTDOCCP.setValue("");
 
         var cmbTDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError');
         cmbTDOCError.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -413,6 +439,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         } else {
             Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
         }
+        
+        if (selectedValue === 'CP') {
+            Ext.getCmp(prototype.id + '-filterPaymentMSI').setVisible(true);
+        } else {
+            Ext.getCmp(prototype.id + '-filterPaymentMSI').setVisible(false);
+        }
+        
         switch (selectedValue) {
             case 'SU':
                 this.setGridDataMainSummary();
@@ -454,6 +487,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case 'CP':
                 this.bean.IN_DATEFROM = "";
                 this.bean.IN_DATETO = "";
+                this.bean.IN_STVAL_CP = Ext.getCmp(prototype.id + '-cmbSTVALCP').getValue();
+                this.bean.IN_TDOC_CP = Ext.getCmp(prototype.id + '-cmbTDOCCP').getValue();
                 var beanString = JSON.stringify(this.bean);
                 searchParamsMainSettlement = {
                     beanString: beanString,

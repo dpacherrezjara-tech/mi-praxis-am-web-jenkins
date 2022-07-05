@@ -581,6 +581,68 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             }
                         }
                     ]
+                },
+                {
+                    xtype: 'form',
+                    padding: '2px 5px 1px 5px',
+                    id: prototype.id + '-filterPaymentMSI',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    margin: '0 0 0 40px',
+                    hidden: true,
+                    layout: 'column',
+                    defaults: {
+//                labelStyle: 'font-weight:bold;',
+                        fieldStyle: 'text-align: center;',
+                        padding: '5px 1px 5px 1px',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items: [
+                        {xtype: 'tbspacer', width: 100},
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status',
+                            id: prototype.id + '-cmbSTVALCP',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 150,
+                            width: 250,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                              //  change: 'cmbSTVAL_keyDownHandler',
+                                change: 'rbChangeType'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Document:',
+                            id: prototype.id + '-cmbTDOCCP',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 100,
+                            width: 200,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                               // change: 'cmbSTVAL_keyDownHandler',
+                                change: 'rbChangeType'
+                            }
+                        }
+                    ]
                 }
             ]
         }
