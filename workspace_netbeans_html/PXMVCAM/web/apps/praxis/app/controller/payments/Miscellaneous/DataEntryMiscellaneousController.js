@@ -27,6 +27,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
+                this.setearCamposClave();
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -225,6 +226,15 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     },
     DeshabilitarCampoClave: function () {
         Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtDescTable').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtCTable').setReadOnly(true);
+    },
+    setearCamposClave: function(){
+        Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
+        Ext.getCmp(prototype.id + '-de-txtDescTable').setValue('Tabla Adjustment');
+        
+        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtDescTable').setReadOnly(true);
     },
     Habilitarlbl: function () {
 //        Ext.getCmp(prototype.id + '-lblDescripcion').show();

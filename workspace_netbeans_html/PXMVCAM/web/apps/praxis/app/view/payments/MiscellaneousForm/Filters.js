@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Filters', {
                     fieldStyle: 'text-align: left;',
                     labelWidth: 150,
                     width: 400,
-                    hidden: false,
+                    hidden: true,
                     listeners:{
                          change: 'btnSearch_click'
                      }
