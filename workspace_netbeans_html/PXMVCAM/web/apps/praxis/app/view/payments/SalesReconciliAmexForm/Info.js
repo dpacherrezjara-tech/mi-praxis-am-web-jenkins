@@ -3269,19 +3269,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Processing',
-                                             defaults: {
-                                             menuDisabled: true,
-                                             sortable: false,
-                                             align: 'center'
-                                             },
-                                             columns: [
-                                             {
-                                             text: 'Date', dataIndex: 'AXPRODAT', width: 85,
-                                             }
-                                             ]
-                                             },*/
                                             {
                                                 text: 'Status',
                                                 defaults: {
@@ -3372,117 +3359,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {text: 'Auth.', dataIndex: 'SAUTHOC', width: 70},
                                             {text: 'Installment<br>Plan', dataIndex: 'NBRINSTA', width: 90},
                                             {text: 'Installment<br>Number', dataIndex: 'INSTANBR', width: 90},
-                                            /*{
-                                             text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100, hidden: true,
-                                             listeners: {
-                                             //                                                    click: 'onGridDetBankS'
-                                             },
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;background-color:#B2FAC6";
-                                             value = Ext.util.Format.number(value, '0,000.00');
-                                             return value;
-                                             },
-                                             },*/
-                                            /*{
-                                             text: 'Commission',
-                                             defaults: {
-                                             menuDisabled: true,
-                                             sortable: false,
-                                             align: 'center'
-                                             },
-                                             columns: [
-                                             {
-                                             text: 'Rate', dataIndex: 'DISCRATE_IMPORT', width: 70,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;background-color:#FCF6DC";
-                                             value = Ext.util.Format.number(value, '0,000.00 %');
-                                             return value;
-                                             }
-                                             },
-                                             {
-                                             text: 'Amount', dataIndex: 'DISCAMOUN_IMPORT', width: 90,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;background-color:#FCF6DC";
-                                             value = Ext.util.Format.number(value, '0,000.00');
-                                             return value;
-                                             },
-                                             summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
-                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                             return '<b>' + Ext.util.Format.number(data.totDISCAMOUN_IMPORT, '0,000.00') + '<b>';
-                                             }
-                                             },
-                                             {
-                                             text: 'VAT', dataIndex: 'DISCAMOUN_IVA', width: 90,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;background-color:#f5edc9";
-                                             value = Ext.util.Format.number(value, '0,000.00');
-                                             return value;
-                                             },
-                                             summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
-                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                             return '<b>' + Ext.util.Format.number(data.totDISCAMOUN_IVA, '0,000.00') + '<b>';
-                                             }
-                                             },
-                                             ]
-                                             },
-                                             /*
-                                             {
-                                             text: '% Commission<br>MSI_1', dataIndex: 'RATESFEE', width: 100,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;";
-                                             value = Ext.util.Format.number(value, '0,000.00 %');
-                                             return value;
-                                             },
-                                             },
-                                             {
-                                             text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;";
-                                             value = Ext.util.Format.number(value, '0,000.00');
-                                             return value;
-                                             },
-                                             summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
-                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                             return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
-                                             }
-                                             },
-                                             {
-                                             text: '% Commission<br>MSI_2', dataIndex: 'RATEACCE', width: 100,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;";
-                                             value = Ext.util.Format.number(value, '0,000.00 %');
-                                             return value;
-                                             },
-                                             },
-                                             {
-                                             text: 'Acceleration <br> Amount', dataIndex: 'ACCEAMOU', width: 100,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;";
-                                             value = Ext.util.Format.number(value, '0,000.00');
-                                             return value;
-                                             },
-                                             summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
-                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                             return '<b>' + Ext.util.Format.number(data.totACCEAMOU, '0,000.00') + '<b>';
-                                             }
-                                             },
-                                             {
-                                             text: 'VAT COM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
-                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                             metaData.style = "text-align:right;";
-                                             value = Ext.util.Format.number(value, '0,000.00');
-                                             return value;
-                                             },
-                                             summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
-                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                             return '<b>' + Ext.util.Format.number(data.totTAXAMOUN_AD, '0,000.00') + '<b>';
-                                             }
-                                             },*/
                                             {
                                                 text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 100,
                                                 listeners: {
@@ -3794,32 +3670,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             },
                                                         ]
                                                     },
-                                                    /*{
-                                                     text: 'First Inst. <br> Amou.Conc', dataIndex: 'FINSAMOUC', width: 100, hidden: true,
-                                                     listeners: {
-                                                     //                                                    click: 'onGridDetBankS'
-                                                     },
-                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                     metaData.style = "text-align:right;background-color:#B2FAC6;";
-                                                     value = Ext.util.Format.number(value, '0,000.00');
-                                                     return value;
-                                                     //                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                     }
-                                                     },
-                                                     {
-                                                     text: 'Subseq.Ins. <br> Amou.Conc', dataIndex: 'SINSAMOUC', width: 100, hidden: true,
-                                                     listeners: {
-                                                     //                                                    click: 'onGridDetBankS'
-                                                     },
-                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                     metaData.style = "text-align:right;background-color:#B2FAC6;";
-                                                     value = Ext.util.Format.number(value, '0,000.00');
-                                                     return value;
-                                                     //                                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                     }
-                                                     },*/
                                                 ]
                                             },
                                             {
@@ -3830,6 +3680,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
+                                                    {text: 'Number', dataIndex: 'CHADJNBR', width: 110},
+                                                    {text: 'Reason Code', dataIndex: 'CHAADJCOD', width: 90},
+                                                    {text: 'Description', dataIndex: 'CHAADJDES', width: 280,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+                                                            metaData.tdAttr = 'data-qtip="' + record.data.CHAADJDES + '"';
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: 'Merch. Loc.', dataIndex: 'LMERCHID', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";                                                            
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: 'Seller ID', dataIndex: 'SELLERID', width: 70},
                                                     {
                                                         text: 'Amount', dataIndex: 'GROSAMOUN_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {

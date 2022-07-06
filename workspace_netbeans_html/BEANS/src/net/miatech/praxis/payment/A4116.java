@@ -46,6 +46,9 @@ public class A4116 {
     public String TRANSDATE = "";
     public String TRANSID = "";
     public String SAUTHOC = "";
+    public String CHADJNBR = "";
+    public String CHAADJCOD = "";
+    public String CHAADJDES = "";
         
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;

@@ -638,7 +638,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchChangePayment")
     public @ResponseBody
     String searchChangePayment(ModelMap map, HttpServletRequest request) {
@@ -4698,9 +4698,17 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_36 = row1.createCell(36);
             Cell CH1_37 = row1.createCell(37);
             Cell CH1_38 = row1.createCell(38);
+            Cell CH1_39 = row1.createCell(39);
+            Cell CH1_40 = row1.createCell(40);
+            Cell CH1_41 = row1.createCell(41);
+            Cell CH1_42 = row1.createCell(42);
+            Cell CH1_43 = row1.createCell(43);
+            Cell CH1_44 = row1.createCell(44);
+            Cell CH1_45 = row1.createCell(45);
+            Cell CH1_46 = row1.createCell(46);
 
             CH1_0.setCellValue("Payment");
-            CH1_1.setCellValue("Transaction");
+            CH1_1.setCellValue("Sales");
             CH1_2.setCellValue("Diff.");
             CH1_3.setCellValue("Status");
             CH1_4.setCellValue("");
@@ -4708,36 +4716,44 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_6.setCellValue("Qty Tkts");
             CH1_7.setCellValue("Invoice Refer.Number PNR");
             CH1_8.setCellValue("PNR");
-            CH1_9.setCellValue("Indust.Speci.Ref.Nbr");
-            CH1_10.setCellValue("Card Number");
-            CH1_11.setCellValue("Auth.");
-            CH1_12.setCellValue("Installment Plan");
-            CH1_13.setCellValue("Installment Number");
-            CH1_14.setCellValue("Transaction Amount");
-            CH1_15.setCellValue("MSI");
-            CH1_16.setCellValue("");
-            CH1_17.setCellValue("");
+            CH1_9.setCellValue("Document Type");
+            CH1_10.setCellValue("Indust.Speci.Ref.Nbr");
+            CH1_11.setCellValue("Card Number");
+            CH1_12.setCellValue("Auth.");
+            CH1_13.setCellValue("Installment Plan");
+            CH1_14.setCellValue("Installment Number");
+            CH1_15.setCellValue("Sales Amount");
+            CH1_16.setCellValue("Transaction Amount");
+            CH1_17.setCellValue("MSI");
             CH1_18.setCellValue("");
             CH1_19.setCellValue("");
-            CH1_20.setCellValue("Commission Base");
+            CH1_20.setCellValue("");
             CH1_21.setCellValue("");
-            CH1_22.setCellValue("");
+            CH1_22.setCellValue("Commission Base");
             CH1_23.setCellValue("");
-            CH1_24.setCellValue("Result Reconciliation Transaction");
+            CH1_24.setCellValue("");
             CH1_25.setCellValue("");
-            CH1_26.setCellValue("");
+            CH1_26.setCellValue("Result Reconciliation Transaction");
             CH1_27.setCellValue("");
             CH1_28.setCellValue("");
             CH1_29.setCellValue("");
             CH1_30.setCellValue("");
             CH1_31.setCellValue("");
-            CH1_32.setCellValue("Chargeback");
+            CH1_32.setCellValue("");
             CH1_33.setCellValue("");
-            CH1_34.setCellValue("");
-            CH1_35.setCellValue("Net Amount to Recive AM");
-            CH1_36.setCellValue("Currency Settlement");
-            CH1_37.setCellValue("Calculated Commission");
-            CH1_38.setCellValue("Rule");
+            CH1_34.setCellValue("Chargeback");
+            CH1_35.setCellValue("");
+            CH1_36.setCellValue("");
+            CH1_37.setCellValue("");
+            CH1_38.setCellValue("");
+            CH1_39.setCellValue("");
+            CH1_40.setCellValue("");
+            CH1_41.setCellValue("");
+            CH1_42.setCellValue("Net Amount to Recive AM");
+            CH1_43.setCellValue("Currency Settlement");
+            CH1_44.setCellValue("Calculated Commission");
+            CH1_45.setCellValue("Rule");
+            CH1_46.setCellValue("Flag Complement");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -4778,13 +4794,22 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_36.setCellStyle(headerStyle);
             CH1_37.setCellStyle(headerStyle);
             CH1_38.setCellStyle(headerStyle);
+            CH1_39.setCellStyle(headerStyle);
+            CH1_40.setCellStyle(headerStyle);
+            CH1_41.setCellStyle(headerStyle);
+            CH1_42.setCellStyle(headerStyle);
+            CH1_43.setCellStyle(headerStyle);
+            CH1_44.setCellStyle(headerStyle);
+            CH1_45.setCellStyle(headerStyle);
+            CH1_46.setCellStyle(headerStyle);
 
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)            
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 21));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 25));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 26, 33));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 34, 41));
+            
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 8, 8));
@@ -4794,14 +4819,15 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 14, 14));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 19));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 23));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 31));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 32, 34));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 35, 35));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 36, 36));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 37, 37));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 38, 38));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 16, 16));
+            
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 42, 42));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 43, 43));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 44, 44));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 45, 45));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 46, 46));
+            
             ++vj;
             //============================================
 
@@ -4846,6 +4872,14 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH2_36 = row2.createCell(36);
             Cell CH2_37 = row2.createCell(37);
             Cell CH2_38 = row2.createCell(38);
+            Cell CH2_39 = row2.createCell(39);
+            Cell CH2_40 = row2.createCell(40);
+            Cell CH2_41 = row2.createCell(41);
+            Cell CH2_42 = row2.createCell(42);
+            Cell CH2_43 = row2.createCell(43);
+            Cell CH2_44 = row2.createCell(44);
+            Cell CH2_45 = row2.createCell(45);
+            Cell CH2_46 = row2.createCell(46);
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Date");
@@ -4862,30 +4896,38 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_12.setCellValue("");
             CH2_13.setCellValue("");
             CH2_14.setCellValue("");
-            CH2_15.setCellValue("Rate Comm.");
-            CH2_16.setCellValue("Serv.Fee");
-            CH2_17.setCellValue("Accel.Amount");
-            CH2_18.setCellValue("Total Comm.");
-            CH2_19.setCellValue("VAT COMM 1 2");
-            CH2_20.setCellValue("Discount Rate");
-            CH2_21.setCellValue("Discount Amount");
-            CH2_22.setCellValue("Discount Rate AV");
-            CH2_23.setCellValue("Discount Amount AV");
-            CH2_24.setCellValue("Transaction Amount");
-            CH2_25.setCellValue("MSI");
-            CH2_26.setCellValue("");
-            CH2_27.setCellValue("");
-            CH2_28.setCellValue("Commission Base");
+            CH2_15.setCellValue("");
+            CH2_16.setCellValue("");
+            CH2_17.setCellValue("Rate Comm.");
+            CH2_18.setCellValue("Serv.Fee");
+            CH2_19.setCellValue("Accel.Amount");
+            CH2_20.setCellValue("Total Comm.");
+            CH2_21.setCellValue("VAT COMM 1 2");
+            CH2_22.setCellValue("Discount Rate");
+            CH2_23.setCellValue("Discount Amount");
+            CH2_24.setCellValue("Discount Rate VAT");
+            CH2_25.setCellValue("Discount Amount VAT");
+            CH2_26.setCellValue("Transaction Amount");
+            CH2_27.setCellValue("MSI");
+            CH2_28.setCellValue("");
             CH2_29.setCellValue("");
-            CH2_30.setCellValue("");
+            CH2_30.setCellValue("Commission Base");
             CH2_31.setCellValue("");
-            CH2_32.setCellValue("Amount");
-            CH2_33.setCellValue("Commission");
-            CH2_34.setCellValue("VAT");
-            CH2_35.setCellValue("");
-            CH2_36.setCellValue("");
-            CH2_37.setCellValue("");
-            CH2_38.setCellValue("");
+            CH2_32.setCellValue("");
+            CH2_33.setCellValue("");
+            CH2_34.setCellValue("Number");
+            CH2_35.setCellValue("Reason Code");
+            CH2_36.setCellValue("Description");
+            CH2_37.setCellValue("Merch. Loc.");
+            CH2_38.setCellValue("Seller ID");
+            CH2_39.setCellValue("Amount");
+            CH2_40.setCellValue("Commission");
+            CH2_41.setCellValue("VAT");
+            CH2_42.setCellValue("");
+            CH2_43.setCellValue("");
+            CH2_44.setCellValue("");
+            CH2_45.setCellValue("");
+            CH2_46.setCellValue("");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -4926,6 +4968,14 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_36.setCellStyle(headerStyle);
             CH2_37.setCellStyle(headerStyle);
             CH2_38.setCellStyle(headerStyle);
+            CH2_39.setCellStyle(headerStyle);
+            CH2_40.setCellStyle(headerStyle);
+            CH2_41.setCellStyle(headerStyle);
+            CH2_42.setCellStyle(headerStyle);
+            CH2_43.setCellStyle(headerStyle);
+            CH2_44.setCellStyle(headerStyle);
+            CH2_45.setCellStyle(headerStyle);
+            CH2_46.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
@@ -4934,8 +4984,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
+            
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
@@ -4944,11 +4993,20 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 24, 24));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 25, 27));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 28, 31));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 32, 32));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 33, 33));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 25, 25));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 26, 26));
+            
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 27, 29));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 30, 33));
+            
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 34, 34));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 35, 35));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 36, 36));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 37, 37));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 38, 38));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 39, 39));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 40, 40));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 41, 41));
             ++vj;
             //============================================
 
@@ -4993,6 +5051,14 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH3_36 = row3.createCell(36);
             Cell CH3_37 = row3.createCell(37);
             Cell CH3_38 = row3.createCell(38);
+            Cell CH3_39 = row3.createCell(39);
+            Cell CH3_40 = row3.createCell(40);
+            Cell CH3_41 = row3.createCell(41);
+            Cell CH3_42 = row3.createCell(42);
+            Cell CH3_43 = row3.createCell(43);
+            Cell CH3_44 = row3.createCell(44);
+            Cell CH3_45 = row3.createCell(45);
+            Cell CH3_46 = row3.createCell(46);
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -5019,20 +5085,28 @@ public class SalesReconciliAmexController extends BaseController {
             CH3_22.setCellValue("");
             CH3_23.setCellValue("");
             CH3_24.setCellValue("");
-            CH3_25.setCellValue("Rate Comm.");
-            CH3_26.setCellValue("Total Comm.");
-            CH3_27.setCellValue("VAT COMM 1 2");
-            CH3_28.setCellValue("Discount Rate Comm.");
-            CH3_29.setCellValue("Discount Amount Comm.");
-            CH3_30.setCellValue("Discount Rate VAT");
-            CH3_31.setCellValue("Discount Amount VAT");
-            CH3_32.setCellValue("");
-            CH3_33.setCellValue("");
+            CH3_25.setCellValue("");
+            CH3_26.setCellValue("");
+            CH3_27.setCellValue("Rate Comm.");
+            CH3_28.setCellValue("Total Comm.");
+            CH3_29.setCellValue("VAT COMM 1 2");
+            CH3_30.setCellValue("Discount Rate Comm.");
+            CH3_31.setCellValue("Discount Amount Comm.");
+            CH3_32.setCellValue("Discount Rate VAT");
+            CH3_33.setCellValue("Discount Amount VAT");
             CH3_34.setCellValue("");
             CH3_35.setCellValue("");
             CH3_36.setCellValue("");
             CH3_37.setCellValue("");
             CH3_38.setCellValue("");
+            CH3_39.setCellValue("");
+            CH3_40.setCellValue("");
+            CH3_41.setCellValue("");
+            CH3_42.setCellValue("");
+            CH3_43.setCellValue("");
+            CH3_44.setCellValue("");
+            CH3_45.setCellValue("");
+            CH3_46.setCellValue("");
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -5073,15 +5147,23 @@ public class SalesReconciliAmexController extends BaseController {
             CH3_36.setCellStyle(headerStyle);
             CH3_37.setCellStyle(headerStyle);
             CH3_38.setCellStyle(headerStyle);
+            CH3_39.setCellStyle(headerStyle);
+            CH3_40.setCellStyle(headerStyle);
+            CH3_41.setCellStyle(headerStyle);
+            CH3_42.setCellStyle(headerStyle);
+            CH3_43.setCellStyle(headerStyle);
+            CH3_44.setCellStyle(headerStyle);
+            CH3_45.setCellStyle(headerStyle);
+            CH3_46.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 25, 25));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 26, 26));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 27, 27));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 28, 28));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 29, 29));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 30, 30));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 31, 31));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 32, 32));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 33, 33));
             ++vj;
             //============================================
 
@@ -5126,6 +5208,14 @@ public class SalesReconciliAmexController extends BaseController {
                 Cell rcell36 = row1.createCell(36);
                 Cell rcell37 = row1.createCell(37);
                 Cell rcell38 = row1.createCell(38);
+                Cell rcell39 = row1.createCell(39);
+                Cell rcell40 = row1.createCell(40);
+                Cell rcell41 = row1.createCell(41);
+                Cell rcell42 = row1.createCell(42);
+                Cell rcell43 = row1.createCell(43);
+                Cell rcell44 = row1.createCell(44);
+                Cell rcell45 = row1.createCell(45);
+                Cell rcell46 = row1.createCell(46);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).TRANSDATE);
@@ -5136,38 +5226,46 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell6.setCellValue(listaData.get(vi).QTYTKT);
                 rcell7.setCellValue(listaData.get(vi).INVORNBR);
                 rcell8.setCellValue(listaData.get(vi).SPNR);
-                rcell9.setCellValue(listaData.get(vi).ISREFNBR);
-                rcell10.setCellValue(listaData.get(vi).SCARDN);
-                rcell11.setCellValue(listaData.get(vi).SAUTHOC);
-                rcell12.setCellValue(listaData.get(vi).NBRINSTA);
-                rcell13.setCellValue(listaData.get(vi).INSTANBR);
-                rcell14.setCellValue(listaData.get(vi).TGROSAMOUN);
-                rcell15.setCellValue(listaData.get(vi).RATESFEE);
-                rcell16.setCellValue(listaData.get(vi).SFEEAMOU);
-                rcell17.setCellValue(listaData.get(vi).ACCEAMOU);
-                rcell18.setCellValue(listaData.get(vi).ACCEAMOUC);
-                rcell19.setCellValue(listaData.get(vi).IVACOM12);
-                rcell20.setCellValue(listaData.get(vi).DISCRATE);
-                rcell21.setCellValue(listaData.get(vi).DISCAMOUN);
-                rcell22.setCellValue(listaData.get(vi).DISCRATEI);
-                rcell23.setCellValue(listaData.get(vi).DISCAMOUNI);
-                rcell24.setCellValue(listaData.get(vi).TGROSAMOUC);
-                rcell25.setCellValue(listaData.get(vi).RATESFEEC);
-                rcell26.setCellValue(listaData.get(vi).SFEEAMOUC);
-                rcell27.setCellValue(listaData.get(vi).VATCOMMSIC);
-                rcell28.setCellValue(listaData.get(vi).DISCRATEC);
-                rcell29.setCellValue(listaData.get(vi).DISCAMOUNC);
-                rcell30.setCellValue(listaData.get(vi).DISCRATEIC);
-                rcell31.setCellValue(listaData.get(vi).DISCAMOUIC);
-                rcell32.setCellValue(listaData.get(vi).GROSAMOUN_CB);
-                rcell33.setCellValue(listaData.get(vi).DISCAMOUN_CB);
-                rcell34.setCellValue(listaData.get(vi).TAXAMOUN_CB);
-                rcell35.setCellValue(listaData.get(vi).NETAMOUN);
-                rcell36.setCellValue(listaData.get(vi).IN_PCURRENCY);
-                rcell37.setCellValue(listaData.get(vi).DISCAMOSC);
-                rcell38.setCellValue(listaData.get(vi).descFREGLA);
+                rcell9.setCellValue(listaData.get(vi).descTDOC);
+                rcell10.setCellValue(listaData.get(vi).ISREFNBR);
+                rcell11.setCellValue(listaData.get(vi).SCARDN);
+                rcell12.setCellValue(listaData.get(vi).SAUTHOC);
+                rcell13.setCellValue(listaData.get(vi).NBRINSTA);
+                rcell14.setCellValue(listaData.get(vi).INSTANBR);
+                rcell15.setCellValue(listaData.get(vi).SVFOPS);
+                rcell16.setCellValue(listaData.get(vi).TGROSAMOUN);
+                rcell17.setCellValue(listaData.get(vi).RATESFEE);
+                rcell18.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell19.setCellValue(listaData.get(vi).ACCEAMOU);
+                rcell20.setCellValue(listaData.get(vi).ACCEAMOUC);
+                rcell21.setCellValue(listaData.get(vi).IVACOM12);
+                rcell22.setCellValue(listaData.get(vi).DISCRATE);
+                rcell23.setCellValue(listaData.get(vi).DISCAMOUN);
+                rcell24.setCellValue(listaData.get(vi).DISCRATEI);
+                rcell25.setCellValue(listaData.get(vi).DISCAMOUNI);
+                rcell26.setCellValue(listaData.get(vi).TGROSAMOUC);
+                rcell27.setCellValue(listaData.get(vi).RATESFEEC);
+                rcell28.setCellValue(listaData.get(vi).SFEEAMOUC);
+                rcell29.setCellValue(listaData.get(vi).VATCOMMSIC);
+                rcell30.setCellValue(listaData.get(vi).DISCRATEC);
+                rcell31.setCellValue(listaData.get(vi).DISCAMOUNC);
+                rcell32.setCellValue(listaData.get(vi).DISCRATEIC);
+                rcell33.setCellValue(listaData.get(vi).DISCAMOUIC);
+                rcell34.setCellValue(listaData.get(vi).CHADJNBR);
+                rcell35.setCellValue(listaData.get(vi).CHAADJCOD);
+                rcell36.setCellValue(listaData.get(vi).CHAADJDES);
+                rcell37.setCellValue(listaData.get(vi).LMERCHID);
+                rcell38.setCellValue(listaData.get(vi).SELLERID);
+                rcell39.setCellValue(listaData.get(vi).GROSAMOUN_CB);
+                rcell40.setCellValue(listaData.get(vi).DISCAMOUN_CB);
+                rcell41.setCellValue(listaData.get(vi).TAXAMOUN_CB);
+                rcell42.setCellValue(listaData.get(vi).NETAMOUN);
+                rcell43.setCellValue(listaData.get(vi).IN_PCURRENCY);
+                rcell44.setCellValue(listaData.get(vi).DISCAMOSC);
+                rcell45.setCellValue(listaData.get(vi).descFREGLA);
+                rcell46.setCellValue(listaData.get(vi).descFCOMPL);
 
-                if (listaData.get(vi).CERROR.equals("")) {
+                if (listaData.get(vi).CERROIN.equals("")) {
                     //nadine
                 } else {
                     rcell3.setCellStyle(bodyStyle);
@@ -5217,6 +5315,14 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_36_T = rowTotal.createCell(36);
             Cell CH1_37_T = rowTotal.createCell(37);
             Cell CH1_38_T = rowTotal.createCell(38);
+            Cell CH1_39_T = rowTotal.createCell(39);
+            Cell CH1_40_T = rowTotal.createCell(40);
+            Cell CH1_41_T = rowTotal.createCell(41);
+            Cell CH1_42_T = rowTotal.createCell(42);
+            Cell CH1_43_T = rowTotal.createCell(43);
+            Cell CH1_44_T = rowTotal.createCell(44);
+            Cell CH1_45_T = rowTotal.createCell(45);
+            Cell CH1_46_T = rowTotal.createCell(46);
 
             CH1_0_T.setCellValue("");
             CH1_1_T.setCellValue("");
@@ -5232,31 +5338,39 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_11_T.setCellValue("");
             CH1_12_T.setCellValue("");
             CH1_13_T.setCellValue("");
-            CH1_14_T.setCellValue(listaData.get(0).totTGROSAMOUN);
-            CH1_15_T.setCellValue("");
-            CH1_16_T.setCellValue(listaData.get(0).totSFEEAMOU);
-            CH1_17_T.setCellValue(listaData.get(0).totACCEAMOU);
-            CH1_18_T.setCellValue(listaData.get(0).ACCEAMOUC_TOTAL);
-            CH1_19_T.setCellValue(listaData.get(0).totIVACOM12);
-            CH1_20_T.setCellValue("");
-            CH1_21_T.setCellValue(listaData.get(0).totDISCAMOUN);
+            CH1_14_T.setCellValue("");
+            CH1_15_T.setCellValue(listaData.get(0).SVFOPS_TOTAL);
+            CH1_16_T.setCellValue(listaData.get(0).totTGROSAMOUN);
+            CH1_17_T.setCellValue("");
+            CH1_18_T.setCellValue(listaData.get(0).totSFEEAMOU);
+            CH1_19_T.setCellValue(listaData.get(0).totACCEAMOU);
+            CH1_20_T.setCellValue(listaData.get(0).ACCEAMOUC_TOTAL);
+            CH1_21_T.setCellValue(listaData.get(0).totIVACOM12);
             CH1_22_T.setCellValue("");
-            CH1_23_T.setCellValue(listaData.get(0).DISCAMOUNI_TOTAL);
-            CH1_24_T.setCellValue(listaData.get(0).TGROSAMOUC_TOTAL);
-            CH1_25_T.setCellValue("");
-            CH1_26_T.setCellValue(listaData.get(0).SFEEAMOUC_TOTAL);
-            CH1_27_T.setCellValue(listaData.get(0).VATCOMMSIC_TOTAL);
-            CH1_28_T.setCellValue("");
-            CH1_29_T.setCellValue(listaData.get(0).DISCAMOUNC_TOTAL);
+            CH1_23_T.setCellValue(listaData.get(0).totDISCAMOUN);
+            CH1_24_T.setCellValue("");
+            CH1_25_T.setCellValue(listaData.get(0).DISCAMOUNI_TOTAL);
+            CH1_26_T.setCellValue(listaData.get(0).TGROSAMOUC_TOTAL);
+            CH1_27_T.setCellValue("");
+            CH1_28_T.setCellValue(listaData.get(0).SFEEAMOUC_TOTAL);
+            CH1_29_T.setCellValue(listaData.get(0).VATCOMMSIC_TOTAL);
             CH1_30_T.setCellValue("");
-            CH1_31_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL);
-            CH1_32_T.setCellValue(listaData.get(0).totGROSAMOUN_CB);
-            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUN_CB_TOTAL);
-            CH1_34_T.setCellValue(listaData.get(0).totTAXAMOUN_CB);
-            CH1_35_T.setCellValue(listaData.get(0).totNETAMOUN);
+            CH1_31_T.setCellValue(listaData.get(0).DISCAMOUNC_TOTAL);
+            CH1_32_T.setCellValue("");
+            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL);            
+            CH1_34_T.setCellValue("");
+            CH1_35_T.setCellValue("");
             CH1_36_T.setCellValue("");
-            CH1_37_T.setCellValue(listaData.get(0).totDISCAMOSC);
-            CH1_38_T.setCellValue("");
+            CH1_37_T.setCellValue("");
+            CH1_38_T.setCellValue("");            
+            CH1_39_T.setCellValue(listaData.get(0).totGROSAMOUN_CB);
+            CH1_40_T.setCellValue(listaData.get(0).DISCAMOUN_CB_TOTAL);
+            CH1_41_T.setCellValue(listaData.get(0).totTAXAMOUN_CB);
+            CH1_42_T.setCellValue(listaData.get(0).totNETAMOUN);
+            CH1_43_T.setCellValue("");
+            CH1_44_T.setCellValue(listaData.get(0).totDISCAMOSC);
+            CH1_45_T.setCellValue("");
+            CH1_46_T.setCellValue("");
 
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
@@ -5297,6 +5411,14 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_36_T.setCellStyle(totalStyle);
             CH1_37_T.setCellStyle(totalStyle);
             CH1_38_T.setCellStyle(totalStyle);
+            CH1_39_T.setCellStyle(totalStyle);
+            CH1_40_T.setCellStyle(totalStyle);
+            CH1_41_T.setCellStyle(totalStyle);
+            CH1_42_T.setCellStyle(totalStyle);
+            CH1_43_T.setCellStyle(totalStyle);
+            CH1_44_T.setCellStyle(totalStyle);
+            CH1_45_T.setCellStyle(totalStyle);
+            CH1_46_T.setCellStyle(totalStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -5337,6 +5459,14 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.autoSizeColumn(36, true);
             sheet.autoSizeColumn(37, true);
             sheet.autoSizeColumn(38, true);
+            sheet.autoSizeColumn(39, true);
+            sheet.autoSizeColumn(40, true);
+            sheet.autoSizeColumn(41, true);
+            sheet.autoSizeColumn(42, true);
+            sheet.autoSizeColumn(43, true);
+            sheet.autoSizeColumn(44, true);
+            sheet.autoSizeColumn(45, true);
+            sheet.autoSizeColumn(46, true);
 
             //============================================
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -6423,7 +6553,7 @@ public class SalesReconciliAmexController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "/getTXTSettlementDetail")
     public @ResponseBody
     void getTXTSettlementDetail(HttpServletRequest request, HttpServletResponse response) {
