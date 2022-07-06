@@ -2321,7 +2321,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     onEditClickSettlement: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
-        this.winDataEntrySettlement('U', rec);
+        if(rec.data.RECTYPE !== 'CHARGEBACK'){
+            this.winDataEntrySettlement('U', rec);
+        }
+        
     },
     winDataEntrySettlement: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;

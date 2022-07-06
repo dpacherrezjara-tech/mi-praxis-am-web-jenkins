@@ -2153,6 +2153,12 @@ public class SalesReconciliAmexDAO {
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
+                                        
+                    beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
+                    beanTkt.CHAADJCOD = rst.getString("CHAADJCOD").trim();
+                    beanTkt.CHAADJDES = rst.getString("CHAADJDES").trim();
+                    beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
+                    beanTkt.SELLERID = rst.getString("SELLERID").trim();
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
