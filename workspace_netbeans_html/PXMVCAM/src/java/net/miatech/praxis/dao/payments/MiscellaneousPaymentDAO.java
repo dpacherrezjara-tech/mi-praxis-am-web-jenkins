@@ -186,65 +186,100 @@ public class MiscellaneousPaymentDAO {
 
         return lstTkts;
     }
-  
-    public List<A4169Filter> loadPX598SQP04520(A4169Filter filter) throws SQLException, Exception {
+ 
+    
+    public A4169 loadPX598SQP04520 (A4169Filter filter) throws SQLException, Exception {
 
-        List<A4169Filter> lstTkts = new ArrayList<A4169Filter>(0);
-        A4169Filter beanTkt;
-
-        A4169Filter objRtn;
-        objRtn = new A4169Filter();
-        objRtn.CODE = "";
-        objRtn.NAME = "All";
-        lstTkts.add(objRtn);
-
-        CallableStatement cstmt = null;
-        ResultSet rst = null;
+        A4169 beanTkt = new A4169();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04520(?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.execute();
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.CODETB.trim());
 
-            rst = cstmt.getResultSet();
+            cstmt01.execute();
 
-            while (rst.next()) {
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                beanTkt.CCUST = rs01.getString("CCUST");
+                beanTkt.CODETB = rs01.getString("CODETB").trim();
+                beanTkt.TTABLA = rs01.getString("TTABLA").trim();
+                beanTkt.DESCRE1 = rs01.getString("DESCRE1").trim();
+                beanTkt.DESCRE2 = rs01.getString("DESCRE2").trim();
+                beanTkt.DESCR_TTABLA = rs01.getString("DESCR_TTABLA").trim();
+                beanTkt.CANT1 = rs01.getInt("CANT1");
+                beanTkt.CANT2 = rs01.getInt("CANT2");
+                beanTkt.STVAL = rs01.getString("STVAL").trim();
+                beanTkt.USCR = rs01.getString("USCR").trim();
+                beanTkt.FECR = rs01.getString("FECR").trim();
+                beanTkt.HOCR = rs01.getString("HOCR").trim();
+                beanTkt.PGMCR = rs01.getString("PGMCR").trim();
+                beanTkt.USUP = rs01.getString("USUP").trim();
+                beanTkt.FEUP = rs01.getString("FEUP").trim();
+                beanTkt.HOUP = rs01.getString("HOUP").trim();
+                beanTkt.PGMUP = rs01.getString("PGMUP").trim();
 
-                beanTkt = new A4169Filter();
-
-                beanTkt.CODETB = rst.getString("CODETB").trim();
-                beanTkt.DESCRE1 = rst.getString("DESCRE1").trim();
-                beanTkt.DESCRE2 = rst.getString("DESCRE2").trim();
-                beanTkt.CANT1 = rst.getInt("CANT1");
-                beanTkt.CANT2 = rst.getInt("CANT2");
-                beanTkt.STVAL = rst.getString("STVAL").trim();
-                beanTkt.USCR = rst.getString("USCR").trim();
-                beanTkt.FECR = rst.getString("FECR").trim();
-                beanTkt.HOCR = rst.getString("HOCR").trim();
-                beanTkt.PGMCR = rst.getString("PGMCR").trim();
-                beanTkt.USUP = rst.getString("USUP").trim();
-                beanTkt.FEUP = rst.getString("FEUP").trim();
-                beanTkt.HOUP = rst.getString("HOUP").trim();
-                beanTkt.PGMUP = rst.getString("PGMUP").trim();
-                lstTkts.add(beanTkt);
             }
-            rst.close();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
         } finally {
-            if (rst != null) {
+            if (rs01 != null) {
                 try {
-                    rst.close();
+                    rs01.close();
                 } catch (SQLException e) {
                     logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
                 }
             }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return beanTkt;
+    }
+    
+    public String loadPX598SQP04521(A4169 filter, String option) throws SQLException, Exception  {
+        String strMsj = "Operation was successful.";
+
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, option);
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(3, filter.TTABLA.trim());
+            cstmt.setString(4, filter.CODETB.trim());
+            cstmt.setString(5, filter.DESCRE1.trim());
+            //cstmt.setString(6, filter.IN_STVAL.trim());
+            cstmt.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt.setString(7, Functions.getFechaActual());
+            cstmt.setString(8, Functions.getHoraActual());
+            
+            
+            cstmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            strMsj = e.getMessage();
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
@@ -256,7 +291,8 @@ public class MiscellaneousPaymentDAO {
             pasarGarbageCollector();
         }
 
-        return lstTkts;
+        return strMsj;
+
     }
  
 }

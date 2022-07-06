@@ -257,28 +257,27 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Tipo TB-TABLE',
+                                    text: 'Table',
                                     fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
+                                    width: 90,
                                 },
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtTipoTTable',
+                                    id:prototype.id+'-de-txtCodeTable',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:right;',
+                                    fieldStyle: 'text-align:center;',
                                     width: 245,
-                                    maskRe: /[0-9]/,
                                     enforceMaxLength: true,
-                                    maxLength: 8                                  
+                                    maxLength: 100,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Codigo TB-TABLE',
+                                    text: 'Description',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -287,12 +286,12 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCodTTable',
+                                    id:prototype.id+'-de-txtDescTable',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 8
+                                    maxLength: 100
                                 },
                                 { xtype: 'tbspacer', width: 35 }
                             ]
@@ -309,7 +308,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Descripcion',
+                                    text: 'Code',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -318,45 +317,14 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtDesc1',
+                                    id:prototype.id+'-de-txtCTable',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 8
+                                    maxLength: 100,
                                 },
-                                { xtype: 'tbspacer', width: 50 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Cantidad',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCant1',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 245,
-                                    enforceMaxLength: true,
-                                    maxLength: 8
-                                },
-                                { xtype: 'tbspacer', width: 5 }
-                            ]
-                        },
-                        { xtype: 'tbspacer', width: 6 },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '2 2 0 8',
-//                            bodyStyle: 'background:#E5ECEF;',
-                            
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
                                     text: 'Descripcion',
@@ -368,66 +336,16 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtDesc2',
+                                    id:prototype.id+'-de-txtCDesc',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 8
+                                    maxLength: 100,
                                 },
-                                { xtype: 'tbspacer', width: 50 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Cantidad',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCant2',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 245,
-                                    enforceMaxLength: true,
-                                    maxLength: 8
-                                },
-                                { xtype: 'tbspacer', width: 5 }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '2 2 0 8',
-//                            bodyStyle: 'background:#E5ECEF;',
-                            
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Status',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtStval',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 245,
-                                    enforceMaxLength: true,
-                                    maxLength: 8
-                                },
-                                
+                                { xtype: 'tbspacer', width: 35 },
                             ]
                         }
-                        
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="ControlData">

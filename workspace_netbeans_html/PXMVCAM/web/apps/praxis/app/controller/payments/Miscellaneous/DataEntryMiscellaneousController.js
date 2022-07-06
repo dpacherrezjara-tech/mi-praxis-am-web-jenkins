@@ -43,21 +43,13 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         }
     },
     mostrarData: function () {
-//        console.log(meDE.beanResult);
-        this.setValue('de-txtTipoTTable', this.beanResult.TTABLA);
-        this.setValue('de-txtCodTTable', this.beanResult.CODETB);
-        this.setValue('de-txtDesc1', this.beanResult.DESCRE1);
-        this.setValue('de-txtCant1', this.beanResult.CANT1);
-        this.setValue('de-txtDesc2', this.beanResult.DESCRE2);
-        this.setValue('de-txtCant2', this.beanResult.CANT2);
-        this.setValue('de-txtStval', this.beanResult.STVAL);
-        
-//        
-//      
-//public String PGMCR = "";
-//public String PGMUP = "";
-        
-        
+        console.log(meDE.beanResult);
+        this.setValue('de-txtCodeTable', this.beanResult.TTABLA);
+        this.setValue('de-txtDescTable', this.beanResult.DESCR_TTABLA);
+        this.setValue('de-txtCTable', this.beanResult.CODETB);
+        this.setValue('de-txtCDesc', this.beanResult.DESCRE1);
+       // this.setValue('de-txtStval', this.beanResult.STVAL);
+
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -67,36 +59,16 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     },
     obtainData: function () {
 
-//        var cmbCODEBANKN = Ext.getCmp(prototype.id + '-cmbCODEBANKN');
-//        cmbCODEBANKN.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "Empty"],
-//                ["001", "001-BANAMEX"],
-//                ["002", "002-SANTANDER"],
-//                ["003", "003-BANORTE"],
-//                ["004", "004-BBVA"],
-//                ["005", "005-AMEX"]
-//            ]
-//        }));
-//        cmbCODEBANKN.setValue('');
-           
-        
 
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-//        console.log(beanTemp);
-//        beanTemp.CODEBANK = this.getValue("de-txtCODEBANK");
-//        beanTemp.NAMEBANK = this.getValue("de-txtNAMEBANK");
-//        beanTemp.COUNTRY = this.getValue("de-cmbCOUNTRY");
-//        beanTemp.CURRENC = this.getValue("de-txtCURRENC");
-//        beanTemp.CLIENTE = this.getValue("de-txtCLIENTE");
-//        beanTemp.FSTAT = this.getValue("cmbFSTAT");
-//        beanTemp.FINSUMO = this.getValue("cmbFINSUMO");
-//        beanTemp.CODBANKN = this.getValue("cmbCODEBANKN");
-
+        beanTemp.TTABLA = this.getValue("de-txtCodeTable");
+        beanTemp.DESCR_TTABLA = this.getValue("de-txtDescTable");
+        beanTemp.CODETB = this.getValue("de-txtCTable");
+        beanTemp.DESCRE1 = this.getValue("de-txtCDesc");
+       // beanTemp.IN_STVAL = this.getValue("de-txtStval");
+      
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -108,10 +80,9 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     },
     getData: function () {
         var beanString = JSON.stringify(meDE.bean.data);
-        console.log('gaaa');
         console.log(beanString);
         Ext.Ajax.request({
-            url: prototype.url + '/search',
+            url: prototype.url + '/searchCompleteDetail',
             method: 'POST',
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
@@ -120,8 +91,8 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
-                console.log(beanResult.TTABLA);
                 meDE.mostrarData();
+                console.log(meDE.mostrarData());
 
             }
         });
@@ -166,7 +137,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA2280(beanTemp);
+                        this.MaintenanceA4169(beanTemp);
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -176,24 +147,25 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     },
     onUpdateClick: function (btn) {
         Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        var beanTemp = {};
-                        this.llenarData(beanTemp);
-                        beanTemp.option = 'U';
-                        beanTemp.beanString = JSON.stringify(beanTemp);;
-                        this.MaintenanceA2280(beanTemp);
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            var beanTemp = {};
+                            this.llenarData(beanTemp);
+                            beanTemp.option = 'U';
+                            beanTemp.beanString = JSON.stringify(beanTemp);
+                            ;
+                            this.MaintenanceA4169(beanTemp);
+                        }
                     }
-                }
-            });
+                });
     },
     onDeleteClick: function (btn) {
         Ext.Msg.show({
@@ -208,7 +180,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
                     var beanTemp = {};
                     beanTemp.option = 'D';
                     beanTemp.beanString = JSON.stringify(meDE.beanResult);
-                    this.MaintenanceA2280(beanTemp);
+                    this.MaintenanceA4169(beanTemp);
                 }
             }
         });
@@ -219,15 +191,15 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     // </editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA2280: function (beanTemp) {
+    MaintenanceA4169: function (beanTemp) {
 //        console.log(beanTemp);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA2280',
+            url: prototype.url + '/MaintenanceA4169',
             method: 'POST',
             timeout: 60000000,
             params: beanTemp,
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-            success: function(response, opts) {
+            success: function (response, opts) {
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
@@ -236,7 +208,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
                     Ext.getCmp(prototype.id + '-dataEntry').unmask();
                     Ext.getCmp(prototype.id + '-dataEntry').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                } else{
+                } else {
                     global.Msg({msg: 'An error occurred'});
                 }
             }
@@ -245,16 +217,14 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     //</editor-fold>
 
     validacionInsert: function (beanTemp) {
-//        var msjResult = '';
-//        if (this.getValue("de-txtCODEBANK") === '' || this.getValue("de-cmbCOUNTRY") === '' || this.getValue("de-txtCURRENC") === '') {
-//            msjResult = "You must enter the required field.";
-//        }
-//        return msjResult;
+        var msjResult = '';
+        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtDescTable") === '' || this.getValue("de-txtCTable") === '' || this.getValue("de-txtCDesc") === '' ) {
+            msjResult = "You must enter the required field.";
+        }
+        return msjResult;
     },
     DeshabilitarCampoClave: function () {
-//        Ext.getCmp(prototype.id + '-de-txtCODEBANK').setReadOnly(true);
-//        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').setReadOnly(true);
-//        Ext.getCmp(prototype.id + '-de-txtCURRENC').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
     },
     Habilitarlbl: function () {
 //        Ext.getCmp(prototype.id + '-lblDescripcion').show();

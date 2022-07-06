@@ -155,89 +155,62 @@ public class MiscellaneousPaymentController extends BaseController {
 
     }
     
-//
-//    @RequestMapping(value = "MaintenanceA2280")
-//    public @ResponseBody
-//    String MaintenanceA2280(ModelMap map, HttpServletRequest request) {
-//
-//        System.out.println("-------------- MiscellaneousPayment : MaintenanceA2280-------------");
-//        String option;
-//        A2281 filter = new A2281();
-//        Gson gson = new Gson();
-//        String msj = "";
-//        String beanString = "";
-//
-//        try {
-//
-//            option = request.getParameter("option");
-//            beanString = request.getParameter("beanString");
-//            filter = gson.fromJson(beanString, A2281.class);
-//
-//            logic = new MiscellaneousPaymentLogic();
-//            logic.setSession(this.serverSession.getServerSession());
-//            msj = logic.loadPX267SQP00672(filter, option);
-//
-//            map.put("success", true);
-//            map.put("Mensaje", msj);
-//        } catch (NumberFormatException | SQLException ex) {
-//            map.put("success", false);
-//            map.put("Mensaje", ex.getMessage());
-//        } catch (Exception ex) {
-//            map.put("success", false);
-//            map.put("Mensaje", ex.getMessage());
-//        }
-//        return new Gson().toJson(map);
-//    }
-
-    @RequestMapping(value = "getDataEntry")
+    @RequestMapping(value = "searchCompleteDetail")
     public @ResponseBody
-    String getDataEntry(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- SalesReconciliAmex : getDataEntry-------------");
+    String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- BanksCatalog : searchCompleteDetail-------------");
 
-        map.put("success", true);
-        List<A4169Filter> lst = this.getListgetDataEntry(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
+        Gson gson = new Gson();
+        A4169Filter filter = new A4169Filter();
+        A4169 result = new A4169();
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A4169Filter.class);
+
+        logic = new MiscellaneousPaymentLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            result = logic.loadPX598SQP04520(filter);
+            map.put("result", result);
+            map.put("success", true);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(RejectionsController.class.getName()).log(Level.SEVERE, null, ex);
+            map.put("success", false);
+        }
         return new Gson().toJson(map);
     }
-   
-    public List<A4169Filter> getListgetDataEntry(HttpServletRequest request, Boolean bExcel) {
+    
+    @RequestMapping(value = "MaintenanceA4169")
+    public @ResponseBody
+    String MaintenanceA4169(ModelMap map, HttpServletRequest request) {
 
-        List<A4169Filter> lst = new ArrayList<>(0);
-        A4169Filter filter = new A4169Filter();
+        System.out.println("-------------- BanksCatalog : Maintenance4169-------------");
+        String option;
+        A4169 filter = new A4169();
         Gson gson = new Gson();
+        String msj = "";
         String beanString = "";
 
         try {
+
+            option = request.getParameter("option");
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4169.class);
+
             logic = new MiscellaneousPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
+            msj = logic.loadPX598SQP04521(filter, option);
 
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4169Filter.class);
-
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            lst = logic.loadPX598SQP04520(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
         }
-        return lst;
-
+        return new Gson().toJson(map);
     }
 }
 

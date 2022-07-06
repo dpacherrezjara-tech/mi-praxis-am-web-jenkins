@@ -19,7 +19,10 @@ public int CANT2 = 0;
 public String STVAL = "";
 public String PGMCR = "";
 public String PGMUP = "";
-
+public String option = "";
+public String IN_TTABLA = "";
+public String IN_DESCRE1 = "";
+public String IN_STVAL = "";
 public String USCR = "";
 public String FECR = "";
 public String HOCR = "";
