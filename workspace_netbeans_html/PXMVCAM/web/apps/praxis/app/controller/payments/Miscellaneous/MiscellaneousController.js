@@ -86,22 +86,9 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.MiscellaneousController
         }
     },
     obtainData: function() {
-       
-//        var cmbCode = Ext.getCmp(prototype.id + '-cmbCode');
-//        cmbCode.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["USD", "USD"],
-//                ["EUR", "EUR"],
-//                ["MXN", "MXN"]
-//            ]
-//        }));
-//        cmbCode.setValue("");
-        
+      
         Ext.Ajax.request({
-            url: prototype.urlMaster + '/getCodes',
+            url: prototype.url + '/getCodes',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(this.dataObtain)},
@@ -109,7 +96,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.MiscellaneousController
                 var res = Ext.JSON.decode(response.responseText);             
                 if (res.success) {
                     Ext.getCmp(prototype.id + '-cmbCodes').bindStore(
-                        Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
+                        Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                     );
                     Ext.getCmp(prototype.id + '-cmbCodes').setValue('');
                     me.btnSearch_click();
@@ -122,13 +109,12 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.MiscellaneousController
     setFormatParameter: function() {
 
         me.bean = {};
-        me.bean.CURRENC = Ext.getCmp(prototype.id + '-cmbCode').getValue();
+        me.bean.IN_CODE = Ext.getCmp(prototype.id + '-cmbCodes').getValue();
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
             beanString: beanString
         };
-//        console.log(searchParams);
     },
     btnSearch_click: function(obj, e) {
         this.setFormatParameter();
@@ -200,7 +186,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.MiscellaneousController
             params: {
                 action: action,
                 rec: rec,
-                lstCountry:me.lstCountry
+                lst:me.lst
             }
         }).show();
     },

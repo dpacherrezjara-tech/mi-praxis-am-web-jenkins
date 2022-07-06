@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width:725,
+                            width:765,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 720,
+                                    width: 760,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -82,20 +82,20 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
 //                                                    {text: 'Name', dataIndex: 'NAMEBANK', width: 220, align: 'left'}
 //                                                ]
 //                                            },
-//                                            {
-//                                                sortable: false,
-//                                                xtype: 'actioncolumn',
-//                                                width: 40,
-//                                                text: 'Edit',
-//                                                align: 'center',
-//                                                items: [
-//                                                    {
-//                                                        iconCls: 'prx-icon-edit',
-//                                                        tooltip: 'Edit',
-//                                                        handler: 'onEditClick'
-//                                                    }
-//                                                ]
-//                                            }
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'onEditClick'
+                                                    }
+                                                ]
+                                            }
                                         ]
                                     }
                                 },

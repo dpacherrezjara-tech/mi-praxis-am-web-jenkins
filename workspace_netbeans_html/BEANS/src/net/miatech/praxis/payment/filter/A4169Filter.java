@@ -4,6 +4,10 @@ import net.miatech.beans.Pagination;
 import net.miatech.praxis.payment.A4169;
 
 public class A4169Filter extends A4169{
+    
+    
+    
+    public Pagination page = new Pagination();
+    
 
-        public Pagination page = new Pagination();
 }

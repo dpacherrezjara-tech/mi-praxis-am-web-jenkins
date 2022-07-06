@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
+import static net.miatech.praxis.dao.payments.BanksCatalogDAO.pasarGarbageCollector;
+import net.miatech.praxis.payment.A2281;
 import net.miatech.praxis.payment.A4169;
+import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A4169Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -48,31 +51,32 @@ public class MiscellaneousPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04518(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04518(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(2, Types.INTEGER);
             cstmt.registerOutParameter(3, Types.INTEGER);
             cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_CODE.trim());
            
-            cstmt.setInt(2, filter.page.PAGNUM);
-            cstmt.setInt(3, filter.page.PAGROW);
-            cstmt.setInt(4, filter.page.TOTPAG);
-            cstmt.setInt(5, filter.page.TOTROW);
+            cstmt.setInt(3, filter.page.PAGNUM);
+            cstmt.setInt(4, filter.page.PAGROW);
+            cstmt.setInt(5, filter.page.TOTPAG);
+            cstmt.setInt(6, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(2);
-            filter.page.PAGROW = cstmt.getInt(3);
-            filter.page.TOTPAG = cstmt.getInt(4);
-            filter.page.TOTROW = cstmt.getInt(5);
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -123,13 +127,13 @@ public class MiscellaneousPaymentDAO {
     }
   
   
-  public List<A4116Filter> loadPX570SQP04414(A4116Filter filter) throws SQLException, Exception {
+  public List<A4169Filter> loadPX598SQP04519(A4169Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4169Filter> lstTkts = new ArrayList<A4169Filter>(0);
+        A4169Filter beanTkt;
 
-        A4116Filter objRtn;
-        objRtn = new A4116Filter();
+        A4169Filter objRtn;
+        objRtn = new A4169Filter();
         objRtn.CODE = "";
         objRtn.NAME = "All";
         lstTkts.add(objRtn);
@@ -137,7 +141,7 @@ public class MiscellaneousPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04414(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04519(?)}";
 
         Connection cnx = null;
         try {
@@ -145,14 +149,13 @@ public class MiscellaneousPaymentDAO {
             cstmt = cnx.prepareCall(SQLCLL01);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_WARNING.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4169Filter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
@@ -183,4 +186,77 @@ public class MiscellaneousPaymentDAO {
 
         return lstTkts;
     }
+  
+    public List<A4169Filter> loadPX598SQP04520(A4169Filter filter) throws SQLException, Exception {
+
+        List<A4169Filter> lstTkts = new ArrayList<A4169Filter>(0);
+        A4169Filter beanTkt;
+
+        A4169Filter objRtn;
+        objRtn = new A4169Filter();
+        objRtn.CODE = "";
+        objRtn.NAME = "All";
+        lstTkts.add(objRtn);
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04520(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A4169Filter();
+
+                beanTkt.CODETB = rst.getString("CODETB").trim();
+                beanTkt.DESCRE1 = rst.getString("DESCRE1").trim();
+                beanTkt.DESCRE2 = rst.getString("DESCRE2").trim();
+                beanTkt.CANT1 = rst.getInt("CANT1");
+                beanTkt.CANT2 = rst.getInt("CANT2");
+                beanTkt.STVAL = rst.getString("STVAL").trim();
+                beanTkt.USCR = rst.getString("USCR").trim();
+                beanTkt.FECR = rst.getString("FECR").trim();
+                beanTkt.HOCR = rst.getString("HOCR").trim();
+                beanTkt.PGMCR = rst.getString("PGMCR").trim();
+                beanTkt.USUP = rst.getString("USUP").trim();
+                beanTkt.FEUP = rst.getString("FEUP").trim();
+                beanTkt.HOUP = rst.getString("HOUP").trim();
+                beanTkt.PGMUP = rst.getString("PGMUP").trim();
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+ 
 }

@@ -19,5 +19,12 @@ public class MiscellaneousPaymentLogic {
         return MiscellaneousPaymentDAO.loadPX598SQP04518(filter);
     }
     
+    public List<A4169Filter> loadPX598SQP04519(A4169Filter filter) throws SQLException, Exception {
+        return MiscellaneousPaymentDAO.loadPX598SQP04519(filter);
+    }
+    
+    public List<A4169Filter> loadPX598SQP04520(A4169Filter filter) throws SQLException, Exception {
+        return MiscellaneousPaymentDAO.loadPX598SQP04520(filter);
+    }
 
 }

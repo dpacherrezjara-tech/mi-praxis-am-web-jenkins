@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Filters', {
                 {
                     xtype: 'combo',
                     id: prototype.id + '-cmbCodes',
-                    fieldLabel: 'Error Code',
+                    fieldLabel: 'Codes',
                     triggerAction: 'all',
                     enableKeyEvents: true,
                     readOnly: false,

@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
         'Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousController'
     ],
     controller: 'DataEntryMiscellaneousController',
-    title:'Bank - Data Entry Form',
+    title:'Miscellaneous - Data Entry Form',
     header:true,
     height:365,
     width:820,
@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                     items: [
                         {
                             xtype: 'label',
-                            text: 'Bank Information',
+                            text: 'Miscellaneous Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -44,205 +44,207 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                             margin: '4 2 4 3'
                         },   
                         {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#E5ECEF;',
-                            margin: '1 2 1 10',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [                                                       
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Code',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 60
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCODEBANK',
-                                    fieldStyle: 'text-align:center',
-                                    enableKeyEvents: false,
-                                    enforceMaxLength: true,
-                                    editable: true,
-                                    enabled: false,
-                                    maxLength: 2,
-                                    maskRe: /[a-zA-Z]/,
-                                    readOnly: false,
-                                    width: 50,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 50 },
-                                {
-//                                 
-                                    xtype: 'label',
-                                    text: 'Numeric Code',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 95
-                                },
-                                { xtype: 'tbspacer', width: 5 },
-                                {
-                                    xtype: 'combo',
-                                    id:prototype.id+'-cmbCODEBANKN',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    width: 130,
-                                    labelWidth: 10,
-                                    hidden: false,
-                                    hiddenLabel: false 
-                                },
-                                { xtype: 'tbspacer', width: 45 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Name',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 45
-                                },
-                                { xtype: 'tbspacer', width: 2 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtNAMEBANK',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    enforceMaxLength: true,
-                                    maxLength: 40,
-                                    width: 263,
-                                    labelWidth: 20
-                                },
-                                { xtype: 'tbspacer', width: 12 }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '1 2 1 10',
-                            bodyStyle: 'background:#E5ECEF;',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Country',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 60
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'combo',
-                                    id:prototype.id+'-de-cmbCOUNTRY',
-                                    fieldStyle: 'text-align:left;',
-                                    enableKeyEvents: true,
-                                    width: 65,
-                                    editable: true,
-                                    readOnly: false,
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    emptyText: 'All',
-                                    valueField: 'A006PAIS',
-                                    displayField: 'A006PAIS'
-                                },
-                                { xtype: 'tbspacer', width: 35 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Currency',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 65
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 15 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCURRENC',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 70,
-                                    readOnly: false,
-                                    enforceMaxLength: true,
-                                    maxLength: 3,
-                                    maskRe: /[a-zA-Z]/,
-                                     listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 50 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Document Nbr.',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 100
-                                },
-                                { xtype: 'tbspacer', width: 2 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-txtDOCNUM',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    enforceMaxLength: true,
-                                    maxLength: 5,
-                                    maskRe: /[0-9]/,
-                                    width: 80
-                                },  
-                                { xtype: 'tbspacer', width: 40 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Status',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 50
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'combo',
-                                    id:prototype.id+'-cmbFSTAT',
-                                    fieldStyle: 'text-align:left;',
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    width: 90
-                                },
-                                { xtype: 'tbspacer', width: 11 }
-                            ]
+//                        {
+//                            xtype: 'panel',
+//                            layout: 'hbox',
+//                            border: false,
+//                            bodyStyle: 'background:#E5ECEF;',
+//                            margin: '1 2 1 10',
+//                            defaults: {
+//                                anchor: '100%',
+//                                width: 1080
+//                            },
+//                            items: [                                                       
+//                                { xtype: 'tbspacer', width: 7 },
+//                                {
+//                                    xtype: 'label',
+//                                    text: 'Tipo TB-TABLE',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 60
+//                                },
+//                                {
+//                                    xtype: 'label',
+//                                    text: '(*)',
+//                                    style: 'font-weight:bold;color:red;',
+//                                    width: 20,
+//                                    autoEl: {
+//                                        tag: 'label',
+//                                        'data-qtip': 'Mandatory Field'
+//                                    }
+//                                },
+//                                { xtype: 'tbspacer', width: 4 },
+//                                {
+//                                    xtype: 'textfield',
+//                                    id:prototype.id+'-de-txtCODEBANK',
+//                                    fieldStyle: 'text-align:center',
+//                                    enableKeyEvents: false,
+//                                    enforceMaxLength: true,
+//                                    editable: true,
+//                                    enabled: false,
+//                                    maxLength: 2,
+//                                    maskRe: /[a-zA-Z]/,
+//                                    readOnly: false,
+//                                    width: 50,
+//                                    listeners:{
+//                                        change: 'onUpperValue'
+//                                    }
+//                                },
+//                                { xtype: 'tbspacer', width: 50 },
+//                                {
+////                                 
+//                                    xtype: 'label',
+//                                    text: 'Numeric Code',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 95
+//                                },
+//                                { xtype: 'tbspacer', width: 5 },
+//                                {
+//                                    xtype: 'combo',
+//                                    id:prototype.id+'-cmbCODEBANKN',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    fieldStyle: 'text-align:left;',
+//                                    queryMode: 'local',
+//                                    triggerAction: 'all',
+//                                    valueField: 'code',
+//                                    displayField: 'name',
+//                                    width: 130,
+//                                    labelWidth: 10,
+//                                    hidden: false,
+//                                    hiddenLabel: false 
+//                                },
+//                                { xtype: 'tbspacer', width: 45 },
+//                                {
+//                                    xtype: 'label',
+//                                    text: 'Name',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 45
+//                                },
+//                                { xtype: 'tbspacer', width: 2 },
+//                                {
+//                                    xtype: 'textfield',
+//                                    id:prototype.id+'-de-txtNAMEBANK',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    fieldStyle: 'text-align:center;',
+//                                    enforceMaxLength: true,
+//                                    maxLength: 40,
+//                                    width: 263,
+//                                    labelWidth: 20
+//                                },
+//                                { xtype: 'tbspacer', width: 12 }
+//                            ]
+//                        },
+//                        {
+//                            xtype: 'panel',
+//                            layout: 'hbox',
+//                            border: false,
+//                            margin: '1 2 1 10',
+//                            bodyStyle: 'background:#E5ECEF;',
+//                            defaults: {
+//                                anchor: '100%',
+//                                width: 1080
+//                            },
+//                            items: [
+//                                { xtype: 'tbspacer', width: 7 },
+//                                {
+//                                    xtype: 'label',
+//                                    text: 'Country',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 60
+//                                },
+//                                {
+//                                    xtype: 'label',
+//                                    text: '(*)',
+//                                    style: 'font-weight:bold;color:red;',
+//                                    width: 20,
+//                                    autoEl: {
+//                                        tag: 'label',
+//                                        'data-qtip': 'Mandatory Field'
+//                                    }
+//                                },
+//                                { xtype: 'tbspacer', width: 4 },
+//                                {
+//                                    xtype: 'combo',
+//                                    id:prototype.id+'-de-cmbCOUNTRY',
+//                                    fieldStyle: 'text-align:left;',
+//                                    enableKeyEvents: true,
+//                                    width: 65,
+//                                    editable: true,
+//                                    readOnly: false,
+//                                    queryMode: 'local',
+//                                    triggerAction: 'all',
+//                                    emptyText: 'All',
+//                                    valueField: 'A006PAIS',
+//                                    displayField: 'A006PAIS'
+//                                },
+//                                { xtype: 'tbspacer', width: 35 },
+//                                {
+//                                    xtype: 'label',
+//                                    text: 'Currency',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 65
+//                                },
+//                                {
+//                                    xtype: 'label',
+//                                    text: '(*)',
+//                                    style: 'font-weight:bold;color:red;',
+//                                    width: 20,
+//                                    autoEl: {
+//                                        tag: 'label',
+//                                        'data-qtip': 'Mandatory Field'
+//                                    }
+//                                },
+//                                { xtype: 'tbspacer', width: 15 },
+//                                {
+//                                    xtype: 'textfield',
+//                                    id:prototype.id+'-de-txtCURRENC',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    fieldStyle: 'text-align:center;',
+//                                    width: 70,
+//                                    readOnly: false,
+//                                    enforceMaxLength: true,
+//                                    maxLength: 3,
+//                                    maskRe: /[a-zA-Z]/,
+//                                     listeners:{
+//                                        change: 'onUpperValue'
+//                                    }
+//                                },
+//                                { xtype: 'tbspacer', width: 50 },
+//                                {
+//                                    xtype: 'label',
+//                                    text: 'Document Nbr.',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 100
+//                                },
+//                                { xtype: 'tbspacer', width: 2 },
+//                                {
+//                                    xtype: 'textfield',
+//                                    id:prototype.id+'-txtDOCNUM',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    fieldStyle: 'text-align:center;',
+//                                    enforceMaxLength: true,
+//                                    maxLength: 5,
+//                                    maskRe: /[0-9]/,
+//                                    width: 80
+//                                },  
+//                                { xtype: 'tbspacer', width: 40 },
+//                                {
+//                                    xtype: 'label',
+//                                    text: 'Status',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    width: 50
+//                                },
+//                                { xtype: 'tbspacer', width: 4 },
+//                                {
+//                                    xtype: 'combo',
+//                                    id:prototype.id+'-cmbFSTAT',
+//                                    fieldStyle: 'text-align:left;',
+//                                    valueField: 'code',
+//                                    displayField: 'name',
+//                                    width: 90
+//                                },
+//                                { xtype: 'tbspacer', width: 11 }
+//                            ]
+//                        },
                         },
                         { xtype: 'tbspacer', width: 6 },
                         {
@@ -255,28 +257,28 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Input Status',
-                                    fontSize: 11,
+                                    text: 'Tipo TB-TABLE',
+                                    fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 200
+                                    width: 90
                                 },
                                 { xtype: 'tbspacer', width: 4 },
                                 {
-                                    xtype: 'combo',
-                                    id:prototype.id+'-cmbFINSUMO',
-                                    fieldStyle: 'text-align:left;',
-                                    width: 90,
-                                    editable: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    enableKeyEvents: true
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtTipoTTable',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:right;',
+                                    width: 245,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    maxLength: 8                                  
                                 },
-                                { xtype: 'tbspacer', width: 50 },
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Cliente ',
+                                    text: 'Codigo TB-TABLE',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -285,7 +287,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCLIENTE',
+                                    id:prototype.id+'-de-txtCodTTable',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 245,
@@ -307,43 +309,40 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Commission Rate Normal',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
+                                    text: 'Descripcion',
+                                    hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 200
+                                    width: 90
+                                    
                                 },
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATECON',
+                                    id:prototype.id+'-de-txtDesc1',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:right;',
-                                    width: 90,
-                                    maskRe: /[0-9]/,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 5                                  
+                                    maxLength: 8
                                 },
                                 { xtype: 'tbspacer', width: 50 },
                                 {
                                     xtype: 'label',
-                                    text: ' Rate IVA',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
+                                    text: 'Cantidad',
+                                    hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 60                                },
-                                { xtype: 'tbspacer', width: 160 },
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATEIVA',
+                                    id:prototype.id+'-de-txtCant1',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:right;',
-                                    width: 119,
-                                    maskRe: /[0-9]/,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 5
+                                    maxLength: 8
                                 },
                                 { xtype: 'tbspacer', width: 5 }
                             ]
@@ -360,48 +359,72 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Commission Rate Promocional 1',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
+                                    text: 'Descripcion',
+                                    hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 200,
-                                    height: 35
+                                    width: 90
+                                    
                                 },
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATECOP1',
+                                    id:prototype.id+'-de-txtDesc2',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:right;',
-                                    width: 90,
-                                    maskRe: /[0-9]/,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 5
+                                    maxLength: 8
                                 },
                                 { xtype: 'tbspacer', width: 50 },
                                 {
                                     xtype: 'label',
-                                    text: ' Commission Rate Promocional 2',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
+                                    text: 'Cantidad',
+                                    hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 200,
-                                    height: 35
+                                    width: 90
+                                    
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATECOP2',
+                                    id:prototype.id+'-de-txtCant2',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:right;',
-                                    width: 119,
-                                    maskRe: /[0-9]/,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 245,
                                     enforceMaxLength: true,
-                                    maxLength: 5
+                                    maxLength: 8
                                 },
                                 { xtype: 'tbspacer', width: 5 }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '2 2 0 8',
+//                            bodyStyle: 'background:#E5ECEF;',
+                            
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 4 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtStval',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 245,
+                                    enforceMaxLength: true,
+                                    maxLength: 8
+                                },
+                                
                             ]
                         }
                         
@@ -432,7 +455,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Creator User ',
+                                    text: 'Creator User',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120,
                                     height: 20

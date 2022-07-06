@@ -64,8 +64,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.MiscellaneousForm', {
                                         ,
                                         {
                                             xtype: prototype.id + '-filters',
-                                            id: prototype.id + '-contentFilter',
-                                            hidden: true
+                                            id: prototype.id + '-contentFilter'
                                         }
                                         ,
                                         {
