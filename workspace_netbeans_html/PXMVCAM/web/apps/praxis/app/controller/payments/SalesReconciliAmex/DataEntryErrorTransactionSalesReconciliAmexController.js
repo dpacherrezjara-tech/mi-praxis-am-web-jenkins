@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     sumAmountBlocked: 0,
     gridAdjustmentRowIndex: 10,
     status_match: ['1', '5', '6', '7'],
+    dataObtain: {},
     // </editor-fold>
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
@@ -42,8 +43,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         //console.log(this.bean);
 
     },
+    obtainGetAdjustmentCode: function () {
+        Ext.Ajax.request({
+            url: prototype.url + '/getAdjustmentCodes',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbADJTYPE').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbADJTYPE').setValue('');
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+    },
     afterRender: function () {
 //        console.log('afterRender');
+        this.obtainGetAdjustmentCode();
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
@@ -81,6 +101,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-dataEntryError').close();
             } else {
                 this.bean = this.p.rec.data;
+                if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
+                    Ext.getCmp(prototype.id + '-btn-update').hide();
+                    Ext.getCmp(prototype.id + '-panelScanCard').hide();
+                    Ext.getCmp(prototype.id + '-panelScan').hide();
+                    Ext.getCmp(prototype.id + '-panelMsiTracing').show();
+                }
             }
             this.getData();
             //this.winDataEntry('U', rec, all, rowIndex);
@@ -193,6 +219,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
         beanTemp.TDOC = this.beanResult.TDOC;
+        beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
+        
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
         } else {
@@ -476,6 +504,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                             Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-gridDataAdjustment').hide();
+                    Ext.getCmp(prototype.id + '-cmbADJTYPE').setValue('');
+                    Ext.getCmp(prototype.id + '-panelADJ').hide();
                     meDE.onNextClick();
                 } else {
                     global.Msg({msg: res.msjOption});
@@ -897,6 +927,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         } else {
             //this.lstAdjustment = [];
             Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+            Ext.getCmp(prototype.id + '-panelADJ').show();
             var rec = Object.create(grid.getStore().getAt(rowIndex).data);
 
             rec.A1531VFOP = this.bean.TGROSAMOUN - this.sumAmount;
@@ -947,7 +978,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
         //Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore().data.items[0].data.A1531VFOP
     },
-    refreshValuesAdjustment: function (field, e, eOpts) {                
+    refreshValuesAdjustment: function (field, e, eOpts) {
         this.lstAdjustment = [];
         var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
         for (var c = 0; c < store_gridDataAdjustment.data.length; c++) {
@@ -960,20 +991,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 );
         this.calcularMontos();
     },
-    eventKeyAdjustment: function(e, eOpts){
+    eventKeyAdjustment: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
             /*console.log(meDE.gridAdjustmentRowIndex);
-            var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
-            console.log(store_gridDataAdjustment.data.items[0].data.A1531VFOP);
-            console.log(store_gridDataAdjustment.data.items[0].data.A1531TKT);*/
-            
+             var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+             console.log(store_gridDataAdjustment.data.items[0].data.A1531VFOP);
+             console.log(store_gridDataAdjustment.data.items[0].data.A1531TKT);*/
+
             this.lstAdjustment[meDE.gridAdjustmentRowIndex].A1531VFOP = parseFloat(e.value);
             this.lstAdjustment[meDE.gridAdjustmentRowIndex].tot_VFOP = parseFloat(e.value);
-            
+
             /*Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-                Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
-            );*/
+             Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+             );*/
             this.calcularMontos();
-        }        
+        }
     }
 });
