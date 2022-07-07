@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     meDE: '',
     actionCode: '',
     bean: {},
+    beanEdit: {},
     beanResult: {},
     lstCountry: [],
     searchParams: {},
@@ -34,9 +35,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                 break;
             case 'U':
                 this.mostrarData(this.bean.data);
-//                if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
-//                    this.DeshabilitarCampoClave();
-//                }
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').show();
@@ -151,15 +149,22 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 
     },
     
-    llenarData: function(beanTemp) {
-
+    llenarData: function(beanTemp, chk) {
+        
         beanTemp.TICKET = this.getValue("txtTICKET");
-        beanTemp.TICKET_2 = this.getValue("txtTICKET_2");
         beanTemp.CUPON = this.getValue("txtCUPON");
-        beanTemp.CUPON_2 = this.getValue("txtCUPON_2");
+        
+        if(chk){
+            beanTemp.TICKET_2 = '';
+            beanTemp.CUPON_2 = '';
+            beanTemp.LNKMVLO = 'EDIT';
+        }else{
+            beanTemp.TICKET_2 = this.getValue("txtTICKET_2");
+            beanTemp.CUPON_2 = this.getValue("txtCUPON_2");
+            beanTemp.LNKMVLO = this.bean.data.LNKMVLO;
+        }
         
         beanTemp.SEQ = this.bean.data.SEQ;
-        beanTemp.LNKMVLO = this.bean.data.LNKMVLO;
         
         beanTemp.DFLIGHT = this.getValue("txtDFLIGHT");
         beanTemp.NFLIGHT = this.getValue("txtNFLIGHT");
@@ -185,6 +190,52 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
         }
         
         beanTemp.STASABR = this.getValue("txtSTASABR").trim();;
+
+        beanTemp.USCR = this.getValue("txtUSCR").trim();
+        beanTemp.FECR = this.getValue("txtFECR").trim();
+        beanTemp.HOCR = this.getValue("txtHOCR").trim();
+        beanTemp.USUP = this.getValue("txtUSUP").trim();
+        beanTemp.FEUP = this.getValue("txtFEUP").trim();
+        beanTemp.HOUP = this.getValue("txtHOUP").trim();
+
+        console.log(beanTemp);
+
+    },
+    
+    llenarData_edit: function(beanTemp) {
+
+        beanTemp.TICKET = this.bean.data.strTicket.substring(0,13);
+        beanTemp.TICKET_2 = '';
+        beanTemp.CUPON = this.bean.data.strTicket.substring(14,15);
+        beanTemp.CUPON_2 = '';
+        
+        beanTemp.SEQ = this.bean.data.SEQ;
+        beanTemp.LNKMVLO = 'EDIT';
+        
+        beanTemp.DFLIGHT = this.bean.data.DFLIGHT;
+        beanTemp.NFLIGHT = this.bean.data.NFLIGHT;
+        beanTemp.TPAX =this.bean.data.TPAX;
+        
+        beanTemp.CDEPART = this.bean.data.CDEPART;
+        beanTemp.CARRIVA = this.bean.data.CARRIVA;
+        beanTemp.CHAIR = this.bean.data.CHAIR;
+
+        beanTemp.LNAME = this.bean.data.LNAME;
+        beanTemp.FNAME = this.bean.data.FNAME;
+        
+        beanTemp.STVAL = this.bean.data.STVAL;
+        beanTemp.STVCR = this.bean.data.STVCR;
+        beanTemp.FSALES = this.bean.data.FSALES;
+        if(beanTemp.FSALES === null){
+            beanTemp.FSALES = '';
+        }
+        
+        beanTemp.FSABRE = this.bean.data.FSABRE;
+        if(beanTemp.FSABRE === null){
+            beanTemp.FSABRE = '';
+        }
+        
+        beanTemp.STASABR = this.bean.data.STASABR;
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -250,14 +301,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             modal: true,
             fn: function(btn) {
                 if (btn === 'yes') {
+                    var chk = Ext.getCmp(prototype.id + '-chkDetail').getValue();
                     var beanTemp = {};
-                    this.llenarData(beanTemp);
-                    
-//                    if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
-//                        beanTemp.option = '';
+//                    if(chk){
+//                        this.llenarData_edit(beanTemp);
 //                    }else{
-                        beanTemp.option = 'U';
+                        this.llenarData(beanTemp, chk);
 //                    }
+                    beanTemp.option = 'U';
                     
                     this.validTktExists(beanTemp);
                 }
@@ -330,9 +381,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA3729">
     MaintenanceA3729: function(beanTemp) {
-        
-        console.log('ACTUALIZAR');
-        
+                
         var beanString = JSON.stringify(beanTemp);
         Ext.Ajax.request({
             url: prototype.url + '/MaintenanceA3729',
@@ -369,12 +418,52 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     },
     DeshabilitarCampoClave: function() {
 
-        Ext.getCmp(prototype.id + '-txtTICKET').setReadOnly(false);
-        Ext.getCmp(prototype.id + '-txtCUPON').setReadOnly(false);
-        Ext.getCmp(prototype.id + '-txtCHAIR').setReadOnly(false);
-        
+        Ext.getCmp(prototype.id + '-txtTICKET').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtCUPON').setReadOnly(true);
         Ext.getCmp(prototype.id + '-txtTICKET_2').setReadOnly(true);
         Ext.getCmp(prototype.id + '-txtCUPON_2').setReadOnly(true);
+        
+        Ext.getCmp(prototype.id + '-txtDFLIGHT').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtNFLIGHT').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-cmbTPAX').setReadOnly(true);
+        
+        Ext.getCmp(prototype.id + '-txtCDEPART').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtCARRIVA').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtCHAIR').setReadOnly(true);
+        
+        Ext.getCmp(prototype.id + '-txtLNAME').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtFNAME').setReadOnly(true);
+        
+        
+        Ext.getCmp(prototype.id + '-cmbSTVAL').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-cmbSTVCR').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-cmbFSALES').setReadOnly(true);
+        
+        Ext.getCmp(prototype.id + '-cmbFSABRE').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtSTASABR').setReadOnly(true);
+    },
+    
+    HabilitarCampoClave: function() {
+
+        Ext.getCmp(prototype.id + '-txtTICKET_2').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-txtCUPON_2').setReadOnly(false);
+        
+        Ext.getCmp(prototype.id + '-txtNFLIGHT').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-cmbTPAX').setReadOnly(false);
+        
+        Ext.getCmp(prototype.id + '-txtCDEPART').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-txtCARRIVA').setReadOnly(false);
+        
+        Ext.getCmp(prototype.id + '-txtLNAME').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtFNAME').setReadOnly(true);
+        
+        
+        Ext.getCmp(prototype.id + '-cmbSTVAL').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-cmbSTVCR').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-cmbFSALES').setReadOnly(false);
+        
+        Ext.getCmp(prototype.id + '-cmbFSABRE').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-txtSTASABR').setReadOnly(false);
     },
     Habilitarlbl: function() {
         Ext.getCmp(prototype.id + '-lblDescripcion').show();
@@ -396,6 +485,19 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             Ext.getCmp(prototype.id + '-lbldes2').show();
         }
     },
+    
+    chkDetail_ChangeValue: function() {
+        
+        var opc = Ext.getCmp(prototype.id + '-chkDetail').getValue();
+        
+        if(opc){
+            this.DeshabilitarCampoClave();
+        }else{
+            this.HabilitarCampoClave();
+        }
+        
+    },
+    
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function(id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();

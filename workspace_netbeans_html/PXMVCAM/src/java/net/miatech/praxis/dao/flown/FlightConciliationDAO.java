@@ -489,7 +489,7 @@ public class FlightConciliationDAO {
 
                     beanCons.FOPERZUL = rst.getString("FOPERZUL");
                     beanCons.strFormatDate2 = Functions.getMonthConvert(beanCons.FOPERZUL);
-                    beanCons.FMULTI = rst.getString("FMULTI").trim();
+                    beanCons.FMULTI= rst.getString("FMULTI").trim();
                     beanCons.QCPNOD = rst.getLong("QCPNOD");
                     beanCons.QCPNFI = rst.getInt("QCPNFI");
                     beanCons.QCPNFRE = rst.getInt("QCPNFRE");
@@ -732,7 +732,7 @@ public class FlightConciliationDAO {
             cs.setString(3, filter.NFLIGHT);
             cs.setString(4, filter.IN_FSABRE);
             cs.setString(5, filter.CDEPART);
-            cs.setString(6, filter.IN_TABLE.trim());
+            cs.setString(6, "A3729");
 
             cs.execute();
 
@@ -740,7 +740,7 @@ public class FlightConciliationDAO {
             while (rst.next()) {
 
                 beanCons = new A3729Filter();
-                
+
                 beanCons.RN = rst.getLong("RN");
                 beanCons.CHAIR = rst.getString("CHAIR").trim();
                 beanCons.strTicket = rst.getString("TICKET").trim();
@@ -797,28 +797,18 @@ public class FlightConciliationDAO {
                 beanCons.TPAX = rst.getString("TPAX").trim();
                 beanCons.TPAX_V = rst.getString("TPAX_V").trim();
 
-                if(filter.IN_TABLE.equals("A3729")){
-                    if (!beanCons.TPAX_V.equals("")) {
-                        beanCons.TPAX = beanCons.TPAX_V;
-                    }
+                if (!beanCons.TPAX_V.equals("")) {
+                    beanCons.TPAX = beanCons.TPAX_V;
+                }
 
-                    if (beanCons.TPAX.equals("A")) {
-                        beanCons.desPAX = "Adult";
-                    } else if (beanCons.TPAX.equals("C")) {
-                        beanCons.desPAX = "Children";
-                    } else if (beanCons.TPAX.equals("I")) {
-                        beanCons.desPAX = "Infant";
-                    } else if (beanCons.TPAX.equals("INF")) {
-                        beanCons.desPAX = "Infant";
-                    }
-                }else{
-                    if (beanCons.TPAX.equals("AD")) {
-                        beanCons.desPAX = "Adult";
-                    } else if (beanCons.TPAX.equals("INF")) {
-                        beanCons.desPAX = "Infant";
-                    } else {
-                        beanCons.desPAX = beanCons.TPAX;
-                    }
+                if (beanCons.TPAX.equals("A")) {
+                    beanCons.desPAX = "Adult";
+                } else if (beanCons.TPAX.equals("C")) {
+                    beanCons.desPAX = "Children";
+                } else if (beanCons.TPAX.equals("I")) {
+                    beanCons.desPAX = "Infant";
+                } else if (beanCons.TPAX.equals("INF")) {
+                    beanCons.desPAX = "Infant";
                 }
 
                 beanCons.FA720 = rst.getString("FA720").trim();
@@ -2372,7 +2362,7 @@ public class FlightConciliationDAO {
         String strMsj = "";
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2406,12 +2396,16 @@ public class FlightConciliationDAO {
             cstmt.setString(19, session.getUserView().getUserInfo().USR);
             cstmt.setString(20, Functions.getFechaActual());
             cstmt.setString(21, Functions.getHoraActual());
-            cstmt.setString(22, filter.IN_TABLE.trim());
+            cstmt.setString(22, "A3729");
+            cstmt.setString(23, filter.LNKMVLO.trim());
+            cstmt.setString(24, filter.FECR.trim());
+            cstmt.setString(25, filter.HOCR.trim());
             cstmt.execute();
 
             strMsj = "Upgrade was successful.";
 
         } catch (Exception e) {
+            strMsj = e.getMessage();
             e.printStackTrace();
         } finally {
             if (cstmt != null) {
@@ -2517,7 +2511,7 @@ public class FlightConciliationDAO {
             cstmt.setString(25, session.getUserView().getUserInfo().USR);
             cstmt.setString(26, Functions.getFechaActual());
             cstmt.setString(27, Functions.getHoraActual());
-            cstmt.setString(28, filter.IN_TABLE.trim());
+            cstmt.setString(28, "A3729");
             cstmt.execute();
 
             strMsj = "Insertion was successful.";
