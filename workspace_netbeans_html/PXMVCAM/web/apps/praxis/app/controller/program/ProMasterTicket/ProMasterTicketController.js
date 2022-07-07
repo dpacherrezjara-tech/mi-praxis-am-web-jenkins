@@ -253,7 +253,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             viewRefund.show();
 	}
 	if(data.STAT === 'FLWN'){
-            this.searchBeanTkt(win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim() + data.CPN,data.SEQ, data.SEQRO);
+            this.searchBeanTkt(data.CIA + data.FOR + data.SER + data.CPN,data.SEQ, data.SEQRO);
 	}
         if(data.STAT === 'BILLED'){
             //this.searchBeanTkt(win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim() + data.CPN,this.filterTKT.IN_SEQ, data.SEQ);
@@ -1827,6 +1827,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         FOR : paramsResultSet11.fileA1692.FORMA,
                                         SER : paramsResultSet11.fileA1692.SERIE,
                                         SEQ : paramsResultSet11.fileA1692.SEQ.trim(),
+                                        SEQRO : paramsResultSet11.fileA1692.SEQRO.trim(),
                                         CPN : paramsResultSet11.fileA1692.CUPON,
                                         ORI : paramsResultSet11.fileA1692.CDEPART,
                                         DES : paramsResultSet11.fileA1692.CARRIVA,
@@ -1895,6 +1896,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         FOR : paramsResultSet12.fileA1818.FORMA,
                                         SER : paramsResultSet12.fileA1818.SERIE,
                                         SEQ : paramsResultSet12.fileA1818.SEQ.trim(),
+                                        SEQRO : paramsResultSet12.fileA1818.SEQRO.trim(),
                                         CPN : paramsResultSet12.fileA1818.CUPON,
                                         ORI : paramsResultSet12.fileA1818.CDEPART,
                                         DES : paramsResultSet12.fileA1818.CARRIVA,
@@ -2474,6 +2476,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         FOR : paramsResultSet11.fileA1692.FORMA,
                                         SER : paramsResultSet11.fileA1692.SERIE,
                                         SEQ : paramsResultSet11.fileA1692.SEQ.trim(),
+                                        SEQRO : paramsResultSet11.fileA1692.SEQRO.trim(),
                                         CPN : paramsResultSet11.fileA1692.CUPON,
                                         ORI : paramsResultSet11.fileA1692.CDEPART,
                                         DES : paramsResultSet11.fileA1692.CARRIVA,
@@ -2542,6 +2545,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         FOR : paramsResultSet12.fileA1818.FORMA,
                                         SER : paramsResultSet12.fileA1818.SERIE,
                                         SEQ : paramsResultSet12.fileA1818.SEQ.trim(),
+                                        SEQRO : paramsResultSet12.fileA1818.SEQRO.trim(),
                                         CPN : paramsResultSet12.fileA1818.CUPON,
                                         ORI : paramsResultSet12.fileA1818.CDEPART,
                                         DES : paramsResultSet12.fileA1818.CARRIVA,
