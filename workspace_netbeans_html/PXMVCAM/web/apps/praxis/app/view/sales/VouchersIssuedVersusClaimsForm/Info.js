@@ -56,6 +56,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                         }
                                     },
                                     {text: 'Issued Date', dataIndex: 'A4213FECVT', align: 'center', width: 100},
+                                    {text: 'Curr.', dataIndex: 'A4213MONED', width: 50, align: 'center'},
                                     {text: 'Amount', dataIndex: 'A4213AMOUN', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
@@ -64,16 +65,15 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-                                    },
-                                    {text: 'Curr.', dataIndex: 'A4213MDATK', width: 50, align: 'center'},
+                                    },                                    
                                     {text: 'Agent', dataIndex: 'A4213AGENT', align: 'center', width: 70},
                                     {text: 'Ticket<br>Ancillaries', dataIndex: '', align: 'center', width: 120,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                         
                                             return record.get("A4213CIATK")+record.get("A4213FORTK")+record.get("A4213SERTK");
                                         }
-                                    },
-
-                                    {text: 'Coupons', dataIndex: 'A4213CUPON', align: 'center', width: 70},
+                                    },                                    
+                                    {text: 'Coupons', dataIndex: 'A4213CUPON', align: 'center', width: 70},                                    
+                                    {text: 'Curr.', dataIndex: 'A4213MDATK', width: 50, align: 'center'},
                                     {text: 'Amount', dataIndex: 'A4213AMOTK', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
