@@ -1,11 +1,11 @@
-var storeComboAdj = Ext.create('Ext.data.SimpleStore', {
-    fields: ['code', 'name'],
-    data: [
-        ["01", "DIFERENCIA LIQUIDACION VS SALE"],
-        ["02", "PAGO DUPLICADO"],
-        ["03", "ADM/AVISOS DE CARGO"]
-    ]
-});
+/*var storeComboAdj = Ext.create('Ext.data.SimpleStore', {
+ fields: ['code', 'name'],
+ data: [
+ ["01", "DIFERENCIA LIQUIDACION VS SALE"],
+ ["02", "PAGO DUPLICADO"],
+ ["03", "ADM/AVISOS DE CARGO"]
+ ]
+ });*/
 Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryErrorTransactionSalesReconciliAmexForm',
@@ -1036,7 +1036,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             layout: 'vbox',
                             border: false,
                             width: 956,
-                            height: 245,
+                            height: 270,
                             hidden: false,
                             autoScroll: true,
                             bodyStyle: 'background:#E5ECEF;',
@@ -1260,12 +1260,47 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 },
                                 {xtype: 'tbspacer', height: 2},
                                 {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    id: prototype.id + '-panelADJ',
+                                    border: false,
+                                    hidden: true,
+                                    margin: '0 2 0 20',
+                                    bodyStyle: 'background:#efe5e5;',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 30},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Adjustment Type',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 120
+                                        },
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbADJTYPE',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:left;',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            valueField: 'CODE',
+                                            displayField: 'NAME',
+                                            width: 130,
+                                            labelWidth: 10,
+                                            hidden: false,
+                                            hiddenLabel: false
+                                        },
+                                    ]
+                                },
+                                {xtype: 'tbspacer', height: 2},
+                                {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAdjustment',
-                                    width: 952,
+                                    width: 782,
                                     height: 60,
                                     hidden: true,
                                     columnLines: true,
+                                    margin: '0 2 0 100',
                                     plugins: [
                                         {
                                             ptype: 'cellediting',
@@ -1336,9 +1371,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 },
                                                 listeners: {
-                                                    click: function(obj, metaData, rowNum, columnNum, obj2, rowData){
-                                                            meDE.gridAdjustmentRowIndex = rowNum;
-                                                        },
+                                                    click: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+                                                        meDE.gridAdjustmentRowIndex = rowNum;
+                                                    },
                                                 },
                                                 editor: {
                                                     xtype: 'textfield',
@@ -1349,12 +1384,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     selectOnFocus: true,
                                                     listeners: {
                                                         /*blur: function (field, e, eOpts) {
-                                                            var newVal = field.getValue().trim();
-                                                            field.setValue(newVal);
-                                                            meDE.refreshValuesAdjustment(self, e, eOpts);
-                                                        }*/                                                        
+                                                         var newVal = field.getValue().trim();
+                                                         field.setValue(newVal);
+                                                         meDE.refreshValuesAdjustment(self, e, eOpts);
+                                                         }*/
                                                         specialkey: 'eventKeyAdjustment',
-                                                        
                                                     }
                                                 },
                                             },
@@ -1397,31 +1431,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
-                                                renderer: function (value, meta, record, row, col) {
-                                                    meta.style = "background-color:#fae2a0;";
-                                                    switch (value) {
-                                                        case '':
-                                                            return 'DIFERENCIA LIQUIDACION VS SALE';
-                                                        case '01':
-                                                            return 'DIFERENCIA LIQUIDACION VS SALE';
-                                                        case '02':
-                                                            return 'PAGO DUPLICADO';
-                                                        case '03':
-                                                            return 'ADM/AVISOS DE CARGO';
-                                                        default:
-                                                            return 'DIFERENCIA LIQUIDACION VS SALE';
-                                                    }
-                                                },
-                                                editor: {
-                                                    xtype: 'combo',
-                                                    store: storeComboAdj,
-                                                    editable: false,
-                                                    valueField: 'code',
-                                                    displayField: 'name',
-                                                    value: '',
-                                                }
-                                            },
+                                            /*{text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
+                                             renderer: function (value, meta, record, row, col) {
+                                             meta.style = "background-color:#fae2a0;";
+                                             switch (value) {
+                                             case '':
+                                             return 'DIFERENCIA LIQUIDACION VS SALE';
+                                             case '01':
+                                             return 'DIFERENCIA LIQUIDACION VS SALE';
+                                             case '02':
+                                             return 'PAGO DUPLICADO';
+                                             case '03':
+                                             return 'ADM/AVISOS DE CARGO';
+                                             default:
+                                             return 'DIFERENCIA LIQUIDACION VS SALE';
+                                             }
+                                             },
+                                             editor: {
+                                             xtype: 'combo',
+                                             store: storeComboAdj,
+                                             editable: false,
+                                             valueField: 'code',
+                                             displayField: 'name',
+                                             value: '',
+                                             }
+                                             },*/
                                         ]
                                     }
                                 },

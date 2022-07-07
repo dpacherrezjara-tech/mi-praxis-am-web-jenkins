@@ -89,7 +89,7 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04357(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04357(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04468(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04468(filter);
     }
@@ -97,7 +97,7 @@ public class SalesReconciliAmexLogic {
     public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04359(filter);
     }
-    
+
     public A4118Filter loadPX570SQP04466(A4118Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04466(filter);
     }
@@ -109,11 +109,11 @@ public class SalesReconciliAmexLogic {
     public String loadPX570SQP04361(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04361(filter);
     }
-    
+
     public String loadPX570SQP04469(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04469(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04420(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04420(filter);
     }
@@ -121,7 +121,7 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04414(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04414(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04465(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04465(filter);
     }
@@ -138,6 +138,8 @@ public class SalesReconciliAmexLogic {
         return SalesReconciliAmexDAO.loadPX570SQP04463(filter);
     }
 
-    
+    public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04470(filter);
+    }
     //-----------------------------------------------------------------------------------------
 }

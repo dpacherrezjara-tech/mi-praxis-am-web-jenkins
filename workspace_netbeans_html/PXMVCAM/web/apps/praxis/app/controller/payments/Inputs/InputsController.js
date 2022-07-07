@@ -624,9 +624,15 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
 
                         var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
                         var color = '';
-                        //var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00'; 
-                        if (dt.getDay() === 0 || dt.getDay() === 6) {
-                            color = '#FFFFFF'
+                        //var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
+                        
+                        
+                        if (dt.getDay() === 0 || dt.getDay() === 6) {   // Domingo y Sabado
+                            if(me.beanCalendar.IN_FUENTE === 'AXPLUSGR-D' || me.beanCalendar.IN_FUENTE === 'AXLIGATB-D'){
+                                color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
+                            }else{
+                                color = '#FFFFFF'
+                            }
                         } else if(res[i].strFormatDate === 'YELLOW' ){
                             color = '#D8FF02'
                         } else{

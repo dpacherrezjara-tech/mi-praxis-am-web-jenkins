@@ -8,6 +8,7 @@ public class A4169Filter extends A4169{
     
     
     public Pagination page = new Pagination();
+    public String descSTVAL = "";
     
 
 }

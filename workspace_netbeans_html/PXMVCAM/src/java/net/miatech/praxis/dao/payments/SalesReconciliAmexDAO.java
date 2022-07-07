@@ -3394,7 +3394,7 @@ public class SalesReconciliAmexDAO {
         List<A4116Filter> lstSendManual = filter.lstSendManual;
         A4116Filter beanDet;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3416,11 +3416,12 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(13, filter.SPNR.trim());
             cstmt01.setString(14, filter.ISREFNBR.trim());
             cstmt01.setDouble(15, filter.TGROSAMOUN);
-            cstmt01.setString(16, filter.CERROR);
+            cstmt01.setString(16, filter.CERROR.trim());
             cstmt01.setInt(17, lstSendManual.size());
-            cstmt01.setString(18, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(19, Functions.getFechaActual());
-            cstmt01.setString(20, Functions.getHoraActual());
+            cstmt01.setString(18, filter.ADJ_TYPE.trim());
+            cstmt01.setString(19, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(20, Functions.getFechaActual());
+            cstmt01.setString(21, Functions.getHoraActual());
 
             cstmt01.execute();
 
@@ -3449,7 +3450,7 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(15, beanDet.A720SEQ.trim());
                     cstmt01.setString(16, beanDet.A720GRUPO.trim());
                     cstmt01.setDouble(17, beanDet.SADJUST);
-                    cstmt01.setString(18, beanDet.CERROR);
+                    cstmt01.setString(18, filter.ADJ_TYPE.trim());
                     cstmt01.setString(19, beanDet.STMANUAL);
                     cstmt01.setString(20, session.getUserView().getUserInfo().USR);
                     cstmt01.setString(21, Functions.getFechaActual());
@@ -4162,6 +4163,66 @@ public class SalesReconciliAmexDAO {
 
                 lstTkts.add(beanTkt);
                 contador++;
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
+    public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+
+        A4116Filter objRtn;
+        objRtn = new A4116Filter();
+        objRtn.CODE = "";
+        objRtn.NAME = "None";
+        lstTkts.add(objRtn);
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04470(?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A4116Filter();
+
+                beanTkt.CODE = rst.getString("CODE").trim();
+                beanTkt.NAME = rst.getString("NAME").trim();
+                lstTkts.add(beanTkt);
             }
             rst.close();
 
