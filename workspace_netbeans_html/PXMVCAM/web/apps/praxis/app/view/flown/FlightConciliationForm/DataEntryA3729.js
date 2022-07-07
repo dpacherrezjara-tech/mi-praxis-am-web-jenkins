@@ -174,6 +174,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             maxLength: 1,
                             width: 35
                         },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkDetail',
+                            width: 90,
+                            boxLabel: '<b>(Empty)</b>',
+                            inputValue: '1',
+                            listeners: {
+                                change: 'chkDetail_ChangeValue'
+                            }
+                        },
                         /*
                         {xtype: 'tbspacer', width: 65},
                         {
