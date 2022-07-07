@@ -10,6 +10,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     searchParams: {},
     lstA1852: {},
     dataObtain: {},
+    copia :'',
     // </editor-fold>
     init: function (view) {
         prototype.id = 'MiscellaneousForm';
@@ -46,10 +47,12 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     mostrarData: function () {
         console.log(meDE.beanResult);
         this.setValue('de-txtCodeTable', this.beanResult.TTABLA);
-        this.setValue('de-txtDescTable', this.beanResult.DESCR_TTABLA);
         this.setValue('de-txtCTable', this.beanResult.CODETB);
+        this.copia = this.getValue('de-txtCTable');
         this.setValue('de-txtCDesc', this.beanResult.DESCRE1);
-       // this.setValue('de-txtStval', this.beanResult.STVAL);
+        this.setValue('de-txtCant1', this.beanResult.CANT1);
+        this.setValue('de-txtCant2', this.beanResult.CANT2);
+        this.setValue('cmbStval', this.beanResult.STVAL);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -59,18 +62,29 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         this.setValue('txtHOUP', this.beanResult.HOUP);
     },
     obtainData: function () {
-
+        var cmbStval = Ext.getCmp(prototype.id + '-cmbStval');
+        cmbStval.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "none"],
+                ["V", "Vigente"],
+                ["A", "Anulado"]
+            ]
+        }));
+        cmbStval.setValue('');
 
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
         beanTemp.TTABLA = this.getValue("de-txtCodeTable");
-        beanTemp.DESCR_TTABLA = this.getValue("de-txtDescTable");
         beanTemp.CODETB = this.getValue("de-txtCTable");
+        beanTemp.CODETBCO = this.copia;
         beanTemp.DESCRE1 = this.getValue("de-txtCDesc");
-       // beanTemp.IN_STVAL = this.getValue("de-txtStval");
+        beanTemp.CANT1 = this.getValue("de-txtCant1");
+        beanTemp.CANT2 = this.getValue("de-txtCant2");
+        beanTemp.STVAL = this.getValue("cmbStval");
       
-
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
         beanTemp.HOCR = this.getValue("txtHOCR").trim();
@@ -219,22 +233,18 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
 
     validacionInsert: function (beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtDescTable") === '' || this.getValue("de-txtCTable") === '' || this.getValue("de-txtCDesc") === '' ) {
+        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === '' || this.getValue("de-txtCDesc") === '' ) {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
     },
     DeshabilitarCampoClave: function () {
         Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-txtDescTable').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-txtCTable').setReadOnly(true);
     },
     setearCamposClave: function(){
         Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
-        Ext.getCmp(prototype.id + '-de-txtDescTable').setValue('Tabla Adjustment');
         
         Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-txtDescTable').setReadOnly(true);
     },
     Habilitarlbl: function () {
 //        Ext.getCmp(prototype.id + '-lblDescripcion').show();

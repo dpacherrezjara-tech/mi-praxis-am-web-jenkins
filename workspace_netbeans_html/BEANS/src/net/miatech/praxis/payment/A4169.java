@@ -9,6 +9,7 @@ public String CCUST = "";
 public String TTABLA = "";
 public String DESCR_TTABLA = "";
 public String CODETB = "";
+public String CODETBCO = "";
 public String CODE = "";
 public String IN_CODE = "";
 public String NAME = "";
@@ -29,5 +30,6 @@ public String HOCR = "";
 public String USUP = "";
 public String FEUP = "";
 public String HOUP = "";
+public String descSTVAL = "";
 
 }

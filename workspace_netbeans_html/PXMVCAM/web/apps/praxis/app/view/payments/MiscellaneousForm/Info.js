@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width:765,
+                            width:890,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 760,
+                                    width: 885,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -65,23 +65,11 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                         },
                                         items: [
                                             {text: 'Table', dataIndex: 'TTABLA', width: 120},
-                                            {text: 'Description Table', dataIndex: 'DESCR_TTABLA', width: 240},
                                             {text: 'Code', dataIndex: 'CODETB', width: 120},
                                             {text: 'Description', dataIndex: 'DESCRE1', width: 240},
-//                                            {text: 'Code',
-//                                                defaults: {
-//                                                    menuDisabled: true,
-//                                                    sortable: true,
-//                                                    align: 'center',
-//                                                    border: true
-//                                                },
-//                                                columns: [
-//                                                    {text: 'Ctry', dataIndex: 'COUNTRY', width: 50},
-//                                                    {text: 'Code', dataIndex: 'CODEBANK', width: 50},
-//                                                    {text: 'Nrc. Code', dataIndex: 'CODBANKN', width: 70},
-//                                                    {text: 'Name', dataIndex: 'NAMEBANK', width: 220, align: 'left'}
-//                                                ]
-//                                            },
+                                            {text: 'Cant1', dataIndex: 'CANT1', width: 120},
+                                            {text: 'Cant2', dataIndex: 'CANT2', width: 120},
+                                            {text: 'Status', dataIndex: 'STVAL', width: 120},
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
