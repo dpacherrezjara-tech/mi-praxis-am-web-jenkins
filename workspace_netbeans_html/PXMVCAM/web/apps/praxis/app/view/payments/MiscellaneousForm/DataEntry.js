@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
     controller: 'DataEntryMiscellaneousController',
     title:'Miscellaneous - Data Entry Form',
     header:true,
-    height:365,
-    width:820,
+    height:380,
+    width:720,
     resizable:false,
     layout:'fit',
     modal:true,
@@ -48,8 +48,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '20 2 2 8',
-//                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '10 2 2 8',
                             items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
@@ -61,15 +60,15 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90,
                                 },
-                                { xtype: 'tbspacer', width: 4 },
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
                                     id:prototype.id+'-de-txtCodeTable',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 100,
+                                    width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 80,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
@@ -80,35 +79,41 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     width: 90
                                     
                                 },
-                                { xtype: 'tbspacer', width: 4 },
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
                                     id:prototype.id+'-de-txtCTable',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 100,
+                                    width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 80,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Descripcion',
+                                    text: 'Status',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
+                                    width:90
                                     
                                 },
-                                { xtype: 'tbspacer', width: 4 },
+                                { xtype: 'tbspacer', width: 7 },
                                 {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCDesc',
+                                    xtype: 'combo',
+                                    id:prototype.id+'-cmbStval',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 245,
-                                    enforceMaxLength: true,
-                                    maxLength: 100,
-                                }
+                                    fieldStyle: 'text-align:left;',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    width: 80,
+                                    labelWidth: 10,
+                                    hidden: false,
+                                    hiddenLabel: false 
+                                },
+                                
                             ]
                         },
                         { xtype: 'tbspacer', width: 6 },
@@ -116,8 +121,61 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '20 2 2 8',
-//                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '10 2 2 8',
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Descripcion 1',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtCDesc1',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 200,
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 2 8',
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Descripcion 2',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtCDesc2',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 200,
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 2 8',
                             items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
@@ -129,13 +187,13 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90,
                                 },
-                                { xtype: 'tbspacer', width: 4 },
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
                                     id:prototype.id+'-de-txtCant1',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 100,
+                                    width: 80,
                                     enforceMaxLength: true,
                                     maxLength: 100,
                                 },
@@ -148,43 +206,21 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     width: 90
                                     
                                 },
-                                { xtype: 'tbspacer', width: 4 },
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
                                     id:prototype.id+'-de-txtCant2',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 100,
+                                    width: 80,
                                     enforceMaxLength: true,
                                     maxLength: 100,
-                                },
-                                { xtype: 'tbspacer', width: 20 },
-                                {
-//                                 
-                                    xtype: 'label',
-                                    text: 'Status',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 95
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'combo',
-                                    id:prototype.id+'-cmbStval',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    width: 130,
-                                    labelWidth: 10,
-                                    hidden: false,
-                                    hiddenLabel: false 
                                 },
                             ]
                         }
                     ]
                 },
+                { xtype: 'tbspacer', height: 10 },
                 // <editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'label',

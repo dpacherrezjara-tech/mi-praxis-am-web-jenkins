@@ -1099,6 +1099,7 @@ public class SalesReconciliAmexDAO {
                         beanTkt.desCERROR = "Difference";
                     }
                     beanTkt.CERROIN = rst.getString("CERROIN").trim();
+                    beanTkt.DES_CERROIN = rst.getString("DES_CERROIN").trim();
 
                     if (beanTkt.CERROIN.equals("")) {
                         beanTkt.desCERROIN = "Conciliate";
@@ -1150,6 +1151,211 @@ public class SalesReconciliAmexDAO {
             pasarGarbageCollector();
         }
 
+        return lstTkts;
+    }
+
+    public List<A4116Filter> loadPX570SQP04471(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+        double lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
+        double lngTotQTYTRA = 0, lngTotQTYDOC = 0;
+        double TGROSAMOUN_TOTAL = 0;
+        double TGROSAMOUNC_TOTAL = 0;
+        double DISCAMOUN_TOTAL = 0;
+        double DISCAMOUNI_TOTAL = 0;
+        double SFEEAMOUC_TOTAL = 0;
+        double SFEEAMOU_TOTAL = 0;
+        double ACCEAMOUC_TOTAL = 0;
+        double ACCEAMOU_TOTAL = 0;
+        double DISCAMOUNC_TOTAL = 0;
+        double DISCAMOUIC_TOTAL = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04471(?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM);
+            cstmt.setString(3, filter.IN_DATETO);
+            cstmt.setString(4, filter.IN_DATE);
+            cstmt.setString(5, filter.strDATE);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN_TOTAL");
+                TGROSAMOUNC_TOTAL = rst.getDouble("TGROSAMOUNC_TOTAL");
+                DISCAMOUN_TOTAL = rst.getDouble("DISCAMOUN_TOTAL");
+                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
+                SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
+                SFEEAMOU_TOTAL = rst.getDouble("SFEEAMOU_TOTAL");
+                ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
+                ACCEAMOU_TOTAL = rst.getDouble("ACCEAMOU_TOTAL");
+                DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
+                DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                    beanTkt = new A4116Filter();
+                    beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
+                    beanTkt.IN_DATETO = filter.IN_DATETO.trim();
+                    beanTkt.IN_DATE = filter.IN_DATE.trim();
+                    beanTkt.strDATE = filter.strDATE.trim();
+                    beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
+                    beanTkt.IN_AXPAYNBR = filter.IN_AXPAYNBR.trim();
+                    beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
+                    beanTkt.IN_IDITEMS = filter.IN_IDITEMS.trim();
+
+                    beanTkt.RN = rst.getString("RN").trim();
+                    beanTkt.DATE = rst.getString("DATE").trim();
+                    beanTkt.PRDA = rst.getString("PRDA").trim();
+                    beanTkt.TDOC = rst.getString("TDOC").trim();
+                    beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
+                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.STYPECD = rst.getString("STYPECD").trim();
+                    beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
+                    beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                    beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+
+                    beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
+                    beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                    beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
+                    beanTkt.SIREFNBR = rst.getString("SIREFNBR").trim();
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
+                    beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
+
+                    beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
+                    beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
+                    beanTkt.SELLERID = rst.getString("SELLERID").trim();
+                    beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                    beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
+                    beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+
+                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
+
+                    beanTkt.TRANSDATE = rst.getString("TRANSDATE");
+                    beanTkt.TRANSID = rst.getString("TRANSID");
+                    beanTkt.SAUTHOC = rst.getString("SAUTHOC");
+                    beanTkt.INSTANBR = rst.getString("INSTANBR");
+                    beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+
+                    beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                    beanTkt.FINSAMOUC = rst.getDouble("FINSAMOUC");
+                    beanTkt.SINSAMOUC = rst.getDouble("SINSAMOUC");
+
+                    beanTkt.RATESFEE = rst.getDouble("RATESFEE");
+                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
+                    beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
+                    beanTkt.DISCAMOUNI = this.mantenerSigno(beanTkt.DISCAMOUN, rst.getDouble("DISCAMOUNI"));
+
+                    if (rst.getDouble("DISCRATEI") < 0) {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
+                    } else {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    }
+
+                    beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
+                    beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
+                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
+                    beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
+                    beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
+                    beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
+                    beanTkt.DISCAMOUNC = this.cambioSigno(beanTkt.TGROSAMOUC, rst.getDouble("DISCAMOUNC"));
+                    beanTkt.DISCAMOUIC = this.mantenerSigno(beanTkt.DISCAMOUNC, rst.getDouble("DISCAMOUIC"));
+
+                    if (rst.getDouble("DISCRATEIC") < 0) {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
+                    } else {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
+                    beanTkt.CERROR = rst.getString("CERROR").trim();
+
+                    if (beanTkt.CERROR.equals("")) {
+                        beanTkt.desCERROR = "Conciliate";
+                    } else {
+                        beanTkt.desCERROR = "Difference";
+                    }
+                    beanTkt.CERROIN = rst.getString("CERROIN").trim();
+                    beanTkt.DES_CERROIN = rst.getString("DES_CERROIN").trim();
+
+                    if (beanTkt.CERROIN.equals("")) {
+                        beanTkt.desCERROIN = "Conciliate";
+                    } else {
+                        beanTkt.desCERROIN = "Difference";
+                    }
+
+                    //Totales
+                    beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
+                    beanTkt.DISCAMOUN_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUN_TOTAL, DISCAMOUN_TOTAL);
+                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUN_TOTAL, DISCAMOUNI_TOTAL);
+
+                    beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUNC_TOTAL, DISCAMOUNC_TOTAL);
+                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
+
+                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
+                    beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
+                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
+                    beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
+
+                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                    beanTkt.page.PAGROW = filter.page.PAGROW;
+                    beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                    beanTkt.page.TOTROW = filter.page.TOTROW;
+
+                    lstTkts.add(beanTkt);
+                }
+                //rst.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
         return lstTkts;
     }
 
@@ -2153,7 +2359,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
-                                        
+
                     beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
                     beanTkt.CHAADJCOD = rst.getString("CHAADJCOD").trim();
                     beanTkt.CHAADJDES = rst.getString("CHAADJDES").trim();
@@ -2234,7 +2440,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
         hmDescEstados.put("8", "Pending RFND");
-        
+
         HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
         hmDescTDOC.put("", "");
         hmDescTDOC.put("S", "Sales");
@@ -2386,7 +2592,6 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }*/
-
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
                     if (rst.getDouble("DISCRATEI") < 0) {
@@ -2415,7 +2620,7 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.descSTVAL = rst.getString("STVAL").trim();
                     }
-                    
+
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     if (hmDescTDOC.containsKey(rst.getString("TDOC").trim())) {
                         beanTkt.descTDOC = hmDescTDOC.get(rst.getString("TDOC").trim()).toString();
@@ -3014,7 +3219,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setInt(8, filter.page.PAGROW);
             cstmt.setInt(9, filter.page.TOTPAG);
             cstmt.setInt(10, filter.page.TOTROW);
-            
+
             cstmt.execute();
 
             filter.page.PAGNUM = cstmt.getInt(7);
@@ -3498,27 +3703,27 @@ public class SalesReconciliAmexDAO {
         String msj = "";
 
         Connection cnx = null;
-        try {            
+        try {
             //Cambiar Status a las transacciones
             if (lstSendManual != null && lstSendManual.size() > 0) {
                 cnx = session.getCNXIBMDB2().getIBMDB2Connection();
                 String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
-                
+
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
-                    
-                    if(beanDet.STVAL.equals("1")){
-                        if(beanDet.NBRINSTA == 0){
+
+                    if (beanDet.STVAL.equals("1")) {
+                        if (beanDet.NBRINSTA == 0) {
                             NEW_CERROR = "87";
                         } else {
                             NEW_CERROR = "86";
                         }
                         break;
                     }
-                    
+
                 }
-                
+
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
 
@@ -3994,10 +4199,10 @@ public class SalesReconciliAmexDAO {
                 }
 
                 beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
-                
+
                 beanTkt.IDITEMS = rst.getString("IDITEMS");
                 beanTkt.IDITEMT = rst.getString("IDITEMT");
-                
+
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
 
@@ -4028,7 +4233,7 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4116Filter> loadPX570SQP04420(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
@@ -4066,7 +4271,7 @@ public class SalesReconciliAmexDAO {
         hmDescFCOMPL.put("2", "LIGAS");
         hmDescFCOMPL.put("3", "TABLET");
         hmDescFCOMPL.put("4", "BPO");
-        
+
         int contador = 0;
         String SCARDN = "";
         double TGROSAMOUN = 0;
@@ -4076,7 +4281,7 @@ public class SalesReconciliAmexDAO {
         ResultSet rst = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?,?,?)}";
-            
+
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -4086,34 +4291,34 @@ public class SalesReconciliAmexDAO {
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
-        
+
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
             cstmt.setString(3, filter.IN_DATETO);
             cstmt.setString(4, filter.IN_STVAL_CP.trim());
             cstmt.setString(5, filter.IN_TDOC_CP.trim());
-            
+
             cstmt.setInt(6, filter.page.PAGNUM);
             cstmt.setInt(7, filter.page.PAGROW);
             cstmt.setInt(8, filter.page.TOTPAG);
             cstmt.setInt(9, filter.page.TOTROW);
 
             cstmt.execute();
-            
+
             filter.page.PAGNUM = cstmt.getInt(6);
             filter.page.PAGROW = cstmt.getInt(7);
             filter.page.TOTPAG = cstmt.getInt(8);
             filter.page.TOTROW = cstmt.getInt(9);
-            
+
             cstmt.execute();
-            
+
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
 
                 beanTkt = new A4116Filter();
-                
-                if (contador == 0) {                    
+
+                if (contador == 0) {
                     TGROSAMOUN = Math.abs(rst.getDouble("TGROSAMOUN"));
                     SCARDN = rst.getString("SCARDN").trim();
                 }
@@ -4140,22 +4345,22 @@ public class SalesReconciliAmexDAO {
                 } else {
                     beanTkt.descSTVAL = rst.getString("STVAL").trim();
                 }
-                
+
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
-                
-                if( !(SCARDN.equals(rst.getString("SCARDN").trim()) && TGROSAMOUN == Math.abs(rst.getDouble("TGROSAMOUN"))) ){
+
+                if (!(SCARDN.equals(rst.getString("SCARDN").trim()) && TGROSAMOUN == Math.abs(rst.getDouble("TGROSAMOUN")))) {
                     TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     SCARDN = rst.getString("SCARDN").trim();
                     color = !color;
                 }
-                
+
                 if (color) {
                     beanTkt.COLOR = "#91b9fa";
                 } else {
                     beanTkt.COLOR = "#e6ecf5";
                 }
-                
+
                 beanTkt.page.PAGNUM = filter.page.PAGNUM;
                 beanTkt.page.PAGROW = filter.page.PAGROW;
                 beanTkt.page.TOTPAG = filter.page.TOTPAG;
@@ -4189,7 +4394,7 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);

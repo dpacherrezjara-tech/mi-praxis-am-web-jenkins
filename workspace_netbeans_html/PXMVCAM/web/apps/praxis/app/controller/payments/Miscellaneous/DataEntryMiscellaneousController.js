@@ -49,7 +49,8 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         this.setValue('de-txtCodeTable', this.beanResult.TTABLA);
         this.setValue('de-txtCTable', this.beanResult.CODETB);
         this.copia = this.getValue('de-txtCTable');
-        this.setValue('de-txtCDesc', this.beanResult.DESCRE1);
+        this.setValue('de-txtCDesc1', this.beanResult.DESCRE1);
+        this.setValue('de-txtCDesc2', this.beanResult.DESCRE2);
         this.setValue('de-txtCant1', this.beanResult.CANT1);
         this.setValue('de-txtCant2', this.beanResult.CANT2);
         this.setValue('cmbStval', this.beanResult.STVAL);
@@ -80,9 +81,18 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         beanTemp.TTABLA = this.getValue("de-txtCodeTable");
         beanTemp.CODETB = this.getValue("de-txtCTable");
         beanTemp.CODETBCO = this.copia;
-        beanTemp.DESCRE1 = this.getValue("de-txtCDesc");
+        beanTemp.DESCRE1 = this.getValue("de-txtCDesc1");
+        beanTemp.DESCRE2 = this.getValue("de-txtCDesc2");
         beanTemp.CANT1 = this.getValue("de-txtCant1");
+        var a =  this.getValue("de-txtCant1");
+        if( a === ''){
+            beanTemp.CANT1 = 0;
+        }
         beanTemp.CANT2 = this.getValue("de-txtCant2");
+        var b =  this.getValue("de-txtCant1");
+        if( b === ''){
+            beanTemp.CANT1 = 0;
+        }
         beanTemp.STVAL = this.getValue("cmbStval");
       
         beanTemp.USCR = this.getValue("txtUSCR").trim();
@@ -91,7 +101,6 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         beanTemp.USUP = this.getValue("txtUSUP").trim();
         beanTemp.FEUP = this.getValue("txtFEUP").trim();
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
-//        console.log(beanTemp);
     },
     getData: function () {
         var beanString = JSON.stringify(meDE.bean.data);
@@ -108,32 +117,13 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
                 meDE.beanResult = res.result;
                 meDE.mostrarData();
                 console.log(meDE.mostrarData());
-
             }
         });
     },
-    //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function () {
-//        this.setValue('txtCODSOUR', '');
-//        this.setValue('txtDESSOU', '');
-//        this.setValue('txtGRUSOR', '');
-//        this.setValue('txtstrGRUSOR', '');
-//        Ext.getCmp(prototype.id + '-lblDescripcion').setText('');
-//        Ext.getCmp(prototype.id + '-lblDescripcion2').setText('');
-//        this.setValue('txtUSCR', '');
-//        this.setValue('txtFECR', '');
-//        this.setValue('txtHOCR', '');
-//        this.setValue('txtUSUP', '');
-//        this.setValue('txtFEUP', '');
-//        this.setValue('txtHOUP', '');
-    },
-    //</editor-fold>
-    toUpperCase: function (obj, value, opts) {
-//        console.log(obj);
-//        console.log(value);
-//        console.log(opts);
+        //this.setValue('txtCODSOUR', '');
+
     },
     // <editor-fold defaultstate="collapsed" desc="Botones">
     onSaveClick: function (btn) {
@@ -204,7 +194,6 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         this.view.close();
     },
     // </editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
     MaintenanceA4169: function (beanTemp) {
 //        console.log(beanTemp);
@@ -233,7 +222,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
 
     validacionInsert: function (beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === '' || this.getValue("de-txtCDesc") === '' ) {
+        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === ''|| this.getValue("cmbStval") === '' || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' ) {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
