@@ -86,6 +86,7 @@ public class MiscellaneousPaymentDAO {
                 bean.DESCR_TTABLA = rst.getString("DESCR_TTABLA");
                 bean.CODETB = rst.getString("CODETB");
                 bean.DESCRE1   = rst.getString("DESCRE1");
+                bean.DESCRE2   = rst.getString("DESCRE2");
                 bean.CANT1   = rst.getInt("CANT1");
                 bean.CANT2   = rst.getInt("CANT2");
                 bean.STVAL   = rst.getString("STVAL");
@@ -261,7 +262,7 @@ public class MiscellaneousPaymentDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -274,12 +275,13 @@ public class MiscellaneousPaymentDAO {
             cstmt.setString(4, filter.CODETB.trim());
             cstmt.setString(5, filter.CODETBCO.trim());
             cstmt.setString(6, filter.DESCRE1.trim());
-            cstmt.setInt(7, filter.CANT1);
-            cstmt.setInt(8, filter.CANT2);
-            cstmt.setString(9, filter.STVAL.trim());
-            cstmt.setString(10, session.getUserView().getUserInfo().USR);
-            cstmt.setString(11, Functions.getFechaActual());
-            cstmt.setString(12, Functions.getHoraActual());
+            cstmt.setString(7, filter.DESCRE2.trim());
+            cstmt.setInt(8, filter.CANT1);
+            cstmt.setInt(9, filter.CANT2);
+            cstmt.setString(10, filter.STVAL.trim());
+            cstmt.setString(11, session.getUserView().getUserInfo().USR);
+            cstmt.setString(12, Functions.getFechaActual());
+            cstmt.setString(13, Functions.getHoraActual());
             
             
             cstmt.execute();

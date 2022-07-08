@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width:890,
+                            width: 890,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -64,12 +64,23 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Table', dataIndex: 'TTABLA', width: 120},
-                                            {text: 'Code', dataIndex: 'CODETB', width: 120},
-                                            {text: 'Description', dataIndex: 'DESCRE1', width: 240},
-                                            {text: 'Cant1', dataIndex: 'CANT1', width: 120},
-                                            {text: 'Cant2', dataIndex: 'CANT2', width: 120},
-                                            {text: 'Status', dataIndex: 'STVAL', width: 120},
+                                            {text: 'Table', dataIndex: 'TTABLA', width: 80},
+                                            {text: 'Code', dataIndex: 'CODETB', width: 80},
+                                            {text: 'Status', dataIndex: 'STVAL', width: 80, 
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:center;';
+                                                    if(value === 'V'){
+                                                        value = 'Vigente';
+                                                    }else if(value === 'A'){
+                                                        value = 'Anulado';
+                                                    }
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Description 1', dataIndex: 'DESCRE1', width: 210},
+                                            {text: 'Description 2', dataIndex: 'DESCRE2', width: 210},
+                                            {text: 'Cantidad 1', dataIndex: 'CANT1', width: 90},
+                                            {text: 'Cantidad 2', dataIndex: 'CANT2', width: 90},
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
