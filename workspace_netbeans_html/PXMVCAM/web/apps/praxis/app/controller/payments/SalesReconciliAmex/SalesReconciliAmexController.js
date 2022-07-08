@@ -190,7 +190,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbSTVAL.setValue("");
-        
+
         var cmbSTVALCP = Ext.getCmp(prototype.id + '-cmbSTVALCP');
         cmbSTVALCP.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -215,7 +215,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbTDOC.setValue("");
-        
+
         var cmbTDOCCP = Ext.getCmp(prototype.id + '-cmbTDOCCP');
         cmbTDOCCP.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -254,7 +254,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbComplement.setValue("");
-        
+
         var cmbRecType = Ext.getCmp(prototype.id + '-cmbRecType');
         cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -324,10 +324,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
 
-                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
+                    /*Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
-                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
+                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');*/
 
                 }
             }
@@ -435,17 +435,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
         }
         if (selectedValue === 'SU') {
-            Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
+            Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
         }
-        
+
         if (selectedValue === 'CP') {
             Ext.getCmp(prototype.id + '-filterPaymentMSI').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-filterPaymentMSI').setVisible(false);
         }
-        
+
         switch (selectedValue) {
             case 'SU':
                 this.setGridDataMainSummary();
@@ -1341,7 +1341,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetTransaction: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        
+
         if (rowData.data.desCERROR === 'Sub Total' || rowData.data.desCERROR === 'Adjustment') {
             return 0;
         }
@@ -1433,6 +1433,63 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridDetTransaction').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
+    },
+    onGridDiffTransaction: function () {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDiffTransaction';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanTransaction.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+        this.beanTransaction.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        this.beanTransaction.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();        
+
+        me.paramsDetailTransaction.beanString = JSON.stringify(this.beanTransaction);
+        this.setGridDataDiffTransaction();
+    },
+    setGridDataDiffTransaction: function () {
+        win.lblUser_toolTip("Estructura: A4116");
+
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDiffTransaction'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = me.paramsDetailTransaction;
+                },
+                load: function (obj) {
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log(obj);
+                        var pag = Ext.getCmp(prototype.id + '-paggin20');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+
+                        if (data.IN_DATE === "PAYDATE") {
+                            Ext.getCmp(prototype.id + '-htDateDiffTransaction').setText('Payment');
+
+                        } else {
+                            Ext.getCmp(prototype.id + '-htDateDiffTransaction').setText('Processing');
+                        }
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDiffTransaction').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDiffTransaction').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin20').bindStore(storeGridDatas);
     },
     onGridDetPricing: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -2089,13 +2146,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-txtCC2').setValue('');
         Ext.getCmp(prototype.id + '-txtAuthE').setValue('');
 
-        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
-        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
-        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
-
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
-        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
-        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
+        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').resumeEvents();
 
         Ext.getCmp(prototype.id + '-cmbSTVAL').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbSTVAL').setValue('');
@@ -2116,7 +2169,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
-        
+
         Ext.getCmp(prototype.id + '-cmbRecType').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbRecType').setValue('1');
         Ext.getCmp(prototype.id + '-cmbRecType').resumeEvents();
@@ -2272,7 +2325,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setWidthPie: function () {
 
         console.log(me.panelActual);
-        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment' || me.panelActual === '-boxDetailTktSettlement' || me.panelActual === '-panelGridData' || me.panelActual === '-boxDetSubmission' || me.panelActual === '-boxMainSummary' || me.panelActual === '-boxSummaryTransactionError' || me.panelActual === '-boxMainChangePayment') {
+        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment' || me.panelActual === '-boxDetailTktSettlement' || me.panelActual === '-panelGridData' || me.panelActual === '-boxDetSubmission' || me.panelActual === '-boxMainSummary' || me.panelActual === '-boxSummaryTransactionError' || me.panelActual === '-boxMainChangePayment' || me.panelActual === '-boxDiffTransaction') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -2321,10 +2374,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     onEditClickSettlement: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
-        if(rec.data.RECTYPE !== 'CHARGEBACK'){
+        if (rec.data.RECTYPE !== 'CHARGEBACK') {
             this.winDataEntrySettlement('U', rec);
         }
-        
+
     },
     winDataEntrySettlement: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -2414,7 +2467,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case '-boxMainChangePayment':
                 me.pagginActual = '-paggin19';
-                break;    
+                break;
+            case '-boxDiffTransaction':
+                me.pagginActual = '-paggin20';
+                break;
         }
     },
     afterRenderYear: function (obj) {

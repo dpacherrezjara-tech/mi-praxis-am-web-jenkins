@@ -307,6 +307,56 @@ public class SalesReconciliAmexController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchDiffTransaction")
+    public @ResponseBody
+    String searchDiffTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesReconciliAmex : searchDiffTransaction-------------");
+
+        map.put("success", true);
+        List<A4116Filter> lst = this.getListDiffTransaction(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4116Filter> getListDiffTransaction(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4116Filter> lst = new ArrayList<>(0);
+        A4116Filter filter = new A4116Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX570SQP04471(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
     @RequestMapping(value = "searchDetPricing")
     public @ResponseBody
     String searchDetPricing(ModelMap map, HttpServletRequest request) {
@@ -4809,7 +4859,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 25));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 26, 33));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 34, 41));
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 8, 8));
@@ -4821,13 +4871,13 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 16, 16));
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 42, 42));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 43, 43));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 44, 44));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 45, 45));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 46, 46));
-            
+
             ++vj;
             //============================================
 
@@ -4984,7 +5034,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
-            
+
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
@@ -4995,10 +5045,10 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 24, 24));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 25, 25));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 26, 26));
-            
+
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 27, 29));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 30, 33));
-            
+
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 34, 34));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 35, 35));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 36, 36));
@@ -5357,12 +5407,12 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_30_T.setCellValue("");
             CH1_31_T.setCellValue(listaData.get(0).DISCAMOUNC_TOTAL);
             CH1_32_T.setCellValue("");
-            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL);            
+            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL);
             CH1_34_T.setCellValue("");
             CH1_35_T.setCellValue("");
             CH1_36_T.setCellValue("");
             CH1_37_T.setCellValue("");
-            CH1_38_T.setCellValue("");            
+            CH1_38_T.setCellValue("");
             CH1_39_T.setCellValue(listaData.get(0).totGROSAMOUN_CB);
             CH1_40_T.setCellValue(listaData.get(0).DISCAMOUN_CB_TOTAL);
             CH1_41_T.setCellValue(listaData.get(0).totTAXAMOUN_CB);
@@ -7889,7 +7939,7 @@ public class SalesReconciliAmexController extends BaseController {
         return lst;
 
     }
-    
+
     @RequestMapping(value = "getAdjustmentCodes")
     public @ResponseBody
     String getCodes(ModelMap map, HttpServletRequest request) {

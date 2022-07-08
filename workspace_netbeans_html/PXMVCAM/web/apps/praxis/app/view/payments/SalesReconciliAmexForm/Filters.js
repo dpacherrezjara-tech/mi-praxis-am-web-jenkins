@@ -212,7 +212,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {
+                        /*{
                             xtype: 'combo',
                             fieldLabel: 'Reconcil. Summ.',
                             id: prototype.id + '-cmbErrorCodesRecSumm',
@@ -229,6 +229,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             listeners: {
                                 //change: 'rbChangeType'
                             }
+                        },*/
+                        {
+                            xtype: 'button',
+                            margin: '0 0 0 25',
+                            //id: prototype.id + '-btnShowAuditTW',
+                            text: 'Differences',
+                            width: 120,
+                            listeners: {
+                                click: 'onGridDiffTransaction'
+                            }
+
                         }
                     ]
                 },
@@ -301,7 +312,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {
-                              //  change: 'cmbSTVAL_keyDownHandler',
+                                //  change: 'cmbSTVAL_keyDownHandler',
                                 change: 'rbChangeType'
                             }
                         },
@@ -405,7 +416,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {
-                               // change: 'cmbSTVAL_keyDownHandler',
+                                // change: 'cmbSTVAL_keyDownHandler',
                                 change: 'rbChangeType'
                             }
                         }
@@ -432,18 +443,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                     items: [
                         {xtype: 'tbspacer', width: 100},
                         {
-                             xtype: 'checkboxfield',
-                             id: prototype.id + '-chkWarnings',
-                             width: 50,
-                             boxLabel: 'Warnings',
-                             inputValue: '0',
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkWarnings',
+                            width: 50,
+                            boxLabel: 'Warnings',
+                            inputValue: '0',
                             checked: false,
-                             listeners:{
-                                 change: 'chkWarning_Click'
-                             }
-                         },
-                         {xtype: 'tbspacer', width: 20},
-                         {
+                            listeners: {
+                                change: 'chkWarning_Click'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
                             xtype: 'combo',
                             id: prototype.id + '-cmbErrorCode',
                             fieldLabel: 'Error Code',
@@ -457,9 +468,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             labelWidth: 150,
                             width: 400,
                             hidden: false,
-                            listeners:{
-                                 change: 'btnSearch_click'
-                             }
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
                         },
                         {xtype: 'tbspacer', width: 20},
                         {
@@ -476,9 +487,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             labelWidth: 100,
                             width: 250,
                             hidden: false,
-                            listeners:{
-                                 change: 'btnSearch_click'
-                             }
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
                         },
                         {xtype: 'tbspacer', width: 20},
                         {
@@ -576,7 +587,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {
-                               // change: 'cmbSTVAL_keyDownHandler',
+                                // change: 'cmbSTVAL_keyDownHandler',
                                 change: 'btnSearch_click'
                             }
                         }
@@ -617,7 +628,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {
-                              //  change: 'cmbSTVAL_keyDownHandler',
+                                //  change: 'cmbSTVAL_keyDownHandler',
                                 change: 'rbChangeType'
                             }
                         },
@@ -638,7 +649,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {
-                               // change: 'cmbSTVAL_keyDownHandler',
+                                // change: 'cmbSTVAL_keyDownHandler',
                                 change: 'rbChangeType'
                             }
                         }
