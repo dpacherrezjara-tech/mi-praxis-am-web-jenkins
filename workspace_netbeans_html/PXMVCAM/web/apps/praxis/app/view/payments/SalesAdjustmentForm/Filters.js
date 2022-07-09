@@ -29,10 +29,12 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Filters', {
                         padding: '5px 1px 5px 1px',
                         anchor: '100%',
                         hiddenLabel: false,
-                        labelAlign: 'right',
+                        labelAlign: 'center',
                         hidden: false
                     },
                     items: [
+                        
+                        {xtype: 'tbspacer', width: 250},
                         {
                             xtype: 'label',
                             html: '<strong style="color:#000;">Search By:</strong>',
@@ -160,6 +162,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Filters', {
                             width: 70,
                             anchor: '100%'
                         }, 
+                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbErrorCode',
@@ -176,6 +179,26 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Filters', {
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPNR',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
                             }
                         },
                     ]
@@ -198,25 +221,6 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {
-                            xtype: 'label',
-                            text: 'PNR:',
-                            padding: '8px 1px 2px 1px',
-                            width: 50
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtPNR',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[a-zA-Z]/,
-                            maxLength: 6,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
-                            }
-                        },
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'label',

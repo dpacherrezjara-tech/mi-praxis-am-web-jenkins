@@ -361,10 +361,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
         Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
     },
-    getPaggin: function() {
+    setWidthPie: function () {
+        console.log(me.panelActual);
+        if (me.panelActual === '-boxAdjustment') {
+            var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
+            Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
+            Ext.getCmp(prototype.id + '-pie').setVisible(true);
+        } else {
+            Ext.getCmp(prototype.id + '-pie').setVisible(false);
+        }
+    },
+    getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
-            case  '-panelGridData':
+            case  '-boxAdjustment':
                 me.pagginActual = '-paggin';
                 break;
         }

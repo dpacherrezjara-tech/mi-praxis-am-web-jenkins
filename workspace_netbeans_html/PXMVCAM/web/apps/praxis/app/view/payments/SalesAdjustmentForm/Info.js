@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAdjustment',
-                                    width: 1750,
+                                    width: 1740,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -263,7 +263,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                     return value;
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                    var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TGROSAMOUN_TOTAL, '0,000.00') + '<b>';
                                                 }
@@ -291,7 +291,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.SFEEAMOU_TOTAL, '0,000.00') + '<b>';
                                                         }
@@ -304,7 +304,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.ACCEAMOU_TOTAL, '0,000.00') + '<b>';
                                                         }
@@ -317,7 +317,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.ACCEAMOUC_TOTAL, '0,000.00') + '<b>';
                                                         }
@@ -348,7 +348,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.DISCAMOUN_TOTAL, '0,000.00') + '<b>';
                                                         }
@@ -369,7 +369,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.DISCAMOUNI_TOTAL, '0,000.00') + '<b>';
                                                         }
@@ -392,7 +392,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.TGROSAMOUNC_TOTAL, '0,000.00') + '<b>';
                                                         }
@@ -421,7 +421,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.SFEEAMOUC_TOTAL, '0,000.00') + '<b>';
                                                                 }
@@ -452,7 +452,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.DISCAMOUNC_TOTAL, '0,000.00') + '<b>';
                                                                 }
@@ -473,7 +473,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAdjustment').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.DISCAMOUIC_TOTAL, '0,000.00') + '<b>';
                                                                 }
