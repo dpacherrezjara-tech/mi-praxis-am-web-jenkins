@@ -2063,7 +2063,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1700,
+                            width: 1750,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -2073,7 +2073,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDiffTransaction',
-                                    width: 1590,
+                                    width: 1700,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -2114,15 +2114,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Merchant ID', dataIndex: 'MERCHID', width: 100,
-                                                        listeners: {
-                                                            click: 'onGridDetPricing'
-                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
-                                                            value = '<b>' + value + '</b>';
-                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         }
                                                     }
                                                 ]
@@ -2139,8 +2135,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Description', dataIndex: 'DES_CERROIN', width: 80,
+                                            {text: 'Description', dataIndex: 'DES_CERROIN', width: 190,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
                                                     return value;
                                                 }
                                             },
@@ -2162,12 +2159,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    /*{text: 'Merchant <br> Location ID', dataIndex: 'LMERCHID', width: 90,
-                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                     metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                     return value;
-                                                     }
-                                                     },*/
                                                     {text: 'Sales<br>Merchant ID', dataIndex: 'SMERCHID', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
@@ -2175,12 +2166,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'ID<br>Tran.', dataIndex: 'IDITEMT', width: 70,
-                                                        listeners: {
-                                                            click: 'onGridDetPricingByItemt'
-                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         }
                                                     },
                                                     {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 120,
@@ -2189,7 +2177,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
-//                                                            value = '<br>' + value + '<br>';
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;text-align:center">' + value + '</a>';
                                                         }
                                                     },
