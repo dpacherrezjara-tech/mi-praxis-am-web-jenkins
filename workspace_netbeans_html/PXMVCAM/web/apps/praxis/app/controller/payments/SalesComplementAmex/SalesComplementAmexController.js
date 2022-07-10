@@ -94,6 +94,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     },
     xpanel_afterrender: function (obj, e) {
         this.obtainData();
+        this.btnSearch_click();
     },
     eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
@@ -127,7 +128,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
 
-        me.btnSearch_click();
+        //me.btnSearch_click();
     },
     setFormatParameter: function () {
         me.bean = {};
@@ -153,9 +154,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         }
     },
     btnSearch_click: function (obj, e) {
+        console.log('SEARCH');
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
         var stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
-        
+        console.log(selectedValue);
+        console.log(stval);
         this.setFormatParameter();
 
         switch (selectedValue) {

@@ -234,12 +234,30 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             xtype: 'button',
                             margin: '0 0 0 25',
                             //id: prototype.id + '-btnShowAuditTW',
-                            text: 'Differences',
+                            text: 'Integrity Errors',
                             width: 120,
                             listeners: {
                                 click: 'onGridDiffTransaction'
                             }
 
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Document:',
+                            id: prototype.id + '-cmbSummTDOC',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 80,
+                            width: 150,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                change: 'onGridDiffTransaction'
+                            }
                         }
                     ]
                 },

@@ -189,7 +189,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["8", "Pending RFND"]
             ]
         }));
-        cmbSTVAL.setValue("");
+        Ext.getCmp(prototype.id + '-cmbSTVAL').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbSTVAL').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSTVAL').resumeEvents();
 
         var cmbSTVALCP = Ext.getCmp(prototype.id + '-cmbSTVALCP');
         cmbSTVALCP.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -202,7 +204,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["8", "Pending RFND"]
             ]
         }));
-        cmbSTVALCP.setValue("");
+        Ext.getCmp(prototype.id + '-cmbSTVALCP').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbSTVALCP').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSTVALCP').resumeEvents();
 
         var cmbTDOC = Ext.getCmp(prototype.id + '-cmbTDOC');
         cmbTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -214,7 +218,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["R", "Refund"]
             ]
         }));
-        cmbTDOC.setValue("");
+        Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
+        Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
+        
+        var cmbSummTDOC = Ext.getCmp(prototype.id + '-cmbSummTDOC');
+        cmbSummTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["S", "Sales"],
+                ["R", "Refund"]
+            ]
+        }));
+        Ext.getCmp(prototype.id + '-cmbSummTDOC').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbSummTDOC').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSummTDOC').resumeEvents();
 
         var cmbTDOCCP = Ext.getCmp(prototype.id + '-cmbTDOCCP');
         cmbTDOCCP.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -226,7 +246,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["R", "Refund"]
             ]
         }));
-        cmbTDOCCP.setValue("");
+        Ext.getCmp(prototype.id + '-cmbTDOCCP').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbTDOCCP').setValue('');
+        Ext.getCmp(prototype.id + '-cmbTDOCCP').resumeEvents();
 
         var cmbTDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError');
         cmbTDOCError.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -238,7 +260,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["R", "Refund"]
             ]
         }));
-        cmbTDOCError.setValue("S");
+        Ext.getCmp(prototype.id + '-cmbTDOCError').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbTDOCError').setValue('S');
+        Ext.getCmp(prototype.id + '-cmbTDOCError').resumeEvents();
 
         var cmbComplement = Ext.getCmp(prototype.id + '-cmbComplement');
         cmbComplement.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -253,7 +277,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["T", "Tablet"]
             ]
         }));
-        cmbComplement.setValue("");
+        Ext.getCmp(prototype.id + '-cmbComplement').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbComplement').setValue('');
+        Ext.getCmp(prototype.id + '-cmbComplement').resumeEvents();
 
         var cmbRecType = Ext.getCmp(prototype.id + '-cmbRecType');
         cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -263,7 +289,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["1", "Transact."],
                 ["2", "Chargeback"]
             ]
-        }));
+        }));        
         cmbRecType.setValue("1");
 
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
@@ -1443,6 +1469,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanTransaction.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
         this.beanTransaction.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
         this.beanTransaction.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();        
+        this.beanTransaction.IN_TDOC = Ext.getCmp(prototype.id + '-cmbSummTDOC').getValue();        
 
         me.paramsDetailTransaction.beanString = JSON.stringify(this.beanTransaction);
         this.setGridDataDiffTransaction();
