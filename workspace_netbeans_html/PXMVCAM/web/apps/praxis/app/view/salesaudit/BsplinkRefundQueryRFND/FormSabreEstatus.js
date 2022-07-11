@@ -65,6 +65,15 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormSabreEstatus',
                             width: 200,
                             value: 'xxxxxx',
                             readOnly: true
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.idSabreEstatus + '-btnprocessing',
+                            iconCls: 'prx-icon-processing',
+                            tooltip: 'Process sabre status',
+                            listeners:{
+                                click: 'onSabreStatusClick'
+                            }
                         }
                     ]
                 },{

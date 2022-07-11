@@ -69,6 +69,7 @@ public class RefundControlDAO {
                     objRtn.A3388ROBOT = rs01.getString("A3388ROBOT");
                     objRtn.A3388FINA = rs01.getString("A3388FINA");
                     objRtn.A3388TOTALPAG = rs01.getString("A3388TOTALPAG");
+                    objRtn.A3388CHANEL = rs01.getString("A3388CHANEL");
                 } else {
                     objRtn.A3388CCUST = rs01.getString("A3388CCUST");
                     objRtn.A3388PAIS = rs01.getString("A3388PAIS");
@@ -88,7 +89,7 @@ public class RefundControlDAO {
                     objRtn.A3388FLAG = rs01.getString("A3388FLAG");
                     objRtn.A3388REGAS = rs01.getString("A3388REGAS");
                     objRtn.A3388DIAS = rs01.getString("A3388DIAS");
-
+                    objRtn.A3388CHANEL = rs01.getString("A3388CHANEL");
                 }
 
                 lstRtn.add(objRtn);
@@ -167,6 +168,7 @@ public class RefundControlDAO {
                 objRtn.A3388REGAS = rs01.getString("A3388REGAS");
                 objRtn.A3388DIAS = rs01.getString("A3388DIAS");
                 objRtn.A3388TOTALPAG = rs01.getString("A3255COUNT");
+                objRtn.A3388CHANEL = rs01.getString("A3388CHANEL");
                 lstRtn.add(objRtn);
             }
         } catch (SQLException e) {
