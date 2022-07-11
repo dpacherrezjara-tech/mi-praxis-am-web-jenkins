@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +25,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
@@ -62,7 +65,10 @@ public class AgentsMasterFileController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private AgentsMasterFileLogic logic;
-
+    private Connection cnx = null;
+    private IServerSession session;
+    private CallableStatement cs = null;
+    
     @RequestMapping(method = RequestMethod.POST)
     public String index(ModelMap map) {
         map.put("vp_serverDate", Functions.getFechaActual());
@@ -82,7 +88,11 @@ public class AgentsMasterFileController extends BaseController {
         return new Gson().toJson(map);
 
     }
-
+    
+    public void setSession(IServerSession ss) {
+        session = ss;
+    }
+    
     public List<A003> getList(HttpServletRequest request, Boolean bExcel) {
         logic = new AgentsMasterFileLogic();
 
@@ -118,8 +128,19 @@ public class AgentsMasterFileController extends BaseController {
                 filter.strExcel = "TRUE";
             }
 
-            lst = logic.loadAgentReport(filter);
+            if(this.serverSession.getFareBasis()!=null && "".equals(filter.VP_ACTION) && "".equals(filter.A003KEY1) && "".equals(filter.A003KEY2) && "".equals(filter.A003KEY3) && filter.page.PAGNUM == 1)
+            {
+                if (!bExcel) 
+                    lst = serverSession.getAgentMaster();
+                else
+                    lst = logic.loadAgentReport(filter);
+            }
+            else
+            {
+                lst = logic.loadAgentReport(filter);
+            }
 
+            
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -159,7 +180,7 @@ public class AgentsMasterFileController extends BaseController {
 
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A003> listaData = this.getList(request, false);
+            List<A003> listaData = this.getList(request, true);
 
             System.out.println("Agents Master File : " + listaData.size());
 
@@ -628,59 +649,91 @@ public class AgentsMasterFileController extends BaseController {
      */
     @RequestMapping(value = "getFileTxt")
     public @ResponseBody
-    void getFileTxt(HttpServletRequest request, HttpServletResponse response) {
+    void getFileTxt(HttpServletRequest request, HttpServletResponse response) throws Exception {
         A003 filter = new A003();
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        
+            try {
+                filter.VP_ACTION = request.getParameter("VP_ACTION");
+                filter.A003KEY1 = request.getParameter("A003KEY1");
+                filter.A003KEY2 = request.getParameter("A003KEY2");
+                filter.A003KEY3 = request.getParameter("A003KEY3");
+                /*
+                 Se establece tiempo límite de conexión por 60 min
+                 */
+                Unirest.setTimeouts(3600000, 3600000);
+                /*
+                 Preparando parámetros para enviar por body
+                 */
+                HashMap bodyData = new HashMap<>();
+                bodyData.put("server_database", "AEROMEXICO");
+                bodyData.put("VP_AIR", "139");
+                bodyData.put("VP_ACTION", filter.VP_ACTION);
+                bodyData.put("VP_A003KEY1", filter.A003KEY1);
+                bodyData.put("VP_A003KEY2", filter.A003KEY2);
+                bodyData.put("VP_A003KEY3", filter.A003KEY3);
+                bodyData.put("VP_A003TYPE", request.getParameter("A003TYPE"));
+                bodyData.put("PATH", rutaFile);
 
-        try {
-            filter.VP_ACTION = request.getParameter("VP_ACTION");
-            filter.A003KEY1 = request.getParameter("A003KEY1");
-            filter.A003KEY2 = request.getParameter("A003KEY2");
-            filter.A003KEY3 = request.getParameter("A003KEY3");
-            /*
-             Se establece tiempo límite de conexión por 60 min
-             */
-            Unirest.setTimeouts(3600000, 3600000);
-            /*
-             Preparando parámetros para enviar por body
-             */
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("server_database", "AEROMEXICO");
-            bodyData.put("VP_AIR", "139");
-            bodyData.put("VP_ACTION", filter.VP_ACTION);
-            bodyData.put("VP_A003KEY1", filter.A003KEY1);
-            bodyData.put("VP_A003KEY2", filter.A003KEY2);
-            bodyData.put("VP_A003KEY3", filter.A003KEY3);
-            bodyData.put("VP_A003TYPE", request.getParameter("A003TYPE"));
-            bodyData.put("PATH", rutaFile);
+                String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+                String urlAPI = "/api/AgentsMasterFile/rptAgentsMasterFile/";
+                HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI)
+                        .header("content-type", "application/json")
+                        .header("cache-control", "no-cache")
+                        .body(new Gson().toJson(bodyData))
+                        .asJson();
 
-            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-            String urlAPI = "/api/AgentsMasterFile/rptAgentsMasterFile/";
-            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI)
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
+                String error_code = responseAPI.getBody().getObject().get("error_code").toString();
+                String error_msg = responseAPI.getBody().getObject().get("error_msg").toString();
+                String filename = responseAPI.getBody().getObject().get("filename").toString();
+                /*comprimir archivo
+                 */
+                /*if (!filename.isEmpty()) {
+                    if (!zip(filename)) {
+                        response.setContentType("application/zip");
+                    }
+                }*/
+                response.setContentType("application/zip");
+                response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
+                InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
+                IOUtils.copy(is, response.getOutputStream());
+                response.flushBuffer();
 
-            String error_code = responseAPI.getBody().getObject().get("error_code").toString();
-            String error_msg = responseAPI.getBody().getObject().get("error_msg").toString();
-            String filename = responseAPI.getBody().getObject().get("filename").toString();
-            /*comprimir archivo
-             */
-            /*if (!filename.isEmpty()) {
-                if (!zip(filename)) {
-                    response.setContentType("application/zip");
-                }
-            }*/
-             response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+            } catch (Exception e) {
+                throw new SpringException(e);
+            }
+    }
 
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
+    @RequestMapping(value = "ValidationDownload")
+    public @ResponseBody
+    String ValidationDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        A003 filter = new A003();
+        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        filter.page.PAGROW = -1;
+        filter.page.PAGNUM = 1;
+            try {
+                logic = new AgentsMasterFileLogic();
+                logic.setSession(this.serverSession.getServerSession());
+                
+                filter.VP_ACTION = request.getParameter("VP_ACTION");
+                filter.A003KEY1 = request.getParameter("A003KEY1");
+                filter.A003KEY2 = request.getParameter("A003KEY2");
+                filter.A003KEY3 = request.getParameter("A003KEY3");
+                
+                int int_result = logic.ValidationDownload(filter);
+                HashMap m = new HashMap();
+                m.put("success", true);
+                m.put("int_result", int_result);
+
+                return new Gson().toJson(m);
+                
+
+            } catch (Exception e) {
+                throw new SpringException(e);
+            }
     }
 
 }

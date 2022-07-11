@@ -16,6 +16,7 @@ import net.miatech.beans.PX019S01A025Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.A003;
+import net.miatech.praxis.exceptions.SpringException;
 import org.apache.log4j.Logger;
 
 /**
@@ -315,6 +316,76 @@ public class AgentsMasterFileDAO {
         return listaData;
     }*/
 
+    public int ValidationDownload (A003 filter)  throws SQLException, Exception  {
+        int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
+
+        try{
+            
+            if (filter.page.PAGNUM > 0) {
+               PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
+            }
+            
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04493(?,?,?,?,?,?,?,?)}";
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
+            cs = cnx.prepareCall(strSQL);
+            
+            cs.registerOutParameter("IO_PAGNUM", Types.INTEGER);
+            cs.registerOutParameter("IO_PAGROW", Types.INTEGER);
+            cs.registerOutParameter("IO_TOTPAG", Types.INTEGER);
+            cs.registerOutParameter("IO_TOTROW", Types.INTEGER);
+
+            cs.setString("IN_OPTION", filter.VP_ACTION);
+            cs.setString("IN_CODE",  filter.A003KEY1);
+            cs.setString("IN_TIPO", filter.A003KEY2);
+            cs.setString("IN_NOMBRE",  filter.A003KEY3);          
+            
+            cs.setInt("IO_PAGNUM", PAGINIT);
+            cs.setInt("IO_PAGROW", totRowsPag);     
+            cs.setInt("IO_TOTPAG", totRows);     
+            cs.setInt("IO_TOTROW", filter.page.TOTROW); 
+
+            cs.execute();
+            
+            filter.page.PAGNUM = cs.getInt("IO_PAGNUM");
+            filter.page.PAGROW = cs.getInt("IO_PAGROW");
+            filter.page.TOTPAG = cs.getInt("IO_TOTPAG");
+            filter.page.TOTROW = cs.getInt("IO_TOTROW");
+            
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cs.getInt("IO_PAGROW")) {
+               totRows = filter.page.TOTROW;
+               totPAGS = filter.page.TOTPAG;
+            } else {
+               try {
+                   totRows = cs.getInt("IO_TOTROW");
+                   int total =  (int)(totRows / totRowsPag);                                                                    
+                   int resto =  (totRows % totRowsPag);                    
+
+                   if(resto>0)
+                       totPAGS = total + 1;
+                   else
+                       totPAGS = total;
+
+               } catch (Exception e) {
+                   totPAGS = totRows / totRowsPag;
+               }
+            }        
+             
+            filter.page.TOTPAG = totPAGS;
+            
+            rst = cs.getResultSet();
+
+            //while (rst.next()) {
+            //    STR_RESULT = rst.getString("VMESSAGE");
+            //}
+            
+        }
+        finally {
+            setClose();
+        }
+        
+        return filter.page.TOTROW; 
+    }
+    
     public A003 loadAgentCompleteData(A003 filter) throws SQLException, Exception {
 
         String strSQL;
@@ -639,4 +710,28 @@ public class AgentsMasterFileDAO {
         return filter;
     }
 
+        private void setClose() {
+
+        if (rst != null) {
+            try {
+                rst.close();
+            } catch (SQLException e) {
+                throw new SpringException(e);
+            }
+        }
+        if (cs != null) {
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                throw new SpringException(e);
+            }
+        }
+        try {
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+        } catch (Exception ex) {
+            throw new SpringException(ex);
+        }
+        pasarGarbageCollector();
+    }
+    
 }
