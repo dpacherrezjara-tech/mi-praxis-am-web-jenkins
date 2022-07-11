@@ -15,6 +15,7 @@ public String IN_CODE = "";
 public String NAME = "";
 public String DESCRE1 = "";
 public String DESCRE2 = "";
+public String TDOC = "";
 public int CANT1 = 0;
 public int CANT2 = 0;
 public String STVAL = "";

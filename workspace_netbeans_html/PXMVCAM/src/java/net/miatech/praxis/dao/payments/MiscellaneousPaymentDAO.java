@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
@@ -16,7 +17,6 @@ import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A4169Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
-
 
 public class MiscellaneousPaymentDAO {
 
@@ -43,10 +43,17 @@ public class MiscellaneousPaymentDAO {
         session = ss;
     }
 
-  public List<A4169Filter> loadPX598SQP04518(A4169Filter filter) throws SQLException, Exception {
+    public List<A4169Filter> loadPX598SQP04518(A4169Filter filter) throws SQLException, Exception {
 
         List<A4169Filter> lstData = new ArrayList<A4169Filter>(0);
         A4169Filter bean;
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("S", "Sales");
+        hmDescEstados.put("R", "RFND");
+        hmDescEstados.put("A", "Adjustment");
+        hmDescEstados.put("N", "ADM/NOTA CARGO");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -65,7 +72,7 @@ public class MiscellaneousPaymentDAO {
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_CODE.trim());
-           
+
             cstmt.setInt(3, filter.page.PAGNUM);
             cstmt.setInt(4, filter.page.PAGROW);
             cstmt.setInt(5, filter.page.TOTPAG);
@@ -85,11 +92,17 @@ public class MiscellaneousPaymentDAO {
                 bean.TTABLA = rst.getString("TTABLA");
                 bean.DESCR_TTABLA = rst.getString("DESCR_TTABLA");
                 bean.CODETB = rst.getString("CODETB");
-                bean.DESCRE1   = rst.getString("DESCRE1");
-                bean.DESCRE2   = rst.getString("DESCRE2");
-                bean.CANT1   = rst.getInt("CANT1");
-                bean.CANT2   = rst.getInt("CANT2");
-                bean.STVAL   = rst.getString("STVAL");
+                bean.DESCRE1 = rst.getString("DESCRE1");
+                bean.DESCRE2 = rst.getString("DESCRE2");
+                //bean.TDOC = rst.getString("TDOC");
+                if (hmDescEstados.containsKey(rst.getString("TDOC").trim())) {
+                    bean.TDOC = hmDescEstados.get(rst.getString("TDOC").trim()).toString();
+                } else {
+                    bean.TDOC = rst.getString("TDOC").trim();
+                }
+                bean.CANT1 = rst.getInt("CANT1");
+                bean.CANT2 = rst.getInt("CANT2");
+                bean.STVAL = rst.getString("STVAL");
                 if (rst.getString("STVAL").trim().equals("V")) {
                     bean.descSTVAL = "Vigente";
                 } else if (rst.getString("STVAL").trim().equals("A")) {
@@ -126,9 +139,8 @@ public class MiscellaneousPaymentDAO {
 
         return lstData;
     }
-  
-  
-  public List<A4169Filter> loadPX598SQP04519(A4169Filter filter) throws SQLException, Exception {
+
+    public List<A4169Filter> loadPX598SQP04519(A4169Filter filter) throws SQLException, Exception {
 
         List<A4169Filter> lstTkts = new ArrayList<A4169Filter>(0);
         A4169Filter beanTkt;
@@ -187,9 +199,8 @@ public class MiscellaneousPaymentDAO {
 
         return lstTkts;
     }
- 
-    
-    public A4169 loadPX598SQP04520 (A4169Filter filter) throws SQLException, Exception {
+
+    public A4169 loadPX598SQP04520(A4169Filter filter) throws SQLException, Exception {
 
         A4169 beanTkt = new A4169();
         CallableStatement cstmt01 = null;
@@ -214,6 +225,7 @@ public class MiscellaneousPaymentDAO {
                 beanTkt.TTABLA = rs01.getString("TTABLA").trim();
                 beanTkt.DESCRE1 = rs01.getString("DESCRE1").trim();
                 beanTkt.DESCRE2 = rs01.getString("DESCRE2").trim();
+                beanTkt.TDOC = rs01.getString("TDOC").trim();
                 beanTkt.DESCR_TTABLA = rs01.getString("DESCR_TTABLA").trim();
                 beanTkt.CANT1 = rs01.getInt("CANT1");
                 beanTkt.CANT2 = rs01.getInt("CANT2");
@@ -256,13 +268,13 @@ public class MiscellaneousPaymentDAO {
 
         return beanTkt;
     }
-    
-    public String loadPX598SQP04521(A4169 filter, String option) throws SQLException, Exception  {
+
+    public String loadPX598SQP04521(A4169 filter, String option) throws SQLException, Exception {
         String strMsj = "Operation was successful.";
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -276,14 +288,14 @@ public class MiscellaneousPaymentDAO {
             cstmt.setString(5, filter.CODETBCO.trim());
             cstmt.setString(6, filter.DESCRE1.trim());
             cstmt.setString(7, filter.DESCRE2.trim());
-            cstmt.setInt(8, filter.CANT1);
-            cstmt.setInt(9, filter.CANT2);
-            cstmt.setString(10, filter.STVAL.trim());
-            cstmt.setString(11, session.getUserView().getUserInfo().USR);
-            cstmt.setString(12, Functions.getFechaActual());
-            cstmt.setString(13, Functions.getHoraActual());
-            
-            
+            cstmt.setString(8, filter.TDOC.trim());
+            cstmt.setInt(9, filter.CANT1);
+            cstmt.setInt(10, filter.CANT2);
+            cstmt.setString(11, filter.STVAL.trim());
+            cstmt.setString(12, session.getUserView().getUserInfo().USR);
+            cstmt.setString(13, Functions.getFechaActual());
+            cstmt.setString(14, Functions.getHoraActual());
+
             cstmt.execute();
 
         } catch (Exception e) {
@@ -304,5 +316,5 @@ public class MiscellaneousPaymentDAO {
         return strMsj;
 
     }
- 
+
 }
