@@ -165,6 +165,7 @@ public class DataRequestedByDateDAO {
                 objRtn.DATAPLICA = rs01.getString("DATAPLICA").trim();
                 objRtn.CRULE = rs01.getString("CRULE").trim();
                 objRtn.MFOP = rs01.getString("MFOP").trim();
+                objRtn.FOLIO = rs01.getString("FOLIO").trim();
                 
                 objRtn.MERCHN = rs01.getString("MERCHN").trim();
                 objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
