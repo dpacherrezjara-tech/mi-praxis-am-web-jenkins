@@ -50,8 +50,8 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1880,
-                                    height: 535,
+                                    width: 1860,
+                                    height: 543,
                                     columnLines: true,
                                     /*features: [{
                                      ftype: 'summary'
@@ -156,7 +156,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'STVAL', width: 200
+                                                text: 'Status', dataIndex: 'descSTVAL', width: 200
                                             },
                                             {
                                                 text: 'Credit Card',
@@ -199,7 +199,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'descVFOP', width: 80,
+                                                        text: 'Amount', dataIndex: 'VFOP', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:right;background:" + data.COLOR;

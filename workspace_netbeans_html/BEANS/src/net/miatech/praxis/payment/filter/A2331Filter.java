@@ -86,7 +86,7 @@ public class A2331Filter extends A2331 {
     public String strDescBank = "";
     public String strFlag = "";
     public String strDescError = "";
-    public String descVFOP = "";
+    public String descSTVAL = "";
     public String NOMTARHAB = "";
     public String COMMENT = "";
     public String DATE = "";

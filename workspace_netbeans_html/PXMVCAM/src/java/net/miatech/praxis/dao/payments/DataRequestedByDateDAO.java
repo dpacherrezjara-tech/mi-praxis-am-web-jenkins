@@ -66,15 +66,6 @@ public class DataRequestedByDateDAO {
         hmDescSTVAL.put("4", "Sent to Bank");
         hmDescSTVAL.put("5", "Chargeback");
         hmDescSTVAL.put("6", "Reverse Chargeback");
-        
-        HashMap hmDescVFOP = new HashMap();
-        hmDescVFOP.put("", "");
-        hmDescVFOP.put("1", "Stand By");
-        hmDescVFOP.put("2", "Sent Office");
-        hmDescVFOP.put("3", "Link Document");
-        hmDescVFOP.put("4", "Sent Bank");
-        hmDescVFOP.put("5", "Chargeback");
-        hmDescVFOP.put("6", "Reverse Chargeback");
 
         HashMap hmDescCRULE = new HashMap();
         hmDescCRULE.put("", "");
@@ -153,7 +144,11 @@ public class DataRequestedByDateDAO {
                 objRtn.TICKET = objRtn.CCIA + objRtn.FORMA + objRtn.SERIE;
                 objRtn.STVAL = rs01.getString("STVAL").trim();
                 objRtn.strDescStatus = hmDescSTVAL.get(objRtn.STVAL).toString();
-                //								
+                if (hmDescSTVAL.containsKey(objRtn.STVAL)) {
+                    objRtn.descSTVAL = hmDescSTVAL.get(objRtn.STVAL).toString();
+                } else {
+                    objRtn.descSTVAL = objRtn.STVAL;
+                }								
 
                 objRtn.INDCPN = rs01.getString("INDCPN").trim();
                 objRtn.STUSO = rs01.getString("STUSO").trim();
@@ -170,22 +165,12 @@ public class DataRequestedByDateDAO {
                 objRtn.DATAPLICA = rs01.getString("DATAPLICA").trim();
                 objRtn.CRULE = rs01.getString("CRULE").trim();
                 objRtn.MFOP = rs01.getString("MFOP").trim();
-                if (hmDescCRULE.containsKey(objRtn.CRULE)) {
-                    objRtn.strDescCRULE = hmDescCRULE.get(objRtn.CRULE).toString();
-                } else {
-                    objRtn.strDescCRULE = objRtn.CRULE;
-                }
-
+                
                 objRtn.MERCHN = rs01.getString("MERCHN").trim();
                 objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
                 objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
                 objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
                 objRtn.VFOP = rs01.getDouble("VFOP");    
-                if (hmDescVFOP.containsKey(objRtn.VFOP)) {
-                    objRtn.descVFOP = hmDescVFOP.get(objRtn.VFOP).toString();
-                } else {
-                   // objRtn.descVFOP. = rs01.getDouble("VFOP");
-                }
                 if (contador == 0) {
                     objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
                 } else if (MERCHANT.equals(rs01.getString("MERCHN").trim())
