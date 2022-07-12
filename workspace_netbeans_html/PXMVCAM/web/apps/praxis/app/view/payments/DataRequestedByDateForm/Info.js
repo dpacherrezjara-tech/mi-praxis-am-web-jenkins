@@ -156,7 +156,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'descSTVAL', width: 200
+                                                text: 'Status', dataIndex: 'descSTVAL', width: 140
                                             },
                                             {
                                                 text: 'Credit Card',
