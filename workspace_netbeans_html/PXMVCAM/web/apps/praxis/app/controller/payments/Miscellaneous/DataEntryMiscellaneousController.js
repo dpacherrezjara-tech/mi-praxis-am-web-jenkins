@@ -51,6 +51,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         this.copia = this.getValue('de-txtCTable');
         this.setValue('de-txtCDesc1', this.beanResult.DESCRE1);
         this.setValue('de-txtCDesc2', this.beanResult.DESCRE2);
+        this.setValue('cmbDoc', this.beanResult.TDOC);
         this.setValue('de-txtCant1', this.beanResult.CANT1);
         this.setValue('de-txtCant2', this.beanResult.CANT2);
         this.setValue('cmbStval', this.beanResult.STVAL);
@@ -74,6 +75,20 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
             ]
         }));
         cmbStval.setValue('');
+        
+        var cmbDoc = Ext.getCmp(prototype.id + '-cmbDoc');
+        cmbDoc.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "none"],
+                ["S", "Sales"],
+                ["R", "Refund"],
+                ["A", "Adjustment"],
+                ["N", "ADM/NOTA CARGO"]
+            ]
+        }));
+        cmbDoc.setValue('');
 
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
@@ -83,6 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         beanTemp.CODETBCO = this.copia;
         beanTemp.DESCRE1 = this.getValue("de-txtCDesc1");
         beanTemp.DESCRE2 = this.getValue("de-txtCDesc2");
+        beanTemp.TDOC = this.getValue("cmbDoc");
         beanTemp.CANT1 = this.getValue("de-txtCant1");
         var a =  this.getValue("de-txtCant1");
         if( a === ''){
@@ -222,7 +238,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
 
     validacionInsert: function (beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === ''|| this.getValue("cmbStval") === '' || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' ) {
+        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === ''|| this.getValue("cmbStval") === '' || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '' ) {
             msjResult = "You must enter the required field.";
         }
         return msjResult;

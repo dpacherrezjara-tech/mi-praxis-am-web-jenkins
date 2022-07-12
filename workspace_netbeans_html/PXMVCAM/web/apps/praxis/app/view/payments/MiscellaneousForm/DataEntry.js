@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
     controller: 'DataEntryMiscellaneousController',
     title:'Miscellaneous - Data Entry Form',
     header:true,
-    height:380,
-    width:720,
+    height:390,
+    width:820,
     resizable:false,
     layout:'fit',
     modal:true,
@@ -169,6 +169,38 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     enforceMaxLength: true,
                                     maxLength: 100,
                                 }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 2 8',
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Document',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'combo',
+                                    id:prototype.id+'-cmbDoc',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    width: 120,
+                                    labelWidth: 10,
+                                    hidden: false,
+                                    hiddenLabel: false 
+                                },
                             ]
                         },
                         {
