@@ -178,7 +178,7 @@ public class DataRequestedByDateDAO {
                         & CARDNBR.equals(rs01.getString("CARDNBR").trim())
                         & AUTHNBR.equals(rs01.getString("AUTHNBR").trim())
                         & PNR.equals(rs01.getString("PNR").trim())) {
-                    //objRtn.AUTAMOUNT = 0;
+                    objRtn.AUTAMOUNT = 0;
                     objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
                 } else {
                     objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
