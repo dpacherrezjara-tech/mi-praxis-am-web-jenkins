@@ -22,27 +22,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     gridAdjustmentRowIndex: 10,
     status_match: ['1', '5', '6', '7'],
     dataObtain: {},
-    // </editor-fold>
-    init: function (view) {
-        prototype.id = 'SalesReconciliAmexForm';
-        prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
-        meDE = this;
-        this.lstSendManual = [];
-        this.lstBlocked = [];
-        this.lstAdjustment = [];
-        this.setValue('de-txtSumAmount', this.sumAmount);
-        //this.setValue('de-txtSumAmountBlocked', this.sumAmountBlocked);
+            // </editor-fold>
+            init: function (view) {
+                prototype.id = 'SalesReconciliAmexForm';
+                prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
+                meDE = this;
+                this.lstSendManual = [];
+                this.lstBlocked = [];
+                this.lstAdjustment = [];
+                this.setValue('de-txtSumAmount', this.sumAmount);
+                //this.setValue('de-txtSumAmountBlocked', this.sumAmountBlocked);
 
-        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
-        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
-        Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
-        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
-        this.p = this.view.params;
-        this.actionCode = this.p.action;
-        this.bean = this.p.rec.data;
-        //console.log(this.bean);
+                Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
+                Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+                this.p = this.view.params;
+                this.actionCode = this.p.action;
+                this.bean = this.p.rec.data;
+                //console.log(this.bean);
 
-    },
+            },
     obtainGetAdjustmentCode: function () {
         Ext.Ajax.request({
             url: prototype.url + '/getAdjustmentCodes',
@@ -220,7 +220,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.CERROR = this.getValue("txtCERROR");
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
-        
+
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
         } else {
@@ -564,7 +564,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     validacionDesglose: function () {
         var msjResult = '';
-        if (this.lstSendManual.length === 0) {
+        if (this.lstSendManual.length === 0 && this.lstAdjustment.length === 0) {
             msjResult = "You must have at least one ticket.";
         }
         return msjResult;
@@ -1004,6 +1004,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             /*Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
              Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
              );*/
+            this.calcularMontos();
+        }
+    },
+    addAdjustment_keyDownHandler: function () {
+        if (this.sumAmount === this.bean.TGROSAMOUN) {
+            global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+        } else {
+            this.lstAdjustment = [];
+            Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+            Ext.getCmp(prototype.id + '-panelADJ').show();
+            //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
+            var rec = Object.create(this.bean);
+
+            rec.A1531VFOP = rec.TGROSAMOUN;
+            rec.tot_VFOP = rec.TGROSAMOUN;
+            rec.A720AGENTE = $('#menuUser').text();
+            rec.CERROR = '01';
+            rec.A1531TTARJ = 'AX';
+            rec.A1531NREF = rec.SCARDN;
+            rec.A1531CAPL = rec.SAUTHOC;
+            rec.A720FECVTA = rec.BSUMDATE;
+            rec.A720PNR = rec.SPNR;
+            rec.A1531TKT = rec.ISREFNBR;
+
+            this.lstAdjustment.push(rec);
+
+            Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                    Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                    );
             this.calcularMontos();
         }
     }

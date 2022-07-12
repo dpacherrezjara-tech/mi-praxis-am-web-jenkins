@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 890,
+                            width: 905,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 885,
+                                    width: 905,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -77,10 +77,11 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Description 1', dataIndex: 'DESCRE1', width: 210},
-                                            {text: 'Description 2', dataIndex: 'DESCRE2', width: 210},
-                                            {text: 'Cantidad 1', dataIndex: 'CANT1', width: 90},
-                                            {text: 'Cantidad 2', dataIndex: 'CANT2', width: 90},
+                                            {text: 'Description 1', dataIndex: 'DESCRE1', width: 180, align:'left'},
+                                            {text: 'Description 2', dataIndex: 'DESCRE2', width: 180, align:'left'},
+                                            {text: 'Document', dataIndex: 'TDOC', width: 120, align:'left'},
+                                            {text: 'Cantidad 1', dataIndex: 'CANT1', width: 70},
+                                            {text: 'Cantidad 2', dataIndex: 'CANT2', width: 70},
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',

@@ -2137,6 +2137,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -2446,6 +2447,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
 
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
@@ -2817,6 +2819,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04466(?,?,?,?,?,?,?,?,?)}";
 
@@ -2952,6 +2955,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3366,7 +3370,8 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
-
+        hmDescTDOC.put("N", "ADM");
+        
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -4144,6 +4149,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -4264,6 +4270,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
