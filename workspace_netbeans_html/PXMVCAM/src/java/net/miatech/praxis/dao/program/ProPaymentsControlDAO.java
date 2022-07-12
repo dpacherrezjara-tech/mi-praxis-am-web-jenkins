@@ -13,6 +13,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.IMF145Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.praxis.payment.filter.A3020Filter;
@@ -2989,6 +2990,159 @@ public class ProPaymentsControlDAO {
         return list;
     }
 
+    
+    
+    
+    // ---------------------------------------------------------------------------------------------------------------
+    
+    public List<IMF145Filter> loadSQP04546(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long QTYSALES = 0, AMOUNTS = 0, QTYSALCA = 0, AMOUNTCA = 0, QTYSALCC = 0, AMOUNTCC = 0, QTYSALBA = 0;
+        long AMOUNTBA = 0, VALOREX = 0, VALORCA = 0, VALORCC = 0;
+//        double AMOUNT = 0, COMISION = 0, TAX = 0, AYQ = 0, AYR = 0, FARE = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04546(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(12, Types.INTEGER);
+            cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATE);
+            cstmt.setString(3, filter.IN_FECHA_FROM);
+            cstmt.setString(4, filter.IN_FECHA_TO);
+            
+            cstmt.setString(5, filter.IN_FTE);
+            cstmt.setString(6, filter.IN_PAYMENT);
+            cstmt.setString(7, filter.IN_TDOC);
+            cstmt.setString(8, filter.IN_SCOUNTRY);
+            cstmt.setString(9, filter.IN_FLAG);
+            cstmt.setString(10, filter.IN_FINSUMO);
+            cstmt.setString(11, filter.IN_BANK);
+            cstmt.setInt(12, filter.page.PAGNUM);
+            cstmt.setInt(13, filter.page.PAGROW);
+            cstmt.setInt(14, filter.page.TOTPAG);
+            cstmt.setInt(15, filter.page.TOTROW);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                QTYSALES = rst.getLong("QTYSALES");
+                AMOUNTS = rst.getLong("AMOUNTS");
+                
+                QTYSALCA = rst.getLong("QTYSALCA");
+                AMOUNTCA = rst.getLong("AMOUNTCA");
+                QTYSALCC = rst.getLong("QTYSALCC");
+                AMOUNTCC = rst.getLong("AMOUNTCC");
+                
+                QTYSALBA = rst.getLong("QTYSALBA");
+                AMOUNTBA = rst.getLong("AMOUNTBA");
+                
+                VALOREX = rst.getLong("VALOREX");
+                VALORCA = rst.getLong("VALORCA");
+                VALORCC = rst.getLong("VALORCC");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_DATE = filter.IN_DATE;
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    bean.IN_FTE = filter.IN_FTE;
+                    bean.IN_PAYMENT = filter.IN_PAYMENT;
+                    bean.IN_TDOC = filter.IN_TDOC;
+                    bean.IN_SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.IN_FLAG = filter.IN_FLAG;
+                    bean.IN_FINSUMO = filter.IN_FINSUMO;
+                    bean.IN_BANK = filter.IN_BANK;
+
+                   
+                    bean.DSALES = rst.getString("DSALES");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.DSALES);
+                    bean.SCOUNTRY = rst.getString("SCOUNTRY");
+                    bean.SCARCOD = rst.getString("SCARCOD");
+
+                    bean.QTYSALES = rst.getLong("QTYSALES");
+                    bean.AMOUNTS = rst.getLong("AMOUNTS");
+                    
+                    bean.QTYSALCA = rst.getLong("QTYSALCA");
+                    bean.AMOUNTCA = rst.getLong("AMOUNTCA");
+                    bean.QTYSALCC = rst.getLong("QTYSALCC");
+                    bean.AMOUNTCC = rst.getLong("AMOUNTCC");
+                    
+                    bean.QTYSALBA = rst.getLong("QTYSALBA");
+                    bean.AMOUNTBA = rst.getLong("AMOUNTBA");
+                    bean.VALOREX = rst.getLong("VALOREX");
+                    bean.VALORCA = rst.getLong("VALORCA");
+                    bean.VALORCC = rst.getLong("VALORCC");
+                    
+                    bean.diffQTYSALCC = bean.QTYSALCC - bean.QTYSALBA;
+                    bean.diffAMOUNTCC = bean.AMOUNTCC - bean.AMOUNTBA;
+                    
+                    bean.totQTYSALES = QTYSALES;
+                    bean.totAMOUNTS = AMOUNTS;
+                    
+                    bean.totQTYSALCA = QTYSALCA;
+                    bean.totAMOUNTCA = AMOUNTCA;
+                    bean.totQTYSALCC = QTYSALCC;
+                    bean.totAMOUNTCC = AMOUNTCC;
+                    
+                    bean.totQTYSALBA = QTYSALBA;
+                    bean.totAMOUNTBA = AMOUNTBA;
+                    bean.totVALOREX = VALOREX;
+                    bean.totVALORCA = VALORCA;
+                    bean.totVALORCC = VALORCC;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+                     
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
+    
     
     
     

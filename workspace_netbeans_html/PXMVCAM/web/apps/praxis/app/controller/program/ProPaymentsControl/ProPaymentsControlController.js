@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     bean: '',
     beanCLAtot: '',
     beanCLA: '',
+    beanNewAmex: '',
     paginActual: '',
     drillDown: [],
     lstCountry: [],
@@ -20,6 +21,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     searchParamsCard: {},
     searchParamsClari: {},
     searchParamsClariTot: {},
+    searchParamsNewAmex: {},
     paramsDetail: {},
     dataObtain: {},
     dataGrid: [],
@@ -127,14 +129,11 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         
         var country = Ext.getCmp(prototype.id + '-cmbPais').getValue();
         if(country === 'US'){
-//            setComboBoxItem(cmbPais, 'All');
             Ext.getCmp(prototype.id + '-cmbPais').setValue("All");
 	}
         
         var type = Ext.getCmp(prototype.id + '-cmbType').getValue();
         if(type === '2' || type === '7'){
-//            cmbFecFiltro.visible=false;
-//            cmbFecFiltro.includeInLayout=false;
             Ext.getCmp(prototype.id + '-cmbPais').setReadOnly(true);
             if(type === '2'){
                 Ext.getCmp(prototype.id + '-lblTitulo').setText('By Country');
@@ -142,62 +141,29 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 Ext.getCmp(prototype.id + '-lblTitulo').setText('By USA/States');
             }
 	}else if(type === '3'){
-//            cmbFecFiltro.visible=false;
-//            cmbFecFiltro.includeInLayout=false;
             Ext.getCmp(prototype.id + '-lblTitulo').setText('By Credit Card');
 	}else if(type === '4'){
-//            cmbFecFiltro.visible=false;
-//            cmbFecFiltro.includeInLayout=false;		
             Ext.getCmp(prototype.id + '-cmbFTE').setReadOnly(true);
             Ext.getCmp(prototype.id + '-lblTitulo').setText('By Channel');
 	}else if(type === '5'){
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
-
             Ext.getCmp(prototype.id + '-boxSearchFilter1').show();
-//            boxSearchFilter1.includeInLayout = true;
-
             Ext.getCmp(prototype.id + '-rbgSELEC').reset();
             Ext.getCmp(prototype.id + '-lblTitulo').setText('Credit Card Sales & ACCB');
 	}else if(type === '6'){
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
             Ext.getCmp(prototype.id + '-lblTitulo').setText('By IATA');
 	}else if(type === '8'){
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
 	    Ext.getCmp(prototype.id + '-lblTitulo').setText('By Fare / Tax');
 	}else if(type === '9'){
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
 	    Ext.getCmp(prototype.id + '-lblTitulo').setText('By Bank (*)');		
 	}else if(type === '10'){
-//		boxSearchFilter2.visible = true;
-//		boxSearchFilter2.includeInLayout = true;
             Ext.getCmp(prototype.id + '-boxSearchFilter2').show();
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
             Ext.getCmp(prototype.id + '-rbgPEM').reset();
 	    Ext.getCmp(prototype.id + '-lblTitulo').setText('By POS Entry Mode');		
 	}else if(type === '11'){
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
             Ext.getCmp(prototype.id + '-lblTitulo').setText('By Phases Status');		
 	}else if(type === '12'){
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
             Ext.getCmp(prototype.id + '-lblTitulo').setText('General Totals');			
 	}else if(type === '13'){
-//		cmbFecFiltro.visible=true;
-//		cmbFecFiltro.includeInLayout=true;
-//		boxSearchFilter3.visible=true;
-//		boxSearchFilter3.includeInLayout=true;
-//		hboxFilter2.visible=false;
-//		hboxFilter2.includeInLayout=false;
-//		cmbFTE.enabled=false;
-//		cmbTARJ.enabled=false;
-//		lblDate.visible=false;
-//		lblDate.includeInLayout=false;
             Ext.getCmp(prototype.id + '-cmbFecFiltro').show();
             Ext.getCmp(prototype.id + '-boxSearchFilter3').show();
             Ext.getCmp(prototype.id + '-hboxFilter2').hide();
@@ -205,9 +171,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             Ext.getCmp(prototype.id + '-cmbTARJ').setReadOnly(true);
             Ext.getCmp(prototype.id + '-lblDate').hide();
             Ext.getCmp(prototype.id + '-lblTitulo').setText('Clarifications Requested by Banks');		
-	}else{
-//		cmbFecFiltro.visible=false;
-//		cmbFecFiltro.includeInLayout=false;
+	}else if(type === '20'){
+            Ext.getCmp(prototype.id + '-lblTitulo').setText('Credit Card New');
+        }else{
 	    Ext.getCmp(prototype.id + '-lblTitulo').setText('By Month / Year');
 	}
 	
@@ -245,7 +211,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 ["10", "By POS Entry Mode"],
                 ["11", "By Phase Status"],
                 ["12", "General Total"],
-                ["13", "By Clarification"]
+                ["13", "By Clarification"],
+                ["20", "Credit Card New"]
             ]
         }));
         cmbType.setValue("1");
@@ -497,6 +464,41 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 this.searchClarification();
                 
             }
+	}else if(typeSearch === '20'){
+            
+            me.beanNewAmex = {};
+                
+            me.beanNewAmex.IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+            me.beanNewAmex.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + 
+                                          Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+            me.beanNewAmex.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
+                                        Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+
+
+            me.beanNewAmex.IN_FTE = Ext.getCmp(prototype.id + '-cmbFTE').getValue();
+            me.beanNewAmex.IN_PAYMENT = Ext.getCmp(prototype.id + '-cmbTARJ').getValue();
+            var op2 = Ext.getCmp(prototype.id + '-rbgType').getValue();
+            me.beanNewAmex.IN_TDOC = op2.rbgTDOC;
+            
+            
+            me.beanNewAmex.IN_SCOUNTRY = Ext.getCmp(prototype.id + '-cmbPais').getValue();
+            var chk = Ext.getCmp(prototype.id + '-chkEECC').getValue();
+            if(chk === true){
+                me.beanNewAmex.IN_FLAG = 'Y';
+            }else{
+                me.beanNewAmex.IN_FLAG = '';
+            }
+            me.beanNewAmex.IN_FINSUMO = Ext.getCmp(prototype.id + '-cmbFINSUMO').getValue();
+            me.beanNewAmex.IN_BANK = Ext.getCmp(prototype.id + '-cmbBank').getValue();
+            
+
+            var beanString = JSON.stringify(me.beanNewAmex);
+            searchParamsNewAmex = {
+                beanString: beanString,
+                bean: me.beanNewAmex
+            }; 
+            
+            this.searchNewAmex();
 	}
         else {
             this.search();
@@ -2557,6 +2559,47 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             global.clear();
             Ext.getCmp(prototype.id + '-gridDetBank').bindStore(storeGridDatas);
         }
+    },
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="searchNewAmex">
+    searchNewAmex: function () {
+        win.lblUser_toolTip("Estructura: IMF145");
+        me.panelActual = '-boxNewAmex';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchNewAmex'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParamsNewAmex;
+                },
+                load: function (obj) {
+                    console.log(obj.data);
+                    console.log(obj.data.items[0].data);
+                    if (obj.data.length === 0) {
+//                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText('');
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var data = obj.data.items[0].data;
+////                            console.log(data);
+//                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lblFT_SVFOPUS1').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lblFT_Perc1').setText('100.00');
+//                        Ext.getCmp(prototype.id + '-lblTotTAX1').setText(Ext.util.Format.number(data.perc3, '0,000.00') + '%');
+                    }
+//                        me.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridNewAmex').bindStore(storeGridDatas);
     },
     // </editor-fold>
     
