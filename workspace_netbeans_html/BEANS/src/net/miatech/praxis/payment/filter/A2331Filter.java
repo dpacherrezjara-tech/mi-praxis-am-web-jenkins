@@ -86,6 +86,7 @@ public class A2331Filter extends A2331 {
     public String strDescBank = "";
     public String strFlag = "";
     public String strDescError = "";
+    public String descVFOP = "";
     public String NOMTARHAB = "";
     public String COMMENT = "";
     public String DATE = "";
@@ -178,5 +179,6 @@ public class A2331Filter extends A2331 {
     public double totAMTGDSBU = 0;
     
     public Pagination page = new Pagination();
+    
 
 }

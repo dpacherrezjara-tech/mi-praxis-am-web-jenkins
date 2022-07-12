@@ -156,6 +156,9 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
+                                                text: 'Status', dataIndex: 'STVAL', width: 200
+                                            },
+                                            {
                                                 text: 'Credit Card',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -196,7 +199,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Auth<br>Amount', dataIndex: 'AUTAMOUNT', width: 80,
+                                                        text: 'Amount', dataIndex: 'descVFOP', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:right;background:" + data.COLOR;

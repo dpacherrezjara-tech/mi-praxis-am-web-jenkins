@@ -66,6 +66,15 @@ public class DataRequestedByDateDAO {
         hmDescSTVAL.put("4", "Sent to Bank");
         hmDescSTVAL.put("5", "Chargeback");
         hmDescSTVAL.put("6", "Reverse Chargeback");
+        
+        HashMap hmDescVFOP = new HashMap();
+        hmDescVFOP.put("", "");
+        hmDescVFOP.put("1", "Stand By");
+        hmDescVFOP.put("2", "Sent Office");
+        hmDescVFOP.put("3", "Link Document");
+        hmDescVFOP.put("4", "Sent Bank");
+        hmDescVFOP.put("5", "Chargeback");
+        hmDescVFOP.put("6", "Reverse Chargeback");
 
         HashMap hmDescCRULE = new HashMap();
         hmDescCRULE.put("", "");
@@ -171,7 +180,12 @@ public class DataRequestedByDateDAO {
                 objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
                 objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
                 objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
-
+                objRtn.VFOP = rs01.getDouble("VFOP");    
+                if (hmDescVFOP.containsKey(objRtn.VFOP)) {
+                    objRtn.descVFOP = hmDescVFOP.get(objRtn.VFOP).toString();
+                } else {
+                   // objRtn.descVFOP. = rs01.getDouble("VFOP");
+                }
                 if (contador == 0) {
                     objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
                 } else if (MERCHANT.equals(rs01.getString("MERCHN").trim())
