@@ -1071,7 +1071,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     setGridDataDetTktSettlement: function () {
         win.lblUser_toolTip("Estructura: A4121");
-        me.setWidthPie();
+        //me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktSettlement'
@@ -1081,11 +1081,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 },
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    var pag = Ext.getCmp(prototype.id + '-paggin17');
+                    /*var pag = Ext.getCmp(prototype.id + '-paggin17');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));*/
 
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -1109,7 +1109,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         global.clear();
         Ext.getCmp(prototype.id + '-gridDetailTktSettlement').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin17').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin17').bindStore(storeGridDatas);
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
