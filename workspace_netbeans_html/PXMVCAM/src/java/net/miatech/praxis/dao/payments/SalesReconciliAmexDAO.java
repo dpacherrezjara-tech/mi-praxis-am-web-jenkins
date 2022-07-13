@@ -3665,8 +3665,9 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(20, session.getUserView().getUserInfo().USR);
                     cstmt01.setString(21, Functions.getFechaActual());
                     cstmt01.setString(22, Functions.getHoraActual());
-
-                    cstmt01.execute();
+                    if(!beanDet.STMANUAL.trim().equals("Blocked")){
+                        cstmt01.execute();
+                    }
                 }
             }
 
