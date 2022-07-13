@@ -1034,6 +1034,87 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
                     );
             this.calcularMontos();
+            this.helpByCreditCardForAdjustment();
         }
-    }
+    },
+    helpByCreditCardForAdjustment: function () {
+        //this.setValue('de-txtSumAmount', Ext.util.Format.number('0', '0,000.00'));
+        //this.lstSendManual = [];
+        this.lstBlocked = [];
+
+        //verificacion de fecha segun cuotas
+        var fecha_a_validar = "";
+        var cant_cuotas = this.getValue("de-txtINSTANBR");
+        if (cant_cuotas > 0) {
+            fecha_a_validar = this.getValue("de-txtTRANSDATE");
+        } else {
+            fecha_a_validar = this.getValue("de-txtBSUMDATE");
+        }
+
+        var cc1 = this.getValue("de-txtSCARDN").substr(0,6);
+        var cc2 = this.getValue("de-txtSCARDN").substr(11,4);
+        var approval = this.getValue("de-txtSAUTHOC");
+        var sales_date = fecha_a_validar;
+        //var tkt = this.getValue("input-txtTKTScan");
+        var tkt = '';
+        var beanGrid = {};
+        beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
+        beanGrid.SAUTHOC = approval;
+        beanGrid.BSUMDATE = sales_date;
+        beanGrid.INSTANBR = cant_cuotas;
+        beanGrid.TKT = tkt;
+        beanGrid.TDOC = this.beanResult.TDOC;
+        var beanStringGrid = JSON.stringify(beanGrid);
+        Ext.Ajax.request({
+            url: prototype.url + '/gridTransactionErrorByTKT',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+            params: {beanString: beanStringGrid},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                var flag_blocked = false;
+                meDE.beanInfo = res.lstInfo;
+                console.log(meDE.beanInfo);
+                if (res.lstInfo.length > 0) {
+                    if (res.lstInfo[0].A1531CFOP !== 'CC') {
+                        global.Msg({msg: 'Is not Credit Card'});
+                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
+                        global.Msg({msg: 'Credit Card Is not AMEX'});
+                    } else {
+                        for (var i = 0; i < res.lstInfo.length; i++) {
+                            if (res.lstInfo[i].FDUPLIB > 0) {
+                                //Guardar aquí tkts usados
+                                res.lstInfo[i].STMANUAL = 'Blocked';
+                                meDE.lstBlocked.push(res.lstInfo[i]);
+                            } else {
+                                flag_blocked = true;
+                                meDE.lstSendManual.push(res.lstInfo[i]);
+                            }
+                        }
+                        console.log(flag_blocked);
+                        /*if (flag_blocked) {
+                            global.Msg({msg: 'There are some blocked tickets'});
+                        }*/
+                    }
+                } else {
+                    global.Msg({msg: 'Not Found in Sales'});
+                }
+
+                /*Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
+                        Ext.create('Ext.data.Store', {data: meDE.lstSendManual, autoLoad: true})
+                        );
+                Ext.getCmp(prototype.id + '-gridDataInfoBlocked').bindStore(
+                        Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
+                        );*/
+                
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
+                        Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
+                        );
+                
+                //meDE.calcularMontos();
+            }
+        });
+    },
 });

@@ -187,7 +187,8 @@ public class SalesAdjustmentDAO {
                     } else {
                         beanTkt.descFREGLA = rst.getString("FREGLA").trim();
                     }
-
+                        
+                    beanTkt.QTYTKT = rst.getInt("QTYTKT");
                     beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
@@ -391,7 +392,285 @@ public class SalesAdjustmentDAO {
         }
         return numero_a_cambiar;
     }
+    
+    public List<A4116Filter> loadPX570SQP04540(A4116Filter filter) throws SQLException, Exception {
 
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", "Sales Without Settlement");
+        hmDescEstados.put("3", "Settlement Without Sales");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
+
+        HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
+        hmDescTDOC.put("", "");
+        hmDescTDOC.put("S", "Sales");
+        hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
+
+        double totGROSAMOUN = 0;
+        double totTGROSAMOUN = 0;
+        double totDISCAMOUN_IMPORT = 0;
+        double totDISCAMOUN_IVA = 0;
+        double totSFEEAMOU = 0;
+        double totACCEAMOU = 0;
+        double totTAXAMOUN_AD = 0;
+        double totIVACOM12 = 0;
+        double totGROSAMOUN_CB = 0;
+        double totDISCAMOUN = 0;
+        double totTAXAMOUN_CB = 0;
+        double totNETAMOUN = 0;
+        double totDISCAMOSC = 0;
+        double ACCEAMOUC_TOTAL = 0;
+        double DISCAMOUNI_TOTAL = 0;
+        double TGROSAMOUC_TOTAL = 0;
+        double SFEEAMOUC_TOTAL = 0;
+        double DISCAMOUNC_TOTAL = 0;
+        double DISCAMOUIC_TOTAL = 0;
+        double VATCOMMSIC_TOTAL = 0;
+        double DISCAMOUN_CB_TOTAL = 0;
+        double SADJUST_TOTAL = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04540(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
+            cstmt.registerOutParameter(16, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.DATE);
+            cstmt.setString(3, filter.IN_DATE);
+            cstmt.setString(4, filter.MERCHID);
+            cstmt.setString(5, filter.SPNR);
+            cstmt.setString(6, filter.ISREFNBR);
+            cstmt.setString(7, filter.IN_TRANSDATE);
+            cstmt.setString(8, filter.IN_AXPRODAT);
+            cstmt.setString(9, filter.IN_FREGLA);
+            cstmt.setString(10, filter.IN_SCARDN);
+            cstmt.setString(11, filter.IN_SAUTHOC);
+            cstmt.setString(12, filter.IN_IDITEMT);
+            cstmt.setString(13, filter.IN_IDITEMS);
+            cstmt.setInt(14, filter.page.PAGNUM);
+            cstmt.setInt(15, filter.page.PAGROW);
+            cstmt.setInt(16, filter.page.TOTPAG);
+            cstmt.setInt(17, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(14);
+            filter.page.PAGROW = cstmt.getInt(15);
+            filter.page.TOTPAG = cstmt.getInt(16);
+            filter.page.TOTROW = cstmt.getInt(17);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                totGROSAMOUN = rst.getDouble("totGROSAMOUN");
+                totTGROSAMOUN = rst.getDouble("totTGROSAMOUN");
+                totDISCAMOUN_IMPORT = rst.getDouble("totDISCAMOUN_IMPORT");
+                totDISCAMOUN_IVA = rst.getDouble("totDISCAMOUN_IVA");
+                totSFEEAMOU = rst.getDouble("totSFEEAMOU");
+                totACCEAMOU = rst.getDouble("totACCEAMOU");
+                totTAXAMOUN_AD = rst.getDouble("totTAXAMOUN_AD");
+                totIVACOM12 = rst.getDouble("totIVACOM12");
+                totGROSAMOUN_CB = rst.getDouble("totGROSAMOUN_CB");
+                totDISCAMOUN = rst.getDouble("totDISCAMOUN");
+                totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");
+                totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD;
+                totDISCAMOSC = rst.getDouble("totDISCAMOSC");
+
+                ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
+                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
+                TGROSAMOUC_TOTAL = rst.getDouble("TGROSAMOUC_TOTAL");
+                SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
+                DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
+                DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
+                VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
+                DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
+                SADJUST_TOTAL = rst.getDouble("SADJUST_TOTAL");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                    beanTkt = new A4116Filter();
+                    beanTkt.IN_DATE = filter.IN_DATE.trim();
+                    beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
+                    beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
+                    beanTkt.IN_ISREFNBR = filter.ISREFNBR.trim();
+                    beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
+                    beanTkt.IN_TGROSAMOUN = filter.IN_TGROSAMOUN;
+                    beanTkt.IN_descSTVAL = filter.IN_descSTVAL;
+
+                    beanTkt.RN = rst.getString("RN").trim();
+                    beanTkt.DATE = rst.getString(filter.IN_DATE.trim()).trim();
+                    beanTkt.TRANSDATE = rst.getString("TRANSDATE").trim();
+                    beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
+                    beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
+                    beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
+                    beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                    beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                    beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+                    //beanTkt.QTYTKT = rst.getInt("QTYTKT");
+                    beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
+                    beanTkt.SPNR = rst.getString("SPNR").trim();
+                    beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
+                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
+                    beanTkt.DISCAMOUN_CB = rst.getDouble("DISCAMOUN_CB");
+
+                    beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
+                    beanTkt.DISCAMOUNI = this.mantenerSigno(beanTkt.DISCAMOUN, rst.getDouble("DISCAMOUNI"));
+
+                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
+                    beanTkt.DISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
+                    beanTkt.DISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
+                    beanTkt.DISCRATE_IMPORT = rst.getDouble("DISCRATE_IMPORT");
+                    //beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
+                    beanTkt.SADJUST = rst.getDouble("SADJUST");
+                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
+                    beanTkt.GROSAMOUN_CB = rst.getDouble("GROSAMOUN_CB");
+                    beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
+                    beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
+                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
+                    beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
+                    beanTkt.CERROR = rst.getString("CERROR").trim();
+                    beanTkt.desCERROR = rst.getString("desCERROR").trim();
+
+                    /*if (beanTkt.CERROR.equals("")) {
+                        beanTkt.desCERROR = "Conciliate";
+                    } else {
+                        beanTkt.desCERROR = "Difference";
+                    }*/
+                    beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
+                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
+                    if (rst.getDouble("DISCRATEI") < 0) {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
+                    } else {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    }
+
+                    beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
+                    beanTkt.DISCAMOUNC = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUNC"));
+                    beanTkt.DISCAMOUIC = this.mantenerSigno(beanTkt.DISCAMOUNC, rst.getDouble("DISCAMOUIC"));
+
+                    beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
+                    beanTkt.VATCOMMSIC = rst.getDouble("VATCOMMSIC");
+
+                    beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
+                    beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
+                    if (rst.getDouble("DISCRATEIC") < 0) {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
+                    } else {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
+                    if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
+                        beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                    } else {
+                        beanTkt.descSTVAL = rst.getString("STVAL").trim();
+                    }
+
+                    beanTkt.TDOC = rst.getString("TDOC").trim();
+                    if (hmDescTDOC.containsKey(rst.getString("TDOC").trim())) {
+                        beanTkt.descTDOC = hmDescTDOC.get(rst.getString("TDOC").trim()).toString();
+                    } else {
+                        beanTkt.descTDOC = rst.getString("TDOC").trim();
+                    }
+
+                    beanTkt.RATESFEE = rst.getDouble("RATESFEE");
+                    beanTkt.RATEACCE = rst.getDouble("RATEACCE");
+                    beanTkt.IVACOM12 = rst.getDouble("IVACOM12");
+
+                    beanTkt.totGROSAMOUN = totGROSAMOUN;
+                    beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN);
+                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.totDISCAMOUN, DISCAMOUNI_TOTAL);
+                    beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
+                    beanTkt.totDISCAMOUN_IVA = totDISCAMOUN_IVA;
+                    beanTkt.totSFEEAMOU = totSFEEAMOU;
+                    beanTkt.totACCEAMOU = totACCEAMOU;
+                    beanTkt.totTAXAMOUN_AD = totTAXAMOUN_AD;
+                    beanTkt.totIVACOM12 = totIVACOM12;
+                    beanTkt.totTAXAMOUN_CB = totTAXAMOUN_CB;
+                    beanTkt.totNETAMOUN = totNETAMOUN;
+                    beanTkt.totDISCAMOSC = totDISCAMOSC;
+                    beanTkt.totGROSAMOUN_CB = totGROSAMOUN_CB;
+
+                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
+                    beanTkt.TGROSAMOUC_TOTAL = TGROSAMOUC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUC_TOTAL, DISCAMOUNC_TOTAL);
+                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
+                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
+                    beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
+                    beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
+                    beanTkt.SADJUST_TOTAL = SADJUST_TOTAL;
+
+                    beanTkt.A1531TTARJ = "AX";
+                    beanTkt.FDESGLOSE = "1";
+                    beanTkt.A1531NREF = beanTkt.SCARDN;
+                    beanTkt.A1531CAPL = beanTkt.SAUTHOC;
+                    beanTkt.A1531VFOP = beanTkt.TGROSAMOUN;
+                    beanTkt.tot_VFOP = beanTkt.totTGROSAMOUN;
+                    beanTkt.A720FECVTA = beanTkt.TRANSDATE;
+                    beanTkt.A720PNR = beanTkt.SPNR;
+                    beanTkt.A1531TKT = beanTkt.ISREFNBR;
+                    beanTkt.A720AGENTE = "";
+
+                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                    beanTkt.page.PAGROW = filter.page.PAGROW;
+                    beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                    beanTkt.page.TOTROW = filter.page.TOTROW;
+
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
 //    public String loadPX267SQP00672(A2281 filter, String option) throws SQLException, Exception  {
 //        //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A2280.
 //        String strMsj = "Operation was successful.";

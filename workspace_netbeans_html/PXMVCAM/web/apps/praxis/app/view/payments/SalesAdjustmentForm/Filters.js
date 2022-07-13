@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Filters', {
                             fieldStyle: 'text-align: left;',
                             labelWidth: 100,
                             width: 300,
-                            hidden: false,
+                            hidden: true,
                             listeners: {
                                 change: 'btnSearch_click'
                             }
