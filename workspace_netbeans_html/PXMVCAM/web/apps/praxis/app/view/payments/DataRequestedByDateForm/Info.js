@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    { text: 'Date', dataIndex: 'DATE', width: 85}
+                                                    { text: 'Date', dataIndex: 'DATE', width: 70}
                                                 ]
                                             },
                                             {
@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'SALEDATE', width: 85,
+                                                        text: 'Date', dataIndex: 'SALEDATE', width: 70,
                                                     }
                                                 ]
                                             },
@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                              ]
                                              },*/
                                             {
-                                                text: 'IATA', dataIndex: 'AGENTE', width: 90,
+                                                text: 'IATA', dataIndex: 'AGENTE', width: 70,
                                             },
                                             /*{
                                              text: 'Sending Date',
@@ -156,7 +156,10 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'descSTVAL', width: 140
+                                                text: 'Status', dataIndex: 'descSTVAL', width: 130
+                                            },
+                                            {
+                                                text: 'Chargeback <br> Number', dataIndex: 'FOLIO', width: 120
                                             },
                                             {
                                                 text: 'Credit Card',
@@ -167,7 +170,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55,
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 45,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background:" + data.COLOR;
@@ -175,7 +178,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Number', dataIndex: 'CARDNBR', width: 145,
+                                                        text: 'Number', dataIndex: 'CARDNBR', width: 125,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background:" + data.COLOR;
@@ -191,7 +194,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Curr', dataIndex: 'MFOP', width: 60,
+                                                        text: 'Curr', dataIndex: 'MFOP', width: 50,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background:" + data.COLOR;
@@ -199,7 +202,16 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'VFOP', width: 80,
+                                                        text: 'Chargeback<br>Amount', dataIndex: 'AUTAMOUNT', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:right;background:" + data.COLOR;
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Ticket<br>Amount', dataIndex: 'VFOP', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:right;background:" + data.COLOR;
@@ -210,7 +222,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Ticket', dataIndex: 'TICKET', width: 120,
+                                                text: 'Ticket', dataIndex: 'TICKET', width: 110,
                                                 listeners: {
                                                     click: 'viewTicket'
                                                 },
@@ -241,14 +253,14 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'First', dataIndex: 'STUSO', width: 70,
+                                                        text: 'First', dataIndex: 'STUSO', width: 60,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#d5f4d5;";
                                                             return value;
                                                         }
                                                     },
                                                     {
-                                                        text: 'Last', dataIndex: 'STUSOS', width: 70,
+                                                        text: 'Last', dataIndex: 'STUSOS', width: 60,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#d5f4d5;";
                                                             return value;
