@@ -1,7 +1,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- */																				   
+ */
 package net.miatech.praxis.classes;
 
 import com.itextpdf.text.BaseColor;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import net.miatech.beans.SQP00795Filter;
+import net.miatech.beans.SQP04561Filter;
 
 /**
  *
@@ -105,8 +106,7 @@ public class ProReportCommCTIA {
                 cell.setBorder(Rectangle.BOTTOM);
                 table.addCell(cell);
                 table.writeSelectedRows(0, -1, 34, 600, writer.getDirectContent());
-			 
-			
+
             } catch (DocumentException de) {
                 throw new ExceptionConverter(de);
             }
@@ -174,8 +174,8 @@ public class ProReportCommCTIA {
         posNewPagex = posNewPagex + 50;
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Class", subFont_1)), posNewPagex, posNewPagey, 0);
         posNewPagex = posNewPagex + 25;
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("O/D", subFont_1)), posNewPagex, posNewPagey, 0);
-        posNewPagex = posNewPagex + 25;																																 
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("O/D", subFont_1)), posNewPagex, posNewPagey, 0);
+        posNewPagex = posNewPagex + 25;
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("IT Tour Code", subFont_1)), posNewPagex, posNewPagey, 0);
         posNewPagex = posNewPagex + 70;
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("FOP", subFont_1)), posNewPagex, posNewPagey, 0);
@@ -203,9 +203,26 @@ public class ProReportCommCTIA {
         ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("%", subFont_1)), posNewPagex, posNewPagey, 0);
 
     }
+    //posNewPagey 533
+    public void setTitleANC(int posNewPagex, int posNewPagey, PdfWriter writer) {
+        PdfContentByte canvas = writer.getDirectContent();
+        PdfContentByte under = writer.getDirectContentUnder();
+        colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), posNewPagex+7, posNewPagey - 7, 300, 40);
 
-    public void createReport(SQP00795Filter Data) {
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("OTHER CHARGES", subFont_1)), posNewPagex+15, posNewPagey+15, 0); //548
+        
+        posNewPagex = posNewPagex + 15; 
+        posNewPagey = posNewPagey + 5;
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("ACUERDO", subFont_1)), posNewPagex, posNewPagey, 0); //538
+        posNewPagex = posNewPagex + 70;
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBCODE", subFont_1)), posNewPagex, posNewPagey, 0);
+        posNewPagex = posNewPagex + 70;
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("FARE", subFont_1)), posNewPagex, posNewPagey, 0);
+        
+    }
 
+    public void createReport(SQP00795Filter Data, List<SQP04561Filter> DataAnc ) {
+        
         try {
             fileTmp01 = File.createTempFile("tmp", FILE);
             fileTmp02 = File.createTempFile("tmp", FileTXT);
@@ -217,7 +234,7 @@ public class ProReportCommCTIA {
             int PosX5;
             int PosX15;
             int PosX9;
-			int PosX99;		   
+            int PosX99;
             int PosX13;
             int PosX16;
             int PosX2;
@@ -305,7 +322,6 @@ public class ProReportCommCTIA {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("IVA: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 75; //80
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444TIVA), NORMAL), PoxT, PYi, 0);
-			
 
             // TOTAL Comm. + IVA                    
             PoxT = PoxT + 10; //50
@@ -318,42 +334,41 @@ public class ProReportCommCTIA {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Send To FOB: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 60; //65
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(Data.A2444FENV, NORMAL), PoxT, PYi, 0);
-			
-			//NUEVOS CAMPOS JD
+
+            //NUEVOS CAMPOS JD
             // Other Charges
             PYi = PYi - (Hlng);
             PoxT = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Other Charges: ", subFontT)), PoxT, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Other Charges: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 150; //70
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase( formato_numero(Data.A2444OTHCH), NORMAL), PoxT, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444OTHCH), NORMAL), PoxT, PYi, 0);
 
             // Bank Comm                  
             PoxT = PoxT + 12; //100
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Bank Commission: ", subFontT)), PoxT, PYi, 0);
-            
+
             PoxT = PoxT + 130; //70
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444BANKC), NORMAL), PoxT, PYi, 0);
-            
+
             // Other - Bank Comm      
             PoxT = PoxT + 10; //80
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Oth.-Bank Comm: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 135; //80
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase( formato_numero(Data.A2444OTHBK), NORMAL), PoxT, PYi, 0);
-            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444OTHBK), NORMAL), PoxT, PYi, 0);
 
             // IVA                    
             PoxT = PoxT + 12; //50
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("IVA: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 85; //125
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase( formato_numero(Data.A2444IVA16), NORMAL), PoxT, PYi, 0);
-            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444IVA16), NORMAL), PoxT, PYi, 0);
+
             // Other - Bank Comm + IVA
             PoxT = PoxT + 12;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Oth.-Bank Comm+IVA: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 150; //65
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase( formato_numero(Data.A2444OBK16), NORMAL), PoxT, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444OBK16), NORMAL), PoxT, PYi, 0);
             //FIN NUEVOS CAMPOS JD
-			
+
             // TOTAL CASH
             PYi = PYi - Hlng;
             PoxT = PosX1;
@@ -367,7 +382,6 @@ public class ProReportCommCTIA {
             PoxT = PoxT + 130;
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444TCAMC), NORMAL), PoxT, PYi, 0);
 
-			
             // Titulo Columnas grid //
             colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), PosX1, PYi - 28, 750, 25);
 
@@ -400,12 +414,12 @@ public class ProReportCommCTIA {
             PosX1 = PosX1 + 50;
             PosX9 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Class", subFont_1)), PosX1, PYi, 0);
-			// JD	 
+            // JD	 
             PosX1 = PosX1 + 25;
-			PosX99 = PosX1;
+            PosX99 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("O/D", subFont_1)), PosX1, PYi, 0);
             //FIN JD
-            PosX1 = PosX1 + 25;				   
+            PosX1 = PosX1 + 25;
             PosX10 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("IT Tour Code", subFont_1)), PosX1, PYi, 0);
 
@@ -452,7 +466,6 @@ public class ProReportCommCTIA {
             PosX19 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("%", subFont_1)), PosX1, PYi, 0);
 
-			
             // genera Data en txt
             PrintStream out = new PrintStream(new FileOutputStream(fileTmp02));
             // Texto Header            
@@ -475,7 +488,7 @@ public class ProReportCommCTIA {
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445CARR, subFont)), PosX6, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445FBAS, subFont)), PosX8, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445CLAS, subFont)), PosX9, PYi, 0);
-				ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445ORIG+"-"+Data.lstRws.get(i).A2445DEST, subFont)), PosX99-14, PYi, 0);																																											 
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445ORIG + "-" + Data.lstRws.get(i).A2445DEST, subFont)), PosX99 - 14, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445CODIT, subFont)), PosX10, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445CFOP, subFont)), PosX11, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.lstRws.get(i).A2445IATAE, subFont)), PosX20, PYi, 0);
@@ -513,15 +526,13 @@ public class ProReportCommCTIA {
                     ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.lstRws.get(i).A2445POCAN), subFont)), PosX19, PYi, 0);
                 }
                 // ACUMULA TOTALES
-				if(!Data.lstRws.get(i).A2445TRNCU.equals("RFNX")){												  
-					TOT_A2445VCPN = TOT_A2445VCPN + Data.lstRws.get(i).A2445VCPN;
-				} 
+                if (!Data.lstRws.get(i).A2445TRNCU.equals("RFNX")) {
+                    TOT_A2445VCPN = TOT_A2445VCPN + Data.lstRws.get(i).A2445VCPN;
+                }
                 TOT_A2445ACSC = TOT_A2445ACSC + Data.lstRws.get(i).A2445ACSC;
                 TOT_A2445OCANR = TOT_A2445OCANR + Data.lstRws.get(i).A2445OCANR;
                 TOT_A2445COCAR = TOT_A2445COCAR + Data.lstRws.get(i).A2445COCAR;
 
-				 
-				
                 // Texto detail            
                 out.println(Data.lstRws.get(i).A2445IATA + ";"
                         + Data.lstRws.get(i).TKT + ";"
@@ -532,7 +543,7 @@ public class ProReportCommCTIA {
                         + Data.lstRws.get(i).A2445CARR + ";"
                         + Data.lstRws.get(i).A2445FBAS + ";"
                         + Data.lstRws.get(i).A2445CLAS + ";"
-						+ Data.lstRws.get(i).A2445ORIG + "-" + Data.lstRws.get(i).A2445DEST + ";"																		 
+                        + Data.lstRws.get(i).A2445ORIG + "-" + Data.lstRws.get(i).A2445DEST + ";"
                         + Data.lstRws.get(i).A2445CODIT + ";"
                         + Data.lstRws.get(i).A2445CFOP + ";"
                         + Data.lstRws.get(i).A2445IATAE + ";"
@@ -576,7 +587,7 @@ public class ProReportCommCTIA {
 
                     // Reinciar Contador al inicio  Nex Page //
                     posNewPagex = 15;
-                }
+                }                
             }
 
             // TOTALES
@@ -586,13 +597,30 @@ public class ProReportCommCTIA {
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(TOT_A2445ACSC), subFont_1)), PosX13, PYi - 15, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(TOT_A2445OCANR), subFont_1)), PosX16, PYi - 15, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(TOT_A2445COCAR), subFont_1)), PosX17, PYi - 15, 0);
-
+            
+            //Add page resumen de importes x ancillarie
+            ItemPage = 0;
+            PYi = 520; 
+            getPageNumber++;
+            document.newPage();            
+            posNewPagey = PYi + 13;
+            this.setTitleANC(posNewPagex, posNewPagey, writer);
+            // Reinciar Contador al inicio  Nex Page //
+            posNewPagex = 15;                          
+            PYi = PYi - 2;
+            for (int i = 0; i < DataAnc.size(); i++) {
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(DataAnc.get(i).A2445CCST, subFont)), posNewPagex+15, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(DataAnc.get(i).A2445RFIS, subFont)), posNewPagex+85, PYi, 0);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(DataAnc.get(i).A2445CARGO), subFont)), posNewPagex+180, PYi, 0);
+                PYi = PYi - 12;
+            }
+            
+                
             // No PDF, Just a text file                       
             out.flush();
             out.close();
             //this.onCloseDocument(writer, document);
             document.close();
-			
 
         } catch (Exception e) {
             e.printStackTrace();
