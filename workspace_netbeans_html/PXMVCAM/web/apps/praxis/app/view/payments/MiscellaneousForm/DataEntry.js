@@ -126,7 +126,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Descripcion 1',
+                                    text: 'Description 1',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -153,7 +153,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Descripcion 2',
+                                    text: 'Description 2',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -208,6 +208,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                             layout: 'hbox',
                             border: false,
                             margin: '10 2 2 8',
+                            hidden: true,
                             items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {

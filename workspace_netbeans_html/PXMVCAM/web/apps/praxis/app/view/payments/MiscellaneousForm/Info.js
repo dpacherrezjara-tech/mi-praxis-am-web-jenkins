@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 905,
+                            width: 685,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 905,
+                                    width: 685,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Table', dataIndex: 'TTABLA', width: 80},
+                                            {text: 'Table', dataIndex: 'TTABLA', width: 80, hidden:true},
                                             {text: 'Code', dataIndex: 'CODETB', width: 80},
                                             {text: 'Status', dataIndex: 'STVAL', width: 80, 
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -80,8 +80,8 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                             {text: 'Description 1', dataIndex: 'DESCRE1', width: 180, align:'left'},
                                             {text: 'Description 2', dataIndex: 'DESCRE2', width: 180, align:'left'},
                                             {text: 'Document', dataIndex: 'TDOC', width: 120, align:'left'},
-                                            {text: 'Cantidad 1', dataIndex: 'CANT1', width: 70},
-                                            {text: 'Cantidad 2', dataIndex: 'CANT2', width: 70},
+                                            {text: 'Cantidad 1', dataIndex: 'CANT1', width: 70, hidden:true},
+                                            {text: 'Cantidad 2', dataIndex: 'CANT2', width: 70, hidden:true},
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',

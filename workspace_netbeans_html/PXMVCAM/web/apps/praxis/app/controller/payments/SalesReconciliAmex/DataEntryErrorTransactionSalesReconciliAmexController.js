@@ -813,8 +813,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
                                 meDE.lstBlocked.push(res.lstInfo[i]);
-                            } else {
                                 flag_blocked = true;
+                            } else {
                                 meDE.lstSendManual.push(res.lstInfo[i]);
                             }
                         }

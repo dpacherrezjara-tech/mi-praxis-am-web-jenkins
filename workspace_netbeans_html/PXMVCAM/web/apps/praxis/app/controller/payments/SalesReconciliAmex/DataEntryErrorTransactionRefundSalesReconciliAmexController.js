@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                if (['1','5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
+                if (['1', '5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
@@ -129,12 +129,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-        
-        if (['1','5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
+
+        if (['1', '5', '6', '7'].indexOf(this.bean.STVAL) >= 0) {
             this.getBreakdownDataGridForMatch();
         } else {
             this.getBreakdownDataGrid();
-        }  
+        }
     },
     obtainData: function () {
 //        console.log('obtainData');
@@ -738,6 +738,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanInfo = res.lstInfo;
+                var flag_blocked = false;
                 console.log(meDE.beanInfo);
 
                 if (res.lstInfo.length > 0) {
@@ -750,9 +751,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
                                 meDE.lstBlocked.push(res.lstInfo[i]);
+                                flag_blocked = true;
                             } else {
                                 meDE.lstSendManual.push(res.lstInfo[i]);
                             }
+                        }
+
+                        if (flag_blocked) {
+                            global.Msg({msg: 'There are some blocked tickets'});
                         }
                     }
                 } else {
