@@ -88,6 +88,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJMassiveaccountingForm.DataEntryADJMas
                  me.paramsDE.A3344CPN= rec.data.A3344CPN;
                  me.paramsDE.A3344TNC =rec.data.A3344TNC;
                  me.paramsDE.A3344CRRL= rec.data.A3344CRRL;
+                 me.paramsDE.A3344NARCH= rec.data.A3344NARCH;
         Ext.getCmp(prototype.idDataEntryADJMassive + '-win').mask('Please Wait....');
         Ext.Ajax.request({
             url: me.urlWin01 + '/ListAdjmassive/',
