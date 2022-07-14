@@ -108,6 +108,16 @@ public class MiscellaneousPaymentDAO {
                 } else if (rst.getString("STVAL").trim().equals("A")) {
                     bean.descSTVAL = "Anulado";
                 }
+                
+                bean.USCR = rst.getString("USCR").trim();
+                bean.FECR = rst.getString("FECR").trim();
+                bean.HOCR = rst.getString("HOCR").trim();
+                bean.PGMCR = rst.getString("PGMCR").trim();
+                bean.USUP = rst.getString("USUP").trim();
+                bean.FEUP = rst.getString("FEUP").trim();
+                bean.HOUP = rst.getString("HOUP").trim();
+                bean.PGMUP = rst.getString("PGMUP").trim();
+                
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
                 bean.page.TOTPAG = filter.page.TOTPAG;
@@ -230,9 +240,9 @@ public class MiscellaneousPaymentDAO {
                 beanTkt.CANT1 = rs01.getInt("CANT1");
                 beanTkt.CANT2 = rs01.getInt("CANT2");
                 beanTkt.STVAL = rs01.getString("STVAL").trim();
-                if (rst.getString("STVAL").trim().equals("V")) {
+                if (rs01.getString("STVAL").trim().equals("V")) {
                     beanTkt.descSTVAL = "Vigente";
-                } else if (rst.getString("STVAL").trim().equals("A")) {
+                } else if (rs01.getString("STVAL").trim().equals("A")) {
                     beanTkt.descSTVAL = "Anulado";
                 }
                 beanTkt.USCR = rs01.getString("USCR").trim();
