@@ -3371,7 +3371,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("R", "Refund");
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
-        
+
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -3665,7 +3665,7 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(20, session.getUserView().getUserInfo().USR);
                     cstmt01.setString(21, Functions.getFechaActual());
                     cstmt01.setString(22, Functions.getHoraActual());
-                    if(!beanDet.STMANUAL.trim().equals("Blocked")){
+                    if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
                     }
                 }
@@ -4039,7 +4039,18 @@ public class SalesReconciliAmexDAO {
 
         String SQLCLL01 = "";
 
+        String IN_FECVTA = "";
+        String IN_FECVTA_FROM = "";
+        String IN_FECVTA_TO = "";
+
+        IN_FECVTA = filter.BSUMDATE.trim();
+        IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 1);
+        IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
+        
         if (filter.TDOC.trim().equals("R")) {
+            IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
+            IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
+                        
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04457(?,?,?,?,?,?,?,?)}";
         } else {
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?,?,?,?)}";
@@ -4054,9 +4065,9 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(2, filter.TKT.trim());
             cstmt.setString(3, filter.SCARDN.trim());
             cstmt.setString(4, filter.SAUTHOC.trim());
-            cstmt.setString(5, filter.BSUMDATE.trim());
-            cstmt.setString(6, Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1));
-            cstmt.setString(7, Functions.restXDaystoDate(filter.BSUMDATE.trim(), 1));
+            cstmt.setString(5, IN_FECVTA);
+            cstmt.setString(6, IN_FECVTA_TO);
+            cstmt.setString(7, IN_FECVTA_FROM);
             cstmt.setString(8, filter.INSTANBR.trim());
             cstmt.execute();
 
