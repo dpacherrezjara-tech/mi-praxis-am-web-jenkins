@@ -3088,6 +3088,7 @@ public class ProPaymentsControlDAO {
                     
                     bean.QTYSALBA = rst.getLong("QTYSALBA");
                     bean.AMOUNTBA = rst.getLong("AMOUNTBA");
+                    
                     bean.VALOREX = rst.getLong("VALOREX");
                     bean.VALORCA = rst.getLong("VALORCA");
                     bean.VALORCC = rst.getLong("VALORCC");
@@ -3108,6 +3109,13 @@ public class ProPaymentsControlDAO {
                     bean.totVALOREX = VALOREX;
                     bean.totVALORCA = VALORCA;
                     bean.totVALORCC = VALORCC;
+                    
+                    bean.percSales = bean.AMOUNTS*100/bean.totAMOUNTS;
+//                    bean.percCA = bean.AMOUNTCA*100/bean.totAMOUNTCA;
+//                    bean.percCC = bean.AMOUNTCC*100/bean.totAMOUNTCC;
+                    
+                    bean.percCA = bean.AMOUNTCA*100/bean.AMOUNTS;
+                    bean.percCC = bean.AMOUNTCC*100/bean.AMOUNTS;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
