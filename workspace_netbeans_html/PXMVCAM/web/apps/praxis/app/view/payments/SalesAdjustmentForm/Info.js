@@ -717,7 +717,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 },
                                             },
                                             {
-                                                text: 'Amount<br>Total Transact.', dataIndex: 'TGROSAMOUC', width: 100,
+                                                text: 'Amount<br>Total Transact.', dataIndex: 'TGROSAMOUC', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
