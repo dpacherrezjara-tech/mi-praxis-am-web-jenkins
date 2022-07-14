@@ -20,8 +20,13 @@ public class IMF145 {
     public long AMOUNTS = 0;
     public long QTYSALCA = 0;
     public long AMOUNTCA = 0;
+    public long percSales = 0;
+    public long percCA = 0;
+    
     public long QTYSALCC = 0;
     public long AMOUNTCC = 0;
+    public long percCC = 0;
+    
     public long QTYSALBA = 0;
     public long AMOUNTBA = 0;
     public long VALOREX = 0;

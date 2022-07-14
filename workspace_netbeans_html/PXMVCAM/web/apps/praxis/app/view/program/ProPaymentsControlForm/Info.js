@@ -6717,8 +6717,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: false,
                             height: 'auto',
-                            width: 1307,
-//                            margin: '0 0 0 180 ',
+                            width: 1407,
+                            margin: '20 0 0 0 ',
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -6727,11 +6727,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridNewAmex',
-                                    width: 1162,
+//                                    width: 1342,
+                                    width: 1342,
                                     columnLines: true,
-//                                    features: [{
-//                                        ftype: 'summary'
-//                                    }],
+                                    features: [{
+                                        ftype: 'summary'
+                                    }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -6765,9 +6766,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 //                                                        metaData.style = "text-align:right;background-color:#c9daf5;";
 //                                                        value = Ext.util.Format.number(value, '0,000');
-                                                        return  'USD';
-                                                    }
-                                                },
+                                                    return  'USD';
+                                                }
+                                            },
                                             {
                                                 text: 'Sales',
 //                                                id: prototype.id + '-adgSalDate',
@@ -6783,6 +6784,11 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYSALES, '0,000') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -6791,13 +6797,31 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'percSales', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + '100%'+ '<b>';
                                                         }
                                                     }
                                                 ]
                                             },
                                             {
-                                                text: 'Payment Sales',
-//                                                id: prototype.id + '-headMonthConc',
+                                                text: 'Cash',
+//                                                        id: prototype.id + '-headMonthAcc',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -6805,77 +6829,107 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Cash',
-//                                                        id: prototype.id + '-headMonthAcc',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: false,
-                                                            align: 'center'
+                                                        text: 'Tickets', dataIndex: 'QTYSALCA', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c9daf5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
                                                         },
-                                                        columns: [
-                                                            {
-                                                                text: 'Tickets', dataIndex: 'QTYSALCA', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#c9daf5;";
-                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                    return  value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Amount', dataIndex: 'AMOUNTCA', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#c9daf5;";
-                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                    return  value;
-                                                                }
-                                                            }
-                                                        ]
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYSALCA, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {
-                                                        text: 'Credit Card',
-//                                                        id: prototype.id + '-headMonthAcc',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: false,
-                                                            align: 'center'
+                                                        text: 'Amount', dataIndex: 'AMOUNTCA', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c9daf5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
                                                         },
-                                                        columns: [
-                                                            {
-                                                                text: 'Tickets', dataIndex: 'QTYSALCC', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
-                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                    return  value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Amount', dataIndex: 'AMOUNTCC', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
-                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                    return  value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Qty Bank', dataIndex: 'AMOUNTCC', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
-                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                    return  value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Amount Bank', dataIndex: 'AMOUNTCC', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
-                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                    return  value;
-                                                                }
-                                                            }
-                                                        ]
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTCA, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {
-                                                        text: 'Total',
+                                                        text: '%', dataIndex: 'percCA', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c9daf5;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return  value;
+                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            return '<b>' + '100%'+ '<b>';
+//                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Credit Card',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tickets', dataIndex: 'QTYSALCC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYSALCC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'AMOUNTCC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTCC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'percCC', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return  value;
+                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            return '<b>' + '100%'+ '<b>';
+//                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Bank',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Payment Sales',
 //                                                        id: prototype.id + '-headMonthAcc',
                                                         defaults: {
                                                             menuDisabled: true,
@@ -6884,27 +6938,182 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Tickets', dataIndex: 'diffQTYSALCC', width: 100,
+                                                                text: 'Qty Bank', dataIndex: 'QTYSALBA', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totQTYSALBA, '0,000') + '<b>';
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Amount', dataIndex: 'diffAMOUNTCC', width: 100,
+                                                                text: 'Amount Bank', dataIndex: 'AMOUNTBA', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAMOUNTBA, '0,000') + '<b>';
                                                                 }
                                                             }
                                                         ]
                                                     },
                                                 ]
                                             },
+                                            {
+                                                text: 'Pending',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tickets', dataIndex: 'diffQTYSALCC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totDiffQTYSALCC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'diffAMOUNTCC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totDiffAMOUNTCC, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         ]
                                     }
+                                },
+                                
+                                //PANEL DE GRAFICOS
+                                {
+                                    xtype: 'panel',
+                                    hidden: false,
+                                    margin: '15 0 5 0',
+                                    border: false,
+                                    layout: {
+                                        type: 'vbox',
+                                        aling: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 5',
+                                            border: true,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-grafNewCC',
+                                                    width: 1400,
+                                                    border: false,
+                                                    height: 400,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Total Tickets by Sales Date ',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['QTYSALES','QTYSALCA', 'QTYSALCC', 'diffQTYSALCC'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+        //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Sales Date',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: ['Sales','Cash', 'Credit Card', 'Pending'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['QTYSALES','QTYSALCA', 'QTYSALCC', 'diffQTYSALCC'],
+                                                            colors: ['#c6f7cd', '#828CE1', '#CC0000','#0066ff'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 800
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'QTYSALES') {
+                                                                        label = 'Sales';
+                                                                    } else if (ctx.field === 'QTYSALCA') {
+                                                                        label = 'Cash';
+                                                                    } else if (ctx.field === 'QTYSALCC') {
+                                                                        label = 'Credit Card';
+                                                                    } else if (ctx.field === 'diffQTYSALCC') {
+                                                                        label = 'Pending';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         },

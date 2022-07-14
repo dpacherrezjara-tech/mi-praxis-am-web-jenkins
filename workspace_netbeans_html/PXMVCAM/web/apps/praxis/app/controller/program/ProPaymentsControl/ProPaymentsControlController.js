@@ -2600,6 +2600,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridNewAmex').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-grafNewCC').bindStore(storeGridDatas);
     },
     // </editor-fold>
     
