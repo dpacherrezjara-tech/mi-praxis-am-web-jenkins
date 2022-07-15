@@ -17,6 +17,7 @@ public class IMF145Filter extends IMF145{
     public String IN_DATE = "";
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String IN_FECHA = "";
     public String IN_PAYMENT = "";
     public String IN_TDOC = "";
     public String IN_FTE = "";
@@ -30,6 +31,8 @@ public class IMF145Filter extends IMF145{
     
     public long diffQTYSALCC;
     public long diffAMOUNTCC;
+    public long totdiffAMOUNTCC;
+    public long totdiffQTYSALCC;
     
     public long totQTYSALES;
     public long totAMOUNTS;

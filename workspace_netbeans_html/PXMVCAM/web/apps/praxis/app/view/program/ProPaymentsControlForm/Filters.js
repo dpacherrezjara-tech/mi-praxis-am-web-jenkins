@@ -163,6 +163,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {
                             xtype: 'label',
                             text: 'Source:',
+                            id: prototype.id+'-lblFTE',
                             padding: '3 0',
                             width: 50
                         },
@@ -193,6 +194,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {
                             xtype: 'label',
                             text: 'Type of Sale:',
+                            id: prototype.id+'-lblTARJ',
                             padding: '3 0',
                             width: 75
                         },
@@ -283,6 +285,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {
                             xtype: 'label',
                             text: 'Bank Status:',
+                            id: prototype.id+'-lblFINSUMO',
                             padding: '3 0',
                             width: 70
                         },
