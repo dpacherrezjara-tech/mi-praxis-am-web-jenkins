@@ -3920,16 +3920,29 @@ public class SalesReconciliAmexDAO {
 
         List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
         A4116Filter beanRec;
-        String fecha_a_validar = "";
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
         String SQLCLL01 = "";
 
+        String IN_FECVTA = "";
+        String IN_FECVTA_FROM = "";
+        String IN_FECVTA_TO = "";
+
+        if (filter.INSTANBR.trim().equals("0")) {
+            IN_FECVTA = filter.BSUMDATE.trim();
+        } else {
+            IN_FECVTA = filter.TRANSDATE.trim();
+        }
+
         if (filter.TDOC.trim().equals("R")) {
+            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 365);
+            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04456(?,?,?,?,?,?,?,?,?)}";
         } else {
+            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
+            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?,?,?,?)}";
         }
 
@@ -3938,18 +3951,12 @@ public class SalesReconciliAmexDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            if (filter.INSTANBR.trim().equals("0")) {
-                fecha_a_validar = filter.BSUMDATE.trim();
-            } else {
-                fecha_a_validar = filter.TRANSDATE.trim();
-            }
-
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.SCARDN.trim());
             cstmt.setString(3, filter.SAUTHOC.trim());
-            cstmt.setString(4, fecha_a_validar);
-            cstmt.setString(5, Functions.restXDaystoDate(fecha_a_validar, -1));
-            cstmt.setString(6, Functions.restXDaystoDate(fecha_a_validar, 1));
+            cstmt.setString(4, IN_FECVTA);
+            cstmt.setString(5, IN_FECVTA_FROM);
+            cstmt.setString(6, IN_FECVTA_TO);
             cstmt.setString(7, filter.ISREFNBR.trim());
             cstmt.setString(8, filter.SMERCHID.trim());
             cstmt.setString(9, filter.SPNR.trim());
@@ -4046,11 +4053,11 @@ public class SalesReconciliAmexDAO {
         IN_FECVTA = filter.BSUMDATE.trim();
         IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 1);
         IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
-        
+
         if (filter.TDOC.trim().equals("R")) {
             IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
-                        
+
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04457(?,?,?,?,?,?,?,?)}";
         } else {
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?,?,?,?)}";
