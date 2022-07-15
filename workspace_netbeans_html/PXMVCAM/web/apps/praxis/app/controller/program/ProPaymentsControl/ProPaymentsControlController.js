@@ -2621,11 +2621,43 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 msg: 'Data not found.'
                             });
                         } else {
-//                              me.dataGrid = obj.data;
+                            console.log(obj.data);
                             var data = obj.data.items[0].data;
-//                            console.log(data);
+                            console.log(data);
 
                             Ext.getCmp(prototype.id + '-gridNewAmexByCountry').setTitle('<center style="font-size:12px;">Sales Date : ' + data.IN_FECHA + '</center>');
+                            
+                            
+                            // --------------------------------- GRAFICO -----------------------------
+                            var lstDataGrafic = obj.data.items;
+                            var lstNew = [];
+                            var tot = 0;
+                            
+                            for (var i = 0; i < lstDataGrafic.length; i++) {
+                                if (i <= 1) {
+                                    var item = {};
+                                    item.percSales = lstDataGrafic[i].data.percSales;
+                                    item.SCOUNTRY = lstDataGrafic[i].data.SCOUNTRY + ' , ' + Ext.util.Format.number(item.percSales, '0,000.00') + '%';
+                                    lstNew.push(item);
+                                } else {
+                                    tot = tot + lstDataGrafic[i].data.percSales;
+                                }
+                            }
+
+                            var item2 = {};
+                            item2.percSales = tot;
+                            item2.SCOUNTRY = 'Others, ' + Ext.util.Format.number(item2.percSales, '0,000.00') + '%';
+                            lstNew.push(item2);
+                            
+                            console.log(' ------------ NEW -------------');
+                            console.log(lstNew);
+
+                            var storeGridDatasGrafic = Ext.create('Ext.data.Store', {
+                                data: lstNew,
+                                autoLoad: true
+                            });
+                            Ext.getCmp(prototype.id + '-chart_NewCC_Country').bindStore(storeGridDatasGrafic);
+                            
                         }
 //                        me.setWidthPie();
                     }

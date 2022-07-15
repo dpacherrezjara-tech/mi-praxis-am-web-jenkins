@@ -6687,7 +6687,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                         },
                         // </editor-fold>,
 
-                        // ---------------------------------------------------------------                        
+                        // ---------------------------------------------------------------
                         // <editor-fold defaultstate="collapsed" desc="boxNewAmex">
                         {
                             xtype: 'panel',
@@ -7128,7 +7128,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: false,
                             width: 1527,
-                            height: 497,
+                            height: 897,
                             margin: '20 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -7425,9 +7425,80 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         ]
                                     }
                                 },
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '10 0 0 0',
+                                    width: 1434,
+                                    border: false,
+                                    layout: {
+                                        type: 'vbox'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'polar',
+//                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-chart_NewCC_Country',
+                                            width: 1454,
+                                            border: false,
+                                            margin: '0 0 0 0',
+                                            innerPadding: 50,
+                                            height: 383,
+                                            background: '#E3EAEF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Sales by Country',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'percSales',
+                                                    colors: ['#339933', '#EC3838', '#ff9900'],
+                                                    label: {
+                                                        field: 'SCOUNTRY',
+                                                        renderer: function (value, b, callout) {
+                                                            callout.calloutWidth = 0;
+                                                            return value.substring(value.indexOf(',') + 1);
+                                                        }
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+//                                                                    if (ctx.field === 'QMATCH') {
+//                                                                        label = 'Match';
+//                                                                    } else if (ctx.field === 'QLIQUI') {
+//                                                                        label = 'Settlement';
+//                                                                    } else if (ctx.field === 'QBANK') {
+//                                                                        label = 'Bank';
+//                                                                    } else if (ctx.field === 'QDIFF') {
+//                                                                        label = 'Diff';
+//                                                                    }
+//                                                                    toolTip.setHtml(record.get('TOOLTIP'));
+                                                            toolTip.setHtml(record.get('SCOUNTRY'));
+                                                        }
+                                                    }
+                                                }]
+                                        }
+                                    ]
+                                },
                             ]
                         },
-                        // </editor-fold>                        
+                        
+                        
+                        
+                        // Pie                        
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pie',
