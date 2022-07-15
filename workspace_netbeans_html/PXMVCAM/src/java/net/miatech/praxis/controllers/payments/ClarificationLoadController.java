@@ -913,6 +913,7 @@ public class ClarificationLoadController extends BaseController {
             buffer = "ACLARAMEXU";        
         } else {
             //BANAMEX
+//            buffer = "ACLARBNMX";
             buffer = strBanco;
         }
 
