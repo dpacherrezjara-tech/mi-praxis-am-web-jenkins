@@ -203,23 +203,7 @@ public class ProReportCommCTIA {
         ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("%", subFont_1)), posNewPagex, posNewPagey, 0);
 
     }
-    //posNewPagey 533
-    public void setTitleANC(int posNewPagex, int posNewPagey, PdfWriter writer) {
-        PdfContentByte canvas = writer.getDirectContent();
-        PdfContentByte under = writer.getDirectContentUnder();
-        colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), posNewPagex+7, posNewPagey - 7, 300, 40);
-
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("OTHER CHARGES", subFont_1)), posNewPagex+15, posNewPagey+15, 0); //548
-        
-        posNewPagex = posNewPagex + 15; 
-        posNewPagey = posNewPagey + 5;
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("ACUERDO", subFont_1)), posNewPagex, posNewPagey, 0); //538
-        posNewPagex = posNewPagex + 70;
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBCODE", subFont_1)), posNewPagex, posNewPagey, 0);
-        posNewPagex = posNewPagex + 70;
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("FARE", subFont_1)), posNewPagex, posNewPagey, 0);
-        
-    }
+    
 
     public void createReport(SQP00795Filter Data, List<SQP04561Filter> DataAnc ) {
         
@@ -603,13 +587,27 @@ public class ProReportCommCTIA {
             PYi = 520; 
             getPageNumber++;
             document.newPage();            
-            posNewPagey = PYi + 13;
-            this.setTitleANC(posNewPagex, posNewPagey, writer);
-            // Reinciar Contador al inicio  Nex Page //
-            posNewPagex = 15;                          
-            PYi = PYi - 2;
+            posNewPagey = PYi + 13;            
+            posNewPagex = 15;                     
+            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), posNewPagex+15, posNewPagey, 300, 20);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("OTHER CHARGES", subFont_1)), posNewPagex+135, posNewPagey+10, 0); 
+            posNewPagey = posNewPagey - 12;         
+            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), posNewPagex+15, posNewPagey, 300, 20);            
+            // posNewPagey = posNewPagey - 5;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("AGREEMENT", subFont_1)), posNewPagex+15, posNewPagey+4, 0);
+            posNewPagex = posNewPagex + 75;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBCODE", subFont_1)), posNewPagex, posNewPagey+4, 0);
+            posNewPagex = posNewPagex + 80;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("FARE", subFont_1)), posNewPagex, posNewPagey+4, 0);
+            
+            posNewPagex = 15;            
+            PYi = posNewPagey-10;
             for (int i = 0; i < DataAnc.size(); i++) {
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(DataAnc.get(i).A2445CCST, subFont)), posNewPagex+15, PYi, 0);
+                
+                if (i % 2 == 0) colorRectangle(under, new GrayColor(0.825f), posNewPagex+15, PYi - 7, 300, 15);
+                else colorRectangle(under, GrayColor.GRAYWHITE, posNewPagex+15, PYi - 7, 300, 15);
+                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(DataAnc.get(i).A2445CCST, subFont)), posNewPagex+20, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(DataAnc.get(i).A2445RFIS, subFont)), posNewPagex+85, PYi, 0);                
                 ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(DataAnc.get(i).A2445CARGO), subFont)), posNewPagex+180, PYi, 0);
                 PYi = PYi - 12;
