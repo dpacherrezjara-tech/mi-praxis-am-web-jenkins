@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
         'Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTransactionSalesReconciliAmexController'
     ],
     controller: 'DataEntryErrorTransactionSalesReconciliAmexController',
-    title: 'Sales Reconciliation by Amex - Transaction Error Form',
+    title: 'Sales Transaction DataEntry',
     header: true,
 //    height: 650,
     width: 1075,

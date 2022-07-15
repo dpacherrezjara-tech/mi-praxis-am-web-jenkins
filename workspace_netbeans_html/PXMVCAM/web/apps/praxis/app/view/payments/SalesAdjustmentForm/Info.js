@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAdjustment',
-                                    width: 1565,
+                                    width: 1605,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -547,7 +547,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 width: 40,
                                                 text: 'Edit',
                                                 align: 'center',
-                                                hidden:true,
+                                                hidden:false,
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-edit',
