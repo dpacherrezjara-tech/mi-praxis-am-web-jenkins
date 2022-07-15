@@ -108,6 +108,16 @@ public class MiscellaneousPaymentDAO {
                 } else if (rst.getString("STVAL").trim().equals("A")) {
                     bean.descSTVAL = "Anulado";
                 }
+                
+                bean.USCR = rst.getString("USCR").trim();
+                bean.FECR = rst.getString("FECR").trim();
+                bean.HOCR = rst.getString("HOCR").trim();
+                bean.PGMCR = rst.getString("PGMCR").trim();
+                bean.USUP = rst.getString("USUP").trim();
+                bean.FEUP = rst.getString("FEUP").trim();
+                bean.HOUP = rst.getString("HOUP").trim();
+                bean.PGMUP = rst.getString("PGMUP").trim();
+                
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
                 bean.page.TOTPAG = filter.page.TOTPAG;
@@ -229,10 +239,12 @@ public class MiscellaneousPaymentDAO {
                 beanTkt.DESCR_TTABLA = rs01.getString("DESCR_TTABLA").trim();
                 beanTkt.CANT1 = rs01.getInt("CANT1");
                 beanTkt.CANT2 = rs01.getInt("CANT2");
+                beanTkt.DATINI = rs01.getString("DATINI").trim();
+                beanTkt.DATFIN = rs01.getString("DATFIN").trim();
                 beanTkt.STVAL = rs01.getString("STVAL").trim();
-                if (rst.getString("STVAL").trim().equals("V")) {
+                if (rs01.getString("STVAL").trim().equals("V")) {
                     beanTkt.descSTVAL = "Vigente";
-                } else if (rst.getString("STVAL").trim().equals("A")) {
+                } else if (rs01.getString("STVAL").trim().equals("A")) {
                     beanTkt.descSTVAL = "Anulado";
                 }
                 beanTkt.USCR = rs01.getString("USCR").trim();
@@ -274,7 +286,7 @@ public class MiscellaneousPaymentDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -289,12 +301,14 @@ public class MiscellaneousPaymentDAO {
             cstmt.setString(6, filter.DESCRE1.trim());
             cstmt.setString(7, filter.DESCRE2.trim());
             cstmt.setString(8, filter.TDOC.trim());
-            cstmt.setInt(9, filter.CANT1);
-            cstmt.setInt(10, filter.CANT2);
-            cstmt.setString(11, filter.STVAL.trim());
-            cstmt.setString(12, session.getUserView().getUserInfo().USR);
-            cstmt.setString(13, Functions.getFechaActual());
-            cstmt.setString(14, Functions.getHoraActual());
+            cstmt.setString(9, filter.DATINI.trim());
+            cstmt.setString(10, filter.DATFIN.trim());
+            cstmt.setInt(11, filter.CANT1);
+            cstmt.setInt(12, filter.CANT2);
+            cstmt.setString(13, filter.STVAL.trim());
+            cstmt.setString(14, session.getUserView().getUserInfo().USR);
+            cstmt.setString(15, Functions.getFechaActual());
+            cstmt.setString(16, Functions.getHoraActual());
 
             cstmt.execute();
 

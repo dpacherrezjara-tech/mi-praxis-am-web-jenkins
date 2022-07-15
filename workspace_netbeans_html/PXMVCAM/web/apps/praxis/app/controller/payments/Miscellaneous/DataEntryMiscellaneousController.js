@@ -52,8 +52,10 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         this.setValue('de-txtCDesc1', this.beanResult.DESCRE1);
         this.setValue('de-txtCDesc2', this.beanResult.DESCRE2);
         this.setValue('cmbDoc', this.beanResult.TDOC);
-        this.setValue('de-txtCant1', this.beanResult.CANT1);
-        this.setValue('de-txtCant2', this.beanResult.CANT2);
+//        this.setValue('de-txtCant1', this.beanResult.CANT1);
+//        this.setValue('de-txtCant2', this.beanResult.CANT2);
+        this.setValue('de-txtINI', this.beanResult.DATINI);
+        this.setValue('de-txtFIN', this.beanResult.DATFIN);
         this.setValue('cmbStval', this.beanResult.STVAL);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
@@ -99,16 +101,18 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         beanTemp.DESCRE1 = this.getValue("de-txtCDesc1");
         beanTemp.DESCRE2 = this.getValue("de-txtCDesc2");
         beanTemp.TDOC = this.getValue("cmbDoc");
-        beanTemp.CANT1 = this.getValue("de-txtCant1");
-        var a =  this.getValue("de-txtCant1");
-        if( a === ''){
-            beanTemp.CANT1 = 0;
-        }
-        beanTemp.CANT2 = this.getValue("de-txtCant2");
-        var b =  this.getValue("de-txtCant1");
-        if( b === ''){
-            beanTemp.CANT1 = 0;
-        }
+//        beanTemp.CANT1 = this.getValue("de-txtCant1");
+//        var a =  this.getValue("de-txtCant1");
+//        if( a === ''){
+//            beanTemp.CANT1 = 0;
+//        }
+//        beanTemp.CANT2 = this.getValue("de-txtCant2");
+//        var b =  this.getValue("de-txtCant1");
+//        if( b === ''){
+//            beanTemp.CANT1 = 0;
+//        }
+        beanTemp.DATINI = this.getValue("de-txtINI");
+        beanTemp.DATFIN = this.getValue("de-txtFIN");
         beanTemp.STVAL = this.getValue("cmbStval");
       
         beanTemp.USCR = this.getValue("txtUSCR").trim();
@@ -238,7 +242,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
 
     validacionInsert: function (beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === ''|| this.getValue("cmbStval") === '' || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '' ) {
+        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === '' || this.getValue("cmbStval") === '' /* || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' */ || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '' ) {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
