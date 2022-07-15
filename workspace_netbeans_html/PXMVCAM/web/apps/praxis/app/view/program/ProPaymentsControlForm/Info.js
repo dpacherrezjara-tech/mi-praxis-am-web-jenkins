@@ -192,10 +192,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: '', dataIndex: 'strDescription4' , width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (value === '1') return '<img src="resources/img/botones/check.png">';
-                                                    else return '<img src="resources/img/botones/restricted_folder_symbol_stop-16.png">';
+                                            {text: '', dataIndex: 'strDescription4', width: 20,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (value === '1')
+                                                        return '<img src="resources/img/botones/check.png">';
+                                                    else
+                                                        return '<img src="resources/img/botones/restricted_folder_symbol_stop-16.png">';
                                                 }
                                             },
                                             {
@@ -231,7 +233,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 100}, 
+                                        {width: 100},
                                         {width: 60},
                                         {width: 100, id: prototype.id + '-totQTY1'},
                                         {width: 100, id: prototype.id + '-totSVFOPUS1'},
@@ -259,12 +261,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {xtype: 'tbspacer', width: 800},
                                         {
                                             xtype: 'radiogroup',
-                                            id:prototype.id+'-rbgFlagaa',
+                                            id: prototype.id + '-rbgFlagaa',
                                             margin: '0 0 0 500',
                                             items: [
-                                                { boxLabel: '<b style="color:#046AAA;">Tickets</b>', inputValue: 'Cpn', name: 'rbgFlag', checked: true},
+                                                {boxLabel: '<b style="color:#046AAA;">Tickets</b>', inputValue: 'Cpn', name: 'rbgFlag', checked: true},
                                                 {xtype: 'tbspacer', width: 20},
-                                                { boxLabel: '<b style="color:#046AAA;">Amounts</b>', inputValue: 'Amt', name: 'rbgFlag',width: 80}
+                                                {boxLabel: '<b style="color:#046AAA;">Amounts</b>', inputValue: 'Amt', name: 'rbgFlag', width: 80}
                                             ],
                                             listeners: {
                                                 change: 'displayChart_ByMonth'
@@ -272,7 +274,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         }
                                     ]
                                 },
-                                
                                 //PANEL DE GRAFICOS
                                 {
                                     xtype: 'panel',
@@ -319,7 +320,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     axes: [{
                                                             type: 'numeric3d',
                                                             position: 'left',
-                                                            fields: ['QTY1','QTYA', 'diff1'],
+                                                            fields: ['QTY1', 'QTYA', 'diff1'],
                                                             grid: true,
                                                             title: '',
                                                             //title: 'Millions of USD',
@@ -337,7 +338,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }, {
                                                             type: 'category3d',
                                                             position: 'bottom',
-        //                                                            fields: 'strFormatDate',
+                                                            //                                                            fields: 'strFormatDate',
                                                             grid: true,
                                                             title: {
                                                                 text: 'Sales Date',
@@ -347,9 +348,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     series: [{
                                                             type: 'bar3d',
                                                             stacked: false,
-                                                            title: ['Sales','Conciliation', 'Pending'],
+                                                            title: ['Sales', 'Conciliation', 'Pending'],
                                                             xField: 'strFormatDate',
-                                                            yField: ['QTY1','QTYA', 'diff1'],
+                                                            yField: ['QTY1', 'QTYA', 'diff1'],
                                                             colors: ['#c6f7cd', '#0066ff', '#CC0000'],
                                                             highlight: true,
                                                             style: {
@@ -400,7 +401,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     axes: [{
                                                             type: 'numeric3d',
                                                             position: 'left',
-                                                            fields: ['SVFOPUS1','SVFOPUSA', 'diff2'],
+                                                            fields: ['SVFOPUS1', 'SVFOPUSA', 'diff2'],
                                                             grid: true,
                                                             title: '',
                                                             //title: 'Millions of USD',
@@ -418,7 +419,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }, {
                                                             type: 'category3d',
                                                             position: 'bottom',
-        //                                                            fields: 'strFormatDate',
+                                                            //                                                            fields: 'strFormatDate',
                                                             grid: true,
                                                             title: {
                                                                 text: 'Sales Date',
@@ -428,9 +429,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     series: [{
                                                             type: 'bar3d',
                                                             stacked: false,
-                                                            title: ['Sales','Conciliation', 'Pending'],
+                                                            title: ['Sales', 'Conciliation', 'Pending'],
                                                             xField: 'strFormatDate',
-                                                            yField: ['SVFOPUS1','SVFOPUSA', 'diff2'],
+                                                            yField: ['SVFOPUS1', 'SVFOPUSA', 'diff2'],
                                                             colors: ['#c6f7cd', '#0066ff', '#CC0000'],
                                                             highlight: true,
                                                             style: {
@@ -459,8 +460,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         }
                                     ]
                                 }
-                            
-                            
+
+
                             ]
                         },
                         // </editor-fold>
@@ -643,7 +644,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 50}, 
+                                        {width: 50},
                                         {width: 240},
 //                                        {width: 70},
                                         {width: 100, id: prototype.id + '-totQTY1_CO'},
@@ -655,7 +656,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-totdiff2_CO'},
                                         {width: 60, id: prototype.id + '-totperc3_CO'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -838,7 +839,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 50}, 
+                                        {width: 50},
                                         {width: 295},
 //                                        {width: 70},
                                         {width: 100, id: prototype.id + '-totQTY1_CA'},
@@ -850,7 +851,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-totdiff2_CA'},
                                         {width: 60, id: prototype.id + '-totperc3_CA'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -1026,7 +1027,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 60, id: prototype.id + '-totperc3_CH'}
                                     ]
                                 },
-                                
                                 {
                                     xtype: 'panel',
                                     bodyStyle: 'background-color: #E3EAEF;',
@@ -1062,18 +1062,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 background: '#E3EAEF'
                                             },
                                             series: [{
-                                                type: 'pie3d',
-                                                angleField: 'perc1',
-                                                colors: ['#EC3838', '#ff9900', '#339933', '0066ff'],
+                                                    type: 'pie3d',
+                                                    angleField: 'perc1',
+                                                    colors: ['#EC3838', '#ff9900', '#339933', '0066ff'],
 //                                                colors: ['#c6f7cd', '#0066ff', '#CC0000'],
-                                                label: {
-                                                    field: 'strDescription',
-                                                    renderer: function (value, b, callout) {
-                                                        callout.calloutWidth = 0;
-                                                        return value.substring(value.indexOf(',') + 1);
-                                                    }
-                                                },
-                                                highlight: true,
+                                                    label: {
+                                                        field: 'strDescription',
+                                                        renderer: function (value, b, callout) {
+                                                            callout.calloutWidth = 0;
+                                                            return value.substring(value.indexOf(',') + 1);
+                                                        }
+                                                    },
+                                                    highlight: true,
 //                                                tooltip: {
 //                                                    trackMouse: true,
 //                                                    height: 28,
@@ -1092,7 +1092,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
 //                                                        toolTip.setHtml(label + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '%' + '</b>');
 //                                                    }
 //                                                }
-                                            }]
+                                                }]
                                         }
                                     ]
                                 }
@@ -1300,7 +1300,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 515}, 
+                                        {width: 515},
                                         {width: 100, id: prototype.id + '-totQTY1_IA'},
                                         {width: 100, id: prototype.id + '-totSVFOPUS1_IA'},
                                         {width: 60, id: prototype.id + '-totperc1_IA'},
@@ -1310,7 +1310,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-totdiff2_IA'},
                                         {width: 60, id: prototype.id + '-totperc3_IA'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -2398,7 +2398,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-totdiff2_ST'},
                                         {width: 60, id: prototype.id + '-totperc3_ST'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -2569,8 +2569,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {   text: '%', 
-                                            width: 120, 
+                                        {text: '%',
+                                            width: 120,
                                             id: prototype.id + '-label%',
                                             style: 'background:#A0BFD3;color:#244066;text-align:center;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 90},
@@ -2712,7 +2712,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 50}, 
+                                        {width: 50},
                                         {width: 260},
                                         {width: 110, id: prototype.id + '-totPO_QTY1'},
                                         {width: 60, id: prototype.id + '-totPO_Perc1'},
@@ -2720,7 +2720,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 110, id: prototype.id + '-totPO_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totPO_Perc2'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -2883,7 +2883,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 110, id: prototype.id + '-totP_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totP_Perc2'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -2977,8 +2977,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Qty', dataIndex: 'QTY1', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114" 
-                                                                                                      : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return '<b>' + value + '</b>';
                                                         }
@@ -2995,8 +2995,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {text: 'Currency', dataIndex: 'SCURRENCY', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:center; color:#0B5114" 
-                                                                                              : metaData.style = "text-align:center; color:#244066";
+                                                    (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:center; color:#0B5114"
+                                                            : metaData.style = "text-align:center; color:#244066";
                                                     return '<b>' + value + '</b>';
                                                 }
                                             },
@@ -3011,8 +3011,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Amount', dataIndex: 'SVFOPUS1', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114" 
-                                                                                                      : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return '<b>' + value + '</b>';
                                                         }
@@ -3059,7 +3059,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 110, id: prototype.id + '-totPB_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totPB_Perc2'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -3114,8 +3114,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Description', dataIndex: 'strDescription3', width: 260,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (value === 'Total') ? metaData.style = "text-align:left; color:#0B5114" 
-                                                                                : metaData.style = "text-align:left; color:#244066";
+                                                            (value === 'Total') ? metaData.style = "text-align:left; color:#0B5114"
+                                                                    : metaData.style = "text-align:left; color:#244066";
                                                             return '<b>' + value + '</b>';
                                                         }
                                                     }
@@ -3132,8 +3132,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Qty', dataIndex: 'QTY1', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114" 
-                                                                                                      : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return '<b>' + value + '</b>';
                                                         }
@@ -3150,8 +3150,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {text: 'Currency', dataIndex: 'SCURRENCY', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:center; color:#0B5114" 
-                                                                                              : metaData.style = "text-align:center; color:#244066";
+                                                    (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:center; color:#0B5114"
+                                                            : metaData.style = "text-align:center; color:#244066";
                                                     return '<b>' + value + '</b>';
                                                 }
                                             },
@@ -3166,8 +3166,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Amount', dataIndex: 'SVFOPUS1', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114" 
-                                                                                                      : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.strDescription2 === 'Total') ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#0B5114"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return '<b>' + value + '</b>';
                                                         }
@@ -3212,7 +3212,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 110, id: prototype.id + '-totPA_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totPA_Perc2'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -3358,8 +3358,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'strImagen1' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'strImagen1', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen1 + '"' + '>';
                                                         }
                                                     }
@@ -3398,8 +3398,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'x' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'x', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen2 + '"' + '>';
                                                         }
                                                     }
@@ -3438,8 +3438,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'xxxxx' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'xxxxx', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen3 + '"' + '>';
                                                         }
                                                     }
@@ -3467,22 +3467,19 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 50}, 
+                                        {width: 50},
                                         {width: 270},
                                         {width: 90, id: prototype.id + '-totPP_QTY1'},
                                         {width: 110, id: prototype.id + '-totPP_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totPP_Perc4'},
-                                        
                                         {width: 90, id: prototype.id + '-totPP_QTY2'},
                                         {width: 110, id: prototype.id + '-totPP_SVFOPUS2'},
                                         {width: 60, id: prototype.id + '-totPP_Perc1'},
                                         {width: 20},
-                                        
                                         {width: 90, id: prototype.id + '-totPP_QTYA'},
                                         {width: 110, id: prototype.id + '-totPP_SVFOPUSA'},
                                         {width: 60, id: prototype.id + '-totPP_Perc2'},
                                         {width: 20},
-                                        
                                         {width: 90, id: prototype.id + '-totPP_QTYSABO'},
                                         {width: 110, id: prototype.id + '-totPP_SVFOPUSABO'},
                                         {width: 60, id: prototype.id + '-totPP_Perc3'},
@@ -3524,22 +3521,22 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 background: '#E3EAEF'
                                             },
                                             series: [{
-                                                type: 'pie3d',
-                                                angleField: 'perc4',
-                                                colors: ['#EC3838', '#ff9900', '#339933'],
-                                                label: {
-                                                    field: 'strDescription',
-                                                    renderer: function (value, b, callout) {
-                                                        callout.calloutWidth = 0;
-                                                        return value.substring(value.indexOf(',') + 1);
-                                                    }
-                                                },
-                                                highlight: true,
-                                                tooltip: {
-                                                    trackMouse: true,
-                                                    height: 28,
-                                                    renderer: function(toolTip, record, ctx) {
-                                                        var label = '';
+                                                    type: 'pie3d',
+                                                    angleField: 'perc4',
+                                                    colors: ['#EC3838', '#ff9900', '#339933'],
+                                                    label: {
+                                                        field: 'strDescription',
+                                                        renderer: function (value, b, callout) {
+                                                            callout.calloutWidth = 0;
+                                                            return value.substring(value.indexOf(',') + 1);
+                                                        }
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
 //                                                                    if (ctx.field === 'QMATCH') {
 //                                                                        label = 'Match';
 //                                                                    } else if (ctx.field === 'QLIQUI') {
@@ -3550,10 +3547,10 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
 //                                                                        label = 'Diff';
 //                                                                    }
 //                                                                    toolTip.setHtml(record.get('TOOLTIP'));
-                                                        toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '%' + '</b>');
+                                                            toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '%' + '</b>');
+                                                        }
                                                     }
-                                                }
-                                            }]
+                                                }]
                                         }
                                     ]
                                 },
@@ -3702,8 +3699,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'strImagen1' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'strImagen1', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen1 + '"' + '>';
                                                         }
                                                     }
@@ -3742,8 +3739,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'x' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'x', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen2 + '"' + '>';
                                                         }
                                                     }
@@ -3782,8 +3779,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'xxxxx' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'xxxxx', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen3 + '"' + '>';
                                                         }
                                                     }
@@ -3811,28 +3808,25 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 50}, 
+                                        {width: 50},
                                         {width: 270},
                                         {width: 90, id: prototype.id + '-totPPB_QTY1'},
                                         {width: 110, id: prototype.id + '-totPPB_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc4'},
-                                        
                                         {width: 90, id: prototype.id + '-totPPB_QTY2'},
                                         {width: 110, id: prototype.id + '-totPPB_SVFOPUS2'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc1'},
                                         {width: 20},
-                                        
                                         {width: 90, id: prototype.id + '-totPPB_QTYA'},
                                         {width: 110, id: prototype.id + '-totPPB_SVFOPUSA'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc2'},
                                         {width: 20},
-                                        
                                         {width: 90, id: prototype.id + '-totPPB_QTYSABO'},
                                         {width: 110, id: prototype.id + '-totPPB_SVFOPUSABO'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc3'},
                                         {width: 20}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -3975,8 +3969,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'strImagen1' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'strImagen1', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen1 + '"' + '>';
                                                         }
                                                     }
@@ -4015,8 +4009,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return '<b>' + value + '</b>';
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'x' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'x', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen2 + '"' + '>';
                                                         }
                                                     }
@@ -4055,8 +4049,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             return '<b>' + value + '</b>';
                                                         }
                                                     },
-                                                    {text: '', dataIndex: 'xxxxx' , width: 20,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: '', dataIndex: 'xxxxx', width: 20,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return '<img src=' + '"' + record.data.strImagen3 + '"' + '>';
                                                         }
                                                     }
@@ -4084,28 +4078,25 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 50}, 
+                                        {width: 50},
                                         {width: 270},
                                         {width: 90, id: prototype.id + '-totPPC_QTY1'},
                                         {width: 110, id: prototype.id + '-totPPC_SVFOPUS1'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc4'},
-                                        
                                         {width: 90, id: prototype.id + '-totPPC_QTY2'},
                                         {width: 110, id: prototype.id + '-totPPC_SVFOPUS2'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc1'},
                                         {width: 20},
-                                        
                                         {width: 90, id: prototype.id + '-totPPC_QTYA'},
                                         {width: 110, id: prototype.id + '-totPPC_SVFOPUSA'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc2'},
                                         {width: 20},
-                                        
                                         {width: 90, id: prototype.id + '-totPPC_QTYSABO'},
                                         {width: 110, id: prototype.id + '-totPPC_SVFOPUSABO'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc3'},
                                         {width: 20}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -4245,7 +4236,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Sales without ACCB',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -4255,8 +4246,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff1', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4264,8 +4255,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci1', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4313,7 +4304,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Differences',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -4323,8 +4314,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff2', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4332,8 +4323,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci2', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4381,7 +4372,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Differences',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -4391,8 +4382,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff3', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4400,8 +4391,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci3', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4432,7 +4423,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 180}, 
+                                        {width: 180},
                                         {width: 90, id: prototype.id + '-totPP_QTY11'},
                                         {width: 100, id: prototype.id + '-totPP_SVFOPUS11'},
                                         {width: 60, id: prototype.id + '-totPP_Perc41'},
@@ -4442,13 +4433,11 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 60, id: prototype.id + '-totPP_Perc11'},
                                         {width: 90, id: prototype.id + '-totdiff11', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci1', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        
                                         {width: 90, id: prototype.id + '-totPP_QTYA1'},
                                         {width: 100, id: prototype.id + '-totPP_SVFOPUSA1'},
                                         {width: 60, id: prototype.id + '-totPP_Perc21'},
                                         {width: 90, id: prototype.id + '-totdiff21', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci2', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        
                                         {width: 90, id: prototype.id + '-totPP_QTYSABO1'},
                                         {width: 100, id: prototype.id + '-totPP_SVFOPUSABO1'},
                                         {width: 60, id: prototype.id + '-totPP_Perc31'},
@@ -4521,7 +4510,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }, {
                                                             type: 'category3d',
                                                             position: 'bottom',
-        //                                                            fields: 'strFormatDate',
+                                                            //                                                            fields: 'strFormatDate',
                                                             grid: true,
                                                             title: {
                                                                 text: 'Country',
@@ -4560,7 +4549,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                     ]
                                 }
-                                
+
                             ]
                         },
                         // </editor-fold>
@@ -4609,7 +4598,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
                                                         }
-                                                        
+
                                                     },
                                                     {
                                                         text: 'Description', dataIndex: 'strDescription1', width: 150,
@@ -4718,7 +4707,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Sales without ACCB',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -4728,8 +4717,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff1', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4737,8 +4726,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci1', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci1 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4786,7 +4775,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Differences',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -4796,8 +4785,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff2', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4805,8 +4794,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci2', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci2 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4854,7 +4843,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Differences',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -4864,8 +4853,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff3', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4873,8 +4862,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci3', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci3 > -1) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -4917,20 +4906,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 60, id: prototype.id + '-totPPB_Perc11'},
                                         {width: 80, id: prototype.id + '-totdiff111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci11', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        
                                         {width: 80, id: prototype.id + '-totPPB_QTYA1'},
                                         {width: 100, id: prototype.id + '-totPPB_SVFOPUSA1'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc21'},
                                         {width: 80, id: prototype.id + '-totdiff211', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci21', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        
                                         {width: 80, id: prototype.id + '-totPPB_QTYSABO1'},
                                         {width: 100, id: prototype.id + '-totPPB_SVFOPUSABO1'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc31'},
                                         {width: 80, id: prototype.id + '-totdiff311', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci31', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -4979,7 +4966,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
                                                         }
-                                                        
+
                                                     },
                                                     {
                                                         text: 'Description', dataIndex: 'strDescription2', width: 150,
@@ -5085,7 +5072,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Sales without ACCB',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -5095,8 +5082,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff1', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff1 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff1 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5104,8 +5091,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci1', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci1 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci1 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5153,7 +5140,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Differences',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -5163,8 +5150,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff2', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff2 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff2 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5172,8 +5159,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci2', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci2 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci2 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5220,7 +5207,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     },
                                                     {
                                                         text: 'Differences',
-        //                                                id: prototype.id + '-headMonthConc',
+                                                        //                                                id: prototype.id + '-headMonthConc',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -5230,8 +5217,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Tkts', dataIndex: 'diff3', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.diff3 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.diff3 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5239,8 +5226,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'USD', dataIndex: 'DiffConci3', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    (record.data.DiffConci3 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000" 
-                                                                                             : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
+                                                                    (record.data.DiffConci3 > 0) ? metaData.style = "text-align:right;background-color:#c8c3d5;color:#008000"
+                                                                            : metaData.style = "text-align:right;background-color:#c8c3d5;color:#800000";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  '<b>' + value + '</b>';
                                                                 }
@@ -5283,20 +5270,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 60, id: prototype.id + '-totPPC_Perc11'},
                                         {width: 80, id: prototype.id + '-totdiff1111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        
                                         {width: 80, id: prototype.id + '-totPPC_QTYA1'},
                                         {width: 100, id: prototype.id + '-totPPC_SVFOPUSA1'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc21'},
                                         {width: 80, id: prototype.id + '-totdiff2111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci211', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        
                                         {width: 80, id: prototype.id + '-totPPC_QTYSABO1'},
                                         {width: 100, id: prototype.id + '-totPPC_SVFOPUSABO1'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc31'},
                                         {width: 80, id: prototype.id + '-totdiff3111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
                                         {width: 100, id: prototype.id + '-totDiffConci311', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -5399,7 +5384,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return  '<b>' + value + '%' + '</b>' ;
+                                                                    return  '<b>' + value + '%' + '</b>';
                                                                 }
                                                             }
                                                         ]
@@ -5426,7 +5411,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return  '<b>' + value + '%' + '</b>' ;
+                                                                    return  '<b>' + value + '%' + '</b>';
                                                                 }
                                                             }
                                                         ]
@@ -5526,7 +5511,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#ffccbf;";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return  '<b>' + value + '%' + '</b>' ;
+                                                                    return  '<b>' + value + '%' + '</b>';
                                                                 }
                                                             }
                                                         ]
@@ -5555,14 +5540,13 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 100}, 
+                                        {width: 100},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARtot'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCLARtot'},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARPtot'},
                                         {width: 60, id: prototype.id + '-lblTotperAns'},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARStot'},
                                         {width: 60, id: prototype.id + '-lblTotperNoAns'},
-                                        
                                         {width: 100, id: prototype.id + '-lblTotQTYCHGBKtot'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCHGBUtot'},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARRtot'},
@@ -5572,7 +5556,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 60, id: prototype.id + '-lblTotper'}
                                     ]
                                 },
-                                
                                 //PANEL DE GRAFICOS
                                 {
                                     xtype: 'panel',
@@ -5619,7 +5602,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     axes: [{
                                                             type: 'numeric3d',
                                                             position: 'left',
-                                                            fields: ['dblAMTCLARU','AMTCHGBU'],
+                                                            fields: ['dblAMTCLARU', 'AMTCHGBU'],
                                                             grid: true,
                                                             title: '',
                                                             //title: 'Millions of USD',
@@ -5637,7 +5620,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }, {
                                                             type: 'category3d',
                                                             position: 'bottom',
-        //                                                            fields: 'strFormatDate',
+                                                            //                                                            fields: 'strFormatDate',
                                                             grid: true,
                                                             title: {
                                                                 text: '',
@@ -5647,9 +5630,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     series: [{
                                                             type: 'bar3d',
                                                             stacked: false,
-                                                            title: ['ChargedBack','Received'],
+                                                            title: ['ChargedBack', 'Received'],
                                                             xField: 'strFormatDate',
-                                                            yField: ['dblAMTCLARU','AMTCHGBU'],
+                                                            yField: ['dblAMTCLARU', 'AMTCHGBU'],
                                                             colors: ['#c6f7cd', '#0066ff'],
                                                             highlight: true,
                                                             style: {
@@ -5732,7 +5715,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                     } else {
                                                                         label = 'Total ChargedBack';
                                                                     }
-                                                                    toolTip.setHtml(label + ' - ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') +  '</b>');
+                                                                    toolTip.setHtml(label + ' - ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
                                                                 }
                                                             }
                                                         }]
@@ -5849,7 +5832,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return  '<b>' + value + '%' + '</b>' ;
+                                                                    return  '<b>' + value + '%' + '</b>';
                                                                 }
                                                             }
                                                         ]
@@ -5876,7 +5859,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return  '<b>' + value + '%' + '</b>' ;
+                                                                    return  '<b>' + value + '%' + '</b>';
                                                                 }
                                                             }
                                                         ]
@@ -6002,7 +5985,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 60, id: prototype.id + '-lblTotperAnsGt'},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLARS_Gt'},
                                         {width: 60, id: prototype.id + '-lblTotperNoAnsGt'},
-                                        
                                         {width: 80, id: prototype.id + '-lblTotQTYCHGBK_Gt'},
                                         {width: 90, id: prototype.id + '-lblTotAMTCHGBU_Gt'},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLARR_Gt'},
@@ -6010,7 +5992,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-lngTotQTYBANK_Gt'},
                                         {width: 90, id: prototype.id + '-dblTotAMTBANK_Gt'},
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -6053,7 +6035,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Date', dataIndex: 'strFormatDate', width: 100,
-                                                    listeners: {
+                                                        listeners: {
                                                             click: 'viewDetBank'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -6092,8 +6074,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Not Found', dataIndex: 'lngQNMATCH', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.lngQNMATCH > 0) ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#800000" 
-                                                                                         : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.lngQNMATCH > 0) ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#800000"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  '<b>' + value + '</b>';
                                                         }
@@ -6230,13 +6212,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                                     },
                                     items: [
-                                        {width: 100}, 
+                                        {width: 100},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLARS'},
                                         {width: 90, id: prototype.id + '-lblTotQTYCLARP'},
                                         {width: 80, id: prototype.id + '-lblTotQNMATCH'},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLAR'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCLAR'},
-                                        
                                         {width: 100, id: prototype.id + '-lblTotQTYCHGBK'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCHGBU'},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARR'},
@@ -6244,7 +6225,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-lngTotQTYBANK'},
                                         {width: 100, id: prototype.id + '-dblTotAMTBANK'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>
@@ -6323,8 +6304,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Not Found', dataIndex: 'lngQNMATCH', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.lngQNMATCH > 0) ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#800000" 
-                                                                                         : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.lngQNMATCH > 0) ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#800000"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  '<b>' + value + '</b>';
                                                         }
@@ -6466,7 +6447,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-lblTotQNMATCH_G'},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLAR_G'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCLAR_G'},
-                                        
                                         {width: 100, id: prototype.id + '-lblTotQTYCHGBK_G'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCHGBU_G'},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARR_G'},
@@ -6474,7 +6454,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-lngTotQTYBANK_G'},
                                         {width: 100, id: prototype.id + '-dblTotAMTBANK_G'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>,
@@ -6552,8 +6532,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Not Found', dataIndex: 'lngQNMATCH', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            (record.data.lngQNMATCH > 0) ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#800000" 
-                                                                                         : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
+                                                            (record.data.lngQNMATCH > 0) ? metaData.style = "text-align:right;background-color:#d5f4d5;color:#800000"
+                                                                    : metaData.style = "text-align:right;background-color:#d5f4d5;color:#244066";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  '<b>' + value + '</b>';
                                                         }
@@ -6695,7 +6675,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-lblTotDB_QNMATCH'},
                                         {width: 80, id: prototype.id + '-lblTotDB_QTYCLAR'},
                                         {width: 100, id: prototype.id + '-lblTotDB_AMTCLAR'},
-                                        
                                         {width: 100, id: prototype.id + '-lblTotQTYCHGBK_DB'},
                                         {width: 100, id: prototype.id + '-lblTotAMTCHGBU_DB'},
                                         {width: 100, id: prototype.id + '-lblTotQTYCLARR_DB'},
@@ -6703,13 +6682,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 100, id: prototype.id + '-lngTotQTYBANK_DB'},
                                         {width: 100, id: prototype.id + '-dblTotAMTBANK_DB'}
                                     ]
-                                }      
+                                }
                             ]
                         },
                         // </editor-fold>,
-                        
-                        // ---------------------------------------------------------------
-                        
+
+                        // ---------------------------------------------------------------                        
                         // <editor-fold defaultstate="collapsed" desc="boxNewAmex">
                         {
                             xtype: 'panel',
@@ -6717,7 +6695,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: false,
                             height: 'auto',
-                            width: 1407,
+                            width: 1527,
                             margin: '20 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -6728,11 +6706,11 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridNewAmex',
 //                                    width: 1342,
-                                    width: 1342,
+                                    width: 1462,
                                     columnLines: true,
                                     features: [{
-                                        ftype: 'summary'
-                                    }],
+                                            ftype: 'summary'
+                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -6751,18 +6729,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'strFormatDate', width: 100,
-//                                                        listeners: {
-//                                                            click: 'OnviewDetBank'
-//                                                        },
-//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                                            metaData.style = "color:#057ECB;";
-//                                                            value = '<b>' + value + '</b>';
-//                                                            return '<a href="#payments-clarification-dashboard-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-//                                                        }
+                                                        listeners: {
+                                                            click: 'OnviewNewAmexDetCountry'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
                                                     }
                                                 ]
                                             },
-                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 60,
+                                            {text: 'Curr', dataIndex: 'SCURRENCY', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 //                                                        metaData.style = "text-align:right;background-color:#c9daf5;";
 //                                                        value = Ext.util.Format.number(value, '0,000');
@@ -6808,13 +6786,13 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         text: '%', dataIndex: 'percSales', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + '100%'+ '<b>';
+                                                            return '<b>' + '100' + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -6858,14 +6836,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         text: '%', dataIndex: 'percCA', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#c9daf5;";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + '100%'+ '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCA , '0,000') + '<b>';
+                                                        }
                                                     }
                                                 ]
                                             },
@@ -6908,14 +6886,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         text: '%', dataIndex: 'percCC', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#eddfdf;";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + '100%'+ '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCC , '0,000') + '<b>';
+                                                        }
                                                     }
                                                 ]
                                             },
@@ -6938,7 +6916,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Qty Bank', dataIndex: 'QTYSALBA', width: 100,
+                                                                text: 'Tickets', dataIndex: 'QTYSALBA', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#ECF6CE;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -6951,7 +6929,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Amount Bank', dataIndex: 'AMOUNTBA', width: 100,
+                                                                text: 'Amount', dataIndex: 'AMOUNTBA', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#ECF6CE;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -6962,52 +6940,77 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.totAMOUNTBA, '0,000') + '<b>';
                                                                 }
+                                                            },
+                                                            {
+                                                                text: '%', dataIndex: 'percBA', width: 60,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totpercBA , '0,000') + '<b>';
+                                                                }
                                                             }
                                                         ]
                                                     },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Pending',
+                                                    {
+                                                        text: 'Pending',
 //                                                        id: prototype.id + '-headMonthAcc',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Tickets', dataIndex: 'diffQTYSALCC', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#b2e1ff;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
                                                         },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDiffQTYSALCC, '0,000') + '<b>';
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Amount', dataIndex: 'diffAMOUNTCC', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#b2e1ff;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDiffAMOUNTCC, '0,000') + '<b>';
-                                                        }
+                                                        columns: [
+                                                            {
+                                                                text: 'Tickets', dataIndex: 'diffQTYSALCC', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totdiffAMOUNTCC, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Amount', dataIndex: 'diffAMOUNTCC', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },                                                                
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totdiffAMOUNTCC, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '%', dataIndex: 'percPE', width: 60,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totpercPE, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 ]
-                                            }
+                                            },
                                         ]
                                     }
                                 },
-                                
                                 //PANEL DE GRAFICOS
                                 {
                                     xtype: 'panel',
@@ -7054,7 +7057,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     axes: [{
                                                             type: 'numeric3d',
                                                             position: 'left',
-                                                            fields: ['QTYSALES','QTYSALCA', 'QTYSALCC', 'diffQTYSALCC'],
+                                                            fields: ['QTYSALES', 'QTYSALCA', 'QTYSALCC', 'diffQTYSALCC'],
                                                             grid: true,
                                                             title: '',
                                                             //title: 'Millions of USD',
@@ -7072,7 +7075,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }, {
                                                             type: 'category3d',
                                                             position: 'bottom',
-        //                                                            fields: 'strFormatDate',
+                                                            //                                                            fields: 'strFormatDate',
                                                             grid: true,
                                                             title: {
                                                                 text: 'Sales Date',
@@ -7082,10 +7085,10 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     series: [{
                                                             type: 'bar3d',
                                                             stacked: false,
-                                                            title: ['Sales','Cash', 'Credit Card', 'Pending'],
+                                                            title: ['Sales', 'Cash', 'Credit Card', 'Pending'],
                                                             xField: 'strFormatDate',
-                                                            yField: ['QTYSALES','QTYSALCA', 'QTYSALCC', 'diffQTYSALCC'],
-                                                            colors: ['#c6f7cd', '#828CE1', '#CC0000','#0066ff'],
+                                                            yField: ['QTYSALES', 'QTYSALCA', 'QTYSALCC', 'diffQTYSALCC'],
+                                                            colors: ['#c6f7cd', '#828CE1', '#CC0000', '#0066ff'],
                                                             highlight: true,
                                                             style: {
                                                                 inGroupGapWidth: -7,
@@ -7117,8 +7120,314 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 }
                             ]
                         },
-                        // </editor-fold>
-                        
+                        // </editor-fold>                        
+                        // <editor-fold defaultstate="collapsed" desc="boxNewAmexByCountry">
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxNewAmexByCountry',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: false,
+                            width: 1527,
+                            height: 497,
+                            margin: '20 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridNewAmexByCountry',
+//                                    width: 1342,
+                                    width: 1476,
+                                    height: 468,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Country', dataIndex: 'SCOUNTRY', width: 100, },
+                                            {text: 'Curr', dataIndex: 'SCURRENCY', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                        metaData.style = "text-align:right;background-color:#c9daf5;";
+//                                                        value = Ext.util.Format.number(value, '0,000');
+                                                    return  'USD';
+                                                }
+                                            },
+                                            {
+                                                text: 'Sales',
+//                                                id: prototype.id + '-adgSalDate',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tickets', dataIndex: 'QTYSALES', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYSALES, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'AMOUNTS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'percSales', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + '100' + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Cash',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tickets', dataIndex: 'QTYSALCA', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c9daf5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYSALCA, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'AMOUNTCA', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c9daf5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTCA, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'percCA', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c9daf5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCA, '0,000')+ '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Credit Card',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tickets', dataIndex: 'QTYSALCC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYSALCC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'AMOUNTCC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTCC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'percCC', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#eddfdf;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCC, '0,000')+ '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Bank',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Payment Sales',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Tickets', dataIndex: 'QTYSALBA', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totQTYSALBA, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Amount', dataIndex: 'AMOUNTBA', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAMOUNTBA, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '%', dataIndex: 'percBA', width: 60,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totpercBA, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Pending',
+//                                                        id: prototype.id + '-headMonthAcc',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Tickets', dataIndex: 'diffQTYSALCC', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totdiffQTYSALCC, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Amount', dataIndex: 'diffAMOUNTCC', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totdiffAMOUNTCC, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '%', dataIndex: 'percPE', width: 60,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b2e1ff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totpercPE, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        // </editor-fold>                        
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pie',
@@ -7183,7 +7492,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                         }
                     ]
                 },
-
                 {
                     region: 'south',
                     layout: 'border',

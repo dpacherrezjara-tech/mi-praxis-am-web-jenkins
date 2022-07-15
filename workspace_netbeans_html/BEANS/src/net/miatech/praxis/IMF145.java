@@ -21,11 +21,18 @@ public class IMF145 {
     public long QTYSALCA = 0;
     public long AMOUNTCA = 0;
     public long percSales = 0;
+    public long totpercSales = 0;
     public long percCA = 0;
+    public long totpercCA = 0;
     
     public long QTYSALCC = 0;
     public long AMOUNTCC = 0;
     public long percCC = 0;
+    public long totpercCC = 0;
+    public long percBA = 0;
+    public long totpercBA = 0;
+    public long percPE = 0;
+    public long totpercPE = 0;
     
     public long QTYSALBA = 0;
     public long AMOUNTBA = 0;
