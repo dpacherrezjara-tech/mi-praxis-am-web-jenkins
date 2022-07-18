@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAdjustment',
-                                    width: 1690,
+                                    width: 1750,
                                     columnLines: true,
 //                                    features: [{
 //                                            ftype: 'summary',
@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'DATE', width: 85,
+                                                        text: 'Date', dataIndex: 'DATE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
@@ -167,12 +167,12 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 95,
+                                                    {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 90,
                                                         listeners: {
                                                             click: 'onViewPNR'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:left;background-color:#FCF6DC";
+                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
@@ -195,12 +195,6 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'Seller ID', dataIndex: 'SELLERID', width: 80,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return value;
-                                                        }
-                                                    },
                                                     {
                                                         text: 'Installment',
                                                         defaults: {
@@ -209,13 +203,13 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             align: 'center'
                                                         },
                                                         columns: [
-                                                            {text: 'Plan', dataIndex: 'NBRINSTA', width: 60,
+                                                            {text: 'Plan', dataIndex: 'NBRINSTA', width: 50,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#FCF6DC";
                                                                     return value;
                                                                 }
                                                             },
-                                                            {text: 'Number', dataIndex: 'INSTANBR', width: 60,
+                                                            {text: 'Number', dataIndex: 'INSTANBR', width: 50,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#FCF6DC";
                                                                     return value;
@@ -261,7 +255,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 90,
+                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 80,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -518,7 +512,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100, hidden: true,
                                             },
                                             {
-                                                text: 'Payment <br> Tickets', dataIndex: 'QTYTKT', width: 80,
+                                                text: 'Payment <br> Tickets', dataIndex: 'QTYTKT', width: 60,
                                                 listeners: {
                                                     click: 'onTktsDetail'
                                                 },
@@ -547,7 +541,38 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Auth<br>RFND', dataIndex: 'RFAUTOR', width: 100,
+                                                text: 'Refund Bank',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'RFDATE', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Operation', dataIndex: 'RFOPERB', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Agent', dataIndex: 'RFAUDIT', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Auth', dataIndex: 'RFAUTOR', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6;";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
                                                 sortable: false,
@@ -563,7 +588,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                         handler: 'onEditClick'
                                                     }
                                                 ]
-                                            },
+                                            }
                                         ]
                                     }
                                 }
@@ -1167,6 +1192,9 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 }
                             ]
                         },
+                        
+                        
+                        
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pie',

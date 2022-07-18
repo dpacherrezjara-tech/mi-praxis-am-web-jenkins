@@ -22,22 +22,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
     gridAdjustmentRowIndex: 10,
     status_match: ['1', '5', '6', '7'],
     dataObtain: {},
-            // </editor-fold>
-            init: function (view) {
-                prototype.id = 'SalesAdjustmentForm';
-                prototype.url = CONTEXTPATH + '/SalesAdjustment';
-                meDE = this;
-                this.p = this.view.params;
-                this.actionCode = this.p.action;
-                this.bean = this.p.rec.data;
-                //console.log(this.bean);
-            },
+    
+    init: function (view) {
+        prototype.id = 'SalesAdjustmentForm';
+        prototype.url = CONTEXTPATH + '/SalesAdjustment';
+        meDE = this;
+        this.p = this.view.params;
+        this.actionCode = this.p.action;
+        this.bean = this.p.rec.data;
+    },
     afterRender: function () {
-//        console.log('afterRender');
+        
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
-//                console.log('dd');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -46,8 +44,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
             case 'U':
                 this.getData();
 //                this.DeshabilitarCampoClave();
+
+                console.log(this.bean);
+                if(this.bean.STRFND == '1'){
+                    Ext.getCmp(prototype.id + '-btn-update').hide();
+                    Ext.getCmp(prototype.id + '-de-txtRFDATE').setReadOnly(true);
+                    Ext.getCmp(prototype.id + '-de-txtRFAUTOR').setReadOnly(true);
+                    Ext.getCmp(prototype.id + '-de-txtRFOPERB').setReadOnly(true);
+                }else{
+                    Ext.getCmp(prototype.id + '-de-txtRFDATE').setReadOnly(false);
+                    Ext.getCmp(prototype.id + '-de-txtRFAUTOR').setReadOnly(false);
+                    Ext.getCmp(prototype.id + '-de-txtRFOPERB').setReadOnly(false);
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                }
+
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
@@ -247,25 +258,43 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
 
     },
     onUpdateClick: function (btn) {
-//        console.log('onUpdateClick');
-        var beanTemp = {};
-        this.llenarData(beanTemp);
-        beanTemp.option = 'U';
+        
+//        var beanTemp = {};
+//        this.llenarData(beanTemp);
+//        beanTemp.option = 'U';
         Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to update?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    animateTarget: btn,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            meDE.MaintenanceA4116(beanTemp);
-                        }
+        {
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to update?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+//            animateTarget: btn,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    var beanTemp = {};
+                    this.llenarData(beanTemp);
+                    beanTemp.option = 'U';
+                    
+                    var msjResult = this.validUpdate();
+                    if (msjResult === '') {
+                        meDE.MaintenanceA4116(beanTemp);
+                    } else {
+                        console.log('ELSE');
+                        global.Msg({msg: msjResult});
                     }
-                });
+                }
+            }
+        });
+    },
+    validUpdate: function() {
+        var msjResult = '';
+        console.log(this.getValue("de-txtRFDATE"));
+        if (this.getValue("de-txtRFDATE") === '' || this.getValue("de-txtRFAUTOR") === '' || this.getValue("de-txtRFOPERB") === '' ) {
+            msjResult = "You must enter the required field.";
+        }
+        return msjResult;
     },
     onDeleteClick: function (btn) {
 

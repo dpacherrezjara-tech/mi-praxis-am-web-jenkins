@@ -265,24 +265,18 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'Refund Agent',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtRFAUDIT',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 5}
+                                {xtype: 'tbspacer', width: 265}
                             ]
+                        },
+                        {
+                            xtype: 'label',
+                            text: 'Refund Bank Information',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            width: 234,
+                            height: 20,
+                            margin: '4 2 4 8'
                         },
                         {
                             xtype: 'panel',
@@ -298,7 +292,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Refund Status',
+                                    text: 'Status',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -314,11 +308,21 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Refund Date',
+                                    text: 'Date',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 106
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtRFDATE',
@@ -332,11 +336,21 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Refund Auth.',
+                                    text: 'Authorization',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 106
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtRFAUTOR',
@@ -350,11 +364,21 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Refund Operation',
+                                    text: 'Operation',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 106
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtRFOPERB',
@@ -366,6 +390,32 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                     maxLength: 10,
                                 },
                                 {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Agent',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFAUDIT',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 785}
                             ]
                         },
                         {
