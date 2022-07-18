@@ -22,17 +22,17 @@ public class SalesAdjustmentLogic {
     public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
         return SalesAdjustmentDAO.loadPX570SQP04470(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04540(A4116Filter filter) throws SQLException, Exception {
         return SalesAdjustmentDAO.loadPX570SQP04540(filter);
     }
-    
-//    public String loadPX267SQP00672(A2281 filter, String option) throws SQLException, Exception {
-//        return banksCatalogDAO.loadPX267SQP00672(filter, option);
-//    }
-//
-//    public A2281 loadPX267SQP00673(A2280Filter filter) throws SQLException, Exception {
-//        return banksCatalogDAO.loadPX267SQP00673(filter);
-//    }
+
+    public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
+        return SalesAdjustmentDAO.loadPX570SQP04359(filter);
+    }
+
+    public String loadPX599SQP04542(A4116Filter filter) throws SQLException, Exception {
+        return SalesAdjustmentDAO.loadPX599SQP04542(filter);
+    }
 
 }

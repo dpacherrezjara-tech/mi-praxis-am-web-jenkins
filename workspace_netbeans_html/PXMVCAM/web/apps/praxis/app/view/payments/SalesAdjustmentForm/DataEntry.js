@@ -1,22 +1,22 @@
-Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
+Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntrySalesAdjustmentForm',
-    requires:[
+    requires: [
         'Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustmentController'
     ],
     controller: 'DataEntrySalesAdjustmentController',
-    title:'Bank - Data Entry Form',
-    header:true,
+    title: 'Double Payment - Data Entry Form',
+    header: true,
     //height:650,
-    width:1075,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    width: 1075,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
     border: false,
     defaults: {
         border: false
     },
-    items:[
+    items: [
         {
             xtype: 'form',
             defaults: {
@@ -217,7 +217,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                                     xtype: 'label',
                                     text: 'Status',
                                     textAlign: 'center',
-                                    paddingLeft: 3,
+                                    //paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -228,14 +228,14 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                                     style: 'font-weight:bold;color:#0B333C;',
                                     readOnly: true,
                                     fieldStyle: 'text-align:center;',
-                                    width: 105,
+                                    width: 100,
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
                                     text: 'Date',
                                     textAlign: 'center',
-                                    paddingLeft: 3,
+                                    //paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -265,8 +265,150 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 5},
-                                {xtype: 'tbspacer', width: 255},
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Refund Agent',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFAUDIT',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Refund Status',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSTRFND',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Refund Date',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFDATE',
+                                    fieldStyle: 'text-align:center',
+                                    readOnly: false,
+                                    width: 100,
+                                    maskRe: /[0-9]/,                                    
+                                    enforceMaxLength: true,
+                                    maxLength: 8
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Refund Auth.',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFAUTOR',
+                                    fieldStyle: 'text-align:center',
+                                    readOnly: false,
+                                    width: 100,
+                                    maskRe: /[0-9]/,   
+                                    maxLength: 8,
+                                    enforceMaxLength: true,                                    
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Refund Operation',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFOPERB',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: false,
+                                    width: 100,
+                                    maskRe: /[0-9]/,   
+                                    maxLength: 10,
+                                },
+                                {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            hidden: true,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Refund Agent',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFAUDIT111111',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 120},
+                                {xtype: 'tbspacer', width: 10},
+                                {xtype: 'tbspacer', width: 100},
+                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 120},
+                                {xtype: 'tbspacer', width: 10},
+                                {xtype: 'tbspacer', width: 100},
+                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 120},
+                                {xtype: 'tbspacer', width: 10},
+                                {xtype: 'tbspacer', width: 100},
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -521,9 +663,10 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 100,
-                                    maskRe: /[0-9]/,
+                                    readOnly: true,
+                                    maskRe: /[0-9]/,                                    
                                     enforceMaxLength: true,
-                                    maxLength: 14
+                                    maxLength: 19
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
@@ -544,6 +687,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                                     maskRe: /[A-Z]/,
                                     maxLength: 6,
                                     width: 100,
+                                    readOnly: true,
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
@@ -726,6 +870,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
+                            hidden: true,
                             margin: '0 2 0 20',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
@@ -762,13 +907,14 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                         },
                         {
                             xtype: 'label',
-                            text: 'Scan',
+                            text: 'Tkts Detail',
                             id: prototype.id + '-labelScan',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
                             width: 234,
                             height: 20,
+                            hidden: true,
                             margin: '4 2 4 8'
                         },
                         {
@@ -778,7 +924,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                             border: false,
                             width: 956,
                             height: 270,
-                            hidden: false,
+                            hidden: true,
                             autoScroll: true,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 40',
@@ -1201,7 +1347,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
                                     }
                                 },
                             ]
-                        },                        
+                        },
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="ControlData">
@@ -1346,54 +1492,54 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry',{
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 }
             ]
         }
     ]
-  }
+}
 );

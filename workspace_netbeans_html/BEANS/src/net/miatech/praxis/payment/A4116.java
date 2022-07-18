@@ -49,6 +49,12 @@ public class A4116 {
     public String CHADJNBR = "";
     public String CHAADJCOD = "";
     public String CHAADJDES = "";
+    
+    public String STRFND = "";
+    public String RFAUTOR = "";
+    public String RFOPERB = "";
+    public String RFDATE = "";
+    public String RFAUDIT = "";
         
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;

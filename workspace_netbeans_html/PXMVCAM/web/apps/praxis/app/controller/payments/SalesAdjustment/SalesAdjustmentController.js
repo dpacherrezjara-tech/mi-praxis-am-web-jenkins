@@ -211,9 +211,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                 }, listeners: {
                     beforeload: function(obj) {
                         obj.proxy.extraParams =searchParams                                       
-                        
+                        Ext.getCmp(prototype.id + '-boxAdjustment').mask('Loading...');
                     },
                     load: function(obj) {
+                        Ext.getCmp(prototype.id + '-boxAdjustment').unmask();
 //                        console.log(obj.data);
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();

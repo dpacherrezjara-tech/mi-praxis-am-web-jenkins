@@ -42,6 +42,7 @@ public class A4116Filter extends A4116 {
     public String IN_RECTYPE = "";
     public String IN_AUTHE = "";
     public String IN_SAUTHOC = "";
+    public String IN_STRFND = "";
     public String IN_WARNING = "";
     public String IN_CERROR = "";
     public String IN_TDOC = "";
@@ -125,6 +126,7 @@ public class A4116Filter extends A4116 {
     public Integer FDUPLI = 0;
     public Integer FDUPLIB = 0;
     public String ADJ_TYPE = "";
+    public String descSTRFND = "";
     
     //Summary Error
     public String IN_DRILLDOWN = "";
