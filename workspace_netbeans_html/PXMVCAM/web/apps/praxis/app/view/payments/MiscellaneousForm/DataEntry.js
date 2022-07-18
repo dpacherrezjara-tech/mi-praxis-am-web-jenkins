@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'DATE INI',
+                                    text: 'Vigency from',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -106,12 +106,13 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 80,
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'DATE FIN',
+                                    text: 'To',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -125,7 +126,8 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 80,
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,
                                 }
                             ]
                         },
@@ -134,6 +136,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                             layout: 'hbox',
                             border: false,
                             margin: '10 2 2 8',
+                            hidden: true,
                             items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {

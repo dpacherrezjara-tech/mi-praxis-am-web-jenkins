@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAdjustment',
-                                    width: 1750,
+                                    width: 1770,
                                     columnLines: true,
 //                                    features: [{
 //                                            ftype: 'summary',
@@ -209,7 +209,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                                     return value;
                                                                 }
                                                             },
-                                                            {text: 'Number', dataIndex: 'INSTANBR', width: 50,
+                                                            {text: 'Nbr', dataIndex: 'INSTANBR', width: 50,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#FCF6DC";
                                                                     return value;
@@ -512,7 +512,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100, hidden: true,
                                             },
                                             {
-                                                text: 'Payment <br> Tickets', dataIndex: 'QTYTKT', width: 60,
+                                                text: 'Payment<br>Tickets', dataIndex: 'QTYTKT', width: 65,
                                                 listeners: {
                                                     click: 'onTktsDetail'
                                                 },

@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     searchParams: {},
     lstA1852: {},
     dataObtain: {},
-    copia :'',
+    copia: '',
     // </editor-fold>
     init: function (view) {
         prototype.id = 'MiscellaneousForm';
@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
             ]
         }));
         cmbStval.setValue('');
-        
+
         var cmbDoc = Ext.getCmp(prototype.id + '-cmbDoc');
         cmbDoc.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         beanTemp.DATINI = this.getValue("de-txtINI");
         beanTemp.DATFIN = this.getValue("de-txtFIN");
         beanTemp.STVAL = this.getValue("cmbStval");
-      
+
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
         beanTemp.HOCR = this.getValue("txtHOCR").trim();
@@ -171,26 +171,47 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
         });
     },
     onUpdateClick: function (btn) {
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to update ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    animateTarget: btn,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            var beanTemp = {};
-                            this.llenarData(beanTemp);
-                            beanTemp.option = 'U';
-                            beanTemp.beanString = JSON.stringify(beanTemp);
-                            ;
-                            this.MaintenanceA4169(beanTemp);
+        var msj = this.validateDates();
+
+        if (msj === '') {
+            Ext.Msg.show(
+                    {
+                        title: '.:PRAXIS:.',
+                        msg: 'Are you sure to update?',
+                        buttons: Ext.MessageBox.YESNO,
+                        scope: this,
+                        animateTarget: btn,
+                        icon: Ext.MessageBox.QUESTION,
+                        modal: true,
+                        fn: function (btn) {
+                            if (btn === 'yes') {
+                                var beanTemp = {};
+                                this.llenarData(beanTemp);
+                                beanTemp.option = 'U';
+                                beanTemp.beanString = JSON.stringify(beanTemp);
+                                this.MaintenanceA4169(beanTemp);
+                            }
                         }
-                    }
-                });
+                    });
+        } else {
+            global.Msg({msg: msj});
+        }
+
+    },
+    validateDates: function () {
+        var DATINI = this.getValue("de-txtINI");
+        var DATFIN = this.getValue("de-txtFIN");
+        var msj = '';
+
+        if (DATINI.length === 8 && DATFIN.length === 8) {
+            if (DATFIN < DATINI) {
+                msj = 'Error in dates';
+            }
+        } else {
+            msj = 'Error in date lenghts'
+        }
+
+        return msj;
     },
     onDeleteClick: function (btn) {
         Ext.Msg.show({
@@ -242,7 +263,7 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
 
     validacionInsert: function (beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCodeTable") === '' || this.getValue("de-txtCTable") === '' || this.getValue("cmbStval") === '' /* || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' */ || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '' ) {
+        if (this.getValue("de-txtCodeTable") === '' /* || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' */ || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
@@ -250,10 +271,9 @@ Ext.define('Ext.Praxis.controller.payments.Miscellaneous.DataEntryMiscellaneousC
     DeshabilitarCampoClave: function () {
         Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
     },
-    setearCamposClave: function(){
+    setearCamposClave: function () {
         Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
-        
-        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
+        //Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
     },
     Habilitarlbl: function () {
 //        Ext.getCmp(prototype.id + '-lblDescripcion').show();

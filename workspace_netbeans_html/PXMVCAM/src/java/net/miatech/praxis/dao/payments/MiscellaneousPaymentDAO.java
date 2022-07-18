@@ -109,6 +109,9 @@ public class MiscellaneousPaymentDAO {
                     bean.descSTVAL = "Anulado";
                 }
                 
+                bean.DATINI = rst.getString("DATINI").trim();
+                bean.DATFIN = rst.getString("DATFIN").trim();
+                
                 bean.USCR = rst.getString("USCR").trim();
                 bean.FECR = rst.getString("FECR").trim();
                 bean.HOCR = rst.getString("HOCR").trim();
