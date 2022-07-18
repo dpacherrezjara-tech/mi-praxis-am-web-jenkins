@@ -4,29 +4,40 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     meDE: '',
     actionCode: '',
+    msjValidate: '',
     bean: {},
     beanResult: {},
+    beanInfo: {},
     lstCountry: [],
     searchParams: {},
     lstA1852: {},
     dataObtain: {},
-    // </editor-fold>
-    init: function (view) {
-        prototype.id = 'SalesAdjustmentForm';
-        prototype.url = CONTEXTPATH + '/SalesAdjustment';
-        meDE = this;
-        this.p = this.view.params;
-        this.actionCode = this.p.action;
-        this.bean = this.p.rec;
-        this.lstCountry = this.p.lstCountry;
-//        console.log(this.p);
-//        this.obtainData();
-    },
+    lstSendManual: [],
+    lstBlocked: [],
+    lstAdjustment: [],
+    beanSettlementTktsDetail: {},
+    paramsDetailDEDetTktSettlement: {},
+    sumAmount: 0,
+    sumAmountBlocked: 0,
+    gridAdjustmentRowIndex: 10,
+    status_match: ['1', '5', '6', '7'],
+    dataObtain: {},
+            // </editor-fold>
+            init: function (view) {
+                prototype.id = 'SalesAdjustmentForm';
+                prototype.url = CONTEXTPATH + '/SalesAdjustment';
+                meDE = this;
+                this.p = this.view.params;
+                this.actionCode = this.p.action;
+                this.bean = this.p.rec.data;
+                //console.log(this.bean);
+            },
     afterRender: function () {
 //        console.log('afterRender');
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
+//                console.log('dd');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -34,139 +45,109 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
                 break;
             case 'U':
                 this.getData();
-                this.DeshabilitarCampoClave();
+//                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
     },
     mostrarData: function () {
-//        console.log(meDE.beanResult);
-        this.setValue('de-txtCODEBANK', this.beanResult.CODEBANK);
-        this.setValue('de-txtNAMEBANK', this.beanResult.NAMEBANK);
-        this.setValue('de-cmbCOUNTRY', this.beanResult.COUNTRY);
-        this.setValue('de-txtCURRENC', this.beanResult.CURRENC);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-        this.setValue('cmbFSTAT', this.beanResult.FSTAT);
 
-        this.setValue('cmbFINSUMO', this.beanResult.FINSUMO);
-        this.setValue('cmbCODEBANKN', this.beanResult.CODBANKN);
-        this.setValue('txtDOCNUM', this.beanResult.DOCNUM);
-        this.setValue('de-txtRATECON', Ext.util.Format.number(this.beanResult.RATECON, '0,000.00'));
-        this.setValue('de-txtRATECOP1', Ext.util.Format.number(this.beanResult.RATECOP1, '0,000.00'));
-        this.setValue('de-txtRATECOP2', Ext.util.Format.number(this.beanResult.RATECOP2, '0,000.00'));
-        this.setValue('de-txtRATEIVA', Ext.util.Format.number(this.beanResult.RATEIVA, '0,000.00'));
+        this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
+        this.setValue('de-txtPRDA', this.beanResult.PRDA);
+        this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
+        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
+        this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
+        this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
+        this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
+        this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
+        this.setValue('de-txtIDITEMS', this.beanResult.IDITEMS);
+        this.setValue('de-txtIDITEMT', this.beanResult.IDITEMT);
+        this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
+        this.setValue('de-txtSPNR', this.beanResult.SPNR);
+        this.setValue('de-txtTRANSDATE', this.beanResult.TRANSDATE);
+        this.setValue('txtCERRORHST', this.beanResult.CERRORHST);
+        this.setValue('txtCERROR', this.beanResult.CERROR);
+        this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
+        this.setValue('txtCERROIN', this.beanResult.CERROIN);
+        this.setValue('txtDES_CERROIN', this.beanResult.DES_CERROIN);
+        this.setValue('txtFLAG', this.beanResult.FSELEC);
+        this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
+        this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
+        this.setValue('txtSTVAL', this.beanResult.descSTVAL);
+        this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
+        this.setValue('de-txtTDOC', this.beanResult.descTDOC);
+        this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
+        this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
+        this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
+        this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
+        this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
+                
+        this.setValue('de-txtSTRFND', this.beanResult.descSTRFND);
+        this.setValue('de-txtRFDATE', this.beanResult.RFDATE);
+        this.setValue('de-txtRFAUTOR', this.beanResult.RFAUTOR);
+        this.setValue('de-txtRFOPERB', this.beanResult.RFOPERB);
+        this.setValue('de-txtRFAUDIT', this.beanResult.RFAUDIT);
 
+        this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
+        this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
+        this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
+        this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
-        this.setValue('txtHOCR', this.beanResult.HOCR);
+        this.setValue('txtHOCR', this.formato(this.beanResult.HOCR));
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
-        this.setValue('txtHOUP', this.beanResult.HOUP);
+        this.setValue('txtHOUP', this.formato(this.beanResult.HOUP));
+        //this.getBreakdownDataGrid();
+    },
+    formato: function (numero) {
+        var d, e;
+        d = String(numero);
+        if (d === "0     ") {
+            return "";
+        } else {
+            e = d.substring(0, 2) + ':' + d.substring(2, 4) + ':' + d.substring(4, 6);
+            return e;
+        }
     },
     obtainData: function () {
-
-        var cmbCODEBANKN = Ext.getCmp(prototype.id + '-cmbCODEBANKN');
-        cmbCODEBANKN.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "Empty"],
-                ["001", "001-BANAMEX"],
-                ["002", "002-SANTANDER"],
-                ["003", "003-BANORTE"],
-                ["004", "004-BBVA"],
-                ["005", "005-AMEX"]
-            ]
-        }));
-        cmbCODEBANKN.setValue('');
-
-        var cmbFINSUMO = Ext.getCmp(prototype.id + '-cmbFINSUMO');
-        cmbFINSUMO.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "Pending"],
-                ["P", "In Progress"],
-                ["I", "Implemented"]
-            ]
-        }));
-        cmbFINSUMO.setValue('');
-
-        var cmbFSTAT = Ext.getCmp(prototype.id + '-cmbFSTAT');
-        cmbFSTAT.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["O", "Open"],
-                ["C", "Closed"]
-            ]
-        }));
-        cmbFSTAT.setValue('C');
-
-        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').bindStore(
-                Ext.create('Ext.data.Store', {data: this.lstCountry, autoLoad: true})
-                );
-        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').setValue('');
-
+//        console.log('obtainData');
     },
-    //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-//        console.log(beanTemp);
-        beanTemp.CODEBANK = this.getValue("de-txtCODEBANK");
-        beanTemp.NAMEBANK = this.getValue("de-txtNAMEBANK");
-        beanTemp.COUNTRY = this.getValue("de-cmbCOUNTRY");
-        beanTemp.CURRENC = this.getValue("de-txtCURRENC");
-        beanTemp.CLIENTE = this.getValue("de-txtCLIENTE");
-        beanTemp.FSTAT = this.getValue("cmbFSTAT");
-        beanTemp.FINSUMO = this.getValue("cmbFINSUMO");
-        beanTemp.CODBANKN = this.getValue("cmbCODEBANKN");
 
-        if (this.getValue("de-txtRATEIVA") !== '') {
-            beanTemp.DOCNUM = Number(this.getValue("txtDOCNUM").trim().replace(',', ''));
-        } else {
-            beanTemp.DOCNUM = 0;
-        }
+        beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
+        beanTemp.PRDA = this.getValue("de-txtPRDA");
+        beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
+        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.SMERCHID = this.getValue("de-txtSMERCHID");
+        beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
+        beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
+        beanTemp.SCARDN = this.getValue("de-txtSCARDN");
+        beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");
+        beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");
+        beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
+        beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
+        beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.TDOC = this.beanResult.TDOC;
+        beanTemp.SPNR = this.getValue("de-txtSPNR");
+        beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
+        beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
         
-        if (this.getValue("de-txtRATECON") !== '') {
-            beanTemp.RATECON = Number(this.getValue("de-txtRATECON").trim().replace(',', ''));
-        } else {
-            beanTemp.RATECON = 0;
-        }
+        beanTemp.RFDATE = this.getValue("de-txtRFDATE");
+        beanTemp.RFAUTOR = this.getValue("de-txtRFAUTOR");
+        beanTemp.RFOPERB = this.getValue("de-txtRFOPERB");
         
-        if (this.getValue("de-txtRATECOP1") !== '') {
-            beanTemp.RATECOP1 = Number(this.getValue("de-txtRATECOP1").trim().replace(',', ''));
-        } else {
-            beanTemp.RATECOP1 = 0;
-        }
-        
-        if (this.getValue("de-txtRATECOP2") !== '') {
-            beanTemp.RATECOP2 = Number(this.getValue("de-txtRATECOP2").trim().replace(',', ''));
-        } else {
-            beanTemp.RATECOP2 = 0;
-        }
-        
-        if (this.getValue("de-txtRATEIVA") !== '') {
-            beanTemp.RATEIVA = Number(this.getValue("de-txtRATEIVA").trim().replace(',', ''));
-        } else {
-            beanTemp.RATEIVA = 0;
-        }
-
-        beanTemp.USCR = this.getValue("txtUSCR").trim();
-        beanTemp.FECR = this.getValue("txtFECR").trim();
-        beanTemp.HOCR = this.getValue("txtHOCR").trim();
-        beanTemp.USUP = this.getValue("txtUSUP").trim();
-        beanTemp.FEUP = this.getValue("txtFEUP").trim();
-        beanTemp.HOUP = this.getValue("txtHOUP").trim();
-//        console.log(beanTemp);
+        //console.log(beanTemp);
     },
     getData: function () {
-        var beanString = JSON.stringify(meDE.bean.data);
-//        console.log(beanString);
+
+        var beanString = JSON.stringify(meDE.bean);
         Ext.Ajax.request({
-            url: prototype.url + '/searchCompleteDetail',
+            url: prototype.url + '/searchTransactionErrorDetail',
             method: 'POST',
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
@@ -175,27 +156,85 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
+                meDE.beanInfo = res.lstInfo;
                 meDE.mostrarData();
-
             }
         });
     },
-    //</editor-fold>
+    getBreakdownDataGrid: function () {
+        this.beanSettlementTktsDetail = {};
+        this.beanSettlementTktsDetail.DATE = this.bean.DATE;
+        this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
+        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
+        this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
+        this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
+        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
+        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
+        this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
+        this.beanSettlementTktsDetail.IN_FREGLA = this.bean.FREGLA;
+        this.beanSettlementTktsDetail.IN_SCARDN = this.bean.SCARDN;
+        this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
+        this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
+        this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
+        Ext.Ajax.request({
+            url: prototype.url + '/searchDetTktSettlement',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+            params: {beanString: meDE.paramsDetailDEDetTktSettlement},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanInfo = res.data;
+                for (var i = 0; i < res.data.length; i++) {
+                    meDE.lstSendManual.push(res.data[i]);
+                }
 
+                meDE.getDataGrid(meDE.beanResult);
+                //meDE.calcularMontos();
+            }
+        });
+    },
+    getBreakdownDataGridForMatch: function () {
+        this.beanSettlementTktsDetail = {};
+        this.beanSettlementTktsDetail.DATE = this.bean.DATE;
+        this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
+        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
+        this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
+        this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
+        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
+        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
+        this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
+        this.beanSettlementTktsDetail.IN_FREGLA = this.bean.FREGLA;
+        this.beanSettlementTktsDetail.IN_SCARDN = this.bean.SCARDN;
+        this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
+        this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
+        this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
+        Ext.Ajax.request({
+            url: prototype.url + '/searchDetTktSettlement',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+            params: {beanString: meDE.paramsDetailDEDetTktSettlement},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanInfo = res.data;
+                for (var i = 0; i < res.data.length; i++) {
+                    meDE.lstSendManual.push(res.data[i]);
+                }
+            }
+        });
+    },
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function () {
-        this.setValue('txtCODSOUR', '');
-        this.setValue('txtDESSOU', '');
-        this.setValue('txtGRUSOR', '');
-        this.setValue('txtstrGRUSOR', '');
-        Ext.getCmp(prototype.id + '-lblDescripcion').setText('');
-        Ext.getCmp(prototype.id + '-lblDescripcion2').setText('');
-        this.setValue('txtUSCR', '');
-        this.setValue('txtFECR', '');
-        this.setValue('txtHOCR', '');
-        this.setValue('txtUSUP', '');
-        this.setValue('txtFEUP', '');
-        this.setValue('txtHOUP', '');
+        //this.setValue('txtCODSOUR', '');        
     },
     //</editor-fold>
     toUpperCase: function (obj, value, opts) {
@@ -205,130 +244,76 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
     },
     // <editor-fold defaultstate="collapsed" desc="Botones">
     onSaveClick: function (btn) {
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to insert ?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    var beanTemp = {};
-                    this.llenarData(beanTemp);
-                    var msjResult = this.validacionInsert(beanTemp);
-                    if (msjResult === '') {
-                        beanTemp.option = 'I';
-                        beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA2280(beanTemp);
-                    } else {
-                        global.Msg({msg: msjResult});
-                    }
-                }
-            }
-        });
+
     },
     onUpdateClick: function (btn) {
+//        console.log('onUpdateClick');
+        var beanTemp = {};
+        this.llenarData(beanTemp);
+        beanTemp.option = 'U';
         Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        var beanTemp = {};
-                        this.llenarData(beanTemp);
-                        beanTemp.option = 'U';
-                        beanTemp.beanString = JSON.stringify(beanTemp);;
-                        this.MaintenanceA2280(beanTemp);
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            meDE.MaintenanceA4116(beanTemp);
+                        }
                     }
-                }
-            });
+                });
     },
     onDeleteClick: function (btn) {
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to delete ?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    var beanTemp = {};
-                    beanTemp.option = 'D';
-                    beanTemp.beanString = JSON.stringify(meDE.beanResult);
-                    this.MaintenanceA2280(beanTemp);
-                }
-            }
-        });
+
     },
     onCancelClick: function (btn) {
         this.view.close();
     },
     // </editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA2280: function (beanTemp) {
+    //<editor-fold defaultstate="collapsed" desc="MaintenanceA4116">
+    MaintenanceA4116: function (beanTemp) {
 //        console.log(beanTemp);
+        var beanString = JSON.stringify(beanTemp);
+//        console.log(beanString);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA2280',
+            url: prototype.url + '/MaintenanceDoublePayment',
             method: 'POST',
             timeout: 60000000,
-            params: beanTemp,
+            params: {beanString: beanString},
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-            success: function(response, opts) {
+            success: function (response, opts) {
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                console.log(res);
+//                console.log(res);
                 if (res.success) {
-                    global.Msg({msg: res.Mensaje});
+                    //global.Msg({msg: res.msjOption});
                     Ext.getCmp(prototype.id + '-dataEntry').unmask();
                     Ext.getCmp(prototype.id + '-dataEntry').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                } else{
-                    global.Msg({msg: 'An error occurred'});
+                } else {
+                    global.Msg({msg: res.msjOption});
+                    //global.Msg({msg: 'Failed to Update Transaction'});
                 }
             }
         });
     },
     //</editor-fold>
-
-    validacionInsert: function (beanTemp) {
-        var msjResult = '';
-        if (this.getValue("de-txtCODEBANK") === '' || this.getValue("de-cmbCOUNTRY") === '' || this.getValue("de-txtCURRENC") === '') {
-            msjResult = "You must enter the required field.";
-        }
-        return msjResult;
-    },
     DeshabilitarCampoClave: function () {
-        Ext.getCmp(prototype.id + '-de-txtCODEBANK').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-txtCURRENC').setReadOnly(true);
+        
     },
     Habilitarlbl: function () {
-        Ext.getCmp(prototype.id + '-lblDescripcion').show();
-        Ext.getCmp(prototype.id + '-txtDESSOU').hide();
-        Ext.getCmp(prototype.id + '-lbldes2').show();
+        
     },
     desHabilitartxt: function () {
-        if (this.getValue("txtGRUSOR") !== this.bean.GRUSOR) {
-            Ext.getCmp(prototype.id + '-lbldes').hide();
-        } else {
-            Ext.getCmp(prototype.id + '-lbldes').show();
-        }
+        
     },
     Habilitarlbl1: function () {
-        Ext.getCmp(prototype.id + '-lbldes').hide();
-        if (this.getValue("txtCODSOUR") == '') {
-            Ext.getCmp(prototype.id + '-lbldes2').hide();
-        } else {
-            Ext.getCmp(prototype.id + '-lbldes2').show();
-        }
+        
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
@@ -347,6 +332,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
         if (e.getKey() === e.ENTER) {
 //            this.btnSearch_click();
         }
-    }
-// </editor-fold>
+    },
+// </editor-fold>    
 });

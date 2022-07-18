@@ -53,12 +53,12 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAdjustment',
-                                    width: 1565,
+                                    width: 1690,
                                     columnLines: true,
-                                    features: [{
-                                            ftype: 'summary',
-                                            dock: 'bottom'
-                                        }],
+//                                    features: [{
+//                                            ftype: 'summary',
+//                                            dock: 'bottom'
+//                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -116,6 +116,14 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background-color:#B2FAC6;";
                                                             metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Refund', dataIndex: 'descSTRFND', width: 85,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            //metaData.style = "text-align:center;background-color:#B2FAC6;";
+                                                            //metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
                                                             return value;
                                                         }
                                                     },
@@ -539,7 +547,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Auth<br>RFND', dataIndex: '', width: 100,
+                                                text: 'Auth<br>RFND', dataIndex: 'RFAUTOR', width: 100,
                                             },
                                             {
                                                 sortable: false,
@@ -547,7 +555,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                 width: 40,
                                                 text: 'Edit',
                                                 align: 'center',
-                                                hidden:true,
+                                                hidden:false,
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-edit',

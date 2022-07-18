@@ -103,7 +103,7 @@ public class SalesAdjustmentController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "getAdjustmentCodes")
     public @ResponseBody
     String getCodes(ModelMap map, HttpServletRequest request) {
@@ -154,7 +154,7 @@ public class SalesAdjustmentController extends BaseController {
         return lst;
 
     }
-    
+
     @RequestMapping(value = "searchDetTktSettlement")
     public @ResponseBody
     String searchDetTktSettlement(ModelMap map, HttpServletRequest request) {
@@ -203,6 +203,70 @@ public class SalesAdjustmentController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
+    }
+
+    @RequestMapping(value = "searchTransactionErrorDetail")
+    public @ResponseBody
+    String searchTransactionErrorDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Adjustment - Double Payment : searchTransactionErrorDetail-------------");
+
+        Gson gson = new Gson();
+        A4116Filter filter = new A4116Filter();
+        A4116Filter result = new A4116Filter();
+        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A4116Filter.class);
+
+        logic = new SalesAdjustmentLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            result = logic.loadPX570SQP04359(filter);
+//            lstInfo = logic.loadPX570SQP04395(result);
+            map.put("result", result);
+            map.put("lstInfo", lstInfo);
+            map.put("success", true);
+        } catch (Exception ex) {
+            map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "MaintenanceDoublePayment")
+    public @ResponseBody
+    String MaintenanceErrorTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Adjustment - Double Payment : MaintenanceDoublePayment-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4116Filter filter = new A4116Filter();
+            A4116Filter result = new A4116Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            logic = new SalesAdjustmentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX599SQP04542(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
     }
 
 //    @RequestMapping(value = "getXLSX")
@@ -464,7 +528,6 @@ public class SalesAdjustmentController extends BaseController {
 //        }
 //        return new Gson().toJson(map);
 //    }
-
 }
 
 //        @RequestMapping(value = "search")
