@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                     },                                    
                                     {text: 'Coupons', dataIndex: 'A4213CUPON', align: 'center', width: 70},                                    
                                     {text: 'Curr.', dataIndex: 'A4213MDATK', width: 50, align: 'center'},
-                                    {text: 'Amount', dataIndex: 'A4213AMOTK', width: 90, align: 'right',
+                                    {text: 'Amount', dataIndex: 'A4213TFOP', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
