@@ -3955,8 +3955,8 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(2, filter.SCARDN.trim());
             cstmt.setString(3, filter.SAUTHOC.trim());
             cstmt.setString(4, IN_FECVTA);
-            cstmt.setString(5, IN_FECVTA_FROM);
-            cstmt.setString(6, IN_FECVTA_TO);
+            cstmt.setString(5, IN_FECVTA_TO);
+            cstmt.setString(6, IN_FECVTA_FROM);
             cstmt.setString(7, filter.ISREFNBR.trim());
             cstmt.setString(8, filter.SMERCHID.trim());
             cstmt.setString(9, filter.SPNR.trim());
