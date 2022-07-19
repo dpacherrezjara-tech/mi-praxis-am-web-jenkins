@@ -22,17 +22,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
     gridAdjustmentRowIndex: 10,
     status_match: ['1', '5', '6', '7'],
     dataObtain: {},
-    
-    init: function (view) {
-        prototype.id = 'SalesAdjustmentForm';
-        prototype.url = CONTEXTPATH + '/SalesAdjustment';
-        meDE = this;
-        this.p = this.view.params;
-        this.actionCode = this.p.action;
-        this.bean = this.p.rec.data;
-    },
+            init: function (view) {
+                prototype.id = 'SalesAdjustmentForm';
+                prototype.url = CONTEXTPATH + '/SalesAdjustment';
+                meDE = this;
+                this.p = this.view.params;
+                this.actionCode = this.p.action;
+                this.bean = this.p.rec.data;
+            },
     afterRender: function () {
-        
+
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
@@ -46,12 +45,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
 //                this.DeshabilitarCampoClave();
 
                 console.log(this.bean);
-                if(this.bean.STRFND == '1'){
+                if (this.bean.STRFND == '1') {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-de-txtRFDATE').setReadOnly(true);
                     Ext.getCmp(prototype.id + '-de-txtRFAUTOR').setReadOnly(true);
                     Ext.getCmp(prototype.id + '-de-txtRFOPERB').setReadOnly(true);
-                }else{
+                } else {
                     Ext.getCmp(prototype.id + '-de-txtRFDATE').setReadOnly(false);
                     Ext.getCmp(prototype.id + '-de-txtRFAUTOR').setReadOnly(false);
                     Ext.getCmp(prototype.id + '-de-txtRFOPERB').setReadOnly(false);
@@ -96,7 +95,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
-                
+
         this.setValue('de-txtSTRFND', this.beanResult.descSTRFND);
         this.setValue('de-txtRFDATE', this.beanResult.RFDATE);
         this.setValue('de-txtRFAUTOR', this.beanResult.RFAUTOR);
@@ -147,11 +146,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
-        
+
         beanTemp.RFDATE = this.getValue("de-txtRFDATE");
         beanTemp.RFAUTOR = this.getValue("de-txtRFAUTOR");
         beanTemp.RFOPERB = this.getValue("de-txtRFOPERB");
-        
+
         //console.log(beanTemp);
     },
     getData: function () {
@@ -258,40 +257,40 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
 
     },
     onUpdateClick: function (btn) {
-        
+
 //        var beanTemp = {};
 //        this.llenarData(beanTemp);
 //        beanTemp.option = 'U';
         Ext.Msg.show(
-        {
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to update?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
 //            animateTarget: btn,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    var beanTemp = {};
-                    this.llenarData(beanTemp);
-                    beanTemp.option = 'U';
-                    
-                    var msjResult = this.validUpdate();
-                    if (msjResult === '') {
-                        meDE.MaintenanceA4116(beanTemp);
-                    } else {
-                        console.log('ELSE');
-                        global.Msg({msg: msjResult});
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            var beanTemp = {};
+                            this.llenarData(beanTemp);
+                            beanTemp.option = 'U';
+
+                            var msjResult = this.validUpdate();
+                            if (msjResult === '') {
+                                meDE.MaintenanceA4116(beanTemp);
+                            } else {
+                                console.log('ELSE');
+                                global.Msg({msg: msjResult});
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     },
-    validUpdate: function() {
+    validUpdate: function () {
         var msjResult = '';
         console.log(this.getValue("de-txtRFDATE"));
-        if (this.getValue("de-txtRFDATE") === '' || this.getValue("de-txtRFAUTOR") === '' || this.getValue("de-txtRFOPERB") === '' ) {
+        if (this.getValue("de-txtRFDATE") === '' || this.getValue("de-txtRFAUTOR") === '' || this.getValue("de-txtRFOPERB") === '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
@@ -321,9 +320,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
 //                console.log(res);
                 if (res.success) {
                     //global.Msg({msg: res.msjOption});
-                    Ext.getCmp(prototype.id + '-dataEntry').unmask();
-                    Ext.getCmp(prototype.id + '-dataEntry').close();
+                    /*Ext.getCmp(prototype.id + '-dataEntry').unmask();
+                    Ext.getCmp(prototype.id + '-dataEntry').close();*/
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    meDE.onNextClick();
                 } else {
                     global.Msg({msg: res.msjOption});
                     //global.Msg({msg: 'Failed to Update Transaction'});
@@ -333,16 +333,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
     },
     //</editor-fold>
     DeshabilitarCampoClave: function () {
-        
+
     },
     Habilitarlbl: function () {
-        
+
     },
     desHabilitartxt: function () {
-        
+
     },
     Habilitarlbl1: function () {
-        
+
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
@@ -363,4 +363,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
         }
     },
 // </editor-fold>    
+    onNextClick: function () {
+        var all = this.p.all;
+        var rec;
+        var rowIndex = this.p.rowIndex;
+        if (this.p.rowIndex < 19) {
+            rec = all.getAt(rowIndex + 1);
+            this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
+            if (this.p.rec === null) {
+                Ext.getCmp(prototype.id + '-dataEntry').close();
+            } else {
+                this.bean = this.p.rec.data;
+                if (this.bean.STRFND == '1') {
+                    Ext.getCmp(prototype.id + '-btn-update').hide();
+                    Ext.getCmp(prototype.id + '-de-txtRFDATE').setReadOnly(true);
+                    Ext.getCmp(prototype.id + '-de-txtRFAUTOR').setReadOnly(true);
+                    Ext.getCmp(prototype.id + '-de-txtRFOPERB').setReadOnly(true);
+                } else {
+                    Ext.getCmp(prototype.id + '-de-txtRFDATE').setReadOnly(false);
+                    Ext.getCmp(prototype.id + '-de-txtRFAUTOR').setReadOnly(false);
+                    Ext.getCmp(prototype.id + '-de-txtRFOPERB').setReadOnly(false);
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                }
+            }
+            this.getData();
+            //this.winDataEntry('U', rec, all, rowIndex);
+        }
+    },   
 });
