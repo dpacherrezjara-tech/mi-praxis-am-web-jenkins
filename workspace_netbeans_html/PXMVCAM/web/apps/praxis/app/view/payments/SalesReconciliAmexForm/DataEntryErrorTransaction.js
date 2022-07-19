@@ -1404,7 +1404,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     editable: true,
                                                     allowBlank: false,
                                                     enableKeyEvents: true,
-                                                    maskRe: /[0-9.]/,
+                                                    maskRe: /[0-9\.-]/,
                                                     selectOnFocus: true,
                                                     listeners: {
                                                         /*blur: function (field, e, eOpts) {

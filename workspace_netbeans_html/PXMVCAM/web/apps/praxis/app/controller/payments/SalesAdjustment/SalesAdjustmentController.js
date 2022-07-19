@@ -145,11 +145,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                 ["R", "Refund"]
             ]
         }));
+        
+        var cmbSTRFND = Ext.getCmp(prototype.id + '-cmbSTRFND');
+        cmbSTRFND.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["0", "Pending"],
+                ["1", "Processed"]
+            ]
+        }));
+        
         Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('S');
+        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
         
-        me.obtainGetAdjustmentCode();
+        Ext.getCmp(prototype.id + '-cmbSTRFND').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-cmbSTRFND').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSTRFND').resumeEvents();
+        
+        //me.obtainGetAdjustmentCode();
     },
     obtainGetAdjustmentCode: function () {
         Ext.Ajax.request({
@@ -181,6 +197,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
         me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
+        me.bean.IN_STRFND = Ext.getCmp(prototype.id + '-cmbSTRFND').getValue();
+        
         var beanString = JSON.stringify(me.bean);
         
         searchParams = {

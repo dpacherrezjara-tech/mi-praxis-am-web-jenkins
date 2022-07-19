@@ -295,6 +295,27 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Filters', {
                             labelWidth: 100,
                             width: 200,
                             hiddenLabel: false,
+                            hidden: true,
+                            value: '',
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Refund Bank:',
+                            id: prototype.id + '-cmbSTRFND',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 100,
+                            width: 200,
+                            hiddenLabel: false,
                             value: '',
                             listeners: {
                                 change: 'btnSearch_click'
