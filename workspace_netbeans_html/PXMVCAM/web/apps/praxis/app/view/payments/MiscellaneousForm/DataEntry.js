@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Vigency from',
+                                    text: 'Date from',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'To',
+                                    text: 'Date To',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90

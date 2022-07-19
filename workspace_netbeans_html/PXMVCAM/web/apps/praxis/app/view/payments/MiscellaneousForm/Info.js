@@ -98,7 +98,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousForm.Info', {
                                             {text: 'Cantidad 1', dataIndex: 'CANT1', width: 70, hidden: true},
                                             {text: 'Cantidad 2', dataIndex: 'CANT2', width: 70, hidden: true},
                                             {
-                                                text: 'Vigency',
+                                                text: 'Date',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
