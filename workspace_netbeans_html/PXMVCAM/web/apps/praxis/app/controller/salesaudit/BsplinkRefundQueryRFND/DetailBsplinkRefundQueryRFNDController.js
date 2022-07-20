@@ -501,8 +501,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                     return;
                 }
             }
-            if (vl_razon.length > 440) {
-                Ext.Msg.alert('.: PRAXIS :.', 'The description total must not exceed 440 characters');
+            if (vl_razon.length > 420) {
+                Ext.Msg.alert('.: PRAXIS :.', 'The description total must not exceed 420 characters');
                 bvalida = false;
             }
         }
@@ -554,7 +554,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                 buttons: 3,
                 fn: function (btn) {
                     if (btn === 'yes') {
-
                         me.beanGuardar.IN_STATUS = Ext.getCmp(prototype.id01 + '-ComboEstatus').getValue();
                         me.beanGuardar.IN_PREME = Ext.getCmp(prototype.id01 + '-txtPreme').getValue();
                         me.beanGuardar.IN_A3389PAIS = Ext.getCmp(prototype.id01 + '-txtCOUNTRY').getValue();
