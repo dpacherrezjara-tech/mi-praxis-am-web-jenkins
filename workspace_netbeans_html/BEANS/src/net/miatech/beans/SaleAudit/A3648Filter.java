@@ -41,6 +41,9 @@ public class A3648Filter extends A3648 {
     public double IN_TARIF = 0;
     public double IN_TTAX = 0;
     public double IN_TOTALRFND = 0;
+    public double IN_TARIFEQUI=0;
+    public double IN_COMMI=0;
+    public String IN_MDAEQUI="";
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
 
