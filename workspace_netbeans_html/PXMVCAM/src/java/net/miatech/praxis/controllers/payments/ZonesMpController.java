@@ -97,7 +97,7 @@ public class ZonesMpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX598SQP04543(filter);
+            lst = logic.loadPX600SQP04543(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -147,7 +147,7 @@ public class ZonesMpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX598SQP04544(filter);
+            lst = logic.loadPX600SQP04544(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -170,7 +170,7 @@ public class ZonesMpController extends BaseController {
         logic = new ZonesMpLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX598SQP04545(filter);
+            result = logic.loadPX600SQP04545(filter);
             map.put("result", result);
             map.put("success", true);
         } catch (Exception ex) {
@@ -199,7 +199,7 @@ public class ZonesMpController extends BaseController {
 
             logic = new ZonesMpLogic();
             logic.setSession(this.serverSession.getServerSession());
-            msj = logic.loadPX598SQP04521(filter, option);
+            msj = logic.loadPX600SQP04521(filter, option);
 
             map.put("success", true);
             map.put("Mensaje", msj);

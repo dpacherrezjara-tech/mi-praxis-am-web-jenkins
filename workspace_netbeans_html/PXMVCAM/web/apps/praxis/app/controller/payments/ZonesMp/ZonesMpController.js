@@ -87,23 +87,23 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.ZonesMpController', {
     },
     obtainData: function() {
       
-        Ext.Ajax.request({
-            url: prototype.url + '/getCodes',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(this.dataObtain)},
-            success: function(response, options) {
-                var res = Ext.JSON.decode(response.responseText);             
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbCodes').bindStore(
-                        Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                    );
-                    Ext.getCmp(prototype.id + '-cmbCodes').setValue('');
-                    me.btnSearch_click();
-                } else
-                    global.Msg({msg: res.sesion});
-            }
-        });
+//        Ext.Ajax.request({
+//            url: prototype.url + '/getCodes',
+//            method: 'POST',
+//            timeout: 60000000,
+//            params: {beanString: JSON.stringify(this.dataObtain)},
+//            success: function(response, options) {
+//                var res = Ext.JSON.decode(response.responseText);             
+//                if (res.success) {
+//                    Ext.getCmp(prototype.id + '-cmbCodes').bindStore(
+//                        Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+//                    );
+//                    Ext.getCmp(prototype.id + '-cmbCodes').setValue('');
+//                    me.btnSearch_click();
+//                } else
+//                    global.Msg({msg: res.sesion});
+//            }
+//        });
         
     },
     setFormatParameter: function() {

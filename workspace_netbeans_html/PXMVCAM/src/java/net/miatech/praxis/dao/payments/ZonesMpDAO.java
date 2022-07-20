@@ -43,7 +43,7 @@ public class ZonesMpDAO {
         session = ss;
     }
 
-    public List<A4170Filter> loadPX598SQP04543(A4170Filter filter) throws SQLException, Exception {
+    public List<A4170Filter> loadPX600SQP04543(A4170Filter filter) throws SQLException, Exception {
 
         List<A4170Filter> lstData = new ArrayList<A4170Filter>(0);
         A4170Filter bean;
@@ -140,7 +140,7 @@ public class ZonesMpDAO {
         return lstData;
     }
 
-    public List<A4170Filter> loadPX598SQP04544(A4170Filter filter) throws SQLException, Exception {
+    public List<A4170Filter> loadPX600SQP04544(A4170Filter filter) throws SQLException, Exception {
 
         List<A4170Filter> lstTkts = new ArrayList<A4170Filter>(0);
         A4170Filter beanTkt;
@@ -200,7 +200,7 @@ public class ZonesMpDAO {
         return lstTkts;
     }
 
-    public A4170 loadPX598SQP04545(A4170Filter filter) throws SQLException, Exception {
+    public A4170 loadPX600SQP04545(A4170Filter filter) throws SQLException, Exception {
 
         A4170 beanTkt = new A4170();
         CallableStatement cstmt01 = null;
@@ -271,7 +271,7 @@ public class ZonesMpDAO {
         return beanTkt;
     }
 
-    public String loadPX598SQP04521(A4170 filter, String option) throws SQLException, Exception {
+    public String loadPX600SQP04521(A4170 filter, String option) throws SQLException, Exception {
         String strMsj = "Operation was successful.";
 
         CallableStatement cstmt = null;

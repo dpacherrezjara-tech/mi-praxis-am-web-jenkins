@@ -15,19 +15,19 @@ public class ZonesMpLogic {
         ZonesMpDAO.setSession(ss);
     }
 
-    public List<A4170Filter> loadPX598SQP04543(A4170Filter filter) throws SQLException, Exception {
-        return ZonesMpDAO.loadPX598SQP04543(filter);
+    public List<A4170Filter> loadPX600SQP04543(A4170Filter filter) throws SQLException, Exception {
+        return ZonesMpDAO.loadPX600SQP04543(filter);
     }
     
-    public List<A4170Filter> loadPX598SQP04544(A4170Filter filter) throws SQLException, Exception {
-        return ZonesMpDAO.loadPX598SQP04544(filter);
+    public List<A4170Filter> loadPX600SQP04544(A4170Filter filter) throws SQLException, Exception {
+        return ZonesMpDAO.loadPX600SQP04544(filter);
     }
     
-    public A4170 loadPX598SQP04545(A4170Filter filter) throws SQLException, Exception {
-        return ZonesMpDAO.loadPX598SQP04545(filter);
+    public A4170 loadPX600SQP04545(A4170Filter filter) throws SQLException, Exception {
+        return ZonesMpDAO.loadPX600SQP04545(filter);
     }
     
-    public String loadPX598SQP04521(A4170 filter, String option) throws SQLException, Exception {
-        return ZonesMpDAO.loadPX598SQP04521(filter, option);
+    public String loadPX600SQP04521(A4170 filter, String option) throws SQLException, Exception {
+        return ZonesMpDAO.loadPX600SQP04521(filter, option);
     }
 }
