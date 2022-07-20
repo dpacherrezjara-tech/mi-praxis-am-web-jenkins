@@ -1,14 +1,14 @@
 
-prototype.id = 'RFNDQuery';
-prototype.id01 = 'DetailRefundQueryRFND';
-prototype.id2 = 'DetailTicket';
-prototype.id3 = 'RFNDAddTax';
+prototype.id = 'RFNDQueryespeciales';
+//prototype.id01 = 'DetailRefundQueryRFND';
+prototype.idDetailTicket = 'DetailTicket';
+prototype.idRFNDFormRazones = 'FNDFormRazones';
 prototype.id05 = 'RFNDFileViewer';
-prototype.id4 = 'DetailTicketHistory';
+prototype.idDetailTicketHistory = 'DetailTicketHistory';
 prototype.url02 = CONTEXTPATH + '/RFNDPending';
 prototype.url01 = CONTEXTPATH + '/RFNDQuery';
 prototype.url3 = CONTEXTPATH + '/RFNDUserMaintenance';
-prototype.widthWindow = 1366;
+prototype.widthWindow = 1400;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
@@ -16,13 +16,13 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
     alias: 'widget.RFNDQuery',
     requires: [
         'Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController',
-        'Ext.Praxis.view.salesaudit.RFNDQuery.DetailRefundQueryRFND',
+        //'Ext.Praxis.view.salesaudit.RFNDQuery.DetailRefundQueryRFND',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket',
         'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDAddTax',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory'
     ],
     controller: 'RFNDQueryController',
-    id: prototype.id + '-Contenedor',
+    id: prototype.idRFNDQueryespeciales + '-Contenedor',
     layout: {
         type: 'vbox',
         align: 'center'
@@ -39,12 +39,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id + '-contenedor-form',
-            width: 1366,
+            id: prototype.idRFNDQueryespeciales + '-contenedor-form',
+            width: prototype.widthWindow,
             items: [
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-contenedor-options',
+                    id: prototype.idRFNDQueryespeciales + '-contenedor-options',
                     border: false,
                     bodyStyle: 'background: transparent',
                     padding: '10px 5px 0px 5px',
@@ -62,22 +62,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                             },
                             items: [
                                 {
-                                    xtype: 'checkbox',
-                                    id: prototype.id + '-pagination',
-                                    boxLabel: 'Pagination?',
-                                    checked: true,
-                                    disabled: true,
-                                    listeners: {
-                                        change: 'onPaginationChkChange'
-                                    }
-                                },
-                                {
                                     xtype: 'Paginator',
-                                    id: prototype.id + '-pagginator-01',
+                                    id: prototype.idRFNDQueryespeciales + '-pagginator-01',
                                     pagInfo: [
-                                        prototype.id + '-lbl-currentPage',
-                                        prototype.id + '-lbl-pageCount',
-                                        prototype.id + '-lbl-total'
+                                        prototype.idRFNDQueryespeciales + '-lbl-currentPage',
+                                        prototype.idRFNDQueryespeciales + '-lbl-pageCount',
+                                        prototype.idRFNDQueryespeciales + '-lbl-total'
                                     ]
                                 }
                             ]
@@ -88,7 +78,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                             items: [
                                 {
                                     xtype: 'button',
-                                    id: prototype.id + '-btn-search',
+                                    id: prototype.idRFNDQueryespeciales + '-btnSearch',
                                     iconCls: 'prx-icon-search',
                                     tooltip: 'Search',
                                     listeners: {
@@ -97,16 +87,41 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.id + '-btn-filter',
-                                    iconCls: 'prx-icon-filter',
-                                    tooltip: 'Hidden/Show filter',
+                                    id: prototype.idRFNDQueryespeciales + '-btn-add',
+                                    iconCls: 'prx-icon-add',
+                                    tooltip: 'Add record',
                                     listeners: {
-                                        click: 'onFilterClick'
+                                        click: 'onAddClick'
                                     }
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.id + '-btn-excel',
+                                    id: prototype.id + '-Save_refresh',
+                                    icon: 'resources/img/icon/16x16/Save_refresh-16.png',
+                                    tooltip: 'Change massive from approved states',
+                                    listeners: {
+                                        click: 'img_clickHandler_save'
+                                    }
+                                },
+                                /*{
+                                 xtype: 'button',
+                                 id: prototype.idRFNDQueryespeciales + '-Save_List',
+                                 icon: 'resources/img/icon/16x16/task-save.png',
+                                 tooltip: 'Process Change massive states',
+                                 listeners: {
+                                 click: 'img_clickHandler_save_List'
+                                 }
+                                 },*/
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-btnFilter',
+                                    iconCls: 'prx-icon-filter',
+                                    tooltip: 'Display filter',
+                                    listeners: 'onFilterClick'
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-btnExcel',
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
@@ -115,12 +130,19 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.id + '-btn-clear',
+                                    id: prototype.idRFNDQueryespeciales + '-btnClear',
                                     iconCls: 'prx-icon-clear',
                                     tooltip: 'Clear Options',
                                     listeners: {
-                                        click: 'onClearClick'
+                                        click: 'btnClear_click'
                                     }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-btnBack',
+                                    iconCls: 'prx-icon-back',
+                                    tooltip: 'Back',
+                                    listeners: 'onClearClick'
                                 }
                             ]
                         }
@@ -128,171 +150,153 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                 },
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-contenedor-filters',
-                    bodyStyle: 'background-color: #E3EAF9;',
+                    id: prototype.idRFNDQueryespeciales + '-contenedor-filters',
+                    border: false,
                     defaults: {
-                        bodyStyle: 'background: transparent',
-                        border: false,
-                        padding: '5px'
+                        bodyStyle: 'background-color: #E3EAF9;',
+                        border: true,
+                        style: 'margin: 2px',
                     },
                     padding: '1px 5px 1px 5px',
                     items: [
                         {
-                            xtype: 'form',
-                            id: prototype.id + '-contenedor-filters-form',
+                            xtype: 'panel',
+                            layout: 'hbox',
                             defaults: {
-                                padding: '1px',
-                                bodyStyle: 'background: transparent'
+                                style: 'margin: 1px',
+                                bodyStyle: 'background: transparent',
+                                padding: '5px'
                             },
                             items: [
                                 {
+                                    xtype: 'label',
+                                    text: 'Select by:',
+                                    style: 'font-weight:bold;',
+                                    padding: '10 5 5 5',
+                                    width: 80
+                                },
+                                {
+                                    xtype: 'label',
+                                    style: 'color:red;font-size:13px;',
+                                    padding: '10 5 5 5',
+                                    text: '(*)',
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                , {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'combo',
+                                    //fieldLabel: 'Search Type',
+                                    id: prototype.idRFNDQueryespeciales + '-search-type',
+                                    labelAlign: 'left',
+                                    queryMode: 'local',
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    emptyText: '[SELECTED]',
+                                    //labelWidth: 75,
+                                    labelClsExtra: 'prx-label-search',
+                                    width: 120,
+                                    editable: false,
+                                    listConfig: {
+                                        minWidth: 200
+                                    },
+                                    listeners: {
+                                        afterrender: 'onCmbSearchAfterRender',
+                                        change: 'onCmbSearchChange'
+                                    }
+                                },
+                                {
                                     xtype: 'panel',
-                                    id: prototype.id + '-box-filter-01',
                                     layout: 'hbox',
-                                    border: true,
+                                    style: 'margin-left: 2px',
                                     defaults: {
-                                        // style: 'margin-left:1px',
-                                        padding: '5px 1px 5px 1px'
+                                        style: 'margin: 2px'
                                     },
                                     items: [
                                         {
-                                            xtype: 'combo',
-                                            fieldLabel: 'Search Type',
-                                            id: prototype.id + '-search-type',
-                                            labelAlign: 'left',
-                                            queryMode: 'local',
-                                            valueField: 'code',
-                                            displayField: 'name',
-                                            emptyText: '[SELECTED]',
-                                            labelWidth: 75,
-                                            labelClsExtra: 'prx-label-search',
-                                            width: 275,
-                                            editable: false,
-                                            listConfig: {
-                                                minWidth: 200
-                                            },
-                                            listeners: {
-                                                afterrender: 'onCmbSearchAfterRender',
-                                                change: 'onCmbSearchChange'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtIATA',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
-                                            maxLength: 8,
-                                            enforceMaxLength: 8,
-                                            width: 100,
-                                            hideLabel: true,
-                                            enableKeyEvents: true,
-                                            hidden: true
-                                        },
-                                        {
                                             xtype: 'datefield',
-                                            id: prototype.id + '-txtFilterDateFrom',
-                                            fieldLabel: 'From',
+                                            id: prototype.idRFNDQueryespeciales + '-txtFilterDateFrom',
                                             format: 'Y/m/d',
-                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
-                                            value: Ext.Date.format(new Date(), 'Y/m/d'),
+                                            fieldLabel: 'From:',
                                             labelWidth: 40,
                                             labelAlign: 'right',
+                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
+                                            value: Ext.Date.format(new Date(), 'Y/m/d'),
                                             width: 135,
-                                            hidden: true,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id + '-txtFilterDateTo',
-                                            fieldLabel: 'To',
+                                            id: prototype.idRFNDQueryespeciales + '-txtFilterDateTo',
                                             format: 'Y/m/d',
+                                            fieldLabel: 'To:',
+                                            labelWidth: 30,
+                                            labelAlign: 'right',
                                             maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
                                             value: Ext.Date.format(new Date(), 'Y/m/d'),
-                                            labelWidth: 40,
-                                            labelAlign: 'right',
-                                            width: 135,
-                                            hidden: true,
+                                            width: 125,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-txthora1',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
-                                            fieldLabel: 'Start hour',
-                                            labelAlign: 'right',
-                                            labelWidth: 60,
-                                            width: 100,
-                                            hidden: true,
-                                            listeners: {
-                                                specialkey: 'onSearchkey'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txthora2',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
-                                            fieldLabel: 'End hour',
-                                            labelAlign: 'right',
-                                            labelWidth: 60,
-                                            width: 100,
-                                            hidden: true,
-                                            listeners: {
-                                                specialkey: 'onSearchkey'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtCia',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
+                                            id: prototype.idRFNDQueryespeciales + '-txtCia',
                                             hideLabel: true,
-                                            value: '139',
+                                            maskRe: /[0-9]/,
                                             maxLength: 3,
                                             enforceMaxLength: 3,
                                             width: 35,
+                                            value: '139',
                                             hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-txtFrmaSerie',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
+                                            id: prototype.idRFNDQueryespeciales + '-txtFrmaSerie',
                                             hideLabel: true,
-                                            width: 80,
-                                            hidden: true,
+                                            maskRe: /[0-9]/,
                                             maxLength: 10,
                                             enforceMaxLength: 10,
+                                            width: 80,
+                                            hidden: true,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-txtSeq',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
+                                            id: prototype.idRFNDQueryespeciales + '-txtFrmaFolio',
                                             hideLabel: true,
-                                            width: 30,
-                                            maxLength: 2,
-                                            enforceMaxLength: 2,
-                                            hidden: true
+                                            maskRe: /[0-9]/,
+                                            maxLength: 30,
+                                            enforceMaxLength: 30,
+                                            width: 90,
+                                            hidden: true,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-txtNumber',
-                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
-                                            hideLabel: true,
-                                            width: 80,
-                                            hidden: true,
-                                            maxLength: 10,
-                                            enforceMaxLength: 10,
+                                            id: prototype.idRFNDQueryespeciales + '-txtIATA',
+                                            width: 140,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 8,
+                                            enforceMaxLength: 8,
+                                            enableKeyEvents: true,
+                                            fieldLabel: 'IATA',
+                                            labelWidth: 40,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id + '-CmbStatus',
+                                            id: prototype.idRFNDQueryespeciales + '-CmbStatus',
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -304,43 +308,31 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                             listConfig: {
                                                 minWidth: 200
                                             },
-                                            hidden: true,
                                             listeners: {
-                                                afterrender: 'onCmbStatusAfterRender',
-                                                change: 'onCmbStatusChange'
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id + '-box-filter-02',
-                                    layout: 'hbox',
-                                    style: 'padding: 0px',
-                                    border: true,
-                                    hidden: true,
-                                    defaults: {
-                                        // style: 'margin-left:1px'
-                                        padding: '5px 1px 5px 1px'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-cmbCountry',
-                                            fieldLabel: 'Country',
-                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                                            maxLength: 2,
-                                            enforceMaxLength: 2,
-                                            labelWidth: 50,
-                                            width: 110,
-                                            listeners: {
-                                                specialkey: 'onSearchkey',
-                                                change: 'onchange'
+                                                afterrender: 'onCmbStatusAfterRender'
                                             }
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id + '-txtUser',
+                                            id: prototype.idRFNDQueryespeciales + '-CmbStatusBPO',
+                                            fieldLabel: 'BPO',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 200,
+                                            labelWidth: 50,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idRFNDQueryespeciales + '-CmbAudit',
                                             fieldLabel: 'Auditor',
                                             queryMode: 'local',
                                             displayField: 'A3389REGAS',
@@ -353,115 +345,391 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                                 minWidth: 200
                                             }
                                         }
+                                        //{xtype: 'textfield', id: prototype.idRFNDQueryespeciales + '-txtUser', hidden: true}
                                     ]
                                 }
                             ]
                         }
                     ]
                 },
+
                 {
                     xtype: 'panel',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'center'
-                    },
-                    border: true,
+                    border: false,
                     bodyStyle: 'background-color: #E3EAF9;',
                     defaults: {
-                        border: false,
                         padding: '0px 5px 0px 5px'
                     },
                     padding: '1px 5px 1px 5px',
                     items: [
                         {
                             xtype: 'grid',
-                            id: prototype.id + '-grid',
+                            id: prototype.idRFNDQueryespeciales + '-gridCabe',
                             columnLines: true,
                             autoScroll: true,
-                            width: 1360,
-                            height: 480,
+                            height: 250,
+                           /* selModel: {
+                                selType: 'checkboxmodel',
+                                listeners: {
+                                    beforeselect: function (grid, record, index, eOpts, metaData) {
+
+                                        if (record.get('CANTPEN') > 0) {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+
+                                    }
+                                }
+
+                            },*/
+                            features: [{
+                                    //id: 'group',
+                                    ftype: 'groupingsummary',
+                                    groupHeaderTpl: '{name}',
+                                    hideGroupedHeader: false,
+                                    enableGroupingMenu: false
+                                }, {
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
                             columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center'
+                                },
                                 items: [
-                                    {
-                                        text: 'Origin',
-                                        dataIndex: 'A3647MODO',
-                                        width: 80
-                                    }, {
-                                        text: 'Area',
-                                        dataIndex: 'A3647AREA',
-                                        width: 100
-                                    }, {
-                                        text: 'Folio',
-                                        dataIndex: 'A3647FOLIO',
-                                        width: 80
+                                    {text: 'Folio', dataIndex: 'A3647FOLIO', width: 150, align: 'center', renderer: 'onRendererColumnOnPreme'},
+                                    {text: 'System <br> date', dataIndex: 'A3647FREGI', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Auditor', dataIndex: 'A3647REGAS', width: 100},
+                                    {text: 'Zone', dataIndex: 'A3647COCD', width: 130, renderer: 'onRendererColumnTYPE'},
+                                    {text: 'Ticket Qty',
+                                        columns: [
+                                            {text: 'Request',
+                                                columns: [
+                                                    {
+                                                        text: 'Pend',
+                                                        dataIndex: 'CANTPE',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Aut',
+                                                        dataIndex: 'CANTOK',
+                                                        width: 70,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Reje',
+                                                        dataIndex: 'CANTKO',
+                                                        width: 70,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALCANT',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Change of status',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'STOEN',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Ret.',
+                                                        dataIndex: 'STORET',
+                                                        width: 70,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALSTO',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    }]
+                                            },
+                                            {text: 'BPO',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'BPOOK',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Error',
+                                                        dataIndex: 'BPOKO',
+                                                        width: 70,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALBPO',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    }]
+                                            }
+                                        ]
+
+
                                     },
-                                    {
-                                        text: 'Qty TKT',
-                                        dataIndex: 'A3647CANTIDAD',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Application </br>date',
-                                        dataIndex: 'A3647FAPPI',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Authorise/</br>Reject date',
-                                        dataIndex: 'A3647FAUTO',
-                                        width: 75
-                                    },
-                                    {
-                                        text: 'Time',
-                                        dataIndex: 'A3647HAUTO',
-                                        width: 50
-                                    },
-                                    {
-                                        text: 'Country',
-                                        dataIndex: 'A3647PAIS',
-                                        width: 60
-                                    },
-                                    {
-                                        text: 'Cur.',
-                                        dataIndex: 'A3647MDA',
-                                        width: 40
-                                    },
-                                    {
-                                        text: 'Net',
-                                        dataIndex: 'A3647NETO',
-                                        width: 70,
-                                        align: 'right'
-                                    },
-                                    {
-                                        text: 'Description',
-                                        dataIndex: 'A3647RAAG',
-                                        flex: 1,
-                                        align: 'left',
-                                        renderer: 'onRendererColumnReason'
-                                    },
-                                    {
-                                        text: 'Auditor',
-                                        dataIndex: 'A3647REGAS',
-                                        width: 90
-                                    },
-                                    {
-                                        text: 'Sales audit',
-                                        dataIndex: 'A3647STATO',
-                                        flex: 1,
-                                        align: 'left'
-                                    },
-                                    {
-                                        text: 'Status',
-                                        dataIndex: 'A3647FLAG',
-                                        width: 150,
-                                        renderer: 'onRendererColumnStatus'
+                                    {text: 'Ticket Amount',
+                                        columns: [
+                                            {text: 'Request',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'SUMAOK',
+                                                        width: 130,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                    }
+                                                ]
+                                            }
+
+                                        ]
+
+
                                     },
                                     {
                                         text: 'Days',
                                         dataIndex: 'A3647DIAS',
                                         width: 45
                                     },
+                                    //{text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatuscab'},
+                                    {text: '', dataIndex: '', width: 60, renderer: 'onRendererColumnOnCab'}
+
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'panel',
+                            iid: prototype.idRFNDQueryespeciales + '-pagginator-legend',
+                            layout: {
+                                type: 'hbox',
+                                pack: 'center'
+                            },
+                            border: true,
+                            bodyStyle: 'background-color: transparent;',
+                            defaults: {
+                                border: false,
+                                padding: '0px 5px 0px 5px'
+                            },
+                            padding: '1px 5px 1px 5px',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    width: prototype.widthContenedor,
+                                    height: 25,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        margin: '3px 0px 0px 5px'
+                                    },
+                                    items: [
+                                        {
+                                            text: 'Page',
+                                            width: 50
+                                        },
+                                        {
+                                            id: prototype.idRFNDQueryespeciales + '-lbl-currentPage',
+                                            text: '1',
+                                            width: 50
+                                        },
+                                        {
+                                            text: 'Of',
+                                            width: 50
+                                        },
+                                        {
+                                            id: prototype.idRFNDQueryespeciales + '-lbl-pageCount',
+                                            text: '0',
+                                            width: 50
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            text: 'Total found',
+                                            width: 80
+                                        },
+                                        {
+                                            id: prototype.idRFNDQueryespeciales + '-lbl-total',
+                                            text: '0',
+                                            width: 50
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'toolbar',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.idRFNDQueryespeciales + '-panelFilter1',
+                                    hidden: true,
+                                    width: 500, border: false,
+                                    layout: 'column',
+                                    items: [
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idRFNDQueryespeciales + '-de-cmbOptionTKT',
+                                            margin: '5 0 5 0',
+                                            fieldLabel: 'Search By',
+                                            width: 180,
+                                            labelWidth: 70,
+                                            labelAlign: 'left',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender2',
+                                                change: 'onChangeComboTkt'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            margin: '5 0 5 5',
+                                            id: prototype.idRFNDQueryespeciales + '-de-txtTKT',
+                                            //hidden: true,
+                                            fieldLabel: '',
+                                            width: 110,
+                                            labelWidth: 10,
+                                            enableKeyEvents: true,
+                                            labelAlign: 'left',
+                                            //padding: '1px 5px 0px 10',
+                                            enforceMaxLength: true,
+                                            maxLength: 13,
+                                            maskRe: /[0-9]/,
+                                            listeners: {
+                                                keypress: 'onTextKeypress'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            margin: '5 0 5 5',
+                                            id: prototype.idRFNDQueryespeciales + '-de-txtIata',
+                                            hidden: true,
+                                            fieldLabel: '',
+                                            width: 80,
+                                            labelWidth: 10,
+                                            enableKeyEvents: true,
+                                            labelAlign: 'left',
+                                            //padding: '1px 5px 0px 10',
+                                            enforceMaxLength: true,
+                                            maxLength: 8,
+                                            maskRe: /[0-9]/,
+                                            listeners: {
+                                                keypress: 'onTextKeypress'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {xtype: 'tbspacer', hidden: true, id: prototype.idRFNDQueryespeciales + '-tbspacer1', width: 600},
+                                {xtype: 'tbspacer', id: prototype.idRFNDQueryespeciales + '-tbspacer2', width: 1100},
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-btnSearch1',
+                                    iconCls: 'prx-icon-search',
+                                    tooltip: 'Search',
+                                    listeners: {
+                                        click: 'onClickBtnSearch'
+                                    }
+
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-btnFilter1',
+                                    iconCls: 'prx-icon-filter',
+                                    tooltip: 'Display filter',
+                                    listeners: {
+                                        click: 'onClickBtnFilter'
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-Save_List',
+                                    icon: 'resources/img/icon/16x16/task-save.png',
+                                    tooltip: 'Process Change massive states',
+                                    listeners: {
+                                        click: 'img_clickHandler_save_List'
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    id: prototype.idRFNDQueryespeciales + '-btnExcel2',
+                                    iconCls: 'prx-icon-excel',
+                                    tooltip: 'Export to Excel',
+                                    listeners: {
+                                        click: 'onExcelClick2'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'grid', title: 'TICKET DETAIL',
+                            id: prototype.idRFNDQueryespeciales + '-grid',
+                            columnLines: true,
+                            autoScroll: true,
+                            //width: 1260,
+                            height: 350,
+                            /*selModel: {
+                                selType: 'checkboxmodel',
+                                listeners: {
+                                    beforeselect: function (grid, record, index, eOpts, metaData) {
+
+                                        if (Ext.String.trim(record.get('A4076FLAG')) === 'Y' || Ext.String.trim(record.get('A4076FLAG')) === 'U') {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+
+                                    }
+                                }
+
+                            },*/
+                            columns: {
+                                items: [
+                                    {text: 'System<br>Date', dataIndex: 'A3648FREGI', width: 70},
+                                    {text: 'Issue<br>Date', dataIndex: 'A3648XFSAL', width: 70},
+                                    {text: 'Zone', dataIndex: 'A3648COCD', width: 120},//renderer: 'onRendererColumnTYPE'
+                                    {text: 'Area', dataIndex: 'A3648ARCD', width: 70},// renderer: 'onRendererColumnBase'
+                                    {text: 'Ticket', dataIndex: 'A3648TICKET', width: 120},
+                                    {text: 'CPN', dataIndex: 'A3648CPN', width: 40},
+                                    {text: 'Country', dataIndex: 'A3648SPVTA', width: 60},
+                                    {text: 'IATA', dataIndex: 'A3648SIATA', width: 65},
+                                    {text: 'Agency', dataIndex: 'A3648AGENCY', width: 275, align: 'left', renderer: 'onRendererColumnAttr'},
+                                    {text: 'Transc.', dataIndex: 'A3648STRCU', width: 80},
+                                    {text: 'Tdoc', dataIndex: 'A3648STDOC', width: 80},
+                                    {text: 'Cur.', dataIndex: 'A3648MDA', width: 40},
+                                    {text: 'Fare', dataIndex: 'A3648TARID', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Tax', dataIndex: 'A3648TTAXD', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Commi.', dataIndex: 'A3648COMID', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto<br>RFND', dataIndex: 'A3648TOTAD', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto<br>Praxis', dataIndex: 'A3648STOTL', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto<br>XML', dataIndex: 'A3648XTOTL', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Status', dataIndex: 'A3648FLAG', width: 200, renderer: 'onRendererColumnStatus'},
+                                    {text: 'BPO', dataIndex: 'A3648STATO', width: 200},
+                                    {text: 'Group', dataIndex: 'A3648GRUPO', width: 90},
                                     {
-                                        text: 'On time',
+                                        text: '',
                                         dataIndex: '',
                                         width: 60,
                                         renderer: 'onRendererColumnOnTime'
@@ -478,19 +746,9 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                                 handler: 'onDetailClick'
                                             }
                                         ]
-                                    }, {
-                                        sortable: false,
-                                        xtype: 'actioncolumn',
-                                        width: 50,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-image-process',
-                                                tooltip: 'Update',
-                                                handler: 'onUpdateClick'
-                                            }
-                                        ]
                                     }
+
+
                                 ],
                                 defaults: {
                                     sortable: true,
@@ -499,68 +757,50 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                 }
                             },
                             viewConfig: {
-                                // trackOver: false,
+                                //trackOver: false,
                                 stripeRows: true,
                                 enableTextSelection: true
                             }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    id: prototype.id + '-pagginator-legend',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'center'
-                    },
-                    border: true,
-                    bodyStyle: 'background-color: transparent;',
-                    defaults: {
-                        border: false,
-                        padding: '0px 5px 0px 5px'
-                    },
-                    padding: '1px 5px 1px 5px',
-                    items: [
+                        },
                         {
                             xtype: 'panel',
-                            width: prototype.widthContenedor,
-                            height: 25,
+                            iid: prototype.idRFNDQueryespeciales + '-pagginator-legend2',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
                             },
+                            border: true,
+                            bodyStyle: 'background-color: transparent;',
                             defaults: {
-                                xtype: 'label',
-                                margin: '3px 0px 0px 5px'
+                                border: false,
+                                padding: '0px 5px 0px 5px'
                             },
+                            padding: '1px 5px 1px 5px',
                             items: [
                                 {
-                                    text: 'Page',
-                                    width: 50
-                                },
-                                {
-                                    id: prototype.id + '-lbl-currentPage',
-                                    text: '1',
-                                    width: 50
-                                },
-                                {
-                                    text: 'Of',
-                                    width: 50
-                                },
-                                {
-                                    id: prototype.id + '-lbl-pageCount',
-                                    text: '0',
-                                    width: 50
-                                },
-                                {xtype: 'tbspacer', width: 100},
-                                {
-                                    text: 'Total found',
-                                    width: 80
-                                },
-                                {
-                                    id: prototype.id + '-lbl-total',
-                                    text: '0',
-                                    width: 50
+                                    xtype: 'panel',
+                                    width: prototype.widthContenedor,
+                                    height: 25,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        margin: '3px 0px 0px 5px'
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            text: 'Total found',
+                                            width: 80
+                                        },
+                                        {
+                                            id: prototype.idRFNDQueryespeciales + '-lbl-total2',
+                                            text: '0',
+                                            width: 50
+                                        }
+                                    ]
                                 }
                             ]
                         }
