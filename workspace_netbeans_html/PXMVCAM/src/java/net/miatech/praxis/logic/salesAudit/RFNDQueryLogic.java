@@ -28,6 +28,9 @@ public class RFNDQueryLogic {
     public List<A3647Filter> SearchReportQueryRFND(A3647Filter filter) throws SQLException, Exception {
         return objDAO.SearchReportQueryRFND(filter);
     }
+     public List<A3648Filter> searchDetail(A3648Filter filter) throws SQLException, Exception {
+        return objDAO.searchDetail(filter);
+    }
 
     public A3647Filter SearchQueryRFNDetail(A3647Filter filter) throws SQLException, Exception {
         return objDAO.SearchQueryRFNDetail(filter);
