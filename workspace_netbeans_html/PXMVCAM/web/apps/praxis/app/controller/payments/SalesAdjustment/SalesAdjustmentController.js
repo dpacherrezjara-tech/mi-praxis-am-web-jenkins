@@ -336,9 +336,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
     },
     onEditClick: function(grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry('U', rec);
+        var all = grid.getStore();
+        this.winDataEntry('U', rec, all, rowIndex);
     },
-    winDataEntry: function(action, rec) {
+    winDataEntry: function(action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;       
         
@@ -347,7 +348,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             params: {
                 action: action,
                 rec: rec,
-                lstCountry:me.lstCountry
+                all: all,
+                rowIndex: rowIndex
             }
         }).show();
     },
