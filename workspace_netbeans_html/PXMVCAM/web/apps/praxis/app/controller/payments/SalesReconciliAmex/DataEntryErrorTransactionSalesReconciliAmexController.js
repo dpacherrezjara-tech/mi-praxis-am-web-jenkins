@@ -689,13 +689,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFromDate', '');
     },
     resetScan_keyDownHandler: function () {
+        //Limpiando campos
         this.setValue('input-txtTKTScan', '');
         this.setValue('txtCard1', '');
         this.setValue('txtCard2', '');
         this.setValue('txtApproval', '');
         this.setValue('txtFromDate', '');
+        //Limpiando listas
+        this.lstSendManual = [];
+        this.lstBlocked = [];
+        this.lstAdjustment = [];
+        //Limpiar grilla Scan
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        //Limpiar grilla Bloqueados
+        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
+        //Limpiar grilla ajustes
+        Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataAdjustment').getView().refresh();
+        //Ocultando sección de ajustes
+        Ext.getCmp(prototype.id + '-panelADJ').hide();
+        Ext.getCmp(prototype.id + '-gridDataAdjustment').hide();
+        //Reiniciando Scan
         this.getBreakdownDataGrid();
     },
     txtTKTScan_keyDownHandler: function (e, eOpts) {
@@ -992,18 +1008,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.calcularMontos();
     },
     eventKeyAdjustment: function (e, eOpts) {
+        console.log(e);
+        console.log(isNaN(e.value))
+        console.log(e.originalValue);
         if (eOpts.getKey() === 13) {
-            /*console.log(meDE.gridAdjustmentRowIndex);
-             var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
-             console.log(store_gridDataAdjustment.data.items[0].data.A1531VFOP);
-             console.log(store_gridDataAdjustment.data.items[0].data.A1531TKT);*/
+            if (isNaN(e.value)) {
+                global.Msg({msg: 'Not a number.'});
+                this.lstAdjustment[meDE.gridAdjustmentRowIndex].A1531VFOP = parseFloat(e.originalValue);
+                this.lstAdjustment[meDE.gridAdjustmentRowIndex].tot_VFOP = parseFloat(e.originalValue);
+            } else {
+                /*console.log(meDE.gridAdjustmentRowIndex);
+                 var store_gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+                 console.log(store_gridDataAdjustment.data.items[0].data.A1531VFOP);
+                 console.log(store_gridDataAdjustment.data.items[0].data.A1531TKT);*/
 
-            this.lstAdjustment[meDE.gridAdjustmentRowIndex].A1531VFOP = parseFloat(e.value);
-            this.lstAdjustment[meDE.gridAdjustmentRowIndex].tot_VFOP = parseFloat(e.value);
+                this.lstAdjustment[meDE.gridAdjustmentRowIndex].A1531VFOP = parseFloat(e.value);
+                this.lstAdjustment[meDE.gridAdjustmentRowIndex].tot_VFOP = parseFloat(e.value);
 
-            /*Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-             Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
-             );*/
+                /*Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                 Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                 );*/
+            }
+
             this.calcularMontos();
         }
     },
@@ -1051,8 +1077,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             fecha_a_validar = this.getValue("de-txtBSUMDATE");
         }
 
-        var cc1 = this.getValue("de-txtSCARDN").substr(0,6);
-        var cc2 = this.getValue("de-txtSCARDN").substr(11,4);
+        var cc1 = this.getValue("de-txtSCARDN").substr(0, 6);
+        var cc2 = this.getValue("de-txtSCARDN").substr(11, 4);
         var approval = this.getValue("de-txtSAUTHOC");
         var sales_date = fecha_a_validar;
         //var tkt = this.getValue("input-txtTKTScan");
@@ -1095,24 +1121,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                         }
                         console.log(flag_blocked);
                         /*if (flag_blocked) {
-                            global.Msg({msg: 'There are some blocked tickets'});
-                        }*/
+                         global.Msg({msg: 'There are some blocked tickets'});
+                         }*/
                     }
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
                 }
 
                 /*Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
-                        Ext.create('Ext.data.Store', {data: meDE.lstSendManual, autoLoad: true})
-                        );
-                Ext.getCmp(prototype.id + '-gridDataInfoBlocked').bindStore(
-                        Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
-                        );*/
-                
+                 Ext.create('Ext.data.Store', {data: meDE.lstSendManual, autoLoad: true})
+                 );
+                 Ext.getCmp(prototype.id + '-gridDataInfoBlocked').bindStore(
+                 Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
+                 );*/
+
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
                         Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
                         );
-                
+
                 //meDE.calcularMontos();
             }
         });

@@ -620,8 +620,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtCard2', '');
         this.setValue('txtApproval', '');
         this.setValue('txtFromDate', '');
+        this.lstSendManual = [];
+        this.lstBlocked = [];
+         //Limpiar grilla Scan
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        //Limpiar grilla Bloqueados
+        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
+        //Reiniciando Scan
         this.getBreakdownDataGrid();
     },
     txtTKTScan_keyDownHandler: function (e, eOpts) {
