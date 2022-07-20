@@ -1320,11 +1320,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAdjustment',
-                                    width: 782,
+                                    width: 952,
                                     height: 60,
                                     hidden: true,
                                     columnLines: true,
-                                    margin: '0 2 0 100',
+                                    //margin: '0 2 0 100',
                                     plugins: [
                                         {
                                             ptype: 'cellediting',
@@ -1340,6 +1340,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                         },
                                         items: [
                                             {text: 'Status', dataIndex: 'STMANUAL', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    value = 'Adjustment';
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Doc.<br>Type', dataIndex: 'descTDOC', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     value = 'Adjustment';
@@ -1455,6 +1462,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
+                                            {text: '', dataIndex: '', width: 40,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return '';
+                                                }
+                                            },
+                                            {text: '', dataIndex: '', width: 30,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return '';
+                                                }
+                                            },
+                                            {text: '', dataIndex: '', width: 40,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return '';
+                                                }
+                                            },
+                                            
                                             /*{text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
                                              renderer: function (value, meta, record, row, col) {
                                              meta.style = "background-color:#fae2a0;";
