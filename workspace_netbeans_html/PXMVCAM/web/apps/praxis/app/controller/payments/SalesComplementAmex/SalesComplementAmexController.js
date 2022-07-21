@@ -155,7 +155,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     },
     btnSearch_click: function (obj, e) {
         console.log('SEARCH');
-        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
         var stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
         console.log(selectedValue);
         console.log(stval);
@@ -361,7 +361,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     rbChangeType: function () {
 
         var cmbFindByFAMEX = Ext.getCmp(prototype.id + '-cmbFindByFAMEX');
-        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
         var stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
         console.log(selectedValue);
         
