@@ -25,10 +25,10 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     },
     afterRender: function () {
 //        console.log('afterRender');
-        this.obtainData();
+        //this.obtainData();
         switch (this.actionCode) {
             case 'I':
-                this.setearCamposClave();
+                //this.setearCamposClave();
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                 break;
             case 'U':
                 this.getData();
-                this.DeshabilitarCampoClave();
+                //this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').show();
@@ -45,18 +45,10 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
         }
     },
     mostrarData: function () {
-        console.log(meDE.beanResult);
-        this.setValue('de-txtCodeTable', this.beanResult.TTABLA);
-        this.setValue('de-txtCTable', this.beanResult.CODETB);
-        this.copia = this.getValue('de-txtCTable');
-        this.setValue('de-txtCDesc1', this.beanResult.DESCRE1);
-        this.setValue('de-txtCDesc2', this.beanResult.DESCRE2);
-        this.setValue('cmbDoc', this.beanResult.TDOC);
-//        this.setValue('de-txtCant1', this.beanResult.CANT1);
-//        this.setValue('de-txtCant2', this.beanResult.CANT2);
-        this.setValue('de-txtINI', this.beanResult.DATINI);
-        this.setValue('de-txtFIN', this.beanResult.DATFIN);
-        this.setValue('cmbStval', this.beanResult.STVAL);
+        this.setValue('de-txtZONE', this.beanResult.ZONA);
+        this.setValue('de-txtCOUNT', this.beanResult.PAIS);
+        this.setValue('de-txtINSUM', this.beanResult.INSUMP);
+        this.setValue('de-txtDESC', this.beanResult.DESCRE);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -95,32 +87,22 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-        beanTemp.TTABLA = this.getValue("de-txtCodeTable");
-        beanTemp.CODETB = this.getValue("de-txtCTable");
-        beanTemp.CODETBCO = this.copia;
-        beanTemp.DESCRE1 = this.getValue("de-txtCDesc1");
-        beanTemp.DESCRE2 = this.getValue("de-txtCDesc2");
-        beanTemp.TDOC = this.getValue("cmbDoc");
-//        beanTemp.CANT1 = this.getValue("de-txtCant1");
-//        var a =  this.getValue("de-txtCant1");
-//        if( a === ''){
-//            beanTemp.CANT1 = 0;
-//        }
-//        beanTemp.CANT2 = this.getValue("de-txtCant2");
-//        var b =  this.getValue("de-txtCant1");
-//        if( b === ''){
-//            beanTemp.CANT1 = 0;
-//        }
-        beanTemp.DATINI = this.getValue("de-txtINI");
-        beanTemp.DATFIN = this.getValue("de-txtFIN");
-        beanTemp.STVAL = this.getValue("cmbStval");
+        beanTemp.ZONA = this.getValue("de-txtZONE");
+        beanTemp.PAIS = this.getValue("de-txtCOUNT");
+        beanTemp.INSUMP = this.getValue("de-txtINSUM");
+        beanTemp.DESCRE = this.getValue("de-txtDESC");
 
-        beanTemp.USCR = this.getValue("txtUSCR").trim();
-        beanTemp.FECR = this.getValue("txtFECR").trim();
-        beanTemp.HOCR = this.getValue("txtHOCR").trim();
-        beanTemp.USUP = this.getValue("txtUSUP").trim();
-        beanTemp.FEUP = this.getValue("txtFEUP").trim();
-        beanTemp.HOUP = this.getValue("txtHOUP").trim();
+        if (this.beanResult === {}) {
+            beanTemp.IN_ZONA = '';
+            beanTemp.IN_PAIS = '';
+            beanTemp.IN_INSUMP = '';
+        } else {
+            beanTemp.IN_ZONA = this.beanResult.ZONA;
+            beanTemp.IN_PAIS = this.beanResult.PAIS;
+            beanTemp.IN_INSUMP = this.beanResult.INSUMP;
+        }
+
+
     },
     getData: function () {
         var beanString = JSON.stringify(meDE.bean.data);
@@ -136,7 +118,6 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
                 meDE.mostrarData();
-                console.log(meDE.mostrarData());
             }
         });
     },
@@ -158,11 +139,11 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
-                    var msjResult = this.validacionInsert(beanTemp);
+                    var msjResult = '';
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA4169(beanTemp);
+                        this.MaintenanceA4170(beanTemp);
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -171,7 +152,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
         });
     },
     onUpdateClick: function (btn) {
-        var msj = this.validateDates();
+        var msj = '';
 
         if (msj === '') {
             Ext.Msg.show(
@@ -189,7 +170,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                                 this.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                this.MaintenanceA4169(beanTemp);
+                                this.MaintenanceA4170(beanTemp);
                             }
                         }
                     });
@@ -223,10 +204,14 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
             modal: true,
             fn: function (btn) {
                 if (btn === 'yes') {
+                    /*var beanTemp = {};
+                     beanTemp.option = 'D';
+                     beanTemp.beanString = JSON.stringify(meDE.beanResult);*/
                     var beanTemp = {};
+                    this.llenarData(beanTemp);
                     beanTemp.option = 'D';
-                    beanTemp.beanString = JSON.stringify(meDE.beanResult);
-                    this.MaintenanceA4169(beanTemp);
+                    beanTemp.beanString = JSON.stringify(beanTemp);
+                    this.MaintenanceA4170(beanTemp);
                 }
             }
         });
@@ -236,10 +221,10 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     },
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA4169: function (beanTemp) {
+    MaintenanceA4170: function (beanTemp) {
 //        console.log(beanTemp);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA4169',
+            url: prototype.url + '/MaintenanceA4170',
             method: 'POST',
             timeout: 60000000,
             params: beanTemp,

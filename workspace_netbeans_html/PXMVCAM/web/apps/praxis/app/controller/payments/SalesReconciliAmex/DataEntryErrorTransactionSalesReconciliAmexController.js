@@ -945,9 +945,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
             Ext.getCmp(prototype.id + '-panelADJ').show();
             var rec = Object.create(grid.getStore().getAt(rowIndex).data);
+            
+            var monto_ajustado = parseFloat(parseFloat(this.bean.TGROSAMOUN - this.sumAmount).toFixed(2))
 
-            rec.A1531VFOP = this.bean.TGROSAMOUN - this.sumAmount;
-            rec.tot_VFOP = this.bean.TGROSAMOUN - this.sumAmount;
+            rec.A1531VFOP = monto_ajustado;
+            rec.tot_VFOP = monto_ajustado;
             rec.A720AGENTE = $('#menuUser').text();
             rec.CERROR = '01';
 

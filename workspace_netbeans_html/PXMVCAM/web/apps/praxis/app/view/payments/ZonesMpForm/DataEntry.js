@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
     controller: 'DataEntryZonesMpController',
     title:'ZonesMp - Data Entry Form',
     header:true,
-    height:390,
+    height:300,
     width:820,
     resizable:false,
     layout:'fit',
@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                     items: [
                         {
                             xtype: 'label',
-                            text: 'ZonesMp Information',
+                            text: 'Zones Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -68,8 +68,9 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 80,
+                                    maxLength: 4,
                                 },
+                                { xtype: 'tbspacer', width: 120 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
@@ -87,7 +88,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 80,
+                                    maxLength: 2,
                                 },
                             ]
                         },
@@ -100,7 +101,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Insumos',
+                                    text: 'Input',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -114,7 +115,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                     fieldStyle: 'text-align:center;',
                                     width: 200,
                                     enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 6,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
@@ -133,58 +134,10 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                     fieldStyle: 'text-align:center;',
                                     width: 200,
                                     enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 40,
                                 }
                             ]
                         },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '10 2 2 8',
-                            hidden: true,
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Cantidad1',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90,
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCant1',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 100,
-                                },
-                                { xtype: 'tbspacer', width: 20 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Cantidad2',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCant2',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 100,
-                                },
-                            ]
-                        }
                     ]
                 },
                 { xtype: 'tbspacer', height: 10 },

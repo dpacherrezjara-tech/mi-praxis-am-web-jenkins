@@ -17,7 +17,6 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.ZonesMpLogic;
-import net.miatech.praxis.payment.A4170;
 import net.miatech.praxis.payment.filter.A4170Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -103,8 +102,66 @@ public class ZonesMpController extends BaseController {
         }
         return lst;
     }
+       
+    @RequestMapping(value = "searchCompleteDetail")
+    public @ResponseBody
+    String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- BanksCatalog : searchCompleteDetail-------------");
+
+        Gson gson = new Gson();
+        A4170Filter filter = new A4170Filter();
+        A4170Filter result = new A4170Filter();
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A4170Filter.class);
+
+        logic = new ZonesMpLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            result = logic.loadPX600SQP04544(filter);
+            map.put("result", result);
+            map.put("success", true);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(RejectionsController.class.getName()).log(Level.SEVERE, null, ex);
+            map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
     
-    @RequestMapping(value = "getCodes")
+    @RequestMapping(value = "MaintenanceA4170")
+    public @ResponseBody
+    String MaintenanceA4170(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- BanksCatalog : MaintenanceA4170-------------");
+        String option;
+        A4170Filter filter = new A4170Filter();
+        Gson gson = new Gson();
+        String msj = "";
+        String beanString = "";
+
+        try {
+
+            option = request.getParameter("option");
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4170Filter.class);
+
+            logic = new ZonesMpLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            msj = logic.loadPX600SQP04545(filter, option);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    /*@RequestMapping(value = "getCodes")
     public @ResponseBody
     String getCodes(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- SalesReconciliAmex : getCodes-------------");
@@ -152,65 +209,6 @@ public class ZonesMpController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
-
-    }
-    
-    @RequestMapping(value = "searchCompleteDetail")
-    public @ResponseBody
-    String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- BanksCatalog : searchCompleteDetail-------------");
-
-        Gson gson = new Gson();
-        A4170Filter filter = new A4170Filter();
-        A4170 result = new A4170();
-
-        String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4170Filter.class);
-
-        logic = new ZonesMpLogic();
-        logic.setSession(this.serverSession.getServerSession());
-        try {
-            result = logic.loadPX600SQP04545(filter);
-            map.put("result", result);
-            map.put("success", true);
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(RejectionsController.class.getName()).log(Level.SEVERE, null, ex);
-            map.put("success", false);
-        }
-        return new Gson().toJson(map);
-    }
-    
-    @RequestMapping(value = "MaintenanceA4170")
-    public @ResponseBody
-    String MaintenanceA4170(ModelMap map, HttpServletRequest request) {
-
-        System.out.println("-------------- BanksCatalog : Maintenance4169-------------");
-        String option;
-        A4170 filter = new A4170();
-        Gson gson = new Gson();
-        String msj = "";
-        String beanString = "";
-
-        try {
-
-            option = request.getParameter("option");
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4170.class);
-
-            logic = new ZonesMpLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            msj = logic.loadPX600SQP04521(filter, option);
-
-            map.put("success", true);
-            map.put("Mensaje", msj);
-        } catch (NumberFormatException | SQLException ex) {
-            map.put("success", false);
-            map.put("Mensaje", ex.getMessage());
-        } catch (Exception ex) {
-            map.put("success", false);
-            map.put("Mensaje", ex.getMessage());
-        }
-        return new Gson().toJson(map);
-    }
+    }*/
 }
 

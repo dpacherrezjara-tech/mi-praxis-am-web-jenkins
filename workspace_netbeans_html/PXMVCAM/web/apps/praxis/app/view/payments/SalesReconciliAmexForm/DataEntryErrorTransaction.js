@@ -1396,7 +1396,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             },
                                             {header: 'Amount', dataIndex: 'A1531VFOP', width: 70, xtype: 'gridcolumn',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
+                                                    metaData.style = "text-align:right;background-color:#F0FA8F";
 
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;

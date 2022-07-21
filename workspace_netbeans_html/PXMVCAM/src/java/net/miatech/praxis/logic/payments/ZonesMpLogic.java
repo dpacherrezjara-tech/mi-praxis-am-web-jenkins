@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ZonesMpDAO;
-import net.miatech.praxis.payment.A4170;
 import net.miatech.praxis.payment.filter.A4170Filter;
 
 public class ZonesMpLogic {
@@ -18,16 +17,12 @@ public class ZonesMpLogic {
     public List<A4170Filter> loadPX600SQP04543(A4170Filter filter) throws SQLException, Exception {
         return ZonesMpDAO.loadPX600SQP04543(filter);
     }
-    
-    public List<A4170Filter> loadPX600SQP04544(A4170Filter filter) throws SQLException, Exception {
+        
+    public A4170Filter loadPX600SQP04544(A4170Filter filter) throws SQLException, Exception {
         return ZonesMpDAO.loadPX600SQP04544(filter);
     }
     
-    public A4170 loadPX600SQP04545(A4170Filter filter) throws SQLException, Exception {
-        return ZonesMpDAO.loadPX600SQP04545(filter);
-    }
-    
-    public String loadPX600SQP04521(A4170 filter, String option) throws SQLException, Exception {
-        return ZonesMpDAO.loadPX600SQP04521(filter, option);
+    public String loadPX600SQP04545(A4170Filter filter, String option) throws SQLException, Exception {
+        return ZonesMpDAO.loadPX600SQP04545(filter, option);
     }
 }

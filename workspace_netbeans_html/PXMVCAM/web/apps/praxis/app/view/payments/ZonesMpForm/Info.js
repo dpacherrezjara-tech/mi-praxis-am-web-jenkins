@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 745,
+                                    width: 494,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -64,33 +64,21 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-//                                            {text: 'Zonas', dataIndex: 'CODETB', width: 80},
-//                                            {text: 'Country', dataIndex: 'STVAL', width: 80, hidden: true,
-//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                                    metaData.style = 'text-align:center;';
-//                                                    if (value === 'V') {
-//                                                        value = 'Vigente';
-//                                                    } else if (value === 'A') {
-//                                                        value = 'Anulado';
-//                                                    }
-//                                                    return  value;
-//                                                }
-//                                            },
-                                            {text: 'Zonas', dataIndex: 'ZONA', width: 80,
+                                            {text: 'Zones', dataIndex: 'ZONA', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left;';
+                                                    metaData.style = 'text-align:center;';
                                                     return  value;
                                                 }
                                             },
                                             {text: 'Country', dataIndex: 'PAIS', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left;';
+                                                    metaData.style = 'text-align:center;';
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Insumos medios pag', dataIndex: 'INSUMP', width: 180,
+                                            {text: 'MP Input', dataIndex: 'INSUMP', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left;';
+                                                    metaData.style = 'text-align:center;';
                                                     return  value;
                                                 }
                                             },

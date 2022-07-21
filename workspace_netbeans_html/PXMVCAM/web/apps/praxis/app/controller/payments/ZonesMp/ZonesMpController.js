@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.ZonesMpController', {
 //                    global.Msg({msg: res.sesion});
 //            }
 //        });
-        
+        this.btnSearch_click();
     },
     setFormatParameter: function() {
 
@@ -125,8 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.ZonesMpController', {
     setGridData: function() {
         win.lblUser_toolTip("Estructura: A4169");
         me.panelActual = '-panelGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+        global.selectedChild(me.childs, prototype.id + me.panelActual);        
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -142,6 +141,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.ZonesMpController', {
                     },
                     load: function(obj) {
 //                        console.log(obj.data);
+                        me.setWidthPie();
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
