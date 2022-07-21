@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
         'Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController'
     ],
     controller: 'DataEntryZonesMpController',
-    title:'ZonesMp - Data Entry Form',
+    title:'Zones - Data Entry Form',
     header:true,
     height:300,
     width:820,

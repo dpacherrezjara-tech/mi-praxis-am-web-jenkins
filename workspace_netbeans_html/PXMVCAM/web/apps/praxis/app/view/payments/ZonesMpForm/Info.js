@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Zones', dataIndex: 'ZONA', width: 80,
+                                            {text: 'Zone', dataIndex: 'ZONA', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:center;';
                                                     return  value;
@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'MP Input', dataIndex: 'INSUMP', width: 100,
+                                            {text: 'Input', dataIndex: 'INSUMP', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:center;';
                                                     return  value;
