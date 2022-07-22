@@ -1898,7 +1898,7 @@ public class ProMasterTicketDAO {
         String SQLCLL01 = "";
        
         SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; 
-        if(filter.IN_TFILTER == 1 && filter.IN_TEXT.substring(0, 3)!="139")
+        if(filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3)))
         {
             SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}"; 
         }
