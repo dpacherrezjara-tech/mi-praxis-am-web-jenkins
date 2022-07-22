@@ -412,7 +412,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     //global.Msg({msg: res.msjOption});
                     Ext.getCmp(prototype.id + '-dataEntryErrorRefund').unmask();
                     //Ext.getCmp(prototype.id + '-dataEntryErrorRefund').close();
-                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    me.setGridDataMainErrorTransaction();
+                    //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     meDE.lstSendManual = [];
                     meDE.lstBlocked = [];
                     meDE.onNextClick();
