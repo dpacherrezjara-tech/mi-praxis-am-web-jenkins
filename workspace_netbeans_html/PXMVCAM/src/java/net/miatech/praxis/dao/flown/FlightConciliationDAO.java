@@ -722,7 +722,6 @@ public class FlightConciliationDAO {
         try {
 
             String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?,?)}";
-//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -2073,7 +2072,6 @@ public class FlightConciliationDAO {
 
         try {
 
-//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
             String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04286(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -2098,6 +2096,7 @@ public class FlightConciliationDAO {
 //                beanCons.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
 //                beanCons.NPAX = rst.getString("NPAX").trim();
                 beanCons.SEQ = rst.getString("SEQ").trim();
+//                beanCons.SPNR = rst.getString("SPNR").trim();
                 beanCons.FNAME = rst.getString("FNAME").trim();
                 beanCons.LNAME = rst.getString("LNAME").trim();
                 beanCons.DFLIGHT = rst.getString("DFLIGHT").trim();
