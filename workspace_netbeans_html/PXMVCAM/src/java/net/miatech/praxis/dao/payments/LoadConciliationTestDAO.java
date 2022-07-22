@@ -2195,12 +2195,12 @@ public class LoadConciliationTestDAO {
                     beanTkt.IN_AUTHNBR = filter.IN_AUTHNBR.trim();
                     beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
 
-                    if (rst.getString("ACARCOD").trim().isEmpty()) {
+                    if (rst.getString("SCARCOD").trim().isEmpty()) {
                         //Venta sin ACCB
                         beanTkt.SCARCOD = "**";
                         beanTkt.strDescCard = "(Sales without Reconciliation)";
                     } else {
-                        beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
+                        beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
                         beanTkt.strDescCard = rst.getString("NAMECAR").trim();
                     }
                     beanTkt.lngQMATCH = rst.getLong("QMATCH");
