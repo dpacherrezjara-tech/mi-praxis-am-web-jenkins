@@ -168,7 +168,7 @@ public class ADJMassiveaccountingFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02410 (?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02410 (?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -183,6 +183,7 @@ public class ADJMassiveaccountingFormDAO {
             cstmt01.setString(6, filter.A3344CPN);
             cstmt01.setString(7, filter.A3344TNC);
             cstmt01.setString(8, filter.A3344CRRL);
+            cstmt01.setString(9, filter.A3344NARCH);
 
             cstmt01.execute();
 

@@ -1307,15 +1307,9 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     {
                                                         text: 'PNR', dataIndex: 'SPNR', width: 70, sortable: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background:#FFF9E0;";
+                                                            metaData.style = "text-align:center;";
                                                             return value;
-                                                        },
-//                                                        sorter: function (v1, v2) {
-//                                                            console.log('sorter');
-//                                                            v1 = v1.get('CHAIR');
-//                                                            v2 = v2.get('CHAIR');
-//                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
-//                                                        }
+                                                        }
                                                     },
                                                     {
                                                         text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
@@ -2566,6 +2560,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridFlightManifest',
                                     width: 1369,
+//                                    width: 1449,
                                     height: 550,
                                     features: [{
                                             ftype: 'summary'
@@ -2628,6 +2623,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
 //                                                        }
                                             },
+//                                            {
+//                                                text: 'PNR', dataIndex: 'PNR', width: 80, sortable: true,
+//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    metaData.style = "text-align:center;";
+//                                                    return value;
+//                                                }
+//                                            },
                                             {
                                                 text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
                                                 listeners: {
