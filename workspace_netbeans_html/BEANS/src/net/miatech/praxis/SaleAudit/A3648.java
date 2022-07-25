@@ -84,6 +84,7 @@ public class A3648 {
     public String A3648CPN4D;
     public String A3648TRFND;
     public double A3648TARID;
+    public double A3648STAQD;
     public double A3648TTAXD;
     public double A3648COMID;
     public double A3648SCOMD;
@@ -115,7 +116,74 @@ public class A3648 {
     public String A3648ESTADO;
     public String A3648FOLIO;
     public String A3648RAAG;
+    public String A3648CONJT;
+    public String A3648CARR5;
+    public String A3648CARR6;
+    public String A3648CARR7;
+    public String A3648CARR8;
+    public String A3648CPN5D;
+    public String A3648CPN6D;
+    public String A3648CPN7D;
+    public String A3648CPN8D;
 
+    public double getA3648STAQD() {
+        return A3648STAQD;
+    }
+
+    public void setA3648STAQD(double A3648STAQD) {
+        this.A3648STAQD = A3648STAQD;
+    }
+
+    public String getA3648CPN5D() {
+        return A3648CPN5D;
+    }
+
+    public void setA3648CPN5D(String A3648CPN5D) {
+        this.A3648CPN5D = A3648CPN5D;
+    }
+
+    public String getA3648CPN6D() {
+        return A3648CPN6D;
+    }
+
+    public void setA3648CPN6D(String A3648CPN6D) {
+        this.A3648CPN6D = A3648CPN6D;
+    }
+
+    public String getA3648CPN7D() {
+        return A3648CPN7D;
+    }
+
+    public void setA3648CPN7D(String A3648CPN7D) {
+        this.A3648CPN7D = A3648CPN7D;
+    }
+
+    public String getA3648CPN8D() {
+        return A3648CPN8D;
+    }
+
+    public void setA3648CPN8D(String A3648CPN8D) {
+        this.A3648CPN8D = A3648CPN8D;
+    }
+    public void setA3648CONJT(String A3648CONJT) {
+        this.A3648CONJT = A3648CONJT;
+    }
+
+    public void setA3648CARR5(String A3648CARR5) {
+        this.A3648CARR5 = A3648CARR5;
+    }
+
+    public void setA3648CARR6(String A3648CARR6) {
+        this.A3648CARR6 = A3648CARR6;
+    }
+
+    public void setA3648CARR7(String A3648CARR7) {
+        this.A3648CARR7 = A3648CARR7;
+    }
+
+    public void setA3648CARR8(String A3648CARR8) {
+        this.A3648CARR8 = A3648CARR8;
+    }
     public String getA3648RAAG() {
         return A3648RAAG;
     }
