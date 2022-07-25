@@ -37,10 +37,18 @@ public class A3648Filter extends A3648 {
     public String IN_CPN2 = "";
     public String IN_CPN3 = "";
     public String IN_CPN4 = "";
+    public String IN_CPN5 = "";
+    public String IN_CPN6 = "";
+    public String IN_CPN7 = "";
+    public String IN_CPN8 = "";
+    public String IN_CONJU = "";
 
     public double IN_TARIF = 0;
     public double IN_TTAX = 0;
     public double IN_TOTALRFND = 0;
+    public double IN_TARIFEQUI=0;
+    public double IN_COMMI=0;
+    public String IN_MDAEQUI="";
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
 
