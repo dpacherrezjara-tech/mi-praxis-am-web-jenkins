@@ -86,14 +86,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDPending.RFNDFormRazonesControll
         }
         beanDatos.A3649CODE = rec.get('A3651CODRZ');
         beanDatos.A3649TYPE = 'AM';
-        beanDatos.A3649CIA = Ext.String.trim(rec2.params.A3652CIA);
-        beanDatos.A3649FORMA = Ext.String.trim(rec2.params.A3652FORMA);
-        beanDatos.A3649SERIE = Ext.String.trim(rec2.params.A3652SERIE);
-        beanDatos.A3649SEQ = Ext.String.trim(rec2.params.A3652SEQ);
+        beanDatos.A3649CIA = Ext.String.trim(rec2.paramsA3648CIA);
+        beanDatos.A3649FORMA = Ext.String.trim(rec2.params.A3648FORMA);
+        beanDatos.A3649SERIE = Ext.String.trim(rec2.params.A3648SERIE);
+        beanDatos.A3649SEQ = Ext.String.trim(rec2.params.A3648SEQ);
         beanDatos.A3649CORRL = '';
-        beanDatos.A3649PREME = Ext.String.trim(rec2.params.A3652PREME);
-        beanDatos.A3649ANIO = Ext.String.trim(rec2.params.A3652ANIO);
+        beanDatos.A3649PREME = Ext.String.trim(rec2.params.A3648PREME);
+        beanDatos.A3649ANIO = Ext.String.trim(rec2.params.A3648ANIO);
         beanDatos.A3649FAMIL = rec.get('A3651FAMIL');
+        console.log(beanDatos);
         for (var i = 0; i < regs; i++) {
             if (grid03.getStore().getAt(i).get('A3649CODE') === beanDatos.A3649CODE) {
                 global.Msg({msg: "EXISTS RECORD !", icon: 2, fn: function () {
