@@ -101,12 +101,24 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                         {
                             xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txttidoc',
-                            fieldLabel: 'TYPE',
+                            fieldLabel: 'Type',
                             labelWidth: 35,
                             width: 120,
                             value: '0000',
                             readOnly: true
                         },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idDetailTicket + '-txtConto',
+                            fieldLabel: 'CJT',
+                            labelWidth: 30,
+                            width: 80,
+                            value: '',
+                            readOnly: true,
+                            listeners: {
+                                change: 'onchange'
+                            }
+                        }
                     ]
                 },
                 {
@@ -245,6 +257,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             labelAlign: 'right'
                         }
+                        
                     ]
                 },
                 {
@@ -429,6 +442,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                                             }
                                         }},
                                     {text: 'Net', dataIndex: 'A3652TXDIF', flex: 1, align: 'right', editor: 'numberfield',
+                                         hideTrigger: true,keyNavEnabled: false,mouseWheelEnabled: false,
                                         renderer: 'onColumnAirlineRenderer', summaryRenderer: 'OnAirlineSummary', //summaryType: 'sum',
                                         summaryType: function (records) {
                                             // do your logic and return a value.
@@ -625,6 +639,15 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             xtype: 'grid',
                             id: prototype.idDetailTicket + '-gridDataStatus',
                             title: 'USES COUPONS',
+                            dockedItems: [{
+                                    xtype: 'toolbar',
+                                    items: [{
+                                            text: 'Update CPN',
+                                            id: prototype.idDetailTicket + '-txtUpdateUsos',
+                                            iconCls: 'prx-icon-update',
+                                            handler: 'OnUpdateUsosCPN'
+                                        }, '-']
+                                }],
                             columnLines: true,
                             autoScroll: true,
                             columns: {
@@ -672,7 +695,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                                 }
                             },
                             height: 150,
-                            width: 450,
+                            width: 460,
                             listeners: {
                                 afterrender: 'OnLoadGridAfterrender'
                             }
@@ -1056,8 +1079,39 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             labelWidth: 3,
                             fieldLabel: '4'
                         },
-                        {xtype: 'tbspacer', width: 80},
                         {
+                            xtype: 'checkboxfield',
+                            id: prototype.idDetailTicket + '-txtCpn5',
+                            name: 'Cupon5', hidden: true,
+                            labelWidth: 3,
+                            fieldLabel: '5'
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            name: 'Cupon6',
+                            id: prototype.idDetailTicket + '-txtCpn6',
+                             hidden: true,
+                            labelWidth: 3,
+                            fieldLabel: '6'
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            name: 'Cupon7',
+                            id: prototype.idDetailTicket + '-txtCpn7',
+                             hidden: true,
+                            labelWidth: 3,
+                            fieldLabel: '7'
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            name: 'Cupon8',
+                            id: prototype.idDetailTicket + '-txtCpn8',
+                             hidden: true,
+                            labelWidth: 3,
+                            fieldLabel: '8'
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        /*{
                             xtype: 'displayfield',
                             id: prototype.idDetailTicket + '-txtusoCpn',
                             fieldLabel: 'All coupons are used',
@@ -1065,7 +1119,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             labelWidth: 150,
                             labelSeparator: '',
                             hidden: true
-                        },
+                        },*/
                         {
                             xtype: 'checkboxfield',
                             id: prototype.idDetailTicket + '-txtShowcoupons',
@@ -1074,6 +1128,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             fieldLabel: 'Show all coupons',
                             listeners: {
                                 change: 'onChkChangeCPN'
+                               // checkchange:'onChkChangeCPN',
                             }
                         }
 
