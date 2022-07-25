@@ -1,6 +1,6 @@
 
-prototype.idRFNDPending = 'RFNDPending';
-//prototype.id01 = 'DetailRefundQueryRFND';
+
+prototype.idRFNDQuery = 'RFNDQuery';
 prototype.idDetailTicket = 'DetailTicket';
 prototype.idRFNDFormRazones = 'FNDFormRazones';
 prototype.id05 = 'RFNDFileViewer';
@@ -11,21 +11,20 @@ prototype.url3 = CONTEXTPATH + '/RFNDUserMaintenance';
 prototype.widthWindow = 1400;
 prototype.heightWindow = 768;
 
-Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
+Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.RFNDPending',
+    alias: 'widget.RFNDQuery',
 
     requires: [
-        'Ext.Praxis.controller.salesaudit.RFNDPending.RFNDPendingController',
-        //'Ext.Praxis.view.salesaudit.RFNDQuery.DetailRefundQueryRFND',
+        'Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket',
         'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDAddTax',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory'
     ],
 
-    controller: 'RFNDPendingController',
+    controller: 'RFNDQueryController',
 
-    id: prototype.idRFNDPending + '-Contenedor',
+    id: prototype.idRFNDQuery + '-Contenedor',
 
     layout: {
         type: 'vbox',
@@ -46,12 +45,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
 
     items: [{
             xtype: 'panel',
-            id: prototype.idRFNDPending + '-contenedor-form',
+            id: prototype.idRFNDQuery + '-contenedor-form',
             width: prototype.widthWindow,
             items: [
                 {
                     xtype: 'panel',
-                    id: prototype.idRFNDPending + '-contenedor-options',
+                    id: prototype.idRFNDQuery + '-contenedor-options',
                     border: false,
                     bodyStyle: 'background: transparent',
                     padding: '10px 5px 0px 5px',
@@ -70,11 +69,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                             items: [
                                 {
                                     xtype: 'Paginator',
-                                    id: prototype.idRFNDPending + '-pagginator-01',
+                                    id: prototype.idRFNDQuery + '-pagginator-01',
                                     pagInfo: [
-                                        prototype.idRFNDPending + '-lbl-currentPage',
-                                        prototype.idRFNDPending + '-lbl-pageCount',
-                                        prototype.idRFNDPending + '-lbl-total'
+                                        prototype.idRFNDQuery + '-lbl-currentPage',
+                                        prototype.idRFNDQuery + '-lbl-pageCount',
+                                        prototype.idRFNDQuery + '-lbl-total'
                                     ]
                                 }
                             ]
@@ -85,7 +84,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                             items: [
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnSearch',
+                                    id: prototype.idRFNDQuery + '-btnSearch',
                                     iconCls: 'prx-icon-search',
                                     tooltip: 'Search',
                                     listeners: {
@@ -94,14 +93,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnFilter',
+                                    id: prototype.idRFNDQuery + '-btnFilter',
                                     iconCls: 'prx-icon-filter',
                                     tooltip: 'Display filter',
                                     listeners: 'onFilterClick'
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnExcel',
+                                    id: prototype.idRFNDQuery + '-btnExcel',
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
@@ -110,7 +109,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnClear',
+                                    id: prototype.idRFNDQuery + '-btnClear',
                                     iconCls: 'prx-icon-clear',
                                     tooltip: 'Clear Options',
                                     listeners: {
@@ -119,7 +118,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnBack',
+                                    id: prototype.idRFNDQuery + '-btnBack',
                                     iconCls: 'prx-icon-back',
                                     tooltip: 'Back',
                                     listeners: 'onClearClick'
@@ -130,7 +129,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                 },
                 {
                     xtype: 'panel',
-                    id: prototype.idRFNDPending + '-contenedor-filters',
+                    id: prototype.idRFNDQuery + '-contenedor-filters',
                     border: false,
                     defaults: {
                         bodyStyle: 'background-color: #E3EAF9;',
@@ -169,7 +168,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                 {
                                     xtype: 'combo',
                                     //fieldLabel: 'Search Type',
-                                    id: prototype.idRFNDPending + '-search-type',
+                                    id: prototype.idRFNDQuery + '-search-type',
                                     labelAlign: 'left',
                                     queryMode: 'local',
                                     valueField: 'code',
@@ -197,7 +196,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                     items: [
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.idRFNDPending + '-txtFilterDateFrom',
+                                            id: prototype.idRFNDQuery + '-txtFilterDateFrom',
                                             format: 'Y/m/d',
                                             fieldLabel: 'From:',
                                             labelWidth: 40,
@@ -211,7 +210,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.idRFNDPending + '-txtFilterDateTo',
+                                            id: prototype.idRFNDQuery + '-txtFilterDateTo',
                                             format: 'Y/m/d',
                                             fieldLabel: 'To:',
                                             labelWidth: 30,
@@ -225,7 +224,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDPending + '-txtCia',
+                                            id: prototype.idRFNDQuery + '-txtCia',
                                             hideLabel: true,
                                             maskRe: /[0-9]/,
                                             maxLength: 3,
@@ -236,7 +235,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDPending + '-txtFrmaSerie',
+                                            id: prototype.idRFNDQuery + '-txtFrmaSerie',
                                             hideLabel: true,
                                             maskRe: /[0-9]/,
                                             maxLength: 10,
@@ -249,7 +248,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDPending + '-txtFrmaFolio',
+                                            id: prototype.idRFNDQuery + '-txtFrmaFolio',
                                             hideLabel: true,
                                             maskRe: /[0-9]/,
                                             maxLength: 30,
@@ -262,7 +261,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDPending + '-txtIATA',
+                                            id: prototype.idRFNDQuery + '-txtIATA',
                                             width: 140,
                                             maskRe: /[0-9]/,
                                             maxLength: 8,
@@ -276,7 +275,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDPending + '-CmbStatus',
+                                            id: prototype.idRFNDQuery + '-CmbStatus',
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -294,7 +293,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDPending + '-CmbStatusBPO',
+                                            id: prototype.idRFNDQuery + '-CmbStatusBPO',
                                             fieldLabel: 'BPO',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -312,7 +311,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDPending + '-CmbAudit',
+                                            id: prototype.idRFNDQuery + '-CmbAudit',
                                             fieldLabel: 'Auditor',
                                             queryMode: 'local',
                                             displayField: 'A3389REGAS',
@@ -325,7 +324,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                                 minWidth: 200
                                             }
                                         }
-                                        //{xtype: 'textfield', id: prototype.idRFNDPending + '-txtUser', hidden: true}
+                                        //{xtype: 'textfield', id: prototype.idRFNDQuery + '-txtUser', hidden: true}
                                     ]
                                 }
                             ]
@@ -344,7 +343,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                     items: [
                         {
                             xtype: 'grid',
-                            id: prototype.idRFNDPending + '-gridCabe',
+                            id: prototype.idRFNDQuery + '-gridCabe',
                             columnLines: true,
                             autoScroll: true,
                             height: 250,
@@ -501,7 +500,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                         },
                         {
                             xtype: 'panel',
-                            iid: prototype.idRFNDPending + '-pagginator-legend',
+                            iid: prototype.idRFNDQuery + '-pagginator-legend',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -532,7 +531,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                             width: 50
                                         },
                                         {
-                                            id: prototype.idRFNDPending + '-lbl-currentPage',
+                                            id: prototype.idRFNDQuery + '-lbl-currentPage',
                                             text: '1',
                                             width: 50
                                         },
@@ -541,7 +540,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                             width: 50
                                         },
                                         {
-                                            id: prototype.idRFNDPending + '-lbl-pageCount',
+                                            id: prototype.idRFNDQuery + '-lbl-pageCount',
                                             text: '0',
                                             width: 50
                                         },
@@ -551,7 +550,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                             width: 80
                                         },
                                         {
-                                            id: prototype.idRFNDPending + '-lbl-total',
+                                            id: prototype.idRFNDQuery + '-lbl-total',
                                             text: '0',
                                             width: 50
                                         }
@@ -564,14 +563,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    id: prototype.idRFNDPending + '-panelFilter1',
+                                    id: prototype.idRFNDQuery + '-panelFilter1',
                                     hidden: true,
                                     width: 500, border: false,
                                     layout: 'column',
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDPending + '-de-cmbOptionTKT',
+                                            id: prototype.idRFNDQuery + '-de-cmbOptionTKT',
                                             margin: '5 0 5 0',
                                             fieldLabel: 'Search By',
                                             width: 180,
@@ -589,7 +588,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         {
                                             xtype: 'textfield',
                                             margin: '5 0 5 5',
-                                            id: prototype.idRFNDPending + '-de-txtTKT',
+                                            id: prototype.idRFNDQuery + '-de-txtTKT',
                                             //hidden: true,
                                             fieldLabel: '',
                                             width: 110,
@@ -607,7 +606,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         {
                                             xtype: 'textfield',
                                             margin: '5 0 5 5',
-                                            id: prototype.idRFNDPending + '-de-txtIata',
+                                            id: prototype.idRFNDQuery + '-de-txtIata',
                                             hidden: true,
                                             fieldLabel: '',
                                             width: 80,
@@ -624,11 +623,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                         }
                                     ]
                                 },
-                                {xtype: 'tbspacer', hidden: true, id: prototype.idRFNDPending + '-tbspacer1', width: 600},
-                                {xtype: 'tbspacer', id: prototype.idRFNDPending + '-tbspacer2', width: 1100},
+                                {xtype: 'tbspacer', hidden: true, id: prototype.idRFNDQuery + '-tbspacer1', width: 600},
+                                {xtype: 'tbspacer', id: prototype.idRFNDQuery + '-tbspacer2', width: 1100},
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnSearch1',
+                                    id: prototype.idRFNDQuery + '-btnSearch1',
                                     iconCls: 'prx-icon-search',
                                     tooltip: 'Search',
                                     listeners: {
@@ -638,7 +637,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnFilter1',
+                                    id: prototype.idRFNDQuery + '-btnFilter1',
                                     iconCls: 'prx-icon-filter',
                                     tooltip: 'Display filter',
                                     listeners: {
@@ -646,7 +645,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                     }
                                 }, {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-Save_List',
+                                    id: prototype.idRFNDQuery + '-Save_List',
                                     icon: 'resources/img/icon/16x16/task-save.png',
                                     tooltip: 'Process Change massive states',
                                     listeners: {
@@ -654,7 +653,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                     }
                                 }, {
                                     xtype: 'button',
-                                    id: prototype.idRFNDPending + '-btnExcel2',
+                                    id: prototype.idRFNDQuery + '-btnExcel2',
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
@@ -665,7 +664,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                         },
                         {
                             xtype: 'grid', title: 'TICKET DETAIL',
-                            id: prototype.idRFNDPending + '-grid',
+                            id: prototype.idRFNDQuery + '-grid',
                             columnLines: true,
                             autoScroll: true,
                             //width: 1260,
@@ -745,7 +744,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                         },
                         {
                             xtype: 'panel',
-                            iid: prototype.idRFNDPending + '-pagginator-legend2',
+                            iid: prototype.idRFNDQuery + '-pagginator-legend2',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -777,7 +776,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                             width: 80
                                         },
                                         {
-                                            id: prototype.idRFNDPending + '-lbl-total2',
+                                            id: prototype.idRFNDQuery + '-lbl-total2',
                                             text: '0',
                                             width: 50
                                         }
@@ -790,4 +789,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
             ]
         }]
 });
+
+
 
