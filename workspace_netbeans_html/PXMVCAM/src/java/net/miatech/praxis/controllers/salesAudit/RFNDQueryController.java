@@ -13,11 +13,16 @@ import com.google.gson.JsonParser;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A3647Filter;
 import net.miatech.beans.SaleAudit.A3648Filter;
 import net.miatech.beans.SaleAudit.A3649Filter;
@@ -29,6 +34,16 @@ import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.RFNDQueryLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -93,6 +108,511 @@ public class RFNDQueryController extends BaseController {
         map.put("data", lst);
 
         return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/getXLSX")
+    public @ResponseBody
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+        A3647Filter filter = new A3647Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new RFNDQueryLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A3647Filter> listaData = logic.SearchReportQueryRFND(filter);
+
+            // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
+            //Workbook workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
+            Sheet sheet = workbook.createSheet("Resumen RFND");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle headerStyle = workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            // </editor-fold>
+
+            Integer vi = 0, vj = 0;
+            Iterator iter = listaData.iterator();
+
+            Row row;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15;
+            //<editor-fold defaultstate="collapsed" desc="row">
+            row = sheet.createRow(vj);
+
+            CH_00 = row.createCell(0);
+            CH_01 = row.createCell(1);
+            CH_02 = row.createCell(2);
+            CH_03 = row.createCell(3);
+            CH_04 = row.createCell(4);
+            CH_05 = row.createCell(5);
+            CH_06 = row.createCell(6);
+            CH_07 = row.createCell(7);
+            CH_08 = row.createCell(8);
+            CH_09 = row.createCell(9);
+            CH_10 = row.createCell(10);
+            CH_11 = row.createCell(11);
+            CH_12 = row.createCell(12);
+            CH_13 = row.createCell(13);
+            CH_14 = row.createCell(14);
+            CH_15 = row.createCell(15);
+
+            CH_00.setCellValue("Folio");
+            CH_01.setCellValue("System date");
+            CH_02.setCellValue("Auditor");
+            CH_03.setCellValue("Zone");
+            CH_04.setCellValue("Ticket Qty Pend");
+            CH_05.setCellValue("Ticket Qty Auto");
+            CH_06.setCellValue("Ticket Qty Reje");
+            CH_07.setCellValue("Total");
+            CH_08.setCellValue("Change of status Send");
+            CH_09.setCellValue("Change of status Retu.");
+            CH_10.setCellValue("Total");
+            CH_11.setCellValue("Ticket BPO Qty OK");
+            CH_12.setCellValue("Ticket BPO Qty Error");
+            CH_13.setCellValue("total BPO");
+            CH_14.setCellValue("Ticket Amount");
+            CH_15.setCellValue("Days");
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+
+            CH_00.setCellStyle(headerStyle);
+            CH_01.setCellStyle(headerStyle);
+            CH_02.setCellStyle(headerStyle);
+            CH_03.setCellStyle(headerStyle);
+            CH_04.setCellStyle(headerStyle);
+            CH_05.setCellStyle(headerStyle);
+            CH_06.setCellStyle(headerStyle);
+            CH_07.setCellStyle(headerStyle);
+            CH_08.setCellStyle(headerStyle);
+            CH_09.setCellStyle(headerStyle);
+            CH_10.setCellStyle(headerStyle);
+            CH_11.setCellStyle(headerStyle);
+            CH_12.setCellStyle(headerStyle);
+            CH_13.setCellStyle(headerStyle);
+            CH_14.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
+
+            ++vj;
+            //</editor-fold>
+
+            while (iter.hasNext()) {
+                row = sheet.createRow(vj);
+                // <editor-fold defaultstate="collapsed" desc="data">
+                CH_00 = row.createCell(0);
+                CH_01 = row.createCell(1);
+                CH_02 = row.createCell(2);
+                CH_03 = row.createCell(3);
+                CH_04 = row.createCell(4);
+                CH_05 = row.createCell(5);
+                CH_06 = row.createCell(6);
+                CH_07 = row.createCell(7);
+                CH_08 = row.createCell(8);
+                CH_09 = row.createCell(9);
+                CH_10 = row.createCell(10);
+                CH_11 = row.createCell(11);
+                CH_12 = row.createCell(12);
+                CH_13 = row.createCell(13);
+                CH_14 = row.createCell(14);
+                CH_15 = row.createCell(15);
+
+                CH_00.setCellValue(listaData.get(vi).A3647FOLIO);
+                CH_01.setCellValue(listaData.get(vi).A3647FREGI);
+                CH_02.setCellValue(listaData.get(vi).A3647REGAS);
+                CH_03.setCellValue(listaData.get(vi).A3647COCD);
+                CH_04.setCellValue(listaData.get(vi).CANTPE);
+                CH_05.setCellValue(listaData.get(vi).CANTOK);
+                CH_06.setCellValue(listaData.get(vi).CANTKO);
+                CH_07.setCellValue(listaData.get(vi).TOTALCANT);
+
+                CH_08.setCellValue(listaData.get(vi).STOEN);
+                CH_09.setCellValue(listaData.get(vi).STORET);
+                CH_10.setCellValue(listaData.get(vi).TOTALSTO);
+
+                CH_11.setCellValue(listaData.get(vi).BPOOK);
+                CH_12.setCellValue(listaData.get(vi).BPOKO);
+                CH_13.setCellValue(listaData.get(vi).TOTALBPO);
+                CH_14.setCellValue(listaData.get(vi).SUMAOK);
+                CH_15.setCellValue(listaData.get(vi).A3647DIAS);
+
+                CH_00.setCellStyle(bodyStyle);
+                CH_01.setCellStyle(bodyStyle);
+                CH_02.setCellStyle(bodyStyle);
+                CH_03.setCellStyle(bodyStyle);
+                CH_04.setCellStyle(bodyStyle);
+                CH_05.setCellStyle(bodyStyle);
+                CH_06.setCellStyle(bodyStyle);
+                CH_07.setCellStyle(bodyStyle);
+                CH_08.setCellStyle(bodyStyle);
+                CH_09.setCellStyle(bodyStyle);
+                CH_10.setCellStyle(bodyStyle);
+                CH_11.setCellStyle(bodyStyle);
+                CH_12.setCellStyle(bodyStyle);
+                CH_13.setCellStyle(bodyStyle);
+                CH_14.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
+
+                // </editor-fold>
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+
+            String fileNameDownload = String.format("Resumen RFND - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new SpringException(e);
+        }
+    }
+
+    @RequestMapping(value = "/getXLSX2")
+    public @ResponseBody
+    void getXLSX2(HttpServletRequest request, HttpServletResponse response) {
+        A3648Filter filter = new A3648Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new RFNDQueryLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A3648Filter> listaData = logic.searchDetail(filter);
+
+            // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
+            //Workbook workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
+            Sheet sheet = workbook.createSheet("Detalle RFND");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle headerStyle = workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            // </editor-fold>
+
+            Integer vi = 0, vj = 0;
+            Iterator iter = listaData.iterator();
+
+            Row row;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22;
+            //<editor-fold defaultstate="collapsed" desc="row">
+            row = sheet.createRow(vj);
+
+            CH_00 = row.createCell(0);
+            CH_01 = row.createCell(1);
+            CH_02 = row.createCell(2);
+            CH_03 = row.createCell(3);
+            CH_04 = row.createCell(4);
+            CH_05 = row.createCell(5);
+            CH_06 = row.createCell(6);
+            CH_07 = row.createCell(7);
+            CH_08 = row.createCell(8);
+            CH_09 = row.createCell(9);
+            CH_10 = row.createCell(10);
+            CH_11 = row.createCell(11);
+            CH_12 = row.createCell(12);
+            CH_13 = row.createCell(13);
+            CH_14 = row.createCell(14);
+            CH_15 = row.createCell(15);
+            CH_16 = row.createCell(16);
+            CH_17 = row.createCell(17);
+            CH_18 = row.createCell(18);
+            CH_19 = row.createCell(19);
+            CH_20 = row.createCell(20);
+            CH_21 = row.createCell(21);
+            CH_22 = row.createCell(22);
+
+            CH_00.setCellValue("System Date");
+            CH_01.setCellValue("Issue Date");
+            CH_02.setCellValue("Zone");
+            CH_03.setCellValue("Area");
+            CH_04.setCellValue("Ticket");
+            CH_05.setCellValue("CPN");
+            CH_06.setCellValue("Country");
+            CH_07.setCellValue("IATA");
+            CH_08.setCellValue("Agency");
+            CH_09.setCellValue("Transction");
+            CH_10.setCellValue("Tdoc");
+            CH_11.setCellValue("Currency");
+            CH_12.setCellValue("Fare");
+            CH_13.setCellValue("Tax");
+            CH_14.setCellValue("Commi.");
+            CH_15.setCellValue("Neto RFND");
+            CH_16.setCellValue("Neto Praxis");
+            CH_17.setCellValue("Neto XML");
+            CH_18.setCellValue("Status");
+            CH_19.setCellValue("BPO");
+            CH_20.setCellValue("Group");
+            CH_21.setCellValue("Req. Reason");
+            CH_22.setCellValue("Remarks");
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 18));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+
+            CH_00.setCellStyle(headerStyle);
+            CH_01.setCellStyle(headerStyle);
+            CH_02.setCellStyle(headerStyle);
+            CH_03.setCellStyle(headerStyle);
+            CH_04.setCellStyle(headerStyle);
+            CH_05.setCellStyle(headerStyle);
+            CH_06.setCellStyle(headerStyle);
+            CH_07.setCellStyle(headerStyle);
+            CH_08.setCellStyle(headerStyle);
+            CH_09.setCellStyle(headerStyle);
+            CH_10.setCellStyle(headerStyle);
+            CH_11.setCellStyle(headerStyle);
+            CH_12.setCellStyle(headerStyle);
+            CH_13.setCellStyle(headerStyle);
+            CH_14.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
+            CH_16.setCellStyle(headerStyle);
+            CH_17.setCellStyle(headerStyle);
+            CH_18.setCellStyle(headerStyle);
+            CH_19.setCellStyle(headerStyle);
+            CH_20.setCellStyle(headerStyle);
+            CH_21.setCellStyle(headerStyle);
+            CH_22.setCellStyle(headerStyle);
+
+            ++vj;
+            //</editor-fold>
+
+            while (iter.hasNext()) {
+                row = sheet.createRow(vj);
+                // <editor-fold defaultstate="collapsed" desc="data">
+                CH_00 = row.createCell(0);
+                CH_01 = row.createCell(1);
+                CH_02 = row.createCell(2);
+                CH_03 = row.createCell(3);
+                CH_04 = row.createCell(4);
+                CH_05 = row.createCell(5);
+                CH_06 = row.createCell(6);
+                CH_07 = row.createCell(7);
+                CH_08 = row.createCell(8);
+                CH_09 = row.createCell(9);
+                CH_10 = row.createCell(10);
+                CH_11 = row.createCell(11);
+                CH_12 = row.createCell(12);
+                CH_13 = row.createCell(13);
+                CH_14 = row.createCell(14);
+                CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
+                CH_17 = row.createCell(17);
+                CH_18 = row.createCell(18);
+                CH_19 = row.createCell(19);
+                CH_20 = row.createCell(20);
+                CH_21 = row.createCell(21);
+                CH_22 = row.createCell(22);
+
+                CH_00.setCellValue(listaData.get(vi).A3648FREGI);
+                CH_01.setCellValue(listaData.get(vi).A3648XFSAL);
+                CH_02.setCellValue(listaData.get(vi).A3648COCD);
+                CH_03.setCellValue(listaData.get(vi).A3648ARCD);
+                CH_04.setCellValue(listaData.get(vi).A3648TICKET);
+                CH_05.setCellValue(listaData.get(vi).A3648CPN);
+                CH_06.setCellValue(listaData.get(vi).A3648SPVTA);
+                CH_07.setCellValue(listaData.get(vi).A3648SIATA);
+                CH_08.setCellValue(listaData.get(vi).A3648AGENCY);
+                CH_09.setCellValue(listaData.get(vi).A3648STRCU);
+                CH_10.setCellValue(listaData.get(vi).A3648STDOC);
+                CH_11.setCellValue(listaData.get(vi).A3648MDA);
+                CH_12.setCellValue(listaData.get(vi).A3648TARID);
+                CH_13.setCellValue(listaData.get(vi).A3648TTAXD);
+                CH_14.setCellValue(listaData.get(vi).A3648COMID);
+                CH_15.setCellValue(listaData.get(vi).A3648TOTAD);
+                CH_16.setCellValue(listaData.get(vi).A3648STOTL);
+                CH_17.setCellValue(listaData.get(vi).A3648XTOTL);
+
+                String vl_A4076FLAG = "";
+                switch (listaData.get(vi).A3648FLAG) {
+                    case "E":
+                        vl_A4076FLAG = "ERROR PROCESS";
+                        break;
+                    case "A":
+                        vl_A4076FLAG = "IN PROCESS";
+                        break;
+                    case "R":
+                        vl_A4076FLAG = "REJECTED";
+                        break;
+                    case "F":
+                        vl_A4076FLAG = "AUTHORISED";
+                        break;
+                    case "Y":
+                        vl_A4076FLAG = "PENDING";
+                        break;
+                }
+                CH_18.setCellValue(vl_A4076FLAG);
+                CH_19.setCellValue(listaData.get(vi).A3648STATO);
+                CH_20.setCellValue(listaData.get(vi).A3648GRUPO);
+                CH_21.setCellValue(listaData.get(vi).A3648ERROR);
+                CH_22.setCellValue(listaData.get(vi).A3648RAAG);
+
+                CH_00.setCellStyle(bodyStyle);
+                CH_01.setCellStyle(bodyStyle);
+                CH_02.setCellStyle(bodyStyle);
+                CH_03.setCellStyle(bodyStyle);
+                CH_04.setCellStyle(bodyStyle);
+                CH_05.setCellStyle(bodyStyle);
+                CH_06.setCellStyle(bodyStyle);
+                CH_07.setCellStyle(bodyStyle);
+                CH_08.setCellStyle(bodyStyle);
+                CH_09.setCellStyle(bodyStyle);
+                CH_10.setCellStyle(bodyStyle);
+                CH_11.setCellStyle(bodyStyle);
+                CH_12.setCellStyle(bodyStyle);
+                CH_13.setCellStyle(bodyStyle);
+                CH_14.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
+                CH_17.setCellStyle(bodyStyle);
+                CH_18.setCellStyle(bodyStyle);
+                CH_19.setCellStyle(bodyStyle);
+                CH_20.setCellStyle(bodyStyle);
+                CH_21.setCellStyle(bodyStyle);
+
+                // </editor-fold>
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            //sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(18, true);
+            sheet.autoSizeColumn(20, true);
+            sheet.autoSizeColumn(21, true);
+
+            String fileNameDownload = String.format("Detalle RFND - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new SpringException(e);
+        }
     }
 
     @RequestMapping(value = "searchDetail")
@@ -222,6 +742,69 @@ public class RFNDQueryController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "ProcesaUpdateUsosCPN")
+    public @ResponseBody
+    String ProcesaUpdateUsosCPN(ModelMap map, HttpServletRequest request) {
+        A3647Filter lst;
+        A3647Filter filter = new A3647Filter();
+        boolean success = true;
+        HashMap map03;
+        ArrayList<HashMap<String, String>> lsta_usos = new ArrayList<>();
+
+        try {
+            logic = new RFNDQueryLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_PREME = request.getParameter("IN_PREME").trim();
+            filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
+            filter.IN_CIA = request.getParameter("IN_CIA").trim();
+            filter.IN_FORMA = request.getParameter("IN_FORMA").trim();
+            filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
+            filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
+            filter.IN_CORRL = request.getParameter("IN_CORRL").trim();
+
+            success = this.rfndnotifiUpdateCPN(filter);
+            if (success) {
+                lst = logic.ProcesaUpdateUsosCPN(filter); 
+                // <editor-fold defaultstate="collapsed" desc="ArrayList -> LIS_COUPNS">
+                for (int vi = 0; vi < lst.lst_USOS.size(); ++vi) {
+                    map03 = new HashMap<>();
+
+                    map03.put("A3660CCUST", lst.lst_USOS.get(vi).A3660CCUST);
+                    map03.put("A3660PREME", lst.lst_USOS.get(vi).A3660PREME);
+                    map03.put("A3660ANIO", lst.lst_USOS.get(vi).A3660ANIO);
+                    map03.put("A3660CIA", lst.lst_USOS.get(vi).A3660CIA);
+                    map03.put("A3660FORMA", lst.lst_USOS.get(vi).A3660FORMA);
+                    map03.put("A3660SERIE", lst.lst_USOS.get(vi).A3660SERIE);
+                    map03.put("A3660SEQ", lst.lst_USOS.get(vi).A3660SEQ);
+                    map03.put("A3660CORRL", lst.lst_USOS.get(vi).A3660CORRL);
+                    map03.put("A3660TICKT", lst.lst_USOS.get(vi).A3660TICKT);
+                    map03.put("A3660CPN", lst.lst_USOS.get(vi).A3660CPN);
+                    map03.put("A3660FCAMB", lst.lst_USOS.get(vi).A3660FCAMB);
+                    map03.put("A3660HCAMB", lst.lst_USOS.get(vi).A3660HCAMB);
+                    map03.put("A3660CODE", lst.lst_USOS.get(vi).A3660CODE);
+                    map03.put("A3660STINI", lst.lst_USOS.get(vi).A3660STINI);
+                    map03.put("A3660STFIN", lst.lst_USOS.get(vi).A3660STFIN);
+                    map03.put("A3660FLAG", lst.lst_USOS.get(vi).A3660FLAG);
+                    map03.put("A3660REGIS", lst.lst_USOS.get(vi).A3660REGIS);
+                    map03.put("A3660FREGI", lst.lst_USOS.get(vi).A3660FREGI);
+                    map03.put("A3660HREGI", lst.lst_USOS.get(vi).A3660HREGI);
+
+                    lsta_usos.add(map03);
+                }
+                // </editor-fold>
+            }
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("lsta_USOS", lsta_usos);
+
+        return new Gson().toJson(map);
+    }
+
     public String rfndestatuspagina(A3647Filter beanGene, String Razones) {
         String mensaje = "";
         String flag = "";
@@ -292,10 +875,91 @@ public class RFNDQueryController extends BaseController {
         return mensaje;
     }
 
+    public boolean rfndnotifiUpdateCPN(A3647Filter beanGene) {
+        String mensaje = "";
+        String token = "";
+        boolean success = true;
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO_RFND").toString();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            /*
+             Se establece tiempo límite de conexión por 60 min
+             */
+            Unirest.setTimeouts(3600000, 3600000);
+
+            /*
+             Preparando parámetros para enviar por body
+            
+             */
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("ticket", beanGene.IN_CIA + "" + beanGene.IN_FORMA + "" + beanGene.IN_SERIE);
+            bodyData.put("correlativo", beanGene.IN_CORRL);
+            bodyData.put("prememo", beanGene.IN_PREME);
+            bodyData.put("anio", beanGene.IN_ANIO);
+            bodyData.put("secuencia", beanGene.IN_SEQ);
+            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/usos-sabre")
+                    .header("content-type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Authorization", "Token " + token)
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+
+            success = Boolean.parseBoolean(response.getBody().getObject().get("success").toString());
+
+        } catch (SQLException e) {
+            mensaje = e.getMessage();
+        } catch (Exception e) {
+            mensaje = e.getMessage();
+        }
+
+        return success;
+    }
+
+    public String rfndnotifipagina(A3648Filter beanGene) {
+        String mensaje = "";
+        String flag = "";
+        String token = "";
+        boolean success = true;
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO_RFND").toString();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            /*
+             Se establece tiempo límite de conexión por 60 min
+             */
+            Unirest.setTimeouts(3600000, 3600000);
+
+            /*
+             Preparando parámetros para enviar por body
+            
+             */
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("preme", beanGene.IN_PREME);
+            bodyData.put("anio", beanGene.IN_ANIO);
+            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/manual-response")
+                    .header("content-type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Authorization", "Token " + token)
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+
+            success = Boolean.parseBoolean(response.getBody().getObject().get("success").toString());
+
+        } catch (SQLException e) {
+            mensaje = e.getMessage();
+        } catch (Exception e) {
+            mensaje = e.getMessage();
+        }
+
+        return mensaje;
+    }
+
     @RequestMapping(value = "ProcesaManualRFNDTCKT")
     public @ResponseBody
     String ProcesaManualRFNDTCKT(ModelMap map, HttpServletRequest request) {
         String result = "";
+        String result2 = "";
         String razones = "";
         String taxes = "";
         String fop = "";
@@ -309,28 +973,37 @@ public class RFNDQueryController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             JsonParser parser = new JsonParser();
+            if (filter.IN_STATUS.equals("F")) {
+                // Obtain Array
+                JsonArray gsonTaxes = parser.parse(request.getParameter("beanlstTaxes")).getAsJsonArray();
+                JsonArray gsonFop = parser.parse(request.getParameter("beanlstlstFop")).getAsJsonArray();
+                //LISTA DE TAXES
+                for (JsonElement obj : gsonTaxes) {
+                    JsonObject gsonObj = obj.getAsJsonObject();
+                    taxes = taxes + "|" + gsonObj.get("A3652PREME").getAsString() + "$" + gsonObj.get("A3652ANIO").getAsString() + "$" + gsonObj.get("A3652CDTAX").getAsString() + "$" + gsonObj.get("A3652CORRL").getAsString() + "$" + gsonObj.get("A3652APFC").getAsString() + "$" + gsonObj.get("A3652MONED").getAsString() + "$" + gsonObj.get("A3652TXDIF").getAsDouble();
+                }
+
+                //LISTA DE FOP 
+                for (JsonElement obj : gsonFop) {
+                    JsonObject gsonObj = obj.getAsJsonObject();
+                    fop += fop + "|" + gsonObj.get("A3653PREME").getAsString() + "$" + gsonObj.get("A3653ANIO").getAsString() + "$" + gsonObj.get("A3653CORRL").getAsString() + "$" + gsonObj.get("A3653CFOP").getAsString() + "$" + gsonObj.get("A3653TYCAR").getAsString() + "$" + gsonObj.get("A3653NTARJ").getAsString() + "$" + gsonObj.get("A3653FEXP").getAsString() + "$" + gsonObj.get("A3653CAPL").getAsString() + "$" + gsonObj.get("A3653TYPE").getAsString() + "$" + gsonObj.get("A3653TOTAL").getAsDouble();
+                }
+            }
             // Obtain Array
             JsonArray gsonRazo = parser.parse(request.getParameter("beanlstRazones")).getAsJsonArray();
-            JsonArray gsonTaxes = parser.parse(request.getParameter("beanlstTaxes")).getAsJsonArray();
-            JsonArray gsonFop = parser.parse(request.getParameter("beanlstlstFop")).getAsJsonArray();
-            for (JsonElement obj : gsonTaxes) {
-                JsonObject gsonObj = obj.getAsJsonObject();
-                taxes = taxes + "|" + gsonObj.get("A3652CDTAX").getAsString() + "$" + gsonObj.get("A3652TXDIF").getAsDouble() + "$" + gsonObj.get("A3652APFC").getAsString() + "$" + gsonObj.get("A3652CORRL").getAsString();
-            }
+
             //LISTA DE TKT
             for (JsonElement obj : gsonRazo) {
                 JsonObject gsonObj = obj.getAsJsonObject();
-                razones += razones + "|" + gsonObj.get("A3649CODE").getAsString() + "$" + gsonObj.get("A3649ERROR").getAsString();
-            }
-            //LISTA DE FOP 
-            for (JsonElement obj : gsonFop) {
-                JsonObject gsonObj = obj.getAsJsonObject();
-                fop += fop + "|" + gsonObj.get("A3653CFOP").getAsString() + "$" + gsonObj.get("A3653TYCAR").getAsString() + "$" + gsonObj.get("A3653NTARJ").getAsString() + "$" + gsonObj.get("A3653TOTAL").getAsString() + "$" + gsonObj.get("A3653FEXP").getAsString() + "$" + gsonObj.get("A3653CAPL").getAsString() + "$" + gsonObj.get("A3653CORRL").getAsString();
+                razones += razones + "|" + gsonObj.get("A3649CODE").getAsString() + "$" + gsonObj.get("A3649ERROR").getAsString() + "$" + gsonObj.get("A3649TYPE").getAsString() + "$" + gsonObj.get("A3649CORRL").getAsString() + "$" + gsonObj.get("A3649PREME").getAsString() + "$" + gsonObj.get("A3649ANIO").getAsString() + "$" + gsonObj.get("A3649FAMIL").getAsString();
             }
 
             logic = new RFNDQueryLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.ProcesaManualRFNDTCKT(filter, taxes, razones, fop);
+            if (result.equals("Proceso Culminado")) {
+                result2 = this.rfndnotifipagina(filter);
+            }
 
         } catch (Exception e) {
             throw new SpringException(e);
@@ -504,6 +1177,7 @@ public class RFNDQueryController extends BaseController {
                 map05.put("A3649CORRL", lst.lst_RAZON.get(vi).A3649CORRL);
                 map05.put("A3649TYPE", lst.lst_RAZON.get(vi).A3649TYPE);
                 map05.put("A3649BASE", lst.lst_RAZON.get(vi).A3649BASE);
+                map05.put("A3649FAMIL", lst.lst_RAZON.get(vi).A3649FAMIL);
                 map05.put("A3649CODE", lst.lst_RAZON.get(vi).A3649CODE);
                 map05.put("A3649ANIO", lst.lst_RAZON.get(vi).A3649ANIO);
                 map05.put("A3649ERROR", lst.lst_RAZON.get(vi).A3649ERROR);

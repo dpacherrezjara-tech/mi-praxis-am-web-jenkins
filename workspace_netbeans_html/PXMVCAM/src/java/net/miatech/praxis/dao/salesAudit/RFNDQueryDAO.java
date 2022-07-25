@@ -125,7 +125,7 @@ public class RFNDQueryDAO {
                 objRtn.STOEN = rs01.getInt("STOEN");
                 objRtn.STORET = rs01.getInt("STORET");
                 objRtn.TOTALSTO = rs01.getInt("STOEN") + rs01.getInt("STORET");
-                objRtn.A3647DIAS= rs01.getString("DIAS");
+                objRtn.A3647DIAS = rs01.getString("DIAS");
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -270,6 +270,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648MDAQD = rs01.getString("A3648MDAQD");
                 objRtn.A3648MDA = rs01.getString("A3648MDA");
                 objRtn.A3648TARID = rs01.getDouble("A3648TARID");
+                objRtn.A3648STAQD  = rs01.getDouble("A3648STAQD");
                 objRtn.A3648TTAXD = rs01.getDouble("A3648TTAXD");
                 objRtn.A3648COMID = rs01.getDouble("A3648COMID");
                 objRtn.A3648SCOMD = rs01.getDouble("A3648SCOMD");
@@ -296,6 +297,15 @@ public class RFNDQueryDAO {
                 objRtn.A3648ESTADO = rs01.getString("A3648ESTADO");
                 objRtn.A3648FOLIO = rs01.getString("A3647FOLIO");
                 objRtn.A3648RAAG = rs01.getString("A3647RAAG");
+                objRtn.A3648CONJT = rs01.getString("A3648CONJT");
+                objRtn.A3648CARR5 = rs01.getString("A3648CARR5");
+                objRtn.A3648CARR6 = rs01.getString("A3648CARR6");
+                objRtn.A3648CARR7 = rs01.getString("A3648CARR7");
+                objRtn.A3648CARR8 = rs01.getString("A3648CARR8");
+                objRtn.A3648CPN5D = rs01.getString("A3648CPN5D");
+                objRtn.A3648CPN6D = rs01.getString("A3648CPN6D");
+                objRtn.A3648CPN7D = rs01.getString("A3648CPN7D");
+                objRtn.A3648CPN8D = rs01.getString("A3648CPN8D");
 
                 lstRtn.add(objRtn);
             }
@@ -518,37 +528,48 @@ public class RFNDQueryDAO {
 
     public String ProcesaManualRFNDTCKT(A3648Filter filter, String lstaTaxes, String lstaRazones, String lstafop) throws SQLException, Exception {
         CallableStatement cs = null;
+        CallableStatement cs2 = null;
         ResultSet rst = null;
+        ResultSet rst2 = null;
         String strSQL;
         String STR_RESULT = "";
-
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP03104(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXRFNDESP.SQP03104(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL02 = "{CALL PXRFNDESP.SQP04572(?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
-            cs.setString("IN_TKT", filter.IN_TKT);
-            cs.setString("IN_SEQ", filter.IN_SEQ);
+            cs.setString("IN_FOLIO", filter.IN_FOLIO);
+            cs.setString("IN_COUNTRY", filter.IN_COUNTRY);
             cs.setString("IN_CORRL", filter.IN_CORRL);
             cs.setString("IN_PREME", filter.IN_PREME);
             cs.setString("IN_ANIO", filter.IN_ANIO);
+            cs.setString("IN_CIA", filter.IN_CIA);
+            cs.setString("IN_FORMA", filter.IN_FORMA);
+            cs.setString("IN_SERIE", filter.IN_SERIE);
+            cs.setString("IN_SEQ", filter.IN_SEQ);
+            cs.setDouble("IN_TARIF", filter.IN_TARIF);
             cs.setString("IN_MDA", filter.IN_MDA);
-
+            cs.setDouble("IN_TARIFEQUI", filter.IN_TARIFEQUI);
+            cs.setString("IN_MDAEQUI", filter.IN_MDAEQUI);
+            cs.setDouble("IN_TTAX", filter.IN_TTAX);
+            cs.setDouble("IN_COMMI", filter.IN_COMMI);
+            cs.setDouble("IN_TOTALRFND", filter.IN_TOTALRFND);
+            cs.setString("IN_STATUS", filter.IN_STATUS);
+            cs.setString("IN_CONJU", filter.IN_CONJU);
+            cs.setString("IN_MARCA", filter.IN_MARCA);
             cs.setString("IN_CPN1", filter.IN_CPN1);
             cs.setString("IN_CPN2", filter.IN_CPN2);
             cs.setString("IN_CPN3", filter.IN_CPN3);
             cs.setString("IN_CPN4", filter.IN_CPN4);
-
-            cs.setString("IN_COUNTRY", filter.IN_COUNTRY);
-            cs.setString("IN_STATUS", filter.IN_STATUS);
-            cs.setDouble("IN_TARIF", filter.IN_TARIF);
-            cs.setDouble("IN_TTAX", filter.IN_TTAX);
-            cs.setDouble("IN_TOTALRFND", filter.IN_TOTALRFND);
+            cs.setString("IN_CPN5", filter.IN_CPN5);
+            cs.setString("IN_CPN6", filter.IN_CPN6);
+            cs.setString("IN_CPN7", filter.IN_CPN7);
+            cs.setString("IN_CPN8", filter.IN_CPN8);
             cs.setString("IN_LSTATaxes", lstaTaxes);
             cs.setString("IN_LSTARazones", lstaRazones);
             cs.setString("IN_LSTAfop", lstafop);
-            cs.setString("IN_MARCA", filter.IN_MARCA);
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
             cs.setString("IN_FREGI", Functions.getFechaActual());
             cs.setString("IN_HREGI", Functions.getHoraActual());
@@ -558,6 +579,18 @@ public class RFNDQueryDAO {
 
             while (rst.next()) {
                 STR_RESULT = rst.getString("VMESSAGE");
+                if (rst.getString("VMESSAGE").equals("RECORD INSERTED")) {
+                    cs2 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL02);
+                    cs2.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                    cs2.setString(2, filter.IN_PREME);
+                    cs2.setString(3, filter.IN_ANIO);
+                    cs2.execute();
+                    rst2 = cs2.getResultSet();
+                    while (rst2.next()) {
+                        STR_RESULT = rst2.getString("VMESSAGE");
+                    }
+                    cs2.close();
+                }
             }
             cs.close();
         } catch (SQLException e) {
@@ -680,10 +713,10 @@ public class RFNDQueryDAO {
                 while (rs03.next()) {
                     objlst_COUPNS = new A3654();
                     objlst_COUPNS.A3654CCUST = rs03.getString("A3654CCUST");
-                    objlst_COUPNS.A3648CIA = rs03.getString("A3648CIA");
-                    objlst_COUPNS.A3648FORMA = rs03.getString("A3648FORMA");
-                    objlst_COUPNS.A3648SERIE = rs03.getString("A3648SERIE");
-                    objlst_COUPNS.A3648SEQ = rs03.getString("A3648SEQ");
+                    objlst_COUPNS.A3648CIA = rs03.getString("A3654CIA");
+                    objlst_COUPNS.A3648FORMA = rs03.getString("A3654FORMA");
+                    objlst_COUPNS.A3648SERIE = rs03.getString("A3654SERIE");
+                    objlst_COUPNS.A3648SEQ = rs03.getString("A3654SEQ");
                     objlst_COUPNS.A3654CPN = rs03.getString("A3654CPN");
                     objlst_COUPNS.A3654MARKE = rs03.getString("A3654MARKE");
                     objlst_COUPNS.A3654NFLGH = rs03.getString("A3654NFLGH");
@@ -760,11 +793,12 @@ public class RFNDQueryDAO {
                     objlst_RAZON.A3659CIA = rs05.getString("A3656CIA");
                     objlst_RAZON.A3659FORMA = rs05.getString("A3656FORMA");
                     objlst_RAZON.A3659SERIE = rs05.getString("A3656SERIE");
-                    objlst_RAZON.A3659SEQ = rs05.getString("A3656SEQ");                    
+                    objlst_RAZON.A3659SEQ = rs05.getString("A3656SEQ");
                     objlst_RAZON.A3649CORRL = rs05.getString("A3656CORRL");
                     objlst_RAZON.A3649TYPE = rs05.getString("A3656TYPE");
                     objlst_RAZON.A3649BASE = rs05.getString("A3656BASE");
                     objlst_RAZON.A3649CODE = rs05.getString("A3656CODE");
+                    objlst_RAZON.A3649FAMIL = rs05.getString("A3656FAMIL");
                     objlst_RAZON.A3649ERROR = rs05.getString("A3656ERROR");
                     objlst_RAZON.A3649REGIS = rs05.getString("A3656REGIS");
                     objlst_RAZON.A3649FREGI = rs05.getString("A3656FREGI");
@@ -778,7 +812,7 @@ public class RFNDQueryDAO {
                 while (rs06.next()) {
                     objlst_USOS = new A3660();
                     objlst_USOS.A3660CCUST = rs06.getString("A3660CCUST");
-                    objlst_USOS.A3660PREME = rs06.getString("A3660PREME"); 
+                    objlst_USOS.A3660PREME = rs06.getString("A3660PREME");
                     objlst_USOS.A3660ANIO = rs06.getString("A3660ANIO");
                     objlst_USOS.A3660CIA = rs06.getString("A3660CIA");
                     objlst_USOS.A3660FORMA = rs06.getString("A3660FORMA");
@@ -837,6 +871,90 @@ public class RFNDQueryDAO {
 
     }
 
+    public A3647Filter ProcesaUpdateUsosCPN(A3647Filter filter) throws SQLException, Exception {
+        A3647Filter lstGeneral = null;
+        List<A3660> lst_USOS = new ArrayList<A3660>(0);
+
+        A3647Filter objRtnGeneral = null;
+        A3660 objlst_USOS = null;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL PXRFNDESP.SQP04576(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_PREME);
+            cstmt01.setString(3, filter.IN_ANIO);
+            cstmt01.setString(4, filter.IN_CIA);
+            cstmt01.setString(5, filter.IN_FORMA);
+            cstmt01.setString(6, filter.IN_SERIE);
+            cstmt01.setString(7, filter.IN_SEQ);
+            cstmt01.setString(8, filter.IN_CORRL);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            ///LIST DOCUMENTS
+            while (rs01.next()) {
+                objlst_USOS = new A3660();
+                objlst_USOS.A3660CCUST = rs01.getString("A3660CCUST");
+                objlst_USOS.A3660PREME = rs01.getString("A3660PREME");
+                objlst_USOS.A3660ANIO = rs01.getString("A3660ANIO");
+                objlst_USOS.A3660CIA = rs01.getString("A3660CIA");
+                objlst_USOS.A3660FORMA = rs01.getString("A3660FORMA");
+                objlst_USOS.A3660SERIE = rs01.getString("A3660SERIE");
+                objlst_USOS.A3660SEQ = rs01.getString("A3660SEQ");
+                objlst_USOS.A3660CORRL = rs01.getString("A3660CORRL");
+                objlst_USOS.A3660TICKT = rs01.getString("A3660TICKT");
+                objlst_USOS.A3660CPN = rs01.getString("A3660CPN");
+                objlst_USOS.A3660FCAMB = rs01.getString("A3660FCAMB");
+
+                objlst_USOS.A3660HCAMB = rs01.getString("A3660HCAMB");
+                objlst_USOS.A3660CODE = rs01.getString("A3660CODE");
+                objlst_USOS.A3660STINI = rs01.getString("A3660STINI");
+                objlst_USOS.A3660STFIN = rs01.getString("A3660STFIN");
+                objlst_USOS.A3660FLAG = rs01.getString("A3660FLAG");
+                objlst_USOS.A3660REGIS = rs01.getString("A3660REGIS");
+                objlst_USOS.A3660FREGI = rs01.getString("A3660FREGI");
+                objlst_USOS.A3660HREGI = rs01.getString("A3660HREGI");
+
+                lst_USOS.add(objlst_USOS);
+            }
+            // FIN DE LA AGENCIA
+            objRtnGeneral = new A3647Filter();
+            objRtnGeneral.lst_USOS = lst_USOS;
+
+            lstGeneral = objRtnGeneral;
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstGeneral;
+
+    }
+
     public String ProcesaDeleteTAXManual(A3652Filter filter) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -845,7 +963,7 @@ public class RFNDQueryDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP03458(?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXRFNDESP.SQP03458(?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);

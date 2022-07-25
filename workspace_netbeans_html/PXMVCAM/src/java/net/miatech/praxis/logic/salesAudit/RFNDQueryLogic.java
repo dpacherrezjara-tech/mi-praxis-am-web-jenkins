@@ -48,5 +48,8 @@ public class RFNDQueryLogic {
     public String ProcesaDeleteTAXManual(A3652Filter filter) throws SQLException, Exception {
         return objDAO.ProcesaDeleteTAXManual(filter);
     }
+    public A3647Filter ProcesaUpdateUsosCPN(A3647Filter filter) throws SQLException, Exception {
+        return objDAO.ProcesaUpdateUsosCPN(filter);
+    }
 
 }
