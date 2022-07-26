@@ -2589,6 +2589,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     beanTkt.desCERROR = rst.getString("desCERROR").trim();
 
+                    beanTkt.SAGENT = rst.getString("SAGENT").trim();
+                    beanTkt.FUENTE = rst.getString("FUENTE").trim();
+
                     /*if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
                     } else {
@@ -2667,7 +2670,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.A720FECVTA = beanTkt.TRANSDATE;
                     beanTkt.A720PNR = beanTkt.SPNR;
                     beanTkt.A1531TKT = beanTkt.ISREFNBR;
-                    beanTkt.A720AGENTE = "";
+                    beanTkt.A720AGENTE = beanTkt.SAGENT;
+                    beanTkt.A720ORIG = beanTkt.FUENTE;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -3637,7 +3641,7 @@ public class SalesReconciliAmexDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -3661,10 +3665,12 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(16, beanDet.A720GRUPO.trim());
                     cstmt01.setDouble(17, beanDet.SADJUST);
                     cstmt01.setString(18, filter.ADJ_TYPE.trim());
-                    cstmt01.setString(19, beanDet.STMANUAL);
-                    cstmt01.setString(20, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(21, Functions.getFechaActual());
-                    cstmt01.setString(22, Functions.getHoraActual());
+                    cstmt01.setString(19, beanDet.STMANUAL);                    
+                    cstmt01.setString(20, beanDet.A720AGENTE.trim());
+                    cstmt01.setString(21, beanDet.A720ORIG.trim());                    
+                    cstmt01.setString(22, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(23, Functions.getFechaActual());
+                    cstmt01.setString(24, Functions.getHoraActual());
                     if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
                     }
@@ -3988,6 +3994,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A720GRUPO = rst.getString("A720GRUPO").trim();
                 beanRec.A720FECVTA = rst.getString("A720FECVTA").trim();
                 beanRec.A720AGENTE = rst.getString("A720AGENTE").trim();
+                beanRec.A720ORIG = rst.getString("A720ORIG").trim();
 
                 if (filter.TDOC.trim().equals("R")) {
                     beanRec.A1531VFOP = beanRec.A1531VFOP * -1;
