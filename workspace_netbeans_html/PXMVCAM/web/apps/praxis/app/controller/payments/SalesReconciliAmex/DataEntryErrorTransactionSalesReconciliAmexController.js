@@ -918,7 +918,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         for (var i = 0; i < store_gridInfoScan.data.length; i++) {
             var dataRow1 = store_gridInfoScan.data.items[i];
             this.lstSendManual.push(dataRow1.data);
-            this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP + dataRow1.data.SADJUST;
+            if (dataRow1.data.STMANUAL !== 'Blocked') {
+                this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP + dataRow1.data.SADJUST;
+            }            
         }
 
         for (var i = 0; i < this.lstAdjustment.length; i++) {
@@ -939,27 +941,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     onAdjust: function (grid, rowIndex, colIndex) {
 
-        if (this.sumAmount === this.bean.TGROSAMOUN) {
-            global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+        var data = grid.getStore().getAt(rowIndex).data;
+
+        console.log(data);
+
+        if (data.STMANUAL !== 'Blocked') {
+            if (this.sumAmount === this.bean.TGROSAMOUN) {
+                global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+            } else {
+                //this.lstAdjustment = [];
+                Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+                Ext.getCmp(prototype.id + '-panelADJ').show();
+                var rec = Object.create(grid.getStore().getAt(rowIndex).data);
+
+                var monto_ajustado = parseFloat(parseFloat(this.bean.TGROSAMOUN - this.sumAmount).toFixed(2))
+
+                rec.A1531VFOP = monto_ajustado;
+                rec.tot_VFOP = monto_ajustado;
+                rec.SADJUST = 0;
+                rec.A720AGENTE = $('#menuUser').text();
+                rec.CERROR = '01';
+
+                this.lstAdjustment.push(rec);
+
+                Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                        Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                        );
+                this.calcularMontos();
+            }
         } else {
-            //this.lstAdjustment = [];
-            Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
-            Ext.getCmp(prototype.id + '-panelADJ').show();
-            var rec = Object.create(grid.getStore().getAt(rowIndex).data);
-            
-            var monto_ajustado = parseFloat(parseFloat(this.bean.TGROSAMOUN - this.sumAmount).toFixed(2))
-
-            rec.A1531VFOP = monto_ajustado;
-            rec.tot_VFOP = monto_ajustado;
-            rec.A720AGENTE = $('#menuUser').text();
-            rec.CERROR = '01';
-
-            this.lstAdjustment.push(rec);
-
-            Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-                    Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
-                    );
-            this.calcularMontos();
+            global.Msg({msg: 'Can\'t adjust a blocked ticket.'});
         }
 
     },

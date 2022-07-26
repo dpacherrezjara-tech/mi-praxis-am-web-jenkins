@@ -127,6 +127,8 @@ public class A4116Filter extends A4116 {
     public Integer FDUPLIB = 0;
     public String ADJ_TYPE = "";
     public String descSTRFND = "";
+    public String SAGENT = "";
+    public String FUENTE = "";
     
     //Summary Error
     public String IN_DRILLDOWN = "";
@@ -185,6 +187,7 @@ public class A4116Filter extends A4116 {
     public String A720SEQ = "";
     public String A720GRUPO = "";
     public String A720FECVTA = "";    
+    public String A720ORIG = "";    
 
     // A1531
     public String STMANUAL = "";
