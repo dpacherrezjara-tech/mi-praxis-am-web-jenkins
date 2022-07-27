@@ -20,6 +20,7 @@ public class A4258 {
     public String A4258INIPR = "";
     public String A4258FINPR = "";
     public String A4258FPERI = "";
+    public String A4258TARJE = "";
     public String A4258MDLOC = "";
     public Double A4258TOT = 0.0;
     public String A4258TOTLT = "";
