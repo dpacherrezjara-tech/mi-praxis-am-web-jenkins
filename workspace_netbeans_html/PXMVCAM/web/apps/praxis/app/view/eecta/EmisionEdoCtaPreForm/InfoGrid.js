@@ -1,5 +1,5 @@
 
-Ext.define('Ext.Praxis.view.eecta.SalesReportPreForm.InfoGrid', {
+Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaPreForm.InfoGrid', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
     layout: 'border',
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.eecta.SalesReportPreForm.InfoGrid', {
                         align: 'left'
                     },
                     items: [
-                        // <editor-fold defaultstate="collapsed" desc="gridTree">
+                        // <editor-fold defaultstate="collapsed" desc="grid">
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
@@ -56,69 +56,20 @@ Ext.define('Ext.Praxis.view.eecta.SalesReportPreForm.InfoGrid', {
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Nbr. Report', dataIndex: 'A4245NRRPT', width: 80, align: 'center'},
-                                    {text: 'Client Id', dataIndex: 'A4245CDCLI', align: 'center', width: 80},
-                                    {text: 'Client Name', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},                                    
+                                    {text: 'Nº Edo. Cta.', dataIndex: 'A4258NREDO', width: 85, align: 'center'},
+                                    {text: 'Client Id', dataIndex: 'A4258CDCLI', align: 'center', width: 85},
+                                    {text: 'Client', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},   
+                                    {text: 'Date<br>Issue', dataIndex: 'A4258FEDOC', align: 'center', width: 80},                                       
                                     {
                                         text: 'Period',
                                         columns: [
-                                            {text: 'From', dataIndex: 'A4245INIPR', width: 70, align: 'center'},
-                                            {text: 'To', dataIndex: 'A4245FINPR', width: 70, align: 'center'}
+                                            {text: 'From', dataIndex: 'A4258INIPR', width: 70, align: 'center'},
+                                            {text: 'To', dataIndex: 'A4258FINPR', width: 70, align: 'center'}
                                         ]
                                     },
-                                    {text: 'Curr.', dataIndex: 'A4245MDLOC', width: 50, align: 'center'},
-//                                    {text: 'Fare', dataIndex: 'A4245FARE', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
-//                                    {text: 'IVA', dataIndex: 'A4245IVA', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000');
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'TUA', dataIndex: 'A4245TUA', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            if (record.get('IS_TOTAL'))
-//                                                metaData.tdStyle = 'font-weight: bold;';
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'YR', dataIndex: 'A4245YR', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'Other', dataIndex: 'A4245OTR', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
+                                    {text: 'Curr.', dataIndex: 'A4258MDLOC', width: 50, align: 'center'},
                                     {
-                                        text: 'Total', dataIndex: 'A4245TOT', width: 90, align: 'right',
+                                        text: 'Total', dataIndex: 'A4258TOT', width: 90, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -133,18 +84,16 @@ Ext.define('Ext.Praxis.view.eecta.SalesReportPreForm.InfoGrid', {
                                         width: 40,
                                         align: 'center',
                                         items: [
-//                                            {
-//                                                iconCls: 'prx-icon-detail',
-//                                                tooltip: 'Click for view detail',
-//                                                handler: 'onDetailClick',
-//                                                isDisabled: 'onDetailIsDisabled'
-//                                            },
                                             {
                                                 iconCls: 'prx-icon-pdf',
                                                 tooltip: 'Report to PDF',
-                                                handler: 'onReportVentaUATP_PDF'
-                                                //isDisabled: 'onDetailIsDisabled'
+                                                handler: 'onReportEdoCta'
                                             }
+//                                            {
+//                                                iconCls: 'prx-icon-detail',
+//                                                tooltip: 'Report for PDF Detalle',
+//                                                handler: 'onReportEdoCtaDet'
+//                                            }
                                         ]
                                     }
                                 ],
@@ -159,7 +108,7 @@ Ext.define('Ext.Praxis.view.eecta.SalesReportPreForm.InfoGrid', {
                                 enableTextSelection: true,
                                 markDirty: false,
                                 getRowClass: function (record, rowIndex, rowParams, store) {
-                                    if (rowIndex % 2 == 0)
+                                    if (rowIndex % 2 === 0)
                                         return 'rowA';
                                 }
                             },
