@@ -17,6 +17,7 @@ public class SQP04557Filter {
     //    
     public A4245 rpteCab = new A4245();
     public A4246 rpteDet = new A4246();
+    public A4260 rpteDet1 = new A4260(); // NEW     
     public A3961 tbl_misl= new A3961();
     public A3953 tbl_client = new A3953(); 
 }
