@@ -30,6 +30,7 @@ import net.miatech.praxis.eecta.SQP04001Filter;
 import net.miatech.praxis.eecta.SQP04043Filter;
 import net.miatech.praxis.eecta.SQP04050Filter;
 import net.miatech.praxis.eecta.SQP04224Filter;
+import net.miatech.praxis.eecta.SQP04559Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.EmisionEdoCtaLogic;
 import net.miatech.utils.Functions;
@@ -864,6 +865,46 @@ public class EmisionEdoCtaController extends BaseController {
             e.printStackTrace();
             throw new SpringException(e);
         } 
+    }
+    
+    
+    //:: P R E C O M P R A
+    @RequestMapping(value = "/searchEdoCtaPre")
+    public @ResponseBody
+    String searchEdoCtaPre(ModelMap map, HttpServletRequest request) {
+        List<SQP04559Filter> listaData;
+        SQP04559Filter filter;
+        filter = new SQP04559Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_OPCION = request.getParameter("VP_OPCION");
+            filter.VP_FDATE1 = request.getParameter("VP_FDATE1");
+            filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_RSOCI = request.getParameter("VP_RSOCI");
+            filter.VP_NREDO = request.getParameter("VP_NREDO");
+            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new EmisionEdoCtaLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04559Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
     }
     
 }

@@ -21,6 +21,7 @@ import net.miatech.praxis.eecta.SQP04001Filter;
 import net.miatech.praxis.eecta.SQP04043Filter;
 import net.miatech.praxis.eecta.SQP04050Filter;
 import net.miatech.praxis.eecta.SQP04224Filter;
+import net.miatech.praxis.eecta.SQP04559Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -123,9 +124,8 @@ public class EmisionEdoCtaDAO {
         }
 
         return lstRtn;
-    }
-    
-     public List<SQP03976Filter> getSQP03976Filter(SQP03976Filter filter) throws SQLException, Exception {
+    }    
+    public List<SQP03976Filter> getSQP03976Filter(SQP03976Filter filter) throws SQLException, Exception {
         List<SQP03976Filter> lstRtn = new ArrayList<SQP03976Filter>(0);
          SQP03976Filter objRtn;
 
@@ -281,7 +281,7 @@ public class EmisionEdoCtaDAO {
 
         return lstRtn;
     }
-     public List<SQP04001Filter> getSQP04001Filter(SQP04001Filter filter) throws SQLException, Exception {
+    public List<SQP04001Filter> getSQP04001Filter(SQP04001Filter filter) throws SQLException, Exception {
         List<SQP04001Filter> lstRtn = new ArrayList<SQP04001Filter>(0);
         SQP04001Filter objRtn;
 
@@ -400,10 +400,8 @@ public class EmisionEdoCtaDAO {
         }
 
         return lstRtn;
-    }
-     
-     
-     public List<SQP04043Filter> getSQP04043Filter(SQP04043Filter filter) throws SQLException, Exception {
+    }          
+    public List<SQP04043Filter> getSQP04043Filter(SQP04043Filter filter) throws SQLException, Exception {
         List<SQP04043Filter> lstRtn = new ArrayList<SQP04043Filter>(0);
          SQP04043Filter objRtn;
 
@@ -542,7 +540,7 @@ public class EmisionEdoCtaDAO {
 
         return lstRtn;
     }
-     public List<SQP04050Filter> getSQP04050Filter(SQP04050Filter filter) throws SQLException, Exception {
+    public List<SQP04050Filter> getSQP04050Filter(SQP04050Filter filter) throws SQLException, Exception {
         List<SQP04050Filter> lstRtn = new ArrayList<SQP04050Filter>(0);
          SQP04050Filter objRtn;
 
@@ -679,7 +677,7 @@ public class EmisionEdoCtaDAO {
 
         return lstRtn;
     }
-     public List<SQP04224Filter> getSQP04224Filter(SQP04224Filter filter) throws SQLException, Exception {
+    public List<SQP04224Filter> getSQP04224Filter(SQP04224Filter filter) throws SQLException, Exception {
         List<SQP04224Filter> lstRtn = new ArrayList<SQP04224Filter>(0);
         SQP04224Filter objRtn;
 
@@ -709,6 +707,84 @@ public class EmisionEdoCtaDAO {
                 objRtn.A4104MDARC = rs01.getString("A4104MDARC");
                 objRtn.A4104TOT = rs01.getDouble("A4104TOT");
                 objRtn.A4104ANTSD = rs01.getInt("A4104ANTSD");
+                lstRtn.add(objRtn);
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    //:: P R E C O M P R A
+    public List<SQP04559Filter> getSQP04559Filter(SQP04559Filter filter) throws SQLException, Exception {
+        List<SQP04559Filter> lstRtn = new ArrayList<SQP04559Filter>(0);
+        SQP04559Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04559(?,?,?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_OPCION);
+            cstmt01.setString(3, filter.VP_FDATE1);
+            cstmt01.setString(4, filter.VP_FDATE2);
+            cstmt01.setString(5, filter.VP_CDCLI);
+            cstmt01.setString(6, filter.VP_RSOCI);
+            cstmt01.setString(7, filter.VP_NREDO);
+            cstmt01.setInt(8, filter.page.PAGNUM);
+            cstmt01.setInt(9, filter.page.PAGROW);
+            cstmt01.setInt(10, filter.page.TOTPAG);
+            cstmt01.setInt(11, filter.page.TOTROW);            
+            cstmt01.execute();            
+            filter.page.PAGNUM = cstmt01.getInt(8);
+            filter.page.PAGROW = cstmt01.getInt(9);
+            filter.page.TOTPAG = cstmt01.getInt(10);
+            filter.page.TOTROW = cstmt01.getInt(11);
+            
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SQP04559Filter();
+                objRtn.A4258CCUST = rs01.getString("A4258CCUST");
+                objRtn.A4258NREDO = rs01.getString("A4258NREDO");
+                objRtn.A4258CDCLI = rs01.getString("A4258CDCLI");
+                objRtn.A4258SEQID = rs01.getString("A4258SEQID");                
+                objRtn.A3953RSOCI = rs01.getString("A3953RSOCI");
+                objRtn.A4258CONTR = rs01.getString("A4258CONTR");
+                objRtn.A4258FEDOC = rs01.getString("A4258FEDOC");
+                objRtn.A4258INIPR = rs01.getString("A4258INIPR"); //falta
+                objRtn.A4258FINPR = rs01.getString("A4258FINPR"); //falta
+                objRtn.A4258MDLOC = rs01.getString("A4258MDLOC");                
+                objRtn.A4258TOT = rs01.getDouble("A4258TOT");
+                objRtn.A4258TOTLT = rs01.getString("A4258TOTLT");                
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;                
                 lstRtn.add(objRtn);
             }
 

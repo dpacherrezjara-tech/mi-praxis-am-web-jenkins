@@ -216,31 +216,57 @@ public class SalesReportPreDAO {
                 rs03 = cstmt01.getResultSet();
                 while (rs03.next()) {
                     objRtn = new SQP04557Filter();
-                    objRtn.rpteDet.A4246CCUST = rs03.getString("A4246CCUST");
-                    objRtn.rpteDet.A4246CIA = rs03.getString("A4246CIA");
-                    objRtn.rpteDet.A4246FORMA = rs03.getString("A4246FORMA");
-                    objRtn.rpteDet.A4246SERIE = rs03.getString("A4246SERIE");
-                    objRtn.rpteDet.A4246SEQ = rs03.getString("A4246SEQ");
-                    objRtn.rpteDet.A4246NTARJ = rs03.getString("A4246NTARJ"); //new
-                    objRtn.rpteDet.A4246FEECC = rs03.getString("A4246FEECC");
-                    objRtn.rpteDet.A4246FECPR = rs03.getString("A4246FECPR");
-                    objRtn.rpteDet.A4246SOLER = rs03.getString("A4246SOLER");
-                    objRtn.rpteDet.A4246GESTR = rs03.getString("A4246GESTR");
-                    objRtn.rpteDet.A4246CFDI = rs03.getString("A4246CFDI");
-                    objRtn.rpteDet.A4246RFC = rs03.getString("A4246RFC");
-                    objRtn.rpteDet.A4246FECTB = rs03.getString("A4246FECTB");
-                    objRtn.rpteDet.A4246TRNCU = rs03.getString("A4246TRNCU");
-                    objRtn.rpteDet.A4246FEVTA = rs03.getString("A4246FEVTA");
-                    objRtn.rpteDet.A4246PAX = rs03.getString("A4246PAX");
-                    objRtn.rpteDet.A4246RUTA = rs03.getString("A4246RUTA");
-                    objRtn.rpteDet.A4246MDLOC = rs03.getString("A4246MDLOC");                    
-                    objRtn.rpteDet.A4246FARE = rs03.getDouble("A4246FARE");
-                    objRtn.rpteDet.A4246IVA = rs03.getDouble("A4246IVA");
-                    objRtn.rpteDet.A4246TUA = rs03.getDouble("A4246TUA");
-                    objRtn.rpteDet.A4246YR = rs03.getDouble("A4246YR");
-                    objRtn.rpteDet.A4246YQ = rs03.getDouble("A4246YQ");
-                    objRtn.rpteDet.A4246OTR = rs03.getDouble("A4246OTR");
-                    objRtn.rpteDet.A4246TOT = rs03.getDouble("A4246TOT");
+                    objRtn.rpteDet1.A4260CCUST = rs03.getString("A4260CCUST");
+                    objRtn.rpteDet1.A4260NRRPT = rs03.getString("A4260NRRPT");
+                    objRtn.rpteDet1.A4260CDCLI = rs03.getString("A4260CDCLI");
+                    objRtn.rpteDet1.A4260NTARJ = rs03.getString("A4260NTARJ");
+                    objRtn.rpteDet1.A4260ITEM = rs03.getString("A4260ITEM");
+                    objRtn.rpteDet1.A4260TIPO = rs03.getString("A4260TIPO");
+                    
+                    objRtn.rpteDet1.A4260CAM01 = rs03.getString("A4260CAM01");
+                    objRtn.rpteDet1.A4260CAM02 = rs03.getString("A4260CAM02");
+                    objRtn.rpteDet1.A4260CAM03 = rs03.getString("A4260CAM03");
+                    objRtn.rpteDet1.A4260CAM04 = rs03.getString("A4260CAM04");
+                    objRtn.rpteDet1.A4260CAM05 = rs03.getString("A4260CAM05");
+                    
+                    objRtn.rpteDet1.A4260CAM06 = rs03.getString("A4260CAM06");
+                    objRtn.rpteDet1.A4260CAM07 = rs03.getString("A4260CAM07");
+                    objRtn.rpteDet1.A4260CAM08 = rs03.getString("A4260CAM08");
+                    objRtn.rpteDet1.A4260CAM09 = rs03.getString("A4260CAM09");
+                    objRtn.rpteDet1.A4260CAM10 = rs03.getString("A4260CAM10");
+                    
+                    objRtn.rpteDet1.A4260CAM11 = rs03.getString("A4260CAM11");
+                    objRtn.rpteDet1.A4260CAM12 = rs03.getString("A4260CAM12");
+                    objRtn.rpteDet1.A4260CAM13 = rs03.getString("A4260CAM13");
+                    objRtn.rpteDet1.A4260CAM14 = rs03.getString("A4260CAM14");
+                    objRtn.rpteDet1.A4260CAM15 = rs03.getString("A4260CAM15");
+                                      
+                    
+//                    objRtn.rpteDet.A4246CCUST = rs03.getString("A4246CCUST");
+//                    objRtn.rpteDet.A4246CIA = rs03.getString("A4246CIA");
+//                    objRtn.rpteDet.A4246FORMA = rs03.getString("A4246FORMA");
+//                    objRtn.rpteDet.A4246SERIE = rs03.getString("A4246SERIE");
+//                    objRtn.rpteDet.A4246SEQ = rs03.getString("A4246SEQ");
+//                    objRtn.rpteDet.A4246NTARJ = rs03.getString("A4246NTARJ"); //new
+//                    objRtn.rpteDet.A4246FEECC = rs03.getString("A4246FEECC");
+//                    objRtn.rpteDet.A4246FECPR = rs03.getString("A4246FECPR");
+//                    objRtn.rpteDet.A4246SOLER = rs03.getString("A4246SOLER");
+//                    objRtn.rpteDet.A4246GESTR = rs03.getString("A4246GESTR");
+//                    objRtn.rpteDet.A4246CFDI = rs03.getString("A4246CFDI");
+//                    objRtn.rpteDet.A4246RFC = rs03.getString("A4246RFC");
+//                    objRtn.rpteDet.A4246FECTB = rs03.getString("A4246FECTB");
+//                    objRtn.rpteDet.A4246TRNCU = rs03.getString("A4246TRNCU");
+//                    objRtn.rpteDet.A4246FEVTA = rs03.getString("A4246FEVTA");
+//                    objRtn.rpteDet.A4246PAX = rs03.getString("A4246PAX");
+//                    objRtn.rpteDet.A4246RUTA = rs03.getString("A4246RUTA");
+//                    objRtn.rpteDet.A4246MDLOC = rs03.getString("A4246MDLOC");                    
+//                    objRtn.rpteDet.A4246FARE = rs03.getDouble("A4246FARE");
+//                    objRtn.rpteDet.A4246IVA = rs03.getDouble("A4246IVA");
+//                    objRtn.rpteDet.A4246TUA = rs03.getDouble("A4246TUA");
+//                    objRtn.rpteDet.A4246YR = rs03.getDouble("A4246YR");
+//                    objRtn.rpteDet.A4246YQ = rs03.getDouble("A4246YQ");
+//                    objRtn.rpteDet.A4246OTR = rs03.getDouble("A4246OTR");
+//                    objRtn.rpteDet.A4246TOT = rs03.getDouble("A4246TOT");
                     lstRtn.add(objRtn);
                 }
             }
