@@ -22,6 +22,7 @@ import net.miatech.praxis.eecta.SQP04043Filter;
 import net.miatech.praxis.eecta.SQP04050Filter;
 import net.miatech.praxis.eecta.SQP04224Filter;
 import net.miatech.praxis.eecta.SQP04559Filter;
+import net.miatech.praxis.eecta.SQP04560Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -788,6 +789,148 @@ public class EmisionEdoCtaDAO {
                 lstRtn.add(objRtn);
             }
 
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    public List<SQP04560Filter> getSQP04560Filter(SQP04560Filter filter) throws SQLException, Exception {
+        List<SQP04560Filter> lstRtn = new ArrayList<SQP04560Filter>(0);
+         SQP04560Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null , rs03 = null, rs04 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04560(?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_A4258NREDO);
+            cstmt01.setString(3, filter.VP_A4258CDCLI);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            
+            //this.setSQP03875(); tmp
+            
+            /*pos 0*/
+            while (rs01.next()) {
+                objRtn = new SQP04560Filter();                
+                objRtn.rpteCab.A4258CCUST = rs01.getString("A4258CCUST");                                        
+                objRtn.rpteCab.A4258NREDO = rs01.getString("A4258NREDO");                                        
+                objRtn.rpteCab.A4258CDCLI = rs01.getString("A4258CDCLI");                
+                objRtn.rpteCab.A4258SEQID = rs01.getString("A4258SEQID");                                
+                objRtn.rpteCab.A4258CONTR = rs01.getString("A4258CONTR");                
+                objRtn.rpteCab.A4258FEDOC = rs01.getString("A4258FEDOC");
+                objRtn.rpteCab.A4258INIPR = rs01.getString("A4258INIPR");
+                objRtn.rpteCab.A4258FINPR = rs01.getString("A4258FINPR");
+                objRtn.rpteCab.A4258TARJE = rs01.getString("A4258TARJE");          
+                objRtn.rpteCab.A4258MDLOC = rs01.getString("A4258MDLOC");
+                objRtn.rpteCab.A4258TOT = rs01.getDouble("A4258TOT");
+                objRtn.rpteCab.A4258TOTLT = rs01.getString("A4258TOTLT");
+                //datos CLIENTE
+                objRtn.tbl_client.A3953RSOCI = rs01.getString("A3953RSOCI");
+                objRtn.tbl_client.A3953DIRE1 = rs01.getString("A3953DIRE1");
+                objRtn.tbl_client.A3953COLON = rs01.getString("A3953COLON");
+                objRtn.tbl_client.A3953DELEG = rs01.getString("A3953DELEG");
+                objRtn.tbl_client.A3953CP = rs01.getString("A3953CP");
+                objRtn.tbl_client.A3953LOGO = rs01.getString("A3953LOGO").trim();
+                objRtn.tbl_client.A3953PLZCR = rs01.getInt("A3953PLZCR");
+                objRtn.tbl_client.A3953TORGN = rs01.getString("A3953TORGN");                                                                                                                      
+                //Fetch BLOB from DB
+                Blob blb= rs01.getBlob("LOGOBLOB");                
+                if( blb != null && !rs01.getString("A3953LOGO").equals("") ){
+                    byte barr[]=blb.getBytes(1,(int)blb.length());
+                    String Rutatmp = session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
+                    FileOutputStream fout=new FileOutputStream( Rutatmp + rs01.getString("A3953LOGO") ); 
+                    //FileOutputStream fout=new FileOutputStream("/Dumps/"+ rs01.getString("A3953LOGO"));                
+                    fout.write(barr);                
+                    fout.close();  
+                }                                
+                lstRtn.add(objRtn);
+            }
+            /*pos 1*/
+            if (cstmt01.getMoreResults()) {
+                rs02 = cstmt01.getResultSet();
+                while (rs02.next()) {
+                    objRtn = new SQP04560Filter();
+                    objRtn.tbl_misl.A3961DESC1 = rs02.getString("A3961DESC1");
+                    objRtn.tbl_misl.A3961DESC2 = rs02.getString("A3961DESC2");
+                    objRtn.tbl_misl.A3961COME1 = rs02.getString("A3961COME1");
+                    objRtn.tbl_misl.A3961COME2 = rs02.getString("A3961COME2");
+                    lstRtn.add(objRtn);                    
+                }
+            }
+            /*pos 2*/
+            if (cstmt01.getMoreResults()) {
+                rs04 = cstmt01.getResultSet();
+                while (rs04.next()) {
+                    objRtn = new SQP04560Filter();
+                    objRtn.tbl_misl.A3961DESC1 = rs04.getString("A3961DESC1");
+                    objRtn.tbl_misl.A3961DESC2 = rs04.getString("A3961DESC2");
+                    objRtn.tbl_misl.A3961COME1 = rs04.getString("A3961COME1");
+                    objRtn.tbl_misl.A3961COME2 = rs04.getString("A3961COME2");
+                    lstRtn.add(objRtn);                    
+                }
+            }
+//            /*pos 3*/
+//            if (cstmt01.getMoreResults()) {
+//                rs03 = cstmt01.getResultSet();
+//                while (rs03.next()) {
+//                    objRtn = new SQP03976Filter();
+//                    objRtn.tbl_saldos.A3990TOT  = rs03.getDouble("A3990TOT");
+//                    objRtn.tbl_saldos.A3990TTLS0 = rs03.getDouble("A3990TTLS0");
+//                    objRtn.tbl_saldos.A3990TTLS1 = rs03.getDouble("A3990TTLS1");
+//                    objRtn.tbl_saldos.A3990TTLS2 = rs03.getDouble("A3990TTLS2");
+//                    objRtn.tbl_saldos.A3990TTLS3 = rs03.getDouble("A3990TTLS3");
+//                    objRtn.tbl_saldos.A3990TTLS4 = rs03.getDouble("A3990TTLS4");
+//                    objRtn.tbl_saldos.A3990TTLS5 = rs03.getDouble("A3990TTLS5");
+//                    objRtn.tbl_saldos.A3990TTLS6 = rs03.getDouble("A3990TTLS6");
+//                    lstRtn.add(objRtn);                    
+//                }
+//            }
+            /*pos 3*/
+            if (cstmt01.getMoreResults()) {
+                rs04 = cstmt01.getResultSet();
+                while (rs04.next()) {
+                    objRtn = new SQP04560Filter();
+                    objRtn.rpteDet.A4259CCUST = rs04.getString("A4259CCUST");
+                    objRtn.rpteDet.A4259CDCLI = rs04.getString("A4259CDCLI");
+                    objRtn.rpteDet.A4259NREDO = rs04.getString("A4259NREDO");
+                    objRtn.rpteDet.A4259TREG = rs04.getString("A4259TREG");
+                    objRtn.rpteDet.A4259SEQED = rs04.getString("A4259SEQED");                    
+                    objRtn.rpteDet.A4259IDPRO = rs04.getString("A4259IDPRO");
+                    objRtn.rpteDet.A4259FEDOC = rs04.getString("A4259FEDOC");
+                    objRtn.rpteDet.A4259FECPR = rs04.getString("A4259FECPR");   
+                    objRtn.rpteDet.A4259SEQID = rs04.getString("A4259SEQID");
+                    objRtn.rpteDet.A4259QTYTX = rs04.getInt("A4259QTYTX");
+                    objRtn.rpteDet.A4259REFBC = rs04.getString("A4259REFBC");   
+                    objRtn.rpteDet.A4259INDPR = rs04.getString("A4259INDPR");   
+                    objRtn.rpteDet.A4259INIPR = rs04.getString("A4259INIPR");   
+                    objRtn.rpteDet.A4259FINPR = rs04.getString("A4259FINPR");                                          
+                    objRtn.rpteDet.A4259BANCO= rs04.getString("A4259BANCO");   
+                    objRtn.rpteDet.A4259MDLOC = rs04.getString("A4259MDLOC"); 
+                    objRtn.rpteDet.NRRPT = rs04.getString("NRRPT");                     
+                    objRtn.rpteDet.A4259TOT = rs04.getDouble("A4259TOT");
+                    lstRtn.add(objRtn);                    
+                }
+            }            
         } finally {
             if (rs01 != null) {
                 try {

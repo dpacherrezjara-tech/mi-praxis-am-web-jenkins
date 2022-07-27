@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.classes.ReportEdoCta;
 import net.miatech.praxis.classes.ReportEdoCtaDet;
+import net.miatech.praxis.classes.ReportEdoCtaPre;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.A3953;
 import net.miatech.praxis.eecta.A3958;
@@ -31,6 +32,7 @@ import net.miatech.praxis.eecta.SQP04043Filter;
 import net.miatech.praxis.eecta.SQP04050Filter;
 import net.miatech.praxis.eecta.SQP04224Filter;
 import net.miatech.praxis.eecta.SQP04559Filter;
+import net.miatech.praxis.eecta.SQP04560Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.EmisionEdoCtaLogic;
 import net.miatech.utils.Functions;
@@ -905,6 +907,44 @@ public class EmisionEdoCtaController extends BaseController {
             map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "pdf_EstadoCuentaPre")
+    void pdf_EstadoCuentaPre(HttpServletRequest request, HttpServletResponse response) {
+        
+        try {
+            logic = new EmisionEdoCtaLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04560Filter filter;
+            List<SQP04560Filter> listaData;
+            filter = new SQP04560Filter();
+            //Datos cabecera    
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+            listaData = logic.getSQP04560Filter(filter);
+            String Rutatmp = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
+            ReportEdoCtaPre reportEdoCtaPre = new ReportEdoCtaPre();
+            File archivo = reportEdoCtaPre.createReport(listaData, Rutatmp );
+            //File archivo = reportEdoCta.createReport( "C:\\Dumps\\resources\\report1.pdf" );
+            response.setHeader("Expires", "0");
+            response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + archivo.getName() + "\"");
+            //response.setContentLength(baos.size());
+            ServletOutputStream sos = null;
+            FileInputStream fis = null;
+            fis = new FileInputStream(new File(archivo.getAbsolutePath()));
+            byte[] bytes = org.apache.commons.io.IOUtils.toByteArray(fis);
+            sos = response.getOutputStream();
+            sos.write(bytes);
+            sos.flush();
+            sos.close();
+        } catch (Exception e) {
+            throw new SpringException(e);
+            //response.("mensaje", "ERROR AL GENERAR EL PDF");
+        }
+
     }
     
 }
