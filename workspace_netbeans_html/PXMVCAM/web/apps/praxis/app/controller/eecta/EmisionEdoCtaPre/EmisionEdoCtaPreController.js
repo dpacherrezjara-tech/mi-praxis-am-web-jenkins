@@ -180,19 +180,19 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCtaPre.EmisionEdoCtaPreControl
         bean.VP_A4258CDCLI = this.gridData.get('A4258CDCLI');    
 //        console.log( 'url:' + prototype.url + '/pdf_EstadoCuenta/?beanString=' + encodeURI(JSON.stringify(bean)) );
 //        console.log(encodeURI(JSON.stringify(bean)) );
-        this.exportPdf(prototype.url + '/pdf_EstadoCuentaPre/?beanString=' + encodeURI(JSON.stringify(bean)) );
+        this.exportPdf(this.url + '/pdf_EstadoCuentaPre/?beanString=' + encodeURI(JSON.stringify(bean)) );
     },
     onReportEdoCtaDet: function ( grid, rowIndex, colIndex ) {
-        if (Ext.getCmp(prototype.id + '-gridData')) {
-            var grid = Ext.getCmp(prototype.id + '-gridData');
-            var store = grid.getStore();
-            var rec = store.getAt(rowIndex);            
-            this.gridData = rec;
-        }
-        var bean = {};
-        bean.VP_NROEDO = this.gridData.get('A4258NREDO');
-        bean.VP_CDCLI = this.gridData.get('A4258CDCLI');        
-        this.exportPdf(prototype.url + '/pdf_EstadoCuenta_det/?beanString=' + encodeURI(JSON.stringify(bean)) );
+//        if (Ext.getCmp(prototype.id + '-gridData')) {
+//            var grid = Ext.getCmp(prototype.id + '-gridData');
+//            var store = grid.getStore();
+//            var rec = store.getAt(rowIndex);            
+//            this.gridData = rec;
+//        }
+//        var bean = {};
+//        bean.VP_NROEDO = this.gridData.get('A4258NREDO');
+//        bean.VP_CDCLI = this.gridData.get('A4258CDCLI');        
+//        this.exportPdf(prototype.url + '/pdf_EstadoCuenta_det/?beanString=' + encodeURI(JSON.stringify(bean)) );
     },
     exportPdf: function (_path) {
         Ext.Msg.show({
