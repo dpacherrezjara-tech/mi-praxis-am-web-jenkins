@@ -58,7 +58,7 @@ public class AbnormalValueLogic {
     public List<WRF016Filterwk> loadPX109SQP02476_COUNTRY(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP02476_COUNTRY(filter);
     }
-    
+
     public List<WRF016Filterwk> loadPX109SQP01232_COUNTRY(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP01232_COUNTRY(filter);
     }
@@ -72,6 +72,10 @@ public class AbnormalValueLogic {
 
     public List<IMF121Filter> loadPX414SQPGG122(IMF121Filter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQPGG122(filter);
+    }
+
+    public List<WRF016Filterwk> loadPX109SQP01231_AGENT(DashboardFilter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX109SQP01231_AGENT(filter);
     }
 
 }
