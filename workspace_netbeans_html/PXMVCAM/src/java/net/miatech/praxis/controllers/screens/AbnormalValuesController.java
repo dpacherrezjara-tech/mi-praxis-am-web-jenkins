@@ -218,6 +218,57 @@ public class AbnormalValuesController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    
+    
+    @RequestMapping(value = "loadTotalControlTotal_Abnormal_Country")
+    public @ResponseBody
+    String loadTotalControlTotal_Abnormal_Country(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        
+        List<WRF016Filterwk> lstData = null;
+        List<WRF016Filterwk> lstData2 = null;
+        List<WRF016Filterwk> lstData3 = null;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            filter.strTIPO = "SALE";
+            lstData = logic.loadPX109SQP01232_COUNTRY(filter);
+            filter.strTIPO = "RFND";
+            lstData2 = logic.loadPX109SQP01232_COUNTRY(filter);
+            filter.strTIPO = "EXCH";
+            lstData3 = logic.loadPX109SQP01232_COUNTRY(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData_Abnormal_CS", lstData);
+                map.put("lstData_Abnormal_CR", lstData2);
+                map.put("lstData_Abnormal_CE", lstData3);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
+    
+    
     // ========================================================================
     // ========================== Difference Fare =============================
     // ========================================================================

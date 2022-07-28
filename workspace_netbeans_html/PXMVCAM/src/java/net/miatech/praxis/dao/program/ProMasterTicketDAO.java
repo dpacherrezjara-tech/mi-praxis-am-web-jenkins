@@ -1914,8 +1914,14 @@ public class ProMasterTicketDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
+        String SQLCLL01 = "";
        
+        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; 
+        if(filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3)))
+        {
+            SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}"; 
+        }
+        
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
