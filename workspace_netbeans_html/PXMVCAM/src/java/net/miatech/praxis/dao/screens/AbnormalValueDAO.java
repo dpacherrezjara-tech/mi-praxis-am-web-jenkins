@@ -890,7 +890,135 @@ public class AbnormalValueDAO {
         return lista;
 
     }
+    
+    
+    public List<WRF016Filterwk> loadPX109SQP01232_COUNTRY(DashboardFilter filter) throws SQLException, Exception {
+        List<WRF016Filterwk> lista = new ArrayList<WRF016Filterwk>(0);
+        WRF016Filterwk objRtn;
+        double AMT1 = 0;
+        String mes1 = "", mes2 = "", mes3 = "", mes4 = "", mes5 = "", mes6 = "", fec_actual = "";
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
 
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01232(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(7, Types.VARCHAR);
+            cstmt.registerOutParameter(8, Types.VARCHAR);
+            cstmt.registerOutParameter(9, Types.VARCHAR);
+            cstmt.registerOutParameter(10, Types.VARCHAR);
+            cstmt.registerOutParameter(11, Types.VARCHAR);
+            cstmt.registerOutParameter(12, Types.VARCHAR);
+            cstmt.registerOutParameter(13, Types.VARCHAR);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
+            cstmt.registerOutParameter(16, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_PAIS);
+            cstmt.setString(5, filter.strTIPO);
+            cstmt.setString(6, filter.FLAG);
+            cstmt.setString(7, "");
+            cstmt.setString(8, "");
+            cstmt.setString(9, "");
+            cstmt.setString(10, "");
+            cstmt.setString(11, "");
+            cstmt.setString(12, "");
+            cstmt.setString(13, "");
+
+            cstmt.setInt(14, filter.page.PAGNUM);
+            cstmt.setInt(15, filter.page.PAGROW);
+            cstmt.setInt(16, filter.page.TOTPAG);
+            cstmt.setInt(17, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            mes1 = cstmt.getString(7);
+            mes2 = cstmt.getString(8);
+            mes3 = cstmt.getString(9);
+            mes4 = cstmt.getString(10);
+            mes5 = cstmt.getString(11);
+            mes6 = cstmt.getString(12);
+            fec_actual = cstmt.getString(13);
+
+            filter.page.PAGNUM = cstmt.getInt(14);
+            filter.page.PAGROW = cstmt.getInt(15);
+            filter.page.TOTPAG = cstmt.getInt(16);
+            filter.page.TOTROW = cstmt.getInt(17);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                AMT1 = rst.getDouble("M6");
+
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    objRtn = new WRF016Filterwk();
+                    objRtn.AIRLINE = rst.getString("COUNTRYS");
+                    objRtn.strFlag = rst.getString("DESCRIP");
+
+                    objRtn.Aud1 = rst.getDouble("M6");
+                    objRtn.Avg1 = rst.getDouble("AVG");
+                    objRtn.Diff1 = rst.getDouble("DIFF");
+                    objRtn.Var1 = rst.getDouble("VAR");
+
+                    objRtn.totNet1 = AMT1;
+
+                    objRtn.strFormatDate4 = Functions.getMonthConvert(mes1);
+                    objRtn.strDescripcion = Functions.getMonthConvert(mes2);
+                    objRtn.strDescripcion1 = Functions.getMonthConvert(mes3);
+                    objRtn.strDescripcion2 = Functions.getMonthConvert(mes4);
+                    objRtn.strDescripcion3 = Functions.getMonthConvert(mes5);
+                    //objRtn.strDescripcion4 = Functions.getMonthConvert(mes6);
+                    objRtn.strDescripcion4 = Functions.getMonthConvert(fec_actual);
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(objRtn);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+
+    }
+
+    
     // =========================================================================
     // ======================= Difference Fare =================================
     // =========================================================================

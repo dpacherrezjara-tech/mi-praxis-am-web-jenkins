@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     xtype: 'tabpanel',
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
-                    width: 1500,
+                    width: 1700,
                     height: 650,
                     anchor: '100%',
                     margin: '1 1 1 1',

@@ -3,7 +3,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
     alias: 'controller.AbnormalValuesController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     me: '',
+    lstCountry: [],
     bean: {},
+    dataObtain: {},
     _path: '',
     // </editor-fold>
     init: function(view) {
@@ -58,6 +60,54 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id+'-cmbDateFromDay').bindStore(storeComboDataDay);
         Ext.getCmp(prototype.id+'-cmbDateToDay').bindStore(storeComboDataDay);
+        
+        
+        Ext.getCmp(prototype.id+'-cmbDateFromYear2').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id+'-cmbDateToYear2').bindStore(storeComboDataYear);
+
+        Ext.getCmp(prototype.id+'-cmbDateFromMonth2').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id+'-cmbDateToMonth2').bindStore(storeComboDataMonth);
+
+        Ext.getCmp(prototype.id+'-cmbDateFromDay2').bindStore(storeComboDataDay);
+        Ext.getCmp(prototype.id+'-cmbDateToDay2').bindStore(storeComboDataDay);
+        
+        
+        var cmbTran = Ext.getCmp(prototype.id + '-cmbTran');
+        cmbTran.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["ACMS", "ACM"],
+                ["ADMS", "ADM"],
+                ["EXCH", "EXCH"],
+                ["RFND", "RFND"],
+                ["SALE", "SALE"]
+            ]
+        }));
+        cmbTran.setValue("");
+        
+        this.dataObtain.COUNTRY = 2;
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/obtainData',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function(response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    me.lstCountry = res.lstCountry;
+                    Ext.getCmp(prototype.id + '-cmbPais').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbPais').setValue('');
+                    
+                    me.btnSearch_click();
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+        
     },
     changeTipoFecha: function() {
         if (this.getValue("cmbFecha") == 2) {
@@ -74,14 +124,15 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
 //        console.log('changeTab_clickHandler');
         console.log(obj);
         var component = Ext.getCmp(obj.replace('_tab','_screen'));
-//        if(obj === prototype.id + '-ScrAVSales_tab'){
-//            
-//            component = Ext.getCmp(prototype.id + '-ScrAVSales_screen');
-//            
-//        }else if(obj === prototype.id + '-ScrDBIataControl_tab'){
-//            
-//            component = Ext.getCmp(prototype.id + '-ScrDBIataControl_screen');
-//        }
+        if(obj === prototype.id + '-ScrAVSales_tab'){
+            
+            Ext.getCmp(prototype.id + '-boxSearchFilter').show();
+            Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
+            
+        }else if(obj === prototype.id + '-ScrDBIataControl_tab'){
+            Ext.getCmp(prototype.id + '-boxSearchFilter').hide();
+            Ext.getCmp(prototype.id + '-boxSearchIATA').show();
+        }
         
         var controller = component.getController();
         controller.btnSearch_click(this.bean);
