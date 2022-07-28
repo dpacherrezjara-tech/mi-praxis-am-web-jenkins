@@ -886,7 +886,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     win.lblUser_toolTip("Estructura: A3729");
 
                     if (obj.data.length > 0) {
-                        console.log(obj.data.items[0].data);
+                        console.log(obj.data);
                         var beanTemp = obj.data.items[0].data;
                         console.log(beanTemp);
                         if (!me.peek().includes('boxDetailFlightManifest'))
