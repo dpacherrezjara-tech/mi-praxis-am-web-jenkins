@@ -49,6 +49,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
         console.log(' ScrDBIataControlController - btnSearch_click');
         Ext.getCmp(prototype.id + '-boxMainDataIataValuesOutOfRange').show();
         Ext.getCmp(prototype.id + '-boxMainDataIataAverageControl').hide();
+        Ext.getCmp(prototype.id + '-BoxControlTotal').hide();
         Ext.getCmp(prototype.id + '-radioButton').show();
 
         var selectBy = Ext.getCmp(prototype.id + '-cmbTipo_ControlTotal').getValue();
@@ -68,6 +69,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
             Ext.getCmp(prototype.id + '-chkONE').hide();
             Ext.getCmp(prototype.id + '-radioButton').hide();
             Ext.getCmp(prototype.id + '-boxMainDataIataValuesOutOfRange').hide();
+            Ext.getCmp(prototype.id + '-BoxControlTotal').hide();
             Ext.getCmp(prototype.id + '-boxMainDataIataAverageControl').show();
             this.loadTotalControlTotal_Agent();
 
@@ -77,9 +79,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
             Ext.getCmp(prototype.id + '-radioButton').hide();
             Ext.getCmp(prototype.id + '-boxMainDataIataValuesOutOfRange').hide();
             Ext.getCmp(prototype.id + '-boxMainDataIataAverageControl').hide();
+            Ext.getCmp(prototype.id + '-BoxControlTotal').show();
+            this.loadTotalControlTotal();
         }
-
-
     },
     loadTotalControlTotal_Abnormal_Country_ONE: function () {
 
@@ -299,4 +301,44 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
 //        meIataCtr.dw_excel = false;
 
     },
+    
+    loadTotalControlTotal: function() {
+
+        console.log(' ScrDBIataControlController - loadTotalControlTotal');
+
+        this.setFormatParameter();
+        win.lblUser_toolTip("Estructura: IMF078");
+        Ext.Ajax.request({
+            url: prototype.url + '/loadTotalControlTotal',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {beanString: this.searchParams, dw_excel: false},
+            success: function(response, options) {
+                Ext.getBody().unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                var lstData = res.lstData;
+                
+                if (lstData.length > 0) {
+                    var bean = lstData[0];
+                    
+                    Ext.getCmp(prototype.id + '-titFecha6_CT').setText(bean.strDescripcion4);
+                    Ext.getCmp(prototype.id + '-titFecha5_CT').setText(bean.strDescripcion3);
+                    Ext.getCmp(prototype.id + '-titFecha4_CT').setText(bean.strDescripcion2);
+                    Ext.getCmp(prototype.id + '-titFecha3_CT').setText(bean.strDescripcion1);
+                    Ext.getCmp(prototype.id + '-titFecha2_CT').setText(bean.strDescripcion);
+                    Ext.getCmp(prototype.id + '-titFecha1_CT').setText(bean.strFormatDate4);
+                    
+                    var storeData = Ext.create('Ext.data.Store', {
+                        data: lstData,
+                        autoLoad: true
+                    });
+                    Ext.getCmp(prototype.id + '-gridControlTotal').bindStore(storeData);
+                }else{
+                    global.Msg({msg: 'Data not found.'});
+                }
+            }
+        });
+    },
+    
 });

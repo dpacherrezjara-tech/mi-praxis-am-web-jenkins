@@ -299,6 +299,42 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "loadTotalControlTotal")
+    public @ResponseBody
+    String loadTotalControlTotal(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        List<WRF016Filterwk> lstData = null;
+        DashboardFilter filter = new DashboardFilter();
+
+        try {
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+            
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            lstData = logic.loadPX109SQP01231_AGENT(filter);
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
 
     // ========================================================================
     // ========================== Difference Fare =============================

@@ -789,9 +789,193 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
 
 
                         },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-BoxControlTotal',
+                            hidden: true,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridControlTotal',
+                                    padding: '5px 0px 0px 0px',
+                                    width: 1284,
+                                    height: 528,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Transaction', dataIndex: 'AIRLINE', width: 100
+                                            },
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-titFecha1_CT',
+                                                columns: [
+                                                    {
+                                                        text: 'Coupons', dataIndex: 'Rej1', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'Aud1', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-titFecha2_CT',
+                                                columns: [
+                                                    {
+                                                        text: 'Coupons', dataIndex: 'Rej2', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'Aud2', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-titFecha3_CT',
+                                                columns: [
+                                                    {
+                                                        text: 'Coupons', dataIndex: 'Rej3', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'Aud3', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-titFecha4_CT',
+                                                columns: [
+                                                    {
+                                                        text: 'Coupons', dataIndex: 'Rej4', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'Aud4', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-titFecha5_CT',
+                                                columns: [
+                                                    {
+                                                        text: 'Coupons', dataIndex: 'Rej5', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'Aud5', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-titFecha6_CT',
+                                                columns: [
+                                                    {
+                                                        text: 'Coupons', dataIndex: 'Rej6', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'Aud6', align: 'center', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'dblPerRev', align: 'center', width: 40,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000%');
+                                                }
+                                            },
+                                            {
+                                                text: 'Average', columns: [
+                                                    {
+                                                        text: '5 months', dataIndex: 'Rate2', align: 'center', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Differences', dataIndex: 'Rate1', align: 'center', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: 'Variation', dataIndex: 'Rate3', align: 'center', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000%');
+                                                }
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
                     ]
-
-
                 },
             ]
         },
