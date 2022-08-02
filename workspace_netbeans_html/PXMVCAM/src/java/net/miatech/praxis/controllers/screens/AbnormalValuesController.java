@@ -337,6 +337,41 @@ public class AbnormalValuesController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    // -------------- CHART --------------------------
+    
+    @RequestMapping(value = "loadControlAgentChart")
+    public @ResponseBody
+    String loadControlAgentChart(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+
+        List<DashboardFilter> listaData = null;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            listaData = logic.loadPX414SQP02022(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
     // ========================================================================
     // ========================== Difference Fare =============================
     // ========================================================================

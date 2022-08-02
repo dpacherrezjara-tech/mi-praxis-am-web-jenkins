@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
                     width: 1700,
-                    height: 650,
+                    height: 1150,
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,

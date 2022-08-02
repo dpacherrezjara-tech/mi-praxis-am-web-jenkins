@@ -20,11 +20,13 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
             // -------------------Eventos Genericos --------------------
             '#AbnormalValuesForm-xpanel': {
                 afterrender: this.xpanel_afterrender
-            }
-            ,
+            },
             '#AbnormalValuesForm-btnSearch': {
                 click: this.imgSearch_clickHandler
-            }
+            },
+            '#AbnormalValuesForm-cmbDateFromMonth': {
+                select: this.selectComboFromMonth
+            },
         });
         
         this.setStoreData();
@@ -43,7 +45,12 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         this.setValue('cmbDateToYear', this.getValue("cmbDateFromYear"));
     },
     cbxDateFromMonth_changeHandler: function() {
-        this.setValue('cmbDateToMonth', this.getValue("cmbDateFromMonth"));
+        
+        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        comboToMonth.setValue(Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue());
+        
+        var comboToMonth2 = Ext.getCmp(prototype.id + '-cmbDateToMonth2');
+        comboToMonth2.setValue(Ext.getCmp(prototype.id + '-cmbDateFromMonth2').getValue());
     },
     cbxDateFromDay_changeHandler: function() {
         this.setValue('cmbDateToDay', this.getValue("cmbDateFromDay"));
