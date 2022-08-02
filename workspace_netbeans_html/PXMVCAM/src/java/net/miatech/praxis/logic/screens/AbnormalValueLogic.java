@@ -63,6 +63,10 @@ public class AbnormalValueLogic {
     public List<WRF016Filterwk> loadPX109SQP01232_COUNTRY(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP01232_COUNTRY(filter);
     }
+    
+    public List<DashboardFilter> loadPX414SQP02022(DashboardFilter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02022(filter);
+    }
 
     // =========================================================================
     // ======================= Difference Fare =================================

@@ -3,10 +3,13 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     alias: 'controller.ScrDBIataControlController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     searchParams: {},
+    searchParams_chart: {},
     columns2: {},
     bean: {},
     beanDet: {},
     meIataCtr: '',
+    meIataCtr_chart: '',
+    beanChart: {},
     dw_excel: false,
     boxActual: '-boxMainDataIataControl',
     drillDown: [],
@@ -115,7 +118,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
                     });
 
                     Ext.getCmp(prototype.id + '-gridMainDataByValues').bindStore(storeData);
-//                    Ext.getCmp(prototype.id + '-ADG_GridControlTotal_Abnormal_CS').bindStore(storeData);
                 } else {
                     global.Msg({msg: 'Data not found.'});
                 }
@@ -187,6 +189,87 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
 //        meIataCtr.dw_excel = false;
 
     },
+    
+    
+    ViewAgent: function(grid, rowIndex, colIndex, c,d,e,f,g) {
+        
+        var beanDetail = grid.getStore().getAt(rowIndex).data;
+        meIataCtr.beanChart = grid.getStore().getAt(rowIndex).data;
+        
+        
+        meIataCtr.beanChart.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth2').getValue();
+        meIataCtr.beanChart.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth2').getValue();
+        meIataCtr.beanChart.VENDOR = beanDetail.AIRLINE;
+        meIataCtr.beanChart.strDescription = beanDetail.strFlag;
+        meIataCtr.beanChart.FTE = 'EXCH';
+        
+        var beanString = JSON.stringify(meIataCtr.beanChart);
+        this.searchParams_chart = beanString;
+        
+//        this.loadControlAgentChart();
+        
+    },
+    loadControlAgentChart: function () {
+
+        win.lblUser_toolTip("Estructura: IMF078");
+//        console.log(meIataCtr.searchParams_chart);
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/loadControlAgentChart'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meIataCtr.searchParams_chart, dw_excel: false};
+                },
+                load: function (obj) {
+                    Ext.getBody().unmask('Loading...');
+                    console.log(obj);
+                    
+                    if (obj.data.length === 0) {
+//                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        console.log(obj.data);
+//
+                    }
+                }
+            }
+        });
+
+//        Ext.getCmp(prototype.id + '-displayChartByAgent01_XXX').bindStore(storeGridDatas);
+        
+        
+//        Ext.Ajax.request({
+//            url: prototype.url + '/loadControlAgentChart',
+//            method: 'POST',
+//            timeout: 60000000,
+//            beforerequest: Ext.getBody().mask('Loading...'),
+//            params: {beanString: this.searchParams_chart, dw_excel: false},
+//            success: function (response, options) {
+//                Ext.getBody().unmask('Loading...');
+//
+//                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+//                var lstData = res.lstAgentChart;
+//
+//                if (lstData.length > 0) {
+////                    console.log(lstData);
+////                    
+//                    var storeData = Ext.create('Ext.data.Store', {
+//                        data: lstData,
+//                        autoLoad: true
+//                    });
+//////
+//                    Ext.getCmp(prototype.id + '-displayChartByAgent01').bindStore(storeData);
+//                } else {
+//                    global.Msg({msg: 'Data not found.'});
+//                }
+//            }
+//        });
+
+
+    },
+    
     loadTotalControlTotal_Abnormal_Country: function () {
 
         console.log(' ScrDBIataControlController - loadTotalControlTotal_Abnormal_Country');
