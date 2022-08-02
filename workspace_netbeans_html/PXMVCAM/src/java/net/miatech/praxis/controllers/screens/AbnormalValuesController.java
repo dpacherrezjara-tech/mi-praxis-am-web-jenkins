@@ -32,6 +32,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF121Filter;
 import net.miatech.praxis.exceptions.SpringException;
@@ -275,7 +276,7 @@ public class AbnormalValuesController extends BaseController {
         try {
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
-            
+
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
 
@@ -300,7 +301,7 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadTotalControlTotal_Tran")
     public @ResponseBody
     String loadTotalControlTotal_Tran(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -311,7 +312,7 @@ public class AbnormalValuesController extends BaseController {
         try {
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
-            
+
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
 
@@ -338,7 +339,6 @@ public class AbnormalValuesController extends BaseController {
     }
 
     // -------------- CHART --------------------------
-    
     @RequestMapping(value = "loadControlAgentChart")
     public @ResponseBody
     String loadControlAgentChart(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -358,7 +358,6 @@ public class AbnormalValuesController extends BaseController {
             map.put("success", true);
             map.put("data", listaData);
 
-
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -370,8 +369,7 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
+
     // ========================================================================
     // ========================== Difference Fare =============================
     // ========================================================================
@@ -935,14 +933,14 @@ public class AbnormalValuesController extends BaseController {
         listaColRow.add(obj);
 
     }
-    
+
     @RequestMapping(value = "loadTotalControlTotal_Abnormal")
     public @ResponseBody
     String loadTotalControlTotal_Abnormal(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        
+
         DashboardFilter filter = new DashboardFilter();
         HashMap hm = new HashMap();
-        
+
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             String beanString = request.getParameter("beanString");
@@ -959,10 +957,46 @@ public class AbnormalValuesController extends BaseController {
 //                String nameExcel = exportFieldsCompleto(request, response, lstData);
 //                map.put("nameExcel", nameExcel);
 //            } else {
-                map.put("lstData_Abnormal_S", hm.get("SALE"));
-                map.put("lstData_Abnormal_R", hm.get("REFUND"));
-                map.put("lstData_Abnormal_E", hm.get("EXCHANGE"));
+            map.put("lstData_Abnormal_S", hm.get("SALE"));
+            map.put("lstData_Abnormal_R", hm.get("REFUND"));
+            map.put("lstData_Abnormal_E", hm.get("EXCHANGE"));
 //            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadTotalControlTotal_TKT")
+    public @ResponseBody
+    String loadTotalControlTotal_TKT(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        List<A720Filter> lstData = null;
+        WRF016Filterwk filter = new WRF016Filterwk();
+
+        try {
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            lstData = logic.loadPX109SQP01269(filter);
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
 
         } catch (SQLException e) {
             map.put("success", false);
