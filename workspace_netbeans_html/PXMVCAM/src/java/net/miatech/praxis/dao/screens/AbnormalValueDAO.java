@@ -1017,6 +1017,65 @@ public class AbnormalValueDAO {
 
     }
 
+    public List<DashboardFilter> loadPX414SQP02022(DashboardFilter filter) throws SQLException, Exception {
+        List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP02022(?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.VENDOR);
+            cstmt01.setString(5, filter.FTE);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new DashboardFilter();
+                objRtn.FTE = filter.FTE;
+                objRtn.VENDOR = rs01.getString("VENDOR");
+                objRtn.strDescription = filter.strDescription;
+                objRtn.DSALES = rs01.getString("DSALES");
+                objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                objRtn.strFormatDate1 = filter.strFormatDate1;
+                objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                objRtn.AVG = rs01.getDouble("PROMEDIO");
+
+                lstRtn.add(objRtn);
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+
+    
+    
+    
     // =========================================================================
     // ======================= Difference Fare =================================
     // =========================================================================
