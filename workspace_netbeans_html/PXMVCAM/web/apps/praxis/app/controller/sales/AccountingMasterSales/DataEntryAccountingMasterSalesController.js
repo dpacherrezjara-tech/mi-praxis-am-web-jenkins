@@ -153,41 +153,48 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
             
             console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
-            if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
-                Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to insert ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'yes') {
-                        this.view.params.action = "I";
-                        this.crud();
+            if(txtA1740FFIN2 !== null)
+            {
+                if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
+                    Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to insert ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "I";
+                            this.crud();
+                        }
                     }
+                    }); 
+                }else{
+                    global.Msg({
+                    msg: 'End date must be greater than start date.',
+                    fn: function() {}
+                    });
                 }
-                }); 
-            }else{
-                global.Msg({
-                msg: 'End date must be greater than start date.',
-                fn: function() {}
-                });
             }
-            /*Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to insert ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'yes') {
-                        this.view.params.action = "I";
-                        this.crud();
+            else
+            {
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to insert ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "I";
+                            this.crud();
+                        }
                     }
-                }
-            }); */
+                    }); 
+            }
+            
         }
     },
     onUpdateClick: function(btn) {
@@ -203,44 +210,51 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
             
             console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
-            if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
-            Ext.Msg.show({
-                title:'.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn){
-                    if (btn === 'yes'){
-                        this.view.params.action = "U";
-                        this.crud();
+            if(txtA1740FFIN2 !== null)
+            {
+                if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
+                Ext.Msg.show({
+                    title:'.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn){
+                        if (btn === 'yes'){
+                            this.view.params.action = "U";
+                            this.crud();
+                        }
                     }
+                });
+                }else{
+                    global.Msg({
+                    msg: 'End date must be greater than start date.',
+                    fn: function() {}
+                    });
                 }
-            });
-            }else{
-                global.Msg({
-                msg: 'End date must be greater than start date.',
-                fn: function() {}
+            }
+            else
+            {
+                Ext.Msg.show({
+                    title:'.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn){
+                        if (btn === 'yes'){
+                            this.view.params.action = "U";
+                            this.crud();
+                        }
+                    }
                 });
             }
 
-//            Ext.Msg.show({
-//                title:'.:PRAXIS:.',
-//                msg: 'Are you sure to update ?',
-//                buttons: Ext.MessageBox.YESNO,
-//                scope: this,
-//                animateTarget: btn,
-//                icon: Ext.MessageBox.QUESTION,
-//                modal: true,
-//                fn: function(btn){
-//                    if (btn === 'yes'){
-//                        this.view.params.action = "U";
-//                        this.crud();
-//                    }
-//                }
-//            });
+
         }
     },
     onDeleteClick: function(btn) {
