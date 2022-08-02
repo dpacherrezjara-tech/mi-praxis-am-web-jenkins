@@ -365,11 +365,11 @@ public class ReportEdoCtaPre {
             int PYi_c = 642; //680
             //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi+10, 400, 0); //LINEA 
                         
-            Phrase CONTR = new Phrase(new Paragraph("Contrato Nº: " + Data.get(0).rpteCab.A4258CONTR, NORMAL));
+            Phrase CONTR = new Phrase(new Paragraph("Nº Contrato: " + Data.get(0).rpteCab.A4258CONTR, NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi_c, 0);
             PYi_c = PYi_c - Hlng;            
             int Py_c = PYi_c;
-            Phrase NRRPT = new Phrase(new Paragraph("Edo. Cuenta Nº: " + Data.get(0).rpteCab.A4258NREDO, NORMAL));
+            Phrase NRRPT = new Phrase(new Paragraph("Nº Edo. Cuenta: " + Data.get(0).rpteCab.A4258NREDO, NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi_c, 0);
             PYi_c = PYi_c - Hlng;
             Phrase FEECC = new Phrase(new Paragraph("Fecha Emisión: " + Data.get(0).rpteCab.A4258FEDOC, NORMAL));
@@ -403,17 +403,24 @@ public class ReportEdoCtaPre {
             // TARJETAS
             ////+++++++++++++++++++++++++++++++++++++++++++++
             PYi = PYi_c;
-            PYi = PYi - 25;
-            PosX1 = PosX1+1;            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("TARJETA:", subFontT)), PosX1, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(0).rpteCab.A4258TARJE, subFontT)), PosX1+25, PYi, 0); //670           
-            colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 590, 0); //LINEA 700
-                    
+            PYi = PYi - 20;
+            PosX1 = PosX1+1;          
+            String[] parts = Data.get(0).rpteCab.A4258TARJE.split("\\/"); 
+            //String separador = Pattern.quote("|");
+            //String[] parts = string.split(separador);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UATP:", subFontT)), PosX1, PYi, 0);
+            PYi = PYi - 12;
+            for (int i = 0; i < parts.length; i++) {
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( parts[i],  NORMAL)), 15, PYi, 0); //670           
+                //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 590, 0); //LINEA 700
+                PYi = PYi - 10;
+            }
+                                
             ////+++++++++++++++++++++++++++++++++++++++++++++
             //SALDO
             ////+++++++++++++++++++++++++++++++++++++++++++++
-            PYi = PYi_c;
-            PYi = PYi - 25;
+            //PYi = PYi_c;
+            PYi = PYi - 20;
             PosX1 = PosX1+1;            
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO ANTERIOR", subFontT)), PosX1, PYi, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFontT)), 560, PYi, 0); //670           
