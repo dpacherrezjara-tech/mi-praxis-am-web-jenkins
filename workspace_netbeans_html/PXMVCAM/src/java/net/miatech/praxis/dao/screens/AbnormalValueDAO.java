@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.IMF121Filter;
@@ -1073,9 +1074,6 @@ public class AbnormalValueDAO {
         return lstRtn;
     }
 
-    
-    
-    
     // =========================================================================
     // ======================= Difference Fare =================================
     // =========================================================================
@@ -1738,6 +1736,155 @@ public class AbnormalValueDAO {
         }
 
         return hm;
+
+    }
+
+    public List<A720Filter> loadPX109SQP01269(WRF016Filterwk filter) throws SQLException, Exception {
+
+        List<A720Filter> lista = new ArrayList<A720Filter>();
+        A720Filter objRtn;
+        double AMOUNT = 0;
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        String strTitulo = "";
+        if (!filter.IN_TYPE.trim().isEmpty() && !filter.FECHA.trim().isEmpty()) {
+
+            if (filter.IN_TYPE.trim().equals("RFND")) {
+                strTitulo += "Refund Date : " + Functions.getMonthConvert(filter.FECHA.substring(0, 6)) + "  -  ";
+            } else if (filter.IN_TYPE.trim().equals("EXCH")) {
+                strTitulo += "Exchange Date : " + Functions.getMonthConvert(filter.FECHA.substring(0, 6)) + "  -  ";
+            } else {
+                strTitulo += "Sales Date : " + Functions.getMonthConvert(filter.FECHA.substring(0, 6)) + "  -  ";
+            }
+
+        }
+        if (!filter.AIRLINE.trim().isEmpty()) {
+            strTitulo += "Agent : " + filter.AIRLINE.trim() + "  -  ";
+        }
+
+        if (strTitulo.endsWith("  -  ")) {
+            strTitulo = strTitulo.substring(0, strTitulo.length() - 3);
+        }
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01269(?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.FECHA);
+            cstmt.setString(3, filter.AIRLINE);//Agente
+            cstmt.setString(4, filter.IN_TYPE);
+
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                AMOUNT = rst.getDouble("VALOR");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    objRtn = new A720Filter();
+                    objRtn.RN = rst.getLong("RN");
+                    objRtn.strDescripcion5 = "Transaction : " + filter.IN_TYPE.replace("RFND", "Refund").replace("EXCH", "Exchange");
+                    //objRtn.strFormatDate = "Sale Date " + Functions.getMonthConvert(filter.FECHA.substring(0, 6)) + " Agent : " + filter.AIRLINE + " - " + filter.strFlag;
+                    objRtn.strFormatDate = strTitulo;
+                    objRtn.A720FECVTA = Functions.getMonthConvert(filter.FECHA);
+
+                    objRtn.A720CIA = rst.getString("A720CIA");
+                    objRtn.A720FORMA = rst.getString("A720FORMA");
+                    objRtn.A720SERIE = rst.getString("A720SERIE");
+                    objRtn.A720SEQ = rst.getString("A720SEQ");
+                    objRtn.strDescripcion = objRtn.A720CIA + " " + objRtn.A720FORMA + objRtn.A720SERIE;
+                    objRtn.A720PAIVTA = rst.getString("A720PAIVTA");
+                    objRtn.A720CIUVTA = rst.getString("A720CIUVTA");
+                    objRtn.A720GRUPO = rst.getString("A720GRUPO");
+
+                    objRtn.A720MONEDA = rst.getString("A720MONEDA");
+                    //objRtn.A720TARIFA = rst.getString("A720TARIFA");
+                    objRtn.A720MDAPAG = rst.getString("A720MDAPAG");
+                    //objRtn.A720TRFPAG = rst.getString("A720TRFPAG");
+                    objRtn.A720ORIG = rst.getString("A720ORIG");
+
+                    objRtn.A720RUTA0 = rst.getString("A720RUTA0");
+                    objRtn.A720RUTA1 = rst.getString("A720RUTA1");
+                    objRtn.A720RUTA2 = rst.getString("A720RUTA2");
+                    objRtn.A720RUTA3 = rst.getString("A720RUTA3");
+                    objRtn.A720RUTA4 = rst.getString("A720RUTA4");
+
+                    objRtn.strDescripcion1 = objRtn.A720RUTA0 + " - " + objRtn.A720RUTA1;
+                    if (!objRtn.A720RUTA2.equals("")) {
+                        objRtn.strDescripcion2 = objRtn.A720RUTA1 + " - " + objRtn.A720RUTA2;
+                    }
+                    if (!objRtn.A720RUTA3.equals("")) {
+                        objRtn.strDescripcion3 = objRtn.A720RUTA2 + " - " + objRtn.A720RUTA3;
+                    }
+                    if (!objRtn.A720RUTA4.equals("")) {
+                        objRtn.strDescripcion4 = objRtn.A720RUTA3 + " - " + objRtn.A720RUTA4;
+                    }
+
+                    objRtn.A720VALOR1 = rst.getDouble("A720VALOR1");
+                    objRtn.A720VALOR2 = rst.getDouble("A720VALOR2");
+                    objRtn.A720VALOR3 = rst.getDouble("A720VALOR3");
+                    objRtn.A720VALOR4 = rst.getDouble("A720VALOR4");
+                    objRtn.A720VALOR = rst.getDouble("VALOR");
+                    objRtn.A720VALOL = AMOUNT;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(objRtn);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
 
     }
 }
