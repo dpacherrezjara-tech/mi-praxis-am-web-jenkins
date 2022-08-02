@@ -768,7 +768,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                             xtype: 'grid',
                                             id: prototype.id + '-ADG_GridQuickTkt_CT',
                                             padding: '5px 0px 0px 0px',
-                                            width: 1034,
+                                            width: 1074,
                                             height: 546,
                                             columnLines: true,
                                             /*features: [{
@@ -792,6 +792,13 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return '<a href="#screens-abnormal-values-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Seq', dataIndex: 'A720SEQ', align: 'center', width: 40,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    return value;
                                                                 }
                                                             },
                                                             {

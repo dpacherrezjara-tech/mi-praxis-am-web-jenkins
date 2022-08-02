@@ -1817,6 +1817,7 @@ public class AbnormalValueDAO {
                     objRtn.A720CIA = rst.getString("A720CIA");
                     objRtn.A720FORMA = rst.getString("A720FORMA");
                     objRtn.A720SERIE = rst.getString("A720SERIE");
+                    objRtn.A720SEQ = rst.getString("A720SEQ");
                     objRtn.strDescripcion = objRtn.A720CIA + " " + objRtn.A720FORMA + objRtn.A720SERIE;
                     objRtn.A720PAIVTA = rst.getString("A720PAIVTA");
                     objRtn.A720CIUVTA = rst.getString("A720CIUVTA");
