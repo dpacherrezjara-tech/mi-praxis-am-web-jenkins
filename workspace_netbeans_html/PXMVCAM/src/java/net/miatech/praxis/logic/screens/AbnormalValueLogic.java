@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.screens;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.IMF121Filter;
@@ -63,7 +64,7 @@ public class AbnormalValueLogic {
     public List<WRF016Filterwk> loadPX109SQP01232_COUNTRY(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP01232_COUNTRY(filter);
     }
-    
+
     public List<DashboardFilter> loadPX414SQP02022(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQP02022(filter);
     }
@@ -82,9 +83,12 @@ public class AbnormalValueLogic {
     public List<WRF016Filterwk> loadPX109SQP01231_AGENT(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP01231_AGENT(filter);
     }
-    
+
     public HashMap loadPX109SQP02217(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP02217(filter);
     }
 
+    public List<A720Filter> loadPX109SQP01269(WRF016Filterwk filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX109SQP01269(filter);
+    }
 }

@@ -535,9 +535,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                                 columns: [
                                                                     {
                                                                         text: '', dataIndex: 'Aud1', align: 'center', width: 100, id: prototype.id + '-titFechaS_AB',
+                                                                        listeners: {
+                                                                            click: 'onClickViewAgent',
+                                                                            args: ['SALE']
+                                                                        },
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:right;";
-                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                            return '<a href="#screens-abnormal-values-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                         }
                                                                     },
                                                                     {
@@ -602,9 +607,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                                 columns: [
                                                                     {
                                                                         text: '', dataIndex: 'Aud1', align: 'center', width: 100, id: prototype.id + '-titFechaR_AB',
+                                                                        listeners: {
+                                                                            click: 'onClickViewAgent',
+                                                                            args: ['RFND']
+                                                                        },
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:right;";
-                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                            return '<a href="#screens-abnormal-values-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                         }
                                                                     },
                                                                     {
@@ -697,9 +707,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                                 columns: [
                                                                     {
                                                                         text: '', dataIndex: 'Aud1', align: 'center', width: 100, id: prototype.id + '-titFechaE_AB',
+                                                                        listeners: {
+                                                                            click: 'onClickViewAgent',
+                                                                            args: ['EXCH']
+                                                                        },
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:right;";
-                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                            return '<a href="#screens-abnormal-values-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                         }
                                                                     },
                                                                     {
@@ -736,9 +751,140 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                 }
                                             ]
                                         },
-                                        
                                         // GRAFICO BARRAS
-                                        
+
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxTKT_CT',
+                                    hidden: true,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridQuickTkt_CT',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 1074,
+                                            height: 546,
+                                            columnLines: true,
+                                            /*features: [{
+                                             ftype: 'summary'
+                                             }],*/
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {
+                                                        text: '', id: prototype.id + '-titTKT_Tran',
+                                                        columns: [
+                                                            {
+                                                                text: 'Ticket Number', dataIndex: 'strDescripcion', align: 'center', width: 120,
+                                                                listeners: {
+                                                                    click: 'gridData_VIEWTKT_clickHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    return '<a href="#screens-abnormal-values-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Seq', dataIndex: 'A720SEQ', align: 'center', width: 40,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'City', dataIndex: 'A720CIUVTA', align: 'center', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Coupon 1', columns: [
+                                                                    {
+                                                                        text: 'Sector', dataIndex: 'strDescripcion1', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'A720VALOR1', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#99ccff";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Coupon 2', columns: [
+                                                                    {
+                                                                        text: 'Sector', dataIndex: 'strDescripcion2', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'A720VALOR2', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#99ccff";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Coupon 3', columns: [
+                                                                    {
+                                                                        text: 'Sector', dataIndex: 'strDescripcion3', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'A720VALOR3', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#99ccff";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Coupon 4', columns: [
+                                                                    {
+                                                                        text: 'Sector', dataIndex: 'strDescripcion4', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'A720VALOR4', align: 'center', width: 100,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#99ccff";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
                                     ]
                                 }
                             ]
