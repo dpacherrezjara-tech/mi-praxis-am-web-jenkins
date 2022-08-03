@@ -9,6 +9,15 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     beanDet: {},
     meIataCtr: '',
     meIataCtr_chart: '',
+    colors_WK: [
+        '#33bdda',
+        '#FAB347',
+        '#6baa01',
+        '#c6f7cd',
+        '#828CE1',
+        '#CC0000',
+        '#0066ff'
+    ],
     beanChart: {},
     dw_excel: false,
     boxActual: '-boxMainDataIataControl',
@@ -151,7 +160,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
                 var lstData2 = res.lstData_Abnormal_R;
                 var lstData3 = res.lstData_Abnormal_E;
 //
-                if (lstData.length > 0) {
+                if (lstData.length > 0) { // if (lstData.length > 0 && lstData2.length > 0) {
                     var bean = lstData[0];
                     if (lstData2.length > 0) {
                         var bean2 = lstData2[0];
@@ -576,5 +585,90 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
         console.log(this.beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', this.beanProMasterTicket);
+    },    
+    ViewAgent: function(grid, rowIndex, colIndex, c,rec,e,f,g) {
+        
+        console.log('ViewAgent');
+        console.log(grid.getStore().getAt(rowIndex));
+        
+        var beanDetail = grid.getStore().getAt(rowIndex).data;
+        meIataCtr.beanChart = grid.getStore().getAt(rowIndex).data;
+//        
+//        
+//        var beanDetail = rec.record.data;
+//        meIataCtr.beanChart = rec.record.data;
+        
+        meIataCtr.beanChart.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth2').getValue();
+        meIataCtr.beanChart.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth2').getValue();
+        meIataCtr.beanChart.VENDOR = beanDetail.AIRLINE;
+        meIataCtr.beanChart.strDescription = beanDetail.strFlag;
+        meIataCtr.beanChart.FTE = 'SALE';
+        
+        var beanString = JSON.stringify(meIataCtr.beanChart);
+        meIataCtr.searchParams_chart = beanString;
+        
+        
+        console.log(meIataCtr.beanChart.VENDOR);
+        this.loadControlAgentChart();
+        
+    },
+    loadControlAgentChart: function () {
+
+        console.log('----------------------------loadControlAgentChart');
+        
+//        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(Ext.create('Ext.data.Store', {
+//            fields: ['data'],
+//            autoLoad: true,
+//            data: [
+//                {"strFormatDate": "202203", "AMOUNT": 200000},
+//                {"strFormatDate": "202207", "AMOUNT": 300000},
+//                {"strFormatDate": "202208", "AMOUNT": 400000}
+//
+//            ]
+//        }));
+        
+        win.lblUser_toolTip("Estructura: IMF078");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/loadControlAgentChart'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meIataCtr.searchParams_chart, dw_excel: false};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getBody().unmask('Loading...');
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    
+                    console.log(res);
+                    
+                    if (res.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        console.log(res.data);
+                        var lst = res.data;
+                        
+//                        var storeDataUso = Ext.create('Ext.data.Store', {
+//                            fields: ['data'],
+//                            data: lst,
+////                            autoLoad: true
+//                        });
+                        
+//                        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(storeDataUso);
+
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(storeGridDatas);
+
+    },    
+    onColumnRender: function (sprite, config, data, index) {
+        return {
+            fillStyle: this.colors_WK[index],
+            strokeStyle: index % 2 ? 'none' : 'black',
+            opacity: index % 2 ? 1 : 0.5
+        };
     },
 });

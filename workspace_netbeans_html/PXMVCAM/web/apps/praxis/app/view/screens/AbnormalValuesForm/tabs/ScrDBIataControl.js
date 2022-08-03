@@ -495,6 +495,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                         type: 'vbox',
                                         align: 'center'
                                     },
+                                    bodyStyle: 'background-color: transparent;',
                                     items: [
                                         {
                                             xtype: 'panel',
@@ -510,7 +511,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-grid_BoxSale',
                                                     padding: '5px 0px 0px 0px',
-                                                    width: 454,
+                                                    width: 479,
                                                     height: 546,
                                                     columnLines: true,
                                                     /*features: [{
@@ -529,6 +530,19 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                                     metaData.style = "font-weight:bold;text-align:center;background:#d5f4d5;";
                                                                     return value;
                                                                 }
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                xtype: 'actioncolumn',
+                                                                width: 25,
+                                                                align: 'center',
+                                                                items: [
+                                                                    {
+                                                                        icon: 'resources/img/botones/FalseChart.png',
+                                                                        tooltip: 'Chart',
+                                                                        handler: 'ViewAgent'
+                                                                    }
+                                                                ]
                                                             },
                                                             {
                                                                 text: 'Sales', id: prototype.id + '-titSales_AB_A',
@@ -752,7 +766,102 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                             ]
                                         },
                                         // GRAFICO BARRAS
-
+                                        {
+                                            xtype: 'panel',
+//                                            id: prototype.id + '-panelGraficos',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 10',
+                                            width: 1110,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-displaySAChart14',
+                                                    width: 1100,
+                                                    border: false,
+                                                    height: 380,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Sales \n\ USD',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['AMOUNT'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+                                                            //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Sales Date',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+//                                                        title: ['ARC', 'ASR', 'BSP(Mexico)', 'BSP(Others)'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['AMOUNT'],
+                                                            colors: ['#0066ff', '#DBA901', '#70DB70', '#FF9966'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1200
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+//                                                                var label = '';
+//                                                                if (ctx.field === 'CUPONS_ARC') {
+//                                                                    label = 'ARC';
+//                                                                } else if (ctx.field === 'CUPONS_ASR') {
+//                                                                    label = 'ASR';
+//                                                                } else if (ctx.field === 'CUPONS_MEX') {
+//                                                                    label = 'BSP(Mexico)';
+//                                                                } else if (ctx.field === 'CUPONS_OTHER') {
+//                                                                    label = 'BSP(Others)';
+//                                                                }
+                                                                    toolTip.setHtml(record.get('strFormatDate') + ' : ');
+                                                                }
+                                                            },
+//                                                            renderer: 'onColumnRender'
+                                                        }]
+                                                }
+                                            ]
+                                        },
                                     ]
                                 },
                                 {
