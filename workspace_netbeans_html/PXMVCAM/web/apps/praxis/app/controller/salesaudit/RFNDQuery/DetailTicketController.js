@@ -336,6 +336,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         }
         Ext.getCmp(prototype.idDetailTicket + '-txtStatus').setValue(rec.get('A3648STATO'));
         Ext.getCmp(prototype.idDetailTicket + '-txtFlag').setValue(vl_A3648FLAG);
+        if ((Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R') && Ext.String.trim(rec.get('A3647REGAS'))==='AUTOPR') {
+            Ext.getCmp(prototype.idDetailTicket + '-btn-save').hide();
+        }
         if (Ext.String.trim(rec.get('A3648FLAG')) === 'F') {
             if (rec.get('A3648MARCA') === 'Y') {
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setValue(true);

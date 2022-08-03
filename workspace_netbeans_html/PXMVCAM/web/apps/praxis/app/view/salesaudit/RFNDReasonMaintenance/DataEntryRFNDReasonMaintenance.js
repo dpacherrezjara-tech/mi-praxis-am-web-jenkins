@@ -3,65 +3,66 @@
  * -------------------------------
  * Migrado por: Luis Remicio
  */
-Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReasonMaintenance',{
-	extend: 'Ext.window.Window',
+Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReasonMaintenance', {
+    extend: 'Ext.window.Window',
     alias: 'widget.DataEntryRFNDReasonMaintenance',
 
     controller: 'DataEntryRFNDReasonMaintenanceController',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReasonMaintenanceController',
     ],
     id: prototype.id01 + '-win',
 
-    title:'Maintenance RFND REASONS',
-    header:true,
-    height:430,
-    width:550,
-    border:false,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: 'Maintenance RFND REASONS',
+    header: true,
+    height: 430,
+    width: 550,
+    border: false,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
 
-    defaults:{
+    defaults: {
         border: false
     },
-    
-    items:[
+
+    items: [
         {
-           xtype: 'form',
+            xtype: 'form',
             id: prototype.id01 + '-form',
-            defaults:{
+            defaults: {
                 style: 'margin: 5px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtReason',
                             fieldLabel: 'Cod.Reason',
-                            afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
+                            //afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
                             labelWidth: 150,
                             readOnly: true,
                             width: 250
                         },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id01 + '-ComboBy',
                             fieldLabel: 'Family',
-                            labelAlign:'right',
+                            labelAlign: 'right',
                             queryMode: 'local',
                             valueField: 'code',
                             displayField: 'name',
+                            afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
                             emptyText: '[SELECTED]',
                             labelWidth: 55,
                             width: 200,
                             editable: false,
-                            listConfig:{
+                            listConfig: {
                                 minWidth: 200
                             }
                         }
@@ -70,25 +71,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        {
-                            xtype: 'textarea',
-                            id: prototype.id01 + '-txtCRelation',
-                            fieldLabel: 'Comment Relation',
-                            afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
-                            enforceMaxLength: true,
-                            maxLength: 200,
-                            labelWidth: 150,
-                            grow: true,
-                            flex: 1,
-                            height: 35
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'textarea',
                             id: prototype.id01 + '-txtCEs',
@@ -106,7 +89,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'textarea',
                             id: prototype.id01 + '-txtCEng',
@@ -124,11 +107,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         {
                             xtype: 'textarea',
-                            id: prototype.id01 + '-txtCPor',
-                            fieldLabel: 'Comment Portuguese',
+                            id: prototype.id01 + '-txtCRelation',
+                            fieldLabel: 'Remark',
                             afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
                             enforceMaxLength: true,
                             maxLength: 200,
@@ -142,13 +125,31 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
+                        {
+                            xtype: 'textarea',
+                            id: prototype.id01 + '-txtCPor',
+                            fieldLabel: 'Comment Portuguese', hidden: true,
+                            afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
+                            enforceMaxLength: true,
+                            maxLength: 200,
+                            labelWidth: 150,
+                            grow: true,
+                            flex: 1,
+                            height: 35
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items: [
                         {
                             xtype: 'textarea',
                             id: prototype.id01 + '-txtCFre',
                             fieldLabel: 'Comment French',
                             afterLabelTextTpl: '<b style="color: #BF6868;float: right;"> (*)</b>',
-                            enforceMaxLength: true,
+                            enforceMaxLength: true, hidden: true,
                             maxLength: 200,
                             labelWidth: 150,
                             grow: true,
@@ -171,11 +172,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
                         border: false,
                         margin: 3
                     },
-                    items:[
+                    items: [
                         {
                             xtype: 'panel',
                             layout: 'hbox',
-                            items:[
+                            items: [
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id01 + '-txtREGIS',
@@ -207,7 +208,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
                         {
                             xtype: 'panel',
                             layout: 'hbox',
-                            items:[
+                            items: [
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id01 + '-txtREVIS',
@@ -241,49 +242,49 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.DataEntryRFNDReason
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            layout:{
+            layout: {
                 type: 'hbox',
                 pack: 'center'
             },
             style: 'background-color: #E3EAF9; padding: 5px;',
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id: prototype.id01+'-btn-save',
+                    id: prototype.id01 + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id: prototype.id01+'-btn-update',
+                    id: prototype.id01 + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id01+'-btn-delete',
+                    id: prototype.id01 + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.id01+'-btn-close',
+                    id: prototype.id01 + '-btn-close',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCloseClick'
                     }
                 }

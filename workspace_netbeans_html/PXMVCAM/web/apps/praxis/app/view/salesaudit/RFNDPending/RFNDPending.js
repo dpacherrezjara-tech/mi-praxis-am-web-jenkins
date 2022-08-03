@@ -20,7 +20,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
         //'Ext.Praxis.view.salesaudit.RFNDQuery.DetailRefundQueryRFND',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket',
         'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDAddTax',
-        'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory'
+        'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory',
+        'Ext.Praxis.view.salesaudit.RFNDPending.RFNDFormRazones'
     ],
 
     controller: 'RFNDPendingController',

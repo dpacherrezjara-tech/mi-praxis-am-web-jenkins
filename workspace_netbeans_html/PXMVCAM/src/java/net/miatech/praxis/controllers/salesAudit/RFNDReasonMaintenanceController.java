@@ -173,14 +173,16 @@ public class RFNDReasonMaintenanceController extends BaseController {
             CH_04 = row.createCell(4);
             CH_05 = row.createCell(5);
             CH_06 = row.createCell(6);
+            CH_07 = row.createCell(7);
 
             CH_00.setCellValue("Cust");
             CH_01.setCellValue("Cod. Reason");
-            CH_02.setCellValue("Relation");
-            CH_03.setCellValue("Description");
-            CH_04.setCellValue("Des. English");
-            CH_05.setCellValue("Des. Portuguese");
-            CH_06.setCellValue("Des. French");
+            CH_02.setCellValue("Family");
+            CH_03.setCellValue("Relation");
+            CH_04.setCellValue("Description");
+            CH_05.setCellValue("Des. English");
+            CH_06.setCellValue("Des. Portuguese");
+            CH_07.setCellValue("Des. French");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -189,6 +191,7 @@ public class RFNDReasonMaintenanceController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -197,6 +200,7 @@ public class RFNDReasonMaintenanceController extends BaseController {
             CH_04.setCellStyle(headerStyle);
             CH_05.setCellStyle(headerStyle);
             CH_06.setCellStyle(headerStyle);
+            CH_07.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -210,14 +214,16 @@ public class RFNDReasonMaintenanceController extends BaseController {
                 CH_04 = row.createCell(4);
                 CH_05 = row.createCell(5);
                 CH_06 = row.createCell(6);
+                CH_07 = row.createCell(7);
 
                 CH_00.setCellValue(lst.get(vi).A3651CCUST);
                 CH_01.setCellValue(lst.get(vi).A3651CODRZ);
-                CH_02.setCellValue(lst.get(vi).A3651COMRE);
-                CH_03.setCellValue(lst.get(vi).A3651COMES);
-                CH_04.setCellValue(lst.get(vi).A3651COMEN);
-                CH_05.setCellValue(lst.get(vi).A3651COMPO);
-                CH_06.setCellValue(lst.get(vi).A3651COMFR);
+                CH_02.setCellValue(lst.get(vi).A3651FAMIL);
+                CH_03.setCellValue(lst.get(vi).A3651COMRE);
+                CH_04.setCellValue(lst.get(vi).A3651COMES);
+                CH_05.setCellValue(lst.get(vi).A3651COMEN);
+                CH_06.setCellValue(lst.get(vi).A3651COMPO);
+                CH_07.setCellValue(lst.get(vi).A3651COMFR);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -226,6 +232,7 @@ public class RFNDReasonMaintenanceController extends BaseController {
                 CH_04.setCellStyle(bodyStyle);
                 CH_05.setCellStyle(bodyStyle);
                 CH_06.setCellStyle(bodyStyle);
+                CH_07.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -239,6 +246,7 @@ public class RFNDReasonMaintenanceController extends BaseController {
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
 
             String fileNameDownload = String.format("Reasons - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");

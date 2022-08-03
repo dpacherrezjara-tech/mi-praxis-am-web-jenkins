@@ -274,7 +274,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDPending.RFNDPendingController',
         me.bean.IN_TICKET = Ext.getCmp(prototype.idRFNDPending + '-txtCia').getValue() + '' + Ext.getCmp(prototype.idRFNDPending + '-txtFrmaSerie').getValue();
         me.bean.IN_COUNTRY = '';//Ext.getCmp(prototype.idRFNDPending + '-CmbType').getValue();
         me.bean.IN_IATA = Ext.getCmp(prototype.idRFNDPending + '-txtIATA').getValue();
-        me.bean.IN_STATUS = Ext.getCmp(prototype.idRFNDPending + '-CmbStatus').getValue();
+        me.bean.IN_FLAG = Ext.getCmp(prototype.idRFNDPending + '-CmbStatus').getValue();
         me.bean.IN_STATUSBPO = Ext.getCmp(prototype.idRFNDPending + '-CmbStatusBPO').getValue();
         me.bean.IN_USER = Ext.getCmp(prototype.idRFNDPending + '-CmbAudit').getValue();
         me.bean.IN_FOLIO = Ext.getCmp(prototype.idRFNDPending + '-txtFrmaFolio').getValue();
