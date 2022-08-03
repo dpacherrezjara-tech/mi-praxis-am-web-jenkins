@@ -269,7 +269,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         me.bean.IN_TICKET = Ext.getCmp(prototype.idRFNDQuery + '-txtCia').getValue() + '' + Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').getValue();
         me.bean.IN_COUNTRY = '';//Ext.getCmp(prototype.idRFNDQuery + '-CmbType').getValue();
         me.bean.IN_IATA = Ext.getCmp(prototype.idRFNDQuery + '-txtIATA').getValue();
-        me.bean.IN_STATUS = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatus').getValue();
+        me.bean.IN_FLAG = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatus').getValue();
         me.bean.IN_STATUSBPO = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatusBPO').getValue();
         me.bean.IN_USER = Ext.getCmp(prototype.idRFNDQuery + '-CmbAudit').getValue();
         me.bean.IN_FOLIO = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio').getValue();
