@@ -84,7 +84,7 @@ public class RFNDQueryController extends BaseController {
             filter.IN_TICKET = request.getParameter("IN_TICKET").trim();
             filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").trim();
             filter.IN_IATA = request.getParameter("IN_IATA").trim();
-            filter.IN_FLAG = request.getParameter("IN_STATUS").trim();
+            filter.IN_FLAG = request.getParameter("IN_FLAG").trim();
             filter.IN_STATUS = request.getParameter("IN_STATUSBPO").trim();
             filter.IN_USER = request.getParameter("IN_USER").trim();
             filter.IN_FOLIO = request.getParameter("IN_FOLIO").trim();
