@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
+Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
     layout: 'border',
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 614,
+                                    width: 514,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -64,35 +64,29 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Zone', dataIndex: 'ZONA', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:center;';
-                                                    return  value;
-                                                }
-                                            },
-                                            {text: 'Country', dataIndex: 'PAIS', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:center;';
-                                                    return  value;
-                                                }
-                                            },
-                                            {text: 'Name', dataIndex: 'DESCR_PAIS', width: 120,
+                                            {text: 'Email', dataIndex: 'DESCRE1', width: 180,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Input', dataIndex: 'INSUMP', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:center;';
-                                                    return  value;
-                                                }
-                                            },
-                                            {text: 'Description', dataIndex: 'DESCRE', width: 180,
+                                            {text: 'Description', dataIndex: 'DESCRE2', width: 180,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
                                                 }
+                                            },
+                                            {
+                                                text: 'Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'From', dataIndex: 'DATINI', width: 70, hidden: false},
+                                                    {text: 'To', dataIndex: 'DATFIN', width: 70, hidden: false},
+                                                ]
                                             },
                                             {
                                                 sortable: false,
@@ -100,6 +94,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                                 width: 40,
                                                 text: 'Edit',
                                                 align: 'center',
+                                                hidden: true,
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-edit',

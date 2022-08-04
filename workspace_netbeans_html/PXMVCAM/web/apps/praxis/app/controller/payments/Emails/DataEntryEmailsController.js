@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', {
+Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryZonesMpController',
+    alias: 'controller.DataEntryEmailsController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     meDE: '',
     actionCode: '',
@@ -13,8 +13,8 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     copia: '',
     // </editor-fold>
     init: function (view) {
-        prototype.id = 'ZonesMpForm';
-        prototype.url = CONTEXTPATH + '/ZonesMp';
+        prototype.id = 'EmailsForm';
+        prototype.url = CONTEXTPATH + '/Emails';
         meDE = this;
         this.p = this.view.params;
         this.actionCode = this.p.action;
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
         switch (this.actionCode) {
             case 'I':
                 //this.setearCamposClave();
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                //Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -38,8 +38,8 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                 this.getData();
                 //this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                //Ext.getCmp(prototype.id + '-btn-update').show();
+                //Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
@@ -47,7 +47,6 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     mostrarData: function () {
         this.setValue('de-txtZONE', this.beanResult.ZONA);
         this.setValue('de-txtCOUNT', this.beanResult.PAIS);
-        this.setValue('de-txtDESCR_PAIS', this.beanResult.DESCR_PAIS);
         this.setValue('de-txtINSUM', this.beanResult.INSUMP);
         this.setValue('de-txtDESC', this.beanResult.DESCRE);
 
@@ -144,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA4170(beanTemp);
+                        this.MaintenanceA4169(beanTemp);
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -171,7 +170,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                                 this.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                this.MaintenanceA4170(beanTemp);
+                                this.MaintenanceA4169(beanTemp);
                             }
                         }
                     });
@@ -212,7 +211,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
                     this.llenarData(beanTemp);
                     beanTemp.option = 'D';
                     beanTemp.beanString = JSON.stringify(beanTemp);
-                    this.MaintenanceA4170(beanTemp);
+                    this.MaintenanceA4169(beanTemp);
                 }
             }
         });
@@ -222,10 +221,10 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     },
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA4170: function (beanTemp) {
+    MaintenanceA4169: function (beanTemp) {
 //        console.log(beanTemp);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA4170',
+            url: prototype.url + '/MaintenanceA4169',
             method: 'POST',
             timeout: 60000000,
             params: beanTemp,

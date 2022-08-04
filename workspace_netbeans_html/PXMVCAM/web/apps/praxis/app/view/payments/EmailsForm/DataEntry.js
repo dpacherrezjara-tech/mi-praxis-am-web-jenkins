@@ -1,10 +1,10 @@
-Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
+Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryZonesMpForm',
+    alias: 'widget.DataEntryEmailsForm',
     requires:[
-        'Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController'
+        'Ext.Praxis.controller.payments.Emails.DataEntryEmailsController'
     ],
-    controller: 'DataEntryZonesMpController',
+    controller: 'DataEntryEmailsController',
     title:'Zones - Data Entry Form',
     header:true,
     height:300,
@@ -89,15 +89,6 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                     width: 80,
                                     enforceMaxLength: true,
                                     maxLength: 2,
-                                },
-                                { xtype: 'tbspacer', width: 2 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtDESCR_PAIS',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    readOnly: true,
-                                    width: 120,
                                 },
                             ]
                         },
