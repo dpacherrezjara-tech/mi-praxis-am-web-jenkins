@@ -17,7 +17,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.EmailsLogic;
-import net.miatech.praxis.payment.filter.A4170Filter;
+import net.miatech.praxis.payment.filter.A4169Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -60,17 +60,17 @@ public class EmailsController extends BaseController {
     String search(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- Emails : Search-------------");
         map.put("success", true);
-        List<A4170Filter> lst = this.getList(request, false);
+        List<A4169Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4170Filter> getList(HttpServletRequest request, Boolean bExcel) {
+    public List<A4169Filter> getList(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4170Filter> lst = new ArrayList<>(0);
-        A4170Filter filter = new A4170Filter();
+        List<A4169Filter> lst = new ArrayList<>(0);
+        A4169Filter filter = new A4169Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -79,7 +79,7 @@ public class EmailsController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4170Filter.class);
+            filter = gson.fromJson(beanString, A4169Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
             filter.page.LIMIT = 0;
@@ -96,7 +96,7 @@ public class EmailsController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX600SQP04543(filter);
+            lst = logic.loadPX601SQP04566(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -109,11 +109,11 @@ public class EmailsController extends BaseController {
         System.out.println("-------------- BanksCatalog : searchCompleteDetail-------------");
 
         Gson gson = new Gson();
-        A4170Filter filter = new A4170Filter();
-        A4170Filter result = new A4170Filter();
+        A4169Filter filter = new A4169Filter();
+        A4169Filter result = new A4169Filter();
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4170Filter.class);
+        filter = gson.fromJson(beanString, A4169Filter.class);
 
         logic = new EmailsLogic();
         logic.setSession(this.serverSession.getServerSession());
@@ -128,13 +128,13 @@ public class EmailsController extends BaseController {
         return new Gson().toJson(map);
     }
     
-    @RequestMapping(value = "MaintenanceA4170")
+    @RequestMapping(value = "MaintenanceA4169")
     public @ResponseBody
-    String MaintenanceA4170(ModelMap map, HttpServletRequest request) {
+    String MaintenanceA4169(ModelMap map, HttpServletRequest request) {
 
-        System.out.println("-------------- BanksCatalog : MaintenanceA4170-------------");
+        System.out.println("-------------- BanksCatalog : MaintenanceA4169-------------");
         String option;
-        A4170Filter filter = new A4170Filter();
+        A4169Filter filter = new A4169Filter();
         Gson gson = new Gson();
         String msj = "";
         String beanString = "";
@@ -143,7 +143,7 @@ public class EmailsController extends BaseController {
 
             option = request.getParameter("option");
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4170Filter.class);
+            filter = gson.fromJson(beanString, A4169Filter.class);
 
             logic = new EmailsLogic();
             logic.setSession(this.serverSession.getServerSession());
@@ -159,56 +159,6 @@ public class EmailsController extends BaseController {
             map.put("Mensaje", ex.getMessage());
         }
         return new Gson().toJson(map);
-    }
-    
-    /*@RequestMapping(value = "getCodes")
-    public @ResponseBody
-    String getCodes(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- SalesReconciliAmex : getCodes-------------");
-
-        map.put("success", true);
-        List<A4170Filter> lst = this.getListGetCodes(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
-        return new Gson().toJson(map);
-    }
-
-    public List<A4170Filter> getListGetCodes(HttpServletRequest request, Boolean bExcel) {
-
-        List<A4170Filter> lst = new ArrayList<>(0);
-        A4170Filter filter = new A4170Filter();
-        Gson gson = new Gson();
-        String beanString = "";
-
-        try {
-            logic = new EmailsLogic();
-            logic.setSession(this.serverSession.getServerSession());
-
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4170Filter.class);
-
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            lst = logic.loadPX600SQP04544(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
-        return lst;
-    }*/
+    }     
 }
 

@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         switch (this.actionCode) {
             case 'I':
                 //this.setearCamposClave();
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                //Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -38,8 +38,8 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                 this.getData();
                 //this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                //Ext.getCmp(prototype.id + '-btn-update').show();
+                //Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA4170(beanTemp);
+                        this.MaintenanceA4169(beanTemp);
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -170,7 +170,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                                 this.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                this.MaintenanceA4170(beanTemp);
+                                this.MaintenanceA4169(beanTemp);
                             }
                         }
                     });
@@ -211,7 +211,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                     this.llenarData(beanTemp);
                     beanTemp.option = 'D';
                     beanTemp.beanString = JSON.stringify(beanTemp);
-                    this.MaintenanceA4170(beanTemp);
+                    this.MaintenanceA4169(beanTemp);
                 }
             }
         });
@@ -221,10 +221,10 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     },
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA4170: function (beanTemp) {
+    MaintenanceA4169: function (beanTemp) {
 //        console.log(beanTemp);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA4170',
+            url: prototype.url + '/MaintenanceA4169',
             method: 'POST',
             timeout: 60000000,
             params: beanTemp,

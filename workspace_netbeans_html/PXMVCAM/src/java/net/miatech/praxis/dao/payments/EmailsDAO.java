@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A4170Filter;
+import net.miatech.praxis.payment.A4169;
+import net.miatech.praxis.payment.filter.A4169Filter;
+import net.miatech.praxis.payment.filter.A4169Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -39,51 +41,73 @@ public class EmailsDAO {
         session = ss;
     }
 
-    public List<A4170Filter> loadPX600SQP04543(A4170Filter filter) throws SQLException, Exception {
+    public List<A4169Filter> loadPX601SQP04566(A4169Filter filter) throws SQLException, Exception {
 
-        List<A4170Filter> lstData = new ArrayList<A4170Filter>(0);
-        A4170Filter bean;
+        List<A4169Filter> lstData = new ArrayList<A4169Filter>(0);
+        A4169Filter bean;
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("S", "Sales");
+        hmDescEstados.put("R", "RFND");
+        hmDescEstados.put("A", "Adjustment");
+        hmDescEstados.put("N", "ADM/NOTA CARGO");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04543(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04566(?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
+            cstmt.registerOutParameter(2, Types.INTEGER);
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
-            cstmt.registerOutParameter(6, Types.INTEGER);
-            cstmt.registerOutParameter(7, Types.INTEGER);
-            cstmt.registerOutParameter(8, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_PAIS.trim());
-            cstmt.setString(3, filter.IN_ZONA.trim());
-            cstmt.setString(4, filter.IN_INSUMP.trim());
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setInt(2, filter.page.PAGNUM);
+            cstmt.setInt(3, filter.page.PAGROW);
+            cstmt.setInt(4, filter.page.TOTPAG);
+            cstmt.setInt(5, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(2);
+            filter.page.PAGROW = cstmt.getInt(3);
+            filter.page.TOTPAG = cstmt.getInt(4);
+            filter.page.TOTROW = cstmt.getInt(5);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                bean = new A4170Filter();
+                bean = new A4169Filter();
 
-                bean.ZONA = rst.getString("ZONA").trim();
-                bean.PAIS = rst.getString("PAIS").trim();
-                bean.INSUMP = rst.getString("INSUMP").trim();
-                bean.DESCRE = rst.getString("DESCRE").trim();
-
+                bean.TTABLA = rst.getString("TTABLA");
+                bean.DESCR_TTABLA = rst.getString("DESCR_TTABLA");
+                bean.CODETB = rst.getString("CODETB");
+                bean.DESCRE1 = rst.getString("DESCRE1");
+                bean.DESCRE2 = rst.getString("DESCRE2");
+                //bean.TDOC = rst.getString("TDOC");
+                if (hmDescEstados.containsKey(rst.getString("TDOC").trim())) {
+                    bean.TDOC = hmDescEstados.get(rst.getString("TDOC").trim()).toString();
+                } else {
+                    bean.TDOC = rst.getString("TDOC").trim();
+                }
+                bean.CANT1 = rst.getInt("CANT1");
+                bean.CANT2 = rst.getInt("CANT2");
+                bean.STVAL = rst.getString("STVAL");
+                if (rst.getString("STVAL").trim().equals("V")) {
+                    bean.descSTVAL = "Vigente";
+                } else if (rst.getString("STVAL").trim().equals("A")) {
+                    bean.descSTVAL = "Anulado";
+                }
+                
+                bean.DATINI = rst.getString("DATINI").trim();
+                bean.DATFIN = rst.getString("DATFIN").trim();
+                
                 bean.USCR = rst.getString("USCR").trim();
                 bean.FECR = rst.getString("FECR").trim();
                 bean.HOCR = rst.getString("HOCR").trim();
@@ -92,7 +116,7 @@ public class EmailsDAO {
                 bean.FEUP = rst.getString("FEUP").trim();
                 bean.HOUP = rst.getString("HOUP").trim();
                 bean.PGMUP = rst.getString("PGMUP").trim();
-
+                
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
                 bean.page.TOTPAG = filter.page.TOTPAG;
@@ -125,13 +149,13 @@ public class EmailsDAO {
         return lstData;
     }
 
-    public A4170Filter loadPX600SQP04544(A4170Filter filter) throws SQLException, Exception {
+    public A4169Filter loadPX600SQP04544(A4169Filter filter) throws SQLException, Exception {
 
-        A4170Filter beanTkt = new A4170Filter();
+        A4169Filter beanTkt = new A4169Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04544(?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04520(?,?)}";
 
         Connection cnx = null;
         try {
@@ -139,19 +163,29 @@ public class EmailsDAO {
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.PAIS.trim());
-            cstmt01.setString(3, filter.ZONA.trim());
-            cstmt01.setString(4, filter.INSUMP.trim());
+            cstmt01.setString(2, filter.CODETB.trim());
 
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-                beanTkt.ZONA = rs01.getString("ZONA").trim();
-                beanTkt.PAIS = rs01.getString("PAIS").trim();
-                beanTkt.INSUMP = rs01.getString("INSUMP").trim();
-                beanTkt.DESCRE = rs01.getString("DESCRE").trim();
-
+                beanTkt.CCUST = rs01.getString("CCUST");
+                beanTkt.CODETB = rs01.getString("CODETB").trim();
+                beanTkt.TTABLA = rs01.getString("TTABLA").trim();
+                beanTkt.DESCRE1 = rs01.getString("DESCRE1").trim();
+                beanTkt.DESCRE2 = rs01.getString("DESCRE2").trim();
+                beanTkt.TDOC = rs01.getString("TDOC").trim();
+                beanTkt.DESCR_TTABLA = rs01.getString("DESCR_TTABLA").trim();
+                beanTkt.CANT1 = rs01.getInt("CANT1");
+                beanTkt.CANT2 = rs01.getInt("CANT2");
+                beanTkt.DATINI = rs01.getString("DATINI").trim();
+                beanTkt.DATFIN = rs01.getString("DATFIN").trim();
+                beanTkt.STVAL = rs01.getString("STVAL").trim();
+                if (rs01.getString("STVAL").trim().equals("V")) {
+                    beanTkt.descSTVAL = "Vigente";
+                } else if (rs01.getString("STVAL").trim().equals("A")) {
+                    beanTkt.descSTVAL = "Anulado";
+                }
                 beanTkt.USCR = rs01.getString("USCR").trim();
                 beanTkt.FECR = rs01.getString("FECR").trim();
                 beanTkt.HOCR = rs01.getString("HOCR").trim();
@@ -186,12 +220,12 @@ public class EmailsDAO {
         return beanTkt;
     }
 
-    public String loadPX600SQP04545(A4170Filter filter, String option) throws SQLException, Exception {
+    public String loadPX600SQP04545(A4169Filter filter, String option) throws SQLException, Exception {
         String strMsj = "Operation was successful.";
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04545(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -200,18 +234,20 @@ public class EmailsDAO {
 
             cstmt.setString(1, option);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
-            cstmt.setString(3, filter.ZONA.trim());
-            cstmt.setString(4, filter.PAIS.trim());
-            cstmt.setString(5, filter.INSUMP.trim());
-            cstmt.setString(6, filter.DESCRE.trim());
-            
-            cstmt.setString(7, filter.IN_ZONA.trim());
-            cstmt.setString(8, filter.IN_PAIS.trim());
-            cstmt.setString(9, filter.IN_INSUMP.trim());
-
-            cstmt.setString(10, session.getUserView().getUserInfo().USR);
-            cstmt.setString(11, Functions.getFechaActual());
-            cstmt.setString(12, Functions.getHoraActual());
+            cstmt.setString(3, filter.TTABLA.trim());
+            cstmt.setString(4, filter.CODETB.trim());
+            cstmt.setString(5, filter.CODETBCO.trim());
+            cstmt.setString(6, filter.DESCRE1.trim());
+            cstmt.setString(7, filter.DESCRE2.trim());
+            cstmt.setString(8, filter.TDOC.trim());
+            cstmt.setString(9, filter.DATINI.trim());
+            cstmt.setString(10, filter.DATFIN.trim());
+            cstmt.setInt(11, filter.CANT1);
+            cstmt.setInt(12, filter.CANT2);
+            cstmt.setString(13, filter.STVAL.trim());
+            cstmt.setString(14, session.getUserView().getUserInfo().USR);
+            cstmt.setString(15, Functions.getFechaActual());
+            cstmt.setString(16, Functions.getHoraActual());
 
             cstmt.execute();
 
@@ -232,66 +268,5 @@ public class EmailsDAO {
 
         return strMsj;
 
-    }
-
-    //PARA FILTRO DE PAIS
-    public List<A4170Filter> loadPX600SQP04544_1(A4170Filter filter) throws SQLException, Exception {
-
-        List<A4170Filter> lstTkts = new ArrayList<A4170Filter>(0);
-        A4170Filter beanTkt;
-
-        A4170Filter objRtn;
-        objRtn = new A4170Filter();
-        objRtn.CODE = "";
-        objRtn.NAME = "All";
-        lstTkts.add(objRtn);
-
-        CallableStatement cstmt = null;
-        ResultSet rst = null;
-
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04544(?)}";
-
-        Connection cnx = null;
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt = cnx.prepareCall(SQLCLL01);
-
-            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.execute();
-
-            rst = cstmt.getResultSet();
-
-            while (rst.next()) {
-
-                beanTkt = new A4170Filter();
-
-                beanTkt.CODE = rst.getString("CODE").trim();
-                beanTkt.NAME = rst.getString("NAME").trim();
-                lstTkts.add(beanTkt);
-            }
-            rst.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rst != null) {
-                try {
-                    rst.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-
-        return lstTkts;
     }
 }
