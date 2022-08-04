@@ -118,7 +118,7 @@ public class EmailsController extends BaseController {
         logic = new EmailsLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX600SQP04544(filter);
+            result = logic.loadPX601SQP04567(filter);
             map.put("result", result);
             map.put("success", true);
         } catch (Exception ex) {
@@ -147,7 +147,7 @@ public class EmailsController extends BaseController {
 
             logic = new EmailsLogic();
             logic.setSession(this.serverSession.getServerSession());
-            msj = logic.loadPX600SQP04545(filter, option);
+            msj = logic.loadPX601SQP04568(filter, option);
 
             map.put("success", true);
             map.put("Mensaje", msj);

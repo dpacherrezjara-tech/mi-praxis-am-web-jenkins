@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 514,
+                                    width: 454,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Email', dataIndex: 'DESCRE1', width: 180,
+                                            {text: 'Email', dataIndex: 'DESCRE1', width: 220,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
@@ -78,6 +78,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                             },
                                             {
                                                 text: 'Date',
+                                                hidden:true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -94,7 +95,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                                 width: 40,
                                                 text: 'Edit',
                                                 align: 'center',
-                                                hidden: true,
+                                                hidden: false,
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-edit',
