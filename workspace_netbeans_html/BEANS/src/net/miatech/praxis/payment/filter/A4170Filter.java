@@ -12,6 +12,7 @@ public class A4170Filter extends A4170{
     public String ZONA = "";
     public String IN_ZONA = "";
     public String PAIS = "";
+    public String DESCR_PAIS = "";
     public String IN_PAIS = "";
     public String INSUMP = "";
     public String IN_INSUMP = "";

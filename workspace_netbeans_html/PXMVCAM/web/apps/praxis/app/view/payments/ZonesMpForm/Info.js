@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 494,
+                                    width: 614,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -73,6 +73,12 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.Info', {
                                             {text: 'Country', dataIndex: 'PAIS', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:center;';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Name', dataIndex: 'DESCR_PAIS', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:left;';
                                                     return  value;
                                                 }
                                             },

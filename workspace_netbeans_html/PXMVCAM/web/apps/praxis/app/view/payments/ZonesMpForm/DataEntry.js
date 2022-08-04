@@ -90,6 +90,15 @@ Ext.define('Ext.Praxis.view.payments.ZonesMpForm.DataEntry',{
                                     enforceMaxLength: true,
                                     maxLength: 2,
                                 },
+                                { xtype: 'tbspacer', width: 2 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtDESCR_PAIS',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    readOnly: true,
+                                    width: 120,
+                                },
                             ]
                         },
                         {

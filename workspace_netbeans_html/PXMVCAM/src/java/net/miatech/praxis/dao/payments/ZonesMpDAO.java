@@ -81,6 +81,7 @@ public class ZonesMpDAO {
 
                 bean.ZONA = rst.getString("ZONA").trim();
                 bean.PAIS = rst.getString("PAIS").trim();
+                bean.DESCR_PAIS = rst.getString("DESCR_PAIS").trim();
                 bean.INSUMP = rst.getString("INSUMP").trim();
                 bean.DESCRE = rst.getString("DESCRE").trim();
 
@@ -149,6 +150,7 @@ public class ZonesMpDAO {
             while (rs01.next()) {
                 beanTkt.ZONA = rs01.getString("ZONA").trim();
                 beanTkt.PAIS = rs01.getString("PAIS").trim();
+                beanTkt.DESCR_PAIS = rs01.getString("DESCR_PAIS").trim();
                 beanTkt.INSUMP = rs01.getString("INSUMP").trim();
                 beanTkt.DESCRE = rs01.getString("DESCRE").trim();
 

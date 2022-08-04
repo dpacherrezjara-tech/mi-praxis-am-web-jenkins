@@ -47,6 +47,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.DataEntryZonesMpController', 
     mostrarData: function () {
         this.setValue('de-txtZONE', this.beanResult.ZONA);
         this.setValue('de-txtCOUNT', this.beanResult.PAIS);
+        this.setValue('de-txtDESCR_PAIS', this.beanResult.DESCR_PAIS);
         this.setValue('de-txtINSUM', this.beanResult.INSUMP);
         this.setValue('de-txtDESC', this.beanResult.DESCRE);
 
