@@ -19,6 +19,7 @@ public class A4244 {
     public String A4244TIPO = "";
     public String A4244MDA = "";
     public Double A4244TOTAP = 0.00;
+    public Double A4244VENTA= 0.00;      
     public Double A4244SALDP = 0.00;
     public String A4244STSPG = "";
     public String A4244USRIN = "";
