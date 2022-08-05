@@ -584,6 +584,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 fileA2552.A2552PROVIDES2 = "";
                                 fileA2552.A2552PROVI3 = 0;
                                 fileA2552.A2552PROVIDES3 = "";
+                                fileA2552.A2552PROVI4 = 0;
 
                                 if ((fileA2552.A2552TARIF + fileA2552.A2552IVA + fileA2552.A2552COMI + fileA2552.A2552TAXCM) == 0) {
                                     result = "Amount must be greater or less than zero";
@@ -623,6 +624,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 fileA2552.A2552PROVI2 = 0;
                                 fileA2552.A2552PROVIDES2 = "";
                                 fileA2552.A2552PROVI3 = 0;
+                                fileA2552.A2552PROVI4 = 0;
                                 fileA2552.A2552PROVIDES3 = "";
                                 fileA2552.A2552TKT = "";
                                 fileA2552.A2552CTA = "";
@@ -652,6 +654,12 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                     fileA2552.A2552PROVI3 = 0;
                                 }
                                 fileA2552.A2552PROVIDES3 = getCellValue(currentRow.getCell(19));
+                                if (!getCellValue(currentRow.getCell(20)).equals("")) {
+                                    fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(20)));
+                                } else {
+                                    fileA2552.A2552PROVI4 = 0;
+                                }
+                                
                                 fileA2552.A2552CTA = "";
                                 fileA2552.A2552TITU = "";
                                 fileA2552.A2552RAZONLIB = "";
@@ -792,12 +800,18 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 fileA2552.A2552PROVI3 = 0;
                             }
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
+                                fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                            } else {
+                                fileA2552.A2552PROVI4 = 0;
+                            }
+                            
+                            if (!getCellValue(currentRow.getCell(14)).equals("")) {
                                 fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(14)));
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
 
-                            if ((fileA2552.A2552COMI + fileA2552.A2552TAXCM + fileA2552.A2552PROVI + fileA2552.A2552PROVI2 + fileA2552.A2552PROVI3) == 0) {
+                            if ((fileA2552.A2552COMI + fileA2552.A2552TAXCM + fileA2552.A2552PROVI + fileA2552.A2552PROVI2 + fileA2552.A2552PROVI3 + fileA2552.A2552PROVI4) == 0) {
                                 result = "Amount must be greater or less than zero";
                                 break;
                             }
@@ -1089,8 +1103,15 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             } else {
                                 fileA2552.A2552PROVI3 = 0;
                             }
+                            
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
-                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                            } else {
+                                fileA2552.A2552PROVI4 = 0;
+                            }
+                            
+                            if (!getCellValue(currentRow.getCell(15)).equals("")) {
+                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
@@ -1104,7 +1125,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 break;
                             }
 
-                            if ((fileA2552.A2552COMI + fileA2552.A2552TAXCM + fileA2552.A2552PROVI + fileA2552.A2552PROVI2 + fileA2552.A2552PROVI3) == 0) {
+                            if ((fileA2552.A2552COMI + fileA2552.A2552TAXCM + fileA2552.A2552PROVI + fileA2552.A2552PROVI2 + fileA2552.A2552PROVI3 + fileA2552.A2552PROVI4) == 0) {
                                 result = "Amount must be greater or less than zero";
                                 break;
                             }
