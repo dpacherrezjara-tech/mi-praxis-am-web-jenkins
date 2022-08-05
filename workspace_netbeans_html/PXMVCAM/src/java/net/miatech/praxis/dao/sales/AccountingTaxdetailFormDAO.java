@@ -103,6 +103,7 @@ public class AccountingTaxdetailFormDAO {
                 objRtn.IATA = rs01.getString("IATA");
                 objRtn.NOMBRE = rs01.getString("NOMBRE");
                 objRtn.GRUPO = rs01.getString("GRUPO");
+                objRtn.MODO = rs01.getString("MODO");
                 objRtn.NROBOLETO = rs01.getString("NROBOLETO");
                 objRtn.ITINERARIO = rs01.getString("ITINERARIO");
                 objRtn.TRANSACCION = rs01.getString("TRNCU");
