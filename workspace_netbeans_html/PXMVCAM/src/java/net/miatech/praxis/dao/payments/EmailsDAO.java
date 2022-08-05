@@ -149,13 +149,13 @@ public class EmailsDAO {
         return lstData;
     }
 
-    public A4169Filter loadPX600SQP04544(A4169Filter filter) throws SQLException, Exception {
+    public A4169Filter loadPX601SQP04567(A4169Filter filter) throws SQLException, Exception {
 
         A4169Filter beanTkt = new A4169Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04520(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04567(?,?)}";
 
         Connection cnx = null;
         try {
@@ -174,18 +174,10 @@ public class EmailsDAO {
                 beanTkt.TTABLA = rs01.getString("TTABLA").trim();
                 beanTkt.DESCRE1 = rs01.getString("DESCRE1").trim();
                 beanTkt.DESCRE2 = rs01.getString("DESCRE2").trim();
-                beanTkt.TDOC = rs01.getString("TDOC").trim();
-                beanTkt.DESCR_TTABLA = rs01.getString("DESCR_TTABLA").trim();
-                beanTkt.CANT1 = rs01.getInt("CANT1");
-                beanTkt.CANT2 = rs01.getInt("CANT2");
+                
                 beanTkt.DATINI = rs01.getString("DATINI").trim();
                 beanTkt.DATFIN = rs01.getString("DATFIN").trim();
-                beanTkt.STVAL = rs01.getString("STVAL").trim();
-                if (rs01.getString("STVAL").trim().equals("V")) {
-                    beanTkt.descSTVAL = "Vigente";
-                } else if (rs01.getString("STVAL").trim().equals("A")) {
-                    beanTkt.descSTVAL = "Anulado";
-                }
+
                 beanTkt.USCR = rs01.getString("USCR").trim();
                 beanTkt.FECR = rs01.getString("FECR").trim();
                 beanTkt.HOCR = rs01.getString("HOCR").trim();
@@ -220,12 +212,12 @@ public class EmailsDAO {
         return beanTkt;
     }
 
-    public String loadPX600SQP04545(A4169Filter filter, String option) throws SQLException, Exception {
+    public String loadPX601SQP04568(A4169Filter filter, String option) throws SQLException, Exception {
         String strMsj = "Operation was successful.";
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04521(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04568(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -239,15 +231,11 @@ public class EmailsDAO {
             cstmt.setString(5, filter.CODETBCO.trim());
             cstmt.setString(6, filter.DESCRE1.trim());
             cstmt.setString(7, filter.DESCRE2.trim());
-            cstmt.setString(8, filter.TDOC.trim());
-            cstmt.setString(9, filter.DATINI.trim());
-            cstmt.setString(10, filter.DATFIN.trim());
-            cstmt.setInt(11, filter.CANT1);
-            cstmt.setInt(12, filter.CANT2);
-            cstmt.setString(13, filter.STVAL.trim());
-            cstmt.setString(14, session.getUserView().getUserInfo().USR);
-            cstmt.setString(15, Functions.getFechaActual());
-            cstmt.setString(16, Functions.getHoraActual());
+            cstmt.setString(8, filter.DATINI.trim());
+            cstmt.setString(9, filter.DATFIN.trim());
+            cstmt.setString(10, session.getUserView().getUserInfo().USR);
+            cstmt.setString(11, Functions.getFechaActual());
+            cstmt.setString(12, Functions.getHoraActual());
 
             cstmt.execute();
 

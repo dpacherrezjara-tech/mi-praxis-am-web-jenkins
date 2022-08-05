@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
     controller: 'DataEntryEmailsController',
     title:'Zones - Data Entry Form',
     header:true,
-    height:300,
-    width:820,
+    height:390,
+    width:720,
     resizable:false,
     layout:'fit',
     modal:true,
@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                     items: [
                         {
                             xtype: 'label',
-                            text: 'Zones Information',
+                            text: 'Emails Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -53,28 +53,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Zone',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90,
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtZONE',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 4,
-                                },
-                                { xtype: 'tbspacer', width: 120 },
-                                { xtype: 'tbspacer', width: 20 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Country',
+                                    text: 'Code',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -83,15 +62,109 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCOUNT',
+                                    id:prototype.id+'-de-txtCTable',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 80,
+                                    enforceMaxLength: false,
+                                    maxLength: 80,
+                                },
+                                { xtype: 'tbspacer', width: 180 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Email',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtCDesc1',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 200,
+                                    enforceMaxLength: false,
+                                    maxLength: 100,
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Date from',
+                                    hidden:true,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },                               
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtINI',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 80,
+                                    hidden:true,
+                                    enforceMaxLength: true,
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,
+                                },
+                                { xtype: 'tbspacer', width: 20 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Date To',
+                                    hidden:true,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtFIN',
+                                    hidden:true,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 2,
-                                },
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,
+                                }
                             ]
                         },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 2 8',
+                            hidden: true,
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width:90
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'combo',
+                                    id:prototype.id+'-cmbStval',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    width: 80,
+                                    labelWidth: 10,
+                                    hidden: false,
+                                    hiddenLabel: false 
+                                }
+                            ]
+                        },
+                        { xtype: 'tbspacer', width: 6 },
                         {
                             xtype: 'panel',
                             layout: 'hbox',
@@ -101,7 +174,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Input',
+                                    text: 'Description 2',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -110,17 +183,46 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtINSUM',
+                                    id:prototype.id+'-de-txtCDesc2',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 200,
+                                    enforceMaxLength: false,
+                                    maxLength: 100,
+                                }
+                            ]
+                        },                        
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 2 8',
+                            hidden: true,
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Cantidad1',
+                                    fontSize: 15,
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 90,
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtCant1',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 6,
+                                    maxLength: 100,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Description',
+                                    text: 'Cantidad2',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 90
@@ -129,15 +231,15 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtDESC',
+                                    id:prototype.id+'-de-txtCant2',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 200,
+                                    width: 80,
                                     enforceMaxLength: true,
-                                    maxLength: 40,
-                                }
+                                    maxLength: 100,
+                                },
                             ]
-                        },
+                        }
                     ]
                 },
                 { xtype: 'tbspacer', height: 10 },
