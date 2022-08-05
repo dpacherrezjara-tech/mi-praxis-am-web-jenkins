@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
                             );
                     Ext.getCmp(prototype.id + '-cmbPais').setValue('');
                     
-                    me.btnSearch_click();
+                    //me.btnSearch_click();
                 } else
                     global.Msg({msg: res.sesion});
             }

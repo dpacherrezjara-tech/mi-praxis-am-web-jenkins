@@ -495,6 +495,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                         type: 'vbox',
                                         align: 'center'
                                     },
+                                    bodyStyle: 'background-color: transparent;',
                                     items: [
                                         {
                                             xtype: 'panel',
@@ -510,7 +511,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-grid_BoxSale',
                                                     padding: '5px 0px 0px 0px',
-                                                    width: 454,
+                                                    width: 479,
                                                     height: 546,
                                                     columnLines: true,
                                                     /*features: [{
@@ -526,9 +527,24 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                             {
                                                                 text: 'Agent', dataIndex: 'AIRLINE', align: 'center', width: 70,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strFlag + '"';
                                                                     metaData.style = "font-weight:bold;text-align:center;background:#d5f4d5;";
                                                                     return value;
                                                                 }
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                xtype: 'actioncolumn',
+                                                                width: 25,
+                                                                align: 'center',
+                                                                items: [
+                                                                    {
+                                                                        icon: 'resources/img/botones/FalseChart.png',
+                                                                        tooltip: 'SALE',
+                                                                        handler: 'ViewAgent'
+                                                                    }
+                                                                ]
                                                             },
                                                             {
                                                                 text: 'Sales', id: prototype.id + '-titSales_AB_A',
@@ -582,7 +598,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-grid_BoxRefund',
                                                     padding: '5px 0px 0px 0px',
-                                                    width: 454,
+                                                    width: 479,
                                                     height: 546,
                                                     columnLines: true,
                                                     /*features: [{
@@ -598,9 +614,24 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                             {
                                                                 text: 'Agent', dataIndex: 'AIRLINE', align: 'center', width: 70,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strFlag + '"';
                                                                     metaData.style = "font-weight:bold;text-align:center;background:#d5f4d5;";
                                                                     return value;
                                                                 }
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                xtype: 'actioncolumn',
+                                                                width: 25,
+                                                                align: 'center',
+                                                                items: [
+                                                                    {
+                                                                        icon: 'resources/img/botones/FalseChart.png',
+                                                                        tooltip: 'RFND',
+                                                                        handler: 'ViewAgent'
+                                                                    }
+                                                                ]
                                                             },
                                                             {
                                                                 text: 'Refund', id: prototype.id + '-titRefund_AB_A',
@@ -654,7 +685,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-grid_BoxExchange',
                                                     padding: '5px 0px 0px 0px',
-                                                    width: 454,
+                                                    width: 479,
                                                     height: 546,
                                                     columnLines: true,
                                                     /*features: [{
@@ -670,38 +701,25 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                             {
                                                                 text: 'Agent', dataIndex: 'AIRLINE', align: 'center', width: 70,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strFlag + '"';
                                                                     metaData.style = "font-weight:bold;text-align:center;background:#d5f4d5;";
                                                                     return value;
                                                                 },
                                                             },
-                                                            //                                                    {
-                                                            //                                                        sortable: false,
-                                                            //                                                        xtype: 'actioncolumn',
-                                                            //                                                        width: 25,
-                                                            //                                                        text: '',
-                                                            //                                                        align: 'center',
-                                                            //                                                        items: [
-                                                            //                                                            {
-                                                            //                                                                iconCls: 'prx-icon-edit',
-                                                            //                                                                tooltip: 'Chart',
-                                                            //                                                                handler: 'onEditClick'
-                                                            //                                                            }
-                                                            //                                                        ]
-                                                            //                                                    },
-//                                                            {
-//                                                                text: '',
-//                                                                xtype: 'actioncolumn',
-//                                                                width: 25,
-//                                                                align: 'center',
-//                                                                items: [
-//                                                                    {
-//                                                                        icon: 'resources/img/botones/FalseChart.png',
-//                                                                        tooltip: 'Chart',
-//                                                                        handler: 'ViewAgent',
-//                                                                        args: ['EXCH']
-//                                                                    }
-//                                                                ]
-//                                                            },
+                                                            {
+                                                                text: '',
+                                                                xtype: 'actioncolumn',
+                                                                width: 25,
+                                                                align: 'center',
+                                                                items: [
+                                                                    {
+                                                                        icon: 'resources/img/botones/FalseChart.png',
+                                                                        tooltip: 'EXCH',
+                                                                        handler: 'ViewAgent'
+                                                                    }
+                                                                ]
+                                                            },
                                                             {
                                                                 text: 'Exchange', id: prototype.id + '-titExchange_AB_A',
                                                                 columns: [
@@ -751,8 +769,184 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl', {
                                                 }
                                             ]
                                         },
+                                        // Filtros Select By
+                                        {
+                                            xtype: 'panel',
+                                            border: false,
+                                            margin: '15 0 5 0',
+                                            id: prototype.id + '-panel_titulo',
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'center'
+                                            },
+                                            bodyStyle: 'background-color: transparent;',
+                                            items: [
+                //                                {xtype: 'tbspacer', width: 50},
+                                                {
+                                                    xtype: 'label',
+                                                    html: '<strong style="color:#000;"> </strong>',
+                                                    align: 'center',
+                                                    id: prototype.id + '-lb_barras',
+                                                    fieldStyle: 'text-align:center;',
+                                                    padding: '8px 7px 8px 0px'
+                                                }
+                                            ]
+                                        },
+                                        
                                         // GRAFICO BARRAS
-
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-panelGraficos',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 10',
+                                            hidden: true,
+                                            width: 1110,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-displaySAChart14',
+                                                    width: 1100,
+                                                    border: false,
+                                                    height: 380,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'USD',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [
+                                                        {
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['AMOUNT'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  '$' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  '$' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, 
+                                                        {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Sales Date',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [
+                                                        {
+                                                            type: 'bar3d',
+                                                            stacked: false,
+//                                                        title: ['ARC', 'ASR', 'BSP(Mexico)', 'BSP(Others)'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['AMOUNT'],
+                                                            colors: ['#339933', '#DBA901', '#70DB70', '#FF9966'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1200
+                                                            },
+                                                            label: {
+                                                                field: ['AMOUNT'],
+//                                                            display: 'insideEnd',
+                                                                display: 'outside',
+                                                                calloutLine: {
+                                                                    length: 10,
+                                                                    width: 0,
+                                                                color: '#FFFFFF',
+                                                                },
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutVertical = false;
+//                                                                    if (value === 100) {
+                                                                        return '$' + Ext.util.Format.number(value, '0,000');
+//                                                                    } else {
+//                                                                        return Ext.util.Format.number(value, '0,000.00');
+//                                                                    }
+                                                                }
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+//                                                                var label = '';
+//                                                                if (ctx.field === 'CUPONS_ARC') {
+//                                                                    label = 'ARC';
+//                                                                } else if (ctx.field === 'CUPONS_ASR') {
+//                                                                    label = 'ASR';
+//                                                                } else if (ctx.field === 'CUPONS_MEX') {
+//                                                                    label = 'BSP(Mexico)';
+//                                                                } else if (ctx.field === 'CUPONS_OTHER') {
+//                                                                    label = 'BSP(Others)';
+//                                                                }
+//                                                                    toolTip.setHtml(record.get('strFormatDate') + ' : ' + record.get('AMOUNT'));
+                                                                    toolTip.setHtml(record.get('strFormatDate') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            },
+//                                                            renderer: 'onColumnRender'
+                                                        },
+                                                        {
+                                                            type: 'line',
+                                                            xField: 'strFormatDate',
+                                                            yField: 'AVG',
+                                                            title: 'Average',
+                                                            fill: true,
+                                                            highlight: true,
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function(toolTip, record, ctx) {
+                                                                    toolTip.setHtml(record.get('strFormatDate') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000'));
+                                                                }
+                                                            },
+                                                            style: {
+                                                                smooth: true,
+                                                                fill: '#fcfcfc',    // punto
+//                                                                stroke: '#33bdda',
+                                                                stroke: 'blue',
+                                                                fillOpacity: 0.1,
+                                                                miterLimit: 3,
+                                                                lineCap: 'miter',
+                                                                lineWidth: 2
+                                                            },
+                                                            marker: {
+                                                                type: 'circle',
+                                                                radius: 4,
+                                                                lineWidth: 2,
+//                                                                stroke: "#33bdda",
+                                                                stroke: "blue",
+                                                                fill: 'white'
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
                                     ]
                                 },
                                 {

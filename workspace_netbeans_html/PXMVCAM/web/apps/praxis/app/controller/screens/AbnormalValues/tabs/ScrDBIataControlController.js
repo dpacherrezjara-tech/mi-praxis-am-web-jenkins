@@ -9,6 +9,15 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     beanDet: {},
     meIataCtr: '',
     meIataCtr_chart: '',
+    colors_WK: [
+        '#33bdda',
+        '#FAB347',
+        '#6baa01',
+        '#c6f7cd',
+        '#828CE1',
+        '#CC0000',
+        '#0066ff'
+    ],
     beanChart: {},
     dw_excel: false,
     boxActual: '-boxMainDataIataControl',
@@ -19,9 +28,8 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     // </editor-fold>
     init: function (view) {
         meIataCtr = this;
-        console.log('ScrDBIataControlController - initt');
         meIataCtr.drillDown.push(meIataCtr.boxActual);
-        console.log(meIataCtr.drillDown);
+//        console.log(meIataCtr.drillDown);
 
 
         var type = Ext.getCmp(prototype.id + '-cmbTipo_ControlTotal');
@@ -38,7 +46,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     },
     afterRender: function () {
 
-        console.log('ScrDBIataControlController - after');
         Ext.getCmp(prototype.id + '-cmbDateFromYear2').setValue(new Date().getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToYear2').setValue(new Date().getFullYear());
 
@@ -50,7 +57,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
 
     },
     btnSearch_click: function (bean) {
-        console.log(' ScrDBIataControlController - btnSearch_click');
+        
         Ext.getCmp(prototype.id + '-boxMainDataIataValuesOutOfRange').show();
         Ext.getCmp(prototype.id + '-BoxTKT_CT').hide();
         Ext.getCmp(prototype.id + '-boxMainDataIataAverageControl').hide();
@@ -104,7 +111,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
             params: {beanString: this.searchParams, dw_excel: false},
             success: function (response, options) {
                 Ext.getBody().unmask('Loading...');
-//                console.log(response);
 
                 var res = Ext.JSON.decode(response.responseText);
                 var lstData = res.lstData_Abnormal_CS;
@@ -151,7 +157,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
                 var lstData2 = res.lstData_Abnormal_R;
                 var lstData3 = res.lstData_Abnormal_E;
 //
-                if (lstData.length > 0) {
+                if (lstData.length > 0) { // if (lstData.length > 0 && lstData2.length > 0) {
                     var bean = lstData[0];
                     if (lstData2.length > 0) {
                         var bean2 = lstData2[0];
@@ -219,7 +225,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     loadControlAgentChart: function () {
 
         win.lblUser_toolTip("Estructura: IMF078");
-//        console.log(meIataCtr.searchParams_chart);
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -388,16 +393,20 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     },
     DD_BYAGENT_colHandler: function (obj, rb_new, rb_old, func) {
         Ext.getCmp(prototype.id + '-BoxTKT_CT').hide();
+        Ext.getCmp(prototype.id + '-panelGraficos').hide();
+        Ext.getCmp(prototype.id + '-panel_titulo').hide();
         if (obj !== 'XXX') {
-//            console.log('Falta');
 
         } else {
             var tipo_radio = Ext.getCmp(prototype.id + '-rbgType').getValue().rbgType;
             if (tipo_radio === '2') {   // Agent
+//                Ext.getCmp(prototype.id + '-panelGraficos').show();
                 Ext.getCmp(prototype.id + '-BoxAB_Pais').hide();
                 Ext.getCmp(prototype.id + '-BoxAB_Agent').show();
                 this.loadTotalControlTotal_Abnormal();
-            } else {
+            } else {    // Country
+                Ext.getCmp(prototype.id + '-panelGraficos').hide();
+                Ext.getCmp(prototype.id + '-panel_titulo').hide();
                 Ext.getCmp(prototype.id + '-BoxAB_Pais').show();
                 Ext.getCmp(prototype.id + '-BoxAB_Agent').hide();
                 this.loadTotalControlTotal_Abnormal_Country();
@@ -576,5 +585,93 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
         console.log(this.beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', this.beanProMasterTicket);
+    },    
+    ViewAgent: function(grid, rowIndex, colIndex, c,rec,e,f,g) {
+        
+//        console.log(c.tooltip);
+        
+        var beanDetail = grid.getStore().getAt(rowIndex).data;
+        meIataCtr.beanChart = beanDetail;
+        
+        meIataCtr.beanChart.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth2').getValue();
+        meIataCtr.beanChart.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth2').getValue();
+        meIataCtr.beanChart.VENDOR = beanDetail.AIRLINE;
+        meIataCtr.beanChart.strDescription = beanDetail.strFlag;
+        meIataCtr.beanChart.FTE = c.tooltip;
+        
+        var beanString = JSON.stringify(meIataCtr.beanChart);
+        meIataCtr.searchParams_chart = beanString;
+        
+        
+        console.log(meIataCtr.beanChart.VENDOR);
+        this.loadControlAgentChart();
+        
+    },
+    loadControlAgentChart: function () {
+
+        console.log('----------------------------loadControlAgentChart');
+        
+//        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(Ext.create('Ext.data.Store', {
+//            fields: ['data'],
+//            autoLoad: true,
+//            data: [
+//                {"strFormatDate": "202203", "AMOUNT": 200000},
+//                {"strFormatDate": "202207", "AMOUNT": 300000},
+//                {"strFormatDate": "202208", "AMOUNT": 400000}
+//
+//            ]
+//        }));
+        
+        win.lblUser_toolTip("Estructura: IMF078");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/loadControlAgentChart'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meIataCtr.searchParams_chart, dw_excel: false};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getBody().unmask('Loading...');
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    
+                    console.log(res);
+                    
+                    if (res.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        Ext.getCmp(prototype.id + '-panelGraficos').show();
+                        Ext.getCmp(prototype.id + '-panel_titulo').show();
+                        console.log(res.data);
+                        var lst = res.data;
+                        
+                        
+                        Ext.getCmp(prototype.id + '-lb_barras').setHtml('<strong style="font-size:12px;">' + res.data[0].strDescription + ' (' + res.data[0].VENDOR + ')' + '</strong>');
+                        
+                        /*
+                        Ext.getCmp(prototype.id + '-displaySAChart14').setTitle('Changed Title');
+                        var storeDataUso = Ext.create('Ext.data.Store', {
+                            fields: ['data'],
+                            data: lst,
+                            autoLoad: true
+                        });
+                        
+                        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(storeDataUso);
+                        */
+
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(storeGridDatas);
+
+    },    
+    onColumnRender: function (sprite, config, data, index) {
+        return {
+            fillStyle: this.colors_WK[index],
+            strokeStyle: index % 2 ? 'none' : 'black',
+            opacity: index % 2 ? 1 : 0.5
+        };
     },
 });
