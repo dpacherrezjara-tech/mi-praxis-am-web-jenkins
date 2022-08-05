@@ -63,8 +63,9 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.Filters', {
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
-                                            ["1", "Código"],
-                                            ["2", "Nombre"]
+                                            ["1", "Customer code"],
+                                            ["2", "Customer name"],
+                                            ["3", "Range of dates"]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -107,7 +108,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.Filters', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtCDCLI',
-                                            fieldLabel: 'Código Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                            fieldLabel: 'Customer code', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
@@ -115,7 +116,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.Filters', {
                                             width: 210,
                                             height: 28,
                                             maskRe: /[0-9]/,
-                                            value:'1411',
+                                            value:'1394',
                                             //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
@@ -141,7 +142,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.Filters', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtPARAM1',
-                                            fieldLabel: 'Nombre Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                            fieldLabel: 'Customer name', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,                                                                                        
                                             width: 300,
@@ -150,6 +151,70 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.Filters', {
                                                 keypress: 'onTxtFilterKeypress'
                                             }
                                         }                                        
+                                    ]
+                                },
+                                // </editor-fold>
+                                // <editor-fold defaultstate="collapsed" desc="BoxFilter02">
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFilter03',
+                                    hidden: true,
+                                    border: false,
+                                    layout: 'hbox',
+                                    bodyStyle: 'background: transparent;"',                                    
+                                    margin: '3 0',
+                                    defaults: {
+                                        anchor: '100%',
+                                        padding: '4 0'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'datefield',
+                                            id: prototype.id + '-fecha1',
+                                            fieldLabel: 'From', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 40,
+                                            width: 130,
+                                            height: 24,
+                                            format: 'Ymd',
+                                            // minValue: new Date(200, 00, 01),
+                                            value:new Date(),
+                                            maskRe: /[0-9/]/,
+                                            editable: true,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 10,
+                                            //padding:'2 2 2 2 ',                                            
+                                            listeners: {
+                                                //change: 'onUpperValue',
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-fecha2').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'datefield',
+                                            id: prototype.id + '-fecha2',
+                                            fieldLabel: 'To', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 20,
+                                            width: 110,
+                                            height: 24,
+                                            format: 'Ymd',
+                                            minValue: new Date(2000, 00, 01),
+                                            value:new Date(),
+                                            maskRe: /[0-9/]/,
+                                            editable: true,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 10,
+                                            padding: '2 0 0 10 ',
+                                            listeners: {
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+
+                                                    }
+                                                }
+                                            }
+                                        }
                                     ]
                                 }
                                 // </editor-fold>

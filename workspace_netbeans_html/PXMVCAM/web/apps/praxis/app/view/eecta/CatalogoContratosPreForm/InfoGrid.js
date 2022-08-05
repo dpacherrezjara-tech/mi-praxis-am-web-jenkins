@@ -66,8 +66,8 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                     },
                                     {text: 'Id', dataIndex: 'A4241IDANT', align: 'left', width: 50,locked: true},
                                     {text: 'Date', dataIndex: 'A4241FEC', align: 'left', width: 70,locked: true},
-                                    {text: 'Client Code', dataIndex: 'A4241CDCLI', align: 'left', width: 85,locked: true},
-                                    {text: 'Client Name', dataIndex: 'A3953RSOCI', align: 'left', width: 300,locked: true},
+                                    {text: 'Customer code', dataIndex: 'A4241CDCLI', align: 'left', width: 85,locked: true},
+                                    {text: 'Customer name', dataIndex: 'A3953RSOCI', align: 'left', width: 300,locked: true},
                                     {text: 'Curr.', dataIndex: 'A4241MDA', width: 60, align: 'left'},
                                     {text: 'Amount<br>Prepaid', dataIndex: 'A4241TOTAN', width: 110, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Amount Profit', dataIndex: 'A4241TOTBF', width: 90, align: 'right',
+                                    {text: 'Amount<br>Profit', dataIndex: 'A4241TOTBF', width: 90, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
@@ -89,7 +89,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Contr.', dataIndex: 'A4241CONTR', width: 50, align: 'left'},
+                                    //{text: 'Contr.', dataIndex: 'A4241CONTR', width: 50, align: 'left'},
                                     {
                                         text: 'Control Totals & Balance',
                                         columns: [

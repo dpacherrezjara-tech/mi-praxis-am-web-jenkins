@@ -58,13 +58,21 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             case '1':
                 Ext.getCmp(prototype.id + '-BoxFilter01').show();
                 Ext.getCmp(prototype.id + '-BoxFilter02').hide();
+                Ext.getCmp(prototype.id + '-BoxFilter03').hide();
                 Ext.getCmp(prototype.id + '-txtCDCLI').focus();
                 break;
             case '2':
-                Ext.getCmp(prototype.id + '-BoxFilter01').setVisible(false);
-                Ext.getCmp(prototype.id + '-BoxFilter02').setVisible(true);
+                Ext.getCmp(prototype.id + '-BoxFilter01').hide();
+                Ext.getCmp(prototype.id + '-BoxFilter02').show();
+                Ext.getCmp(prototype.id + '-BoxFilter03').hide();
                 Ext.getCmp(prototype.id + '-txtPARAM1').focus();
                 break;
+            case '3':
+                Ext.getCmp(prototype.id + '-BoxFilter01').hide();
+                Ext.getCmp(prototype.id + '-BoxFilter02').hide();
+                Ext.getCmp(prototype.id + '-BoxFilter03').show();
+                Ext.getCmp(prototype.id + '-fecha1').focus();
+                break;    
         }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
@@ -131,8 +139,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
-            id: prototype.id + '-CatalogoClienteEntry',
+        Ext.create('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreEntry', {
+            id: prototype.id + '-CatalogoContratosPreEntry',
             params: {
                 action: action,
                 rec: rec
