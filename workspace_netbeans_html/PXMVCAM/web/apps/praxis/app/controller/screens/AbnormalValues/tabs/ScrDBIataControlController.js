@@ -28,9 +28,8 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     // </editor-fold>
     init: function (view) {
         meIataCtr = this;
-        console.log('ScrDBIataControlController - initt');
         meIataCtr.drillDown.push(meIataCtr.boxActual);
-        console.log(meIataCtr.drillDown);
+//        console.log(meIataCtr.drillDown);
 
 
         var type = Ext.getCmp(prototype.id + '-cmbTipo_ControlTotal');
@@ -47,7 +46,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     },
     afterRender: function () {
 
-        console.log('ScrDBIataControlController - after');
         Ext.getCmp(prototype.id + '-cmbDateFromYear2').setValue(new Date().getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToYear2').setValue(new Date().getFullYear());
 
@@ -59,7 +57,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
 
     },
     btnSearch_click: function (bean) {
-        console.log(' ScrDBIataControlController - btnSearch_click');
+        
         Ext.getCmp(prototype.id + '-boxMainDataIataValuesOutOfRange').show();
         Ext.getCmp(prototype.id + '-BoxTKT_CT').hide();
         Ext.getCmp(prototype.id + '-boxMainDataIataAverageControl').hide();
@@ -113,7 +111,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
             params: {beanString: this.searchParams, dw_excel: false},
             success: function (response, options) {
                 Ext.getBody().unmask('Loading...');
-//                console.log(response);
 
                 var res = Ext.JSON.decode(response.responseText);
                 var lstData = res.lstData_Abnormal_CS;
@@ -228,7 +225,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     loadControlAgentChart: function () {
 
         win.lblUser_toolTip("Estructura: IMF078");
-//        console.log(meIataCtr.searchParams_chart);
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -397,16 +393,20 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     },
     DD_BYAGENT_colHandler: function (obj, rb_new, rb_old, func) {
         Ext.getCmp(prototype.id + '-BoxTKT_CT').hide();
+        Ext.getCmp(prototype.id + '-panelGraficos').hide();
+        Ext.getCmp(prototype.id + '-panel_titulo').hide();
         if (obj !== 'XXX') {
-//            console.log('Falta');
 
         } else {
             var tipo_radio = Ext.getCmp(prototype.id + '-rbgType').getValue().rbgType;
             if (tipo_radio === '2') {   // Agent
+//                Ext.getCmp(prototype.id + '-panelGraficos').show();
                 Ext.getCmp(prototype.id + '-BoxAB_Pais').hide();
                 Ext.getCmp(prototype.id + '-BoxAB_Agent').show();
                 this.loadTotalControlTotal_Abnormal();
-            } else {
+            } else {    // Country
+                Ext.getCmp(prototype.id + '-panelGraficos').hide();
+                Ext.getCmp(prototype.id + '-panel_titulo').hide();
                 Ext.getCmp(prototype.id + '-BoxAB_Pais').show();
                 Ext.getCmp(prototype.id + '-BoxAB_Agent').hide();
                 this.loadTotalControlTotal_Abnormal_Country();
@@ -588,21 +588,16 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
     },    
     ViewAgent: function(grid, rowIndex, colIndex, c,rec,e,f,g) {
         
-        console.log('ViewAgent');
-        console.log(grid.getStore().getAt(rowIndex));
+//        console.log(c.tooltip);
         
         var beanDetail = grid.getStore().getAt(rowIndex).data;
-        meIataCtr.beanChart = grid.getStore().getAt(rowIndex).data;
-//        
-//        
-//        var beanDetail = rec.record.data;
-//        meIataCtr.beanChart = rec.record.data;
+        meIataCtr.beanChart = beanDetail;
         
         meIataCtr.beanChart.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth2').getValue();
         meIataCtr.beanChart.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear2').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth2').getValue();
         meIataCtr.beanChart.VENDOR = beanDetail.AIRLINE;
         meIataCtr.beanChart.strDescription = beanDetail.strFlag;
-        meIataCtr.beanChart.FTE = 'SALE';
+        meIataCtr.beanChart.FTE = c.tooltip;
         
         var beanString = JSON.stringify(meIataCtr.beanChart);
         meIataCtr.searchParams_chart = beanString;
@@ -645,16 +640,24 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDBIataControlCo
                     if (res.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
                     } else {
+                        Ext.getCmp(prototype.id + '-panelGraficos').show();
+                        Ext.getCmp(prototype.id + '-panel_titulo').show();
                         console.log(res.data);
                         var lst = res.data;
                         
-//                        var storeDataUso = Ext.create('Ext.data.Store', {
-//                            fields: ['data'],
-//                            data: lst,
-////                            autoLoad: true
-//                        });
                         
-//                        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(storeDataUso);
+                        Ext.getCmp(prototype.id + '-lb_barras').setHtml('<strong style="font-size:12px;">' + res.data[0].strDescription + ' (' + res.data[0].VENDOR + ')' + '</strong>');
+                        
+                        /*
+                        Ext.getCmp(prototype.id + '-displaySAChart14').setTitle('Changed Title');
+                        var storeDataUso = Ext.create('Ext.data.Store', {
+                            fields: ['data'],
+                            data: lst,
+                            autoLoad: true
+                        });
+                        
+                        Ext.getCmp(prototype.id + '-displaySAChart14').bindStore(storeDataUso);
+                        */
 
                     }
                     global.clear();
