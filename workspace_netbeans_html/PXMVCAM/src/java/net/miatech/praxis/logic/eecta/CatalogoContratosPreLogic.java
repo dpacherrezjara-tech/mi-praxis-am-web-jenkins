@@ -10,6 +10,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.eecta.CatalogoContratosPreDAO;
 import net.miatech.praxis.eecta.SQP04587Filter;
+import net.miatech.praxis.eecta.SQP04588Filter;
 
 /**
  *
@@ -24,4 +25,8 @@ public class CatalogoContratosPreLogic {
     public List<SQP04587Filter> getSQP04587Filter(SQP04587Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04587Filter(filter);
     }
+    public List<SQP04588Filter> getSQP04588Filter(SQP04588Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04588Filter(filter);
+    }
+    
 }

@@ -597,7 +597,7 @@ public class ReportEdoCtaPre {
             PYi = PYi - 25;
             colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 590, -40); //68
             //Double total_sub_totales = Subtotal_ventas + Subtotal_pagos+Subtotal_pagos_RC;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO DISPONIBLE:", subFontT)), pos_sub_ttl-25, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO DISPONIBLE:", subFontT)), pos_sub_ttl-35, PYi, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(0).rpteCab.A4258TOT ), subFontT)), pos_sub_ttl_a, PYi, 0);            
             
             //REMARK  

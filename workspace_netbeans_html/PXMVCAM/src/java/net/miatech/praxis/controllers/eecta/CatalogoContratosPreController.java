@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04587Filter;
+import net.miatech.praxis.eecta.SQP04588Filter;
 import net.miatech.praxis.logic.eecta.CatalogoContratosPreLogic;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -65,5 +66,37 @@ public class CatalogoContratosPreController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+     @RequestMapping(value = "/searchDet")
+    public @ResponseBody
+    String searchDet(ModelMap map, HttpServletRequest request) {
+        List<SQP04588Filter> listaData;
+        SQP04588Filter filter;
+        filter = new SQP04588Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+            filter.VP_IDANT = Integer.parseInt(request.getParameter("VP_IDANT"));            
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 20;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new CatalogoContratosPreLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04588Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size());
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
 
 }
