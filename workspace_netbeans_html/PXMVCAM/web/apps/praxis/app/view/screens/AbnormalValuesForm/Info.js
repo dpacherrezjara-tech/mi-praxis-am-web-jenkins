@@ -4,7 +4,8 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
     requires: [
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrAVSales',
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl',
-          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare'
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
     ],
     layout: 'border',
     align: 'center',
@@ -140,7 +141,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrOALParticipation',
+                            id: prototype.id + '-ScrOALParticipation_tab',
                             title: 'Participation OAL',
                             /*layout: {
                                 type: 'vbox',
@@ -152,7 +153,9 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             },*/
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrOALParticipation_screen',
+                                    xtype:prototype.id + '-ScrOALParticipation'
+                                    //ScrOALParticipation
                                 }
                             ]
                         },

@@ -70,6 +70,25 @@ public class AbnormalValueLogic {
     }
 
     // =========================================================================
+    // ======================= PARTICIPATION OAL================================
+    // =========================================================================
+    public List<IMF111Filter> loadPX414SQP02545(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02545(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02546(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02546(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02546_ex(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02546_ex(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02546_1(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02546_1(filter);
+    }
+
+    // =========================================================================
     // ======================= Difference Fare =================================
     // =========================================================================
     public List<IMF121Filter> loadPX414SQPGG121(IMF121Filter filter) throws SQLException, Exception {

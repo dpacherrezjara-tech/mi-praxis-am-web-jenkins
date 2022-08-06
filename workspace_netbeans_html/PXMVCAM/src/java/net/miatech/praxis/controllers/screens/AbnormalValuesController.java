@@ -369,6 +369,149 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    // ========================================================================
+    // ========================== Participation OAL ===========================
+    // ========================================================================
+    @RequestMapping(value = "searchOAL")
+    public @ResponseBody
+    String searchOAL(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02545(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+        @RequestMapping(value = "searchOALDetail")
+    public @ResponseBody
+    String searchOALDetail(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02545(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+        @RequestMapping(value = "searchOALDetailExcel")
+    public @ResponseBody
+    String searchOALDetailExcel(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02545(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+        @RequestMapping(value = "searchOALTkt")
+    public @ResponseBody
+    String searchOALTkt(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02545(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
 
     // ========================================================================
     // ========================== Difference Fare =============================

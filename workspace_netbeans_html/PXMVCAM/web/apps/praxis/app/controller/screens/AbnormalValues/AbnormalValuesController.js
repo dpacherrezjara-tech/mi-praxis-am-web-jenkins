@@ -218,6 +218,10 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
             
             component = Ext.getCmp(prototype.id + '-ScrDBIataControl_screen');
             
+        }else if(tab_id === prototype.id + '-ScrOALParticipation_tab'){
+            
+            component = Ext.getCmp(prototype.id + '-ScrOALParticipation_screen');
+            
         }else if(tab_id === prototype.id + '-ScrDifferenceFare_tab'){
             
             component = Ext.getCmp(prototype.id + '-ScrDifferenceFare_screen');
