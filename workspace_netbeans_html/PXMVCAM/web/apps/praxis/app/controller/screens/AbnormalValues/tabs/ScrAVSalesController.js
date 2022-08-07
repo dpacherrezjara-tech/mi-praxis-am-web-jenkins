@@ -28,6 +28,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrAVSalesControll
         console.log(' ScrAVSalesController - btnSearch_click');
         this.bean = bean;
         console.log(this.bean);
+        
+        meScrRefund.drillDown = [];
+        
         this.btnSearchSales_click();
         
     },
@@ -42,6 +45,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrAVSalesControll
         console.log(' ScrAVSalesController - btnSearchSales_click');
 
         this.setFormatParameter();
+        
+        this.showGrid('-boxMainData');
+        this.hidePagination_clickHandler();
             
         Ext.Ajax.request({
             url: prototype.url + '/searchSales',
@@ -140,11 +146,11 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrAVSalesControll
         Ext.getCmp(prototype.id + '-gridDetSalesS').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
-        
 
     },
     showGrid: function (nameGrid) {
         
+        me.panelActual = nameGrid;/*Para paginacion*/
         Ext.getCmp(prototype.id + meSales.boxActual).hide();
         
         meSales.boxActual = nameGrid;

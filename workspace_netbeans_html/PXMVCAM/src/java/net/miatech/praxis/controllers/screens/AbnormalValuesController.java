@@ -37,6 +37,8 @@ import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF121Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
+import net.miatech.praxis.payment.filter.A2789Filter;
+import net.miatech.praxis.payment.filter.A2790Filter;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -67,6 +69,119 @@ public class AbnormalValuesController extends BaseController {
 //        map.put("vp_serverTime", Functions.getHoraActual());
 //        return "cargo/BusinessTools/form_index";
 //    }
+    
+    // =========================================================================
+    // ========================== Refund Analysis ========================================
+    // =========================================================================
+    @RequestMapping(value = "search")
+    public @ResponseBody
+    String search(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A2790Filter> lstData;
+        A2790Filter filter = new A2790Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02008(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "searchByWeek")
+    public @ResponseBody
+    String searchByWeek(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A2790Filter> lstData;
+        A2790Filter filter = new A2790Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
+            
+            filter.page.PAGROW = limit;
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02015(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "searchByTkt")
+    public @ResponseBody
+    String searchByTkt(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A2789Filter> lstData;
+        A2790Filter filter = new A2790Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02018(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
     // =========================================================================
     // ========================== SALES ========================================
     // =========================================================================

@@ -23,6 +23,8 @@ import net.miatech.beans.IMF121Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
+import net.miatech.praxis.payment.filter.A2789Filter;
+import net.miatech.praxis.payment.filter.A2790Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -53,6 +55,280 @@ public class AbnormalValueDAO {
         System.gc();
     }
 
+
+    /********************************************Refund********************************************/
+    
+    public List<A2790Filter> loadPX414SQP02008(A2790Filter filter) throws SQLException, Exception {
+        List<A2790Filter> lstRtn = new ArrayList<A2790Filter>(0);
+        A2790Filter objRtn;
+        int QTYTRAN = 0, QTYERR1 = 0, QTYERR2 = 0, QTYERR3 = 0, QTYERR4 = 0, TOTAL = 0;
+        double SVFOPUSD = 0, RVFOPUSD = 0, DIFF = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP02008(?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(6, Types.VARCHAR);
+            cstmt01.registerOutParameter(7, Types.VARCHAR);
+            cstmt01.registerOutParameter(8, Types.VARCHAR);
+            cstmt01.registerOutParameter(9, Types.VARCHAR);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_TIPOFECHA);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_RCARCOD);
+            cstmt01.setString(6, "");
+            cstmt01.setString(7, "");
+            cstmt01.setString(8, "");
+            cstmt01.setString(9, "");
+
+            cstmt01.execute();
+            filter.dscError1 = cstmt01.getString(6).trim();
+            filter.dscError2 = cstmt01.getString(7).trim();
+            filter.dscError3 = cstmt01.getString(8).trim();
+            filter.dscError4 = cstmt01.getString(9).trim();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                SVFOPUSD = rs01.getDouble("SVFOPUSD");
+                RVFOPUSD = rs01.getDouble("RVFOPUSD");
+                DIFF = rs01.getDouble("DIFF");
+                QTYTRAN = rs01.getInt("QTYTRAN");
+                QTYERR1 = rs01.getInt("QTYERR1");
+                QTYERR2 = rs01.getInt("QTYERR2");
+                QTYERR3 = rs01.getInt("QTYERR3");
+                QTYERR4 = rs01.getInt("QTYERR4");
+                TOTAL = rs01.getInt("TOTAL");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A2790Filter();
+                    objRtn.IN_TIPOFECHA = filter.IN_TIPOFECHA;
+                    objRtn.IN_RCARCOD = filter.IN_RCARCOD;
+                    objRtn.dscError1 = filter.dscError1;
+                    objRtn.dscError2 = filter.dscError2;
+                    objRtn.dscError3 = filter.dscError3;
+                    objRtn.dscError4 = filter.dscError4;
+
+                    objRtn.FECHA = rs01.getString("FECHA");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FECHA);
+                    objRtn.SCURRENCY = rs01.getString("SCURRENCY");
+                    objRtn.SVFOPUSD = rs01.getDouble("SVFOPUSD");
+                    objRtn.RVFOPUSD = rs01.getDouble("RVFOPUSD");
+                    objRtn.Diff1 = rs01.getDouble("DIFF");;
+                    objRtn.Perc1 = (objRtn.SVFOPUSD > 0) ? (objRtn.RVFOPUSD * 100) / objRtn.SVFOPUSD : 0;
+                    objRtn.QTYTRAN = rs01.getInt("QTYTRAN");
+                    objRtn.QTYERR1 = rs01.getInt("QTYERR1");
+                    objRtn.QTYERR2 = rs01.getInt("QTYERR2");
+                    objRtn.QTYERR3 = rs01.getInt("QTYERR3");
+                    objRtn.QTYERR4 = rs01.getInt("QTYERR4");
+                    objRtn.TOTAL = rs01.getInt("TOTAL");
+
+                    objRtn.totSVFOPUSD = SVFOPUSD;
+                    objRtn.totRVFOPUSD = RVFOPUSD;
+                    objRtn.totDiff1 = DIFF;
+                    objRtn.totPerc1 = (objRtn.totSVFOPUSD > 0) ? (objRtn.totRVFOPUSD * 100) / objRtn.totSVFOPUSD : 0;
+
+                    objRtn.totQTYTRAN = QTYTRAN;
+                    objRtn.totQTYERR1 = QTYERR1;
+                    objRtn.totQTYERR2 = QTYERR2;
+                    objRtn.totQTYERR3 = QTYERR3;
+                    objRtn.totTOTAL = TOTAL;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } finally {
+            setClose(rs01, cstmt01, cnx);
+        }
+
+        return lstRtn;
+    }
+
+    public List<A2790Filter> loadPX414SQP02015(A2790Filter filter) throws SQLException, Exception {
+        List<A2790Filter> lstRtn = new ArrayList<A2790Filter>(0);
+        A2790Filter objRtn;
+        int TOTAL = 0, QERROR = 0;
+        double SVFOPUSD = 0, RVFOPUSD = 0, DIFF = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP02015(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_TIPOFECHA);
+            cstmt01.setString(3, filter.FECHA);
+            cstmt01.setString(4, filter.IN_CERROR);
+            cstmt01.setString(5, filter.IN_CARD1);
+            cstmt01.setString(6, filter.IN_CARD2);
+            cstmt01.setString(7, filter.IN_RCARCOD);
+            cstmt01.setString(8, filter.IN_FECHA_FROM);
+            cstmt01.setString(9, filter.IN_FECHA_TO);
+            cstmt01.setInt(10, filter.page.PAGNUM);
+            cstmt01.setInt(11, filter.page.PAGROW);
+            cstmt01.setInt(12, filter.page.TOTPAG);
+            cstmt01.setInt(13, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(10);
+            filter.page.PAGROW = cstmt01.getInt(11);
+            filter.page.TOTPAG = cstmt01.getInt(12);
+            filter.page.TOTROW = cstmt01.getInt(13);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                TOTAL = rs01.getInt("TOTAL");
+                QERROR = rs01.getInt("QERROR");
+                SVFOPUSD = rs01.getDouble("SVFOP");
+                RVFOPUSD = rs01.getDouble("RVFOP");
+                DIFF = rs01.getDouble("DIFF");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A2790Filter();
+                    objRtn.IN_TIPOFECHA = filter.IN_TIPOFECHA;
+                    objRtn.FECHA = filter.FECHA;
+                    objRtn.IN_CERROR = filter.IN_CERROR;
+                    objRtn.strFormatDate1 = Functions.getMonthConvert(filter.FECHA);
+                    objRtn.RCARDN = rs01.getString("RCARDN");
+                    objRtn.RCARCOD = rs01.getString("RCARCOD");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FPRDA);
+                    objRtn.SVFOPUSD = rs01.getDouble("SVFOP");
+                    objRtn.RVFOPUSD = rs01.getDouble("RVFOP");
+                    objRtn.Diff1 = rs01.getDouble("DIFF");;
+                    objRtn.Perc1 = (objRtn.SVFOPUSD > 0) ? (objRtn.RVFOPUSD * 100) / objRtn.SVFOPUSD : 0;
+                    objRtn.SEM1 = rs01.getInt("SEM1");
+                    objRtn.SEM2 = rs01.getInt("SEM2");
+                    objRtn.SEM3 = rs01.getInt("SEM3");
+                    objRtn.SEM4 = rs01.getInt("SEM4");
+                    objRtn.SEM5 = rs01.getInt("SEM5");
+                    objRtn.TOTAL = rs01.getInt("TOTAL");
+                    objRtn.QTYERROR = rs01.getInt("QERROR");
+
+                    objRtn.totTOTAL = TOTAL;
+                    objRtn.totQTYERROR = QERROR;
+                    objRtn.totSVFOPUSD = SVFOPUSD;
+                    objRtn.totRVFOPUSD = RVFOPUSD;
+                    objRtn.totDiff1 = DIFF;
+                    objRtn.totPerc1 = (objRtn.totSVFOPUSD > 0) ? (objRtn.totRVFOPUSD * 100) / objRtn.totSVFOPUSD : 0;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } finally {
+            setClose(rs01, cstmt01, cnx);
+        }
+
+        return lstRtn;
+    }
+
+    public List<A2789Filter> loadPX414SQP02018(A2790Filter filter) throws SQLException, Exception {
+
+        List<A2789Filter> lstRtn = new ArrayList<A2789Filter>(0);
+        A2789Filter objRtn;
+        double SVFOP = 0, RVFOP = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP02018(?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_TIPOFECHA);
+            cstmt01.setString(3, filter.FECHA);
+            cstmt01.setString(4, filter.RCARDN);
+            cstmt01.setString(5, filter.RCARCOD);
+            cstmt01.setString(6, filter.IN_CERROR);
+            cstmt01.setString(7, filter.IN_TKT);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                SVFOP = rs01.getDouble("SVFOP");
+                RVFOP = rs01.getDouble("RVFOP");
+            }
+            //CCIA,FORMA,SERIE,SCOUNTRY,SAGENT,SCURRENCY,SVFOP
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A2789Filter();
+                    objRtn.FECHA = filter.FECHA;
+                    objRtn.strFormatDate1 = filter.strFormatDate1;
+
+                    objRtn.RCARDN = filter.RCARDN;
+                    objRtn.CCIA = rs01.getString("CCIA");
+                    objRtn.FORMA = rs01.getString("FORMA");
+                    objRtn.SERIE = rs01.getString("SERIE");
+                    objRtn.strTicket = objRtn.CCIA + objRtn.FORMA + objRtn.SERIE;
+                    objRtn.SCOUNTRY = rs01.getString("SCOUNTRY");
+                    objRtn.SAGENT = rs01.getString("SAGENT");
+                    objRtn.strDescription2 = rs01.getString("DES_AGENT");
+                    objRtn.SCURRENCY = rs01.getString("SCURRENCY");
+                    objRtn.SVFOP = rs01.getDouble("SVFOP");
+                    objRtn.FPRDA = rs01.getString("FPRDA");
+                    objRtn.strFormatDate2 = Functions.getMonthConvert(objRtn.FPRDA);
+                    objRtn.TORIG = rs01.getString("TORIG");
+                    objRtn.strDescription = rs01.getString("DESTORIG");
+
+                    objRtn.SEQ = rs01.getString("SEQ");
+                    objRtn.SDATE = rs01.getString("SDATE");
+                    objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.SDATE);
+                    objRtn.RDATE = rs01.getString("RDATE");
+                    objRtn.strFormatDate4 = Functions.getMonthConvert(objRtn.RDATE);
+
+                    objRtn.RCARCOD = rs01.getString("RCARCOD");
+                    objRtn.SCARDN = rs01.getString("SCARDN");
+                    objRtn.RVFOP = rs01.getDouble("RVFOP");
+                    objRtn.CERROR = rs01.getString("CERROR");
+                    objRtn.strDescription1 = rs01.getString("DES_ERROR");
+                    objRtn.diffDate = rs01.getInt("DIFF");
+                    //objRtn.diffAmount = rs01.getDouble("SVFOP") - rs01.getDouble("RVFOP");
+                    objRtn.diffAmount = rs01.getDouble("DIFF_AMT");
+                    objRtn.strDescription4 = rs01.getString("TRNCU");
+
+                    objRtn.totSVFOP = SVFOP;
+                    objRtn.totRVFOP = RVFOP;
+                    objRtn.totdiffAmount = objRtn.totSVFOP - objRtn.totRVFOP;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } finally {
+            setClose(rs01, cstmt01, cnx);
+        }
+
+        return lstRtn;
+    }
+    
     public List<A1007> loadPX037S05A1007() throws SQLException, Exception {
 
         List<A1007> lstRtn = new ArrayList<A1007>(0);
