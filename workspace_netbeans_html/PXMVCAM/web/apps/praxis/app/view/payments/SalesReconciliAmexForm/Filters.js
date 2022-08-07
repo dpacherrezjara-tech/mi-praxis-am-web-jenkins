@@ -290,8 +290,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 100,
-                            width: 180,
+                            labelWidth: 70,
+                            width: 150,
                             hiddenLabel: false,
                             listeners: {
                                 change: 'rbChangeType'
@@ -307,8 +307,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'NAME',
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 150,
-                            width: 400,
+                            labelWidth: 100,
+                            width: 350,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
@@ -334,12 +334,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'rbChangeType'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             text: 'PNR:',
                             padding: '8px 1px 2px 1px',
-                            width: 50,
+                            width: 40,
 //                            autoEl: {
 //                                tag: 'label',
 //                                'data-qtip': 'Authorization Number'
@@ -352,13 +352,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[a-zA-Z]/,
                             maxLength: 6,
-                            width: 100,
+                            width: 80,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'filterPNRSettlement'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             text: 'Credit Card:',
@@ -397,12 +397,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'filterPNRSettlement'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             text: 'Auth:',
                             padding: '8px 1px 2px 1px',
-                            width: 50,
+                            width: 40,
                         },
                         {
                             xtype: 'textfield',
@@ -411,7 +411,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
                             maxLength: 6,
-                            width: 100,
+                            width: 60,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'filterPNRSettlement'
@@ -429,13 +429,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 100,
-                            width: 200,
+                            labelWidth: 80,
+                            width: 160,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
                                 // change: 'cmbSTVAL_keyDownHandler',
                                 change: 'rbChangeType'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Zone:',
+                            id: prototype.id + '-cmbZONAsett',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 120,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {                                
+                                change: 'obtenerPaisesSett'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Country:',
+                            id: prototype.id + '-cmbSCOUNTRYSett',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 80,
+                            width: 140,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
                             }
                         }
                     ]
@@ -459,7 +499,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 100},
+                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id + '-chkWarnings',
@@ -471,7 +511,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'chkWarning_Click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbErrorCode',
@@ -483,14 +523,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             valueField: 'CODE',
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
-                            labelWidth: 150,
-                            width: 400,
+                            labelWidth: 100,
+                            width: 350,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbComplement',
@@ -509,7 +549,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'btnSearch_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             text: 'PNR:',
@@ -529,7 +569,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             text: 'Credit Card:',
@@ -568,7 +608,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             text: 'Auth:',
@@ -607,6 +647,46 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             listeners: {
                                 // change: 'cmbSTVAL_keyDownHandler',
                                 change: 'btnSearch_click'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Zone:',
+                            id: prototype.id + '-cmbZONAErr',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 120,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {                                
+                                change: 'obtenerPaisesErr'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Country:',
+                            id: prototype.id + '-cmbSCOUNTRYErr',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 80,
+                            width: 140,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
                             }
                         }
                     ]

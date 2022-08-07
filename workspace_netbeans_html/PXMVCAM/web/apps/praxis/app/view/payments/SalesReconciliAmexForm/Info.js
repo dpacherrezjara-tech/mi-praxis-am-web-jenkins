@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1800,
+                width: 1840,
                 height: 'auto',
                 align: 'center'
             },
@@ -3747,15 +3747,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 90,
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 145,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            metaData.style = "text-align:center;";
+                                                            metaData.style = "text-align:left;";
                                                             metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
                                                             return value;
                                                         }
                                                     },
                                                 ]
+                                            },
+                                            {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 60,
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 80,
                                             },
                                             {
                                                 text: 'Transaction',
@@ -5112,7 +5118,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1700,
+                            width: 1830,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -5122,7 +5128,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainErrorTransaction',
-                                    width: 1700,
+                                    width: 1830,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -5153,6 +5159,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 60,
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
                                             },
                                             {
                                                 text: 'Payment',
