@@ -219,7 +219,7 @@ public class MiscellaneousPaymentDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04520(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04520(?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -227,7 +227,8 @@ public class MiscellaneousPaymentDAO {
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.CODETB.trim());
+            cstmt01.setString(2, filter.TTABLA.trim());
+            cstmt01.setString(3, filter.CODETB.trim());
 
             cstmt01.execute();
 
