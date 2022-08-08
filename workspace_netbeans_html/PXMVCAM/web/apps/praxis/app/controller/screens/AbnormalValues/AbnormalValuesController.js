@@ -6,6 +6,8 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
     lstCountry: [],
     bean: {},
     dataObtain: {},
+    store_Sales: '',
+    store_Refund: '',
     _path: '',
     // </editor-fold>
     init: function(view) {
@@ -94,6 +96,24 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         }));
         cmbTran.setValue("");
         
+        me.store_Sales = (Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                [1, "Clearing Date"], [2, "Invoice Date"]
+            ]
+        }));
+        
+        me.store_Refund = (Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["FPRDA", "Processing Date"],
+                ["RDATE", "Accounting Date"]
+            ]
+        }));
+        
+        
         this.dataObtain.COUNTRY = 2;
         Ext.Ajax.request({
             url: prototype.urlMaster + '/obtainData',
@@ -135,10 +155,21 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
             
             Ext.getCmp(prototype.id + '-boxSearchFilter').show();
             Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
+            Ext.getCmp(prototype.id + '-cmbFecha').bindStore(me.store_Sales);
+//            Ext.getCmp(prototype.id + '-cmbFecha').setValue(1);
             
         }else if(obj === prototype.id + '-ScrDBIataControl_tab'){
             Ext.getCmp(prototype.id + '-boxSearchFilter').hide();
             Ext.getCmp(prototype.id + '-boxSearchIATA').show();
+        }else if(obj === prototype.id + '-ScrRefund_tab'){
+            Ext.getCmp(prototype.id + '-boxSearchFilter').show();
+            Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
+            
+            Ext.getCmp(prototype.id + '-cmbFecha').bindStore(me.store_Refund);
+            Ext.getCmp(prototype.id + '-cmbFecha').setValue("FPRDA");
+            //Refund MOMENTANEAMENTE
+            this.bean.IN_TIPOFECHA = this.getValue("cmbFecha") ;
+
         }
         
         var controller = component.getController();
@@ -218,6 +249,13 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
             
             component = Ext.getCmp(prototype.id + '-ScrDBIataControl_screen');
             
+        }else if(tab_id === prototype.id + '-ScrRefund_tab'){
+            
+            component = Ext.getCmp(prototype.id + '-ScrRefund_screen');
+        }else if(tab_id === prototype.id + '-ScrOALParticipation_tab'){
+            
+            component = Ext.getCmp(prototype.id + '-ScrOALParticipation_screen');
+            
         }else if(tab_id === prototype.id + '-ScrDifferenceFare_tab'){
             
             component = Ext.getCmp(prototype.id + '-ScrDifferenceFare_screen');
@@ -278,18 +316,44 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         }
     },
     // </editor-fold>,
-    // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
+    getPaggin: function () {
+        me.pagginActual = '';
+        console.log(me.panelActual);
+        switch (me.panelActual) {
+            case '-boxDetDataS':
+                me.pagginActual = '-paggin';
+                break;
+            case '-boxByWeek':
+                me.pagginActual = '-pagginRefundCC';
+                break;
+        }      
+    },
+    // </editor-fold>,
+    // <editor-fold defaultstate="collapsed" despagginActualc="Funciones para la paginación">
     pagFirst: function(obj, e) {
-        Ext.getCmp(prototype.id + '-paggin').moveFirst();
+//        Ext.getCmp(prototype.id + '-paggin').moveFirst();
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveFirst();
     },
     pagPrevious: function(obj, e) {
-        Ext.getCmp(prototype.id + '-paggin').movePrevious();
+//        Ext.getCmp(prototype.id + '-paggin').movePrevious();
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.movePrevious();
     },
     pagNext: function(obj, e) {
-        Ext.getCmp(prototype.id + '-paggin').moveNext();
+//        Ext.getCmp(prototype.id + '-paggin').moveNext();
+        this.getPaggin();
+        console.log('----->'+prototype.id + me.pagginActual);
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveNext();
     },
     pagLast: function(obj, e) {
-        Ext.getCmp(prototype.id + '-paggin').moveLast();
+//        Ext.getCmp(prototype.id + '-paggin').moveLast();
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveLast();
     }
     // </editor-fold>
 });
