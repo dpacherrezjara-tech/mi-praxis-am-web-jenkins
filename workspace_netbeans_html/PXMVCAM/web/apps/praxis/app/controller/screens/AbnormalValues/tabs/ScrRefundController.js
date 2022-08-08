@@ -58,6 +58,14 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
                     } else {
                         var bean = obj.data.items[0].data;
 //                        me.setTotalRowGridData(bean);
+                        var nomFecha = 'Processing';
+                        if(meScrRefund.bean.IN_TIPOFECHA === 'FPRDA'){
+                            nomFecha= 'Processing';	
+                        }else{
+                            nomFecha= 'Accounting';		
+                        }
+                        Ext.getCmp(prototype.id+'-hdFecha').setText(nomFecha);
+                        
                         Ext.getCmp(prototype.id + 'hdError1').setText(bean.dscError1);
                         Ext.getCmp(prototype.id + 'hdError2').setText(bean.dscError2);
                         Ext.getCmp(prototype.id + 'hdError3').setText(bean.dscError3);

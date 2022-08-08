@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
     dataObtain: {},
     store_Sales: '',
     store_Refund: '',
+    tab_Actual: '',
     _path: '',
     // </editor-fold>
     init: function(view) {
@@ -146,47 +147,50 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         }
     },
     // <editor-fold defaultstate="collapsed" desc="Options">
-    changeTab_clickHandler: function(obj) {
+    changeOptionsTab_clickHandler: function(obj) {
         
-//        console.log('changeTab_clickHandler');
-        console.log(obj);
-        var component = Ext.getCmp(obj.replace('_tab','_screen'));
-        if(obj === prototype.id + '-ScrAVSales_tab'){
+        if(obj === prototype.id + '-ScrAVSales_tab' && me.tab_Actual !== obj){
             
             Ext.getCmp(prototype.id + '-boxSearchFilter').show();
             Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
-            Ext.getCmp(prototype.id + '-cmbFecha').bindStore(me.store_Sales);
-//            Ext.getCmp(prototype.id + '-cmbFecha').setValue(1);
             
-        }else if(obj === prototype.id + '-ScrDBIataControl_tab'){
+            Ext.getCmp(prototype.id + '-cmbFecha').bindStore(me.store_Sales);
+            Ext.getCmp(prototype.id + '-cmbFecha').setValue(1);
+            
+        }else if(obj === prototype.id + '-ScrDBIataControl_tab' && me.tab_Actual !== obj){
             Ext.getCmp(prototype.id + '-boxSearchFilter').hide();
             Ext.getCmp(prototype.id + '-boxSearchIATA').show();
-        }else if(obj === prototype.id + '-ScrRefund_tab'){
+        }else if(obj === prototype.id + '-ScrRefund_tab' && me.tab_Actual !== obj){
             Ext.getCmp(prototype.id + '-boxSearchFilter').show();
             Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
             
             Ext.getCmp(prototype.id + '-cmbFecha').bindStore(me.store_Refund);
             Ext.getCmp(prototype.id + '-cmbFecha').setValue("FPRDA");
-            //Refund MOMENTANEAMENTE
-            this.bean.IN_TIPOFECHA = this.getValue("cmbFecha") ;
 
         }
-        
-        var controller = component.getController();
-        controller.btnSearch_click(this.bean);
+        me.tab_Actual = obj;
 //        this.imgSearch_clickHandler();
     },
     imgSearch_clickHandler: function(obj, e) {
+        /*Activar Tab*/
+        var id_tab = Ext.getCmp(prototype.id + '-tabMain').activeTab.id;
+        this.changeOptionsTab_clickHandler(id_tab);
+        
+        
         this.bean = {};
 //        console.log('imgSearch_clickHandler Principal');
         this.bean.IN_FECHA_FROM = this.getValue("cmbDateFromYear") + this.getValue("cmbDateFromMonth");
         this.bean.IN_FECHA_TO = this.getValue("cmbDateToYear") + this.getValue("cmbDateToMonth");
         this.bean.PAGROW = 20;
-//        console.log(this.bean);
-//        console.log(Ext.getCmp(prototype.id + '-tabMain').activeTab.id);
-        this.changeTab_clickHandler(Ext.getCmp(prototype.id + '-tabMain').activeTab.id);
-            
+        this.bean.IN_TIPOFECHA = this.getValue("cmbFecha") ;
+        
+        console.log(this.bean);
 
+
+        /*Obtener controlador de pestaña y ejecutar search */
+        var component = Ext.getCmp(id_tab.replace('_tab','_screen'));
+        var controller = component.getController();
+        controller.btnSearch_click(this.bean);
     },
     search: function(bean) {
 //        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {

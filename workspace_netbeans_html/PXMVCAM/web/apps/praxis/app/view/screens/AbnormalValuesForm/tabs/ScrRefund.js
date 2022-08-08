@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                         align: 'center'
                                     },
                                     items: [
-                                        {text: 'Processing ',
+                                        {text: 'Processing ',id:prototype.id+'-hdFecha',
                                             defaults: {
                                                 menuDisabled: true,
                                                 sortable: true,
