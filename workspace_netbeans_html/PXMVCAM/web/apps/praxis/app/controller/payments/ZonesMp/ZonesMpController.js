@@ -123,7 +123,7 @@ Ext.define('Ext.Praxis.controller.payments.ZonesMp.ZonesMpController', {
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function() {
-        win.lblUser_toolTip("Estructura: A4169");
+        win.lblUser_toolTip("Estructura: A4170");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);        
         var msj = this.validateFields();

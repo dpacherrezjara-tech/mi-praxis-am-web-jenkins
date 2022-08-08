@@ -44,6 +44,11 @@ public class A4116Filter extends A4116 {
     public String IN_SAUTHOC = "";
     public String IN_STRFND = "";
     public String IN_WARNING = "";
+    public String IN_ZONA = "";
+    public String IN_ZONA_SETT = "";
+    public String IN_SCOUNTRY_SETT = "";
+    public String IN_ZONA_ERR = "";
+    public String IN_SCOUNTRY_ERR = "";
     public String IN_CERROR = "";
     public String IN_TDOC = "";
     public String IN_COMPLEMENT = "";

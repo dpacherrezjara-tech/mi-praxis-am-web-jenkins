@@ -55,6 +55,9 @@ public class A4116 {
     public String RFOPERB = "";
     public String RFDATE = "";
     public String RFAUDIT = "";
+    
+    public String ZONA = "";
+    public String SCOUNTRY = "";
         
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;

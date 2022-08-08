@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.SalesReconciliAmexFo
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1800,
+                            width: 1850,
                             layout: 'border',
                             
                             items: [
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.SalesReconciliAmexFo
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1800,
+                                        width: 1850,
                                         align: 'center'
                                     },
                                     items: [
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.SalesReconciliAmexFo
                                         {
                                             xtype: 'panel',
                                             height: 700,
-                                            width: 1800,
+                                            width: 1850,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1800,
+                                                    width: 1850,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
