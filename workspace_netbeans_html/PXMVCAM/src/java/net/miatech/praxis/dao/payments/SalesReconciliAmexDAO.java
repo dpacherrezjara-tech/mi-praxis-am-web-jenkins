@@ -146,7 +146,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PGROSAMOU = rst.getDouble("PGROSAMOU");
                     beanTkt.PDISCAMOU = this.cambioSigno(beanTkt.PGROSAMOU, rst.getDouble("PDISCAMOU"));
                     beanTkt.PTAXAMOU = this.mantenerSigno(beanTkt.PDISCAMOU, rst.getDouble("PTAXAMOU"));
-
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    
                     beanTkt.PSFEEAMOU = rst.getDouble("PSFEEAMOU");
                     beanTkt.PADJAMOUN = rst.getDouble("PADJAMOUN");
                     beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
@@ -316,6 +318,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
 
@@ -837,6 +841,8 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
                     beanTkt.MERCHID = rst.getString("MERCHID").trim();
                     merchID = beanTkt.MERCHID;
@@ -1431,6 +1437,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RN = rst.getString("RN").trim();
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
                     beanTkt.MERCHID = rst.getString("MERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
@@ -1598,6 +1606,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+                    
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
 
                     beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
                     beanTkt.CHAADJCOD = rst.getString("CHAADJCOD").trim();

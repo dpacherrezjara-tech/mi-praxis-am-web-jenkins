@@ -14,6 +14,7 @@ public class A4118 {
     public String CCUST = "";
     public String PRDA = "";
     public String SCOUNTRY = "";
+    public String ZONA = "";
     public String RECTYPE = "";
     public String MERCHID = "";
     public String STYPECD = "";

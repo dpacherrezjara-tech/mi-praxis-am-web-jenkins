@@ -17,6 +17,8 @@ public class A4113 {
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
+    public String ZONA = "";
+    public String SCOUNTRY = "";
 
     public double PNETAMOU = 0;
     public double PGROSAMOU = 0;
