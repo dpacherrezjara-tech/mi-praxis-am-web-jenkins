@@ -15,6 +15,8 @@ import net.miatech.beans.IMF121Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.screens.AbnormalValueDAO;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
+import net.miatech.praxis.payment.filter.A2789Filter;
+import net.miatech.praxis.payment.filter.A2790Filter;
 
 /**
  *
@@ -33,6 +35,24 @@ public class AbnormalValueLogic {
 
     public void setSession(IServerSession ss) {
         AbnormalValueDAO.setSession(ss);
+    }
+
+
+    
+    // =========================================================================
+    // =============================== Refund ===================================
+    // =========================================================================
+
+    public List<A2790Filter> loadPX414SQP02008(A2790Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02008(filter);
+    }
+
+    public List<A2790Filter> loadPX414SQP02015(A2790Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02015(filter);
+    }
+
+    public List<A2789Filter> loadPX414SQP02018(A2790Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02018(filter);
     }
 
     // =========================================================================
@@ -67,6 +87,25 @@ public class AbnormalValueLogic {
 
     public List<DashboardFilter> loadPX414SQP02022(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQP02022(filter);
+    }
+
+    // =========================================================================
+    // ======================= PARTICIPATION OAL================================
+    // =========================================================================
+    public List<IMF111Filter> loadPX414SQP02545(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02545(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02546(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02546(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02546_ex(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02546_ex(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02546_1(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02546_1(filter);
     }
 
     // =========================================================================
