@@ -3420,6 +3420,8 @@ public class SalesReconciliAmexDAO {
                 objRtn.AXPAYNBR = rs01.getString("AXPAYNBR").trim();
                 objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
                 objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
+                objRtn.ZONA = rs01.getString("ZONA").trim();
+                objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
 
                 objRtn.SMERCHID = rs01.getString("SMERCHID").trim();
                 objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();

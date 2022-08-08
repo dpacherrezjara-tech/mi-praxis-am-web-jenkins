@@ -87,7 +87,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         /* else {
          Ext.getCmp(prototype.id + '-chkSelection').show();
          }*/
-
+        this.setValue('de-txtZone', this.beanResult.ZONA);
+        this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);

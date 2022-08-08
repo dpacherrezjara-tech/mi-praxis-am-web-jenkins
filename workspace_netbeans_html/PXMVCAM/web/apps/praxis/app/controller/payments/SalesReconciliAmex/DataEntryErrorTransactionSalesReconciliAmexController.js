@@ -161,6 +161,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFLAG', this.beanResult.FSELEC);
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
+        this.setValue('de-txtZone', this.beanResult.ZONA);
+        this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
         this.setValue('de-txtTDOC', this.beanResult.descTDOC);
