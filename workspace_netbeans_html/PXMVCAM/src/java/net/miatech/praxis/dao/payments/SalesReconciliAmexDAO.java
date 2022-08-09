@@ -1037,6 +1037,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RN = rst.getString("RN").trim();
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
                     beanTkt.MERCHID = rst.getString("MERCHID").trim();
