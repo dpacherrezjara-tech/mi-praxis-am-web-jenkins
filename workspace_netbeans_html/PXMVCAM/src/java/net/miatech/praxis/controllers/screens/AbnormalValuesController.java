@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF121Filter;
+import net.miatech.praxis.classes.ExportUtil;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
 import net.miatech.praxis.payment.filter.A2789Filter;
@@ -130,7 +131,7 @@ public class AbnormalValuesController extends BaseController {
             map.put("success", true);
 
             if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
-                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                String nameExcel = ExportUtil.exportFields(request, response, lstData);
                 map.put("nameExcel", nameExcel);
             } else {
                 map.put("data", lstData);
@@ -168,7 +169,7 @@ public class AbnormalValuesController extends BaseController {
                 String nameExcel = exportFieldsCompleto(request, response, lstData);
                 map.put("nameExcel", nameExcel);
             } else {
-                map.put("lstData", lstData);
+                map.put("data", lstData);
             }
 
         } catch (SQLException e) {

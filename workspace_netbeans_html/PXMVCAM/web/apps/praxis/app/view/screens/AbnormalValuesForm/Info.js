@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     listeners: {
                         'tabchange': function (tabPanel, tab) {
                             console.log(tabPanel.id + ' ' + tab.id);
-                            me.changeTab_clickHandler(tab.id);
+                            me.imgSearch_clickHandler(tab.id);
 
                         }
                     },
