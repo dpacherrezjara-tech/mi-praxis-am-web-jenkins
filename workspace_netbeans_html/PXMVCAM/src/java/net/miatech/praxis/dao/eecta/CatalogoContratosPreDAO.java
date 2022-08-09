@@ -13,6 +13,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
 import org.apache.log4j.Logger;
@@ -221,5 +222,57 @@ public class CatalogoContratosPreDAO {
 
         return lstRtn;
     }
-    
+    public SQP04527Filter setSQP04527Filter(SQP04527Filter filter) throws SQLException, Exception {
+        SQP04527Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04527(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        ResultSet rst = null;
+        cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+        try {
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(21, Types.VARCHAR);
+            cstmt01.registerOutParameter(22, Types.VARCHAR);
+            cstmt01.registerOutParameter(23, Types.VARCHAR);            
+            cstmt01.setString(1, filter.VP_ACTION);
+            cstmt01.setString(2, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setInt(3, filter.A4241IDANT);
+            cstmt01.setString(4, filter.A4241FEC);
+            cstmt01.setDouble(5, filter.A4241TOTAN);
+            cstmt01.setString(6, filter.A4241MDA);
+            cstmt01.setDouble(7, filter.A4241PORBF);
+            cstmt01.setDouble(8, filter.A4241TOTBF);
+            cstmt01.setDouble(9, filter.A4241TOT);
+            cstmt01.setString(10, filter.A4241ORDN);
+            cstmt01.setString(11, filter.A4241CONTR);
+            cstmt01.setString(12, filter.A4241REF);
+            cstmt01.setString(13, filter.A4241FECDE);
+            cstmt01.setString(14, filter.A4241FECHA);
+            cstmt01.setString(15, filter.A4241STSPG);
+            cstmt01.setInt(16, filter.A4241IDRCB);
+            cstmt01.setString(17, filter.A4241FECRC);
+            cstmt01.setString(18, filter.A4241NUMRC); 
+            cstmt01.setString(19, filter.A4241CDCLI);             
+            cstmt01.setString(20, filter.VP_UATPS);
+            cstmt01.execute();
+            
+            objRtn = new SQP04527Filter();
+            objRtn.dbException.SQLCODE = cstmt01.getString(21);
+            objRtn.dbException.MESSAGE = cstmt01.getString(22);
+            objRtn.OU_A4241ID = cstmt01.getString(23);
+
+        } finally {
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return objRtn;
+    }
 }

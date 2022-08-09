@@ -6,10 +6,13 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
 import net.miatech.praxis.logic.eecta.CatalogoContratosPreLogic;
@@ -17,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -98,5 +102,32 @@ public class CatalogoContratosPreController extends BaseController {
         return new Gson().toJson(map);
     }
     
+            
+    @RequestMapping(value = "setContratosCrud", method = RequestMethod.POST)
+    public @ResponseBody            
+    String setContratosCrud(ModelMap map, HttpServletRequest request) {
+        SQP04527Filter objRtn = new SQP04527Filter();        
+        logic = new CatalogoContratosPreLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04527Filter filter = new SQP04527Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            JsonParser parser = new JsonParser();
+            JsonArray gson_uatp = parser.parse(request.getParameter("beanuatp")).getAsJsonArray();
+            filter.VP_UATPS = gson_uatp.toString();
+            
+            objRtn = logic.setSQP04527Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());            
+        }
+        return new Gson().toJson(map);
+
+    }
 
 }
