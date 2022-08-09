@@ -134,6 +134,7 @@ public class A4116Filter extends A4116 {
     public String descSTRFND = "";
     public String SAGENT = "";
     public String FUENTE = "";
+    public String ZONE = "";
     
     //Summary Error
     public String IN_DRILLDOWN = "";
@@ -215,8 +216,8 @@ public class A4116Filter extends A4116 {
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
+ 
     
 
-
-    
+ 
 }

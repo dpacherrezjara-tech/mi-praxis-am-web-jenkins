@@ -3166,7 +3166,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1380,
+                            width: 1475,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -3176,7 +3176,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainSettlement',
-                                    width: 1340,
+                                    width: 1475,
                                     height: 'auto',
                                     columnLines: true,
                                     columns: {
@@ -3206,6 +3206,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return value;
+                                                }
                                             },
                                             {
                                                 text: 'Currency', dataIndex: 'PCURRENCY', width: 70,
@@ -3359,7 +3373,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1740,
+                            width: 1750,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -3369,7 +3383,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridSettlement',
-                                    width: 1740,
+                                    width: 1750,
                                     height: 'auto',
                                     columnLines: true,
                                     features: [{
@@ -3405,7 +3419,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Id', dataIndex: 'MERCHID', width: 100,
+                                                        text: 'Id', dataIndex: 'MERCHID', width: 90,
                                                         listeners: {
                                                             click: 'onGridDetSettMerchant'
                                                         },
@@ -3416,7 +3430,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Status', dataIndex: 'desCERROR', width: 80,
+                                            {text: 'Status', dataIndex: 'desCERROR', width: 75,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
@@ -3424,6 +3438,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         metaData.tdAttr = 'data-qtip="' + record.data.DES_CERROR + '"';
                                                         metaData.style = "text-align:center;background-color:#fc8686;";
                                                     }
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 65,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "text-align:center;background-color:#FCF6DC";
                                                     return value;
                                                 }
                                             },

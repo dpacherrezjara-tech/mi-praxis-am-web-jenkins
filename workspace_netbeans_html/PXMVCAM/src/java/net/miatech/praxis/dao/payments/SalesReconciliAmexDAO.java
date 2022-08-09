@@ -1037,6 +1037,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RN = rst.getString("RN").trim();
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
                     beanTkt.MERCHID = rst.getString("MERCHID").trim();
@@ -1919,6 +1921,8 @@ public class SalesReconciliAmexDAO {
                 beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
                 beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
                 beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                beanTkt.ZONA = rst.getString("ZONA");
+                beanTkt.SCOUNTRY = rst.getString("SCOUNTRY");
 
                 beanTkt.DISCAMOUN_IMPORT = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN_IMPORT"));
                 beanTkt.DISCAMOUN_IVA = this.mantenerSigno(beanTkt.DISCAMOUN_IMPORT, rst.getDouble("DISCAMOUN_IVA"));
@@ -2056,7 +2060,10 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
                     beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
                     beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
-
+                    
+                    beanTkt.ZONA = rst.getString("ZONA");
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY"); 
+                    
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.DISCAMOUN_IMPORT = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN_IMPORT"));
                     beanTkt.DISCAMOUN_IVA = this.mantenerSigno(beanTkt.DISCAMOUN_IMPORT, rst.getDouble("DISCAMOUN_IVA"));
