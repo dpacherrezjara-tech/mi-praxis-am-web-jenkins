@@ -8,9 +8,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id + '-dataEntryController',
     url: CONTEXTPATH + '/CatalogoContratosPre',
-    /**
-     * Constructor
-     */
+    url01: CONTEXTPATH + '/CatalogoCliente',
     init: function (view) {
         var me = this;
     },
@@ -33,7 +31,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 //Ext.getCmp(prototype.id + '-btnDet-contrato').hide();
                 Ext.getCmp(prototype.id + '-btn-save').show();                
                 //this.handlerEvent_setDisabled(true);
-                Ext.getCmp(prototype.id + '-A3953CDCLI').focus();
+                Ext.getCmp(prototype.id + '-A4241CDCLI').focus();
                 break;
             case 'U':
                 this.getDataInputs();
@@ -48,6 +46,17 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //boton logo
         //Ext.getCmp(prototype.id + '-file').setDisabled(bflag);
         //Ext.getCmp(prototype.id + '-btn-upload').setDisabled(bflag);
+    },
+    set_calcular_beneficio:function(){
+                     
+        var A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));
+        var A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", "")); 
+        if( Ext.Number.parseFloat(A4241PORBF) === 0 )return;
+        
+        var A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100; 
+        var A4241TOT = Ext.Number.parseFloat(A4241TOTAN + A4241TOTBF);
+        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue( Ext.util.Format.number(A4241TOTBF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241TOT').setValue( Ext.util.Format.number(A4241TOT, '0,000.00'));        
     },
     getDataInputs: function () {
         var p = this.view.params;
@@ -69,8 +78,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         Ext.getCmp(prototype.id + '-A4242TOTAN').setValue(Ext.util.Format.number(data.A4242TOTAN, '0,000.00'));        
         Ext.getCmp(prototype.id + '-A4242TOTBF').setValue(Ext.util.Format.number(data.A4242TOTBF, '0,000.00'));        
         Ext.getCmp(prototype.id + '-A4242TOT').setValue(Ext.util.Format.number(data.A4242TOT, '0,000.00'));        
+        
         Ext.getCmp(prototype.id + '-A4242VTAAN').setValue(Ext.util.Format.number(data.A4242VTAAN, '0,000.00'));        
         Ext.getCmp(prototype.id + '-A4242VTABF').setValue(Ext.util.Format.number(data.A4242VTABF, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242TOTAP').setValue(Ext.util.Format.number(data.A4242TOTAP, '0,000.00'));        
+                
         Ext.getCmp(prototype.id + '-A4242SALAN').setValue(Ext.util.Format.number(data.A4242SALAN, '0,000.00'));        
         Ext.getCmp(prototype.id + '-A4242SALBF').setValue(Ext.util.Format.number(data.A4242SALBF, '0,000.00'));        
         Ext.getCmp(prototype.id + '-A4242SALDO').setValue(Ext.util.Format.number(data.A4242SALDO, '0,000.00')); 
@@ -90,155 +102,46 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     },
     getDataEntryValues: function (strOption) {
         var VP_ACTION = strOption;
-//        var VL_A3953CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
-//        var VL_A3953RSOCI = Ext.getCmp(prototype.id + '-A3953RSOCI').getValue();
-//        var VL_A3953NCOME = Ext.getCmp(prototype.id + '-A3953NCOME').getValue();
-//        var VL_A3953RFC = Ext.getCmp(prototype.id + '-A3953RFC').getValue();
-//        var VL_A3953DIRE1 = Ext.getCmp(prototype.id + '-A3953DIRE1').getValue();
-//        var VL_A3953DIRE2 = ""; //Ext.getCmp(prototype.id + '-A3953DIRE2').getValue();
-//        var VL_A3953REFER = ""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();
-//        var VL_A3953COLON = Ext.getCmp(prototype.id + '-A3953COLON').getValue();
-//        var VL_A3953DELEG = Ext.getCmp(prototype.id + '-A3953DELEG').getValue();
-//        var VL_A3953CIUDA = Ext.getCmp(prototype.id + '-A3953CIUDA').getValue();
-//        var VL_A3953ESTAD = Ext.getCmp(prototype.id + '-A3953ESTAD').getValue();
-//        var VL_A3953PAIS = Ext.getCmp(prototype.id + '-A3953PAIS').getValue();
-//        var VL_A3953NPAIS = ""; //Ext.getCmp(prototype.id + '-A3953NPAIS').getValue();
-//        var VL_A3953CP = Ext.getCmp(prototype.id + '-A3953CP').getValue();
-//        var VL_A3953TELE1 = Ext.getCmp(prototype.id + '-A3953TELE1').getValue();
-//        var VL_A3953TELE2 = "";
-//        var VL_A3953CDMTR = Ext.getCmp(prototype.id + '-A3953CDMTR').getValue();
-//        var VL_A3953TCLIN = Ext.getCmp(prototype.id + '-A3953TCLIN').getValue();
-//        var VL_A3953TORGN = Ext.getCmp(prototype.id + '-A3953TORGN').getValue();
-//        var VL_A3953CONTR = Ext.getCmp(prototype.id + '-A3953CONTR').getValue();
-//        var VL_A3953CTAMA = Ext.getCmp(prototype.id + '-A3953CTAMA').getValue();
-//        var VL_A3953CDORA = Ext.getCmp(prototype.id + '-A3953CDORA').getValue();
-//        var VL_A3953BANCO = Ext.getCmp(prototype.id + '-A3953BANCO').getValue();
-//        var VL_A3953CTABC = Ext.getCmp(prototype.id + '-A3953CTABC').getValue();
-//        var VL_A3953INDPE = Ext.getCmp(prototype.id + '-A3953INDPE').getValue();
-//        var VL_A3953INDPL = Ext.getCmp(prototype.id + '-A3953INDPL').getValue();
-//        var VL_A3953INDPP = Ext.getCmp(prototype.id + '-A3953INDPP').getValue();
-//        var VL_A3953DIAPP = Ext.getCmp(prototype.id + '-A3953DIAPP').getValue();
-//        var VL_A3953PLZCR = Ext.getCmp(prototype.id + '-A3953PLZCR').getValue();
-//        var VL_A3953FALTA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A3953FALTA').getValue(), 'Ymd');
-//        var VL_A3953FBAJA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A3953FBAJA').getValue(), 'Ymd');
-//        var VL_A3953ARCPD = 'N';
-//        var VL_A3953ARCTX = 'N';
-//        var VL_A3953ARCEC = 'N';
-//        var VL_A3953ARCFZ = 'N';
-//        var VL_A3953ARCFX = 'N';
-//        if (Ext.getCmp(prototype.id + '-A3953ARCPD').getValue())
-//            VL_A3953ARCPD = 'S';
-//        if (Ext.getCmp(prototype.id + '-A3953ARCTX').getValue())
-//            VL_A3953ARCTX = 'S';
-//        if (Ext.getCmp(prototype.id + '-A3953ARCEC').getValue())
-//            VL_A3953ARCEC = 'S';
-//        if (Ext.getCmp(prototype.id + '-A3953ARCFZ').getValue())
-//            VL_A3953ARCFZ = 'S';
-//        if (Ext.getCmp(prototype.id + '-A3953ARCFX').getValue())
-//            VL_A3953ARCFX = 'S';
-//        var VL_A3953LOGO = Ext.getCmp(prototype.id + '-A3953LOGO').getValue();
-//
-//        var VL_A3953STSID = 'N';
-//        if (Ext.getCmp(prototype.id + '-A3953STSID').getValue())
-//            VL_A3953STSID = 'S';
-//        
-//        var VL_A3953STSDV = 'N';
-//        if (Ext.getCmp(prototype.id + '-A3953STSDV').getValue())
-//            VL_A3953STSDV = 'S';
-//        
-//
-//        return {
-//            VP_ACTION: VP_ACTION,
-//            A3953CDCLI: VL_A3953CDCLI,
-//            A3953RSOCI: VL_A3953RSOCI,
-//            A3953NCOME: VL_A3953NCOME,
-//            A3953RFC: VL_A3953RFC,
-//            A3953DIRE1: VL_A3953DIRE1,
-//            A3953DIRE2: VL_A3953DIRE2,
-//            A3953REFER: VL_A3953REFER,
-//            A3953COLON: VL_A3953COLON,
-//            A3953DELEG: VL_A3953DELEG,
-//            A3953CIUDA: VL_A3953CIUDA,
-//            A3953ESTAD: VL_A3953ESTAD,
-//            A3953PAIS: VL_A3953PAIS,
-//            A3953NPAIS: VL_A3953NPAIS,
-//            A3953CP: VL_A3953CP,
-//            A3953TELE1: VL_A3953TELE1,
-//            A3953TELE2: VL_A3953TELE2,
-//            A3953CDMTR: VL_A3953CDMTR,
-//            A3953TCLIN: VL_A3953TCLIN,
-//            A3953TORGN: VL_A3953TORGN,
-//            A3953CONTR: VL_A3953CONTR,
-//            A3953CTAMA: VL_A3953CTAMA,
-//            A3953CDORA: VL_A3953CDORA,
-//            A3953BANCO: VL_A3953BANCO,
-//            A3953CTABC: VL_A3953CTABC,
-//            A3953INDPE: VL_A3953INDPE,
-//            A3953INDPL: VL_A3953INDPL,
-//            A3953INDPP: VL_A3953INDPP,
-//            A3953DIAPP: VL_A3953DIAPP,
-//            A3953PLZCR: VL_A3953PLZCR,
-//            A3953FALTA: VL_A3953FALTA,
-//            A3953FBAJA: VL_A3953FBAJA,
-//            A3953ARCPD: VL_A3953ARCPD,
-//            A3953ARCTX: VL_A3953ARCTX,
-//            A3953ARCEC: VL_A3953ARCEC,
-//            A3953ARCFZ: VL_A3953ARCFZ,
-//            A3953ARCFX: VL_A3953ARCFX,
-//            A3953LOGO: VL_A3953LOGO,
-//            A3953STSID: VL_A3953STSID,
-//            A3953STSDV: VL_A3953STSDV
-//        };
+        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
+        var VL_A4241FEC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FEC').getValue(), 'Ymd');         
+        var VL_A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));        
+        var VL_A4241MDA = Ext.getCmp(prototype.id + '-A4241MDA').getValue();
+        var VL_A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", ""));        
+        var VL_A4241TOTBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTBF').getValue().replace(",", "").replace(",", ""));        
+        var VL_A4241TOT = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOT').getValue().replace(",", "").replace(",", ""));                
+        var VL_A4241ORDN = Ext.getCmp(prototype.id + '-A4241ORDN').getValue();        
+        var VL_A4241CONTR = Ext.getCmp(prototype.id + '-A4241CONTR').getValue();        
+        var VL_A4241REF = Ext.getCmp(prototype.id + '-A4241REF').getValue();
+        var VL_A4241FECDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FECDE').getValue(), 'Ymd');
+        var VL_A4241FECHA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FECHA').getValue(), 'Ymd');
+        var VL_A4241STSPG = Ext.getCmp(prototype.id + '-A4241STSPG').getValue();
+        var VL_A4241IDRCB = Ext.getCmp(prototype.id + '-A4241IDRCB').getValue();
+        var VL_A4241FECRC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FECRC').getValue(), 'Ymd');
+        var VL_A4241NUMRC = Ext.getCmp(prototype.id + '-A4241NUMRC').getValue();
+        var VL_A4241CDCLI = Ext.getCmp(prototype.id + '-A4241CDCLI').getValue();
+        
+        return {
+            VP_ACTION: VP_ACTION,
+            A4241IDANT: VL_A4241IDANT,
+            A4241FEC: VL_A4241FEC,
+            A4241TOTAN: VL_A4241TOTAN,
+            A4241MDA: VL_A4241MDA,
+            A4241PORBF: VL_A4241PORBF,
+            A4241TOTBF: VL_A4241TOTBF,
+            A4241TOT: VL_A4241TOT,
+            A4241ORDN: VL_A4241ORDN,
+            A4241CONTR: VL_A4241CONTR,
+            A4241REF: VL_A4241REF,
+            A4241FECDE: VL_A4241FECDE,
+            A4241FECHA: VL_A4241FECHA,            
+            A4241STSPG: VL_A4241STSPG,
+            A4241IDRCB: VL_A4241IDRCB,
+            A4241FECRC: VL_A4241FECRC,
+            A4241NUMRC: VL_A4241NUMRC,
+            A4241CDCLI: VL_A4241CDCLI
+        };
     },
-    getDataEntry_det_identif: function () {
-        var lstArray = new Array();
-        var RemovedRecords = this.getRemovedRecords(prototype.id + '-gridData-identif');
-        //console.log('REMOVED:');
-        //console.log(RemovedRecords); 
-        //var bFlag_identif = false;
-        RemovedRecords.forEach(function (rec) {
-            //if(rec.data.A3979IDCLI.trim() === '') bFlag_identif = true;
-            lstArray.push({
-                "crudState": "D", //rec.crudState,
-                "A3979SEQID": rec.data.A3979SEQID,
-                "A3979DESCR": rec.data.A3979DESCR,
-                "A3979IDCLI": rec.data.A3979IDCLI,
-                "A3979FALTA": Ext.util.Format.date(rec.data.A3979FALTA, 'Ymd'),
-                "A3979FBAJA": Ext.util.Format.date(rec.data.A3979FBAJA, 'Ymd')
-            });
-        });
-
-        var NewRecords = this.getNewRecords(prototype.id + '-gridData-identif');
-        //console.log('NewRecords:');
-        //console.log(NewRecords);
-        NewRecords.forEach(function (rec) {
-            //if(rec.data.A3979IDCLI.trim() === '') bFlag_identif = true;
-            lstArray.push({
-                "crudState": "I", //rec.crudState,
-                "A3979SEQID": rec.data.A3979SEQID,
-                "A3979DESCR": rec.data.A3979DESCR,
-                "A3979IDCLI": rec.data.A3979IDCLI,
-                "A3979FALTA": Ext.util.Format.date(rec.data.A3979FALTA, 'Ymd'),
-                "A3979FBAJA": Ext.util.Format.date(rec.data.A3979FBAJA, 'Ymd')
-            });
-        });
-
-        var ModifiedRecords = this.getModifiedRecords(prototype.id + '-gridData-identif');
-        //console.log('UPDATE:');
-        //console.log(ModifiedRecords); 
-        ModifiedRecords.forEach(function (rec) {
-            ///if(rec.data.A3979IDCLI.trim() === '') bFlag_identif = true;            
-            lstArray.push({
-                "crudState": "U", //rec.crudState,
-                "A3979SEQID": rec.data.A3979SEQID,
-                "A3979DESCR": rec.data.A3979DESCR,
-                "A3979IDCLI": rec.data.A3979IDCLI,
-                "A3979FALTA": Ext.util.Format.date(rec.data.A3979FALTA, 'Ymd'),
-                "A3979FBAJA": Ext.util.Format.date(rec.data.A3979FBAJA, 'Ymd')
-            });
-        });
-        return lstArray;
-    },
+    
     onSaveClick: function (btn) {
         var p = this.view.params;
         var strOption = p.action;
@@ -275,16 +178,16 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //console.log(RemovedRecords); 
         var bFlag_Nbr_uatp = false;
         RemovedRecords.forEach(function (rec) {
-            if (rec.data.A3954TCUAT.trim() === '')
+            if (rec.data.A4244UATP.trim() === '')
                 bFlag_Nbr_uatp = true;
             lstuatp.push({
                 "crudState": "D", //rec.crudState,
-                "A3954TCUAT": rec.data.A3954TCUAT,
-                "A3954DESCR": rec.data.A3954DESCR,
-                //"A3954IDUAT": rec.data.A3954IDUAT,
-                //"A3954TCUAM": rec.data.A3954TCUAM,
-                "A3954FALTA": Ext.util.Format.date(rec.data.A3954FALTA, 'Ymd'),
-                "A3954FBAJA": Ext.util.Format.date(rec.data.A3954FBAJA, 'Ymd')
+                //"A4244CCUST": rec.data.A4244CCUST,
+                //"A4244CDCLI": rec.data.A4244CDCLI,
+                "A4244UATP": rec.data.A4244UATP,
+                "A4244TIPO": rec.data.A4244TIPO
+                //"A4244MDA": rec.data.A4244MDA,
+                //"A4244VENTA": rec.data.A4244VENTA                
             });
         });
 
@@ -292,16 +195,16 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //console.log('NewRecords:');
         //console.log(NewRecords);
         NewRecords.forEach(function (rec) {
-            if (rec.data.A3954TCUAT.trim() === '')
+            if (rec.data.A4244UATP.trim() === '')
                 bFlag_Nbr_uatp = true;
             lstuatp.push({
                 "crudState": "I", //rec.crudState,
-                "A3954TCUAT": rec.data.A3954TCUAT,
-                "A3954DESCR": rec.data.A3954DESCR,
-                //"A3954IDUAT": rec.data.A3954IDUAT,
-                //"A3954TCUAM": rec.data.A3954TCUAM,
-                "A3954FALTA": Ext.util.Format.date(rec.data.A3954FALTA, 'Ymd'),
-                "A3954FBAJA": Ext.util.Format.date(rec.data.A3954FBAJA, 'Ymd')
+                //"A4244CCUST": rec.data.A4244CCUST,
+                //"A4244CDCLI": rec.data.A4244CDCLI,
+                "A4244UATP": rec.data.A4244UATP,
+                "A4244TIPO": rec.data.A4244TIPO
+                //"A4244MDA": rec.data.A4244MDA,
+                //"A4244VENTA": rec.data.A4244VENTA  
             });
         });
 
@@ -309,50 +212,44 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //console.log('UPDATE:');
         //console.log(ModifiedRecords); 
         ModifiedRecords.forEach(function (rec) {
-            if (rec.data.A3954TCUAT.trim() === '')
+            if (rec.data.A4244UATP.trim() === '')
                 bFlag_Nbr_uatp = true;
             lstuatp.push({
                 "crudState": "U", //rec.crudState,
-                "A3954TCUAT": rec.data.A3954TCUAT,
-                "A3954DESCR": rec.data.A3954DESCR,
-                //"A3954IDUAT": rec.data.A3954IDUAT,
-                //"A3954TCUAM": rec.data.A3954TCUAM,
-                "A3954FALTA": Ext.util.Format.date(rec.data.A3954FALTA, 'Ymd'),
-                "A3954FBAJA": Ext.util.Format.date(rec.data.A3954FBAJA, 'Ymd')
+               // "A4244CCUST": rec.data.A4244CCUST,
+               // "A4244CDCLI": rec.data.A4244CDCLI,
+                "A4244UATP": rec.data.A4244UATP,
+                "A4244TIPO": rec.data.A4244TIPO
+               // "A4244MDA": rec.data.A4244MDA,
+               // "A4244VENTA": rec.data.A4244VENTA  
             });
         });
 
         // valida registro UATP
         if (bFlag_Nbr_uatp) {
             global.Msg({
-                msg: 'Ingrese Numero UATP'
+                msg: 'Ingresar tarjetas UATP'
             });
             return;
         }
         //Detalle identif.
-        var lst_identif = this.getDataEntry_det_identif();
-
-        //Detalle contactos 
-        //...
-        //Detalle contactos AM
-
+        //var lst_identif = this.getDataEntry_det_identif();
 
         var me = this;
         Ext.Ajax.request({
-            url: this.url + '/mantenimiento',
+            url: this.url + '/setContratosCrud',
             method: 'POST',
             timeout: 60000000,
             params: {
                 beanString: JSON.stringify(this.getDataEntryValues(strOption)),
-                beanuatp: JSON.stringify(lstuatp),
-                bean_identif: JSON.stringify(lst_identif),
+                beanuatp: JSON.stringify(lstuatp)
             },
-            beforerequest: Ext.getCmp(prototype.id + '-CatalogoClienteEntry').mask('Loading...', ''),
+            beforerequest: Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').mask('Loading...', ''),
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var objRtn = res.objRtn;
 //                console.log(objRtn);
-                Ext.getCmp(prototype.id + '-CatalogoClienteEntry').unmask('Loading...', '');
+                Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
                     icon: objRtn.dbException.SQLCODE,
@@ -360,18 +257,15 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                         //culmino PROCESO
                         //console.log(objRtn.dbException.SQLCODE);
                         if(objRtn.dbException.SQLCODE === '0')return;                        
-                        Ext.getCmp(prototype.id + '-A3953CDCLI').setValue(objRtn.OU_A3953CDCLI);
+                        Ext.getCmp(prototype.id + '-A4241IDANT').setValue(objRtn.OU_A4241ID);
                         //carga logo(pendiente)
-//                        Ext.getCmp(prototype.id + '-btn-upload').disable(true);
-//                        me.setuploadLogo();
-                        me.search_uatp(); //cargar desde la base de datos para generar STORE.
-                        me.search_identif();
+                        me.search_uatp(); //cargar desde la base de datos para generar STORE.                        
                         me.handlerEvent_setDisabled(false);
                         //PARA ACTUALIZAR DESPUES DE INSERTAR
                         if (strOption === "I") {
                             Ext.getCmp(prototype.id + '-btn-save').hide();
                             Ext.getCmp(prototype.id + '-btn-update').show();
-                            Ext.getCmp(prototype.id + '-btnDet-contrato').show();
+                            //Ext.getCmp(prototype.id + '-btnDet-contrato').show();
                             this.view.params.action = "U";
                         }
                         //Ext.getCmp(prototype.id + '-CatalogoClienteEntry').close();
@@ -437,188 +331,74 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     validateForm: function (params) {
 //        console.log(params);
         var mensaje = "";
-//        if (params.A3953RSOCI === '') {
-//            mensaje = 'INGRESE RAZÓN SOCIAL';
-//            Ext.getCmp(prototype.id + '-A3953RSOCI').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953NCOME === '') {
-//            mensaje = 'INGRESE NOMBRE COMERCIAL';
-//            Ext.getCmp(prototype.id + '-A3953NCOME').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953RFC === '') {
-//            mensaje = 'INGRESE RFC DEL CONTRIBUYENTE ';
-//            Ext.getCmp(prototype.id + '-A3953RFC').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953TCLIN === '' || params.A3953TCLIN === null ) {
-//            mensaje = 'SELECCIONE TIPO CLIENTE';
-//            Ext.getCmp(prototype.id + '-A3953TCLIN').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953PLZCR === 0) {
-//            mensaje = 'INGRESE DIAS PLAZO CREDITO';
-//            Ext.getCmp(prototype.id + '-A3953PLZCR').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953INDPL === null) {
-//            mensaje = 'SELECCIONE INDICADOR PERIODO REPORTE VENTA';
-//            Ext.getCmp(prototype.id + '-A3953INDPL').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953INDPE === null) {
-//            mensaje = 'SELECCIONE INDICADOR PERIODO EECC';
-//            Ext.getCmp(prototype.id + '-A3953INDPE').focus();
-//            return mensaje;
-//        }
-//        
-//        if (params.A3953INDPP === null) {
-//            mensaje = 'SELECCIONE INDICADOR PERIODO COMPLEMENTO PAGO';
-//            Ext.getCmp(prototype.id + '-A3953INDPP').focus();
-//            return mensaje;
-//        }
-//        
-//        var Count = Ext.getCmp(prototype.id + '-gridData-uatp').getStore().getCount();
-//        if (Count === 0) {
-//            mensaje = 'INGRESE DETALLE TARJETA UATP';
-//            return mensaje;
-//        }
-//
-//        if (Ext.getCmp(prototype.id + '-A3953STSID').getValue()) {
-//            var Count1 = Ext.getCmp(prototype.id + '-gridData-identif').getStore().getCount();
-//            if (Count1 === 0) {
-//                mensaje = 'INGRESE DETALLE IDENTIFICADOR';
-//                Ext.getCmp(prototype.id + '-panel-contenedor-grid-detalles').setActiveTab(1);
-//                return mensaje;
-//            }
-//        }
-
+        
+        if (params.A4241CDCLI === '') {
+            mensaje = 'INGRESAR EL CLIENTE';
+            Ext.getCmp(prototype.id + '-A4241CDCLI').focus();
+            return mensaje;
+        }
+        if (params.A4241FEC === '') {
+            mensaje = 'INGRESAR FECHA DE CONTRATO';
+            Ext.getCmp(prototype.id + '-A4241FEC').focus();
+            return mensaje;
+        }
+        if ( parseFloat(params.A4241TOTAN) === 0 ) {
+            mensaje = 'INGRESAR MONTO ANTICIPO';
+            Ext.getCmp(prototype.id + '-A4241TOTAN').focus();
+            return mensaje;
+        }
+        if (params.A4241MDA === '') {
+            mensaje = 'INGRESAR MONEDA DE ANTICIPO ';
+            Ext.getCmp(prototype.id + '-A4241MDA').focus();
+            return mensaje;
+        }
+        if (parseFloat(params.A4241PORBF) === 0 || params.A4241PORBF === null ) {
+            mensaje = 'INGRESAR % BENEFICIO';
+            Ext.getCmp(prototype.id + '-A4241PORBF').focus();
+            return mensaje;
+        }
+        var Count = Ext.getCmp(prototype.id + '-gridData-uatp').getStore().getCount();
+        if (Count === 0) {
+            mensaje = 'INGRESAR DETALLE TARJETA UATP';
+            return mensaje;
+        }
         return mensaje;
     },
     get_ClearField: function () {
         //Initialize data INPUTS
-//        Ext.getCmp(prototype.id + '-A3953CDCLI').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953RSOCI').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953NCOME').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953RFC').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953DIRE1').setValue('');
-//        //""; //Ext.getCmp(prototype.id + '-A3953DIRE2').getValue();                          
-//        //""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();                          
-//        Ext.getCmp(prototype.id + '-A3953COLON').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953DELEG').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953CIUDA').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953ESTAD').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953PAIS').setValue('');
-//        //A3953NPAIS; //Ext.getCmp(prototype.id + '-A3953NPAIS').getValue();                          
-//        Ext.getCmp(prototype.id + '-A3953CP').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953TELE1').setValue('');
-//        //A3953TELE2;
-//        Ext.getCmp(prototype.id + '-A3953CDMTR').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953TCLIN').setValue('C'); //DEFAULT
-//        Ext.getCmp(prototype.id + '-A3953TORGN').setValue('NAC');
-//        Ext.getCmp(prototype.id + '-A3953CONTR').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953CTAMA').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953CDORA').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953BANCO').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953CTABC').setValue('');
-//        Ext.getCmp(prototype.id + '-A3953INDPE').setValue('S');
-//        Ext.getCmp(prototype.id + '-A3953INDPL').setValue('S');
-//        Ext.getCmp(prototype.id + '-A3953INDPP').setValue('M');
-//        Ext.getCmp(prototype.id + '-A3953DIAPP').setValue(10);
-//        Ext.getCmp(prototype.id + '-A3953PLZCR').setValue(20);
-//        Ext.getCmp(prototype.id + '-A3953FALTA').setValue(new Date());
-//        Ext.getCmp(prototype.id + '-A3953FBAJA').setValue('20991231');
-//        //Check    
-//        Ext.getCmp(prototype.id + '-A3953ARCPD').setValue(false);
-//        Ext.getCmp(prototype.id + '-A3953ARCTX').setValue(false);
-//        Ext.getCmp(prototype.id + '-A3953ARCEC').setValue(false);
-//        Ext.getCmp(prototype.id + '-A3953ARCFZ').setValue(false);
-//        Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(false);        
+        Ext.getCmp(prototype.id + '-A4241IDANT').setValue('0');
+        Ext.getCmp(prototype.id + '-A4241CDCLI').setValue('');
+        Ext.getCmp(prototype.id + '-A3953RSOCI').setValue('');
+        Ext.getCmp(prototype.id + '-A4241FEC').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241TOTAN').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241PORBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4241MDA').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241CONTR').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241REF').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241ORDN').setValue('');
+        Ext.getCmp(prototype.id + '-A4241IDRCB').setValue('0');        
+        //saldos
+        Ext.getCmp(prototype.id + '-A4242TOTAN').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242TOTBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242TOT').setValue(Ext.util.Format.number(0, '0,000.00'));  
+        
+        Ext.getCmp(prototype.id + '-A4242VTAAN').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242VTABF').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242TOTAP').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242SALAN').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242SALBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242SALDO').setValue(Ext.util.Format.number(0, '0,000.00'));         
+        //control data        
+        Ext.getCmp(prototype.id + '-A4241USRIN').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241FECIN').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241HORIN').setValue('');                
+        Ext.getCmp(prototype.id + '-A4241USRAC').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241FECAC').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241HORAC').setValue('');      
     },
-    /*
-     * Upload file logo
-     */
-    onbtn_uploadClick: function () {
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: '¿Cargar archivo seleccionado?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    Ext.getCmp(prototype.id + '-btn-upload').disable(true);
-                    this.setuploadLogo();
-                }
-            }
-        });
-    },
-    setuploadLogo: function () {
-        var me = this;
-        var file = Ext.getCmp(prototype.id + '-file').getValue();
-        //console.log('file>' + file);
-        if (file === '') {
-            Ext.MessageBox.alert('PRAXIS', "Seleccione archivo", function (btn, text) {
-                if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id + '-file').focus();", 100);
-            });
-            return;
-        }
-        var VL_OPCION = 'I';
-        if (Ext.getCmp(prototype.id + '-A3953LOGO').getValue().trim())
-            VL_OPCION = 'U';
-        var lparams = {
-            VP_OPCION: VL_OPCION,
-            VP_CDCLI: Ext.getCmp(prototype.id + '-A3953CDCLI').getValue()
-        };
-        var form = Ext.getCmp(prototype.id + '-form01').getForm();
-        form.submit({
-            url: prototype.url + '/uploadLogo',
-            waitMsg: 'Uploading your sure to upload the logo...',
-            params: {beanString: JSON.stringify(lparams)},
-            success: function (fp, o) {
-                var res = Ext.decode(o.response.responseText);
-                var objRtn = res.objRtn;
-                Ext.getCmp(prototype.id + '-btn-upload').enable(true);
-                global.Msg({
-                    msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
-                    fn: function () {
-                        //Logo cargado
-                        Ext.getCmp(prototype.id + '-A3953LOGO_chk').setValue(true);
-                        me.onbtn_searchImage();
-                    }
-                });
-            },
-            failure: function (response, opts) {
-                console.log('server-side failure with status code ' + response.status);
-            }
-        });
-    },
-    onbtn_searchImage: function () {
-        var VL_CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
-        Ext.Ajax.request({
-            url: prototype.url + '/getImagen',
-            method: 'POST',
-            timeout: 60000000,
-            //beforerequest: Ext.getCmp(prototype.id + '-CatalogoClienteEntry').mask('Loading...'),            
-            params: {
-                VP_CDCLI: VL_CDCLI
-            },
-            success: function (response, options) {
-                var responseText = Ext.JSON.decode(response.responseText);
-                var res = responseText.lstImagenes;
-                Ext.getCmp(prototype.id + '-imgImage').setSrc('');
-                Ext.getCmp(prototype.id + '-imgImage').setSrc('data:image/png;base64,' + res + '');
-                if (res.length === 0)
-                    Ext.getCmp(prototype.id + '-imgImage').setSrc('resources/img/not_picture.png');
-                //Ext.getCmp(prototype.id + '-CatalogoClienteEntry').unmask();
-                //global.clear();
-            }
-        });
-    },
+       
     /*
      * lista UATP's
      */
@@ -673,12 +453,12 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
 //        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp',{});
 //        grid01.setStore(storeGridDatas);        
         var beanGrid = {};
-        beanGrid.A3954TCUAT = '';
-        beanGrid.A3954DESCR = '';
-        beanGrid.A3954IDUAT = '';
-        beanGrid.A3954TCUAM = '';
-        beanGrid.A3954FALTA = '';
-        beanGrid.A3954FBAJA = '';
+        //beanGrid.A4244CCUST = '139';
+        //beanGrid.A4244CDCLI = '';
+        beanGrid.A4244UATP = '';
+        beanGrid.A4244TIPO = '';
+        //beanGrid.A4244MDA = '';
+        //beanGrid.A4244VENTA = '0';
         grid01.getStore().add(beanGrid);
 
     },
@@ -696,48 +476,42 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             }
         });
     },
-    /*
-     * ID identif.
-     */
-    search_identif: function () {
-        var bean = {};
+    
+    onBuscarCliente:function(){
+        var me = this;
+        var bean = {};        
         bean.VP_OPCION = "1";
-        bean.VP_A3979CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
-        bean.VP_A3979IDCLI = "";
-        bean.VP_A3979DESCR = "";
-        bean.limit = "-1";
-        bean.page = "-1";
-        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataIdentif', {
-            proxy: {
-                url: prototype.url + '/search_identif'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = bean;
-                },
-                load: function (obj, obj2, success, obj4, obj5) {
-                    //win.lblUser_toolTip("Estructura: A3009");
-                    // <editor-fold defaultstate="collapsed" desc="paggin">
-//                    var pag = Ext.getCmp(prototype.id + '-paggin');
-//                    var pagData = pag.getPageData();
-//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
-//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
-//                    var total = Ext.util.Format.number(pagData.total, '0,000');
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
-                    // </editor-fold>
-//                    if (obj.data.length === 0) {
-//                        global.Msg({
-//                            msg: 'Data not found uatp'
-//                        });
-//                    }
-                    global.clear();
-                }
+        bean.VP_CDCLI = Ext.getCmp(prototype.id+'-A4241CDCLI').getValue();
+        bean.VP_PARAM1 = "";  
+        if (bean.VP_CDCLI === ""){
+            global.Msg({msg: 'Ingrese Código de Cliente'});
+            return;
+        }
+        Ext.Ajax.request({
+            url: me.url01 + '/search',
+            timeout: 60000000,
+            method: 'POST',
+            params: bean,
+            beforerequest: Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').mask('Buscando cliente...', ''),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);                
+                Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
+                if (res.total === 0) {
+                        global.Msg({
+                            msg: 'No se econtro cliente'
+                        });
+                    return;
+                }                                
+                //console.log(res.data[0].A3953RSOCI);
+                Ext.getCmp(prototype.id + '-A4241CDCLI').setValue(res.data[0].A3953CDCLI);
+                Ext.getCmp(prototype.id + '-A3953RSOCI').setValue(res.data[0].A3953RSOCI);
             }
-        });
-        Ext.getCmp(prototype.id + '-gridData-identif').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridData-identif').getStore().reload();
+        });   
+    },
+    OnEventbuscarCliente: function(obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.onBuscarCliente();
+        }
     },
     PadLeft: function (number, width) {
         width -= number.toString().length;
@@ -849,64 +623,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         var Removed = Ext.getCmp(objGrid).getStore().getRemovedRecords();
         //console.log(Removed);
         return Removed;
-    },
-    //No usado
-    crud_uatpAdd: function () {
-        var lstuatp = new Array();
-        var griduatp = Ext.getCmp(prototype.id + '-gridData-uatp');
-        griduatp.store.data.each(function (rec) {
-            lstuatp.push({
-                "A3954TCUAT": rec.data.A3954TCUAT,
-                "A3954DESCR": rec.data.A3954DESCR,
-                "A3954IDUAT": rec.data.A3954IDUAT,
-                "A3954TCUAM": rec.data.A3954TCUAM,
-                "A3954FALTA": rec.data.A3954FALTA,
-                "A3954FBAJA": rec.data.A3954FBAJA
-            });
-        });
-        Ext.Ajax.request({
-            url: this.url + '/mantenimiento_uatp',
-            method: 'POST',
-            timeout: 60000000,
-            params: {
-                VP_ACTION: 'I',
-                VP_A3954CDCLI: Ext.getCmp(prototype.id + '-A3953CDCLI').getValue(),
-                beanuatp: JSON.stringify(lstuatp)
-            },
-            beforerequest: Ext.getCmp(prototype.id + '-CatalogoClienteEntry').mask('Loading...', ''),
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                var objRtn = res.objRtn;
-                Ext.getCmp(prototype.id + '-CatalogoClienteEntry').unmask('Loading...', '');
-                global.Msg({
-                    msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
-                    fn: function () {
-                        //exito
-                        //Ext.getCmp(prototype.id + '-CatalogoClienteEntry').close();
-                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                    }
-                });
-            }
-        });
-    },
-    btnDetContrato_click:function(){
-        this.winDataEntry('U');
-    },
-    winDataEntry: function(action) {
-        action = action === null || action === undefined ? 'U' : action;        
-        var VL_CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
-        Ext.create('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteContrato', {
-            id: prototype.id02 + '-CatalogoClienteContrato',
-            params: {
-                action: action,
-                rec: {
-                  CDCLI:VL_CDCLI
-                }
-            }
-        }).show();
-    }
-
+    }    
 });
 
 

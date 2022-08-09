@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                             id: prototype.id + '-A4241IDANT',
                                             fieldLabel: 'Contract Id', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 120, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
-                                            readOnly: true,
+                                            readOnly: true, value:'0',
                                             width: 245
                                         }
                                     ]
@@ -74,7 +74,13 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                             id: prototype.id + '-A4241CDCLI',
                                             fieldLabel: 'Customer code', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             width: 245, height: 28,
-                                            fieldStyle: 'font-weight: bold;font-size:13px;text-align:center'
+                                            fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 9,
+                                             listeners: {
+                                                 keypress: 'OnEventbuscarCliente'                                                
+                                            }
                                         },
                                         {
                                             xtype: 'toolbar',
@@ -86,9 +92,14 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     iconCls: 'prx-icon-search',
                                                     tooltip: 'Buscar cliente',
                                                     listeners: {
-                                                        //click: 'onBuscarCliente'
+                                                        click: 'onBuscarCliente'
                                                     }
                                                 }]
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-A4241STSPG',
+                                            hidden: true
                                         }
                                     ]
                                 },
@@ -165,7 +176,8 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                             maskRe: /[1234567890\.]/,
                                             listeners: {
                                                 focus: 'onFocusNumberfield',
-                                                focusleave: 'onfocusleaveNumberfield',
+                                                //focusleave: 'onfocusleaveNumberfield',
+                                                focusleave: 'set_calcular_beneficio',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
                                                         Ext.getCmp(prototype.id + '-A4241PORBF').focus();
@@ -184,10 +196,11 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                             maskRe: /[1234567890\.]/,
                                             listeners: {
                                                 focus: 'onFocusNumberfield',
-                                                focusleave: 'onfocusleaveNumberfield',
+                                                //focusleave: 'onfocusleaveNumberfield',
+                                                focusleave: 'set_calcular_beneficio',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        // Ext.getCmp(prototype.id + '-A3953DIRE1').focus();
+                                                        Ext.getCmp(prototype.id + '-A4241MDA').focus();
                                                     }
                                                 }
                                             }
@@ -202,7 +215,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                             disabled: true,
                                             value: '0.00',
                                             maskRe: /[1234567890\.]/,
-                                            listeners: {
+                                            listeners: {                                                
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
                                                         Ext.getCmp(prototype.id + '-A4241MDA').focus();
@@ -406,7 +419,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
                                                     enforceMaxLength: true,
-                                                    value: '0.00',
+                                                    value: '0.00',disabled:true,
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
                                                         focus: 'onFocusNumberfield',
@@ -425,11 +438,11 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
                                                     enforceMaxLength: true,
-                                                    value: '0.00',
+                                                    value: '0.00',disabled:true,
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
                                                         focus: 'onFocusNumberfield',
-                                                        focusleave: 'onfocusleaveNumberfield',
+                                                        //focusleave: 'onfocusleaveNumberfield',                                                        
                                                         keypress: function (obj, e) {
                                                             if (e.getKey() === e.ENTER) {
                                                                 // Ext.getCmp(prototype.id + '-A3953DIRE1').focus();
@@ -444,7 +457,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
                                                     enforceMaxLength: true,
-                                                    value: '0.00',
+                                                    value: '0.00',disabled:true,
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
                                                         focus: 'onFocusNumberfield',
@@ -470,7 +483,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
                                                     enforceMaxLength: true,
-                                                    value: '0.00',
+                                                    value: '0.00',disabled:true,
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
                                                         focus: 'onFocusNumberfield',
@@ -488,7 +501,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
-                                                    enforceMaxLength: true,
+                                                    enforceMaxLength: true,disabled:true,
                                                     value: '0.00',
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
@@ -507,7 +520,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
-                                                    enforceMaxLength: true,
+                                                    enforceMaxLength: true,disabled:true,
                                                     value: '0.00',
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
@@ -534,7 +547,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     width: 100, fieldStyle: 'font-weight:bold;font-size:12px;text-align:right;color:green',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
                                                     enforceMaxLength: true,
-                                                    value: '0.00',
+                                                    value: '0.00', disabled:true,
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
                                                         focus: 'onFocusNumberfield',
@@ -552,7 +565,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right;color:green',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
-                                                    enforceMaxLength: true,
+                                                    enforceMaxLength: true,disabled:true,
                                                     value: '0.00',
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
@@ -571,7 +584,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
                                                     width: 100, fieldStyle: 'font-weight: bold;font-size:12px;text-align:right;color:green',
                                                     enableKeyEvents: true, padding: '1px 1px 0px 1px',
-                                                    enforceMaxLength: true,
+                                                    enforceMaxLength: true,disabled:true,
                                                     value: '0.00',
                                                     maskRe: /[1234567890\.]/,
                                                     listeners: {
@@ -741,6 +754,12 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     }
                                                 }
                                             }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-A4241IDRCB',
+                                            hidden:true,
+                                            value:'0'
                                         },
                                         {
                                             xtype: 'textfield',
