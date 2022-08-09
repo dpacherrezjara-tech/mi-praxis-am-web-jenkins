@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         args: ['01']
                                                     },
                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        metaData.style = "font-weight:bold;text-align:center;";
+                                                        metaData.style = "font-weight:bold;text-align:right;";
                                                         return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
                                                     },
                                                     summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         args: ['08']
                                                     },
                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        metaData.style = "font-weight:bold;text-align:center;";
+                                                        metaData.style = "font-weight:bold;text-align:right;";
                                                         return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
                                                     },
                                                     summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -207,7 +207,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         args: ['06']
                                                     },
                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        metaData.style = "font-weight:bold;text-align:center;";
+                                                        metaData.style = "font-weight:bold;text-align:right;";
                                                         return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
                                                     },
                                                     summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -222,7 +222,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         args: ['04']
                                                     },
                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        metaData.style = "font-weight:bold;text-align:center;";
+                                                        metaData.style = "font-weight:bold;text-align:right;";
                                                         return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
                                                     },
                                                     summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
