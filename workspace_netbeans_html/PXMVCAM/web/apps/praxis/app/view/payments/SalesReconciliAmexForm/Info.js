@@ -84,6 +84,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
+                                            {text: 'Zone', dataIndex: 'ZONA', width: 50},
+                                            {text: 'Country', dataIndex: 'SCOUNTRY', width: 60},
                                             {text: 'Curr', dataIndex: 'PCURRENCY', width: 50},
                                             {
                                                 text: 'Summary',
@@ -622,6 +624,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
+                                            {text: 'Zone', dataIndex: 'ZONA', width: 50},
+                                            {text: 'Country', dataIndex: 'SCOUNTRY', width: 60},
                                             {text: 'Curr', dataIndex: 'PCURRENCY', width: 50},
                                             {
                                                 text: 'Summary',

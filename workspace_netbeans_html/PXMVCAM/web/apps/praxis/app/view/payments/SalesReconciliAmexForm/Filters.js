@@ -258,6 +258,46 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             listeners: {
                                 change: 'onGridDiffTransaction'
                             }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Zone:',
+                            id: prototype.id + '-cmbZONASumm',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 120,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {                                
+                                change: 'obtenerPaisesSumm'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Country:',
+                            id: prototype.id + '-cmbSCOUNTRYSumm',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 80,
+                            width: 140,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
                         }
                     ]
                 },

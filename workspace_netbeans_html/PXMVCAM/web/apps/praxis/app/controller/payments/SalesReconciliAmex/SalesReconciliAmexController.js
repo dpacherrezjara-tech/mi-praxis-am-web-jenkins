@@ -142,7 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
 
-        month = '05';
+        //month = '05';
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
@@ -345,6 +345,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbZONAErr').setValue('');
+                    
+                    Ext.getCmp(prototype.id + '-cmbZONASumm').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbZONASumm').setValue('');
 
                 }
             }
@@ -397,6 +402,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').setValue('');
+
+                }
+            }
+        });
+    },
+    obtenerPaisesSumm: function () {
+        var zona = Ext.getCmp(prototype.id + '-cmbZONASumm').getValue();
+
+        var bean_zona = {};
+        bean_zona.IN_ZONA = zona;
+
+        Ext.Ajax.request({
+            url: prototype.url + '/getPaises',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-frmFilterSummary').mask('Loading...'),
+            params: {beanString: JSON.stringify(bean_zona)},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-frmFilterSummary').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').setValue('');
 
                 }
             }
@@ -468,6 +498,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_AUTHE = Ext.getCmp(prototype.id + '-txtAuthE').getValue();
         me.bean.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         me.bean.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        me.bean.IN_ZONA_SUMM = Ext.getCmp(prototype.id + '-cmbZONASumm').getValue();
+        me.bean.IN_SCOUNTRY_SUMM = Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').getValue();
 
 
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
@@ -1383,12 +1415,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
                         if (data.IN_DATE === "PAYDATE") {
                             Ext.getCmp(prototype.id + '-htDateSunmission').setText('Payment');
-                            Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                    + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                            Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + ' - Merchant ID: ' + data.IN_MERCHID
+                                    + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                         } else {
                             Ext.getCmp(prototype.id + '-htDateSunmission').setText('Processing');
-                            Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                    + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                            Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + ' - Merchant ID: ' + data.IN_MERCHID
+                                    + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                         }
                     }
                 }
@@ -1448,11 +1480,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         if (data.IN_DATE === "PAYDATE") {
 //                            Ext.getCmp(prototype.id + '-htDateChargeback').setText('Payment');
                             Ext.getCmp(prototype.id + '-gridDetChargeback').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                    + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                                    + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                         } else {
 //                            Ext.getCmp(prototype.id + '-htDateChargeback').setText('Processing');
-                            Ext.getCmp(prototype.id + '-gridDetChargeback').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                    + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                            Ext.getCmp(prototype.id + '-gridDetChargeback').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + ' - Merchant ID: ' + data.IN_MERCHID
+                                    + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                         }
                     }
                 }
@@ -1532,20 +1564,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + ' - ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                             }
 
                         } else {
                             Ext.getCmp(prototype.id + '-htDateTransaction').setText('Processing');
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + ' - ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENC + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                             }
                         }
                     }
@@ -1698,20 +1730,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + ' - ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                             }
 
                         } else {
                             Ext.getCmp(prototype.id + '-htDatePricing').setText('Processing');
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + ' - ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENC + '</center>');
+                                        + ' - Payment Number: ' + data.IN_AXPAYNBR + ' - Zone: ' + data.ZONA + ' - Country: ' + data.SCOUNTRY + ' - Currency: ' + data.IN_PCURRENCY + '</center>');
                             }
                         }
                     }

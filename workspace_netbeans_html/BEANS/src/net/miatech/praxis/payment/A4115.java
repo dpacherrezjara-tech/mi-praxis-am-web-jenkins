@@ -13,6 +13,8 @@ public class A4115 {
     
     public String CCUST = "";
     public String PRDA = "";
+    public String ZONA = "";
+    public String SCOUNTRY = "";
     public String RECTYPE = "";
     public String MERCHID = "";
     public String STYPECD = "";
