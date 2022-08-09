@@ -14,5 +14,6 @@ import net.miatech.beans.DBException;
 public class SQP04527Filter extends A4241{
     public String VP_ACTION = "";    
     public String VP_UATPS = "";
-    public DBException dbException = new DBException();
+    public String OU_A4241ID = "";
+    public DBException dbException = new DBException();    
 }
