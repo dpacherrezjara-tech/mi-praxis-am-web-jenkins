@@ -171,7 +171,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                 align: 'center'
                                             },
                                             columns: [
-                                                {text: 'hdError1',id:prototype.id+'hdError1', width: 90, dataIndex: 'QTYERR1',
+                                                {text: '',id:prototype.id+'hdError1', width: 90, dataIndex: 'QTYERR1',
                                                     listeners: {
                                                         click: 'GridByWeek_colHandler',
                                                         args: ['01']
@@ -186,7 +186,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         return '<b>' + Ext.util.Format.number(data.totQTYERR1, '0,000') + '<b>';
                                                     }
                                                 },
-                                                {text: 'hdError2',id:prototype.id+'hdError2', width: 90, dataIndex: 'QTYERR2',
+                                                {text: '',id:prototype.id+'hdError2', width: 90, dataIndex: 'QTYERR2',
                                                     listeners: {
                                                         click: 'GridByWeek_colHandler',
                                                         args: ['08']
@@ -201,7 +201,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         return '<b>' + Ext.util.Format.number(data.totQTYERR2, '0,000') + '<b>';
                                                     }
                                                 },
-                                                {text: 'hdError3',id:prototype.id+'hdError3', width: 90, dataIndex: 'QTYERR3',
+                                                {text: '',id:prototype.id+'hdError3', width: 90, dataIndex: 'QTYERR3',
                                                     listeners: {
                                                         click: 'GridByWeek_colHandler',
                                                         args: ['06']
@@ -216,7 +216,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                         return '<b>' + Ext.util.Format.number(data.totQTYERR3, '0,000') + '<b>';
                                                     }
                                                 },
-                                                {text: 'hdError4',id:prototype.id+'hdError4', width: 90, dataIndex: 'QTYERR1',
+                                                {text: '',id:prototype.id+'hdError4', width: 90, dataIndex: 'QTYERR1',
                                                     listeners: {
                                                         click: 'GridByWeek_colHandler',
                                                         args: ['04']
@@ -275,7 +275,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                     xtype: 'grid',
                                     padding: '20 0 0 0',
                                     id: prototype.id + '-gridDataWeek',
-                                    height: 550,
+                                    height: 560,
                                     width: 1170,
                                     columnLines: true,
                 //                    resizable: false,
@@ -411,7 +411,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
                                                     sortable: true,
                                                     align: 'center'
                                                 },
-                                                columns: [,
+                                                columns: [
                                                     {text: 'Transactions', width: 90, dataIndex: 'TOTAL',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = 'text-align:right; margin-right:0px;';
@@ -447,6 +447,201 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund', {
 
 
                 },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxByTkt',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'hbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        // <editor-fold defaultstate="collapsed" desc="gridDataScrRefund">
+
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {xtype: 'label', id: prototype.id + '-lblTit_Tkt', text: '', style: "font-size:12px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
+                                {
+                                xtype: 'grid',
+                                padding: '20 0 0 0',
+                                id: prototype.id + '-gridDataTkt',
+                                height: 560,
+                                width: 1100,
+                                columnLines: true,
+            //                    resizable: false,
+                                features: [
+                                    {
+                                        dock: 'bottom',
+                                        ftype: 'summary'
+                                    }
+                                ],             
+                                columns: {
+                                    defaults: {
+                                        menuDisabled: true,
+                                        sortable: true,
+                                        resizable: false,
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {text: 'Ticket ',
+                                            defaults: {
+                                                menuDisabled: true,
+                                                sortable: true,
+                                                align: 'center'
+                                            },
+                                            columns: [
+                                                {text: 'Number', dataIndex: 'strTicket', width: 110, align: 'center',
+                                                    listeners: {
+                                                        click: 'gridData_VIEWTKT_clickHandler'
+                                                    },
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = "font-weight:bold;text-align:center;";
+                                                        return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Processing ',
+                                            defaults: {
+                                                menuDisabled: true,
+                                                sortable: true,
+                                                align: 'center'
+                                            },
+                                            columns: [
+                                                {text: 'Date', dataIndex: 'strFormatDate2', width: 90, align: 'center'}
+                                            ]
+                                        },
+                                        {text: 'Source',
+                                            columns: [
+                                                {text: 'Sales', dataIndex: 'strDescription', width: 60, align: 'center'}
+                                            ]
+                                        },
+                                        {text: 'Transaction',
+                                            columns: [
+                                                {text: 'Code', dataIndex: 'strDescription4', width: 60, align: 'center'}
+                                            ]
+                                        },
+                                        {text: 'Sales',
+                                            columns: [
+                                                {text: 'Date', dataIndex: 'strFormatDate3', width: 90, align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = 'text-align:center; margin-center:0px;background:#FFF9E0;';
+                                                        return value;
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Refund',
+                                            columns: [
+                                                {text: 'Date', dataIndex: 'strFormatDate4', width: 90, align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = 'text-align:center; margin-center:0px;background:#FFF9E0;';
+                                                        return value;
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Difference',
+                                            columns: [
+                                                {text: 'days', dataIndex: 'diffDate', width: 80, align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = 'text-align:center; margin-center:0px;background:#FFF9E0;';
+                                                        
+                                                        return Ext.util.Format.number(value, '0,000');
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Country', dataIndex: 'SCOUNTRY', width: 60, align: 'center'},
+                                        {text: 'Agent', dataIndex: 'SAGENT', width: 90, align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        var data = Ext.getCmp(prototype.id + '-gridDataTkt').getStore().getData().items[0].data;
+                                                        metaData.style = 'text-align:center; margin-center:0px;';
+                                                        metaData.tdAttr = 'data-qtip="' + data.strDescription2 + '"';
+                                                        return value;
+                                                    }
+                                        },
+                                        {text: 'Currency', dataIndex: 'SCURRENCY', width: 65, align: 'center'},
+                                        {text: 'Sales',
+                                            columns: [
+                                                {text: 'Amount', width: 90, dataIndex: 'SVFOP', align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = 'text-align:right; margin-right:0px;background:#9ccfbf;';
+                                                        return Ext.util.Format.number(value, '0,000');
+                                                    },
+                                                    summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                        var data = Ext.getCmp(prototype.id + '-gridDataTkt').getStore().getData().items[0].data;
+                                                        metaData.style = 'text-align:right';
+                                                        return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000') + '<b>';
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Refund',
+                                            columns: [
+                                                {text: 'Amount', width: 65, dataIndex: 'RVFOP', align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = 'text-align:right; margin-right:0px;background:#9ccfbf;';
+                                                        return Ext.util.Format.number(value, '0,000');
+                                                    },
+                                                    summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                        var data = Ext.getCmp(prototype.id + '-gridDataTkt').getStore().getData().items[0].data;
+                                                        metaData.style = 'text-align:right';
+                                                        return '<b>' + Ext.util.Format.number(data.totRVFOP, '0,000') + '<b>';
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Difference',
+                                            columns: [
+                                                {text: 'Amount', width: 80, dataIndex: 'diffAmount', align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = 'text-align:right; margin-right:0px;background:#9ccfbf;';
+                                                        return Ext.util.Format.number(value, '0,000');
+                                                    },
+                                                    summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                        var data = Ext.getCmp(prototype.id + '-gridDataTkt').getStore().getData().items[0].data;
+                                                        metaData.style = 'text-align:right';
+                                                        return '<b>' + Ext.util.Format.number(data.totdiffAmount, '0,000') + '<b>';
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {text: 'Error',
+                                            columns: [
+                                                {text: 'Code', dataIndex: 'CERROR', width: 50, align: 'center',
+                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        var data = Ext.getCmp(prototype.id + '-gridDataTkt').getStore().getData().items[0].data;
+                                                        metaData.style = 'text-align:center; margin-center:0px;';
+                                                        metaData.tdAttr = 'data-qtip="' + data.CERROR+'-'+data.strDescription1 + '"';
+                                                        return value;
+                                                    }
+                                                }
+                                            ]
+                                        }
+
+                                    ]
+                                }
+                             }
+                            ]
+                        }
+                    ]
+
+
+                }
             ]
         },
         {

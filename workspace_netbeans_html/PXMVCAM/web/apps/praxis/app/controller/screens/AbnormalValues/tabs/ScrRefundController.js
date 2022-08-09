@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
     columns2: {},
     bean: {},
     beanDet: {},
+    beanTkt: {},
     meScrRefund: '',
     dw_excel: false,
     boxActual: '-boxMainDataScrRefund',
@@ -17,6 +18,11 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
         console.log('ScrRefundController - initt');
 //        meScrRefund.drillDown.push(meScrRefund.boxActual);
         console.log(meScrRefund.drillDown);
+        
+        prototypeProgram.view = 'screens-abnormal-values-form';
+        prototypeProgram.nprog = 'PX00000414';
+        prototypeProgram.title = 'Warning Values';
+        prototypeProgram.modulo = '';
     },
     afterRender: function() {
 
@@ -77,7 +83,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataScrRefund').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataScrRefund').setStore(storeGridDatas);
-        
+//        Ext.getCmp(prototype.id + '-gridDataScrRefund').getView().refresh(true);
 //        Ext.Ajax.request({
 //            url: prototype.url + '/search',
 //            method: 'POST',
@@ -122,7 +128,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
     viewGridByWeek_colHandler: function() {
 
         win.lblUser_toolTip("Estructura: A2789");
-        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.FlightConciliation.GridData', {
             proxy: {url: prototype.url + '/searchByWeek'
             },
             listeners: {
@@ -132,7 +138,6 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + meScrRefund.boxActual).unmask();
-                    win.lblUser_toolTip("Estructura: IMF110");
 
                     if (obj.data.length > 0) {
                         var Objtemp = obj.data.items[0].data;
@@ -214,6 +219,68 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
 //            }
 //        });
     },
+    GridByTkt_colHandler: function(column, e, row, column, x, rowData) {
+        meScrRefund.beanTkt = x.record.data;
+        this.showGrid('-boxByTkt');
+        this.showPagination_clickHandler();
+        
+        console.log(meScrRefund.beanTkt);
+        this.viewGridByTkt_colHandler();
+    },
+    viewGridByTkt_colHandler: function() {
+
+        win.lblUser_toolTip("Estructura: A2789");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {url: prototype.url + '/searchByTkt'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id +  meScrRefund.boxActual).mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(meScrRefund.beanTkt),dw_excel:false};
+                },
+                load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + meScrRefund.boxActual).unmask();
+
+                    if (obj.data.length > 0) {
+                        var Objtemp = obj.data.items[0].data;
+                        var nomFecha='' ;
+                        var strCERROR='' ;
+                        
+                        
+                        if(meScrRefund.beanTkt.IN_TIPOFECHA==='FPRDA'){
+                            nomFecha= 'Processing Date';	
+                        }else{
+                            nomFecha= 'Accounting Date';		
+                        }
+                        var v_titulo = nomFecha + ': ' + Objtemp.strFormatDate1 +'  -  RFN Card Code: ' +Objtemp.RCARCOD+'  -  RFN Card Number: ' + Objtemp.RCARDN;
+                        Ext.getCmp(prototype.id + '-lblTit_Tkt').setText(v_titulo);
+
+
+                    } else {
+                        global.Msg({msg: 'Data not found'});
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDataTkt').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataTkt').setStore(storeGridDatas);
+        
+    },
+    gridData_VIEWTKT_clickHandler: function (column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        var strTkt = data.strTicket.trim();
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+//        beanProMasterTicket.IN_SEQ = '00';
+
+        console.log(beanProMasterTicket);
+        
+        win.displayProMasterTicket(this, 'AbnormalValue', beanProMasterTicket);
+    },
     showGrid: function(nameGrid) {
 
         me.panelActual = nameGrid;//PARA PAGINACION
@@ -249,6 +316,51 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
         }
 //        console.log('imgBack_clickHandler == ' + meScrRefund.drillDown);
 
+    },
+    imgExcel_clickHandler: function () {
+        
+        console.log('imgExcel_clickHandler');
+        meScrRefund.dw_excel = true;
+        if(meScrRefund.boxActual === '-boxMainDataScrRefund'){
+//            console.log(Ext.getCmp(prototype.id + '-gridDataScrRefund').config.columns.items);
+            meScrRefund.goURLpost('search',meScrRefund.searchParams,Ext.getCmp(prototype.id + '-gridDataScrRefund').config.columns.items);
+        }else if(meScrRefund.boxActual === '-boxByWeek'){
+//            console.log(Ext.getCmp(prototype.id + '-gridDataWeek').config.columns.items);
+//            console.log(JSON.stringify(Ext.getCmp(prototype.id + '-gridDetSalesS').config.columns));
+            meScrRefund.goURLpost('searchByWeek',JSON.stringify(meScrRefund.beanDet),Ext.getCmp(prototype.id + '-gridDataWeek').config.columns.items);
+        }else if(meScrRefund.boxActual === '-boxByTkt'){
+//            console.log(Ext.getCmp(prototype.id + '-gridDataWeek').config.columns.items);
+//            console.log(JSON.stringify(Ext.getCmp(prototype.id + '-gridDetSalesS').config.columns));
+            meScrRefund.goURLpost('searchByTkt',JSON.stringify(meScrRefund.beanTkt),Ext.getCmp(prototype.id + '-gridDataTkt').config.columns.items);
+        }else{
+            meScrRefund.dw_excel = false;
+        }
+    },
+    goURLpost: function (method,parms,columns) {
+        
+        var js_columns = JSON.stringify(columns);
+        
+        var mapForm = document.createElement("form");
+        mapForm.target = "_blank";
+        mapForm.method = "POST"; // or "post" if appropriate
+        mapForm.action = prototype.url + '/' +method+'?dw_excel=true';
+
+        var mapInput = document.createElement("input");
+        mapInput.type = "text";
+        mapInput.name = "beanString";
+        mapInput.value = parms;
+        mapForm.appendChild(mapInput);
+        
+        var mapInput = document.createElement("input");
+        mapInput.type = "text";
+        mapInput.name = "columns";
+        mapInput.value = js_columns;
+        mapForm.appendChild(mapInput);
+
+        document.body.appendChild(mapForm);
+
+
+        mapForm.submit();
     },
     showPagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
