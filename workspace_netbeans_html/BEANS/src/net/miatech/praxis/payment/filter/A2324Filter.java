@@ -85,7 +85,9 @@ public class A2324Filter extends A2324 {
     public double TOTCOMISI = 0.0;
     public double totTOTCOMISI = 0.0;
     public double IVA = 0.0;    
-    public double totIVA = 0.0;    
+    public double totIVA = 0.0;   
+    public double SVFOPOL = 0.0;
+    public double totSVFOPOL = 0.0;
     public double TOT_DESC = 0.0;
     public double totTOT_DESC = 0.0;
     public double NET = 0.0;    
@@ -138,5 +140,5 @@ public class A2324Filter extends A2324 {
     public double A1531VFOP = 0.0;
 
     public Pagination page = new Pagination();
-
+    
 }
