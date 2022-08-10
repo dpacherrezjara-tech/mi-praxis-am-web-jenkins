@@ -38,6 +38,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     searchParams: {},
     paramsDetail: {},
     paramsDetailSummary: {},
+    paramsDetailTaxes: {},
     paramsDetailChargeback: {},
     paramsDetailSubmission: {},
     paramsDetailTransaction: {},
@@ -345,7 +346,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbZONAErr').setValue('');
-                    
+
                     Ext.getCmp(prototype.id + '-cmbZONASumm').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
@@ -1432,6 +1433,52 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-paggin15').bindStore(storeGridDatas);
 
     },
+    onGridDetTaxes: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        if (rowData.data.SCOUNTRY === 'AR') {
+            me.paramsDetailTaxes.beanString = JSON.stringify(rowData.data);
+            me.drillDown.push(me.panelActual);
+            me.panelActual = '-boxDetTaxes';
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+            this.setGridDataDetTaxes();
+        }
+    },
+    setGridDataDetTaxes: function () {
+        win.lblUser_toolTip("Estructura: A4114");
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetTaxes'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = me.paramsDetailTaxes;
+                },
+                load: function (obj) {
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log(obj);
+
+                        var pag = Ext.getCmp(prototype.id + '-paggin21');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        var data = obj.data.items[0].data;
+                        console.log(data);                        
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetTaxes').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin21').bindStore(storeGridDatas);
+
+    },
     onGridDetAdjustment: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
@@ -2483,7 +2530,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setWidthPie: function () {
 
         console.log(me.panelActual);
-        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment' || me.panelActual === '-boxDetailTktSettlement' || me.panelActual === '-panelGridData' || me.panelActual === '-boxDetSubmission' || me.panelActual === '-boxMainSummary' || me.panelActual === '-boxSummaryTransactionError' || me.panelActual === '-boxMainChangePayment' || me.panelActual === '-boxDiffTransaction') {
+        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment' || me.panelActual === '-boxDetailTktSettlement' || me.panelActual === '-panelGridData' || me.panelActual === '-boxDetSubmission' || me.panelActual === '-boxMainSummary' || me.panelActual === '-boxSummaryTransactionError' || me.panelActual === '-boxMainChangePayment' || me.panelActual === '-boxDiffTransaction' || me.panelActual === '-boxDetTaxes' ) {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -2628,6 +2675,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case '-boxDiffTransaction':
                 me.pagginActual = '-paggin20';
+                break;
+            case '-boxDetTaxes':
+                me.pagginActual = '-paggin21';
                 break;
         }
     },
