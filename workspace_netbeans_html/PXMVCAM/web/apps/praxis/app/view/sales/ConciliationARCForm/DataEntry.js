@@ -479,8 +479,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                                         },
                                         {
                                             xtype: 'label',
-                                            width: 200,
-                                            text: 'A=Macht M=Manual D=Difference',
+                                            width: 250,
+                                            text: 'A=Match M=Manual Match D=Difference',
                                             style: 'font-weight:normal;text-align:left;'
 
                                         }
