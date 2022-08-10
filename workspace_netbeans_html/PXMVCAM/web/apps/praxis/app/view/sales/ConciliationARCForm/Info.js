@@ -140,11 +140,11 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Status', width: 70, dataIndex: 'A1698STCON_00',
+                            {text: 'Status', width: 90, dataIndex: 'A1698STCON_00',
                                 renderer: function(value, metaData, record, row, col) {
                                     var status = record.data.A1698STCON;
                                     //console.log(record.data);
-                                    if (status === 'A') {
+                                    if (status === 'A' || status==='M') {
                                         metaData.style = 'text-align:left; margin-left:0px;color:#339900;font-weight:bold'
                                     } else {
                                         metaData.style = 'text-align:left; margin-left:0px;color:#FF0000;font-weight:bold'
