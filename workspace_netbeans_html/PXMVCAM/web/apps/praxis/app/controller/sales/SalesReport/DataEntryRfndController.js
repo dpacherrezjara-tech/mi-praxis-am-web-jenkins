@@ -524,6 +524,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
             };
 
             meDET.cargarTotales();
+        }else{
+            Ext.getCmp(prototype.idRfnd + '-dataEntryRfnd').unmask('Loading...', '');
         }
     },
     cargarTotales: function () {
