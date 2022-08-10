@@ -12,6 +12,7 @@ import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesReconciliAmexDAO;
 import net.miatech.praxis.payment.filter.A4113Filter;
+import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
@@ -53,7 +54,7 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04270(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04270(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04471(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04471(filter);
     }
@@ -72,6 +73,10 @@ public class SalesReconciliAmexLogic {
 
     public List<A4116Filter> loadPX570SQP04275(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04275(filter);
+    }
+
+    public List<A4114Filter> loadPX570SQP04571(A4113Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04571(filter);
     }
 
     public List<A4116Filter> loadPX570SQP04328(A4116Filter filter) throws SQLException, Exception {
@@ -129,11 +134,11 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04465(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04465(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04569(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04569(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04570(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04570(filter);
     }

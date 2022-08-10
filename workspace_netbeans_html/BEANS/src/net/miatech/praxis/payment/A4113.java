@@ -14,6 +14,7 @@ public class A4113 {
     public String CCUST = "";
     public String PRDA = "";
     public String PMERCHID = "";
+    public String MERCHID = "";
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
