@@ -1324,6 +1324,42 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                                 strVoid: ''//me1.gloA720TKVOID
                             }
                         }).show();
+                    }else{
+                        if (Ext.getCmp(prototype.idRfnd + '-det-lblConjuction').getValue() === 'C'){
+                            var ticket = '';
+                            var inttkt = Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().substr(2, 8);
+                            ticket = parseInt(inttkt) + 1;
+                            var valueValid = '00000000';
+                            var resultado = valueValid + ticket;
+                            resultado = resultado.substring(resultado.length - valueValid.length);
+                            ticket = Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().substr(0, 2) + resultado;
+                            bean.TDNR = Ext.getCmp(prototype.idRfnd + '-det-lblCia').getValue().trim() + ticket;
+                            Ext.Ajax.request({
+                                url: prototype.ProrrateoNew.url + '/searchDeliveryRFND',
+                                method: 'POST',
+                                timeout: 60000000,
+                                params: {beanString: JSON.stringify(bean)},
+                                success: function (response, opts) {
+                                    var res = Ext.JSON.decode(response.responseText);
+                                    if (res.success) {
+                                        var texto = res.strTextoBSP;
+                                        if (texto !== '') {
+                                            Ext.create('Ext.Praxis.view.screens.CtrlDeliveryOrigForm', {
+                                                id: 'CtrlDeliveryOrigForm',
+                                                params: {
+                                                    strTexto: texto,
+                                                    strVoid: ''//me1.gloA720TKVOID
+                                                }
+                                            }).show();
+                                        }
+                                    } else
+                                        global.Msg({msg: res.sesion});
+                                },
+                                failure: function (response, opts) {
+                                    console.log('server-side failure with status code ' + response.status);
+                                }
+                            });
+                        }
                     }
                 } else
                     global.Msg({msg: res.sesion});
