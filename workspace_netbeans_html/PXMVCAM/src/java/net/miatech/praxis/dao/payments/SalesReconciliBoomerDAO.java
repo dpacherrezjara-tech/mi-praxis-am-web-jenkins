@@ -485,6 +485,7 @@ public class SalesReconciliBoomerDAO {
         long totSVFOPS = 0;
         long totTOTCOMISI = 0;
         long totIVA = 0;
+        long totSVFOPOL = 0;
         long totTOT_DESC = 0;
         long totNET = 0;
 
@@ -533,6 +534,7 @@ public class SalesReconciliBoomerDAO {
                 totSVFOPS = rst.getLong("SVFOPS");
                 totTOTCOMISI = rst.getLong("TOTCOMISI");
                 totIVA = rst.getLong("IVA");
+                totSVFOPOL = rst.getLong("SVFOPOL");
                 totTOT_DESC = totTOTCOMISI + totIVA;
                 totNET = totSVFOP - totTOT_DESC;
             }
@@ -591,6 +593,7 @@ public class SalesReconciliBoomerDAO {
 
                     beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                     beanTkt.IVA = rst.getLong("IVA");
+                    beanTkt.SVFOPOL = rst.getLong("SVFOPOL");
                     beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
                     beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
 
@@ -599,6 +602,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
 
                     beanTkt.totTOTCOMISI = totTOTCOMISI;
+                    beanTkt.totSVFOPOL = totSVFOPOL;
                     beanTkt.totIVA = totIVA;
                     beanTkt.totTOT_DESC = totTOT_DESC;
                     beanTkt.totNET = totNET;

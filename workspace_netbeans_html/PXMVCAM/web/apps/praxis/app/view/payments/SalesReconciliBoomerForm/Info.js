@@ -219,7 +219,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1585,
+                            width: 1610,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -229,7 +229,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetail',
-                                    width: 1585,
+                                    width: 1610,
                                     height: 630,
                                     columnLines: true,
                                     features: [{
@@ -451,6 +451,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 }
                                             },
                                             {
+                                                text: 'Import <br> Oracle', dataIndex: 'SVFOPOL', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totSVFOPOL, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
                                                 text: 'PNR', dataIndex: 'SPNR', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
@@ -514,8 +526,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     height: 630,
                                     columnLines: true,
                                     /*features: [{
-                                            ftype: 'summary'
-                                        }],*/
+                                     ftype: 'summary'
+                                     }],*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1192,7 +1204,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     border: true,
                                     //hidden: true,
 //                            height: 'auto',
-                                    width: 580,
+                                    width: 540,
                                     margin: '0 0 0 0 ',
                                     layout: {
                                         type: 'hbox',
@@ -1202,7 +1214,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataPNRInHeader',
-                                            width: 634,
+                                            width: 594,
                                             height: 'auto',
                                             columnLines: true,
                                             features: [{
@@ -1264,26 +1276,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totA1531VFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {
-                                                        sortable: false,
-                                                        xtype: 'actioncolumn',
-                                                        width: 40,
-                                                        text: 'Edit',
-                                                        align: 'center',
-                                                        items: [
-                                                            {
-                                                                iconCls: 'prx-icon-edit',
-                                                                tooltip: 'Edit',
-                                                                handler: 'onEditClickOnPNR'
-                                                            }
-                                                        ]
-                                                    },
-                                                    /*{
-                                                     text: 'Cur', dataIndex: 'A720MONEDA', width: 40
-                                                     },
-                                                     {
-                                                     text: 'PNR', dataIndex: 'A720PNR', width: 80, editor: {xtype: 'textfield', editable: false}
-                                                     },*/
+                                                            /*{
+                                                             text: 'Cur', dataIndex: 'A720MONEDA', width: 40
+                                                             },
+                                                             {
+                                                             text: 'PNR', dataIndex: 'A720PNR', width: 80, editor: {xtype: 'textfield', editable: false}
+                                                             },*/
                                                 ]
                                             }
                                         },
@@ -3197,12 +3195,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
-                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                             return value;
-                                             }
-                                             },*/
+                                                    /*{
+                                                     text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     return value;
+                                                     }
+                                                     },*/
                                         ]
                                     }
                                 }
@@ -3454,12 +3452,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
-                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                             return value;
-                                             }
-                                             },*/
+                                                    /*{
+                                                     text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     return value;
+                                                     }
+                                                     },*/
                                         ]
                                     }
                                 },
@@ -3689,12 +3687,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
-                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                             return value;
-                                             }
-                                             },*/
+                                                    /*{
+                                                     text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     return value;
+                                                     }
+                                                     },*/
                                         ]
                                     }
                                 }
