@@ -673,7 +673,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                     width: '100%',
                     items: [
                         {
-                            xtype: 'panel',
+                            xtype: 'fieldset',
                             layout: 'vbox',
                             margin: '1 0 1 0',
                             border: false,
@@ -785,7 +785,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                             ]
                         },
                         {
-                            xtype: 'panel',
+                            xtype: 'fieldset',
                             layout: 'vbox',
                             margin: '1 0 1 0',
                             border: false,

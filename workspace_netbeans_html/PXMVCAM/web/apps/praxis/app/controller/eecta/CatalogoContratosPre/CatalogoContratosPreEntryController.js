@@ -140,8 +140,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             A4241NUMRC: VL_A4241NUMRC,
             A4241CDCLI: VL_A4241CDCLI
         };
-    },
-    
+    },    
     onSaveClick: function (btn) {
         var p = this.view.params;
         var strOption = p.action;
@@ -402,12 +401,40 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     /*
      * lista UATP's
      */
+    searchUATPCliente: function () {
+        var bean = {};        
+        bean.VP_CDCLI = Ext.getCmp(prototype.id + '-A4241CDCLI').getValue();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {
+            proxy: {
+                url: prototype.url + '/searchUATPCliente'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, obj2, success, obj4, obj5) {                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found uatp'
+                        });
+                    }
+                    global.clear();
+                }
+            }
+        });
+        var panel = Ext.getCmp(prototype.id + '-contenedor-grid-uatp');
+        panel.removeAll();
+        var gridPanel = Ext.create({
+            region: 'center',
+            xtype: prototype.id + '-info-uatp',
+            id: prototype.id + '-content-info-uatp'
+        });
+        panel.add(gridPanel);
+        Ext.getCmp(prototype.id + '-gridData-uatp').setStore(storeGridDatas);
+    },
     search_uatp: function () {
         var bean = {};        
         bean.VP_IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-//        bean.VP_A3954DESCR = "";
-//        bean.limit = "-1";
-//        bean.page = "-1";
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {
             proxy: {
                 url: prototype.url + '/searchDet'
@@ -447,7 +474,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         panel.add(gridPanel);
         Ext.getCmp(prototype.id + '-gridData-uatp').setStore(storeGridDatas);
     },
-
+    
     onClickAdd_uatp: function () {
         var grid01 = Ext.getCmp(prototype.id + '-gridData-uatp');
 //        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp',{});
@@ -480,9 +507,9 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     onBuscarCliente:function(){
         var me = this;
         var bean = {};        
-        bean.VP_OPCION = "1";
+        bean.VP_OPCION = "3";
         bean.VP_CDCLI = Ext.getCmp(prototype.id+'-A4241CDCLI').getValue();
-        bean.VP_PARAM1 = "";  
+        bean.VP_PARAM1 = "P";  
         if (bean.VP_CDCLI === ""){
             global.Msg({msg: 'Ingrese Código de Cliente'});
             return;
@@ -497,6 +524,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 var res = Ext.JSON.decode(response.responseText);                
                 Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
                 if (res.total === 0) {
+                        Ext.getCmp(prototype.id + '-A4241CDCLI').setValue('');
+                        Ext.getCmp(prototype.id + '-A3953RSOCI').setValue('');
                         global.Msg({
                             msg: 'No se econtro cliente'
                         });
@@ -505,6 +534,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 //console.log(res.data[0].A3953RSOCI);
                 Ext.getCmp(prototype.id + '-A4241CDCLI').setValue(res.data[0].A3953CDCLI);
                 Ext.getCmp(prototype.id + '-A3953RSOCI').setValue(res.data[0].A3953RSOCI);
+                // me.searchUATPCliente(); REVISAR
             }
         });   
     },
@@ -519,82 +549,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
         }
         return number + ""; // siempre devuelve tipo cadena
-    },
-    onClickAdd_identif: function () {
-        var grid01 = Ext.getCmp(prototype.id + '-gridData-identif');
-        var items = grid01.getStore().data.items;
-        //console.log(items);
-        var VL_A3979SEQID = 0;
-        items.forEach(function (rec) {            
-            VL_A3979SEQID = rec.data.A3979SEQID;
-        });
-        VL_A3979SEQID = parseFloat(VL_A3979SEQID) + 1;        
-        var beanGrid = {};
-        beanGrid.A3979SEQID = this.PadLeft(VL_A3979SEQID, 3);
-        beanGrid.A3979DESCR = '';
-        beanGrid.A3979IDCLI = '';
-        beanGrid.A3979FALTA = '';
-        beanGrid.A3979FBAJA = '';
-        grid01.getStore().add(beanGrid);
-
-    },
-    onClickRemove_identif: function (grid, rowIndex, colIndex) {
-        //var me = this;
-        global.Msg({
-            msg: 'Quitar registro?',
-            icon: 3,
-            buttons: 3,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    grid.getStore().removeAt(rowIndex);
-                    //me.onSumaTaxGrid();
-                }
-            }
-        });
-    },
-    
-    search_calendario: function () {
-        var bean = {};
-        bean.VP_OPCION = "1";
-        bean.VP_A3965CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
-        bean.VP_A3965PERIO = "";
-        bean.VP_A3965FEJEC = "2021";
-        bean.limit = "-1";
-        bean.page = "-1";
-        //cambiar STORE ***OJO
-        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataIdentif', {
-            proxy: {
-                url: prototype.url + '/search_calendario'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = bean;
-                },
-                load: function (obj, obj2, success, obj4, obj5) {
-                    //win.lblUser_toolTip("Estructura: A3009");
-                    // <editor-fold defaultstate="collapsed" desc="paggin">
-//                    var pag = Ext.getCmp(prototype.id + '-paggin');
-//                    var pagData = pag.getPageData();
-//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
-//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
-//                    var total = Ext.util.Format.number(pagData.total, '0,000');
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
-                    // </editor-fold>
-//                    if (obj.data.length === 0) {
-//                        global.Msg({
-//                            msg: 'Data not found uatp'
-//                        });
-//                    }
-                    global.clear();
-                }
-            }
-        });        
-        Ext.getCmp(prototype.id + '-gridData-GridCalendario').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridData-GridCalendario').getStore().reload();
-    },
-    
+    },    
     /*
      * 
      * @param {type} objGrid
