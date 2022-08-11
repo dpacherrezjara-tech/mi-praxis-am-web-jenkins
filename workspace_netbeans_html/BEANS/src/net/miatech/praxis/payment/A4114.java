@@ -26,6 +26,7 @@ public class A4114 {
     public String FSELEC = "";
     public String FECSELEC = "";
     public String TAXPDATE = "";
+    public String CERROR = "";
 
     public double TAXBAMOUN = 0;
     public double TAXRATE = 0;

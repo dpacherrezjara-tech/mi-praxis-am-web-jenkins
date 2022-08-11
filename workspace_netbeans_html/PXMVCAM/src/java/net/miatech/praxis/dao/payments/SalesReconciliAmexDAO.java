@@ -1926,7 +1926,14 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TAXDESCRI = rst.getString("TAXDESCRI").trim();                    
                     beanTkt.TAXPDATE = rst.getString("TAXPDATE").trim();                    
                     beanTkt.FSELEC = rst.getString("FSELEC").trim();                    
-                    beanTkt.FECSELEC = rst.getString("FECSELEC").trim();                    
+                    beanTkt.FECSELEC = rst.getString("FECSELEC").trim();
+                    beanTkt.CERROR = rst.getString("CERROR").trim();
+                    
+                    if (beanTkt.CERROR.equals("")) {
+                        beanTkt.desCERROR = "Conciliate";
+                    } else {
+                        beanTkt.desCERROR = "Difference";
+                    }
                                                             
                     beanTkt.TAXBAMOUN = rst.getDouble("TAXBAMOUN");
                     beanTkt.TAXRATE = rst.getDouble("TAXRATE");
