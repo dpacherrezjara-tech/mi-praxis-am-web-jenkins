@@ -2434,6 +2434,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case  '-boxDetSettlement':
                 global.getFile(prototype.url + '/getXLSXDetSettlement?beanString=' + me.paramsDetailDetSettlement.beanString);
                 break;
+            case  '-boxDetailTktSettlement':
+                global.getFile(prototype.url + '/getXLSXDetailTktSettlement?beanString=' + me.paramsDetailDetTktSettlement.beanString);
+                break;    
             case  '-boxMainAdjustment':
                 global.getFile(prototype.url + '/getXLSXMainAdjustment?beanString=' + searchParams.beanString);
                 break;

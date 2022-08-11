@@ -4547,6 +4547,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 60,
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 80,
+                                            },
+                                            {
                                                 text: 'Status',
                                                 defaults: {
                                                     menuDisabled: true,

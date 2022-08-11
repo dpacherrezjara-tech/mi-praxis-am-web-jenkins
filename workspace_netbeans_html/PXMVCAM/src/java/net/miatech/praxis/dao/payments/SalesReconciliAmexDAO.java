@@ -2745,6 +2745,9 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.SAGENT = rst.getString("SAGENT").trim();
                     beanTkt.FUENTE = rst.getString("FUENTE").trim();
+                    
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
 
                     /*if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
