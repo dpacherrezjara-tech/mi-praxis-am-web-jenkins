@@ -467,7 +467,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 1,
-                                            maskRe: /[A/M/D/a/m/d]/,
+                                            maskRe: /[M/m]/,
                                             listeners: {
                                                 change: 'onUpperValue',                                                
                                                 keypress: function (obj, e) {
