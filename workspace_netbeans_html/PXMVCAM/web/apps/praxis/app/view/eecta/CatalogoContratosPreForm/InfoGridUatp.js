@@ -73,6 +73,9 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridUatp', {
                             columns: {
                                 items: [
                                     {
+                                        text: 'Nbr.', dataIndex: 'A4244ITEM', align: 'right', locked: true, width: 50
+                                    },
+                                    {
                                         text: 'UATP Number', dataIndex: 'A4244UATP', locked: true, align: 'left', width: 240,
                                         editor: {
                                             xtype: 'textfield',

@@ -184,7 +184,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 //"A4244CCUST": rec.data.A4244CCUST,
                 //"A4244CDCLI": rec.data.A4244CDCLI,
                 "A4244UATP": rec.data.A4244UATP,
-                "A4244TIPO": rec.data.A4244TIPO
+                "A4244TIPO": rec.data.A4244TIPO,
+                "A4244ITEM": rec.data.A4244ITEM
                 //"A4244MDA": rec.data.A4244MDA,
                 //"A4244VENTA": rec.data.A4244VENTA                
             });
@@ -201,7 +202,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 //"A4244CCUST": rec.data.A4244CCUST,
                 //"A4244CDCLI": rec.data.A4244CDCLI,
                 "A4244UATP": rec.data.A4244UATP,
-                "A4244TIPO": rec.data.A4244TIPO
+                "A4244TIPO": rec.data.A4244TIPO,
+                "A4244ITEM": rec.data.A4244ITEM
                 //"A4244MDA": rec.data.A4244MDA,
                 //"A4244VENTA": rec.data.A4244VENTA  
             });
@@ -218,7 +220,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                // "A4244CCUST": rec.data.A4244CCUST,
                // "A4244CDCLI": rec.data.A4244CDCLI,
                 "A4244UATP": rec.data.A4244UATP,
-                "A4244TIPO": rec.data.A4244TIPO
+                "A4244TIPO": rec.data.A4244TIPO,
+                "A4244ITEM": rec.data.A4244ITEM
                // "A4244MDA": rec.data.A4244MDA,
                // "A4244VENTA": rec.data.A4244VENTA  
             });
@@ -484,6 +487,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //beanGrid.A4244CDCLI = '';
         beanGrid.A4244UATP = '';
         beanGrid.A4244TIPO = '';
+        beanGrid.A4244ITEM = '0';
         //beanGrid.A4244MDA = '';
         //beanGrid.A4244VENTA = '0';
         grid01.getStore().add(beanGrid);
