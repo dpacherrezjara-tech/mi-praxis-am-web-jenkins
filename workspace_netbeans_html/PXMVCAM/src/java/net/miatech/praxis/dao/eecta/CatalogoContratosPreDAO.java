@@ -16,6 +16,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
+import net.miatech.praxis.eecta.SQP04589Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -198,6 +199,56 @@ public class CatalogoContratosPreDAO {
 //                objRtn.page.TOTPAG = filter.page.TOTPAG;
 //                objRtn.page.TOTROW = filter.page.TOTROW;
 
+                lstRtn.add(objRtn);
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    public List<SQP04589Filter> getSQP04589Filter(SQP04589Filter filter) throws SQLException, Exception {
+        List<SQP04589Filter> lstRtn = new ArrayList<SQP04589Filter>(0);
+        SQP04589Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04589(?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_CDCLI);
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SQP04589Filter();                
+                objRtn.A4244UATP = rs01.getString("A3954TCUAT");
+                objRtn.A4244ITEM = 0;                
+                objRtn.A4244TIPO = "A";
+                objRtn.A4244MDA = "";
+                objRtn.A4244VENTA = 0.00;
+                objRtn.A4244TOTAP = 0.00;
+                objRtn.A4244SALDP = 0.00;
+                objRtn.A4244STSPG = ""; 
                 lstRtn.add(objRtn);
             }
 

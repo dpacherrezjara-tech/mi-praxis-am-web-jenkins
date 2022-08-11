@@ -15,6 +15,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
+import net.miatech.praxis.eecta.SQP04589Filter;
 import net.miatech.praxis.logic.eecta.CatalogoContratosPreLogic;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,7 @@ public class CatalogoContratosPreController extends BaseController {
             filter.VP_FECHA2 = request.getParameter("VP_FECHA2");
             filter.VP_CDCLI = request.getParameter("VP_CDCLI");
             filter.VP_PARAM = request.getParameter("VP_PARAM");
-            
+
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
@@ -70,7 +71,8 @@ public class CatalogoContratosPreController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-     @RequestMapping(value = "/searchDet")
+
+    @RequestMapping(value = "/searchDet")
     public @ResponseBody
     String searchDet(ModelMap map, HttpServletRequest request) {
         List<SQP04588Filter> listaData;
@@ -80,7 +82,7 @@ public class CatalogoContratosPreController extends BaseController {
 //        filter.page.START = 0;
 //        filter.page.LIMIT = 0;
         try {
-            filter.VP_IDANT = Integer.parseInt(request.getParameter("VP_IDANT"));            
+            filter.VP_IDANT = Integer.parseInt(request.getParameter("VP_IDANT"));
 //            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
 //            filter.page.PAGROW = 20;
 //            start = (start != 0 ? start : 0);
@@ -101,30 +103,61 @@ public class CatalogoContratosPreController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-            
+
+    @RequestMapping(value = "/searchUATPCliente")
+    public @ResponseBody
+    String searchUATPCliente(ModelMap map, HttpServletRequest request) {
+        List<SQP04589Filter> listaData;
+        SQP04589Filter filter;
+        filter = new SQP04589Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 20;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new CatalogoContratosPreLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04589Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size());
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
     @RequestMapping(value = "setContratosCrud", method = RequestMethod.POST)
-    public @ResponseBody            
+    public @ResponseBody
     String setContratosCrud(ModelMap map, HttpServletRequest request) {
-        SQP04527Filter objRtn = new SQP04527Filter();        
+        SQP04527Filter objRtn = new SQP04527Filter();
         logic = new CatalogoContratosPreLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
             SQP04527Filter filter = new SQP04527Filter();
-            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             JsonParser parser = new JsonParser();
             JsonArray gson_uatp = parser.parse(request.getParameter("beanuatp")).getAsJsonArray();
             filter.VP_UATPS = gson_uatp.toString();
-            
-            objRtn = logic.setSQP04527Filter(filter);            
+
+            objRtn = logic.setSQP04527Filter(filter);
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
             objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
-            objRtn.dbException.MESSAGE = ex.toString(); 
+            objRtn.dbException.MESSAGE = ex.toString();
             map.put("objRtn", objRtn);
             map.put("success", true);
-            map.put("sesion", ex.getMessage());            
+            map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
 

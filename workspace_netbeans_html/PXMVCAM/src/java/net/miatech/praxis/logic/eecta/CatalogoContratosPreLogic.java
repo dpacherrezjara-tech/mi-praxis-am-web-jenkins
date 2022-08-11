@@ -12,6 +12,7 @@ import net.miatech.praxis.dao.eecta.CatalogoContratosPreDAO;
 import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
+import net.miatech.praxis.eecta.SQP04589Filter;
 
 /**
  *
@@ -32,6 +33,10 @@ public class CatalogoContratosPreLogic {
     public SQP04527Filter setSQP04527Filter(SQP04527Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04527Filter(filter);
     }
+    public List<SQP04589Filter> getSQP04589Filter(SQP04589Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04589Filter(filter);
+    }
+    
     
     
 }
