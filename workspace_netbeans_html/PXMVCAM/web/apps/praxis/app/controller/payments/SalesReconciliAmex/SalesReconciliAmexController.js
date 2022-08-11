@@ -1314,6 +1314,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSummary.DATE = rowData.data.DATE;
         this.beanSummary.IN_DATE = rowData.data.IN_DATE;
         this.beanSummary.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanSummary.SCOUNTRY = rowData.data.SCOUNTRY;
         console.log(this.beanSummary);
 
         me.paramsDetailSummary.beanString = JSON.stringify(this.beanSummary);
@@ -1377,6 +1378,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanSubmission.SCOUNTRY = rowData.data.SCOUNTRY;
 
         this.beanSubmission.strDATE = rowData.data.DATE;
 
@@ -1490,6 +1492,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
 
         this.beanSubmission.strDATE = rowData.data.DATE;
+        this.beanSubmission.SCOUNTRY = rowData.data.SCOUNTRY;
         //console.log(this.beanSubmission);
         //me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);                
         //var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
@@ -1562,6 +1565,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanTransaction.IN_MERCHID = rowData.data.MERCHID;
         this.beanTransaction.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanTransaction.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanTransaction.SCOUNTRY = rowData.data.SCOUNTRY;
 
         var strTipo = Ext.getCmp(prototype.id + '-gridDetSubmission').headerCt.getGridColumns()[columnNum].dataIndex;
         console.log(strTipo);
@@ -1648,6 +1652,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanTransaction.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
         this.beanTransaction.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanTransaction.IN_TDOC = Ext.getCmp(prototype.id + '-cmbSummTDOC').getValue();
+        this.beanTransaction.ZONA = Ext.getCmp(prototype.id + '-cmbZONASumm').getValue();
+        this.beanTransaction.SCOUNTRY = Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').getValue();
 
         me.paramsDetailTransaction.beanString = JSON.stringify(this.beanTransaction);
         this.setGridDataDiffTransaction();
@@ -1734,6 +1740,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
         this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanPricing.SCOUNTRY = rowData.data.SCOUNTRY;
 
         this.beanPricing.IN_IDITEMS = rowData.data.IDITEMS;
         this.beanPricing.IN_IDITEMT = rowData.data.IDITEMT;
