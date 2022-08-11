@@ -1,5 +1,5 @@
 
-Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
+Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridUatp', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info-uatp',
     //layout: 'border',
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                             columnLines: true,
                             autoScroll: true,
                             width: '100%',
-                            height: 190,
+                            height: 150,
                             padding: '0px 5px 1px 5px',
                             plugins: {
                                 ptype: 'cellediting',
@@ -54,13 +54,13 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                             },
                             dockedItems: [
                                 {
-                                    xtype: 'toolbar',                                    
+                                    xtype: 'toolbar',
                                     dock: 'right',
                                     items: [
                                         {
                                             text: 'Add',
                                             id: prototype.id + '-gridData-uatp-add',
-                                            iconCls: 'prx-icon-add',                                            
+                                            iconCls: 'prx-icon-add',
                                             handler: 'onClickAdd_uatp'
                                         }
 //                                        ,{
@@ -73,7 +73,10 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                             columns: {
                                 items: [
                                     {
-                                        text: 'Nº UATP', dataIndex: 'A3954TCUAT', locked: true, align: 'left', width: 130,
+                                        text: 'Nbr.', dataIndex: 'A4244ITEM', align: 'right', locked: true, width: 50
+                                    },
+                                    {
+                                        text: 'UATP Number', dataIndex: 'A4244UATP', locked: true, align: 'left', width: 240,
                                         editor: {
                                             xtype: 'textfield',
                                             allowBlank: false,
@@ -83,7 +86,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                                         }
                                     },
                                     {
-                                        text: 'Descripcion', dataIndex: 'A3954DESCR', align: 'left', width: 240,
+                                        text: 'Type', dataIndex: 'A4244TIPO', align: 'left', width: 130,
                                         editor: {
                                             xtype: 'textfield',
                                             allowBlank: false,
@@ -92,74 +95,19 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                                             maxLength: 100
                                         }
                                     },
-//                                    {
-//                                        text: 'Identif.', dataIndex: 'A3954IDUAT', width: 80, align: 'left',
-//                                        editor: {
-//                                            xtype: 'textfield',
-//                                            allowBlank: false,
-//                                            enableKeyEvents: true,
-//                                            enforceMaxLength: true,
-//                                            maxLength: 6
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'T. Master', dataIndex: 'A3954TCUAM', width: 110, align: 'left',
-//                                        enableKeyEvents: true,
-//                                        enforceMaxLength: true,
-//                                        maxLength: 20,
-//                                        editor: {
-//                                            xtype: 'textfield',
-//                                            allowBlank: false
-//                                        }
-//                                    },
                                     {
-                                        text: 'F. Alta', dataIndex: 'A3954FALTA', width: 90, align: 'left',
-                                        editor: {
-                                            xtype: 'datefield',
-                                            width: 120,
-                                            format: 'Y/m/d',
-                                            //minValue: new Date(1990, 00, 01),
-                                            maskRe: /[0-9/]/,
-                                            editable: true,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 10,
-                                            //padding: '2 0 0 2 ',
-                                            listeners: {
-                                                keypress: function (obj, e) {
-                                                    if (e.getKey() === e.ENTER) {
-                                                        //Ext.getCmp(prototype.id+'-txtA1757NFACT').focus();
-                                                    }
-                                                }
-                                            }
-                                        },
+                                        text: 'Sale', dataIndex: 'A4244VENTA', align: 'right', width: 110,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.date(value, 'Y/m/d');
+                                            return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
-                                        text: 'F. Baja.', dataIndex: 'A3954FBAJA', width: 90, align: 'left',
-                                        editor: {
-                                            xtype: 'datefield',
-                                            width: 120,
-                                            format: 'Y/m/d',
-                                            //minValue: new Date(1990, 00, 01),
-                                            maskRe: /[0-9/]/,
-                                            editable: true,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 10,
-                                            //padding: '2 0 0 2 ',
-                                            listeners: {
-                                                keypress: function (obj, e) {
-                                                    if (e.getKey() === e.ENTER) {
-                                                        //Ext.getCmp(prototype.id+'-txtA1757NFACT').focus();
-                                                    }
-                                                }
-                                            }
-                                        },
+                                        text: 'Curr.', dataIndex: 'A4244MDA', align: 'center', width: 50
+                                    },
+                                    {
+                                        text: 'Applied', dataIndex: 'A4244TOTAP', width: 110, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.date(value, 'Y/m/d');
+                                            return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
@@ -168,10 +116,10 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                                         width: 40,
                                         align: 'center',
                                         items: [
-                                            {                                                
+                                            {
                                                 tooltip: 'Click for Remove',
-                                                iconCls: 'prx-icon-image-trash', 
-                                                handler: 'onClickRemove_uatp'                                                
+                                                iconCls: 'prx-icon-image-trash',
+                                                handler: 'onClickRemove_uatp'
                                             }
                                         ]
                                     }

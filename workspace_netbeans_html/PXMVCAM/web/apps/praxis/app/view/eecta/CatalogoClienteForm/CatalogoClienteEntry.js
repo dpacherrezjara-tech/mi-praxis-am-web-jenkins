@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
     title: 'Mantenimiento Cliente',
     header: true,
     width: 850,
-    height: 620,
+    height: 720,
     border: false,
     resizable: false,
     layout: {
