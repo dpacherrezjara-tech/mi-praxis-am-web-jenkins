@@ -68,7 +68,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                         items: [
                                             {text: 'Nbr', dataIndex: 'RN', width: 40, hidden:true},
                                             {text: 'Merchant<br>Nbr.', dataIndex: 'MERCHN', width: 75},
-                                            {text: 'Merchant Name', dataIndex: 'DESCR', width: 220,
+                                            {text: 'Merchant Name', dataIndex: 'DESCR', width: 210,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:left;";
@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                 }
                                             },
                                             {text: 'Operative<br>Unit', dataIndex: 'strDescripUNIOPE', width: 120},
-                                            {text: 'Channel', dataIndex: 'CANAL', width: 65},
+                                            {text: 'Channel', dataIndex: 'CANAL', width: 60},
                                             {text: 'Social',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -112,6 +112,12 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     {text: 'Payment', dataIndex: 'MERCHP', width: 75}
                                                 ]
                                             },
+                                            {text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'IATA',
                                                 defaults: {
@@ -120,7 +126,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'CIATA', width: 75},
+                                                    {text: 'Code', dataIndex: 'CIATA', width: 70},
                                                     {text: 'Name', dataIndex: 'strDescrip', width: 200,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
@@ -137,7 +143,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Client Code', dataIndex: 'CODCLIT1', width: 80,
+                                                    {text: 'Client Code', dataIndex: 'CODCLIT1', width: 77,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#e5ecef;";
                                                             return  value;
@@ -159,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Client Code', dataIndex: 'CODCLIT2', width: 80,
+                                                    {text: 'Client Code', dataIndex: 'CODCLIT2', width: 77,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#e5ecef;";
                                                             return  value;
