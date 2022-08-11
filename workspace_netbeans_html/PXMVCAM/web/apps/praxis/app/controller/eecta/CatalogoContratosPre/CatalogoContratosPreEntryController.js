@@ -97,6 +97,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         Ext.getCmp(prototype.id + '-A4241FECAC').setValue(data.A4241FECAC);        
         Ext.getCmp(prototype.id + '-A4241HORAC').setValue(data.A4241HORAC);        
         
+        Ext.getCmp(prototype.id + '-A4241FECDE').setValue(data.A4241FECDE); 
+        Ext.getCmp(prototype.id + '-A4241FECHA').setValue(data.A4241FECHA); 
+        Ext.getCmp(prototype.id + '-A4241FECRC').setValue(data.A4241FECRC); 
+        Ext.getCmp(prototype.id + '-A4241NUMRC').setValue(data.A4241NUMRC); 
+        Ext.getCmp(prototype.id + '-A4241IDRCB').setValue(data.A4241IDRCB);                 
         this.search_uatp();
         
     },
