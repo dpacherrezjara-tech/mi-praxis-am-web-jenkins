@@ -1115,7 +1115,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
-                            fileA2552.A2552TKT = getCellValue(currentRow.getCell(15));
+                            fileA2552.A2552TKT = getCellValue(currentRow.getCell(16));
                             if (fileA2552.A2552TKT.equals("")) {
                                 result = "TICKET required";
                                 break;
