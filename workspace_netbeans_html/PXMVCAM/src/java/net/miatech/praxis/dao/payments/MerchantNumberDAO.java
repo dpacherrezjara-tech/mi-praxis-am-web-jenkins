@@ -499,17 +499,17 @@ public class MerchantNumberDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00933(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00933(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_MERCHN.trim());
@@ -517,17 +517,18 @@ public class MerchantNumberDAO {
             cstmt.setString(4, filter.IN_UNIOPE.trim());
             cstmt.setString(5, filter.IN_CANAL.trim());
             cstmt.setString(6, filter.IN_STATUS.trim());
-            cstmt.setInt(7, filter.page.PAGNUM);
-            cstmt.setInt(8, filter.page.PAGROW);
-            cstmt.setInt(9, filter.page.TOTPAG);
-            cstmt.setInt(10, filter.page.TOTROW);
+            cstmt.setString(7, filter.IN_COUNTRY.trim());
+            cstmt.setInt(8, filter.page.PAGNUM);
+            cstmt.setInt(9, filter.page.PAGROW);
+            cstmt.setInt(10, filter.page.TOTPAG);
+            cstmt.setInt(11, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(7);
-            filter.page.PAGROW = cstmt.getInt(8);
-            filter.page.TOTPAG = cstmt.getInt(9);
-            filter.page.TOTROW = cstmt.getInt(10);
+            filter.page.PAGNUM = cstmt.getInt(8);
+            filter.page.PAGROW = cstmt.getInt(9);
+            filter.page.TOTPAG = cstmt.getInt(10);
+            filter.page.TOTROW = cstmt.getInt(11);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -537,6 +538,7 @@ public class MerchantNumberDAO {
                 bean.MERCHP = rst.getString("MERCHP").trim();
                 bean.DESCR = rst.getString("DESCR").trim();
                 bean.RSOCIAL = rst.getString("RSOCIAL").trim();
+                bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 bean.CANAL = rst.getString("CANAL").trim();
                 bean.CIATA = rst.getString("CIATA").trim();
                 bean.CODCLIT1 = rst.getString("CODCLIT1").trim();
@@ -587,6 +589,67 @@ public class MerchantNumberDAO {
         }
 
         return lstData;
+    }
+    
+    public List<A2354Filter> loadPX305SQP04580(A2354Filter filter) throws SQLException, Exception {
+
+        List<A2354Filter> lstTkts = new ArrayList<A2354Filter>(0);
+        A2354Filter beanTkt;
+
+        A2354Filter objRtn;
+        objRtn = new A2354Filter();
+        objRtn.CODE = "";
+        objRtn.NAME = "All";
+        lstTkts.add(objRtn);
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04580(?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A2354Filter();
+
+                beanTkt.CODE = rst.getString("CODE").trim();
+                beanTkt.NAME = rst.getString("NAME").trim();
+                lstTkts.add(beanTkt);
+                System.out.println(beanTkt.NAME);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
     }
 
     public List<A003> loadPX305SQP04435(String IATA) throws SQLException, Exception {

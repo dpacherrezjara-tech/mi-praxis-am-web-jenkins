@@ -21,6 +21,7 @@ public class A4114Filter extends A4114 {
     public String DATE = "";
 
     public String DES_MERCHANT = "";
+    public String desCERROR = "";
 
     //Totales
     public double TAXBAMOUN_TOTAL = 0;

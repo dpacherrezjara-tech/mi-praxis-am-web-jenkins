@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
     searchParams: {},
     paramsDetail: {},
     dataObtain: {},
-    init: function(view) {
+    init: function (view) {
         me = this;
         prototype.id = 'MerchantNumberForm';
         prototype.url = CONTEXTPATH + '/MerchantNumber';
@@ -33,7 +33,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         this.control({
 //            //   -------------------Eventos Genericos --------------------
             '#MerchantNumberForm-xpanel': {
-                afterrender: this.xpanel_afterrender            
+                afterrender: this.xpanel_afterrender
             },
             '#MerchantNumberForm-btnSearch': {
                 click: this.btnSearch_click
@@ -70,19 +70,19 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
 //
         });
     },
-    xpanel_afterrender:function(){
-          this.btnSearch_click();
+    xpanel_afterrender: function () {
+        this.btnSearch_click();
     },
-    
-    eventKey: function(e, eOpts) {
+
+    eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
         }
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onChangeCmbType: function(obj, value) {
+    onChangeCmbType: function (obj, value) {
 
         Ext.getCmp(prototype.id + '-panelFilter1').hide();
         Ext.getCmp(prototype.id + '-panelFilter2').hide();
@@ -98,10 +98,9 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         }
 
     },
-    
-    
-    obtainData: function() {
-        
+
+    obtainData: function () {
+
         var cmbFindBy = Ext.getCmp(prototype.id + '-cmbFindBy');
         cmbFindBy.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -114,7 +113,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         cmbFindBy.setValue("1");
         Ext.getCmp(prototype.id + '-txtMERCHN').show();
         Ext.getCmp(prototype.id + '-txtRSOCIAL').hide();
-        
+
         var cmbUNIOPE = Ext.getCmp(prototype.id + '-cmbUNIOPE');
         cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -127,7 +126,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
             ]
         }));
         cmbUNIOPE.setValue("");
-        
+
         var cmbSTATUS = Ext.getCmp(prototype.id + '-cmbSTATUS');
         cmbSTATUS.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -140,33 +139,52 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         }));
         cmbSTATUS.setValue("");
         
+        Ext.getCmp(prototype.id + '-cmbCountry').setValue("");
+        Ext.Ajax.request({
+            url: prototype.url + '/getPaises',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbCountry').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
+                } 
+                else
+                    global.Msg({msg: res.sesion});
+            }
+        });
     },
-    
-    cmbFind_changeHandler: function() {      
-        
+
+    cmbFind_changeHandler: function () {
+
         var cmbFindBy = Ext.getCmp(prototype.id + '-cmbFindBy');
-        
-        if(cmbFindBy.getValue() ==='1') {     
+
+        if (cmbFindBy.getValue() === '1') {
             Ext.getCmp(prototype.id + '-txtMERCHN').show();
             Ext.getCmp(prototype.id + '-txtRSOCIAL').hide();
-            
-        }else 
-            if(cmbFindBy.getValue() === '2'){
+
+        } else
+        if (cmbFindBy.getValue() === '2') {
             Ext.getCmp(prototype.id + '-txtRSOCIAL').show();
             Ext.getCmp(prototype.id + '-txtMERCHN').hide();
-            }
+        }
     },
-    
-    setFormatParameter: function() {
+
+    setFormatParameter: function () {
 
         me.bean = {};
         me.bean.IN_MERCHN = Ext.getCmp(prototype.id + '-txtMERCHN').getValue();
         me.bean.IN_RSOCIAL = Ext.getCmp(prototype.id + '-txtRSOCIAL').getValue();
-        
+
         me.bean.IN_UNIOPE = Ext.getCmp(prototype.id + '-cmbUNIOPE').getValue();
         me.bean.IN_STATUS = Ext.getCmp(prototype.id + '-cmbSTATUS').getValue();
         me.bean.IN_CANAL = Ext.getCmp(prototype.id + '-txtCANAL').getValue();
-        
+        me.bean.IN_COUNTRY = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
@@ -174,13 +192,13 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         };
         console.log(searchParams);
     },
-    btnSearch_click: function(obj, e) {
+    btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGridData();
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
-    setGridData: function() {
+    setGridData: function () {
         win.lblUser_toolTip("Estructura: A2354");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -194,10 +212,10 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
                 proxy: {
                     url: prototype.url + '/search'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = searchParams;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -219,20 +237,20 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
     // </editor-fold>
 
 
-    validateFields: function() {
+    validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
 
         return msj;
     },
-    btnAdd_click: function() {
+    btnAdd_click: function () {
         this.winDataEntry('I');
     },
-    onEditClick: function(grid, rowIndex, colIndex) {
+    onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('U', rec);
     },
-    winDataEntry: function(action, rec) {
+    winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
 
@@ -245,7 +263,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
             }
         }).show();
     },
-    btnBack_click: function(obj, e) {
+    btnBack_click: function (obj, e) {
 
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
@@ -264,16 +282,17 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
             global.showMenu();
         }
     },
-    btnClear_click: function(obj, e) {
-        
+    btnClear_click: function (obj, e) {
+
         Ext.getCmp(prototype.id + '-txtMERCHN').setValue('');
         Ext.getCmp(prototype.id + '-txtRSOCIAL').setValue('');
         Ext.getCmp(prototype.id + '-cmbUNIOPE').setValue('');
         Ext.getCmp(prototype.id + '-cmbSTATUS').setValue('');
+        Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
         Ext.getCmp(prototype.id + '-txtCANAL').setValue('');
 
     },
-    btnExcel_click: function(obj, e) {
+    btnExcel_click: function (obj, e) {
 
         this.setFormatParameter();
         var msj = this.validateFields();
@@ -288,7 +307,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'ok') {
                         this.exportExcel();
                     }
@@ -296,7 +315,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
             });
         }
     },
-    exportExcel: function() {
+    exportExcel: function () {
 
         this.setFormatParameter();
 //        console.log(me.panelActual);
@@ -311,7 +330,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         }
 
     },
-    onDownloadFile: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.paramsDetail.beanString = JSON.stringify(rowData.data);
         me.fileName = rowData.data.A2536NAMEF;
         Ext.Ajax.request({
@@ -320,7 +339,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
             params: me.paramsDetail,
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 
@@ -336,7 +355,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         });
 
     },
-    btnFilter_click: function(obj) {
+    btnFilter_click: function (obj) {
 //        console.log('btnFilter_click');
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
@@ -345,11 +364,11 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
             option.setVisible(true);
         }
     },
-    setWidthPie: function() {
+    setWidthPie: function () {
         var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
         Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
     },
-    getPaggin: function() {
+    getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
             case  '-panelGridData':
@@ -360,46 +379,46 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
     /*     
      * Funciones para la paginacion     
      */
-    pagFirst: function(obj, e) {
+    pagFirst: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveFirst();
-    }, pagPrevious: function(obj, e) {
+    }, pagPrevious: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.movePrevious();
     },
-    pagNext: function(obj, e) {
+    pagNext: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveNext();
     },
-    pagLast: function(obj, e) {
+    pagLast: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
-    getInt: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getInt: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000');
     },
-    getDouble: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getText: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getText: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:left';
         return value;
     },
-    getDoubleColor1: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor1: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#F2FAFC';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor2: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor2: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#DFF0ED';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor3: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
     }

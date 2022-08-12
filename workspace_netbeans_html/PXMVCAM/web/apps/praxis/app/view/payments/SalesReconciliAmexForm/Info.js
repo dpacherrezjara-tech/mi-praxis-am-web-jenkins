@@ -1197,7 +1197,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetTaxes',
-                                    width: 1394,
+                                    width: 1484,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -1224,6 +1224,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {text: 'Tax<br>Date', dataIndex: 'TAXPDATE', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Status', dataIndex: 'desCERROR', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (record.data.CERROR === '') {
+                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                    } else {
+                                                        metaData.style = "text-align:center;background-color:#fc8686;";
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -1264,7 +1274,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return value;
                                                 }
                                             },  
-                                            {text: 'Tax<br>Description', dataIndex: 'TAXDESCRI', width: 180,
+                                            {text: 'Tax Description', dataIndex: 'TAXDESCRI', width: 180,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left";
                                                     return value;
@@ -2324,6 +2334,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         metaData.style = "text-align:center;background-color:#fc8686;";
                                                     }
                                                     metaData.tdAttr = 'data-qtip="' + data.DES_CERROIN + '"';
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Zone', dataIndex: 'ZONA', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Country', dataIndex: 'SCOUNTRY', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
@@ -4535,6 +4557,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         text: 'Date', dataIndex: 'AXPRODAT', width: 85,
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 60,
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 80,
                                             },
                                             {
                                                 text: 'Status',

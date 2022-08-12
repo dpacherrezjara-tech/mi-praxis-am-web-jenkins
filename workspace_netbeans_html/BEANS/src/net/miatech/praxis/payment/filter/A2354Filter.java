@@ -31,10 +31,13 @@ public String strDescripUNIOPE = "";
 public String STATUS = "";
 public String desSTATUS = "";
 public String IN_STATUS = "";
+public String IN_COUNTRY = "";
+public String CODE = "";
+public String NAME = "";
 
 public List<A4202> lstDetalle = new ArrayList<A4202>(0);
 
 //A003
 public String A003KEY1 = "";
-public Pagination page = new Pagination();
-        }
+public Pagination page = new Pagination(); 
+}

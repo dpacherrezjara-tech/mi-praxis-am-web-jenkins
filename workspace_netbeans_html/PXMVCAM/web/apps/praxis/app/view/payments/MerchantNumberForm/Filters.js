@@ -157,10 +157,27 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                     enableKeyEvents: true,
                     triggerAction: 'all'
                 },
-               
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'Country:',
+                    id: prototype.id + '-cmbCountry',
+                    queryMode: 'local',
+                    width: 150,
+                    fieldStyle: 'color:#074066;',
+                    forceSelection: true,
+                    selectOnFocus: false,
+                    caseSensitive: false,
+                    hidden: false,
+                    autoSelect: true,
+                    editable: false,
+                    disabled: false,
+                    typeAhead: true,
+                    valueField: 'CODE',
+                    displayField: 'NAME',
+                    enableKeyEvents: true,
+                    triggerAction: 'all'
+                }
             ]
-            
-            
         }
     ]
 });
