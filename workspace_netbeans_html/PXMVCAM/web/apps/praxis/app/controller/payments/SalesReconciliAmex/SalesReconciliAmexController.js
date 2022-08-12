@@ -2453,6 +2453,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case  '-boxSummaryTransactionError':
                 global.getFile(prototype.url + '/getXLSXSummaryErrorTransactiont?beanString=' + searchParamsMainSettlement.beanString);
                 break;
+            case  '-boxMainChangePayment':
+                global.getFile(prototype.url + '/getXLSXMainChangePayment?beanString=' + searchParamsMainSettlement.beanString);
+                break;
         }
     },
     onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
