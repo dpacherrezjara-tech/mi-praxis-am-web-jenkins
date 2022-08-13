@@ -7238,7 +7238,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1345,
+                            width: 1445,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -7380,6 +7380,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     metaData.style = "text-align:center;background-color:" + data.COLOR;
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 100,
+                                                text: 'MSI Tracking',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-update',
+                                                        tooltip: 'Msi Tracking',
+                                                        handler: 'onMsiTracking'
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }

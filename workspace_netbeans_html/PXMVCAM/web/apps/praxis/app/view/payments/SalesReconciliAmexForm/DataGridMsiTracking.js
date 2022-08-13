@@ -35,6 +35,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                 {
                     xtype: 'panel',
                     width: '100%',
+                    height: 400,
                     bodyStyle: 'background: transparent;"',
                     layout: {
                         type: 'vbox',
@@ -61,7 +62,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMsiTracking',
-                                    height: 460,
+                                    height: 380,
                                     columnLines: true,
                                     plugins: [
                                         {
