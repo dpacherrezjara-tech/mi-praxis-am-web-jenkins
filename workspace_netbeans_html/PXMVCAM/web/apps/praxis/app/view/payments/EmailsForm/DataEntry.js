@@ -56,79 +56,37 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                     text: 'Code',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
+                                    width: 80
                                     
                                 },
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCTable',
+                                    id:prototype.id+'-de-txtCODIGO',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: false,
-                                    maxLength: 80,
-                                },
-                                { xtype: 'tbspacer', width: 180 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Email',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCDesc1',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 200,
-                                    enforceMaxLength: false,
-                                    maxLength: 100,
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Date from',
-                                    hidden:true,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
-                                },                               
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtINI',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    hidden:true,
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
-                                    maskRe: /[0-9]/,
+                                    maxLength: 3,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Date To',
-                                    hidden:true,
+                                    text: 'Description',
+                                    hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                    
+                                    width: 80                                    
                                 },
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtFIN',
-                                    hidden:true,
+                                    id:prototype.id+'-de-txtDESCR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
-                                    maskRe: /[0-9]/,
-                                }
+                                    enforceMaxLength: false,
+                                    maxLength: 40,
+                                },
                             ]
                         },
                         {
@@ -136,110 +94,67 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                             layout: 'hbox',
                             border: false,
                             margin: '10 2 2 8',
-                            hidden: true,
+                            hidden: false,
                             items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'Status',
+                                    text: 'Bank',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width:90
-                                    
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'combo',
-                                    id:prototype.id+'-cmbStval',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    width: 80,
-                                    labelWidth: 10,
-                                    hidden: false,
-                                    hiddenLabel: false 
-                                }
-                            ]
-                        },
-                        { xtype: 'tbspacer', width: 6 },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '10 2 2 8',
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Description 2',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
+                                    width:80
                                     
                                 },
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCDesc2',
+                                    id:prototype.id+'-de-txtCBANK',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 200,
+                                    width: 80,
                                     enforceMaxLength: false,
-                                    maxLength: 100,
-                                }
-                            ]
-                        },                        
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '10 2 2 8',
-                            hidden: true,
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Cantidad1',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90,
-                                },
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCant1',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 4,
                                 },
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
-                                    text: 'Cantidad2',
+                                    text: 'C. Card',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
+                                    width:80
                                     
                                 },
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCant2',
+                                    id:prototype.id+'-de-txtSCARCOD',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 100,
+                                    enforceMaxLength: false,
+                                    maxLength: 2,
+                                },
+                                { xtype: 'tbspacer', width: 20 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Source',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width:80
+                                    
+                                },
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtFTE',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 80,
+                                    enforceMaxLength: false,
+                                    maxLength: 5,
                                 },
                             ]
-                        }
+                        },
                     ]
                 },
                 { xtype: 'tbspacer', height: 10 },

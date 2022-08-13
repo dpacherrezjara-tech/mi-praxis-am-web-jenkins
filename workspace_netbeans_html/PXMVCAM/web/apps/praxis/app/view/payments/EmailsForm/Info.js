@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 454,
+                                    width: 544,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -64,30 +64,35 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Email', dataIndex: 'DESCRE1', width: 220,
+                                            {text: 'Code', dataIndex: 'CODIGO', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:center;';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Description', dataIndex: 'DESCR', width: 150,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Description', dataIndex: 'DESCRE2', width: 180,
+                                            {text: 'Bank', dataIndex: 'descCBANK', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left;';
+                                                    metaData.style = 'text-align:center;';
                                                     return  value;
                                                 }
                                             },
-                                            {
-                                                text: 'Date',
-                                                hidden:true,
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'From', dataIndex: 'DATINI', width: 70, hidden: false},
-                                                    {text: 'To', dataIndex: 'DATFIN', width: 70, hidden: false},
-                                                ]
+                                            {text: 'Credit<br>Card', dataIndex: 'descSCARCOD', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:center;';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Source', dataIndex: 'FTE', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:center;';
+                                                    return  value;
+                                                }
                                             },
                                             {
                                                 sortable: false,

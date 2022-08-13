@@ -10,9 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.A4169;
-import net.miatech.praxis.payment.filter.A4169Filter;
-import net.miatech.praxis.payment.filter.A4169Filter;
+import net.miatech.praxis.payment.filter.A4172Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -41,10 +39,10 @@ public class EmailsDAO {
         session = ss;
     }
 
-    public List<A4169Filter> loadPX601SQP04566(A4169Filter filter) throws SQLException, Exception {
+    public List<A4172Filter> loadPX601SQP04566(A4172Filter filter) throws SQLException, Exception {
 
-        List<A4169Filter> lstData = new ArrayList<A4169Filter>(0);
-        A4169Filter bean;
+        List<A4172Filter> lstData = new ArrayList<A4172Filter>(0);
+        A4172Filter bean;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
@@ -83,39 +81,18 @@ public class EmailsDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                bean = new A4169Filter();
+                bean = new A4172Filter();
 
-                bean.TTABLA = rst.getString("TTABLA");
-                bean.DESCR_TTABLA = rst.getString("DESCR_TTABLA");
-                bean.CODETB = rst.getString("CODETB");
-                bean.DESCRE1 = rst.getString("DESCRE1");
-                bean.DESCRE2 = rst.getString("DESCRE2");
-                //bean.TDOC = rst.getString("TDOC");
-                if (hmDescEstados.containsKey(rst.getString("TDOC").trim())) {
-                    bean.TDOC = hmDescEstados.get(rst.getString("TDOC").trim()).toString();
-                } else {
-                    bean.TDOC = rst.getString("TDOC").trim();
-                }
-                bean.CANT1 = rst.getInt("CANT1");
-                bean.CANT2 = rst.getInt("CANT2");
-                bean.STVAL = rst.getString("STVAL");
-                if (rst.getString("STVAL").trim().equals("V")) {
-                    bean.descSTVAL = "Vigente";
-                } else if (rst.getString("STVAL").trim().equals("A")) {
-                    bean.descSTVAL = "Anulado";
-                }
+                bean.CODIGO = rst.getString("CODIGO").trim();
                 
-                bean.DATINI = rst.getString("DATINI").trim();
-                bean.DATFIN = rst.getString("DATFIN").trim();
+                bean.CBANK = rst.getString("CBANK").trim();
+                bean.descCBANK = rst.getString("CBANK").trim();
                 
-                bean.USCR = rst.getString("USCR").trim();
-                bean.FECR = rst.getString("FECR").trim();
-                bean.HOCR = rst.getString("HOCR").trim();
-                bean.PGMCR = rst.getString("PGMCR").trim();
-                bean.USUP = rst.getString("USUP").trim();
-                bean.FEUP = rst.getString("FEUP").trim();
-                bean.HOUP = rst.getString("HOUP").trim();
-                bean.PGMUP = rst.getString("PGMUP").trim();
+                bean.SCARCOD = rst.getString("SCARCOD").trim();
+                bean.descSCARCOD = rst.getString("SCARCOD").trim();
+                
+                bean.FTE = rst.getString("FTE").trim();
+                bean.DESCR = rst.getString("DESCR").trim();
                 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -149,9 +126,9 @@ public class EmailsDAO {
         return lstData;
     }
 
-    public A4169Filter loadPX601SQP04567(A4169Filter filter) throws SQLException, Exception {
+    public A4172Filter loadPX601SQP04567(A4172Filter filter) throws SQLException, Exception {
 
-        A4169Filter beanTkt = new A4169Filter();
+        A4172Filter beanTkt = new A4172Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
@@ -163,29 +140,31 @@ public class EmailsDAO {
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.CODETB.trim());
+            cstmt01.setString(2, filter.CODIGO.trim());
 
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-                beanTkt.CCUST = rs01.getString("CCUST");
-                beanTkt.CODETB = rs01.getString("CODETB").trim();
-                beanTkt.TTABLA = rs01.getString("TTABLA").trim();
-                beanTkt.DESCRE1 = rs01.getString("DESCRE1").trim();
-                beanTkt.DESCRE2 = rs01.getString("DESCRE2").trim();
+                beanTkt.CCUST = rs01.getString("CCUST");                
+                beanTkt.CODIGO = rs01.getString("CODIGO").trim();
                 
-                beanTkt.DATINI = rs01.getString("DATINI").trim();
-                beanTkt.DATFIN = rs01.getString("DATFIN").trim();
+                beanTkt.CBANK = rs01.getString("CBANK").trim();
+                beanTkt.descCBANK = rs01.getString("CBANK").trim();
+                
+                beanTkt.SCARCOD = rs01.getString("SCARCOD").trim();
+                beanTkt.descSCARCOD = rs01.getString("SCARCOD").trim();
+                
+                beanTkt.FTE = rs01.getString("FTE").trim();
+                beanTkt.DESCR = rs01.getString("DESCR").trim();
 
                 beanTkt.USCR = rs01.getString("USCR").trim();
                 beanTkt.FECR = rs01.getString("FECR").trim();
                 beanTkt.HOCR = rs01.getString("HOCR").trim();
-                beanTkt.PGMCR = rs01.getString("PGMCR").trim();
+
                 beanTkt.USUP = rs01.getString("USUP").trim();
                 beanTkt.FEUP = rs01.getString("FEUP").trim();
                 beanTkt.HOUP = rs01.getString("HOUP").trim();
-                beanTkt.PGMUP = rs01.getString("PGMUP").trim();
 
             }
         } catch (Exception e) {
@@ -212,7 +191,7 @@ public class EmailsDAO {
         return beanTkt;
     }
 
-    public String loadPX601SQP04568(A4169Filter filter, String option) throws SQLException, Exception {
+    public String loadPX601SQP04568(A4172Filter filter, String option) throws SQLException, Exception {
         String strMsj = "Operation was successful.";
 
         CallableStatement cstmt = null;
@@ -226,13 +205,7 @@ public class EmailsDAO {
 
             cstmt.setString(1, option);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
-            cstmt.setString(3, filter.TTABLA.trim());
-            cstmt.setString(4, filter.CODETB.trim());
-            cstmt.setString(5, filter.CODETBCO.trim());
-            cstmt.setString(6, filter.DESCRE1.trim());
-            cstmt.setString(7, filter.DESCRE2.trim());
-            cstmt.setString(8, filter.DATINI.trim());
-            cstmt.setString(9, filter.DATFIN.trim());
+
             cstmt.setString(10, session.getUserView().getUserInfo().USR);
             cstmt.setString(11, Functions.getFechaActual());
             cstmt.setString(12, Functions.getHoraActual());

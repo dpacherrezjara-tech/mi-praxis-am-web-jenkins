@@ -17,7 +17,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.EmailsLogic;
-import net.miatech.praxis.payment.filter.A4169Filter;
+import net.miatech.praxis.payment.filter.A4172Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -60,17 +60,17 @@ public class EmailsController extends BaseController {
     String search(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- Emails : Search-------------");
         map.put("success", true);
-        List<A4169Filter> lst = this.getList(request, false);
+        List<A4172Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4169Filter> getList(HttpServletRequest request, Boolean bExcel) {
+    public List<A4172Filter> getList(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4169Filter> lst = new ArrayList<>(0);
-        A4169Filter filter = new A4169Filter();
+        List<A4172Filter> lst = new ArrayList<>(0);
+        A4172Filter filter = new A4172Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -79,7 +79,7 @@ public class EmailsController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4169Filter.class);
+            filter = gson.fromJson(beanString, A4172Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
             filter.page.LIMIT = 0;
@@ -106,14 +106,14 @@ public class EmailsController extends BaseController {
     @RequestMapping(value = "searchCompleteDetail")
     public @ResponseBody
     String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- BanksCatalog : searchCompleteDetail-------------");
+        System.out.println("-------------- Emails : searchCompleteDetail-------------");
 
         Gson gson = new Gson();
-        A4169Filter filter = new A4169Filter();
-        A4169Filter result = new A4169Filter();
+        A4172Filter filter = new A4172Filter();
+        A4172Filter result = new A4172Filter();
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4169Filter.class);
+        filter = gson.fromJson(beanString, A4172Filter.class);
 
         logic = new EmailsLogic();
         logic.setSession(this.serverSession.getServerSession());
@@ -128,13 +128,13 @@ public class EmailsController extends BaseController {
         return new Gson().toJson(map);
     }
     
-    @RequestMapping(value = "MaintenanceA4169")
+    @RequestMapping(value = "MaintenanceA4172")
     public @ResponseBody
-    String MaintenanceA4169(ModelMap map, HttpServletRequest request) {
+    String MaintenanceA4172(ModelMap map, HttpServletRequest request) {
 
-        System.out.println("-------------- BanksCatalog : MaintenanceA4169-------------");
+        System.out.println("-------------- Emails : MaintenanceA4172-------------");
         String option;
-        A4169Filter filter = new A4169Filter();
+        A4172Filter filter = new A4172Filter();
         Gson gson = new Gson();
         String msj = "";
         String beanString = "";
@@ -143,7 +143,7 @@ public class EmailsController extends BaseController {
 
             option = request.getParameter("option");
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4169Filter.class);
+            filter = gson.fromJson(beanString, A4172Filter.class);
 
             logic = new EmailsLogic();
             logic.setSession(this.serverSession.getServerSession());
