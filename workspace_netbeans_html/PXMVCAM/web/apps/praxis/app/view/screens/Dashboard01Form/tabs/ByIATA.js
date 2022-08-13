@@ -299,7 +299,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ByIATA', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;color:#244066;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 100},
