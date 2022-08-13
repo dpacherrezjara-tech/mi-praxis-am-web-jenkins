@@ -623,6 +623,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 this.bean.IN_DATETO = "";
                 this.bean.IN_STVAL_CP = Ext.getCmp(prototype.id + '-cmbSTVALCP').getValue();
                 this.bean.IN_TDOC_CP = Ext.getCmp(prototype.id + '-cmbTDOCCP').getValue();
+                this.bean.IN_SCARDN1_CP = Ext.getCmp(prototype.id + '-txtCC1_CP').getValue();
+                this.bean.IN_SCARDN2_CP = Ext.getCmp(prototype.id + '-txtCC2_CP').getValue();
+                this.bean.IN_SAUTHOC_CP = Ext.getCmp(prototype.id + '-txtAuth_CP').getValue();
                 var beanString = JSON.stringify(this.bean);
                 searchParamsMainSettlement = {
                     beanString: beanString,
