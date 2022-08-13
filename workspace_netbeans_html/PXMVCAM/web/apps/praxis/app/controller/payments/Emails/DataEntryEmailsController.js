@@ -8,7 +8,6 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     beanResult: {},
     lstCountry: [],
     searchParams: {},
-    lstA1852: {},
     dataObtain: {},
     copia: '',
     // </editor-fold>
@@ -28,7 +27,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -36,22 +35,20 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
             case 'U':
                 this.getData();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                Ext.getCmp(prototype.id + '-btn-update').hide();
+                Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
     },
     mostrarData: function () {
         console.log(meDE.beanResult);
-        this.setValue('de-txtCTable', this.beanResult.CODETB);
-        this.copia = this.getValue('de-txtCTable');
-        this.setValue('de-txtCDesc1', this.beanResult.DESCRE1);
-        this.setValue('de-txtCDesc2', this.beanResult.DESCRE2);
+        this.setValue('de-txtCODIGO', this.beanResult.CODIGO);
 
-        this.setValue('de-txtINI', this.beanResult.DATINI);
-        this.setValue('de-txtFIN', this.beanResult.DATFIN);
-        this.setValue('cmbStval', this.beanResult.STVAL);
+        this.setValue('de-txtCBANK', this.beanResult.CBANK);
+        this.setValue('de-txtSCARCOD', this.beanResult.SCARCOD);
+        this.setValue('de-txtFTE', this.beanResult.FTE);
+        this.setValue('de-txtDESCR', this.beanResult.DESCR);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -61,29 +58,15 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         this.setValue('txtHOUP', this.beanResult.HOUP);
     },
     obtainData: function () {
-        var cmbStval = Ext.getCmp(prototype.id + '-cmbStval');
-        cmbStval.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "none"],
-                ["V", "Vigente"],
-                ["A", "Anulado"]
-            ]
-        }));
-        cmbStval.setValue('');
+        
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-        beanTemp.TTABLA = '90';
-        beanTemp.CODETB = this.getValue("de-txtCTable");
-        beanTemp.CODETBCO = this.copia;
-        beanTemp.DESCRE1 = this.getValue("de-txtCDesc1");
-        beanTemp.DESCRE2 = this.getValue("de-txtCDesc2");
-        
-        beanTemp.DATINI = this.getValue("de-txtINI");
-        beanTemp.DATFIN = this.getValue("de-txtFIN");
-        beanTemp.STVAL = this.getValue("cmbStval");
+        beanTemp.CODIGO = this.getValue("de-txtCTable");        
+        beanTemp.CBANK = this.getValue("de-txtCBANK");
+        beanTemp.SCARCOD = this.getValue("de-txtSCARCOD");        
+        beanTemp.FTE = this.getValue("de-txtFTE");
+        beanTemp.DESCR = this.getValue("de-txtDESCR");
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -132,7 +115,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA4169(beanTemp);
+                        this.MaintenanceA4172(beanTemp);
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -159,7 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                                 this.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                this.MaintenanceA4169(beanTemp);
+                                this.MaintenanceA4172(beanTemp);
                             }
                         }
                     });
@@ -169,17 +152,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
 
     },
     validateDates: function () {
-        var DATINI = this.getValue("de-txtINI");
-        var DATFIN = this.getValue("de-txtFIN");
         var msj = '';
-
-        if (DATINI.length === 8 && DATFIN.length === 8) {
-            if (DATFIN < DATINI) {
-                msj = 'Error in dates';
-            }
-        } else {
-            msj = 'Error in date lenghts'
-        }
 
         return msj;
     },
@@ -196,7 +169,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                     var beanTemp = {};
                     beanTemp.option = 'D';
                     beanTemp.beanString = JSON.stringify(meDE.beanResult);
-                    this.MaintenanceA4169(beanTemp);
+                    this.MaintenanceA4172(beanTemp);
                 }
             }
         });
@@ -205,11 +178,11 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         this.view.close();
     },
     // </editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="MaintenanceA4169">
-    MaintenanceA4169: function (beanTemp) {
+    //<editor-fold defaultstate="collapsed" desc="MaintenanceA4172">
+    MaintenanceA4172: function (beanTemp) {
 //        console.log(beanTemp);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA4169',
+            url: prototype.url + '/MaintenanceA4172',
             method: 'POST',
             timeout: 60000000,
             params: beanTemp,

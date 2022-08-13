@@ -83,17 +83,27 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {xtype: 'tbspacer', width: 5},
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCANAL',
-                                    fieldStyle: 'text-align:left;',
-                                    enforceMaxLength: true,
-                                    maxLength: 3,
-                                    width: 60,
-                                    maskRe: /[a-zA-Z]/,
+                                    xtype: 'combo',
+                                    id: prototype.id + '-de-cmbCANAL',
+                                    queryMode: 'local',
+                                    width: 80,
+                                    fieldStyle: 'color:#074066;',
+                                    forceSelection: true,
+                                    selectOnFocus: false,
+                                    caseSensitive: false,
+                                    hidden: false,
+                                    autoSelect: true,
+                                    editable: false,
+                                    disabled: false,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
                                     listeners: {
                                         change: 'onUpperValue'
                                     }
-                                }
+                                },
                                 ,
                                 {xtype: 'tbspacer', width: 105}
                             ]
@@ -183,7 +193,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:left;',
                                     maxChars: '15',
-                                    width: 100
+                                    width: 120
                                 },
                                 {xtype: 'tbspacer', width: 50}
                             ]
@@ -207,15 +217,34 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     width: 150
                                 },
                                 {xtype: 'tbspacer', width: 4},
+//                                {
+//                                    xtype: 'combo',
+//                                    id: prototype.id + '-de-cmbSCOUNTRY',
+//                                    style: 'font-weight:bold;color:#0B333C;',
+//                                    enforceMaxLength: true,
+//                                    fieldStyle: 'text-align:left;',
+//                                    width: 150,
+//                                    maskRe: /[a-zA-Z]/,
+//                                    maxLength: 2
+//                                },
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSCOUNTRY',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    enforceMaxLength: true,
-                                    fieldStyle: 'text-align:left;',
-                                    width: 150,
-                                    maskRe: /[a-zA-Z]/,
-                                    maxLength: 2
+                                    xtype: 'combo',
+                                    id: prototype.id + '-de-cmbSCOUNTRY',
+                                    queryMode: 'local',
+                                    width: 120,
+                                    fieldStyle: 'color:#074066;',
+                                    forceSelection: true,
+                                    selectOnFocus: false,
+                                    caseSensitive: false,
+                                    hidden: false,
+                                    autoSelect: true,
+                                    editable: false,
+                                    disabled: false,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all'
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
@@ -253,7 +282,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
-                                    text: 'Unidad Operativa',
+                                    text: 'Operational Unit',
                                     fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -265,7 +294,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     xtype: 'combo',
                                     id: prototype.id + '-de-cmbUNIOPE',
                                     queryMode: 'local',
-                                    width: 150,
+                                    width: 120,
                                     fieldStyle: 'color:#074066;',
                                     queryMode: 'local',
                                     forceSelection: true,

@@ -2324,6 +2324,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         });
     },
+    onMsiTracking: function(a, b, c, d, e, rowData) {
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking', {
+            id: prototype.id + '-msiTrackingGrid',
+            params: {
+                rec: rowData.data
+//                lstCountry: me.lstCountry
+            }
+        }).show();
+    },
     btnBack_click: function (obj, e) {
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
@@ -2452,6 +2461,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case  '-boxSummaryTransactionError':
                 global.getFile(prototype.url + '/getXLSXSummaryErrorTransactiont?beanString=' + searchParamsMainSettlement.beanString);
+                break;
+            case  '-boxMainChangePayment':
+                global.getFile(prototype.url + '/getXLSXMainChangePayment?beanString=' + searchParamsMainSettlement.beanString);
                 break;
         }
     },

@@ -71,8 +71,8 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('de-txtMERCHP', this.beanResult.MERCHP);
         this.setValue('de-txtDESCR', this.beanResult.DESCR);
         this.setValue('de-txtRSOCIAL', this.beanResult.RSOCIAL);
-        this.setValue('de-txtCANAL', this.beanResult.CANAL);
-        this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
+        this.setValue('de-cmbCANAL', this.beanResult.CANAL);
+        this.setValue('de-cmbSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtNameCTRY', this.beanResult.strDescripCtry);
         this.setValue('de-cmbUNIOPE', this.beanResult.UNIOPE);
         this.setValue('de-cmbSTATUS', this.beanResult.STATUS);
@@ -99,8 +99,8 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         beanTemp.MERCHP = this.getValue("de-txtMERCHP");
         beanTemp.DESCR = this.getValue("de-txtDESCR");
         beanTemp.RSOCIAL = this.getValue("de-txtRSOCIAL");
-        beanTemp.CANAL = this.getValue("de-txtCANAL");
-        beanTemp.SCOUNTRY = this.getValue("de-txtSCOUNTRY");
+        beanTemp.CANAL = this.getValue("de-cmbCANAL");
+        beanTemp.SCOUNTRY = this.getValue("de-cmbSCOUNTRY");
         beanTemp.UNIOPE = this.getValue("de-cmbUNIOPE");
         beanTemp.STATUS = this.getValue("de-cmbSTATUS");
 
@@ -161,6 +161,37 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             ]
         }));
         cmbSTATUS.setValue('');
+        
+        var cmbCANAL = Ext.getCmp(prototype.id + '-de-cmbCANAL');
+        cmbCANAL.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "none"],
+                ["ATO", "Aeropuert"],
+                ["CTO", "Oficina"],
+                ["CCT", "Reserva"],
+                ["WEB", "Web"],
+                ["GSA", "G.S.Agte"],
+                ["FRA", "Franquic"],
+            ]
+        }));
+        
+        var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
+        cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "none"],
+                ["US", "UNITED STATES"],
+                ["CN", "CANADA"],
+                ["AR", "ARGENTINA"],
+                ["JP", "JAPAN"],
+                ["SP", "SPAIN"],
+                ["MX", "MEXICO"],
+            ]
+        }));
+        
 
         var beanString = JSON.stringify(meDE.bean.data);
 
