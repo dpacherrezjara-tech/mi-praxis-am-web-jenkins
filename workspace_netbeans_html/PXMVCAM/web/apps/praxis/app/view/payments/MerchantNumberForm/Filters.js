@@ -162,7 +162,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                     fieldLabel: 'Country:',
                     id: prototype.id + '-cmbCountry',
                     queryMode: 'local',
-                    width: 220,
+                    width: 240,
                     fieldStyle: 'color:#074066;',
                     forceSelection: true,
                     selectOnFocus: false,
