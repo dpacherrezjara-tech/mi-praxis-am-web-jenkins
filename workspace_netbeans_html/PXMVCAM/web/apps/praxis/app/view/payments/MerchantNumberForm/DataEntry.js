@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     xtype: 'combo',
                                     id: prototype.id + '-de-cmbCANAL',
                                     queryMode: 'local',
-                                    width: 80,
+                                    width: 110,
                                     fieldStyle: 'color:#074066;',
                                     forceSelection: true,
                                     selectOnFocus: false,
@@ -173,7 +173,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                             layout: 'hbox',
                             border: false,
                             margin: '4 2 4 20',
-// bodyStyle: 'background:#E5ECEF;',
+                            // bodyStyle: 'background:#E5ECEF;',
                             defaults: {
                                 anchor: '100%',
                                 width: 1080
@@ -184,17 +184,32 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     xtype: 'label',
                                     text: 'Merchant Payment',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 150
+                                    width: 130
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtMERCHP',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    maxChars: '15',
-                                    width: 120
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    editable: true,
+                                    enabled: false,
+                                    maxLength: 20,
+                                    maskRe: /[0-9]/,
+                                    readOnly: false,
+                                    width: 290
                                 },
+                                
                                 {xtype: 'tbspacer', width: 50}
                             ]
                         },
@@ -231,7 +246,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     xtype: 'combo',
                                     id: prototype.id + '-de-cmbSCOUNTRY',
                                     queryMode: 'local',
-                                    width: 120,
+                                    width: 130,
                                     fieldStyle: 'color:#074066;',
                                     forceSelection: true,
                                     selectOnFocus: false,
@@ -294,7 +309,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     xtype: 'combo',
                                     id: prototype.id + '-de-cmbUNIOPE',
                                     queryMode: 'local',
-                                    width: 120,
+                                    width: 130,
                                     fieldStyle: 'color:#074066;',
                                     queryMode: 'local',
                                     forceSelection: true,

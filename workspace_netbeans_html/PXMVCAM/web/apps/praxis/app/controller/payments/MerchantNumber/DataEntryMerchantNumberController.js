@@ -49,6 +49,36 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     ]
                 }));
                 cmbSTATUS.setValue('');
+                var cmbCANAL = Ext.getCmp(prototype.id + '-de-cmbCANAL');
+                cmbCANAL.bindStore(Ext.create('Ext.data.ArrayStore', {
+                    autoLoad: false,
+                    fields: ['code', 'name'],
+                    data: [
+                        ["", "none"],
+                        ["ATO", "ATO - Aeropuert"],
+                        ["CTO", "CTO - Oficina"],
+                        ["CCT", "CCT - Reserva"],
+                        ["WEB", "WEB - Web"],
+                        ["GSA", "GSA - G.S.Agte"],
+                        ["FRA", "FRA - Franquic"],
+                    ]
+                }));
+                cmbCANAL.setValue('');
+                var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
+                cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
+                    autoLoad: false,
+                    fields: ['code', 'name'],
+                    data: [
+                        ["", "none"],
+                        ["US", "US - UNITED STATES"],
+                        ["CA", "CA - CANADA"],
+                        ["AR", "AR - ARGENTINA"],
+                        ["JP", "JP - JAPAN"],
+                        ["ES", "ES - SPAIN"],
+                        ["MX", "MX - MEXICO"],
+                    ]
+                }));
+                cmbSCOUNTRY.setValue('');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -161,37 +191,37 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             ]
         }));
         cmbSTATUS.setValue('');
-        
+
         var cmbCANAL = Ext.getCmp(prototype.id + '-de-cmbCANAL');
         cmbCANAL.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
                 ["", "none"],
-                ["ATO", "Aeropuert"],
-                ["CTO", "Oficina"],
-                ["CCT", "Reserva"],
-                ["WEB", "Web"],
-                ["GSA", "G.S.Agte"],
-                ["FRA", "Franquic"],
+                ["ATO", "ATO - Aeropuert"],
+                ["CTO", "CTO - Oficina"],
+                ["CCT", "CCT - Reserva"],
+                ["WEB", "WEB - Web"],
+                ["GSA", "GSA - G.S.Agte"],
+                ["FRA", "FRA - Franquic"],
             ]
         }));
-        
+
         var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
         cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
                 ["", "none"],
-                ["US", "UNITED STATES"],
-                ["CN", "CANADA"],
-                ["AR", "ARGENTINA"],
-                ["JP", "JAPAN"],
-                ["SP", "SPAIN"],
-                ["MX", "MEXICO"],
+                ["US", "US - UNITED STATES"],
+                ["CA", "CA - CANADA"],
+                ["AR", "AR - ARGENTINA"],
+                ["JP", "JP - JAPAN"],
+                ["ES", "ES - SPAIN"],
+                ["MX", "MX - MEXICO"],
             ]
         }));
-        
+
 
         var beanString = JSON.stringify(meDE.bean.data);
 
@@ -266,16 +296,22 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to update ?',
                     buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    animateTarget: btn,
+                    //scope: this,
+                    //animateTarget: btn,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
                             var beanTemp = {};
-                            this.llenarData(beanTemp);
-                            beanTemp.option = 'U';
-                            this.MaintenanceA2354(beanTemp);
+                            
+                            var msjResult = meDE.validacionUpdate(beanTemp);
+                            if (msjResult === '') {
+                                meDE.llenarData(beanTemp);
+                                beanTemp.option = 'U';
+                                meDE.MaintenanceA2354(beanTemp);
+                            } else {
+                                global.Msg({msg: msjResult});
+                            }
                         }
                     }
                 });
@@ -334,6 +370,16 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         var msjResult = '';
         if (this.getValue("de-txtMERCHN") === '') {
             msjResult = "You must enter the required field.";
+        }
+        if (this.getValue("de-txtMERCHP") === '') {
+            msjResult = "You must enter the required field.";
+        }
+        return msjResult;
+    },
+    validacionUpdate: function (beanTemp) {
+        var msjResult = '';
+        if (this.getValue("de-txtMERCHP").trim() === '') {
+            msjResult = "The field Merchant Payment cannot be left empty";
         }
         return msjResult;
     },
