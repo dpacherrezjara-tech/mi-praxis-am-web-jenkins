@@ -96,6 +96,9 @@ public class EmailsDAO {
 
                 bean.FTE = rst.getString("FTE").trim();
                 bean.DESCR = rst.getString("DESCR").trim();
+                
+                bean.ZONA = rst.getString("ZONA").trim();
+                bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -160,6 +163,9 @@ public class EmailsDAO {
 
                 beanTkt.FTE = rs01.getString("FTE").trim();
                 beanTkt.DESCR = rs01.getString("DESCR").trim();
+                
+                beanTkt.ZONA = rs01.getString("ZONA").trim();
+                beanTkt.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
 
                 beanTkt.USCR = rs01.getString("USCR").trim();
                 beanTkt.FECR = rs01.getString("FECR").trim();
@@ -202,7 +208,7 @@ public class EmailsDAO {
         CallableStatement cstmt = null;
         PreparedStatement pstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04568(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04568(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -216,10 +222,12 @@ public class EmailsDAO {
             cstmt.setString(5, filter.SCARCOD.trim());
             cstmt.setString(6, filter.FTE.trim());
             cstmt.setString(7, filter.DESCR.trim());
+            cstmt.setString(8, filter.ZONA.trim());
+            cstmt.setString(9, filter.SCOUNTRY.trim());
 
-            cstmt.setString(8, session.getUserView().getUserInfo().USR);
-            cstmt.setString(9, Functions.getFechaActual());
-            cstmt.setString(10, Functions.getHoraActual());
+            cstmt.setString(10, session.getUserView().getUserInfo().USR);
+            cstmt.setString(11, Functions.getFechaActual());
+            cstmt.setString(12, Functions.getHoraActual());
 
             cstmt.execute();
             
