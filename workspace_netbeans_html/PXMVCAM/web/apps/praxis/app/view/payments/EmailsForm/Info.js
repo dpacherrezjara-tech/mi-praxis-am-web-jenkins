@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 544,
+                                    width: 644,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Description', dataIndex: 'DESCR', width: 150,
+                                            {text: 'Description', dataIndex: 'DESCR', width: 250,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
