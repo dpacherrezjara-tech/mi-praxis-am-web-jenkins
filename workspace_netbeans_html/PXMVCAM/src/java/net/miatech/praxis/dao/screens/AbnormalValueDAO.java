@@ -2167,7 +2167,9 @@ public class AbnormalValueDAO {
 
     }
 
-    /*PARTICIPATION OAL*/
+    // =========================================================================
+    // ======================= PARTICIPATION OAL =================================
+    // =========================================================================
     public List<IMF111Filter> loadPX414SQP02545(IMF111Filter filter) throws SQLException, Exception {
 
         List<IMF111Filter> lstRtn = new ArrayList<>(0);
@@ -2909,4 +2911,201 @@ public class AbnormalValueDAO {
 
         return lstRtn;
     }
+    
+    // =========================================================================
+    // ======================= CREDIT CARD ANALISIS =================================
+    // =========================================================================
+    public HashMap loadPX414SQP02248(DashboardFilter filter) throws SQLException, Exception {
+
+        HashMap hm = new HashMap();
+        List<WRF016Filterwk> listaS = new ArrayList<WRF016Filterwk>(0);
+        List<WRF016Filterwk> listaR = new ArrayList<WRF016Filterwk>(0);
+        WRF016Filterwk objRtn;
+        double AMT1 = 0, AMOUNTSC = 0;
+        long QTY1 = 0, QCCARDSC = 0;
+        String mes1 = "", mes2 = "", mes3 = "", mes4 = "", mes5 = "", mes6 = "", fec_actual = "";
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02248(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(9, Types.VARCHAR);
+            cstmt.registerOutParameter(10, Types.VARCHAR);
+            cstmt.registerOutParameter(11, Types.VARCHAR);
+            cstmt.registerOutParameter(12, Types.VARCHAR);
+            cstmt.registerOutParameter(13, Types.VARCHAR);
+            cstmt.registerOutParameter(14, Types.VARCHAR);
+            cstmt.registerOutParameter(15, Types.VARCHAR);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_PAIS);
+            cstmt.setString(5, filter.strTIPO);
+            cstmt.setString(6, filter.FLAG);
+            cstmt.setString(7, filter.IN_CARD1);
+            cstmt.setString(8, filter.IN_CARD2);
+            cstmt.setString(9, "");
+            cstmt.setString(10, "");
+            cstmt.setString(11, "");
+            cstmt.setString(12, "");
+            cstmt.setString(13, "");
+            cstmt.setString(14, "");
+            cstmt.setString(15, "");
+
+            cstmt.execute();
+
+            mes1 = cstmt.getString(9);
+            mes2 = cstmt.getString(10);
+            mes3 = cstmt.getString(11);
+            mes4 = cstmt.getString(12);
+            mes5 = cstmt.getString(13);
+            mes6 = cstmt.getString(14);
+            fec_actual = cstmt.getString(15);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                AMT1 = rst.getDouble("M6");
+                QTY1 = rst.getLong("QTY6");
+                AMOUNTSC = rst.getDouble("AMTCH");
+                QCCARDSC = rst.getLong("QTYCH");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    objRtn = new WRF016Filterwk();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAIS = filter.IN_PAIS;
+                    objRtn.IN_CARD1 = filter.IN_CARD1;
+                    objRtn.IN_CARD2 = filter.IN_CARD2;
+                    objRtn.SCARCOD = rst.getString("SCARCOD");
+                    objRtn.strFlag = rst.getString("SCARCOD") + " - " + rst.getString("DESCRIP");
+                    objRtn.FECHA = fec_actual;
+                    if (!filter.IN_PAIS.trim().isEmpty()) {
+                        objRtn.COMENT1 = "Country : " + filter.IN_PAIS + " - " + filter.strCountryS;
+                    }
+
+                    objRtn.Aud1 = rst.getDouble("M6");
+                    objRtn.Avg1 = rst.getDouble("AVG");
+                    objRtn.Diff1 = rst.getDouble("DIFF");
+
+                    objRtn.Aud2 = rst.getLong("QTY6");
+                    objRtn.Avg2 = rst.getDouble("AVGQ");
+                    objRtn.Diff2 = rst.getDouble("DIFFQ");
+
+                    objRtn.Var1 = rst.getDouble("VAR");
+
+                    objRtn.QCCARDSC = rst.getLong("QTYCH");
+                    objRtn.AMOUNTSC = rst.getDouble("AMTCH");
+
+                    objRtn.totNet1 = AMT1;
+                    objRtn.totNet2 = QTY1;
+                    objRtn.totQCCARDSC = QCCARDSC;
+                    objRtn.totAMOUNTSC = AMOUNTSC;
+
+                    objRtn.strFormatDate4 = Functions.getMonthConvert(mes1);
+                    objRtn.strDescripcion = Functions.getMonthConvert(mes2);
+                    objRtn.strDescripcion1 = Functions.getMonthConvert(mes3);
+                    objRtn.strDescripcion2 = Functions.getMonthConvert(mes4);
+                    objRtn.strDescripcion3 = Functions.getMonthConvert(mes5);
+                    //objRtn.strDescripcion4 = Functions.getMonthConvert(mes6);
+                    objRtn.strDescripcion4 = Functions.getMonthConvert(fec_actual);
+
+                    listaS.add(objRtn);
+                }
+            }
+            hm.put("SALE", listaS);
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    AMT1 = rst.getDouble("M6");
+                    QTY1 = rst.getLong("QTY6");
+                }
+                rst.close();
+
+                if (cstmt.getMoreResults()) {
+                    rst = cstmt.getResultSet();
+
+                    while (rst.next()) {
+                        objRtn = new WRF016Filterwk();
+                        objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                        objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                        objRtn.IN_PAIS = filter.IN_PAIS;
+                        objRtn.IN_CARD1 = filter.IN_CARD1;
+                        objRtn.IN_CARD2 = filter.IN_CARD2;
+                        objRtn.SCARCOD = rst.getString("SCARCOD");
+                        objRtn.strFlag = rst.getString("SCARCOD") + " - " + rst.getString("DESCRIP");
+                        objRtn.FECHA = fec_actual;
+                        if (!filter.IN_PAIS.trim().isEmpty()) {
+                            objRtn.COMENT1 = "Country : " + filter.IN_PAIS + " - " + filter.strCountryS;
+                        }
+
+                        objRtn.Aud1 = rst.getDouble("M6");
+                        objRtn.Avg1 = rst.getDouble("AVG");
+                        objRtn.Diff1 = rst.getDouble("DIFF");
+
+                        objRtn.Aud2 = rst.getLong("QTY6");
+                        objRtn.Avg2 = rst.getDouble("AVGQ");
+                        objRtn.Diff2 = rst.getDouble("DIFFQ");
+
+                        objRtn.Var1 = rst.getDouble("VAR");
+
+                        objRtn.totNet1 = AMT1;
+                        objRtn.totNet2 = QTY1;
+
+                        objRtn.strFormatDate4 = Functions.getMonthConvert(mes1);
+                        objRtn.strDescripcion = Functions.getMonthConvert(mes2);
+                        objRtn.strDescripcion1 = Functions.getMonthConvert(mes3);
+                        objRtn.strDescripcion2 = Functions.getMonthConvert(mes4);
+                        objRtn.strDescripcion3 = Functions.getMonthConvert(mes5);
+                        //objRtn.strDescripcion4 = Functions.getMonthConvert(mes6);
+                        objRtn.strDescripcion4 = Functions.getMonthConvert(fec_actual);
+
+                        listaR.add(objRtn);
+                    }
+                }
+            }
+            hm.put("REFUND", listaR);
+            rst.close();
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return hm;
+
+    }
+
 }

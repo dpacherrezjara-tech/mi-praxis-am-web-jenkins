@@ -701,7 +701,82 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    // =========================================================================
+    // ========================== CREDIT CARD ANALISIS ========================================
+    // =========================================================================
+    @RequestMapping(value = "searchCCA")
+    public @ResponseBody
+    String searchCCA(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
 
+        DashboardFilter filter = new DashboardFilter();
+        HashMap hm = new HashMap();
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            hm = logic.loadPX414SQP02248(filter);
+
+            map.put("success", true);
+
+            map.put("lstData_CCard_S", hm.get("SALE"));
+            map.put("lstData_CCard_R", hm.get("REFUND"));
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    // =========================================================================
+    // ========================== EXCHANGE ANALISIS ========================================
+    // =========================================================================
+    @RequestMapping(value = "searchEA")
+    public @ResponseBody
+    String searchEA(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02393(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
     // ========================================================================
     // ==========================                 =============================
     // ========================================================================

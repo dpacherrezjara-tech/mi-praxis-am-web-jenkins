@@ -130,4 +130,10 @@ public class AbnormalValueLogic {
     public List<A720Filter> loadPX109SQP01269(WRF016Filterwk filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX109SQP01269(filter);
     }
+    // =========================================================================
+    // ======================= CREDIT CARD ANALISIS================================
+    // =========================================================================
+    public HashMap loadPX414SQP02248(DashboardFilter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02248(filter);
+    }
 }
