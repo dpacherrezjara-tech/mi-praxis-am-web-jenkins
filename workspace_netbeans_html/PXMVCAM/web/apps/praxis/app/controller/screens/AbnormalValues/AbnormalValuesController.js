@@ -263,7 +263,14 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         }else if(tab_id === prototype.id + '-ScrDifferenceFare_tab'){
             
             component = Ext.getCmp(prototype.id + '-ScrDifferenceFare_screen');
+        }else if(tab_id === prototype.id + '-ScrCreditCardAnalisis_tab'){
+            
+            component = Ext.getCmp(prototype.id + '-ScrCreditCardAnalisis_screen');
+        }else if(tab_id === prototype.id + '-ScrExchangeAnalisis_tab'){
+            
+            component = Ext.getCmp(prototype.id + '-ScrExchangeAnalisis_screen');
         }
+        
         
         var controller = component.getController();
         controller.imgBack_clickHandler();
