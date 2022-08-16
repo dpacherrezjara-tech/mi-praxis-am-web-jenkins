@@ -1,4 +1,3 @@
-
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
@@ -17,6 +16,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.EmailsLogic;
+import net.miatech.praxis.payment.filter.A4171Filter;
 import net.miatech.praxis.payment.filter.A4172Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -37,7 +37,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 @Controller
 @Scope("request")
@@ -102,7 +101,7 @@ public class EmailsController extends BaseController {
         }
         return lst;
     }
-       
+
     @RequestMapping(value = "searchCompleteDetail")
     public @ResponseBody
     String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
@@ -127,7 +126,7 @@ public class EmailsController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "MaintenanceA4172")
     public @ResponseBody
     String MaintenanceA4172(ModelMap map, HttpServletRequest request) {
@@ -159,6 +158,34 @@ public class EmailsController extends BaseController {
             map.put("Mensaje", ex.getMessage());
         }
         return new Gson().toJson(map);
-    }     
-}
+    }
 
+    @RequestMapping(value = "searchEMAIL")
+    public @ResponseBody
+    String searchEMAIL(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Emails : searchEMAIL-------------");
+        map.put("success", true);
+        List<A4171Filter> lst = this.getListEmail(request);
+        System.out.println("Total : " + lst.size());
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4171Filter> getListEmail(HttpServletRequest request) {
+
+        List<A4171Filter> lst = new ArrayList<>(0);
+        String CODIGO = "";
+
+        try {
+            logic = new EmailsLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            CODIGO = request.getParameter("CODIGO");
+
+            lst = logic.loadPX601SQP04547(CODIGO);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+}

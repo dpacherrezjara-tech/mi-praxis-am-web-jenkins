@@ -56,15 +56,17 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
+
+        this.setGridEMAIL(this.beanResult.CODIGO);
     },
     obtainData: function () {
-        
+
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-        beanTemp.CODIGO = this.getValue("de-txtCTable");        
+        beanTemp.CODIGO = this.getValue("de-txtCTable");
         beanTemp.CBANK = this.getValue("de-txtCBANK");
-        beanTemp.SCARCOD = this.getValue("de-txtSCARCOD");        
+        beanTemp.SCARCOD = this.getValue("de-txtSCARCOD");
         beanTemp.FTE = this.getValue("de-txtFTE");
         beanTemp.DESCR = this.getValue("de-txtDESCR");
 
@@ -74,6 +76,20 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         beanTemp.USUP = this.getValue("txtUSUP").trim();
         beanTemp.FEUP = this.getValue("txtFEUP").trim();
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
+        
+        var listaGrilla = Ext.getCmp(prototype.id + '-gridEMAIL').getStore().data;
+        var beanDet = {};
+        var listaNueva = [];
+
+        for (var i = 0; i < listaGrilla.length; i++) {
+            beanDet = listaGrilla.items[i];
+
+            var beanNuevo = {};
+            beanNuevo.EMAIL = beanDet.data.EMAIL;
+            beanNuevo.CODIGO = this.getValue("de-txtCTable");
+            listaNueva.push(beanNuevo);
+        }
+        beanTemp.lstDetalle = listaNueva;
     },
     getData: function () {
         var beanString = JSON.stringify(meDE.bean.data);
@@ -89,7 +105,6 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
                 meDE.mostrarData();
-                console.log(meDE.mostrarData());
             }
         });
     },
@@ -230,6 +245,84 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
 //        } else {
 //            Ext.getCmp(prototype.id + '-lbldes2').show();
 //        }
+    },
+    addEMAIL: function () {
+        if (Ext.getCmp(prototype.id + '-txtEMAIL').getValue() !== '') {
+            var beanTemp = {};
+            var store_gridEMAIL = Ext.getCmp(prototype.id + '-gridEMAIL').getStore();
+            beanTemp.EMAIL = Ext.getCmp(prototype.id + '-txtEMAIL').getValue();
+            this.insertEMAIL(store_gridEMAIL, beanTemp);
+
+        } else {
+            global.Msg({msg: 'Registro vacío'});
+        }
+    },
+    insertEMAIL: function (store_gridEMAIL, objEMAIL) {
+        var dataRow = {};
+        var duplicado = false;
+        if (store_gridEMAIL.data.length > 0) {
+            for (var i = 0; i < store_gridEMAIL.data.length; i++) {
+                var dataRow1 = store_gridEMAIL.data.items[i];
+                if (dataRow1.data.EMAIL === this.getValue("txtEMAIL")) {
+                    duplicado = true;
+                }
+            }
+            if (!duplicado) {
+                dataRow = store_gridEMAIL.data.items[store_gridEMAIL.data.length - 1 ].copy();
+                dataRow.id = 'ItrecordEMAIL' + Math.random();
+                dataRow.data.EMAIL = this.getValue("txtEMAIL");
+            }
+        } else {
+            dataRow.id = 'ItrecordEMAIL';
+            dataRow.EMAIL = Ext.getCmp(prototype.id + '-txtEMAIL').getValue();
+        }
+
+        console.log(dataRow);
+        if (!duplicado) {
+            store_gridEMAIL.add(dataRow);
+            Ext.getCmp(prototype.id + '-gridEMAIL').getView().refresh();
+            this.clearEMAIL();
+        } else {
+            global.Msg({msg: 'Registro duplicado'});
+        }
+        console.log(store_gridEMAIL.data.length);
+    },
+    removeEMAIL: function (record) {
+        var store_gridEMAIL = Ext.getCmp(prototype.id + '-gridEMAIL').getStore();
+        var rowIndex = store_gridEMAIL.indexOf(record);
+        store_gridEMAIL.removeAt(rowIndex);
+
+        var beanTemp = {};
+        beanTemp.changeEMAIL = true;
+        Ext.getCmp(prototype.id + '-gridEMAIL').getView().refresh();
+        console.log(store_gridEMAIL.data.length);
+    },
+    clearEMAIL: function () {
+        Ext.getCmp(prototype.id + '-txtEMAIL').setValue('');
+    },
+    setGridEMAIL: function (CODIGO) {
+
+        Ext.Ajax.request({
+            url: prototype.url + '/searchEMAIL',
+            method: 'POST',
+            timeout: 60000000,
+//            params: beanTemp,
+            params: {CODIGO: CODIGO},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: res.data,
+                    autoLoad: true
+                });
+
+                Ext.getCmp(prototype.id + '-gridEMAIL').bindStore(storeData);
+
+            }
+        });
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {

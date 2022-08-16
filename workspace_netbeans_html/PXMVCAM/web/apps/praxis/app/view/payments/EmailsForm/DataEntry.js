@@ -1,34 +1,34 @@
-Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
+Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryEmailsForm',
-    requires:[
+    requires: [
         'Ext.Praxis.controller.payments.Emails.DataEntryEmailsController'
     ],
     controller: 'DataEntryEmailsController',
-    title:'Zones - Data Entry Form',
-    header:true,
-    height:390,
-    width:720,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: 'Zones - Data Entry Form',
+    header: true,
+    height: 550,
+    width: 720,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
     border: false,
     defaults: {
         border: false
     },
-    items:[
+    items: [
         {
             xtype: 'form',
-            defaults:{
+            defaults: {
                 style: 'margin: 3px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     bodyStyle: 'background: transparent;"',
                     layout: 'vbox',
-                    width:930,
+                    width: 930,
                     defaults: {
                         anchor: '100%'
                     },
@@ -43,47 +43,47 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                             height: 20,
                             margin: '4 2 4 3'
                         },
-                        { xtype: 'tbspacer', width: 6 },
+                        {xtype: 'tbspacer', width: 6},
                         {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
                             margin: '10 2 2 8',
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Code',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 80
-                                    
+
                                 },
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCODIGO',
+                                    id: prototype.id + '-de-txtCODIGO',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: false,
                                     maxLength: 3,
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Description',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 80                                    
+                                    width: 80
                                 },
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtDESCR',
+                                    id: prototype.id + '-de-txtDESCR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 80,
+                                    width: 250,
                                     enforceMaxLength: false,
                                     maxLength: 40,
                                 },
@@ -96,57 +96,57 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                             margin: '10 2 2 8',
                             hidden: false,
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Bank',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width:80
-                                    
+                                    width: 80
+
                                 },
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtCBANK',
+                                    id: prototype.id + '-de-txtCBANK',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: false,
                                     maxLength: 4,
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'C. Card',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width:80
-                                    
+                                    width: 80
+
                                 },
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtSCARCOD',
+                                    id: prototype.id + '-de-txtSCARCOD',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
                                     enforceMaxLength: false,
                                     maxLength: 2,
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Source',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width:80
-                                    
+                                    width: 80
+
                                 },
-                                { xtype: 'tbspacer', width: 7 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtFTE',
+                                    id: prototype.id + '-de-txtFTE',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
@@ -155,9 +155,179 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                             ]
                         },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: "Add Email's",
+                                    style: 'font-weight:bold; color:#121E31; text-decoration: underline;',
+                                    width: 90,
+                                    margin: '2 2 0 20',
+                                }
+                            ]
+                        },
+                        {xtype: 'panel',
+                            layout: 'vbox',
+                            border: false,
+                            width: 620,
+                            margin: '2 2 0 20',
+                            height: 200,
+                            defaults: {
+                                anchor: '100%',
+                                width: 580,
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    defaults: {
+                                        anchor: '100%',
+                                        width: 580,
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Email',
+                                            style: 'font-weight:bold;color:#121E31;',
+                                            width: 50,
+                                            padding: '3 0'
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'center',
+                                            padding: '1px 1px 1px 1px',
+                                            html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
+                                            width: 30,
+                                            autoEl: {
+                                                tag: 'label',
+                                                'data-qtip': 'Required field'
+                                            }
+                                        }
+                                    ]
+                                },
+                                //*****
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background: transparent;',
+                                    defaults: {
+                                        anchor: '100%',
+                                        width: 550,
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtEMAIL',
+                                            enforceMaxLength: false,
+//                                            enforceMinLength: true,
+//                                            minLength: 5,
+                                            maxLength: 40,
+                                            //maskRe: /[0-9/]/,
+                                            padding: '3 0',
+                                            fieldStyle: 'text-align:center',
+                                            width: 120
+                                        },
+                                        {xtype: 'tbspacer', width: 3},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            margin: '4 1 1 1',
+                                            iconCls: 'prx-icon-add',
+                                            tooltip: 'Add',
+                                            listeners: {
+                                                click: 'addEMAIL'
+                                            }
+
+                                        },
+                                        {xtype: 'tbspacer', width: 3},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            margin: '4 1 1 1',
+                                            iconCls: 'prx-icon-clear',
+                                            tooltip: 'clear',
+                                            listeners: {
+                                                click: 'clearEMAIL'
+                                            }
+                                        }
+                                    ]
+                                },
+                                //grilla------
+                                {
+                                    xtype: 'panel',
+                                    margin: '5 5 0 10',
+                                    padding: '0 0 0 0',
+                                    width: 460,
+                                    height: 135,
+                                    autoScroll: true,
+                                    align: 'center',
+                                    border: false,
+                                    //title: '<b style="font-size:13px;color:white">RAPID Information</b>',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center',
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 200},
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridEMAIL',
+                                            width: 254,
+                                            height: 130,
+                                            columnLines: true,
+                                            padding: '1',
+                                            margin: '1',
+                                            defaults: {
+                                                sortable: true,
+                                                align: 'center'
+                                            },
+                                            columns: [
+                                                {
+                                                    header: 'Email',
+                                                    id: prototype.id + '-colEmail',
+                                                    dataIndex: 'EMAIL',
+                                                    xtype: 'gridcolumn',
+                                                    align: 'center',
+                                                    width: 200
+                                                },
+                                                {
+                                                    header: '',
+                                                    dataIndex: '',
+                                                    xtype: 'widgetcolumn',
+                                                    align: 'center',
+                                                    width: 40,
+                                                    widget: {
+                                                        xtype: 'button',
+                                                        iconCls: 'prx-icon-delete',
+                                                        tooltip: 'remove',
+                                                        listeners: {
+                                                            click: function (button, e, eOpts) {
+                                                                var record = button.getWidgetRecord();
+                                                                meDE.removeEMAIL(record);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                     ]
                 },
-                { xtype: 'tbspacer', height: 10 },
+                {xtype: 'tbspacer', height: 10},
                 // <editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'label',
@@ -166,10 +336,9 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                     style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                     width: 234,
                     margin: '0 2 4 8'
-                     
+
                 },
-                
-                {           
+                {
                     items: [
                         {
                             xtype: 'panel',
@@ -179,8 +348,8 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
-                                { xtype: 'tbspacer', width: 7 },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Creator User',
@@ -190,14 +359,14 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-txtUSCR',
+                                    id: prototype.id + '-txtUSCR',
                                     readOnly: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Creation Date',
@@ -206,14 +375,14 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-txtFECR',
+                                    id: prototype.id + '-txtFECR',
                                     readOnly: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Creation Time',
@@ -222,10 +391,10 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-txtHOCR',
+                                    id: prototype.id + '-txtHOCR',
                                     readOnly: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -233,15 +402,14 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                         },
                         {
                             xtype: 'panel',
-                            border:false,
+                            border: false,
                             layout: 'hbox',
                             margin: '8 2 4 30',
-                            
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
-                                { xtype: 'tbspacer', width: 7 },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'User Update',
@@ -250,14 +418,14 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-txtUSUP',
+                                    id: prototype.id + '-txtUSUP',
                                     readOnly: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Update Date',
@@ -266,14 +434,14 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-txtFEUP',
+                                    id: prototype.id + '-txtFEUP',
                                     readOnly: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Update Time',
@@ -282,10 +450,10 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-txtHOUP',
+                                    id: prototype.id + '-txtHOUP',
                                     readOnly: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -297,54 +465,54 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry',{
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 }
             ]
         }
     ]
-  }
+}
 );
