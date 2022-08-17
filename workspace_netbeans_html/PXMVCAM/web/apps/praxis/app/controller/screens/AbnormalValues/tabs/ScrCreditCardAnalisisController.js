@@ -58,16 +58,15 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrCreditCardAnali
                 var lstData = res.lstData_CCard_S;
                 var lstData2 = res.lstData_CCard_R;
 
-                if (lstData.length > 0) { // if (lstData.length > 0 && lstData2.length > 0) {
-                    if (lstData.length > 0) {
+                 if (lstData.length > 0 && lstData2.length > 0) {
+                    
                         var bean = lstData[0];
                         Ext.getCmp(prototype.id + '-titFechaS_ABCC').setText(bean.strDescripcion4);
-                    }
+                    
 
-                    if (lstData2.length > 0) {
                         var bean2 = lstData2[0];
                         Ext.getCmp(prototype.id + '-titFechaR_ABCC').setText(bean2.strDescripcion4);
-                    }
+                    console.log(bean2.Aud1);
 
                     var storeData = Ext.create('Ext.data.Store', {
                         data: lstData,

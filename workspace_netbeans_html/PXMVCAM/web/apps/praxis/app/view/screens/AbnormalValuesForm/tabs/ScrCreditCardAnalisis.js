@@ -77,8 +77,8 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                         items: [
                                             {text: 'Credit Card', dataIndex: 'strFlag', width: 250, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "font-weight:bold;text-align:left;";
-                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
                                                 }
                                             },
                                             {text: 'Sales USD',
@@ -96,7 +96,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totNet1, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totNet1, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {text: 'Average',
@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totfalta2, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totfalta2, '0,000.00') + '<b>';
                                                                 }
                                                             }
                                                         ]
@@ -123,14 +123,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totfalta3, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totfalta3, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
                                                         text: 'Variation', dataIndex: 'Var1', align: 'center', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            (data.Var1 > 0) ? metaData.style = "text-align:right;background:#d5f4d5;font-weight: bold;color:#0000e6"
+                                                            (data.Var1 > 0) ? metaData.style = "text-align:right;background:#d5f4d5;font-weight: bold;color:#CC3333"
                                                                     : metaData.style = "text-align:right;background:#d5f4d5;font-weight: normal;color:#323232";
                                                             return Ext.util.Format.number(value, '0,000%');
                                                         }
@@ -146,7 +146,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                 columns: [
                                                     {text: 'Qty Cards', width: 70, dataIndex: 'QCCARDSC',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:#9ccfbf;";
+                                                            metaData.style = "text-align:right;";
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -157,13 +157,13 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                     },
                                                     {text: 'Amount', width: 90, dataIndex: 'AMOUNTSC',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'text-align:right; margin-right:0px;background:#9ccfbf;';
-                                                            return Ext.util.Format.number(value, '0,000');
+                                                            metaData.style = 'text-align:right; margin-right:0px;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTSC, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNTSC, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -199,8 +199,8 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                         items: [
                                             {text: 'Credit Card', dataIndex: 'strFlag', width: 250, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "font-weight:bold;text-align:left;";
-                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
                                                 }
                                             },
                                             {text: 'Refund USD',
@@ -212,13 +212,13 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                 columns: [
                                                     {text: '', width: 120, dataIndex: 'Aud1', id: prototype.id + '-titFechaR_ABCC',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background:#9ccfbf;";
-                                                            return value;
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardRefundAnalisis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totNet2, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totNet1, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {text: 'Average',
@@ -245,21 +245,16 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisi
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totfalta7, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totfalta7, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
                                                         text: 'Variation', dataIndex: 'Var1', align: 'center', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            (data.Var1 > 0) ? metaData.style = "text-align:right;background:#d5f4d5;font-weight: bold;color:#0000e6"
+                                                            (data.Var1 > 0) ? metaData.style = "text-align:right;background:#d5f4d5;font-weight: bold;color:#CC3333"
                                                                     : metaData.style = "text-align:right;background:#d5f4d5;font-weight: normal;color:#323232";
                                                             return Ext.util.Format.number(value, '0,000%');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataScrCreditCardSalesAnalisis').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totfalta8, '0,000') + '<b>';
                                                         }
                                                     }
                                                 ]
