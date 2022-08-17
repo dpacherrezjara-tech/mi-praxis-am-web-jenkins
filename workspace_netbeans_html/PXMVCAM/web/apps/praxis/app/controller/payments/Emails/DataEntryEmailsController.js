@@ -27,16 +27,17 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-save').hide();
+                Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
             case 'U':
                 this.getData();
+                this.desHabilitartxt();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
+                Ext.getCmp(prototype.id + '-btn-update').show();
+                Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
@@ -64,7 +65,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-        beanTemp.CODIGO = this.getValue("de-txtCTable");
+        beanTemp.CODIGO = this.getValue("de-txtCODIGO");
         beanTemp.CBANK = this.getValue("de-txtCBANK");
         beanTemp.SCARCOD = this.getValue("de-txtSCARCOD");
         beanTemp.FTE = this.getValue("de-txtFTE");
@@ -76,7 +77,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         beanTemp.USUP = this.getValue("txtUSUP").trim();
         beanTemp.FEUP = this.getValue("txtFEUP").trim();
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
-        
+
         var listaGrilla = Ext.getCmp(prototype.id + '-gridEMAIL').getStore().data;
         var beanDet = {};
         var listaNueva = [];
@@ -86,7 +87,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
 
             var beanNuevo = {};
             beanNuevo.EMAIL = beanDet.data.EMAIL;
-            beanNuevo.CODIGO = this.getValue("de-txtCTable");
+            beanNuevo.CODIGO = this.getValue("de-txtCODIGO");
             listaNueva.push(beanNuevo);
         }
         beanTemp.lstDetalle = listaNueva;
@@ -126,7 +127,8 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
-                    var msjResult = this.validacionInsert(beanTemp);
+                    //var msjResult = this.validacionInsert(beanTemp);
+                    var msjResult = '';
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
@@ -139,7 +141,8 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         });
     },
     onUpdateClick: function (btn) {
-        var msj = this.validateDates();
+        //var msj = this.validateDates();
+        var msj = '';
 
         if (msj === '') {
             Ext.Msg.show(
@@ -232,11 +235,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
 //        Ext.getCmp(prototype.id + '-lbldes2').show();
     },
     desHabilitartxt: function () {
-//        if (this.getValue("txtGRUSOR") !== this.bean.GRUSOR) {
-//            Ext.getCmp(prototype.id + '-lbldes').hide();
-//        } else {
-//            Ext.getCmp(prototype.id + '-lbldes').show();
-//        }
+        Ext.getCmp(prototype.id + '-de-txtCODIGO').setReadOnly(true);
     },
     Habilitarlbl1: function () {
 //        Ext.getCmp(prototype.id + '-lbldes').hide();
@@ -247,14 +246,19 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
 //        }
     },
     addEMAIL: function () {
-        if (Ext.getCmp(prototype.id + '-txtEMAIL').getValue() !== '') {
-            var beanTemp = {};
-            var store_gridEMAIL = Ext.getCmp(prototype.id + '-gridEMAIL').getStore();
-            beanTemp.EMAIL = Ext.getCmp(prototype.id + '-txtEMAIL').getValue();
-            this.insertEMAIL(store_gridEMAIL, beanTemp);
-
+        var email = Ext.getCmp(prototype.id + '-txtEMAIL').getValue();
+        if (email !== '') {
+            var re = /\S+@\S+\.\S+/;
+            if (re.test(email)) {
+                var beanTemp = {};
+                var store_gridEMAIL = Ext.getCmp(prototype.id + '-gridEMAIL').getStore();
+                beanTemp.EMAIL = Ext.getCmp(prototype.id + '-txtEMAIL').getValue();
+                this.insertEMAIL(store_gridEMAIL, beanTemp);
+            } else {
+                global.Msg({msg: 'Enter a valid email'});
+            }
         } else {
-            global.Msg({msg: 'Registro vacío'});
+            global.Msg({msg: 'Empty field'});
         }
     },
     insertEMAIL: function (store_gridEMAIL, objEMAIL) {
