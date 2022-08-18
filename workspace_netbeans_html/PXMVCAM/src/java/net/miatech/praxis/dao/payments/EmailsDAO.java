@@ -231,7 +231,7 @@ public class EmailsDAO {
 
             cstmt.execute();
             
-            String SQL_DELETE = "DELETE FROM LIBSAP48.A4171 WHERE CODIGO = ?";
+            String SQL_DELETE = "DELETE FROM LIBSAP12.A4171 WHERE CODIGO = ?";
             (pstmt = cnx.prepareStatement(SQL_DELETE)).setString(1, filter.CODIGO.trim());
             pstmt.execute();
 

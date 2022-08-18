@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry', {
         'Ext.Praxis.controller.payments.Emails.DataEntryEmailsController'
     ],
     controller: 'DataEntryEmailsController',
-    title: 'Zones - Data Entry Form',
+    title: 'Emails - Data Entry Form',
     header: true,
     height: 580,
     width: 720,
@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry', {
                                     id: prototype.id + '-de-txtDESCR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 250,
+                                    width: 270,
                                     enforceMaxLength: true,
                                     maxLength: 40,
                                 },
@@ -99,43 +99,37 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry', {
                             items: [
                                 {xtype: 'tbspacer', width: 7},
                                 {
-                                    xtype: 'label',
-                                    text: 'Bank',
+                                    xtype: 'combo',
+                                    fieldLabel: '<b>Bank</b>',
+                                    id: prototype.id + '-de-cmbCBANK',
+                                    fieldStyle: 'text-align: left',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    valueField: 'CODEBANK',
+                                    displayField: 'IN_CODE_IN_NAME',
+                                    emptyText: 'All',
+                                    width: 240,
+                                    labelWidth: 80,
+//                    hidden: false,
+                                    hiddenLabel: false
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'combo',
+                                    fieldLabel: '<b>C. Card</b>',
+                                    id: prototype.id + '-de-cmbSCARCOD',
+                                    fieldStyle: 'text-align: left',
+                                    disabled: false,
+                                    width: 240,
+                                    labelWidth: 80,
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 80
-
+                                    hiddenLabel: false
                                 },
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCBANK',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 4,
-                                },
-                                {xtype: 'tbspacer', width: 20},
-                                {
-                                    xtype: 'label',
-                                    text: 'C. Card',
-                                    hidden: false,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 80
-
-                                },
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSCARCOD',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 80,
-                                    enforceMaxLength: true,
-                                    maxLength: 2,
-                                },
-                                {xtype: 'tbspacer', width: 20},
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
                                     text: 'Source',
@@ -154,6 +148,36 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry', {
                                     enforceMaxLength: true,
                                     maxLength: 5,
                                 },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 2 8',
+                            hidden: false,
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'combo',
+                                    fieldLabel: '<b>Zone</b>',
+                                    id: prototype.id + '-de-cmbZONA',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
+                                    readOnly: false,
+                                    editable: true,
+                                    emptyText: 'All',
+                                    //maxLength: 3,
+                                    labelWidth: 80,
+                                    width: 240,
+                                    hiddenLabel: false,
+                                    value: '',
+//                                    listeners: {
+//                                        change: 'obtenerPaisesSumm'
+//                                    }
+                                },                                
                             ]
                         },
                         {

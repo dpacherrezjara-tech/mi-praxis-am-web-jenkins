@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 745,
+                            width: 800,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 644,
+                                    width: 754,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Description', dataIndex: 'DESCR', width: 250,
+                                            {text: 'Description', dataIndex: 'DESCR', width: 280,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
@@ -89,6 +89,12 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                                 }
                                             },
                                             {text: 'Source', dataIndex: 'FTE', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:center;';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Zone', dataIndex: 'ZONA', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:center;';
                                                     return  value;

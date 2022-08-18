@@ -14,6 +14,7 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     init: function (view) {
         prototype.id = 'EmailsForm';
         prototype.url = CONTEXTPATH + '/Emails';
+        prototype.url_amex = CONTEXTPATH + '/SalesReconciliAmex';
         meDE = this;
         this.p = this.view.params;
         this.actionCode = this.p.action;
@@ -25,6 +26,8 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     afterRender: function () {
 //        console.log('afterRender');
         this.obtainData();
+    },
+    setButtons: function () {
         switch (this.actionCode) {
             case 'I':
                 Ext.getCmp(prototype.id + '-btn-save').show();
@@ -46,10 +49,11 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
         console.log(meDE.beanResult);
         this.setValue('de-txtCODIGO', this.beanResult.CODIGO);
 
-        this.setValue('de-txtCBANK', this.beanResult.CBANK);
-        this.setValue('de-txtSCARCOD', this.beanResult.SCARCOD);
+        this.setValue('de-cmbCBANK', this.beanResult.CBANK);
+        this.setValue('de-cmbSCARCOD', this.beanResult.SCARCOD);
         this.setValue('de-txtFTE', this.beanResult.FTE);
         this.setValue('de-txtDESCR', this.beanResult.DESCR);
+        this.setValue('de-cmbZONA', this.beanResult.ZONA);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -62,14 +66,65 @@ Ext.define('Ext.Praxis.controller.payments.Emails.DataEntryEmailsController', {
     },
     obtainData: function () {
 
+        var beanZonas = {};
+
+        Ext.Ajax.request({
+            url: prototype.url_amex + '/getZonas',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            params: {beanString: JSON.stringify(beanZonas)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-de-cmbZONA').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-de-cmbZONA').setValue('');
+
+
+                }
+            }
+        });
+
+        this.dataObtain.CARD = 2;
+        this.dataObtain.BANK = 1;
+
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/obtainData',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-de-cmbCBANK').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.lstBank, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-de-cmbCBANK').setValue('');
+
+                    Ext.getCmp(prototype.id + '-de-cmbSCARCOD').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.lstCard, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-de-cmbSCARCOD').setValue('');
+
+                    meDE.setButtons();
+                    Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
         beanTemp.CODIGO = this.getValue("de-txtCODIGO");
-        beanTemp.CBANK = this.getValue("de-txtCBANK");
-        beanTemp.SCARCOD = this.getValue("de-txtSCARCOD");
+        beanTemp.CBANK = this.getValue("de-cmbCBANK");
+        beanTemp.SCARCOD = this.getValue("de-cmbSCARCOD");
         beanTemp.FTE = this.getValue("de-txtFTE");
         beanTemp.DESCR = this.getValue("de-txtDESCR");
+        beanTemp.ZONA = this.getValue("de-cmbZONA");
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
