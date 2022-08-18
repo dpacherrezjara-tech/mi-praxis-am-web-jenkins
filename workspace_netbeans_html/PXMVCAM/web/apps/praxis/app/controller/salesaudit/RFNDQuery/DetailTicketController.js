@@ -1026,20 +1026,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     bvalida = false;
                     return;
                 }
-                var grid03 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
-                var regs = grid03.getStore().getCount();
+                var grid05 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
+                var regs = grid05.getStore().getCount();
                 for (var i = 0; i < regs; i++) {
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '1') {
-                        Stat1 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '1') {
+                        Stat1 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '2') {
-                        Stat2 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '2') {
+                        Stat2 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '3') {
-                        Stat3 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '3') {
+                        Stat3 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '4') {
-                        Stat4 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '4') {
+                        Stat4 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
 
                 }
@@ -1261,6 +1261,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         if (regs !== 0) {
             for (var i = 0; i < regs; i++) {
                 vl_razon = vl_razon + grid03.getStore().getAt(i).get('A3649ERROR');
+                console.log(grid03.getStore().getAt(i).get('A3649ERROR'));
                 if (grid03.getStore().getAt(i).get('A3649ERROR').length > 250) {
                     Ext.Msg.alert('.: PRAXIS :.', 'The description must not exceed 250 characters');
                     bvalida = false;
