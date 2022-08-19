@@ -568,8 +568,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }
         if (selectedValue === 'SU') {
             Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(true);
+            Ext.getCmp(prototype.id + '-btnEmail').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
+            Ext.getCmp(prototype.id + '-btnEmail').setVisible(false);
         }
 
         if (selectedValue === 'CP') {
@@ -2527,7 +2529,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 AXPAYNBR: data.AXPAYNBR,
                 PMERCHID: data.PMERCHID,
                 DIFF_PNETAMOU_STRING: Ext.util.Format.number(data.DIFF_PNETAMOU, '0,000.00').replace('-', ''),
-                PCURRENCY: data.PCURRENCY
+                PCURRENCY: data.PCURRENCY,
+                ZONA: data.ZONA,
+                SCOUNTRY: data.SCOUNTRY
             },
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...', ''),
             success: function (response, options) {
