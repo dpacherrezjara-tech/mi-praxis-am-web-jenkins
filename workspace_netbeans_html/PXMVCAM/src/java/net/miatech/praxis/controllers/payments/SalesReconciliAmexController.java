@@ -7790,21 +7790,21 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Derivado de los procesos internos de conciliación,<br>";
         mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
         mensaje = mensaje + "\n" + "<ul>";
-        mensaje = mensaje + "\n" + "<li>Fecha de liquidación : " + Data.DATE + "</li>";
+        mensaje = mensaje + "\n" + "<li>Payment Date : " + Data.DATE + "</li>";
         mensaje = mensaje + "\n" + "<li>AX Number : " + Data.AXPAYNBR + "</li>";
         mensaje = mensaje + "\n" + "<li>Merchant Number : " + Data.PMERCHID + "</li>";
         mensaje = mensaje + "\n" + "<li>Zone : " + Data.ZONA + "</li>";
         mensaje = mensaje + "\n" + "<li>Country : " + Data.SCOUNTRY + "</li>";
-        mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
+        mensaje = mensaje + "\n" + "<li>Amount : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
         mensaje = mensaje + "\n" + "</ul>";
         mensaje = mensaje + "\n" + "Según el detalle anexo.<br>";
         mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br></p>";
-        mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
-        mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
-        mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
-
+        mensaje = mensaje + "\n" + "Atentamente.<br><br>";
+        //mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
+        //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
+        //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
+        
         String correoMask = "amaclaracionescontracargos@miatech.net";
 
         List<String> archivos = new ArrayList<>();
@@ -8403,7 +8403,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Derivado de los procesos internos de conciliación,<br><br>";
         mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
         mensaje = mensaje + "\n" + "<table style=\"width:100%\">";
-        mensaje = mensaje + "\n" + "<tr>    <th>Fecha de liquidación</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Zone</th>    <th>Country</th>    <th>Moneda</th>    <th>Valor</th>    </tr>";
+        mensaje = mensaje + "\n" + "<tr>    <th>Payment Date</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Zone</th>    <th>Country</th>    <th>Currency</th>    <th>Amount</th>    </tr>";
 
         for (int i = 0; i < listaData.size(); i++) {
             a = Functions.redondear(listaData.get(i).DIFF_PNETAMOU, 2);
@@ -8416,11 +8416,11 @@ public class SalesReconciliAmexController extends BaseController {
 
         mensaje = mensaje + "\n" + "Según el detalle anexo.<br>";
         mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br>";
-        mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
-        mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
-        mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
+        mensaje = mensaje + "\n" + "Atentamente.<br><br>";
+        //mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
+        //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
+        //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
         mensaje = mensaje + "\n" + "</body>";
         mensaje = mensaje + "\n" + "</html>";
 
