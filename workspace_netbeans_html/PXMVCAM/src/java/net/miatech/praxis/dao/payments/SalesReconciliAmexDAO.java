@@ -502,6 +502,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
 
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+
                     beanTkt.PNETAMOU = rst.getDouble("PNETAMOU");
                     beanTkt.PGROSAMOU = rst.getDouble("PGROSAMOU");
                     beanTkt.PDISCAMOU = this.cambioSigno(beanTkt.PGROSAMOU, rst.getDouble("PDISCAMOU"));
@@ -670,6 +673,9 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+
+                    beanTkt.ZONA = rst.getString("ZONA").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
 
                     beanTkt.PNETAMOU = rst.getDouble("PNETAMOU");
                     beanTkt.PGROSAMOU = rst.getDouble("PGROSAMOU");
@@ -1930,18 +1936,18 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.TAXTCODE = rst.getString("TAXTCODE").trim();
-                    beanTkt.TAXDESCRI = rst.getString("TAXDESCRI").trim();                    
-                    beanTkt.TAXPDATE = rst.getString("TAXPDATE").trim();                    
-                    beanTkt.FSELEC = rst.getString("FSELEC").trim();                    
+                    beanTkt.TAXDESCRI = rst.getString("TAXDESCRI").trim();
+                    beanTkt.TAXPDATE = rst.getString("TAXPDATE").trim();
+                    beanTkt.FSELEC = rst.getString("FSELEC").trim();
                     beanTkt.FECSELEC = rst.getString("FECSELEC").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
-                    
+
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
-                                                            
+
                     beanTkt.TAXBAMOUN = rst.getDouble("TAXBAMOUN");
                     beanTkt.TAXRATE = rst.getDouble("TAXRATE");
                     beanTkt.TAXAMOUNT = rst.getDouble("TAXAMOUNT");
@@ -1953,7 +1959,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TAXBAMOUN_TOTAL = TAXBAMOUN_TOTAL;
                     beanTkt.TAXAMOUNT_TOTAL = TAXAMOUNT_TOTAL;
                     beanTkt.TAXBAMOUNC_TOTAL = TAXBAMOUNC_TOTAL;
-                    beanTkt.TAXAMOUNTC_TOTAL = TAXAMOUNTC_TOTAL;                  
+                    beanTkt.TAXAMOUNTC_TOTAL = TAXAMOUNTC_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -2752,7 +2758,7 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.SAGENT = rst.getString("SAGENT").trim();
                     beanTkt.FUENTE = rst.getString("FUENTE").trim();
-                    
+
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
 
@@ -4170,6 +4176,59 @@ public class SalesReconciliAmexDAO {
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+
+    public List<A4116Filter> loadPX570SQP04617(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04617(?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A4116Filter();
+
+                beanTkt.EMAIL = rst.getString("EMAIL").trim();
                 lstTkts.add(beanTkt);
             }
             rst.close();

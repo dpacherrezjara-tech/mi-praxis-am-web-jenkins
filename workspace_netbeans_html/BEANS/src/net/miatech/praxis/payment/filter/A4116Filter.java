@@ -217,6 +217,8 @@ public class A4116Filter extends A4116 {
     //Listado de codigos de error
     public String CODE = "";
     public String NAME = "";
+    //EMAILS
+    public String EMAIL = "";
 
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
