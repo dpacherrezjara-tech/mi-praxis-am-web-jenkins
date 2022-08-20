@@ -565,7 +565,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100,
                                     maskRe: /[0-9]/,
                                     enforceMaxLength: true,
-                                    maxLength: 14
+                                    maxLength: 15
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
