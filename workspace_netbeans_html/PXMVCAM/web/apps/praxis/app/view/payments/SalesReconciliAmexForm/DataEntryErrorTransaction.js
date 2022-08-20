@@ -901,13 +901,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Adjustment',
+                                    text: 'Adj. Pago Duplicado',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
-                                    width: 80
+                                    width: 130
                                 },
-                                {xtype: 'tbspacer', width: 5},
+                                {xtype: 'tbspacer', width: 2},
                                 {
                                     xtype: 'button',
                                     width: 25,
