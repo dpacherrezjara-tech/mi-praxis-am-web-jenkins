@@ -161,7 +161,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100
                                 },
                                 {xtype: 'tbspacer', width: 30},
-                                 {
+                                {
                                     xtype: 'label',
                                     text: 'Inst. Plan',
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -565,7 +565,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100,
                                     maskRe: /[0-9]/,
                                     enforceMaxLength: true,
-                                    maxLength: 14
+                                    maxLength: 15
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
@@ -810,7 +810,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
                             width: 234,
-                            height: 20,
+                            height: 15,
                             margin: '4 2 4 8'
                         },
                         {
@@ -819,7 +819,88 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             layout: 'hbox',
                             hidden: false,
                             border: false,
-                            margin: '0 2 0 100',
+                            margin: '0 2 0 300',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                /*{
+                                 xtype: 'button',
+                                 width: 25,
+                                 hidden: true,
+                                 //margin: '4 1 1 1',
+                                 iconCls: 'prx-icon-add',
+                                 tooltip: 'Add',
+                                 listeners: {
+                                 click: 'txtTKTScan_keyDownHandler'
+                                 }
+                                 
+                                 },*/
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reset Scan',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 1 1 1',
+                                    icon: 'resources/img/icon/48x48/exchange.png',
+                                    tooltip: 'Reset',
+                                    listeners: {
+                                        click: 'resetScan_keyDownHandler'
+                                    }
+
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id + '-chkBlocked',
+                                    boxLabel: '<b>Blocked</b>',
+                                    checked: false,
+                                    width: 90,
+                                    listeners: {
+                                        change: 'cambiarGrillaChk'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'MSI Tracking',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-update',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'MSI Tracking',
+                                    listeners: {
+                                        click: 'msiTracking_keyDownHandler'
+                                    }
+
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                //150                                                              
+                            ]
+                        },
+                        {xtype: 'tbspacer', height: 5},
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelScanCard',
+                            layout: 'hbox',
+                            hidden: false,
+                            border: false,
+                            margin: '0 2 0 50',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
@@ -843,84 +924,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     maxLength: 13,
                                 },
                                 {xtype: 'tbspacer', width: 3},
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    hidden: true,
-                                    //margin: '4 1 1 1',
-                                    iconCls: 'prx-icon-add',
-                                    tooltip: 'Add',
-                                    listeners: {
-                                        click: 'txtTKTScan_keyDownHandler'
-                                    }
-
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Reset Scan',
-                                    textAlign: 'center',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    margin: '4 4 4 4',
-                                    width: 80
-                                },
-                                {xtype: 'tbspacer', width: 15},
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    //margin: '4 1 1 1',
-                                    icon: 'resources/img/icon/48x48/exchange.png',
-                                    tooltip: 'Reset',
-                                    listeners: {
-                                        click: 'resetScan_keyDownHandler'
-                                    }
-
-                                },
-                                {xtype: 'tbspacer', width: 180},
-                                {
-                                    xtype: 'checkboxfield',
-                                    id: prototype.id + '-chkBlocked',
-                                    boxLabel: '<b>Blocked</b>',
-                                    checked: false,
-                                    width: 70,
-                                    listeners: {
-                                        change: 'cambiarGrillaChk'
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 20},
-                                {
-                                    xtype: 'label',
-                                    text: 'MSI Tracking',
-                                    textAlign: 'center',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    margin: '4 4 4 4',
-                                    width: 90
-                                },
-                                {xtype: 'tbspacer', width: 5},
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    //margin: '4 4 4 4',
-                                    iconCls: 'prx-icon-update',
-                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                    tooltip: 'MSI Tracking',
-                                    listeners: {
-                                        click: 'msiTracking_keyDownHandler'
-                                    }
-
-                                },
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            id: prototype.id + '-panelScanCard',
-                            layout: 'hbox',
-                            hidden: false,
-                            border: false,
-                            margin: '0 2 0 100',
-                            bodyStyle: 'background:#efe5e5;',
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Add C. Card',
@@ -983,7 +986,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    text: 'Refund Date',
+                                    text: 'Sales Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
@@ -1023,7 +1026,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 25,
                                     //margin: '4 4 4 4',
                                     iconCls: 'prx-icon-clear',
-                                    tooltip: 'Clear',
+                                    tooltip: 'Clean',
                                     listeners: {
                                         click: 'clear_keyDownHandler'
                                     }
