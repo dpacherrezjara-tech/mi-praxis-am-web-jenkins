@@ -743,6 +743,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 }
                                             },
                                             {
+                                                text: 'Import <br> Oracle', dataIndex: 'SVFOPOL', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                }, 
+                                            },
+                                            {
                                                 text: 'PNR', dataIndex: 'SPNR', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
