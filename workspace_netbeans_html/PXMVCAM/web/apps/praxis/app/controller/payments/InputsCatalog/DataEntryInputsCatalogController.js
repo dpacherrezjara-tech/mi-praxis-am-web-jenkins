@@ -337,39 +337,39 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
     },
     //</editor-fold>
 
-//    validacionInsert: function (beanTemp) {
-//        var msjResult = '';
+    validacionInsert: function (beanTemp) {
+        var msjResult = '';
 //        if (this.getValue("de-txtMERCHN") === '') {
 //            msjResult = "You must enter the required field.";
 //        }
 //        if (this.getValue("de-txtMERCHP") === '') {
 //            msjResult = "You must enter the required field.";
 //        }
-//        return msjResult;
-//    },
-//    validacionUpdate: function (beanTemp) {
-//        var msjResult = '';
+        return msjResult;
+    },
+    validacionUpdate: function (beanTemp) {
+        var msjResult = '';
 //        if (this.getValue("de-txtMERCHP").trim() === '') {
 //            msjResult = "The field Merchant Payment cannot be left empty";
 //        }
-//        return msjResult;
-//    },
-//    DeshabilitarCampoClave: function () {
+        return msjResult;
+    },
+    DeshabilitarCampoClave: function () {
 //        Ext.getCmp(prototype.id + '-de-txtMERCHN').setEditable(false);
 //        Ext.getCmp(prototype.id + '-de-txtNameCTRY').setReadOnly(true);
-//    },
-//    Habilitarlbl: function () {
+    },
+    Habilitarlbl: function () {
 //        Ext.getCmp(prototype.id + '-lblDescripcion').show();
 //        Ext.getCmp(prototype.id + '-txtDESSOU').hide();
 //        Ext.getCmp(prototype.id + '-lbldes2').show();
-//    },
-//    desHabilitartxt: function () {
+    },
+    desHabilitartxt: function () {
 //        if (this.getValue("txtGRUSOR") !== this.bean.GRUSOR) {
 //            Ext.getCmp(prototype.id + '-lbldes').hide();
 //        } else {
 //            Ext.getCmp(prototype.id + '-lbldes').show();
 //        }
-//    },
+    },
 
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {

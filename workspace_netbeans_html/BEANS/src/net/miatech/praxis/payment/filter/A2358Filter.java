@@ -45,14 +45,7 @@ public class A2358Filter extends  A2358{
     public double FieldN3 = 0;
     public double FieldN4 = 0;
     public double FieldN5 = 0;
-    public String SEQNUM = "";
-    public String DENV = "";
-    public String INPTYPE = "";
-    public String descINPTYPE = "";
-    public String descFASE = "";
-    public String descSTAT = "";
-    public String descINPEXTE = "";      
-    public double totQTYREG = 0;
+    
     
     public long RN = 0;
     public Pagination page = new Pagination();

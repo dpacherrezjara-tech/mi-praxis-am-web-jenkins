@@ -267,7 +267,7 @@ public class InputsCatalogDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04603(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04603(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -276,20 +276,26 @@ public class InputsCatalogDAO {
 
             cstmt.setString(1, option);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
-            cstmt.setString(3, filter.TTABLA.trim());
-            cstmt.setString(4, filter.CODETB.trim());
-            cstmt.setString(5, filter.CODETBCO.trim());
-            cstmt.setString(6, filter.DESCRE1.trim());
-            cstmt.setString(7, filter.DESCRE2.trim());
-            cstmt.setString(8, filter.TDOC.trim());
-            cstmt.setString(9, filter.DATINI.trim());
-            cstmt.setString(10, filter.DATFIN.trim());
-            cstmt.setInt(11, filter.CANT1);
-            cstmt.setInt(12, filter.CANT2);
-            cstmt.setString(13, filter.STVAL.trim());
-            cstmt.setString(14, session.getUserView().getUserInfo().USR);
-            cstmt.setString(15, Functions.getFechaActual());
-            cstmt.setString(16, Functions.getHoraActual());
+            cstmt.setString(3, filter.APLIC.trim());
+            cstmt.setString(4, filter.SEQNUM.trim());
+            cstmt.setString(5, filter.DENV.trim());
+            cstmt.setString(6, filter.NETDIR.trim());
+            cstmt.setString(7, filter.INPNAME.trim());
+            cstmt.setString(8, filter.INPEXTE.trim());
+            cstmt.setString(9, filter.INPTYPE.trim());
+            cstmt.setString(10, filter.STAT.trim());
+            cstmt.setString(11, filter.FASE.trim());
+            cstmt.setString(12, filter.INPDESC.trim());
+            cstmt.setString(13, filter.LIBNAME.trim());
+            cstmt.setString(14, filter.OUTNAME.trim());
+            cstmt.setString(15, filter.FECPROC.trim());
+            cstmt.setString(16, filter.TABLA.trim());
+            cstmt.setDouble(17,  filter.QTYREG);
+            cstmt.setString(18, session.getUserView().getUserInfo().USR);
+            cstmt.setString(19, Functions.getFechaActual());
+            cstmt.setString(20, Functions.getHoraActual());
+            
+
 
             cstmt.execute();
 

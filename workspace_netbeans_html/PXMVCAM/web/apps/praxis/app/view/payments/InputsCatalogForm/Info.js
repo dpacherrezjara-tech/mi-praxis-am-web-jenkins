@@ -132,7 +132,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Extension', dataIndex: 'INPEXTE', width: 80,
+                                                    {text: 'Extension', dataIndex: 'descINPEXTE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
