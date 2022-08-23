@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.InputsCatalogController
     searchParams: {},
     paramsDetail: {},
     dataObtain: {},
+    lst: [],
     dataGrid: [],
     init: function (view) {
         me = this;
@@ -127,9 +128,11 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.InputsCatalogController
             fields: ['code', 'name'],
             data: [
                 ["", "All"],
+                ["0", "0 - FASE 0"],
                 ["1", "1 - FASE I"],
                 ["2", "2 - FASE II"],
-                ["3", "3 - FASE III"]
+                ["3", "3 - FASE III"],
+                ["4", "4 - FASE VI"]
             ]
         }));
         cmbFASE.setValue("");
@@ -153,8 +156,11 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.InputsCatalogController
             fields: ['code', 'name'],
             data: [
                 ["", "All"],
+                [".txt", ".TXT"],
                 [".TXT", ".TXT"],
-                [".CMP", ".CMP"]
+                [".DAT", ".DAT"],
+                [".CSV", ".CSV"],
+                [".cmp", ".CMP"]
             ]
         }));
         cmbINPEXTE.setValue("");
@@ -188,12 +194,30 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.InputsCatalogController
             beanString: beanString
         };
     },
-    
+    btnAdd_click: function () {
+        this.winDataEntry('I');
+    },
+    onEditClick: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry('U', rec);
+    },
+    winDataEntry: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: {
+                action: action,
+                rec: rec,
+                lst: me.lst
+            }
+        }).show();
+    },
     btnSearch_click: function(obj, e) {
         this.setFormatParameter();
         this.setGridData();
     },
-    
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A2358");
         me.panelActual = '-panelGridData';
@@ -350,31 +374,6 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.InputsCatalogController
         } else {
             obj.setValue((month));
         }
-    },
-    selectComboFromYear: function (obj) {
-        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
-        var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
-        comboToYear.bindStore(storeComboDataYear);
-        comboToYear.setValue(obj.getValue());
-    },
-    selectComboFromMonth: function (obj) {
-        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
-        comboToMonth.setValue(obj.getValue());
-    },
-    selectComboToMonth: function (obj) {
-        var comboFromYear = Ext.getCmp(prototype.id + '-cmbDateFromYear');
-        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
-        var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
-        if (comboFromYear.getValue() === comboToYear.getValue()) {
-            if (obj.getValue() < comboFromMonth.getValue()) {
-                comboFromMonth.setValue(obj.getValue());
-            }
-        }
-    },
-
-    selectComboFromDay: function (obj) {
-        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
-        comboToDay.setValue(obj.getValue());
     },
     /*     
      * Funciones para la paginacion     

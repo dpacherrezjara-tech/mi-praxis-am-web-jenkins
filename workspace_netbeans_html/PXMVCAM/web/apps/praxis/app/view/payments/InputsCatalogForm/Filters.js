@@ -3,7 +3,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Filters', {
     alias: 'widget.' + prototype.id + '-filters',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
-    padding: '8px 125px 1px 125px',
+    padding: '8px 118px 1px 118px',
     layout: 'column',
     items: [
         {

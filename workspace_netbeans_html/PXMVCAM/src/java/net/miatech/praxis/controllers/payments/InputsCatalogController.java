@@ -20,6 +20,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.InputsCatalogLogic;
+import net.miatech.praxis.payment.A2358;
 import net.miatech.praxis.payment.A2359;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -107,7 +108,65 @@ public class InputsCatalogController extends BaseController {
         }
         return lst;
     }
+    
+    @RequestMapping(value = "searchCompleteDetail")
+    public @ResponseBody
+    String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- MerchantNumber : searchCompleteDetail-------------");
 
+        Gson gson = new Gson();
+        A2358Filter filter = new A2358Filter();
+        A2358Filter result = new A2358Filter();
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A2358Filter.class);
+
+        logic = new InputsCatalogLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            result = logic.loadPX602SQP04602(filter);
+            map.put("result", result);
+            map.put("success", true);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(RejectionsController.class.getName()).log(Level.SEVERE, null, ex);
+            map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "MaintenanceA2358")
+    public @ResponseBody
+    String MaintenanceA2358(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- BanksCatalog : MaintenanceA2358-------------");
+        String option;
+        A2358 filter = new A2358();
+        Gson gson = new Gson();
+        String msj = "";
+        String beanString = "";
+
+        try {
+
+            option = request.getParameter("option");
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2358.class);
+
+            logic = new InputsCatalogLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            msj = logic.loadPX602SQP04603(filter, option);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody
 //    void getXLSX(HttpServletRequest request, HttpServletResponse response) {

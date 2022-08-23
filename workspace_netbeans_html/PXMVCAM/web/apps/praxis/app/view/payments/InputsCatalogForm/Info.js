@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1575,
+                width: 1615,
 //                height: 516,
                 align: 'center'
             },
@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
                                     height: 522,
-                                    width: 1565,
+                                    width: 1605,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -206,6 +206,20 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                                     metaData.style = "text-align:left;";
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'onEditClick'
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }

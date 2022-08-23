@@ -89,6 +89,12 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Options', {
 
                         },
                         {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAdd',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New'
+                        },
+                        {
                             xtype:'button',
                             id: prototype.id+'-btnDisplay',
                             icon: 'resources/img/botones/FalseChart.png',
