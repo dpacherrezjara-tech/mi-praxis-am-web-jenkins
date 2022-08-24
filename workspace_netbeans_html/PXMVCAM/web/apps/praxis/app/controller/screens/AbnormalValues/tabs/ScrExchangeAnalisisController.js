@@ -40,14 +40,14 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
         console.log(' ScrExchangeAnalisisController - btnSearchSrcExchangeAnalisis_click');
 
         this.setFormatParameter();
-        win.lblUser_toolTip("Estructura: A2790");
+        win.lblUser_toolTip("Estructura: IMF111");
         
         this.showGrid('-boxMainDataScrExchangeAnalisis');
         this.hidePagination_clickHandler();
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
             proxy: {
-                url: prototype.url + '/searchEA'
+                url: prototype.url + '/searchExchange'
             }, listeners: {
                 beforeload: function(obj) {
                     obj.proxy.extraParams = {beanString: meScrExchangeAnalisis.searchParams, dw_excel: false};
@@ -81,6 +81,78 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
         Ext.getCmp(prototype.id + '-gridDataScrExchangeAnalisis').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataScrExchangeAnalisis').setStore(storeGridDatas);
 
+    },
+    viewDetExchange_colHandler: function(param1,param2,param3,column, e, row, val, x, rowData,ab,ac,ad,af) {
+        
+        
+        var cant = x.record.data[param1];
+//        var strTipo = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex.replace('lng', '');
+        if(cant > 0) {
+            meScrExchangeAnalisis.beanDet = x.record.data;
+            meScrExchangeAnalisis.beanDet.IN_FLAGEX = param2;
+            meScrExchangeAnalisis.beanDet.IN_RATED = param3;
+
+            this.showGrid('-boxDetData');
+            this.showPagination_clickHandler();
+
+            console.log(meScrExchangeAnalisis.beanDet);
+            this.searchDetExchange();
+        }
+        
+        
+        
+//        
+    },
+    searchDetExchange: function() {
+
+        win.lblUser_toolTip("Estructura: IMF110");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.FlightConciliation.GridData', {/*20 filas*/
+            proxy: {url: prototype.url + '/searchDetExchange'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id +  meScrExchangeAnalisis.boxActual).mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(meScrExchangeAnalisis.beanDet),dw_excel:false};
+                },
+                load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + meScrExchangeAnalisis.boxActual).unmask();
+
+                    if (obj.data.length > 0) {
+                        var Objtemp = obj.data.items[0].data;
+                        
+                        var pag = Ext.getCmp(prototype.id + '-pagginSrcExchange');
+                        var pagData = pag.getPageData();
+//                        console.log(pagData);
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        
+                        Ext.getCmp(prototype.id + '-titDetExchange').setText('Sales Date : ' + Objtemp.strFormatDate);
+
+
+                    } else {
+                        global.Msg({msg: 'Data not found'});
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetExchange').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-pagginSrcExchange').bindStore(storeGridDatas);
+    },
+    gridData_VIEWTKT_clickHandler: function (column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = data.CCIA;
+        beanProMasterTicket.IN_FORMA = data.FORMA;
+        beanProMasterTicket.IN_SERIE = data.SERIE;
+        beanProMasterTicket.IN_SEQ = '00';
+
+        console.log(beanProMasterTicket);
+        
+        win.displayProMasterTicket(this, 'AbnormalValue', beanProMasterTicket);
     },
     setFormatParameter: function() {
 //        meScrExchangeAnalisis.bean = {};
@@ -121,7 +193,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
         console.log('imgExcel_clickHandler');
         meScrExchangeAnalisis.dw_excel = true;
         if(meScrExchangeAnalisis.boxActual === '-boxMainDataScrExchangeAnalisis'){
-             meScrExchangeAnalisis.goURLpost('search',meScrExchangeAnalisis.searchParams,Ext.getCmp(prototype.id + '-gridDataScrExchangeAnalisis').config.columns.items);
+             meScrExchangeAnalisis.goURLpost('searchExchange',meScrExchangeAnalisis.searchParams,Ext.getCmp(prototype.id + '-gridDataScrExchangeAnalisis').config.columns.items);
+        }else if(meScrExchangeAnalisis.boxActual === '-boxDetData'){
+            meScrRefund.goURLpost('searchDetExchange',JSON.stringify(meScrExchangeAnalisis.beanDet),Ext.getCmp(prototype.id + '-gridDetExchange').config.columns.items);
         }else{
             meScrExchangeAnalisis.dw_excel = false;
         }

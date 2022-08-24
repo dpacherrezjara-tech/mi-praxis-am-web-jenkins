@@ -136,4 +136,20 @@ public class AbnormalValueLogic {
     public HashMap loadPX414SQP02248(DashboardFilter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQP02248(filter);
     }
+
+    // =========================================================================
+    // =============================== EXCHANGE ================================
+    // =========================================================================
+    public List<IMF111Filter> loadPX414SQP02212(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02212(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02213(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02213(filter);
+    }
+
+    public List<IMF111Filter> loadPX414SQP02214(IMF111Filter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX414SQP02214(filter);
+    }
+
 }

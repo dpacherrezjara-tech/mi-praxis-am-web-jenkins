@@ -3108,4 +3108,379 @@ public class AbnormalValueDAO {
 
     }
 
+    // =========================================================================
+    // =============================== EXCHANGE ================================
+    // =========================================================================
+    public List<IMF111Filter> loadPX414SQP02212(IMF111Filter filter)  throws SQLException, Exception {
+
+        List<IMF111Filter> lstRtn = new ArrayList<IMF111Filter>(0);
+        IMF111Filter objRtn;
+        long QTKTS = 0, QTKTS1 = 0, QTKTS2 = 0, QTKTS3 = 0, QTKTS4 = 0, QTKTS5 = 0, QTKTS6 = 0;
+        double AMOUNT = 0, AMOUNT1 = 0, AMOUNT2 = 0, AMOUNT3 = 0, AMOUNT4 = 0, AMOUNT5 = 0, AMOUNT6 = 0, VALADM = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP02212(?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.TRNCU.trim());
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                QTKTS = rs01.getLong("QTKTS");
+                QTKTS1 = rs01.getLong("QTKTS1");
+                QTKTS2 = rs01.getLong("QTKTS2");
+                QTKTS3 = rs01.getLong("QTKTS3");
+                QTKTS4 = rs01.getLong("QTKTS4");
+                QTKTS5 = rs01.getLong("QTKTS5");
+                QTKTS6 = rs01.getLong("QTKTS6");
+
+                AMOUNT = rs01.getDouble("AMOUNT");
+                AMOUNT1 = rs01.getDouble("AMOUNT1");
+                AMOUNT2 = rs01.getDouble("AMOUNT2");
+                AMOUNT3 = rs01.getDouble("AMOUNT3");
+                AMOUNT4 = rs01.getDouble("AMOUNT4");
+                AMOUNT5 = rs01.getDouble("AMOUNT5");
+                AMOUNT6 = rs01.getDouble("AMOUNT6");
+
+                VALADM = rs01.getDouble("VALADM");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+
+                while (rs01.next()) {
+
+                    objRtn = new IMF111Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.TRNCU = filter.TRNCU;
+                    objRtn.FlagFactor = filter.FlagFactor;
+                    objRtn.FECHA = rs01.getString("DSALES");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FECHA);
+                    objRtn.QTKTS = rs01.getLong("QTKTS");
+                    objRtn.QTKTS1 = rs01.getLong("QTKTS1");
+                    objRtn.QTKTS2 = rs01.getLong("QTKTS2");
+                    objRtn.QTKTS3 = rs01.getLong("QTKTS3");
+                    objRtn.QTKTS4 = rs01.getLong("QTKTS4");
+                    objRtn.QTKTS5 = rs01.getLong("QTKTS5");
+                    objRtn.QTKTS6 = rs01.getLong("QTKTS6");
+
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AMOUNT1 = rs01.getDouble("AMOUNT1");
+                    objRtn.AMOUNT2 = rs01.getDouble("AMOUNT2");
+                    objRtn.AMOUNT3 = rs01.getDouble("AMOUNT3");
+                    objRtn.AMOUNT4 = rs01.getDouble("AMOUNT4");
+                    objRtn.AMOUNT5 = rs01.getDouble("AMOUNT5");
+                    objRtn.AMOUNT6 = rs01.getDouble("AMOUNT6");
+
+                    objRtn.VALADM = rs01.getDouble("VALADM");
+
+                    objRtn.lngTotQTKTS = QTKTS;
+                    objRtn.lngTotQTKTS1 = QTKTS1;
+                    objRtn.lngTotQTKTS2 = QTKTS2;
+                    objRtn.lngTotQTKTS3 = QTKTS3;
+                    objRtn.lngTotQTKTS4 = QTKTS4;
+                    objRtn.lngTotQTKTS5 = QTKTS5;
+                    objRtn.lngTotQTKTS6 = QTKTS6;
+
+                    objRtn.dblTotAMOUNT = AMOUNT;
+                    objRtn.dblTotAMOUNT1 = AMOUNT1;
+                    objRtn.dblTotAMOUNT2 = AMOUNT2;
+                    objRtn.dblTotAMOUNT3 = AMOUNT3;
+                    objRtn.dblTotAMOUNT4 = AMOUNT4;
+                    objRtn.dblTotAMOUNT5 = AMOUNT5;
+                    objRtn.dblTotAMOUNT6 = AMOUNT6;
+
+                    objRtn.totVALADM = VALADM;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            setClose(rs01, cstmt01, cnx);
+        }
+
+        return lstRtn;
+    }
+
+    public List<IMF111Filter> loadPX414SQP02213(IMF111Filter filter)  throws SQLException, Exception {
+
+        List<IMF111Filter> lstRtn = new ArrayList<IMF111Filter>(0);
+        IMF111Filter objRtn;
+        long PMP = 0, PMP1 = 0;
+        double RATED = 0, VALOR = 0, VALOR1 = 0, VALOREX = 0, VALORCA = 0, VALORCC = 0, VALADM = 0, VALORMIN = 0, VALORBAS = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP02213(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+            cstmt01.registerOutParameter(14, Types.INTEGER);
+            cstmt01.registerOutParameter(15, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.FECHA);
+            cstmt01.setString(3, filter.IN_FLAGEX);
+            cstmt01.setString(4, filter.IN_RATED);
+            cstmt01.setString(5, filter.IN_TYPE);
+            cstmt01.setString(6, filter.IN_ORDER);
+            cstmt01.setString(7, filter.TRNCU);
+            cstmt01.setString(8, filter.FlagFactor);
+            cstmt01.setString(9, filter.CITYO);
+            cstmt01.setString(10, filter.CITYD);
+            cstmt01.setString(11, filter.FECR);
+            cstmt01.setInt(12, filter.page.PAGNUM);
+            cstmt01.setInt(13, filter.page.PAGROW);
+            cstmt01.setInt(14, filter.page.TOTPAG);
+            cstmt01.setInt(15, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(12);
+            filter.page.PAGROW = cstmt01.getInt(13);
+            filter.page.TOTPAG = cstmt01.getInt(14);
+            filter.page.TOTROW = cstmt01.getInt(15);
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                PMP = rs01.getLong("PMP");
+                PMP1 = rs01.getLong("PMP1");
+
+                RATED = rs01.getDouble("RATED");
+                VALOR = rs01.getDouble("VALOR");
+                VALOR1 = rs01.getDouble("VALOR1");
+                VALOREX = rs01.getDouble("VALOREX");
+                VALORCA = rs01.getDouble("VALORCA");
+                VALORCC = rs01.getDouble("VALORCC");
+                VALADM = rs01.getDouble("VALADM");
+                VALORMIN = rs01.getDouble("VALORMIN");
+                VALORBAS = rs01.getDouble("VALORBASE");
+            }
+
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+
+                while (rs01.next()) {
+
+                    objRtn = new IMF111Filter();
+                    objRtn.FECHA = filter.FECHA;
+                    objRtn.IN_FLAGEX = filter.IN_FLAGEX;
+                    objRtn.IN_RATED = filter.IN_RATED;
+                    objRtn.strFormatDate = filter.strFormatDate;
+                    objRtn.IN_TYPE = filter.IN_TYPE;
+                    objRtn.IN_ORDER = filter.IN_ORDER;
+                    objRtn.FlagFactor = filter.FlagFactor;
+                    objRtn.CITYO = filter.CITYO;
+                    objRtn.CITYD = filter.CITYD;
+                    objRtn.SALICPN = rs01.getString("SALICPN");
+                    objRtn.USEICPN = rs01.getString("USEICPN");
+                    objRtn.FSAVUS = rs01.getString("FSAVUS");
+                    objRtn.strColor = rs01.getString("strColor");
+                    objRtn.strDescription1 = rs01.getString("FSAVUS");
+                    objRtn.RATEPOR = rs01.getDouble("RATEPOR");
+                    objRtn.TRNCU = rs01.getString("TRNCU");
+                    objRtn.CITYS = rs01.getString("CITYO") + " - " + rs01.getString("CITYD");
+                    objRtn.COUNTRYS = rs01.getString("COUNTRYS");
+                    objRtn.strCountry = rs01.getString("DES_COUN");
+                    objRtn.DESC_ORIG = rs01.getString("DESC_ORIG") + "-" + rs01.getString("DESC_DEST");
+                    objRtn.CLASEO = rs01.getString("CLASEO");
+                    objRtn.FACRMI = rs01.getDouble("FACRMI");
+                    objRtn.FACMIN = rs01.getDouble("FACMIN");
+                    objRtn.FACMAX = rs01.getDouble("FACMAX");
+                    objRtn.FACRBA = rs01.getDouble("FACRBA");
+                    objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.strDescription = rs01.getString("DESCAGT");
+                    objRtn.VENDOR = rs01.getString("VENDOR");
+                    objRtn.CCIA = rs01.getString("CCIA");
+                    objRtn.FORMA = rs01.getString("FORMA");
+                    objRtn.SERIE = rs01.getString("SERIE");
+                    objRtn.TKT = rs01.getString("CCIA") + " " + rs01.getString("FORMA") + rs01.getString("SERIE");
+
+                    objRtn.PMP = rs01.getLong("PMP");
+                    objRtn.PMP1 = rs01.getLong("PMP1");
+                    objRtn.RATED = rs01.getDouble("RATED");
+                    objRtn.CURRENC = rs01.getString("CURRENC");
+                    objRtn.VALOR = rs01.getDouble("VALOR");
+                    objRtn.VALOR1 = rs01.getDouble("VALOR1");
+                    objRtn.VALOREX = rs01.getDouble("VALOREX");
+                    objRtn.VALORCA = rs01.getDouble("VALORCA");
+                    objRtn.VALORCC = rs01.getDouble("VALORCC");
+                    objRtn.EXCHAN = rs01.getString("EXCHAN");
+                    objRtn.VALADM = rs01.getDouble("VALADM");
+
+                    objRtn.VALORMIN = rs01.getDouble("VALORMIN");
+                    objRtn.VALORBAS = rs01.getDouble("VALORBASE");
+
+                    objRtn.CANAV = rs01.getString("CANAV").trim();
+                    if (objRtn.CANAV.equals("B")) {
+                        objRtn.strDescription2 = "BSP";
+                    } else if (objRtn.CANAV.equals("A")) {
+                        objRtn.strDescription2 = "ARC";
+                    } else if (objRtn.CANAV.equals("S")) {
+                        objRtn.strDescription2 = "ASR";
+                    } else if (objRtn.CANAV.equals("T")) {
+                        objRtn.strDescription2 = "TCN";
+                    }
+
+                    objRtn.totPMP = PMP;
+                    objRtn.totPMP1 = PMP1;
+                    objRtn.totRATED = RATED;
+                    objRtn.totVALOR = VALOR;
+                    objRtn.totVALOR1 = VALOR1;
+                    objRtn.totVALOREX = VALOREX;
+                    objRtn.totVALORCA = VALORCA;
+                    objRtn.totVALORCC = VALORCC;
+                    objRtn.totVALADM = VALADM;
+
+                    objRtn.totVALORBAS = VALORBAS;
+                    objRtn.totVALORMIN = VALORMIN;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            setClose(rs01, cstmt01, cnx);
+        }
+
+        return lstRtn;
+    }
+
+    public List<IMF111Filter> loadPX414SQP02214(IMF111Filter filter)  throws SQLException, Exception {
+
+        List<IMF111Filter> lstRtn = new ArrayList<IMF111Filter>(0);
+        IMF111Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP02214(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_AGENTE);
+            cstmt01.setString(5, filter.IN_TKT);
+            cstmt01.setString(6, filter.IN_TYPE);
+            cstmt01.setString(7, filter.IN_ORDER);
+            cstmt01.setString(8, filter.TRNCU);
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+
+                objRtn = new IMF111Filter();
+                objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                objRtn.IN_AGENTE = filter.IN_AGENTE;
+                objRtn.IN_TKT = filter.IN_TKT;
+                objRtn.IN_TYPE = filter.IN_TYPE;
+                objRtn.IN_ORDER = filter.IN_ORDER;
+
+                objRtn.RATEPOR = rs01.getDouble("RATEPOR");
+                objRtn.SALICPN = rs01.getString("SALICPN");
+                objRtn.USEICPN = rs01.getString("USEICPN");
+                objRtn.DSALES = rs01.getString("DSALES");
+                objRtn.TRNCU = rs01.getString("TRNCU");
+                objRtn.CITYS = rs01.getString("CITYO") + " - " + rs01.getString("CITYD");
+                objRtn.DESC_ORIG = rs01.getString("DESC_ORIG") + "-" + rs01.getString("DESC_DEST");
+                objRtn.COUNTRYS = rs01.getString("COUNTRYS");
+                objRtn.strCountry = rs01.getString("DES_COUN");
+                objRtn.CLASEO = rs01.getString("CLASEO");
+                objRtn.FACRMI = rs01.getDouble("FACRMI");
+                objRtn.FACMIN = rs01.getDouble("FACMIN");
+                objRtn.FACMAX = rs01.getDouble("FACMAX");
+                objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                objRtn.VENDOR = rs01.getString("VENDOR");
+                objRtn.strDescription = rs01.getString("DESCAGT");
+                objRtn.CCIA = rs01.getString("CCIA");
+                objRtn.FORMA = rs01.getString("FORMA");
+                objRtn.SERIE = rs01.getString("SERIE");
+                objRtn.TKT = rs01.getString("CCIA") + " " + rs01.getString("FORMA") + rs01.getString("SERIE");
+
+                objRtn.PMP = rs01.getLong("PMP");
+                objRtn.PMP1 = rs01.getLong("PMP1");
+                objRtn.RATED = rs01.getDouble("RATED");
+                objRtn.CURRENC = rs01.getString("CURRENC");
+                objRtn.VALOR = rs01.getDouble("VALOR");
+                objRtn.VALOR1 = rs01.getDouble("VALOR1");
+                objRtn.VALOREX = rs01.getDouble("VALOREX");
+                objRtn.VALORCA = rs01.getDouble("VALORCA");
+                objRtn.VALORCC = rs01.getDouble("VALORCC");
+
+                objRtn.EXCHAN = rs01.getString("EXCHAN");
+                objRtn.VALADM = rs01.getDouble("VALADM");
+
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            setClose(rs01, cstmt01, cnx);
+        }
+
+        return lstRtn;
+    }
+
 }

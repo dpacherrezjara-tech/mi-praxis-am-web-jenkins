@@ -149,6 +149,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
     // <editor-fold defaultstate="collapsed" desc="Options">
     changeOptionsTab_clickHandler: function(obj) {
         
+        Ext.getCmp(prototype.id + '-txtCia').setDisabled(false);
         if(obj === prototype.id + '-ScrAVSales_tab' && me.tab_Actual !== obj){
             
             Ext.getCmp(prototype.id + '-boxSearchFilter').show();
@@ -161,6 +162,15 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
             Ext.getCmp(prototype.id + '-boxSearchFilter').hide();
             Ext.getCmp(prototype.id + '-boxSearchIATA').show();
         }else if(obj === prototype.id + '-ScrRefund_tab' && me.tab_Actual !== obj){
+            Ext.getCmp(prototype.id + '-txtCia').setDisabled(true);
+            Ext.getCmp(prototype.id + '-boxSearchFilter').show();
+            Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
+            
+            Ext.getCmp(prototype.id + '-cmbFecha').bindStore(me.store_Refund);
+            Ext.getCmp(prototype.id + '-cmbFecha').setValue("FPRDA");
+
+        }else if(obj === prototype.id + '-ScrExchangeAnalisis_tab' && me.tab_Actual !== obj){
+            Ext.getCmp(prototype.id + '-txtCia').setDisabled(true);
             Ext.getCmp(prototype.id + '-boxSearchFilter').show();
             Ext.getCmp(prototype.id + '-boxSearchIATA').hide();
             
@@ -336,6 +346,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
                 break;
             case '-boxByWeek':
                 me.pagginActual = '-pagginRefundCC';
+                break;
+            case '-boxDetData':
+                me.pagginActual = '-pagginSrcExchange';
                 break;
         }      
     },
