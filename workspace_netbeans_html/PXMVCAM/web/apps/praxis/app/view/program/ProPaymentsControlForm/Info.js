@@ -230,7 +230,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 100},
@@ -641,7 +641,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -836,7 +836,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -1012,7 +1012,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 70},
@@ -1297,7 +1297,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 515},
@@ -1545,7 +1545,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 120},
@@ -1581,10 +1581,10 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
-                                        {text: '%', width: 120, style: 'background:#A0BFD3;color:#244066;text-align:center;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {text: '%', width: 120, style: 'background:#A0BFD3;color:#244066;text-align:center;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80},
                                         {width: 100},
                                         {text: '100%', width: 60, id: prototype.id + '-100%'},
@@ -1837,7 +1837,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 230},
@@ -1873,10 +1873,10 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
-                                        {text: '%', width: 230, style: 'background:#A0BFD3;color:#244066;text-align:center;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {text: '%', width: 230, style: 'background:#A0BFD3;color:#244066;text-align:center;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80},
                                         {width: 100},
                                         {text: '100%', width: 60, id: prototype.id + '-100%Country'},
@@ -2129,7 +2129,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 230},
@@ -2165,10 +2165,10 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
-                                        {text: '%', width: 230, style: 'background:#A0BFD3;color:#244066;text-align:center;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {text: '%', width: 230, style: 'background:#A0BFD3;color:#244066;text-align:center;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80},
                                         {width: 100},
                                         {text: '100%', width: 60, id: prototype.id + '-100%Card'},
@@ -2381,7 +2381,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 60},
@@ -2537,7 +2537,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 120},
@@ -2566,13 +2566,13 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {text: '%',
                                             width: 120,
                                             id: prototype.id + '-label%',
-                                            style: 'background:#A0BFD3;color:#244066;text-align:center;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                            style: 'background:#A0BFD3;color:#244066;text-align:center;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 90},
                                         {width: 110},
                                         {width: 60, text: '100%', id: prototype.id + '-100%FareTax'},
@@ -2709,7 +2709,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -2871,7 +2871,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 120},
@@ -3046,7 +3046,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -3201,7 +3201,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 100},
@@ -3464,7 +3464,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -3805,7 +3805,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -4075,7 +4075,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -4131,7 +4131,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Country2222',
+                                                text: 'Country',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -4420,7 +4420,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 180},
@@ -4431,18 +4431,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 90, id: prototype.id + '-totPP_QTY21'},
                                         {width: 100, id: prototype.id + '-totPP_SVFOPUS21'},
                                         {width: 60, id: prototype.id + '-totPP_Perc11'},
-                                        {width: 90, id: prototype.id + '-totdiff11', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci1', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {width: 90, id: prototype.id + '-totdiff11', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci1', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 90, id: prototype.id + '-totPP_QTYA1'},
                                         {width: 100, id: prototype.id + '-totPP_SVFOPUSA1'},
                                         {width: 60, id: prototype.id + '-totPP_Perc21'},
-                                        {width: 90, id: prototype.id + '-totdiff21', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci2', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {width: 90, id: prototype.id + '-totdiff21', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci2', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 90, id: prototype.id + '-totPP_QTYSABO1'},
                                         {width: 100, id: prototype.id + '-totPP_SVFOPUSABO1'},
                                         {width: 60, id: prototype.id + '-totPP_Perc31'},
-                                        {width: 90, id: prototype.id + '-totdiff31', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci3', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'}
+                                        {width: 90, id: prototype.id + '-totdiff31', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci3', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'}
                                     ]
                                 },
                                 //PANEL DE GRAFICOS
@@ -4530,9 +4530,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 minGapWidth: 2,
                                                                 maxBarWidth: 1000
                                                             },
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
+//                                                            tooltip: {
+//                                                                trackMouse: true,
+//                                                                height: 28,
 //                                                                renderer: function (toolTip, record, ctx) {
 //                                                                    var label = '';
 //                                                                    if (ctx.field === 'perc4') {
@@ -4542,7 +4542,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
 //                                                                    }
 //                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
 //                                                                }
-                                                            }
+//                                                            }
                                                         }]
                                                 },
                                             ]
@@ -4891,7 +4891,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -4904,18 +4904,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-totPPB_QTY21'},
                                         {width: 100, id: prototype.id + '-totPPB_SVFOPUS21'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc11'},
-                                        {width: 80, id: prototype.id + '-totdiff111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci11', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {width: 80, id: prototype.id + '-totdiff111', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci11', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80, id: prototype.id + '-totPPB_QTYA1'},
                                         {width: 100, id: prototype.id + '-totPPB_SVFOPUSA1'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc21'},
-                                        {width: 80, id: prototype.id + '-totdiff211', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci21', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {width: 80, id: prototype.id + '-totdiff211', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci21', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80, id: prototype.id + '-totPPB_QTYSABO1'},
                                         {width: 100, id: prototype.id + '-totPPB_SVFOPUSABO1'},
                                         {width: 60, id: prototype.id + '-totPPB_Perc31'},
-                                        {width: 80, id: prototype.id + '-totdiff311', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci31', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'}
+                                        {width: 80, id: prototype.id + '-totdiff311', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci31', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'}
                                     ]
                                 }
                             ]
@@ -5255,7 +5255,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -5268,18 +5268,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-totPPC_QTY21'},
                                         {width: 100, id: prototype.id + '-totPPC_SVFOPUS21'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc11'},
-                                        {width: 80, id: prototype.id + '-totdiff1111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {width: 80, id: prototype.id + '-totdiff1111', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci111', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80, id: prototype.id + '-totPPC_QTYA1'},
                                         {width: 100, id: prototype.id + '-totPPC_SVFOPUSA1'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc21'},
-                                        {width: 80, id: prototype.id + '-totdiff2111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci211', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
+                                        {width: 80, id: prototype.id + '-totdiff2111', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci211', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
                                         {width: 80, id: prototype.id + '-totPPC_QTYSABO1'},
                                         {width: 100, id: prototype.id + '-totPPC_SVFOPUSABO1'},
                                         {width: 60, id: prototype.id + '-totPPC_Perc31'},
-                                        {width: 80, id: prototype.id + '-totdiff3111', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'},
-                                        {width: 100, id: prototype.id + '-totDiffConci311', style: 'background:#A0BFD3;color:#800000;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'}
+                                        {width: 80, id: prototype.id + '-totdiff3111', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 100, id: prototype.id + '-totDiffConci311', style: 'background:#A0BFD3;color:#800000;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'}
                                     ]
                                 }
                             ]
@@ -5537,7 +5537,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 100},
@@ -5975,7 +5975,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 275},
@@ -6209,7 +6209,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 100},
@@ -6437,7 +6437,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
@@ -6665,7 +6665,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         html: '' + '&nbsp',
                                         height: 25,
                                         padding: '5 5 5 0',
-                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
                                         {width: 50},
