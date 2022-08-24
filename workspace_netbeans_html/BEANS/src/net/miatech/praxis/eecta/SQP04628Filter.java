@@ -5,33 +5,17 @@
  */
 package net.miatech.praxis.eecta;
 
+import net.miatech.beans.Pagination;
+
 /**
  *
  * @author Dvicente
  */
-public class A4264Filter extends A4264{
-    
+public class SQP04628Filter extends A4264{
     private String IN_FROMDATE;
     private String IN_TODATE;
     private String IN_IDFILE;
-    private String OUT_SQLCODE;
-    private String OUT_MESSAGE;
-
-    public String getOUT_SQLCODE() {
-        return OUT_SQLCODE;
-    }
-
-    public void setOUT_SQLCODE(String OUT_SQLCODE) {
-        this.OUT_SQLCODE = OUT_SQLCODE;
-    }
-
-    public String getOUT_MESSAGE() {
-        return OUT_MESSAGE;
-    }
-
-    public void setOUT_MESSAGE(String OUT_MESSAGE) {
-        this.OUT_MESSAGE = OUT_MESSAGE;
-    }
+    private Pagination pagination;
 
     public String getIN_FROMDATE() {
         return IN_FROMDATE;
@@ -56,7 +40,14 @@ public class A4264Filter extends A4264{
     public void setIN_IDFILE(String IN_IDFILE) {
         this.IN_IDFILE = IN_IDFILE;
     }
-    
+
+    public Pagination getPagination() {
+        return pagination;
+    }
+
+    public void setPagination(Pagination pagination) {
+        this.pagination = pagination;
+    }
     
     
 }

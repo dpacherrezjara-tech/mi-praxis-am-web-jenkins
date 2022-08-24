@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04627Filter;
+import net.miatech.praxis.eecta.SQP04628Filter;
 import net.miatech.praxis.logic.eecta.UATPSalesLogic;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -75,6 +76,28 @@ public class UATPSalesController extends BaseController{
     
     @RequestMapping(value = "/getA4264")
     public @ResponseBody String getA4264Data(ModelMap map, HttpServletRequest request){
-        return null;
+        List<SQP04628Filter> listObj = new ArrayList<>();
+        SQP04628Filter filter = new SQP04628Filter();
+        filter.getPagination().TOTROW = -1;
+        filter.getPagination().START =0;
+        filter.getPagination().LIMIT = 0;
+        try {
+            filter.setIN_FROMDATE(request.getParameter("IN_FROMDATE"));
+            filter.setIN_TODATE(request.getParameter("IN_TODATE"));
+            filter.setIN_IDFILE(request.getParameter("IN_IDFILE"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.getPagination().PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.getPagination().PAGNUM = (start / filter.getPagination().PAGROW) + 1;
+            logic = new UATPSalesLogic();
+            listObj = logic.getSQP04628Filter(filter);
+            map.put("success", true);
+            map.put("total", listObj.size() > 0 ? listObj.get(0).getPagination().TOTROW : 0);            
+            map.put("data", listObj);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
     }
 }

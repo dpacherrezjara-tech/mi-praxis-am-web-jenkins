@@ -30,11 +30,11 @@ public class A4264 {
     private Double A4264CFBC;
     private Double A4264TTRNC;
     private Double A4264TLINVC;
-    private Double A4264STREC;
-    private Double A4264STCAR;
-    private Double A4264UCARG;
-    private Double A4264FCARG;
-    private Double A4264HCARG;
+    private String A4264STREC;
+    private String A4264STCAR;
+    private String A4264UCARG;
+    private String A4264FCARG;
+    private String A4264HCARG;
     private String A4264USRIN;
     private String A4264FECIN;
     private String A4264HORIN;
@@ -44,7 +44,7 @@ public class A4264 {
 
     public A4264() {
     }
-    
+
     public String getA4264CCUST() {
         return A4264CCUST;
     }
@@ -197,43 +197,43 @@ public class A4264 {
         this.A4264TLINVC = A4264TLINVC;
     }
 
-    public Double getA4264STREC() {
+    public String getA4264STREC() {
         return A4264STREC;
     }
 
-    public void setA4264STREC(Double A4264STREC) {
+    public void setA4264STREC(String A4264STREC) {
         this.A4264STREC = A4264STREC;
     }
 
-    public Double getA4264STCAR() {
+    public String getA4264STCAR() {
         return A4264STCAR;
     }
 
-    public void setA4264STCAR(Double A4264STCAR) {
+    public void setA4264STCAR(String A4264STCAR) {
         this.A4264STCAR = A4264STCAR;
     }
 
-    public Double getA4264UCARG() {
+    public String getA4264UCARG() {
         return A4264UCARG;
     }
 
-    public void setA4264UCARG(Double A4264UCARG) {
+    public void setA4264UCARG(String A4264UCARG) {
         this.A4264UCARG = A4264UCARG;
     }
 
-    public Double getA4264FCARG() {
+    public String getA4264FCARG() {
         return A4264FCARG;
     }
 
-    public void setA4264FCARG(Double A4264FCARG) {
+    public void setA4264FCARG(String A4264FCARG) {
         this.A4264FCARG = A4264FCARG;
     }
 
-    public Double getA4264HCARG() {
+    public String getA4264HCARG() {
         return A4264HCARG;
     }
 
-    public void setA4264HCARG(Double A4264HCARG) {
+    public void setA4264HCARG(String A4264HCARG) {
         this.A4264HCARG = A4264HCARG;
     }
 
@@ -284,12 +284,6 @@ public class A4264 {
     public void setA4264HORAC(String A4264HORAC) {
         this.A4264HORAC = A4264HORAC;
     }
-    
-    
         
-        
-    
-    
-    
     
 }
