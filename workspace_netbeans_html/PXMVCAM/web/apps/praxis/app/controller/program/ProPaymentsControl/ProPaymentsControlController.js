@@ -1671,13 +1671,20 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 var list = obj.data;
                                 console.log(list);
 
+                                
+                                if(list.length >= 6){
+                                    for (var i = 0; i < 6; i++) {
+                                        var item = {};
+                                        item.perc4 = list.items[i].data.perc4;
+                                        item.strDescription = list.items[i].data.strDescription + ' , ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
+                                        lstNew.push(item);
 
-                                for (var i = 0; i < 6; i++) {
+                                    }
+                                }else{
                                     var item = {};
-                                    item.perc4 = list.items[i].data.perc4;
-                                    item.strDescription = list.items[i].data.strDescription + ' , ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
+                                    item.perc4 = list.items[0].data.perc4;
+                                    item.strDescription = list.items[0].data.strDescription + ' , ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
                                     lstNew.push(item);
-
                                 }
 
                                 var storeDataNew = Ext.create('Ext.data.Store', {
