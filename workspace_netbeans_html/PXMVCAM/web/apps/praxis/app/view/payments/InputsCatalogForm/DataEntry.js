@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
     controller: 'DataEntryInputsCatalogController',
     title: 'Inputs Catalog - Data Entry Form',
     header: true,
-    height: 440,
+    height: 470,
     width: 845,
     resizable: false,
     layout: 'fit',
@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#E5ECEF;',
+                            //bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 0 20',
                             defaults: {
                                 anchor: '100%',
@@ -144,7 +144,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#E5ECEF;',
+                            //bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 0 20',
                             defaults: {
                                 anchor: '100%',
@@ -227,7 +227,106 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#E5ECEF;',
+                            //bodyStyle: 'background:#E5ECEF;',
+                            margin: '10 5 0 110',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                //{xtype: 'tbspacer', width: 110},
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtLun',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Lunes',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtMar',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Martes',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtMie',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Miercoles',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtJue',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Jueves',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtVie',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Viernes',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtSab',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Sabado',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-de-txtDom',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Domingo',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 70
+                                },
+                                
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            //bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 0 20',
                             defaults: {
                                 anchor: '100%',
@@ -339,7 +438,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#E5ECEF;',
+                            //bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 0 20',
                             defaults: {
                                 anchor: '100%',
@@ -401,7 +500,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#E5ECEF;',
+                            //bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 0 20',
                             defaults: {
                                 anchor: '100%',

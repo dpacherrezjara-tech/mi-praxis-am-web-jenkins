@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
                     autoLoad: false,
                     fields: ['code', 'name'],
                     data: [
-                        ["", "All"],
+                        ["", ""],
                         ["A", "A - ACTIVE"],
                         ["I", "I - INACTIVE"]
                     ]
@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
                     autoLoad: false,
                     fields: ['code', 'name'],
                     data: [
-                        ["", "All"],
+                        ["", ""],
                         ["0", "0 - FASE 0"],
                         ["1", "1 - FASE I"],
                         ["2", "2 - FASE II"],
@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
                     autoLoad: false,
                     fields: ['code', 'name'],
                     data: [
-                        ["", "All"],
+                        ["", ""],
                         ["D", "D - DATA"],
                         ["C", "C - CONTROL"],
                         ["M", "M - MISCELLANEOUS"]
@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
                     autoLoad: false,
                     fields: ['code', 'name'],
                     data: [
-                        ["", "All"],
+                        ["", ""],
                         [".txt", ".TXT"],
                         [".TXT", ".TXT"],
                         [".DAT", ".DAT"],
@@ -88,7 +88,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
                 break;
             case 'U':
                 this.getData();
-                // this.DeshabilitarCampoClave();
+                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').show();
@@ -112,6 +112,28 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
         this.setValue('de-cmbINPEXTE', this.beanResult.INPEXTE);
         this.setValue('de-txtINPDESC', this.beanResult.INPDESC);
         this.setValue('de-cmbINPTYPE', this.beanResult.INPTYPE);
+        
+        if(this.beanResult.DENV.includes('1')){
+            (Ext.getCmp(prototype.id + '-de-txtLun')).setValue(1);
+        }
+        if(this.beanResult.DENV.includes('2')){
+            (Ext.getCmp(prototype.id + '-de-txtMar')).setValue(1);
+        }
+        if(this.beanResult.DENV.includes('3')){
+            (Ext.getCmp(prototype.id + '-de-txtMie')).setValue(1);
+        }
+        if(this.beanResult.DENV.includes('4')){
+            (Ext.getCmp(prototype.id + '-de-txtJue')).setValue(1);
+        }
+        if(this.beanResult.DENV.includes('5')){
+            (Ext.getCmp(prototype.id + '-de-txtVie')).setValue(1);
+        }
+        if(this.beanResult.DENV.includes('6')){
+            (Ext.getCmp(prototype.id + '-de-txtSab')).setValue(1);
+        }
+        if(this.beanResult.DENV.includes('7')){
+            (Ext.getCmp(prototype.id + '-de-txtDom')).setValue(1);
+        }
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -125,7 +147,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
 //        console.log('llenarData');
-
+        
         beanTemp.APLIC = this.getValue("de-txtAPLIC");
         beanTemp.SEQNUM = this.getValue("de-txtSEQNUM");
         beanTemp.STAT = this.getValue("de-cmbSTAT");
@@ -141,7 +163,32 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
         beanTemp.INPEXTE = this.getValue("de-cmbINPEXTE");
         beanTemp.INPDESC = this.getValue("de-txtINPDESC");
         beanTemp.INPTYPE = this.getValue("de-cmbINPTYPE");
-
+        
+        var DENValues = "";
+        if ($(Ext.getCmp(prototype.id + '-de-txtLun')).prop('checked')) {
+            DENValues =  DENValues + "1";
+        }
+        if ($(Ext.getCmp(prototype.id + '-de-txtMar')).prop('checked')) {
+            DENValues =  DENValues + "2";
+        }
+        if ($(Ext.getCmp(prototype.id + '-de-txtMie')).prop('checked')) {
+            DENValues =  DENValues + "3";
+        }
+        if ($(Ext.getCmp(prototype.id + '-de-txtJue')).prop('checked')) {
+            DENValues =  DENValues + "4";
+        }
+        if ($(Ext.getCmp(prototype.id + '-de-txtVie')).prop('checked')) {
+            DENValues =  DENValues + "5";
+        }
+        if ($(Ext.getCmp(prototype.id + '-de-txtSab')).prop('checked')) {
+            DENValues =  DENValues + "6";
+        }
+        if ($(Ext.getCmp(prototype.id + '-de-txtDom')).prop('checked')) {
+            DENValues =  DENValues + "7";
+        }
+        console.log(DENValues);
+        beanTemp.DENV = DENValues;
+        
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
         beanTemp.HOCR = this.getValue("txtHOCR").trim();
@@ -156,7 +203,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "All"],
+                ["", ""],
                 ["A", "A - ACTIVE"],
                 ["I", "I - INACTIVE"]
             ]
@@ -167,7 +214,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "All"],
+                ["", ""],
                 ["0", "0 - FASE 0"],
                 ["1", "1 - FASE I"],
                 ["2", "2 - FASE II"],
@@ -181,7 +228,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "All"],
+                ["", ""],
                 ["D", "D - DATA"],
                 ["C", "C - CONTROL"],
                 ["M", "M - MISCELLANEOUS"]
@@ -193,7 +240,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "All"],
+                ["", ""],
                 [".txt", ".TXT"],
                 [".TXT", ".TXT"],
                 [".DAT", ".DAT"],
@@ -355,8 +402,8 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.DataEntryInputsCatalogC
         return msjResult;
     },
     DeshabilitarCampoClave: function () {
-//        Ext.getCmp(prototype.id + '-de-txtMERCHN').setEditable(false);
-//        Ext.getCmp(prototype.id + '-de-txtNameCTRY').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtAPLIC').setEditable(false);
+        Ext.getCmp(prototype.id + '-de-txtINPNAME').setReadOnly(true);
     },
     Habilitarlbl: function () {
 //        Ext.getCmp(prototype.id + '-lblDescripcion').show();

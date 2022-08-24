@@ -97,6 +97,29 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                                     {text: 'Days', dataIndex: 'DENV', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
+                                                            var valueS = "";
+                                                            if(value.includes('1')){
+                                                                valueS = 'L';
+                                                            }
+                                                            if(value.includes('2')){
+                                                                valueS = valueS + ' - M';
+                                                            }
+                                                            if(value.includes('3')){
+                                                                valueS = valueS + ' - Mi';
+                                                            }
+                                                            if(value.includes('4')){
+                                                                valueS = valueS + ' - J';
+                                                            }
+                                                            if(value.includes('5')){
+                                                                valueS = valueS + ' - V';
+                                                            }
+                                                            if(value.includes('6')){
+                                                                valueS = valueS + ' - S';
+                                                            }
+                                                            if(value.includes('7')){
+                                                                valueS = valueS + ' - D';
+                                                            }
+                                                            value = valueS;
                                                             return value;
                                                         }
                                                     }
