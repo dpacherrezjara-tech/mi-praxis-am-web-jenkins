@@ -80,6 +80,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataScrExchangeAnalisis').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataScrExchangeAnalisis').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ChtExchangeMB_01').bindStore(storeGridDatas);
 
     },
     viewDetExchange_colHandler: function(param1,param2,param3,column, e, row, val, x, rowData,ab,ac,ad,af) {

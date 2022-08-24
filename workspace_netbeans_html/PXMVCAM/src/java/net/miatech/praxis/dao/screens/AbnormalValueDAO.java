@@ -3179,6 +3179,7 @@ public class AbnormalValueDAO {
                     objRtn.QTKTS4 = rs01.getLong("QTKTS4");
                     objRtn.QTKTS5 = rs01.getLong("QTKTS5");
                     objRtn.QTKTS6 = rs01.getLong("QTKTS6");
+                    objRtn.QTKTSmax = objRtn.QTKTS4+objRtn.QTKTS5+objRtn.QTKTS6;
 
                     objRtn.AMOUNT = rs01.getDouble("AMOUNT");
                     objRtn.AMOUNT1 = rs01.getDouble("AMOUNT1");
@@ -3187,6 +3188,7 @@ public class AbnormalValueDAO {
                     objRtn.AMOUNT4 = rs01.getDouble("AMOUNT4");
                     objRtn.AMOUNT5 = rs01.getDouble("AMOUNT5");
                     objRtn.AMOUNT6 = rs01.getDouble("AMOUNT6");
+                    objRtn.AMOUNTmax = objRtn.AMOUNT4+objRtn.AMOUNT5+objRtn.AMOUNT6;
 
                     objRtn.VALADM = rs01.getDouble("VALADM");
 

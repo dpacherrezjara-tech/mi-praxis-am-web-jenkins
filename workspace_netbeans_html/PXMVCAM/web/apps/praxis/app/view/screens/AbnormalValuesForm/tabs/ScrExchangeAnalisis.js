@@ -251,7 +251,100 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrExchangeAnalisis'
                                             ]
                                         }
                                     ]
-                                }
+                                    }
+                                },
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '5 0 0 5',
+                                    hidden: false,
+                                    border: true,
+                                    layout: {
+                                        type: 'vbox'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                            id: prototype.id + '-ChtExchangeMB_01',
+                                            width: 1300,
+                                            border: false,
+                                            height: 260,
+                                            background: '#D1E8FE',
+                                            captions: {
+                                                title: {
+                                                    text: 'Tickets',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['QTKTS', 'QTKTSmax'],
+                                                    grid: true,
+                                                    title: '',
+                                                    //title: 'Millions of USD',
+                                                    renderer: function (obj, value) {
+                                                        if (value > 1) {
+                                                            if ((value / 1000).toString().length > 3) {
+                                                                return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                            } else {
+                                                                return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                            }
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                //                                                            fields: 'strFormatDate',
+                                                    grid: true,
+                                                    title: {
+                                                        text: '',
+                                                        translationX: -30
+                                                    }
+                                                }],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    title: ['Total', 'Exchange with Additional'],
+                //                                                title: 'year1', 'year2', 'year3',
+                                                    xField: 'strFormatDate',
+                                                    yField: ['QTKTS', 'QTKTSmax'],
+                                                    colors: ['#67BFFF', '#ffff99'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1000
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            if (ctx.field === 'QTKTS') {
+                                                                label = 'Total';
+                                                            } else if (ctx.field === 'QTKTSmax') {
+                                                                label = 'Exchange with Additional';
+                                                            }
+                                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                        }
+                                                    },
+                //                                    renderer: function (sprite, config, rendererData, index, a, b, c) {
+                //                                    }
+                                                }]
+                                        }
+                                    ]
                                 }
                             ]
                         }
