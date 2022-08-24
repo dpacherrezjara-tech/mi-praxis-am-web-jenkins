@@ -485,8 +485,10 @@ public class SalesReconciliBoomerDAO {
         long totSVFOPS = 0;
         long totTOTCOMISI = 0;
         long totIVA = 0;
+        long totSVFOPOL = 0;
         long totTOT_DESC = 0;
         long totNET = 0;
+        long totSVFOPN = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -533,8 +535,10 @@ public class SalesReconciliBoomerDAO {
                 totSVFOPS = rst.getLong("SVFOPS");
                 totTOTCOMISI = rst.getLong("TOTCOMISI");
                 totIVA = rst.getLong("IVA");
+                totSVFOPOL = rst.getLong("SVFOPOL");
                 totTOT_DESC = totTOTCOMISI + totIVA;
-                totNET = totSVFOP - totTOT_DESC;
+                //totNET = totSVFOP - totTOT_DESC;
+                totNET = rst.getLong("SVFOPN");
             }
             rst.close();
 
@@ -580,7 +584,11 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SVFOP = rst.getLong("SVFOP");
                     beanTkt.SVFOPS = rst.getLong("SVFOPS");
                     beanTkt.IMPORT = rst.getLong("IMPORT");
-                    beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                    //beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                    beanTkt.difSVFOP = rst.getLong("SVFOPS") - (rst.getLong("SVFOPN") + rst.getLong("TOTCOMISI"));
+                    if (beanTkt.difSVFOP >= -1 && beanTkt.difSVFOP <= 1) {
+                        beanTkt.difSVFOP = 0;
+                    }
                     beanTkt.difIMPORT = rst.getLong("SVFOP") - rst.getLong("IMPORT");
 
                     if (beanTkt.difIMPORT < 0) {
@@ -591,14 +599,21 @@ public class SalesReconciliBoomerDAO {
 
                     beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                     beanTkt.IVA = rst.getLong("IVA");
+                    beanTkt.SVFOPOL = rst.getLong("SVFOPOL");
                     beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    beanTkt.NET = rst.getLong("SVFOPN");
 
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
-                    beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+                    //beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+                    beanTkt.totdifSVFOP = totSVFOPS - (totNET + totTOTCOMISI);
+                    if (beanTkt.totdifSVFOP >= -1 && beanTkt.totdifSVFOP <= 1) {
+                        beanTkt.totdifSVFOP = 0;
+                    }
 
                     beanTkt.totTOTCOMISI = totTOTCOMISI;
+                    beanTkt.totSVFOPOL = totSVFOPOL;
                     beanTkt.totIVA = totIVA;
                     beanTkt.totTOT_DESC = totTOT_DESC;
                     beanTkt.totNET = totNET;
@@ -719,9 +734,14 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
                 beanTkt.SVFOP = rst.getLong("SVFOP");
+                beanTkt.SVFOPOL = rst.getLong("SVFOPOL");
                 beanTkt.SVFOPS = rst.getLong("SVFOPS");
                 beanTkt.IMPORT = rst.getLong("IMPORT");
-                beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                //beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                beanTkt.difSVFOP = rst.getLong("SVFOPS") - (rst.getLong("SVFOPN") + rst.getLong("TOTCOMISI"));
+                if (beanTkt.difSVFOP >= -1 && beanTkt.difSVFOP <= 1) {
+                    beanTkt.difSVFOP = 0;
+                }
                 beanTkt.difIMPORT = rst.getLong("SVFOP") - rst.getLong("IMPORT");
 
                 if (beanTkt.difIMPORT < 0) {
@@ -733,11 +753,15 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                 beanTkt.IVA = rst.getLong("IVA");
                 beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                beanTkt.NET = rst.getLong("SVFOPN");
 
                 beanTkt.totSVFOP = totSVFOP;
                 beanTkt.totSVFOPS = totSVFOPS;
                 beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+                if (beanTkt.totdifSVFOP >= -1 && beanTkt.totdifSVFOP <= 1) {
+                    beanTkt.totdifSVFOP = 0;
+                }
 
                 beanTkt.totTOTCOMISI = totTOTCOMISI;
                 beanTkt.totIVA = totIVA;
@@ -1384,6 +1408,7 @@ public class SalesReconciliBoomerDAO {
         long totIVA = 0;
         long totTOT_DESC = 0;
         long totNET = 0;
+        long totSVFOPOL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1427,8 +1452,10 @@ public class SalesReconciliBoomerDAO {
                 totSVFOPS = rst.getLong("SVFOPS");
                 totTOTCOMISI = rst.getLong("TOTCOMISI");
                 totIVA = rst.getLong("IVA");
+                totSVFOPOL = rst.getLong("SVFOPOL");
                 totTOT_DESC = totTOTCOMISI + totIVA;
-                totNET = totSVFOP - totTOT_DESC;
+                //totNET = totSVFOP - totTOT_DESC;
+                totNET = rst.getLong("SVFOPN");
             }
             rst.close();
 
@@ -1471,19 +1498,26 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.CODEBANK = rst.getString("CODEBANK").trim();
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
-                    beanTkt.SVFOP = rst.getLong("SVFOP");
-                    beanTkt.SVFOPS = rst.getLong("SVFOPS");
-                    beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
-
                     beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                     beanTkt.IVA = rst.getLong("IVA");
                     beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                    
+                    //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    beanTkt.NET = rst.getLong("SVFOPN");
+
+                    beanTkt.totSVFOP = totSVFOP;
+                    beanTkt.totSVFOPS = totSVFOPS;
+                    //beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+                    beanTkt.totdifSVFOP = totSVFOPS - (totNET + totTOTCOMISI);
+
                     beanTkt.SVFOP = rst.getLong("SVFOP");
+                    beanTkt.SVFOPOL = rst.getLong("SVFOPOL");
                     beanTkt.SVFOPS = rst.getLong("SVFOPS");
                     beanTkt.IMPORT = rst.getLong("IMPORT");
-                    beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                    //beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
+                    beanTkt.difSVFOP = rst.getLong("SVFOPS") - (rst.getLong("SVFOPN") + rst.getLong("TOTCOMISI"));
+                    if (beanTkt.difSVFOP >= -1 && beanTkt.difSVFOP <= 1) {
+                        beanTkt.difSVFOP = 0;
+                    }
                     beanTkt.difIMPORT = rst.getLong("SVFOP") - rst.getLong("IMPORT");
 
                     if (beanTkt.difIMPORT < 0) {
