@@ -222,7 +222,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
     GridByTkt_colHandler: function(column, e, row, column, x, rowData) {
         meScrRefund.beanTkt = x.record.data;
         this.showGrid('-boxByTkt');
-        this.showPagination_clickHandler();
+        meScrRefund.hidePagination_clickHandler();
         
         console.log(meScrRefund.beanTkt);
         this.viewGridByTkt_colHandler();
@@ -298,21 +298,21 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
     },
     imgBack_clickHandler: function() {
         
-        if (meScrRefund.drillDown.length > 0) {
+        if (meScrRefund.drillDown.length > 1) {
             Ext.getCmp(prototype.id + meScrRefund.boxActual).hide();
             
-            
-             
-           if(meScrRefund.boxActual === '-boxMainDataScrRefund'){
-                meScrRefund.hidePagination_clickHandler();
-            }else if(meScrRefund.boxActual === '-boxByTkt'){
-                meScrRefund.showPagination_clickHandler();
-            }
             /*************/
             
             meScrRefund.drillDown.pop();
             meScrRefund.boxActual = meScrRefund.drillDown[meScrRefund.drillDown.length - 1];
+            me.panelActual = meScrRefund.boxActual;
             Ext.getCmp(prototype.id + meScrRefund.boxActual).show();
+            
+           if(meScrRefund.boxActual === '-boxMainDataScrRefund'){
+                meScrRefund.hidePagination_clickHandler();
+            }else if(meScrRefund.boxActual === '-boxByWeek'){
+                meScrRefund.showPagination_clickHandler();
+            }
         }
 //        console.log('imgBack_clickHandler == ' + meScrRefund.drillDown);
 

@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.AbnormalValuesForm', {
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: 1090,
+                                            height: 700,
                                             layout: 'fit',
                                             items: [
                                                 {

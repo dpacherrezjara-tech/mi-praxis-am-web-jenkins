@@ -6,7 +6,9 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl',
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund',
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare',
-          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisis',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrExchangeAnalisis',
     ],
     layout: 'border',
     align: 'center',
@@ -35,7 +37,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
                     width: 1700,
-                    height: 1350,
+//                    height: 1350,
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,
@@ -93,7 +95,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrAVCreditCard',
+                            id: prototype.id + '-ScrCreditCardAnalisis_tab',
                             title: 'Credit Card Analysis',
                             /*layout: {
                                 type: 'vbox',
@@ -105,18 +107,20 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             },*/
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrCreditCardAnalisis_screen',
+                                    xtype:prototype.id + '-ScrCreditCardAnalisis'
                                 }
                             ]
                         },
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrExchange',
+                            id: prototype.id + '-ScrExchangeAnalisis_tab',
                             title: 'Exchange Analysis',
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrExchangeAnalisis_screen',
+                                    xtype:prototype.id + '-ScrExchangeAnalisis'
                                 }
                             ]
                         },

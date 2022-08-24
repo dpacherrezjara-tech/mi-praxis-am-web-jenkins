@@ -536,7 +536,7 @@ public class AbnormalValuesController extends BaseController {
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX414SQP02545(filter);
+            lstData = logic.loadPX414SQP02546(filter);
 
             map.put("success", true);
 
@@ -571,7 +571,7 @@ public class AbnormalValuesController extends BaseController {
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX414SQP02545(filter);
+            lstData = logic.loadPX414SQP02546_ex(filter);
 
             map.put("success", true);
 
@@ -606,7 +606,7 @@ public class AbnormalValuesController extends BaseController {
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX414SQP02545(filter);
+            lstData = logic.loadPX414SQP02546_1(filter);
 
             map.put("success", true);
 
@@ -701,7 +701,82 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    // =========================================================================
+    // ========================== CREDIT CARD ANALISIS ========================================
+    // =========================================================================
+    @RequestMapping(value = "searchCCA")
+    public @ResponseBody
+    String searchCCA(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
 
+        DashboardFilter filter = new DashboardFilter();
+        HashMap hm = new HashMap();
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            hm = logic.loadPX414SQP02248(filter);
+
+            map.put("success", true);
+
+            map.put("lstData_CCard_S", hm.get("SALE"));
+            map.put("lstData_CCard_R", hm.get("REFUND"));
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    // =========================================================================
+    // ========================== EXCHANGE ANALISIS ========================================
+    // =========================================================================
+    @RequestMapping(value = "searchEA")
+    public @ResponseBody
+    String searchEA(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02393(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
     // ========================================================================
     // ==========================                 =============================
     // ========================================================================
@@ -1255,6 +1330,86 @@ public class AbnormalValuesController extends BaseController {
                 map.put("nameExcel", nameExcel);
             } else {
                 map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
+    // =========================================================================
+    // ========================== EXCHANGE ========================================
+    // =========================================================================
+    @RequestMapping(value = "searchExchange")
+    public @ResponseBody
+    String searchExchange(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02212(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "searchDetExchange")
+    public @ResponseBody
+    String searchDetExchange(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF111Filter> lstData;
+        IMF111Filter filter = new IMF111Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
+            
+            filter.page.PAGROW = limit;
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQP02213(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = ExportUtil.exportFields(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
             }
 
         } catch (SQLException e) {
