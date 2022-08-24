@@ -174,12 +174,10 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
     },
     imgBack_clickHandler: function() {
         
-        if (meScrExchangeAnalisis.drillDown.length > 0) {
+//        console.log(meScrRefund.drillDown)
+        if (meScrExchangeAnalisis.drillDown.length > 1) {
             Ext.getCmp(prototype.id + meScrExchangeAnalisis.boxActual).hide();
             
-           if(meScrExchangeAnalisis.boxActual === '-boxMainDataScrExchangeAnalisis'){
-                meScrExchangeAnalisis.hidePagination_clickHandler();
-            }
 //            else if(meScrExchangeAnalisis.boxActual === '-boxByTkt'){
 //                meScrExchangeAnalisis.showPagination_clickHandler();
 //            }
@@ -187,6 +185,10 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
             meScrExchangeAnalisis.drillDown.pop();
             meScrExchangeAnalisis.boxActual = meScrExchangeAnalisis.drillDown[meScrExchangeAnalisis.drillDown.length - 1];
             Ext.getCmp(prototype.id + meScrExchangeAnalisis.boxActual).show();
+            
+           if(meScrExchangeAnalisis.boxActual === '-boxMainDataScrExchangeAnalisis'){
+                meScrExchangeAnalisis.hidePagination_clickHandler();
+            }
         }
     },
     imgExcel_clickHandler: function () {
