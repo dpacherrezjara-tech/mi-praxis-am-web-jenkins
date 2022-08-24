@@ -536,7 +536,7 @@ public class AbnormalValuesController extends BaseController {
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX414SQP02545(filter);
+            lstData = logic.loadPX414SQP02546(filter);
 
             map.put("success", true);
 
@@ -571,7 +571,7 @@ public class AbnormalValuesController extends BaseController {
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX414SQP02545(filter);
+            lstData = logic.loadPX414SQP02546_ex(filter);
 
             map.put("success", true);
 
@@ -606,7 +606,7 @@ public class AbnormalValuesController extends BaseController {
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX414SQP02545(filter);
+            lstData = logic.loadPX414SQP02546_1(filter);
 
             map.put("success", true);
 
