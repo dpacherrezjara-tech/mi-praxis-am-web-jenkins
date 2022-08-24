@@ -8346,6 +8346,8 @@ public class SalesReconciliAmexController extends BaseController {
         boolean iboolean;
         //Data.DATE, Data.AXPAYNBR, Data.PMERCHID, Data.PCURRENCY, Data.DIFF_PNETAMOU_STRING
         ProMail proMail = new ProMail();
+        
+        int sizeList = 0;
 
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator('.');
@@ -8404,12 +8406,26 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
         mensaje = mensaje + "\n" + "<table style=\"width:100%\">";
         mensaje = mensaje + "\n" + "<tr>    <th>Payment Date</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Zone</th>    <th>Country</th>    <th>Currency</th>    <th>Amount</th>    </tr>";
+                
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        if (listaData.size() > 10) {
+            sizeList = 10;
+        } else {
+            sizeList = listaData.size();
+        }
 
-        for (int i = 0; i < listaData.size(); i++) {
+        for (int i = 0; i < sizeList; i++) {
             a = Functions.redondear(listaData.get(i).DIFF_PNETAMOU, 2);
             String diferencia = formatea.format(a);
             diferencia = diferencia.replace("-", "");
-            mensaje = mensaje + "\n" + "<tr>    <td>" + listaData.get(i).DATE + "</td>    <td>" + listaData.get(i).AXPAYNBR + "</td>    <td>" + listaData.get(i).PMERCHID + "</td>    <td>" + listaData.get(i).ZONA + "</td>    <td>" + listaData.get(i).SCOUNTRY + "</td>    <td>" + listaData.get(i).PCURRENCY + "</td>    <td>" + diferencia + "</td>    </tr>";
+            mensaje = mensaje + "\n" + "<tr>    <td>" + listaData.get(i).DATE + "</td>    <td>" + listaData.get(i).AXPAYNBR + "</td>    <td>" + listaData.get(i).PMERCHID + "</td>    <td>" + listaData.get(i).ZONA + "</td>    <td>" + listaData.get(i).SCOUNTRY + "</td>    <td>" + listaData.get(i).PCURRENCY + "</td>    <td style=\"text-align:right\">" + diferencia + "</td>    </tr>";
         }
 
         mensaje = mensaje + "\n" + "</table>";
