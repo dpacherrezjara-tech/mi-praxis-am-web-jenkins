@@ -184,6 +184,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrExchangeAnalisi
             
             meScrExchangeAnalisis.drillDown.pop();
             meScrExchangeAnalisis.boxActual = meScrExchangeAnalisis.drillDown[meScrExchangeAnalisis.drillDown.length - 1];
+            me.panelActual = meScrExchangeAnalisis.boxActual;
             Ext.getCmp(prototype.id + meScrExchangeAnalisis.boxActual).show();
             
            if(meScrExchangeAnalisis.boxActual === '-boxMainDataScrExchangeAnalisis'){

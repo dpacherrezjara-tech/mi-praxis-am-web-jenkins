@@ -305,6 +305,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrRefundControlle
             
             meScrRefund.drillDown.pop();
             meScrRefund.boxActual = meScrRefund.drillDown[meScrRefund.drillDown.length - 1];
+            me.panelActual = meScrRefund.boxActual;
             Ext.getCmp(prototype.id + meScrRefund.boxActual).show();
             
            if(meScrRefund.boxActual === '-boxMainDataScrRefund'){
