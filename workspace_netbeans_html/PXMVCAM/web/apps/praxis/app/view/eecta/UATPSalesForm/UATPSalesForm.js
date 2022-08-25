@@ -1,15 +1,16 @@
 prototype.widthContenedor = 1200;   
 prototype.widthGrid = '100%';
 
-console.log("uatp")
+console.log("uatp");
 
 Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.UATPSalesForm',
     requires: [
-        // 'Ext.Praxis.controller.eecta.SalesList.SalesListController',
-        // 'Ext.Praxis.view.eecta.SalesListForm.Options',
-        // 'Ext.Praxis.view.eecta.SalesListForm.Filters'
+        'Ext.Praxis.controller.eecta.UATPSales.UATPSalesController',
+        'Ext.Praxis.view.eecta.UATPSalesForm.Options',
+        'Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid'
+        //'Ext.Praxis.view.eecta.SalesListForm.Filters'
     ],
     controller: 'UATPSalesController',
     id: prototype.id + '-ContenedorMain',  
@@ -20,7 +21,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
     defaults: {
         border: false
     },
-    items: [
+    items:[
         {
             id: prototype.id + '-xpanel',
             border: false,
@@ -55,39 +56,39 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
                                         width: prototype.widthContenedor,                                        
                                         align: 'center'
                                     },
-//                                     items: [
-//                                         {
-//                                             xtype: prototype.id + '-options'                                            
-//                                         },
-//                                         {
-//                                             xtype: prototype.id + '-filters',
-//                                             id: prototype.id + '-contentFilter'
-//                                         },
-//                                         {
-//                                             xtype: 'panel',
-//                                             id: prototype.id + '-panel-contenedor-grid',                                            
-//                                             height: 550,                                            
-//                                             layout: 'fit',
-//                                             items: [
-//                                                 // <editor-fold defaultstate="collapsed" desc="setGridData">
-//                                                 {
-//                                                     xtype: 'panel',
-//                                                     id: prototype.id + '-contenedor-grid',
-//                                                     layout: 'border',
-//                                                     align: 'center',                                                    
-//                                                     border: true,
-//                                                     defaults: {
-//                                                         border: true
-//                                                     },
-//                                                     bodyStyle: 'background: transparent'
-// //                                                    listeners: {
-// //                                                        afterrender: 'onGridLoad'
-// //                                                    }
-//                                                 }
-//                                                 // </editor-fold>                                                 
-//                                             ]
-//                                         }
-//                                     ]
+                                    items: [
+                                        {
+                                            xtype: prototype.id + '-options'                                            
+                                        },
+                                        {
+                                            //xtype: prototype.id + '-filters',
+                                            id: prototype.id + '-contentFilter'
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-panel-contenedor-grid',                                            
+                                            height: 550,                                            
+                                            layout: 'fit',
+                                            items: [
+                                                // <editor-fold defaultstate="collapsed" desc="setGridData">
+                                                {
+                                                    xtype: 'panel',
+                                                    id: prototype.id + '-contenedor-grid',
+                                                    layout: 'border',
+                                                    align: 'center',                                                    
+                                                    border: true,
+                                                    defaults: {border: true},
+                                                    bodyStyle: 'background: transparent',
+                                                    items:[
+                                                        {
+                                                            xtype: prototype.id + '-info'    
+                                                        }
+                                                    ]
+                                                }
+                                                // </editor-fold>                                                 
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }

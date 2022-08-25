@@ -2,7 +2,7 @@
 Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
-    layout: 'border',
+    //layout: 'border',
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
