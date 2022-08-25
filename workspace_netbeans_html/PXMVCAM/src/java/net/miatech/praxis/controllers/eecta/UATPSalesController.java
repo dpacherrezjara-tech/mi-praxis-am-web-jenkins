@@ -7,14 +7,12 @@ package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04627Filter;
@@ -28,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import sun.net.www.content.audio.x_aiff;
+//import sun.net.www.content.audio.x_aiff;
 
 /**
  *
@@ -92,7 +90,7 @@ public class UATPSalesController extends BaseController{
             logic = new UATPSalesLogic();
             listObj = logic.getSQP04628Filter(filter);
             map.put("success", true);
-            map.put("total", listObj.size() > 0 ? listObj.get(0).getPagination().TOTROW : 0);            
+            map.put("total", !listObj.isEmpty() ? listObj.get(0).getPagination().TOTROW : 0);            
             map.put("data", listObj);
         } catch (Exception ex) {
             map.put("success", false);
