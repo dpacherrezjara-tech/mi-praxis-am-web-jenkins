@@ -3032,7 +3032,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                         },
                         items: [
                             {
-                                text: 'MODE', dataIndex: 'A1716MODO', width: 50,
+                                text: 'MODE', dataIndex: 'A1716MODO', width: 60,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var data = record.data;
                                             metaData.style = 'text-align:right;';                                                   
@@ -3050,8 +3050,10 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'A': 
                                                                 if(data.A1716TDOC.trim() === 'R')
                                                                     rtn = 'PYMR';
-                                                                else
+                                                                else if(data.A1716TDOC.trim() === 'S')
                                                                     rtn = 'PYMS';
+                                                                else
+                                                                    rtn = 'PYMT';
                                                                 break;
                                                     case 'K': rtn = 'PYMT'; break;
                                                     case 'P': rtn = 'PLSG'; break;
