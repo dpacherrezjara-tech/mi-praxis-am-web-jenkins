@@ -77,7 +77,15 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Options', {
                             border: false,
                             displayInfo: false,
                             hidden: true
-                        }
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginSrcDetailOAL',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
                     ]
                 }
             ]
