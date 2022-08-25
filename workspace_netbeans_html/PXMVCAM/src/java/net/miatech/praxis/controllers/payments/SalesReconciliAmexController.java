@@ -7801,7 +7801,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br></p>";
         mensaje = mensaje + "\n" + "Atentamente.<br><br>";
         //mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#0C343D;font-size:11.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
         //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
         //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
         
@@ -8434,7 +8434,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br>";
         mensaje = mensaje + "\n" + "Atentamente.<br><br>";
         //mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#0C343D;font-size:11.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
         //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
         //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
         mensaje = mensaje + "\n" + "</body>";
