@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1615,
+                width: 1510,
 //                height: 516,
                 align: 'center'
             },
@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
                                     height: 522,
-                                    width: 1605,
+                                    width: 1500,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Seq', dataIndex: 'SEQNUM', width: 70,
+                                            {text: 'Seq', dataIndex: 'SEQNUM', width: 70,hidden:true,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left;";
                                                     return value;
@@ -94,7 +94,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Days', dataIndex: 'DENV', width: 80,
+                                                    {text: 'Days', dataIndex: 'DENV', width: 135,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             var valueS = "";
@@ -215,7 +215,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Unprocessed', dataIndex: 'QTYREG', width: 90,
+                                                    {text: 'Unprocessed', dataIndex: 'QTYREG', width: 90,hidden:true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -226,7 +226,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                             },
                                             {text: 'Phase', dataIndex: 'descFASE', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
+                                                    metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
