@@ -533,6 +533,12 @@ public class AbnormalValuesController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
+            
+            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
+            
+            filter.page.PAGROW = limit;
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
 
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
@@ -544,7 +550,8 @@ public class AbnormalValuesController extends BaseController {
                 String nameExcel = exportFieldsCompleto(request, response, lstData);
                 map.put("nameExcel", nameExcel);
             } else {
-                map.put("lstData", lstData);
+                map.put("data", lstData);
+                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
             }
 
         } catch (SQLException e) {
@@ -556,7 +563,7 @@ public class AbnormalValuesController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
             throw new SpringException(e);
         }
-        return new Gson().toJson(map);
+        return new Gson().toJson(map);       
     }
     
         @RequestMapping(value = "searchOALDetailExcel")
@@ -1391,7 +1398,7 @@ public class AbnormalValuesController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
-
+            
             int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
             
