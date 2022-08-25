@@ -132,7 +132,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    text: 'Source',
+                                    text: 'Input',
                                     hidden: false,
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 80
