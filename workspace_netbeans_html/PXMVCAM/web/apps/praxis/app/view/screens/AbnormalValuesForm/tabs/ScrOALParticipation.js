@@ -86,8 +86,12 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
                                                         text: 'Total<br>Coupons', dataIndex: 'QCPNS0', width: 80, align: 'center',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#b7d3f1;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        }
+                                                            return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
+                                                        },
+                                                        listeners: {
+                                                            click: 'clickDetTotalCoupons_colHandler',
+                                                            args: ['1']
+                                                        },
                                                     },
                                                     {text: 'Total USD',
                                                         columns: [
@@ -152,8 +156,12 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
                                                                 text: 'Total<br>Coupons', dataIndex: 'QCPNS2', width: 80, align: 'center',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#c4d3b6";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                }
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
+                                                                },
+                                                                listeners: {
+                                                                    click: 'clickDetTotalCoupons_colHandler',
+                                                                    args: ['3']
+                                                                },
                                                             },
                                                             {
                                                                 text: 'Total USD', dataIndex: 'VALOR2', width: 100, align: 'center',
@@ -177,8 +185,12 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
                                                                 text: 'Total<br>Coupons', dataIndex: 'QCPNS3', width: 80, align: 'center',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#A9D87D";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                }
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + Ext.util.Format.number(value, '0,000') + '</a>';
+                                                                },
+                                                                listeners: {
+                                                                    click: 'clickDetTotalCoupons_colHandler',
+                                                                    args: ['4']
+                                                                },
                                                             },
                                                             {
                                                                 text: 'Total USD', dataIndex: 'VALOR3', width: 100, align: 'center',
@@ -207,7 +219,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
                 },
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-boxWeek',
+                    id: prototype.id + '-boxDetailOAL',
                     width: '100%',
                     hidden: true,
                     layout: {
@@ -222,130 +234,184 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation'
                         margin: "0 15 0 0"  // (top, right, bottom, left)
                     },
                     items: [
-                        // <editor-fold defaultstate="collapsed" desc="gridData">
-
                         {
-                            xtype: 'panel',
-                            id: prototype.id + '-panelGridDetWeek',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
-                            },
-                            items: [
-                                {xtype: 'label', id: prototype.id + '-titgridDetWeekS', text: '', style: "font-size:12px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
-                                {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridDetWeek',
-                                    padding: '5px 0px 0px 0px',
-                                    width: 788,
-                                    height: 524,
-                                    columnLines: true,
-                                    features: [{
-                                            ftype: 'summary',
-                                            dock: 'bottom'
-                                        }],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        items: [
+                            xtype: 'grid',
+                            id: prototype.id + '-gridDetailOAL',
+                            padding: '5px 0px 0px 0px',
+                            width: 1570,
+                            height: 600,
+                            columnLines: true,
+//                                    features: [{
+//                                            ftype: 'summary'
+//                                        }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'Sales',
+                                        columns: [
                                             {
-                                                text: 'Sales Country', dataIndex: 'COUNTRYS', width: 110, align: 'center',
+                                                text: 'Ticket Number', dataIndex: 'TKT', width: 120, align: 'center',
+//                                                listeners: {
+//                                                    click: 'clickgridDetWeek_colHandler',
+//                                                },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;background:#d5f4d5;";
+                                                    metaData.style = "text-align:center;background-color:#d5f4d5;";
+                                                    //return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a> font-weight:bold;';
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Total',
+                                            {
+                                                text: 'Country - City', dataIndex: 'COUNTRYS', width: 100, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Agent',
                                                 columns: [
                                                     {
-                                                        text: 'Tickets', dataIndex: 'QTTKT', width: 110, align: 'center',
+                                                        text: 'Code', dataIndex: 'VENDOR', width: 80, align: 'center',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridDetWeek').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQTTKT, '0,000');
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD Net', dataIndex: 'VALORT', width: 110, align: 'center',
+                                                        text: 'Name', dataIndex: 'strDescription', width: 120, align: 'center',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            return Ext.util.Format.number(value, '0,000.00');
-                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridDetWeek').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totVALORT, '0,000.00');
+                                                            metaData.style = "text-align:left;";
+                                                            return value;
                                                         }
-                                                    }
+                                                    },
                                                 ]
                                             },
-                                            {text: 'Sales',
-                                                columns: [
-                                                    {text: 'High Values', columns: [
-                                                            {
-                                                                text: 'Tickets', dataIndex: 'QTKTSH', width: 110, align: 'center',
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDetWeek').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totQTKTSH, '0,000');
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'USD Differences', dataIndex: 'VALORH', width: 110, align: 'center',
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDetWeek').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totVALORH, '0,000.00');
-                                                                }
-                                                            }
-                                                        ]
-                                                    },
-                                                    {text: 'Low Values', columns: [
-                                                            {
-                                                                text: 'Tickets', dataIndex: 'QTKTSL', width: 110, align: 'center',
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDetWeek').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totQTKTSL, '0,000');
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'USD Differences', dataIndex: 'VALORL', width: 110, align: 'center',
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDetWeek').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totVALORL, '0,000.00');
-                                                                }
-                                                            }
-                                                        ]
+                                            {
+                                                text: 'Channel', dataIndex: 'strDescription2', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Issued<br>Curr.', dataIndex: 'CURRENL', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Fare', dataIndex: 'TARIFA', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: 'Type', dataIndex: 'TDOC', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Org - Des', dataIndex: 'CITYO', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Carrier', dataIndex: 'CARRIER', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Curr.', dataIndex: 'CURRENC', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Value', dataIndex: 'VALOR', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: '% Part', dataIndex: 'PORXPART', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: 'Miles', dataIndex: 'PMP', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b7d3f1;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: '% Part', dataIndex: 'PERKMSON', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b7d3f1;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: '', dataIndex: '', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    if (record.data.strColorPart === 'R'){
+                                                        value = 'resources/img/icon/16x16/circle_red.png';
+                                                    } else {
+                                                        value = 'resources/img/icon/16x16/circle_green.png';
                                                     }
-                                                ]
+                                                    
+                                                    return '<img src=' + '"' + value + '"' + '>';    
+                                                }
+                                            },
+                                            {
+                                                text: 'Rev. by<br>Miles', dataIndex: 'REVXMILLA', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b7d3f1;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: '', dataIndex: '', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    if (record.data.strColorRevMil === 'R'){
+                                                        value = 'resources/img/icon/16x16/circle_red.png';
+                                                    } else {
+                                                        value = 'resources/img/icon/16x16/circle_green.png';
+                                                    }
+                                                    
+                                                    return '<img src=' + '"' + value + '"' + '>';                                                 
+                                                }
+                                            },
+                                            {
+                                                text: 'Indic', dataIndex: 'strDescription3', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
                                             },
                                         ]
-                                    }
-                                },
-                            ]
+                                    },
+                                ]
+                            }
                         },
                     ]
-
-
                 },
             ]
         },

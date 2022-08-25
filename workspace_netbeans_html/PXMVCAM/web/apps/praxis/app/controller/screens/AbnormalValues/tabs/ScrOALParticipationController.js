@@ -12,25 +12,27 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrOALParticipatio
     drillDown: [],
     _path: '',
     // </editor-fold>
-    init: function(view) {
+    init: function (view) {
         meOAL = this;
         console.log('ScrOALParticipationController - initt');
         meOAL.drillDown.push(meOAL.boxActual);
         console.log(meOAL.drillDown);
     },
-    afterRender: function() {
+    afterRender: function () {
 
         console.log('ScrOALParticipationController - after');
 
     },
-    btnSearch_click: function(bean) {
+    btnSearch_click: function (bean) {
         console.log(' ScrOALParticipationController - btnSearch_click');
-
+        meOAL.drillDown = [];
+        this.showGrid('-boxMainDataOAL');
+        
         this.bean = bean;
         console.log(this.bean);
         this.btnSearchOALParticipation_click();
     },
-    btnSearchOALParticipation_click: function() {
+    btnSearchOALParticipation_click: function () {
 
         console.log(' ScrOALParticipationController - btnSearchOALParticipation_click');
 
@@ -42,7 +44,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrOALParticipatio
             timeout: 60000000,
             beforerequest: Ext.getBody().mask('Loading...'),
             params: {beanString: this.searchParams, dw_excel: false},
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getBody().unmask('Loading...');
                 console.log(response);
 
@@ -62,20 +64,13 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrOALParticipatio
 //        meOAL.dw_excel = false;
 
     },
-    setFormatParameter: function() {
+    setFormatParameter: function () {
 //        meOAL.bean = {};
         var beanString = JSON.stringify(meOAL.bean);
         this.searchParams = beanString;
 //        console.log(meOAL.bean);
     },
-    clickgridDetWeek_colHandler: function(column, e, row, column, x, rowData) {
-        this.beanDet = x.record.data;
-        this.showGrid('-boxWeek');
-
-        console.log(this.beanDet);
-        this.viewgridDetWeek_colHandler();
-    },
-    viewgridDetWeek_colHandler: function() {
+    viewgridDetWeek_colHandler: function () {
 
         win.lblUser_toolTip("Estructura: IMF121");
 
@@ -85,7 +80,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrOALParticipatio
             timeout: 60000000,
             beforerequest: Ext.getBody().mask('Loading...'),
             params: {beanString: JSON.stringify(meOAL.beanDet), dw_excel: false},
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getBody().unmask('Loading...');
                 console.log(response);
 
@@ -105,8 +100,8 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrOALParticipatio
             }
         });
     },
-    showGrid: function(nameGrid) {
-
+    showGrid: function (nameGrid) {
+        me.panelActual = nameGrid;
         Ext.getCmp(prototype.id + meOAL.boxActual).hide();
 
         meOAL.boxActual = nameGrid;
@@ -118,15 +113,79 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrOALParticipatio
 
 
     },
-    imgBack_clickHandler: function() {
+    imgBack_clickHandler: function () {
 
-        if (meOAL.drillDown.length > 0) {
-            Ext.getCmp(prototype.id + meOAL.boxActual).hide();
+        if (meOAL.drillDown.length > 1) {
+            Ext.getCmp(prototype.id + meOAL.boxActual).hide();            
             meOAL.drillDown.pop();
             meOAL.boxActual = meOAL.drillDown[meOAL.drillDown.length - 1];
             Ext.getCmp(prototype.id + meOAL.boxActual).show();
+            
+            if (meOAL.boxActual === '-boxMainDataOAL') {
+                meOAL.hidePagination_clickHandler();
+            }
         }
 //        console.log('imgBack_clickHandler == ' + meOAL.drillDown);
 
     },
+    clickDetTotalCoupons_colHandler: function (param, column, e, row, column, x, rowData) {        
+        this.showGrid('-boxDetailOAL');
+        this.showPagination_clickHandler();
+
+        rowData.data.IN_OPTION = param;
+        var beanString = JSON.stringify(rowData.data);
+        this.searchParams = beanString;
+        this.btnSearchDetailOAL();
+    },
+    btnSearchDetailOAL: function () {
+        console.log(' ScrOALParticipationController - btnSearchDetailOAL');
+
+        win.lblUser_toolTip("Estructura: IMF115");
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.FlightConciliation.GridData', {/*20 filas*/
+            proxy: {url: prototype.url + '/searchOALDetail'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxPrincipalOAL').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meOAL.searchParams, dw_excel: false};
+                },
+                load: function (obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + '-boxPrincipalOAL').unmask();
+
+                    if (obj.data.length > 0) {
+                        var Objtemp = obj.data.items[0].data;
+
+                        var pag = Ext.getCmp(prototype.id + '-pagginSrcDetailOAL');
+                        var pagData = pag.getPageData();
+//                        console.log(pagData);
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+
+                        //Ext.getCmp(prototype.id + '-titDetExchange').setText('Sales Date : ' + Objtemp.strFormatDate);
+
+
+                    } else {
+                        global.Msg({msg: 'Data not found'});
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetailOAL').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-pagginSrcDetailOAL').bindStore(storeGridDatas);
+
+//        meOAL.dw_excel = false;
+
+    },
+    showPagination_clickHandler: function () {
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        Ext.getCmp(prototype.id + '-lblPagination').show();
+    },
+    hidePagination_clickHandler: function () {
+        Ext.getCmp(prototype.id + '-boxPaginacion').hide();
+        Ext.getCmp(prototype.id + '-lblPagination').hide();
+    }
 });
