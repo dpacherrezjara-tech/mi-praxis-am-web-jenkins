@@ -226,7 +226,7 @@ Ext.define('Ext.Praxis.view.payments.InputsCatalogForm.Info', {
                                             },
                                             {text: 'Phase', dataIndex: 'descFASE', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
+                                                    metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
