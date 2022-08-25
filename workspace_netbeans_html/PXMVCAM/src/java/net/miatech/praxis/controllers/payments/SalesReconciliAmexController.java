@@ -7801,7 +7801,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br></p>";
         mensaje = mensaje + "\n" + "Atentamente.<br><br>";
         //mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#0C343D;font-size:11.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
         //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
         //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
         
@@ -8415,8 +8415,8 @@ public class SalesReconciliAmexController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        if (listaData.size() > 10) {
-            sizeList = 10;
+        if (listaData.size() > 20) {
+            sizeList = 20;
         } else {
             sizeList = listaData.size();
         }
@@ -8424,7 +8424,7 @@ public class SalesReconciliAmexController extends BaseController {
         for (int i = 0; i < sizeList; i++) {
             a = Functions.redondear(listaData.get(i).DIFF_PNETAMOU, 2);
             String diferencia = formatea.format(a);
-            diferencia = diferencia.replace("-", "");
+            //diferencia = diferencia.replace("-", "");
             mensaje = mensaje + "\n" + "<tr>    <td>" + listaData.get(i).DATE + "</td>    <td>" + listaData.get(i).AXPAYNBR + "</td>    <td>" + listaData.get(i).PMERCHID + "</td>    <td>" + listaData.get(i).ZONA + "</td>    <td>" + listaData.get(i).SCOUNTRY + "</td>    <td>" + listaData.get(i).PCURRENCY + "</td>    <td style=\"text-align:right\">" + diferencia + "</td>    </tr>";
         }
 
@@ -8434,7 +8434,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br>";
         mensaje = mensaje + "\n" + "Atentamente.<br><br>";
         //mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#0C343D;font-size:11.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
         //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
         //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
         mensaje = mensaje + "\n" + "</body>";

@@ -740,8 +740,10 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
-
-                    lstTkts.add(beanTkt);
+                    
+                    if (beanTkt.DIFF_PNETAMOU != 0){
+                        lstTkts.add(beanTkt);
+                    }                    
                 }
                 rst.close();
             }

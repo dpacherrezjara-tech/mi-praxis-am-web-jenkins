@@ -286,12 +286,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
-            data: [
+            data: [                
+                ["", "All"],
                 ["1", "Transact."],
                 ["2", "Chargeback"]
             ]
         }));
-        cmbRecType.setValue("1");
+        cmbRecType.setValue("");
 
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
          cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -585,7 +586,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
-                if ((Ext.getCmp(prototype.id + '-cmbZONAsett').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbRecType').getValue() !== '1')) {
+                if ((Ext.getCmp(prototype.id + '-cmbZONAsett').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbRecType').getValue() !== '')) {
                     this.filterSettlement();
                 } else {
                     this.setGridDataMainSettlement();
@@ -2397,7 +2398,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
 
         Ext.getCmp(prototype.id + '-cmbRecType').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbRecType').setValue('1');
+        Ext.getCmp(prototype.id + '-cmbRecType').setValue('');
         Ext.getCmp(prototype.id + '-cmbRecType').resumeEvents();
     },
     btnExcel_click: function (obj, e) {
