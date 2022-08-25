@@ -1696,6 +1696,7 @@ public class ProMasterTicketDAO {
                                                                                     objRtn.A1716SUBCU = rs16.getString("A4183SUBCU");
                                                                                     objRtn.A1716IDFIL = rs16.getString("A4183IDFIL");
                                                                                     objRtn.A1716TIDOC = rs16.getString("A4183TIDOC");
+                                                                                    objRtn.A1716TDOC = rs16.getString("A4183TDOC");
                                                                                     objRtn.A1716ORIG = rs16.getString("A4183ORIG");
                                                                                     objRtn.A1716FCONT = rs16.getString("A4183FCONT");
 

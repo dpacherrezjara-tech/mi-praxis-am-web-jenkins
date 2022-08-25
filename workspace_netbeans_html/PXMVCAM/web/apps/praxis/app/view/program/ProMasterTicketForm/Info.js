@@ -3047,7 +3047,12 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'F': rtn = 'FLWN'; break;
                                                     case 'C': rtn = 'COMM'; break;
                                                     case 'L': rtn = 'IPAY'; break;
-                                                    case 'A': rtn = 'PYMT'; break;
+                                                    case 'A': 
+                                                                if(data.A1716TDOC.trim() === 'R')
+                                                                    rtn = 'PYMR';
+                                                                else
+                                                                    rtn = 'PYMS';
+                                                                break;
                                                     case 'K': rtn = 'PYMT'; break;
                                                     case 'P': rtn = 'PLSG'; break;
                                                     case 'B': rtn = 'CBCK'; break;
