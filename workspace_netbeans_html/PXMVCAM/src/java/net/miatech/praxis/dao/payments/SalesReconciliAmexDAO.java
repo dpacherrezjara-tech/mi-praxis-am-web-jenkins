@@ -741,7 +741,7 @@ public class SalesReconciliAmexDAO {
                         beanTkt.desCERROR = "Difference";
                     }
                     
-                    if (beanTkt.DIFF_PNETAMOU > 0){
+                    if (beanTkt.DIFF_PNETAMOU != 0){
                         lstTkts.add(beanTkt);
                     }                    
                 }

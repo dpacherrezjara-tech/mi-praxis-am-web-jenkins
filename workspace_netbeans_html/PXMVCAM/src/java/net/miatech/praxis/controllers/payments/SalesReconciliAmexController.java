@@ -8415,8 +8415,8 @@ public class SalesReconciliAmexController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        if (listaData.size() > 10) {
-            sizeList = 10;
+        if (listaData.size() > 20) {
+            sizeList = 20;
         } else {
             sizeList = listaData.size();
         }
@@ -8424,7 +8424,7 @@ public class SalesReconciliAmexController extends BaseController {
         for (int i = 0; i < sizeList; i++) {
             a = Functions.redondear(listaData.get(i).DIFF_PNETAMOU, 2);
             String diferencia = formatea.format(a);
-            diferencia = diferencia.replace("-", "");
+            //diferencia = diferencia.replace("-", "");
             mensaje = mensaje + "\n" + "<tr>    <td>" + listaData.get(i).DATE + "</td>    <td>" + listaData.get(i).AXPAYNBR + "</td>    <td>" + listaData.get(i).PMERCHID + "</td>    <td>" + listaData.get(i).ZONA + "</td>    <td>" + listaData.get(i).SCOUNTRY + "</td>    <td>" + listaData.get(i).PCURRENCY + "</td>    <td style=\"text-align:right\">" + diferencia + "</td>    </tr>";
         }
 
