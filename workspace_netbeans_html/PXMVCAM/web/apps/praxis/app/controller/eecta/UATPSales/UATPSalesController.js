@@ -57,4 +57,5 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
             this.btnSearch_click();
         }
     }
+     // </editor-fold>
 });

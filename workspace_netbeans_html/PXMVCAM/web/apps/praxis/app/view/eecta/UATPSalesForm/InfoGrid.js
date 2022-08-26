@@ -56,27 +56,20 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Nbr Report', dataIndex: 'A3957NRRPT', width: 80, align: 'center'},
-                                    {text: 'Client Id', dataIndex: 'A3957CDCLI', align: 'center', width: 80},
-                                    {text: 'Client', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},                                    
-                                    {
-                                        text: 'Periodo',
-                                        columns: [
-                                            {text: 'Desde', dataIndex: 'A3957INIPR', width: 70, align: 'center'},
-                                            {text: 'Hasta', dataIndex: 'A3957FINPR', width: 70, align: 'center'}
-                                        ]
-                                    },
-                                    {text: 'Curr.', dataIndex: 'A3957MDLOC', width: 50, align: 'center'},
-                                    {text: 'Fare', dataIndex: 'A3957FARE', width: 90, align: 'right',
+                                    {text: 'Id File', dataIndex: 'A4264IDFIL', width: 120, align: 'center'},
+                                    {text: 'Invoice Code', dataIndex: 'A4264INVC', align: 'left', width: 120},
+                                    {text: 'Processing Date', dataIndex: 'A4264PRDA', align: 'left', width:120},
+                                    {text: 'File Name', dataIndex: 'A4264FLNM', width: 120, align: 'left',flex:1},
+                                    {text: 'Total Nbr. of Batches', dataIndex: 'A3957FARE', width: 155, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
+                                            return Ext.util.Format.number(value, '0,000');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
+                                            return Ext.util.Format.number(value, '0,000');
                                         }
                                     },
-                                    {text: 'IVA', dataIndex: 'A3957IVA', width: 70, align: 'right',
+                                    {text: 'Total Received', dataIndex: 'A4264TLINV', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000');
@@ -86,88 +79,49 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                         }
                                     },
                                     {
-                                        text: 'TUA', dataIndex: 'A3957TUA', width: 70, align: 'right',
-                                        summaryType: 'sum',
+                                        text: 'Status', dataIndex: 'A4264STREC', width: 120, align: 'left',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            if (record.get('IS_TOTAL'))
-                                                metaData.tdStyle = 'font-weight: bold;';
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            var grid = Ext.getCmp(prototype.id + '-gridData72');
-//                                            var store = grid.getStore();
-//                                            var val_AVG = 0.0;
-//                                            var val_NET = 0;
-//                                            var val_BN = 0;
-//                                            store.each(function (value, index) {
-//                                                //if ( Ext.String.trim(value.get('DESCRIPTION').toUpperCase()) != 'OVERCHARGE' ){
-//                                                val_NET += parseFloat(value.get('NET'));
-//                                                val_BN += parseFloat(value.get('BN'));
-//                                                //}
-//                                            });
-//                                            //console.log('val_NET', val_NET);
-//                                            //console.log('val_BN', val_BN);                                    
-//                                            if (val_BN > 0)
-//                                                val_AVG = parseFloat(val_NET / val_BN);
-                                            return Ext.util.Format.number(val_AVG, '0,000.00');
-
-                                        }
-                                    },
-                                    {
-                                        text: 'YR', dataIndex: 'A3957YR', width: 70, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        text: 'Other', dataIndex: 'A3957OTR', width: 90, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        text: 'Total', dataIndex: 'A3957TOT', width: 90, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        xtype: 'actioncolumn',
-                                        sortable: false,
-                                        width: 40,
-                                        align: 'center',
-                                        items: [
-//                                            {
-//                                                iconCls: 'prx-icon-detail',
-//                                                tooltip: 'Click for view detail',
-//                                                handler: 'onDetailClick',
-//                                                isDisabled: 'onDetailIsDisabled'
-//                                            },
-                                            {
-                                                iconCls: 'prx-icon-pdf',
-                                                tooltip: 'Report for PDF',
-                                                handler: 'onReportVentaUATP_PDF'
-                                                //isDisabled: 'onDetailIsDisabled'
+                                            switch (value) {
+                                                case '0':
+                                                    return 'OK';
+                                                    break;
+                                                case '1':
+                                                    return 'With Errors';
+                                                    break;
+                                                default:
+                                                    return 'Error';
+                                                    break;
                                             }
-                                        ]
-                                    }
+                                        }
+                                    },
+                                    {
+                                        text: 'St. Formateo', dataIndex: 'A4264STCAR', width: 120, align: 'left',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            switch (value) {
+                                                case 'P':
+                                                    return 'Pending';
+                                                    break;
+                                                case '1':
+                                                    return 'Loaded OK';
+                                                    break;
+                                                case '1':
+                                                    return 'With Errors';
+                                                    break;
+                                                case '1':
+                                                    return 'Without Sales';
+                                                    break;
+                                                default:
+                                                    return 'Error';
+                                                    break;
+                                            }
+                                        }
+                                    },
                                 ],
                                 defaults: {
                                     sortable: false,
                                     menuDisabled: true,
-                                    align: 'center'
+                                    align: 'center',
+                                    padding:'8px'
                                 }
                             },
                             viewConfig: {

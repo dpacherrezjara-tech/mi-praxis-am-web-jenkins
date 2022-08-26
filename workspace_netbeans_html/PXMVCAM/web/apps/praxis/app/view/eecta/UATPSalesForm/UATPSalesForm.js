@@ -9,8 +9,8 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
     requires: [
         'Ext.Praxis.controller.eecta.UATPSales.UATPSalesController',
         'Ext.Praxis.view.eecta.UATPSalesForm.Options',
-        'Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid'
-        //'Ext.Praxis.view.eecta.SalesListForm.Filters'
+        'Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid',
+        'Ext.Praxis.view.eecta.UATPSalesForm.Filters'
     ],
     controller: 'UATPSalesController',
     id: prototype.id + '-ContenedorMain',  
@@ -61,12 +61,13 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
                                             xtype: prototype.id + '-options'                                            
                                         },
                                         {
-                                            //xtype: prototype.id + '-filters',
+                                            xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter'
                                         },
                                         {
                                             xtype: 'panel',
-                                            id: prototype.id + '-panel-contenedor-grid',                                            
+                                            id: prototype.id + '-panel-contenedor-grid',
+                                            title:'Load File delivery UATP',
                                             height: 550,                                            
                                             layout: 'fit',
                                             items: [
