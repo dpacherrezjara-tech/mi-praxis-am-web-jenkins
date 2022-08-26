@@ -88,7 +88,7 @@ Ext.define('Ext.Praxis.view.payments.EmailsForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Source', dataIndex: 'FTE', width: 100,
+                                            {text: 'Input', dataIndex: 'FTE', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:center;';
                                                     return  value;

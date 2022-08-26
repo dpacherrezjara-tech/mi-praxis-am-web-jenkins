@@ -317,11 +317,8 @@ Ext.define('Ext.Praxis.controller.payments.InputsCatalog.InputsCatalogController
     exportExcel: function () {
 
         switch (me.panelActual) {
-            case  '-boxMainAll':
+            case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
-                break;
-            case  '-boxDelivery':
-                global.getFile(prototype.url + '/getXLSX_Delivery?beanString=' + me.paramsDetail.beanString);
                 break;
         }
 
