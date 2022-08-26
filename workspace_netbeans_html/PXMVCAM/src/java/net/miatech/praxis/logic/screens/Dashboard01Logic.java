@@ -230,6 +230,10 @@ public class Dashboard01Logic {
     public List<A1971Filter> loadPX246SQP00334(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00334(filter);
     }
+    
+    public List<A1971Filter> loadPX246SQP04618(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX246SQP04618(filter);
+    }
 
     public List<A1971Filter> loadPX246SQP00333(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00333(filter);
