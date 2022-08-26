@@ -67,7 +67,6 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',
-                                            title:'Load File delivery UATP',
                                             height: 550,                                            
                                             layout: 'fit',
                                             items: [

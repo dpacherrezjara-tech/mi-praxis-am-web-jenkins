@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.store.eecta.UATPSales.GridData', {
     proxy: {
         type: 'ajax',
         actionMethods: {
-            read: 'POST'
+            read: 'GET'
         },
         timeout: 60000000,
         reader: {

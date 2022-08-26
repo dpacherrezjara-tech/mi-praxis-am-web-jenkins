@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                     {text: 'Invoice Code', dataIndex: 'A4264INVC', align: 'left', width: 120},
                                     {text: 'Processing Date', dataIndex: 'A4264PRDA', align: 'left', width:120},
                                     {text: 'File Name', dataIndex: 'A4264FLNM', width: 120, align: 'left',flex:1},
-                                    {text: 'Total Nbr. of Batches', dataIndex: 'A3957FARE', width: 155, align: 'left',
+                                    {text: 'Total Nbr. of Batches', dataIndex: 'A4264TTRNC', width: 155, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000');
@@ -69,7 +69,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000');
                                         }
                                     },
-                                    {text: 'Total Received', dataIndex: 'A4264TLINV', width: 120, align: 'left',
+                                    {text: 'Total Received', dataIndex: 'A4264TLINVC', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000');
@@ -101,13 +101,13 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                                 case 'P':
                                                     return 'Pending';
                                                     break;
-                                                case '1':
+                                                case '0':
                                                     return 'Loaded OK';
                                                     break;
                                                 case '1':
                                                     return 'With Errors';
                                                     break;
-                                                case '1':
+                                                case '2':
                                                     return 'Without Sales';
                                                     break;
                                                 default:

@@ -78,7 +78,7 @@ public class UATPSalesDAO {
     public List<SQP04628Filter> getSQP0A4628Filter(SQP04628Filter filter)throws SQLException,Exception{
         List<SQP04628Filter> response = new ArrayList<>();
         CallableStatement cstmt = null;
-        String SQL = "{CALL PXUATP.SQP04628(?,?,?)}";
+        String SQL = "{CALL PXUATP.SQP04628(?,?,?,?,?,?,?)}";
         Connection cnx = null;
         ResultSet rs = null;
         try {
@@ -96,6 +96,10 @@ public class UATPSalesDAO {
             cstmt.setInt(6, filter.getPagination().TOTPAG);
             cstmt.setInt(7, filter.getPagination().TOTROW);
             cstmt.execute();
+            filter.getPagination().PAGNUM = cstmt.getInt(4);
+            filter.getPagination().PAGROW = cstmt.getInt(5);
+            filter.getPagination().TOTPAG = cstmt.getInt(6);
+            filter.getPagination().TOTROW = cstmt.getInt(7);
             rs = cstmt.getResultSet();
             while (rs.next()) {                
                 SQP04628Filter obj = new SQP04628Filter();

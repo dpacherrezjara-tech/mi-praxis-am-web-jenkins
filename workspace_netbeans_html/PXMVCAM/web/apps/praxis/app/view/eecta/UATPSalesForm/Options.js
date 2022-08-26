@@ -9,10 +9,10 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.Options', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id+'-boxPaginacion',
-            hidden: false,
-            width: 100,            
-            border: false,                        
+            id: prototype.id + '-boxPaginacion',
+            hidden: true,
+            width: 100,
+            border: false,
             items: [
                 {
                     xtype: 'toolbar',
@@ -56,11 +56,11 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',                            
+                            id: prototype.id + '-paggin',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
-                            hidden:true
+                            hidden: true
                         }
                     ]
                 }
@@ -85,7 +85,17 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnAdd',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New',
+                            listeners: {
+                                click: 'btnAdd_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnFilter',
+                            hidden: true,
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
@@ -97,7 +107,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.Options', {
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
-                            hidden:true,
+                            hidden: true,
                             listeners: {
                                 click: 'btnExcel_click'
                             }
