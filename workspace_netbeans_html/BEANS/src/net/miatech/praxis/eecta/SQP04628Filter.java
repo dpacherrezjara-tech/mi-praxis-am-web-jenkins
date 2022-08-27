@@ -15,7 +15,7 @@ public class SQP04628Filter extends A4264{
     private String IN_FROMDATE;
     private String IN_TODATE;
     private String IN_IDFILE;
-    private Pagination pagination;
+    private Pagination pagination = new Pagination();
 
     public String getIN_FROMDATE() {
         return IN_FROMDATE;

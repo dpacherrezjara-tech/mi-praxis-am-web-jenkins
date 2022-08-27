@@ -75,10 +75,9 @@ public class UATPSalesController extends BaseController{
     
     @RequestMapping(value = "/getA4264")
     public @ResponseBody String getA4264Data(ModelMap map, HttpServletRequest request){
-        System.out.println("Ingresando a controlador A4264");
         List<SQP04628Filter> listObj = new ArrayList<>();
         SQP04628Filter filter = new SQP04628Filter();
-        filter.getPagination().TOTROWS = -1;
+        filter.getPagination().TOTROW = -1;
         filter.getPagination().START =0;
         filter.getPagination().LIMIT = 0;
         try {
@@ -96,11 +95,9 @@ public class UATPSalesController extends BaseController{
             map.put("total", !listObj.isEmpty() ? listObj.get(0).getPagination().TOTROW : 0);            
             map.put("data", listObj);
         } catch (Exception ex) {
-            System.out.println("Error al recibir archivo");
             map.put("success", false);
             map.put("sesion", ex.getMessage());
         }
-        System.out.println(new Gson().toJson(map));
         return new Gson().toJson(map);
     }
 }

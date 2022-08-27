@@ -14,7 +14,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
-import static net.miatech.praxis.dao.eecta.RegistroVentaOALDAO.pasarGarbageCollector;
 import net.miatech.praxis.eecta.SQP04627Filter;
 import net.miatech.praxis.eecta.SQP04628Filter;
 import org.apache.log4j.Logger;
