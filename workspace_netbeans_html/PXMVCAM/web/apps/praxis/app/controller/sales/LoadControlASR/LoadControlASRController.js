@@ -109,14 +109,14 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e, a) {
-        if (obj.id != 'undefined') {
+        if (obj.id !== 'undefined') {
             switch (obj.id) {
                 case prototype.id+'-btnSearch': obj = 'BWR'; break;
                 case prototype.id+'-btnSearch2': obj = 'ERR'; break;
             }
         }
         var tipo_fil = this.getValue("cbxFiltro");
-        if(obj=='BWR'){
+        if(obj==='BWR'){
             this.bean.IN_A1698CCUST = '139';
             this.bean.IN_A1698PAIS = '';  // IATA PAISES
             this.bean.IN_A1698BANK  = ''; //BANCO (EWL, IAP, IAR) CIUDAD(BSP) , REF. TBLE: Miscelanea
@@ -125,28 +125,28 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
             this.bean.IN_A1698HFILE = '';
             this.bean.IN_A1698FREGI = '';
             this.bean.IN_A1698SOURC = 'ASR';
-            if ( tipo_fil == '2' ) {
+            if ( tipo_fil === '2' ) {
                 this.bean.IN_A1698FPRDA = Ext.util.Format.date(this.getValue("txtA1698FPRDA"), 'Ymd');
-                if (this.bean.IN_A1698FPRDA == ''){
+                if (this.bean.IN_A1698FPRDA === ''){
                     global.Msg({ msg: 'Required Field, Processing Date' });
                     this.focus('txtA1698FPRDA');
                     return;
                 }else{
-                    this.search(this.bean);
+                    this.search(this.bean,e);
                 }
-            }else if ( tipo_fil == '1' ){
+            }else if ( tipo_fil === '1' ){
                 this.bean.IN_A1698FREGI = Ext.util.Format.date(this.getValue("txtA1698FCARG"), 'Ymd');
-                if (this.bean.IN_A1698FREGI == ''){
+                if (this.bean.IN_A1698FREGI === ''){
                     global.Msg({ msg: 'Required Field, Processing Date' });
                     this.focus('txtA1698FPRDA');
                     return;
                 }else{
-                    this.search(this.bean);
+                    this.search(this.bean,e);
                 }
             }
-        } else if(obj=='LOAD'){
+        } else if(obj==='LOAD'){
             this.loadASR(this.beanASR);
-        } else if(obj=='ERR'){
+        } else if(obj==='ERR'){
             this.beanError.IN_A1697CCUST = '139';
             this.beanError.IN_A1697PAIS = '';
             this.beanError.IN_A1697BANK  = '';
@@ -155,30 +155,30 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
             this.beanError.IN_A1697HFILE = '';
             this.beanError.IN_A1697FREGI = '';
             this.beanError.IN_A1697SOURC = 'ASR';
-            if ( tipo_fil == '2' ) {
+            if ( tipo_fil === '2' ) {
                 this.beanError.IN_A1697FPRDA = this.getValue("txtA1698FPRDA");
                 
-                if (this.getValue("txtA1698FPRDA") == ''){
+                if (this.getValue("txtA1698FPRDA") === ''){
                     global.Msg({ msg: 'Required Field, Processing Date' });
                     this.focus('txtA1698FPRDA');
                     return;
                 }else{
-                    this.loadError(this.beanError);
+                    this.loadError(this.beanError,e);
                 }
-            }else if ( tipo_fil == '1' ){
+            }else if ( tipo_fil === '1' ){
                 this.beanError.IN_A1697FREGI = Ext.util.Format.date(this.getValue("txtA1698FCARG"), 'Ymd');
-                if (this.beanError.IN_A1697FREGI == ''){
+                if (this.beanError.IN_A1697FREGI === ''){
                     global.Msg({ msg: 'Required Field, Processing Date' });
                     this.focus('txtA1698FPRDA');
                     return;
                 }else{
-                    this.loadError(this.beanError);
+                    this.loadError(this.beanError,e);
                 }
             }
-        }else if(obj=='ERR_FORMAT'){
+        }else if(obj==='ERR_FORMAT'){
             this.beanErrorFormat.IN_IDFIL = ('000000000'+this.getValue("txtIDFile"));
             this.beanErrorFormat.IN_IDFIL = this.beanErrorFormat.IN_IDFIL.substr(this.beanErrorFormat.IN_IDFIL.length - 9);
-            this.searchIdFile(this.beanErrorFormat);
+            this.searchIdFile(this.beanErrorFormat,e);
 	}
     },
     btnFilter_click: function() {
@@ -199,7 +199,11 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
     // </editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="search">
-    search: function(bean) {
+    search: function(bean, opt) {
+        if (opt === 'XLS') {
+            this.exportExcel('/getXLSX?beanString=' + encodeURI(JSON.stringify(bean)));
+            return;
+        }
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.LoadControlASR.GridData', {
             proxy: {
                 url: prototype.url+'/search'
@@ -232,6 +236,21 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
         });
         Ext.getCmp(prototype.id+'-gridControlLoadRep').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id+'-paggin3').bindStore(storeGridDatas);
+    },
+    exportExcel: function(_path) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    global.getFile(prototype.url + _path);
+                }
+            }
+        });
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="loadASR">
@@ -281,7 +300,11 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="loadError">
-    loadError: function(beanError) {
+    loadError: function(beanError, opt) {
+        if (opt === 'XLS') {
+            this.exportExcel('/getXLSX_err?beanString=' + encodeURI(JSON.stringify(beanError)));
+            return;
+        }
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.LoadControlASR.GridDataError', {
             proxy: {
                 url: prototype.url+'/loadError'
@@ -317,7 +340,11 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchIdFile">
-    searchIdFile: function(beanErrorFormat) {
+    searchIdFile: function(beanErrorFormat, opt) {
+        if (opt === 'XLS') {
+            this.exportExcel('/getXLSX_err_format?beanString=' + encodeURI(JSON.stringify(beanErrorFormat)));
+            return;
+        }
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.LoadControlASR.GridDataIdFile', {
             proxy: {
                 url: prototype.url+'/searchIdFile'
@@ -498,6 +525,21 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
         if ( e.getKey() === e.ENTER ){
             this.btnSearch_click();
         }
-    }
+    },
     // </editor-fold>
+    
+    btnExcel_click: function() {
+        var selectedIndex = this.getIndexTabSelected();
+        switch (selectedIndex) {
+            case 0:
+                this.btnSearch_click('BWR', 'XLS');
+                break;
+            case 2:
+                this.btnSearch_click('ERR', 'XLS');
+                break;
+            case 3:
+                this.btnSearch_click('ERR_FORMAT', 'XLS');
+                break;
+        }
+    }
 });

@@ -69,6 +69,15 @@ Ext.define('Ext.Praxis.view.flown.MultilegReportForm.Info', {
                                         }
                                     },
                                     {
+                                        text: 'Update', dataIndex: '', width: 55,id:prototype.id + '-col-update',
+                                        listeners: {
+                                            click: 'onUpdateCarrierA1897'
+                                        },
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            return '<img src="resources/img/botones/refresh.png">';
+                                        }
+                                    },
+                                    {
                                         text: 'Flight',
                                         defaults: {
                                             menuDisabled: true,

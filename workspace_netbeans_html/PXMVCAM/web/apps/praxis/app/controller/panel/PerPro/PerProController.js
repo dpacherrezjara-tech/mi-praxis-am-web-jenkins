@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         prototype.id = 'PerProForm';
         prototype.url = CONTEXTPATH+'/PerPro';
         prototype.widthContenedor = 1300;
-        prototype.widthGrid = 863;
+        prototype.widthGrid = 1200;
         // </editor-fold>
         this.control({
         });
@@ -19,43 +19,10 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     afterRender: function () {
         this.setStoreData();
         this.btnClear_click();
-        this.btnSearch_click();
+//        this.btnSearch_click();
     },
     onMostrarFiltrosChange: function(cmp, newValue, oldValue, eOpts) {
-        //this.limpiarFiltros();
         
-        var strModulo = this.getValue('cboModulo');
-        
-        switch (strModulo) {
-            case 'PSALES':
-            case 'PADM':
-            case 'PFOB':
-            case 'PCONSORTIA':
-            case 'PPSALES':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PFLOWN':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PAPINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-            case 'PARINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;            
-            case 'PADJMA':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-        }
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     setStoreData: function() {
@@ -75,9 +42,8 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     onEditClick: function(grid, rowIndex, colIndex) {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        console.log(rec);
-        if(rec.data.A1955MODUL!=='PADM')
-            this.winDataEntry('U', rec);
+        console.log(rec);        
+        this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -97,8 +63,16 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
-            this.setFormatParameter();
-            this.setGridData();
+        var option = Ext.getCmp(prototype.id+'-codigo-option').getValue();
+        if (option==='') {
+            this.msjAlert='Enter data';
+            global.Msg({
+                msg: this.msjAlert
+            });
+            return false;
+        }
+        this.setFormatParameter();
+        this.setGridData();
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id+'-boxSearchFilter');
@@ -170,7 +144,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.panel.PerProForm.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.panel.PerPro.GridData', {
             proxy: {
                 url: prototype.url+'/search'
             },
@@ -215,6 +189,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         Ext.getCmp(prototype.id+'-cboGroup').setValue('1');
         Ext.getCmp(prototype.id+'-codigo-option').setValue('');        
         // </editor-fold>        
+      
     },
 
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
@@ -242,13 +217,13 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function(id) {
-        //return Ext.getCmp(prototype.id+'-'+id).getValue();
+        return Ext.getCmp(prototype.id+'-'+id).getValue();
     },
     focus: function(id) {
         Ext.getCmp(prototype.id+'-'+id).focus();
     },
     setValue: function(id, txt) {
-        //return Ext.getCmp(prototype.id+'-'+id).setValue(txt);
+        return Ext.getCmp(prototype.id+'-'+id).setValue(txt);
     },
     onUpperValue: function(field, newValue, oldValue){
         field.setValue(newValue.toUpperCase());

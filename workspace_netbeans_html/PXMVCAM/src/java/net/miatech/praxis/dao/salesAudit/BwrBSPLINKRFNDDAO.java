@@ -27,6 +27,7 @@ import net.miatech.praxis.classes.ProMail;
 import net.miatech.utils.TimeFormatToday;
 import net.miatech.utils.WorkStation;
 import net.miatech.utils.Functions;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,30 +35,30 @@ import org.apache.log4j.Logger;
  * @author lremicio
  */
 public class BwrBSPLINKRFNDDAO {
-    
+
     private IServerSession session;
     private static final Logger logError = Logger.getLogger("errorLog");
     private TimeFormatToday today = new TimeFormatToday();
     private WorkStation workStation = WorkStation.getInstance();
-    
-    public BwrBSPLINKRFNDDAO(){
-        
+
+    public BwrBSPLINKRFNDDAO() {
+
     }
-    
+
     public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();
         System.gc();
     }
-    
+
     public BwrBSPLINKRFNDDAO(IServerSession ss) {
         session = ss;
     }
-    
+
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A3389Filter> SearchReportQueryRFND(A3389Filter filter) throws SQLException, Exception {
         List<A3389Filter> lstRtn = new ArrayList<A3389Filter>(0);
         A3389Filter objRtn;
@@ -141,7 +142,14 @@ public class BwrBSPLINKRFNDDAO {
                 objRtn.A3389MDA = rs01.getString("A3389MDA");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
                 objRtn.A3389PAX = rs01.getString("A3389PAX");
-                objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                if (objRtn.A3389PAIS.equals("CN")) {
+                    objRtn.A3389RAAG = StringEscapeUtils.escapeJava(rs01.getString("A3389RACN"));
+                    objRtn.A3389RACN = rs01.getString("A3389RACN");
+                } else {
+                    objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                    objRtn.A3389RACN = rs01.getString("A3389RAAG");
+                }
+                //objRtn.A3389RAAG = rs01.getString("A3389RAAG");
                 objRtn.A3389REGAS = rs01.getString("A3389REGAS");
                 objRtn.A3389FLAG = rs01.getString("A3389FLAG");
                 objRtn.A3389STATO = rs01.getString("A3389STATO");
@@ -154,7 +162,12 @@ public class BwrBSPLINKRFNDDAO {
                 objRtn.A3389HAUTO = rs01.getString("A3389HAUTO");
                 objRtn.A3389PGNA = rs01.getString("A3389PGNA");
                 objRtn.A3389TKTDUPLI2 = rs01.getString("A3389TKTDUPLIS");
-                
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
+
+                objRtn.A3389FREJE = rs01.getString("A3389FREJE");
+                objRtn.A3389HRERR = rs01.getString("A3389HRERR");
+                objRtn.A3389TARIA = rs01.getDouble("A3389TARIA");
+                objRtn.A3389FRERR = rs01.getString("A3389FRERR");
 
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -190,7 +203,7 @@ public class BwrBSPLINKRFNDDAO {
         }
         return lstRtn;
     }
-    
+
     public A3389Filter SearchQueryRFNDetail(A3389Filter filter) throws SQLException, Exception {
         A3389Filter lstGeneral = null;
         List<A3402> lst_TAXES = new ArrayList<A3402>(0);
@@ -240,12 +253,12 @@ public class BwrBSPLINKRFNDDAO {
             rs01 = cstmt01.getResultSet();
             ///VALIDACION DE TARJETAS
             while (rs01.next()) {
-             objlst_TAXES = new A3402();
-             objlst_TAXES.A3402CDTAX = rs01.getString("AGEN");
-             objlst_TAXES.A3402CDATO = rs01.getString("AERO");
-             objlst_TAXES.A3402CORRL= rs01.getString("EXITE");
-             lst_TAXES.add(objlst_TAXES);
-             }
+                objlst_TAXES = new A3402();
+                objlst_TAXES.A3402CDTAX = rs01.getString("AGEN");
+                objlst_TAXES.A3402CDATO = rs01.getString("AERO");
+                objlst_TAXES.A3402CORRL = rs01.getString("EXITE");
+                lst_TAXES.add(objlst_TAXES);
+            }
             ////LIST DOCUMENTS
             if (cstmt01.getMoreResults()) {
                 rs02 = cstmt01.getResultSet();
@@ -315,7 +328,7 @@ public class BwrBSPLINKRFNDDAO {
                 }
             }
             //lst_TAXES AGNT
-            
+
             //LIST DOCUMENTS
             if (cstmt01.getMoreResults()) {
                 rs06 = cstmt01.getResultSet();
@@ -404,7 +417,7 @@ public class BwrBSPLINKRFNDDAO {
         }
         return lstGeneral;
     }
-    
+
     public List<A3404Filter> SearchRFNDRazon(A3404Filter filter) throws SQLException, Exception {
         List<A3404Filter> lstRtn = new ArrayList<A3404Filter>(0);
         A3404Filter objRtn;
@@ -461,7 +474,7 @@ public class BwrBSPLINKRFNDDAO {
         }
         return lstRtn;
     }
-    
+
     public String ProcesaManualRFND(A3389Filter beanGuardarA3389, ArrayList<A3404Filter> gridDataRazones) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -475,24 +488,24 @@ public class BwrBSPLINKRFNDDAO {
             String SQLCLL01 = "{CALL PXSAUDIT.SQP02515(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             //if (beanGuardarA3389.IN_STATUS.equals("R")) {
-                for (A3404Filter obj : gridDataRazones) {
+            for (A3404Filter obj : gridDataRazones) {
 
-                    cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
-                    cs.setString("IN_PREME", beanGuardarA3389.IN_PREME);
-                    cs.setString("IN_STATUS", beanGuardarA3389.IN_STATUS);
-                    cs.setString("IN_CODRZ", obj.A3404CODRZ);
-                    cs.setString("IN_ERROR", obj.A3404ERROR);
-                    cs.setString("IN_FAMIL", obj.A3404FAMIL);
-                    cs.setString("IN_ARCHV1", "");
-                    cs.setString("IN_ARCHV2", "");
-                    cs.setString("IN_ARCHV3", "");
-                    cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
-                    cs.setString("IN_FREGI", Functions.getFechaActual());
-                    cs.setString("IN_HREGI", Functions.getHoraActual());
-                    cs.setString("IN_VALIDA", valida);
-                    cs.execute();
-                    valida = "N";
-                }
+                cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+                cs.setString("IN_PREME", beanGuardarA3389.IN_PREME);
+                cs.setString("IN_STATUS", beanGuardarA3389.IN_STATUS);
+                cs.setString("IN_CODRZ", obj.A3404CODRZ);
+                cs.setString("IN_ERROR", obj.A3404ERROR);
+                cs.setString("IN_FAMIL", obj.A3404FAMIL);
+                cs.setString("IN_ARCHV1", "");
+                cs.setString("IN_ARCHV2", "");
+                cs.setString("IN_ARCHV3", "");
+                cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
+                cs.setString("IN_FREGI", Functions.getFechaActual());
+                cs.setString("IN_HREGI", Functions.getHoraActual());
+                cs.setString("IN_VALIDA", valida);
+                cs.execute();
+                valida = "N";
+            }
 
             rst = cs.getResultSet();
 
@@ -502,10 +515,10 @@ public class BwrBSPLINKRFNDDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -513,7 +526,7 @@ public class BwrBSPLINKRFNDDAO {
 
         return STR_RESULT;
     }
-    
+
     public List<A3389Filter> ReportRFNDEMAIL() throws SQLException, Exception {
         List<A3389Filter> lstRtn = new ArrayList<A3389Filter>(0);
         A3389Filter objRtn;
@@ -622,7 +635,7 @@ public class BwrBSPLINKRFNDDAO {
         }
         return lstRtn;
     }
-    
+
     public boolean SendMail(List<A3389Filter> ListData) {
         boolean iboolean = false;
 
@@ -704,7 +717,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_DESCRICABE + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
         if (VL_ING_XGUTIERREZ.equals("1")) {
             strMails = "jgutierrezm@aeromexico.com";
@@ -722,7 +735,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XGUTIERREZ + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
 
         if (VL_ING_XTERESAA.equals("1")) {
@@ -741,7 +754,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XTERESAA + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
 
         if (VL_ING_XNANCYM.equals("1")) {
@@ -760,7 +773,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XNANCYM + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
         if (VL_ING_XHAYDEEA.equals("1")) {
             strMails = "harenas@aeromexico.com";
@@ -778,7 +791,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XHAYDEEA + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
         if (VL_ING_XCARRIAGA.equals("1")) {
             strMails = "cmarriaga@aeromexico.com";
@@ -796,7 +809,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XCARRIAGA + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
         if (VL_ING_XEULALIAB.equals("1")) {
             strMails = "ebautista@aeromexico.com";
@@ -814,7 +827,7 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XEULALIAB + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
 
         if (VL_ING_XYISSELH.equals("1")) {
@@ -833,12 +846,12 @@ public class BwrBSPLINKRFNDDAO {
                     + VL_CORRE_XYISSELH + "</b><br><br>"
                     + "" + " <b>Gerencia de Control de RFND - Grupo Aeromexico</b></p>";
             String mensaje = VL_MENSAJE;//Data.Mensaje;
-            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net",session);
+            iboolean = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", session);
         }
 
         return iboolean;
     }
-    
+
     public List<A3402Filter> searchLstTax(A3402Filter filter) throws SQLException, Exception {
         List<A3402Filter> lstRtn = new ArrayList<A3402Filter>(0);
         A3402Filter objRtn;
@@ -901,7 +914,5 @@ public class BwrBSPLINKRFNDDAO {
         }
         return lstRtn;
     }
-    
-    
-    
+
 }

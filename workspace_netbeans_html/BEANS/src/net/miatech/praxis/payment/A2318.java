@@ -27,6 +27,7 @@ public class A2318 {
     public String OTHERSEQ = "";
     public double SVFOP = 0.0;
     public double SVFOPC = 0.0;
+    public double SVFOPB = 0.0;
     public double AMTCOM = 0.0;
     public double AMTCOMC = 0.0;
     public double AMTIVA = 0.0;

@@ -677,7 +677,7 @@ public class InputsDAO {
                 objRtn.strFormatDate2 = filter.strFormatDate2;
                 objRtn.FECHA = rs01.getString("FECRFILE");
                 objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.FECHA);
-                objRtn.strFormatDate4 = rs01.getString("NLOT");
+//                objRtn.strFormatDate4 = rs01.getString("NLOT");
                 objRtn.FUENTE = rs01.getString("FUENTE");
                 objRtn.PPROGRAM = rs01.getString("PPROGRAM");
                 objRtn.MENSA = rs01.getString("MENSA").trim();

@@ -90,6 +90,17 @@ public class OwnerlessCouponDAO {
 
             while (rst.next()) {
                 beanTkt = new A1413Filter();
+                beanTkt.A1413STCRU = rst.getString("A1413STCRU").trim();
+
+                if (beanTkt.A1413STCRU.equals("")) {
+                    beanTkt.A1413STCRU = "Pending";
+                } else if (beanTkt.A1413STCRU.equals("F")) {
+                    beanTkt.A1413STCRU = "Extraido al Flown";
+                } else if (beanTkt.A1413STCRU.equals("D")) {
+                    beanTkt.A1413STCRU = "Duplicate";
+                } else if (beanTkt.A1413STCRU.equals("C")) {
+                    beanTkt.A1413STCRU = "Cancelled";
+                }
 
                 beanTkt.A1413CIA = rst.getString("A1413CIA");
                 beanTkt.A1413FORSE = rst.getString("A1413FORSE");
@@ -104,6 +115,7 @@ public class OwnerlessCouponDAO {
                 beanTkt.strDescripcion = Functions.getMonthConvert(beanTkt.A1413FREGI);//Fecha de Ingreso
 
                 beanTkt.A1413FROM = rst.getString("A1413FROM");
+                beanTkt.FFLOWN = rst.getString("FFLOWN");
                 beanTkt.A1413TO = rst.getString("A1413TO");
                 beanTkt.strFROM = rst.getString("DES_ORIG");
                 beanTkt.strTO = rst.getString("DES_DEST");
@@ -315,6 +327,125 @@ public class OwnerlessCouponDAO {
         return lstCarr;
     }
 
+    public List<A1691Filter> loadPX235SQP04158(A1691Filter filter, HashMap<String, String> hmAeropuertos) throws SQLException, Exception {
+
+        List<A1691Filter> lstCarr = new ArrayList<>(0);
+        A1691Filter beanCarr;
+
+        HashMap<String, String> hmDescEstados_A1691 = new HashMap<String, String>();
+        hmDescEstados_A1691.put("5", "Cancelled");
+
+        HashMap<String, String> hmDescEstados_A3778 = new HashMap<String, String>();
+        hmDescEstados_A3778.put("1", "");
+
+        long PAXTOTAL = 0;
+
+        CallableStatement cstmt = null;
+
+        try {
+
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04158(?,?,?,?,?,?,?,?)}";
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_NFLIGHT);
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+
+            rst = cstmt.getResultSet();
+            
+            while (rst.next()) {
+                PAXTOTAL = rst.getLong("PAXTOTAL");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                beanCarr = new A1691Filter();
+
+                beanCarr.DFLIGHT = Functions.getMonthConvert(rst.getString("DFLIGHT").trim());
+                beanCarr.NFLIGHT = rst.getString("NFLIGHT").trim();
+
+                beanCarr.CDEPART = rst.getString("CDEPART").trim();
+                if (hmAeropuertos.containsKey(rst.getString("CDEPART").trim().toUpperCase())) {
+                    beanCarr.strDescCDEPART = hmAeropuertos.get(rst.getString("CDEPART").trim()).toString();
+                }
+                beanCarr.CARRIVA = rst.getString("CARRIVA").trim();
+                if (hmAeropuertos.containsKey(rst.getString("CARRIVA").trim().toUpperCase())) {
+                    beanCarr.strDescCARRIVA = hmAeropuertos.get(rst.getString("CARRIVA").trim()).toString();
+                }
+
+                //beanCarr.STVAL = rst.getString("STVAL").trim();
+                if (hmDescEstados_A1691.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
+                    beanCarr.STVAL = hmDescEstados_A1691.get(rst.getString("STVAL").trim()).toString();
+                } else {
+                    beanCarr.STVAL = rst.getString("STVAL").trim();
+                }
+
+                beanCarr.A3778STVAL = rst.getString("A3778STVAL").trim();
+                beanCarr.A3778USCR = rst.getString("A3778USCR").trim();
+                beanCarr.A3778FECR = Functions.getMonthConvert(rst.getString("A3778FECR").trim());
+                beanCarr.A3778HOCR = Functions.ConvertedTime(rst.getString("A3778HOCR").trim());
+                beanCarr.PAXTOTAL = rst.getLong("PAXTOTAL");
+                beanCarr.A1688USCR = rst.getString("A1688USCR").trim();
+                beanCarr.A1688FECR = Functions.getMonthConvert(rst.getString("A1688FECR").trim());
+                beanCarr.A1688HOCR = Functions.ConvertedTime(rst.getString("A1688HOCR").trim());
+
+                beanCarr.page.PAGNUM = filter.page.PAGNUM;
+                beanCarr.page.PAGROW = filter.page.PAGROW;
+                beanCarr.page.TOTPAG = filter.page.TOTPAG;
+                beanCarr.page.TOTROW = filter.page.TOTROW;
+
+                beanCarr.totPAXTOTAL = PAXTOTAL;
+
+                lstCarr.add(beanCarr);
+            }
+              rst.close();
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstCarr;
+    }
+
     public List<A1413Filter> loadPX235SQP00253(A1413Filter filter) throws SQLException, Exception {
 
         List<A1413Filter> lstObjetos = new ArrayList<>(0);
@@ -339,6 +470,19 @@ public class OwnerlessCouponDAO {
             while (rst.next()) {
                 beanTkt = new A1413Filter();
                 beanTkt.A1413CIA = rst.getString("A1413CIA");
+
+                beanTkt.A1413STCRU = rst.getString("A1413STCRU").trim();
+
+                if (beanTkt.A1413STCRU.equals("")) {
+                    beanTkt.A1413STCRU = "Pending";
+                } else if (beanTkt.A1413STCRU.equals("F")) {
+                    beanTkt.A1413STCRU = "Extraido al Flown";
+                } else if (beanTkt.A1413STCRU.equals("D")) {
+                    beanTkt.A1413STCRU = "Duplicate";
+                } else if (beanTkt.A1413STCRU.equals("C")) {
+                    beanTkt.A1413STCRU = "Cancelled";
+                }
+
                 beanTkt.A1413FORSE = rst.getString("A1413FORSE");
                 beanTkt.A1413CUPON = rst.getString("A1413CUPON");
                 beanTkt.strTicket = rst.getString("A1413CIA") + " " + rst.getString("A1413FORSE") + " " + rst.getString("A1413CUPON");
@@ -354,6 +498,7 @@ public class OwnerlessCouponDAO {
                 beanTkt.A1413TO = rst.getString("A1413TO");
                 beanTkt.strFROM = rst.getString("DES_ORIG");
                 beanTkt.strTO = rst.getString("DES_DEST");
+                beanTkt.FFLOWN = rst.getString("FFLOWN");
 
                 beanTkt.page.PAGNUM = filter.page.PAGNUM;
                 beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -773,6 +918,66 @@ public class OwnerlessCouponDAO {
         }
 
         return filter;
+    }
+    
+    public A1413Filter loadSQP04497(A1413Filter filter, String type) throws SQLException, Exception {
+
+        CallableStatement cs = null;
+        String strSQL;
+        String msj = "";
+        A1413Filter beanCons = new A1413Filter();
+
+        try {
+
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04497(?,?,?,?,?,?,?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+
+            cs.registerOutParameter(8, Types.VARCHAR);
+
+            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cs.setString(2, filter.A1413FVLOB.trim());
+            cs.setString(3, filter.A1413NVLOB.trim());
+            cs.setString(4, filter.A1413FROM.trim());
+            cs.setString(5, filter.A1413TO.trim());
+            cs.setString(6, session.getUserView().getCustomerInfo().USR);
+            cs.setString(7, type);
+            cs.setString(8, "");
+
+            cs.execute();
+
+            //Obteniendo el mensaje de error ===================================    
+            if (cs.getString(8) != null) {
+                beanCons = new A1413Filter();
+//                msj = cs.getString(6).trim();
+                beanCons.strDescripcion = cs.getString(8).trim();
+                beanCons.FFLOWN = type;
+            }
+
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+//        System.out.println(" ----> DAO - Mensaje en la validación : " + msj);
+        
+        return beanCons;
     }
 
 }

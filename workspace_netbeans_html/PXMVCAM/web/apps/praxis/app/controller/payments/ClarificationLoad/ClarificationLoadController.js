@@ -202,7 +202,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                     }else{
                         global.Msg({msg: msjUpload});
                     }
-                } else if(success){
+                } else if(res.success){
                     var msjResult = res.msjResult;
                     global.Msg({msg: msjResult});
                 }else{

@@ -765,7 +765,8 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                             autoScroll: true, width: 950, height: 100,
                                             columns: {
                                                 items: [
-                                                    {text: 'Tax', dataIndex: 'A1673CDTAX', width: 140, align: 'left'},
+                                                    {text: 'Tax', dataIndex: 'A1673CDTAX', width: 60, align: 'left'},
+                                                    {text: 'Ato', dataIndex: 'A1673CDATO', width: 60, align: 'left'},
                                                     {text: 'Calculated Airline',
                                                         columns: [
                                                             {text: 'Amount', dataIndex: 'A1673TXMIA', width: 250, align: 'right',

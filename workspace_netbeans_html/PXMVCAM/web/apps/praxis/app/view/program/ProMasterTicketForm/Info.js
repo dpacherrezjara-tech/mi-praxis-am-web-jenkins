@@ -1388,6 +1388,9 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                         text: 'Seq', dataIndex: 'SEQ', width: 40, hidden: true
                                                     },
                                                     {
+                                                        text: 'SeqRo', dataIndex: 'SEQRO', width: 40, hidden: true
+                                                    },
+                                                    {
                                                         text: 'STATUS', dataIndex: 'STATUS', width: 70
                                                     },
                                                     {
@@ -2976,7 +2979,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'I': rtn = 'TAXC'; break;
                                                     case 'R': rtn = 'RFND'; break;
                                                     case 'F': rtn = 'FLWN'; break;
-                                                    case 'C': rtn = 'EXPI'; break;
+                                                    case 'C': rtn = 'COMM'; break;
                                                     case 'L': rtn = 'IPAY'; break;
                                                     default: rtn = data.A1716MODO.trim();
                                             }

@@ -48,7 +48,7 @@ public class AccountingMasterFlownDAO {
 
         try {
             //PX12200003
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX122S03A1740(?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04486(?,?,?,?,?,?,?)}"; // PX122S03A1740
             
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
@@ -145,7 +145,7 @@ public class AccountingMasterFlownDAO {
                 objRtnFilter = new A1740Filter();
                 objRtnFilter.RN = rst.getLong("NO");
                 objRtnFilter.A1740TITRA = rst.getString("A1740TITRA");
-                objRtnFilter.A1740TIPO = rst.getString("A1740TIPO");
+                objRtnFilter.A1740TIPO = rst.getString("A1740TIPO").trim();
                 objRtnFilter.A1740TIPODESC = rst.getString("A1740TIPODESC");
                 objRtnFilter.A1740SUBTI = rst.getString("A1740SUBTI");
                 objRtnFilter.A1740CATEG = rst.getString("A1740CATEG");
@@ -156,6 +156,7 @@ public class AccountingMasterFlownDAO {
                 objRtnFilter.A1740CTA = rst.getString("A1740CTA");
                 objRtnFilter.A1740SCTA = rst.getString("A1740SCTA");
                 objRtnFilter.A1740EQUI = rst.getString("A1740EQUI");
+                objRtnFilter.A1740INTNU = rst.getString("A1740INTNU");
                 objRtnFilter.A1740ICIA = rst.getString("A1740ICIA");
                 objRtnFilter.A1740CLIE = rst.getString("A1740CLIE");
                 objRtnFilter.A1740FINI = Functions.getMonthConvertDate(rst.getString("A1740FINI"));
@@ -190,7 +191,7 @@ public class AccountingMasterFlownDAO {
 
         try {
             //PX12200004
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX122S04A1740(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04487(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX122S04A1740
             //cs = session.getCNXIBMDB2().getConnection().prepareCall(strSQL);
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -219,6 +220,7 @@ public class AccountingMasterFlownDAO {
             cs.setString(22, filter.IN_A1740TIPO_OLD);
             cs.setString(23, filter.IN_A1740SUBTI_OLD);
             cs.setString(24, filter.IN_A1740CATEG_OLD);
+            cs.setString(25, filter.A1740INTNU);
             cs.execute();
 
             rst = cs.getResultSet();

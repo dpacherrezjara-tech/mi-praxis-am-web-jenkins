@@ -31,6 +31,10 @@ public class InputsControlLogic {
         inputsControlDAO.setSession(ss);
 
     }
+    
+    public List<A1686Filter> loadPX077S14A1910(A1686Filter filter) throws SQLException, Exception {
+        return inputsControlDAO.loadPX077S14A1910(filter);
+    }
 
     public List<A1686Filter> loadPX077S01A1686(A1686Filter filter) throws SQLException, Exception {
         return inputsControlDAO.loadPX077S01A1686(filter);
@@ -87,6 +91,11 @@ public class InputsControlLogic {
     public List<A1693Filter> loadPX077S10A1686(A1691Filter filter) throws SQLException , Exception{
         return inputsControlDAO.loadPX077S10A1686_PRUEBA(filter);
     }
+    
+    public List<A1686Filter> loadPX077S13A1910(A1686Filter filter) throws SQLException , Exception{
+        return inputsControlDAO.loadPX077S13A1910(filter);
+    }
+    
 
 
 }

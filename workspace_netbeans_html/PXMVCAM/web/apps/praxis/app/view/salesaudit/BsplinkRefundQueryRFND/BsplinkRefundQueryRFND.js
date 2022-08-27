@@ -391,6 +391,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.BsplinkRefundQuery
                             height: 480,
                             columns:{
                                 items:[
+                                    {text: 'Channel', dataIndex: 'A3389CHANEL', width: 60, sortable: false, align: 'center'},
                                     {
                                         text: 'Document',
                                         dataIndex: 'A3389NUMER',

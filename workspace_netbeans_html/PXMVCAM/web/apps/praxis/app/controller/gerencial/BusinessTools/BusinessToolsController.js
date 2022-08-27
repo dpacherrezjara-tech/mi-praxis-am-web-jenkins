@@ -383,7 +383,15 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             cmbConector.setValue('AND');
         }
         
-        
+        var cmbFunctions = Ext.getCmp(prototype.id + '-cmbFunctions');
+        cmbFunctions.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ['', 'Select'],
+                ["1", "Valoración"]
+            ]}));
+        cmbFunctions.setValue('');
 
         Ext.Ajax.request({
             url: prototype.url + '/loadFiles',
@@ -1306,6 +1314,52 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 }
             }
         });
+    },
+    changeFunction: function() {
+        
+        if(Ext.getCmp(prototype.id + '-cmbFunctions').getValue()==='') {
+            Ext.getCmp(prototype.id + '-btnFunct').setDisabled(false);
+        }else{
+            Ext.getCmp(prototype.id + '-btnFunct').setDisabled(true);
+        }
+        
+    },
+    procesar_function: function(obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Confirm the process?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.process_valuation();
+                }
+            }
+        });
+    },
+    process_valuation: function() {
+        
+         me.searchParams.strMSG='xdxdxd';
+        
+         Ext.Ajax.request({
+            url: prototype.url + '/executeValuation' ,
+            params: {beanString : JSON.stringify(me.searchParams)},
+            method: 'POST',
+            beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
+            success: function(response, options) {
+                Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
+
+                var res = Ext.JSON.decode(response.responseText);
+                
+                        global.Msg({
+                            msg: res.mensaje
+                        });
+                
+        }});
+        
+        
     },
     exportTXT: function() {
 

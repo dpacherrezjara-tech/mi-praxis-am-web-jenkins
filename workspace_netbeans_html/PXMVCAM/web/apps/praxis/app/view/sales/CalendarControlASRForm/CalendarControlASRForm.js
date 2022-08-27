@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'CalendarControlASRForm';
 prototype.url = CONTEXTPATH+'/CalendarControlASR';
-prototype.widthContenedor = 1100;
+prototype.widthContenedor = 1200;
 // </editor-fold>
 
 Ext.define('Ext.Praxis.view.sales.CalendarControlASRForm.CalendarControlASRForm', {
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlASRForm.CalendarControlASRForm'
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 1350,
+                                            height: 1450,
                                             layout: 'fit',
                                             items: [
                                                 {

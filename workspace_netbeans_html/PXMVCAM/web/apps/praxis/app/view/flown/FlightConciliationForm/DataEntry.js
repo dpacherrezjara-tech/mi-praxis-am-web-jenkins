@@ -312,6 +312,43 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             minLength: 2,
                             maxLength: 2,
                             width: 100
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'label',
+                            text: 'Flight Multileg',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 100
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFMulti',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "None"],
+                                    ["L", "Leg"],
+                                    ["S", "Segment"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            hidden: false,
+                            readOnly: false,
+                            allowBlank: true,
+                            hiddenLabel: false,
+                            forceSelection: true,
+                            selectOnFocus: false,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            width: 90,
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {maxHeight: 111},
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            hideTrigger: false
                         }
                     ]
                 },
@@ -644,7 +681,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     padding: '0px 80px 0px 0px',
                                     html: '<strong style="color:#000; text-decoration: underline; ">ODS File Information</strong>'
                                 },
-                                {xtype: 'tbspacer', width: 300},
                                 {
                                     xtype: 'label',
                                     id: prototype.id + '-txtDESCRIP-label',
@@ -657,7 +693,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                         'data-qtip': 'Mandatory Field'
                                     }
                                 },
+                                {xtype: 'tbspacer', width: 300},
                                 {
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: #EFE9E5',
+                                items:[
+                                   {
                                     xtype: 'textfield',
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
@@ -666,7 +708,19 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
                                     width: 400,
                                     hidden: false
-                                }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 400,
+                                    hidden: false
+                                } 
+                                ]
+                            }
                             ]
                         },
                         {

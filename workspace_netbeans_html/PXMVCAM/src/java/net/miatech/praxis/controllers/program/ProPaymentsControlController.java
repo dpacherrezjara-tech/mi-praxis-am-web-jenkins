@@ -18,6 +18,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.IMF145Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -46,7 +47,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Controller
 @Scope("request")
 @RequestMapping("/ProPaymentsControl")
@@ -66,7 +66,7 @@ public class ProPaymentsControlController extends BaseController {
     @RequestMapping(value = "search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- ProPaymentsControl : Search-------------");
+        System.out.println("-------------- ProPaymentsControl : search-------------");
         map.put("success", true);
         List<A3020Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
@@ -74,6 +74,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getList(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -109,7 +110,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchCountry")
     public @ResponseBody
     String searchCountry(ModelMap map, HttpServletRequest request) {
@@ -121,6 +122,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListCountry(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -156,7 +158,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchCard")
     public @ResponseBody
     String searchCard(ModelMap map, HttpServletRequest request) {
@@ -168,6 +170,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListCard(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -203,7 +206,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchChannel")
     public @ResponseBody
     String searchChannel(ModelMap map, HttpServletRequest request) {
@@ -215,6 +218,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListChannel(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -250,7 +254,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchIata")
     public @ResponseBody
     String searchIata(ModelMap map, HttpServletRequest request) {
@@ -262,6 +266,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListIata(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -297,7 +302,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchPayDelay")
     public @ResponseBody
     String searchPayDelay(ModelMap map, HttpServletRequest request) {
@@ -309,6 +314,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPayDelay(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -344,7 +350,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchPayDelayCountry")
     public @ResponseBody
     String searchPayDelayCountry(ModelMap map, HttpServletRequest request) {
@@ -356,6 +362,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPayDelayCountry(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -391,7 +398,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchPayDelayCard")
     public @ResponseBody
     String searchPayDelayCard(ModelMap map, HttpServletRequest request) {
@@ -403,6 +410,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPayDelayCard(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -438,7 +446,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchUSAState")
     public @ResponseBody
     String searchUSAState(ModelMap map, HttpServletRequest request) {
@@ -450,6 +458,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListState(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -485,7 +494,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchFareTax")
     public @ResponseBody
     String searchFareTax(ModelMap map, HttpServletRequest request) {
@@ -497,6 +506,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListFareTax(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -532,7 +542,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchPOS")
     public @ResponseBody
     String searchPOS(ModelMap map, HttpServletRequest request) {
@@ -544,6 +554,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPOS(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -579,7 +590,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchPOSMonth")
     public @ResponseBody
     String searchPOSMonth(ModelMap map, HttpServletRequest request) {
@@ -591,6 +602,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPOSMonth(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -626,7 +638,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetPEMBank")
     public @ResponseBody
     String searchDetPEMBank(ModelMap map, HttpServletRequest request) {
@@ -638,6 +650,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPEMBank(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -673,7 +686,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetPEMAgent")
     public @ResponseBody
     String searchDetPEMAgent(ModelMap map, HttpServletRequest request) {
@@ -685,6 +698,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPEMAgent(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -720,7 +734,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchPhasesStatus")
     public @ResponseBody
     String searchPhasesStatus(ModelMap map, HttpServletRequest request) {
@@ -732,6 +746,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPhasesStatus(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -767,7 +782,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetPhasesBank")
     public @ResponseBody
     String searchDetPhasesBank(ModelMap map, HttpServletRequest request) {
@@ -779,6 +794,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPhasesBank(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -814,7 +830,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetPhasesCard")
     public @ResponseBody
     String searchDetPhasesCard(ModelMap map, HttpServletRequest request) {
@@ -826,6 +842,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A3020Filter> getListPhasesCard(HttpServletRequest request, Boolean bExcel) {
 
         List<A3020Filter> lst = new ArrayList<>(0);
@@ -861,7 +878,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchClarificationTOT")
     public @ResponseBody
     String searchClarificationTOT(ModelMap map, HttpServletRequest request) {
@@ -873,6 +890,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A2331Filter> getListClarificationTOT(HttpServletRequest request, Boolean bExcel) {
 
         List<A2331Filter> lst = new ArrayList<>(0);
@@ -908,7 +926,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchClarification")
     public @ResponseBody
     String searchClarification(ModelMap map, HttpServletRequest request) {
@@ -920,6 +938,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A2331Filter> getListClarification(HttpServletRequest request, Boolean bExcel) {
 
         List<A2331Filter> lst = new ArrayList<>(0);
@@ -955,7 +974,7 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetClarifBank")
     public @ResponseBody
     String searchDetClarifBank(ModelMap map, HttpServletRequest request) {
@@ -967,6 +986,7 @@ public class ProPaymentsControlController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     public List<A2331Filter> getListClarifBank(HttpServletRequest request, Boolean bExcel) {
 
         List<A2331Filter> lst = new ArrayList<>(0);
@@ -1002,13 +1022,107 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
-    
-    
-    
-    
-    
-    
+
+    // ------------------------------------------------------------------------------------------------------------------
+    @RequestMapping(value = "searchNewAmex")
+    public @ResponseBody
+    String searchNewAmex(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ProPaymentsControl : searchNewAmex-------------");
+        map.put("success", true);
+        List<IMF145Filter> lst = this.getListSearchNewAmex(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF145Filter> getListSearchNewAmex(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF145Filter> lst = new ArrayList<>(0);
+        IMF145Filter filter = new IMF145Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ProPaymentsControlLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF145Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadSQP04546(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchNewAmexByCountry")
+    public @ResponseBody
+    String searchNewAmexByCountry(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ProPaymentsControl : searchNewAmexByCountry-------------");
+        map.put("success", true);
+        List<IMF145Filter> lst = this.getListSearchNewAmexByCountry(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF145Filter> getListSearchNewAmexByCountry(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF145Filter> lst = new ArrayList<>(0);
+        IMF145Filter filter = new IMF145Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ProPaymentsControlLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF145Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            /*if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }*/
+
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
+
+            lst = logic.loadSQP04541(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody
 //    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -1210,5 +1324,4 @@ public class ProPaymentsControlController extends BaseController {
 //            throw new SpringException(e);
 //        }
 //    }
-
 }

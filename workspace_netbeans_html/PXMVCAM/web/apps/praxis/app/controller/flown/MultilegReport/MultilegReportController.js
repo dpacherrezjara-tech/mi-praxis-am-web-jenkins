@@ -4,10 +4,12 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},
+    searchParamsUppdate: {},
     _path: '',
     _pathDetail: '',
     _pathDetTicket: '',
     me: '',
+    NPROG: 'PX00000087',
     // </editor-fold>
     setContext: function() {
         me = this;
@@ -17,7 +19,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         prototype.id = 'MultilegReportForm';
         prototype.url = CONTEXTPATH + '/MultilegReport';
         prototype.widthContenedor = 1340;
-        prototype.widthGrid = 790;
+        prototype.widthGrid = 850 ;
         prototype.widthGridDetail = 1252;
         prototype.widthGridDetTicket = 1305;
         prototype.widthGridDetTicketA1897 = 1330;
@@ -30,6 +32,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         this.setStoreData();
         this.btnClear_click();
         this.btnSearch_click();
+        this.validateProgram(Ext.getCmp(prototype.id + '-col-update'),'PX00000087', 'M');
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     onFromYearChange: function(combo, newValue, oldValue, eOpts) {
@@ -172,6 +175,11 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         Ext.getCmp(prototype.id + '-boxMainData').hide();
         Ext.getCmp(prototype.id + '-boxDetailData').show();
         this.setGridDataSearchDetail();
+    },
+    onUpdateCarrierA1897: function(column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        this.setFormatParameterDetUpdate(data);
+        this.updateTicketA1897();
     },
     onViewDetTicketClick: function(column, e, row, column, x, rowData) {
         var data = x.record.data;
@@ -317,6 +325,21 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
                 'IN_QTYLEG=' + searchParams.IN_QTYLEG;
         // </editor-fold>
     },
+    setFormatParameterDetUpdate: function(data) {
+        searchParamsUppdate = {};
+        bean = {};
+        bean.DFLIGHT = data.DFLIGHT;
+        bean.NFLIGHT = data.NFLIGHT;
+        bean.ORIG = data.ORIG;
+        bean.DEST = data.DEST;
+
+        var beanString = JSON.stringify(bean);
+        // <editor-fold defaultstate="collapsed" desc="asignación">
+        searchParamsUppdate = {
+            beanString: beanString
+        };
+
+    },
     setFormatParameterDetail: function(data) {
         searchParams = {};
 
@@ -417,6 +440,26 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         });
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
     },
+    updateTicketA1897: function() {
+        
+        Ext.Ajax.request({
+            url: prototype.url + '/updateA1897',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {beanString:searchParamsUppdate},
+            success: function(response, options) {
+                Ext.getBody().unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                var msj = res.mensaje;
+                
+                global.Msg({
+                    msg: msj
+                });
+                
+            }
+        });
+    },    
     setGridDataSearchDetail: function() {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.MultilegReport.GridDataDetail', {
             proxy: {
@@ -568,5 +611,72 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
     },
     focus: function(id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
+    },
+    validateAccess: function(info, opcion) {
+        var bolRtn = false;
+        switch (opcion)
+        {
+            case "A":
+                if (info.PERMA === "Y")
+                    bolRtn = true;
+                break;
+            case "L":
+                if (info.PERML === "Y" || info.PERMC === "Y" || info.PERMM === "Y" || info.PERME === "Y")
+                    bolRtn = true;
+                break;
+            case "C":
+                if (info.PERMC === "Y")
+                    bolRtn = true;
+                break;
+            case "M":
+                if (info.PERMM === "Y")
+                    bolRtn = true;
+                break;
+            case "E":
+                if (info.PERME === "Y")
+                    bolRtn = true;
+                break;
+            case "X":
+                if (info.PERMX === "Y")
+                    bolRtn = true;
+                break;
+        }
+
+        return bolRtn;
+    },
+    //<editor-fold defaultstate="collapsed" desc="validateProgram">
+    validateProgram: function(cmp, nprog, opcion) {
+//        console.log('------- validateProgram ---------');
+//        console.log('------- nprog ' + nprog);
+//        console.log('------- opcion  ' +opcion);
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/validateUserProgramAccess',
+            method: 'POST',
+            timeout: 60000000,
+            params: {nprog: nprog || ''},
+            success: function(response, opts) {
+//                console.log(response);
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    var matrix = res.matrix;
+                    console.log('---');
+                    console.log(matrix);
+                    var visible = me.validateAccess(matrix, opcion);
+                    console.log('---2');
+                    console.log(visible);
+                    if (visible){
+                        cmp.show();
+                        Ext.getCmp(prototype.id + '-gridData').setWidth(850);
+                    }else{
+                        cmp.hide();
+                        Ext.getCmp(prototype.id + '-gridData').setWidth(800);
+                    }    
+                } else
+                    global.Msg({msg: res.sesion});
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
     }
 });

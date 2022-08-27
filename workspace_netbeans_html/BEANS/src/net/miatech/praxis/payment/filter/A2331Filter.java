@@ -52,6 +52,7 @@ public class A2331Filter extends A2331 {
     public String strDescCountry = "";
     public String strDescCard = "";
     public String strDescStatus = "";
+    public String strDescCRULE = "";
     public String strDescMerchn = "";
     public String strTitulo = "";
     public String strUsoCpn1 = "";
@@ -85,6 +86,8 @@ public class A2331Filter extends A2331 {
     public String strDescError = "";
     public String NOMTARHAB = "";
     public String COMMENT = "";
+    public String DATE = "";
+    public String TICKET = "";
 
     public long lngQLINK = 0;
     public long lngQCARD = 0;

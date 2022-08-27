@@ -179,6 +179,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             Ext.getCmp(prototype.id+"-cmbSTVAL").setValue(bean.STVAL);
         }
         Ext.getCmp(prototype.id+"-txtCARRI").setValue(bean.CARRI);
+        Ext.getCmp(prototype.id+"-cmbFMulti").setValue(bean.FMULTI.trim());
         Ext.getCmp(prototype.id+"-cmbFFLOW").setValue(bean.FFLOW);
         Ext.getCmp(prototype.id+"-txtFSENDSS").setValue(bean.FSENDSS);
         Ext.getCmp(prototype.id+"-txtCDEPART").setValue(bean.CDEPART);
@@ -212,7 +213,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         } else if (bean.FSTAOD === '1') {
             Ext.getCmp(prototype.id+"-cmbFSTAOD").disable(true);
         }
-        Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion);
+        Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion.substring(0,50).trim());
+        Ext.getCmp(prototype.id+"-txtDESCRIP2").setValue(bean.strDescripcion.substring(50,100).trim());
         Ext.getCmp(prototype.id+"-txtFSENDVC").setValue(bean.FSENDVC);
         Ext.getCmp(prototype.id+"-txtQCPNVC").setValue(bean.QCPNVC);
         Ext.getCmp(prototype.id+"-txtQCPNMA").setValue(bean.QCPNMA);
@@ -515,6 +517,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             beanOption.CCUST = this.p.bean.CCUST;
         }
         beanOption.STVAL = this.getValue('cmbSTVAL');
+        beanOption.FMULTI = this.getValue('cmbFMulti');
         if (beanOption.STVAL==='4') {
             beanOption.FCLOFO = '2';//Se guarda directamente en el Procedure
         }
@@ -548,7 +551,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         }else{
             beanOption.FSTAOD = this.getValue('cmbFSTAOD');
         }
-        beanOption.strDescripcion = this.getValue('txtDESCRIP').trim();
+        beanOption.strDescripcion = this.getValue('txtDESCRIP').padEnd(50, ' ') + this.getValue('txtDESCRIP2').padEnd(50, ' ');
         beanOption.FSENDVC = Ext.util.Format.date(this.getValue('txtFSENDVC'), 'Ymd');
         if (this.getValue("txtQCPNVC").trim() !== '') {
             beanOption.QCPNVC = Number(this.getValue('txtQCPNVC').replace(',', '').trim());

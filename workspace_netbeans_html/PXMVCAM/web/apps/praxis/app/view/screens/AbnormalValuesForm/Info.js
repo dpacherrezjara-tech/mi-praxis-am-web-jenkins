@@ -4,7 +4,11 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
     requires: [
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrAVSales',
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl',
-          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare'
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrRefund',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrOALParticipation',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrCreditCardAnalisis',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrExchangeAnalisis',
     ],
     layout: 'border',
     align: 'center',
@@ -32,8 +36,8 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     xtype: 'tabpanel',
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
-                    width: 1500,
-                    height: 650,
+                    width: 1700,
+//                    height: 1350,
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,
@@ -41,7 +45,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     listeners: {
                         'tabchange': function (tabPanel, tab) {
                             console.log(tabPanel.id + ' ' + tab.id);
-                            me.changeTab_clickHandler(tab.id);
+                            me.imgSearch_clickHandler(tab.id);
 
                         }
                     },
@@ -91,7 +95,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrAVCreditCard',
+                            id: prototype.id + '-ScrCreditCardAnalisis_tab',
                             title: 'Credit Card Analysis',
                             /*layout: {
                                 type: 'vbox',
@@ -103,25 +107,27 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             },*/
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrCreditCardAnalisis_screen',
+                                    xtype:prototype.id + '-ScrCreditCardAnalisis'
                                 }
                             ]
                         },
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrExchange',
+                            id: prototype.id + '-ScrExchangeAnalisis_tab',
                             title: 'Exchange Analysis',
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrExchangeAnalisis_screen',
+                                    xtype:prototype.id + '-ScrExchangeAnalisis'
                                 }
                             ]
                         },
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrRefund',
+                            id: prototype.id + '-ScrRefund_tab',
                             title: 'Refund Analysis',
                             /*layout: {
                                 type: 'vbox',
@@ -133,14 +139,15 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             },*/
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrRefund_screen',
+                                    xtype:prototype.id + '-ScrRefund'
                                 }
                             ]
                         },
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrOALParticipation',
+                            id: prototype.id + '-ScrOALParticipation_tab',
                             title: 'Participation OAL',
                             /*layout: {
                                 type: 'vbox',
@@ -152,7 +159,9 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             },*/
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrOALParticipation_screen',
+                                    xtype:prototype.id + '-ScrOALParticipation'
+                                    //ScrOALParticipation
                                 }
                             ]
                         },
@@ -170,7 +179,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                         }    
                 
                     ]
-                }
+                },               
             ]
         },
         {

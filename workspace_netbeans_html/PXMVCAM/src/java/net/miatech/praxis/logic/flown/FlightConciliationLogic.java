@@ -40,8 +40,8 @@ public class FlightConciliationLogic {
         return objDAO.loadPX095S09A1692(filter, hmAeropuertos);
     }
 
-    public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo, HashMap hmAeropuertos) throws SQLException, Exception {
-        return objDAO.loadPX095S02A1691(filter, strTipo, hmAeropuertos);
+    public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo, HashMap hmAeropuertos, String f_Diff) throws SQLException, Exception {
+        return objDAO.loadPX095S02A1691(filter, strTipo, hmAeropuertos, f_Diff);
     }
 
     public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {
@@ -50,6 +50,10 @@ public class FlightConciliationLogic {
     
     public List<A3729Filter> loadPX095SGGA3729(A3729Filter filter) throws SQLException, Exception {
         return objDAO.loadPX095SGGA3729(filter);
+    }
+    
+    public List<A3729Filter> loadPX095SQP04286(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.loadPX095SQP04286(filter);
     }
     
     public List<A1692Filter> loadPX095S05A1692(A1691Filter2 filter, String strTipo, HashMap<String, String> hmPaises) throws SQLException, Exception {
@@ -102,4 +106,31 @@ public class FlightConciliationLogic {
     public A1692Filter loadPX095S06A1692_1(String strTicket, String strSeq, String seqRol, HashMap<String, String> hmAeropuertos, HashMap<String, String> hmPaises) throws SQLException,Exception {
         return objDAO.loadPX095S06A1692_1(strTicket, strSeq, seqRol, hmAeropuertos, hmPaises);
     }
+    
+    public HashMap loadSQP03651() throws SQLException, Exception {
+        return objDAO.loadSQP03651();
+    }
+    
+    public A3729Filter SQP04282(List<A3729Filter> lstData) throws Exception {
+        return objDAO.SQP04282(lstData);
+    }
+    
+    public A3729Filter SQP04400(List<A3729Filter> lstData) throws Exception {
+        return objDAO.SQP04400(lstData);
+    }
+    
+    public String SQP04320(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04320(filter);
+    }
+    
+    public boolean SQP04321(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04321(filter);
+    }
+    
+    public String SQP04323(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04323(filter);
+    }
+    
+    
+    
 }

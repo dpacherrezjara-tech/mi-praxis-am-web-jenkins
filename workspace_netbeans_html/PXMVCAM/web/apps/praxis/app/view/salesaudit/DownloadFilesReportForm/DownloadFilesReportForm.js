@@ -1,7 +1,7 @@
 
 prototype.id = 'DownloadFilesReportForm';
 prototype.url = CONTEXTPATH + '/DownloadFilesReportForm';
-prototype.widthWindow = 750;
+prototype.widthWindow = 1200;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.DownloadFilesReportForm.DownloadFilesReportForm', {
@@ -275,7 +275,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DownloadFilesReportForm.DownloadFilesRepo
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: prototype.widthWindow,
+                            width: 800,//prototype.widthWindow,
                             height: 600,
                             features: [{
                                     //id: 'group',
@@ -327,7 +327,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DownloadFilesReportForm.DownloadFilesRepo
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDetalle',
-                            width: 750,
+                            width: 1100,
                             hidden: true,
                             height: 600,
                             columnLines: true,
@@ -341,7 +341,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DownloadFilesReportForm.DownloadFilesRepo
                                     {text: 'System </br>date', dataIndex: 'A3280FREGI', width: 70},
                                     {text: 'Execution </br>date', dataIndex: 'A3280FDATE', width: 70},
                                     {text: 'Country', dataIndex: 'A3280PAIS', width: 70, align: 'center'},
-                                    {text: 'Description', dataIndex: 'A3280NOMBR', width: 200, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Description', dataIndex: 'A3280NOMBR', width: 450, renderer: 'onRendererColumnAttr'},
                                     {text: 'Processed', dataIndex: 'A3280COUNT2', width: 90, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {

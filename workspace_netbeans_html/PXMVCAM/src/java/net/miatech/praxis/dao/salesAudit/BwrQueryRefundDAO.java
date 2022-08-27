@@ -5,6 +5,7 @@
  */
 package net.miatech.praxis.dao.salesAudit;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,10 +16,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
 import net.miatech.beans.SaleAudit.A3389Filter;
-import net.miatech.beans.SaleAudit.A3390Filter;
 import net.miatech.beans.SaleAudit.A3908Filter;
-import net.miatech.praxis.SaleAudit.A3389;
-import net.miatech.praxis.SaleAudit.A3390;
 import net.miatech.praxis.SaleAudit.A3391;
 import net.miatech.praxis.SaleAudit.A3392;
 import net.miatech.praxis.SaleAudit.A3401;
@@ -29,6 +27,9 @@ import net.miatech.praxis.SaleAudit.A3408;
 import net.miatech.utils.Functions;
 import net.miatech.utils.TimeFormatToday;
 import net.miatech.utils.WorkStation;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -126,6 +127,7 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389PORPE = rs01.getDouble("A3389PORPE");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
                 objRtn.A3389FREGI = rs01.getString("A3389FREGI");
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
 
                 objRtn.A3389PAIS = rs01.getString("A3389PAIS");
                 objRtn.A3389NUMER = rs01.getString("A3389NUMER");
@@ -140,7 +142,14 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389MDA = rs01.getString("A3389MDA");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
                 objRtn.A3389PAX = rs01.getString("A3389PAX");
-                objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                if (objRtn.A3389PAIS.equals("CN")) {
+                    objRtn.A3389RAAG = StringEscapeUtils.escapeJava(rs01.getString("A3389RACN"));
+                     objRtn.A3389RACN = rs01.getString("A3389RACN");
+                } else {
+                    objRtn.A3389RAAG = rs01.getString("A3389RAAG");
+                     objRtn.A3389RACN = rs01.getString("A3389RAAG");
+                }
+                //objRtn.A3389RAAG = BwrQueryRefundDAO.toUnicode(rs01.getString("A3389RAAG"));//BwrQueryRefundDAO.toUnicode(rs01.getString("A3389RAAG"));
                 objRtn.A3389REGAS = rs01.getString("A3389REGAS");
                 objRtn.A3389FLAG = rs01.getString("A3389FLAG");
                 objRtn.A3389STATO = rs01.getString("A3389STATO");
@@ -153,6 +162,11 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389RAAR = rs01.getString("A3389RAAR");
                 objRtn.A3389RAUD = rs01.getString("A3389RAUD");
                 objRtn.A3389PGNA = rs01.getString("A3389PGNA");
+
+                objRtn.A3389FREJE = rs01.getString("A3389FREJE");
+                objRtn.A3389HRERR = rs01.getString("A3389HRERR");
+                objRtn.A3389TARIA = rs01.getDouble("A3389TARIA");
+                objRtn.A3389FRERR = rs01.getString("A3389FRERR");
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -186,6 +200,37 @@ public class BwrQueryRefundDAO {
             pasarGarbageCollector();
         }
         return lstRtn;
+    }
+
+    public static String matchChineseCharacters(String source) {
+        // comment <a> 
+        String reg = "<a((?!comment).)*?>([^<>]*?[\\u4e00-\\u9fa5]+[^<>]*?)+(?=</a>)";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(source);
+        StringBuilder character = new StringBuilder();
+        while (matcher.find()) {
+            String result = matcher.group();
+            System.out.println(result);
+            // ， 
+            String reg1 = "[\\u4e00-\\u9fa5]+";
+            Pattern p1 = Pattern.compile(reg1);
+            Matcher m1 = p1.matcher(result);
+            while (m1.find()) {
+                character.append(m1.group());
+            }
+            //System.out.println(character.toString());
+        }
+        return character.toString();
+    }
+
+    public static String toUnicode(String s) {
+        String as[] = new String[s.length()];
+        String s1 = "";
+        for (int i = 0; i < s.length(); i++) {
+            as[i] = Integer.toHexString(s.charAt(i) & 0xffff);
+            s1 = s1 + "\\u" + as[i];
+        }
+        return s1;
     }
 
     public A3389Filter SearchQueryRFNDetail(A3389Filter filter) throws SQLException, Exception {
@@ -586,7 +631,6 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389STATO = rs01.getString("A3389STATO");
                 objRtn.A3389RAAG = rs01.getString("A3389RAAG");
                 objRtn.A3389RAAR = rs01.getString("A3389RAZON");
-                
 
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
 
@@ -618,6 +662,7 @@ public class BwrQueryRefundDAO {
         }
         return lstRtn;
     }
+
     public String ProcesaMantenimiento(A3389Filter beanGuardarA3389) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -628,7 +673,7 @@ public class BwrQueryRefundDAO {
         try {
             String SQLCLL01 = "{CALL PXSAUDIT.SQP02873(?,?,?,?,?,?)}";//SQP02515
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
-            
+
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_PREME", beanGuardarA3389.IN_PREME);
             cs.setString("IN_STATUS", beanGuardarA3389.IN_STATUS);
@@ -645,10 +690,10 @@ public class BwrQueryRefundDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -656,7 +701,7 @@ public class BwrQueryRefundDAO {
 
         return STR_RESULT;
     }
-    
+
     public List<A3908Filter> searchSabreLst(A3908Filter filter) throws SQLException, Exception {
         List<A3908Filter> lstRtn = new ArrayList<A3908Filter>(0);
         A3908Filter objRtn;
@@ -669,12 +714,11 @@ public class BwrQueryRefundDAO {
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            
+
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_PREME);
 
             cstmt01.execute();
-
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -691,7 +735,8 @@ public class BwrQueryRefundDAO {
                 objRtn.A3908PAIS = rs01.getString("A3908PAIS");
                 objRtn.A3908STATO = rs01.getString("A3908STATO");
                 objRtn.A3908HCAMB = rs01.getString("A3908HCAMB");
-                
+                objRtn.A3908FLAG = rs01.getInt("A3908FLAG");
+
                 lstRtn.add(objRtn);
 
                 //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
@@ -720,5 +765,5 @@ public class BwrQueryRefundDAO {
         }
         return lstRtn;
     }
-    
+
 }

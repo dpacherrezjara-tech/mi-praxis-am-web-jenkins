@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.controller.sales.CalendarASR.DataEntryCalendarASRControll
                 Ext.getCmp(prototype.id + '-txtA1528FPRO').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
@@ -43,15 +42,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
- * @author zperez  
+ * @author zperez
  */
 @Controller
 @Scope("request")
 @RequestMapping("/BsplinkReportsStatisticsdet")
-public class BsplinkReportsStatisticsdetController extends BaseController{
-   private static final Logger logError = Logger.getLogger("errorLog");
-   
-   @RequestMapping(value = "SearchReportGeneral")
+public class BsplinkReportsStatisticsdetController extends BaseController {
+
+    private static final Logger logError = Logger.getLogger("errorLog");
+
+    @RequestMapping(value = "SearchReportGeneral")
     public @ResponseBody
     String SearchReportGeneral(ModelMap map, HttpServletRequest request) {
         A3389Filter filter = new A3389Filter();
@@ -93,8 +93,8 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
         }
         return new Gson().toJson(map);
     }
-    
-     @RequestMapping(value = "/getXLSX")
+
+    @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         A3389Filter filter = new A3389Filter();
@@ -108,9 +108,9 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             BsplinkReportsStatisticsdetLogic logic = new BsplinkReportsStatisticsdetLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A3389Filter> lst = logic.SearchReportGeneral(filter);
-            
+
             //Workbook workbook = new XSSFWorkbook();
-              int limite = 300;
+            int limite = 300;
             SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
             Sheet sheet = workbook.createSheet("ReportStatistDetail");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
@@ -145,7 +145,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15,CH_16,CH_17,CH_18,CH_19,CH_20,CH_21;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25;
 
             row = sheet.createRow(vj);
 
@@ -171,29 +171,37 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             CH_19 = row.createCell(19);
             CH_20 = row.createCell(20);
             CH_21 = row.createCell(21);
+            CH_22 = row.createCell(22);
+            CH_23 = row.createCell(23);
+            CH_24 = row.createCell(24);
+            CH_25 = row.createCell(25);
 
-             CH_00.setCellValue("Country");
-             CH_01.setCellValue("IATA");
-             CH_02.setCellValue("Agency");
-             CH_03.setCellValue("Type RFND");
-             CH_04.setCellValue("Document");
-             CH_05.setCellValue("Ticket");
-             CH_06.setCellValue("Application date");
-             CH_07.setCellValue("Authorise Reject date");
-             CH_08.setCellValue("Auditor");
-             CH_09.setCellValue("Status");
-             CH_10.setCellValue("Reason BSP");
-             CH_11.setCellValue("Reason AM");
-             CH_12.setCellValue("Sales audit"); 
-             CH_13.setCellValue("Currency");
-             CH_14.setCellValue("Payment");
-             CH_15.setCellValue("Fare");
-             CH_16.setCellValue("Commission");
-             CH_17.setCellValue("Tax");
-             CH_18.setCellValue("Penalty");
-             CH_19.setCellValue("TAX on CP");
-             CH_20.setCellValue("Total");
-             CH_21.setCellValue("Days");
+            CH_00.setCellValue("Country");
+            CH_01.setCellValue("IATA");
+            CH_02.setCellValue("Agency");
+            CH_03.setCellValue("Type RFND");
+            CH_04.setCellValue("Document");
+            CH_05.setCellValue("Ticket");
+            CH_06.setCellValue("Application date");
+            CH_07.setCellValue("Authorise Reject date");
+            CH_08.setCellValue("Auditor");
+            CH_09.setCellValue("Status");
+            CH_10.setCellValue("Reason BSP");
+            CH_11.setCellValue("Reason AM");
+            CH_12.setCellValue("Sales audit");
+            CH_13.setCellValue("Currency");
+            CH_14.setCellValue("Payment");
+            CH_15.setCellValue("Fare");
+            CH_16.setCellValue("Commission");
+            CH_17.setCellValue("Tax");
+            CH_18.setCellValue("Penalty");
+            CH_19.setCellValue("TAX on CP");
+            CH_20.setCellValue("Total");
+            CH_21.setCellValue("Days");
+            CH_22.setCellValue("SALE DATE");
+            CH_23.setCellValue("Applicable");
+            CH_24.setCellValue("Reason");
+            CH_25.setCellValue("Channel");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -217,6 +225,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 20));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 25));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -240,6 +252,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             CH_19.setCellStyle(headerStyle);
             CH_20.setCellStyle(headerStyle);
             CH_21.setCellStyle(headerStyle);
+            CH_22.setCellStyle(headerStyle);
+            CH_23.setCellStyle(headerStyle);
+            CH_24.setCellStyle(headerStyle);
+            CH_25.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -268,6 +284,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
                 CH_19 = row.createCell(19);
                 CH_20 = row.createCell(20);
                 CH_21 = row.createCell(21);
+                CH_22 = row.createCell(22);
+                CH_23 = row.createCell(23);
+                CH_24 = row.createCell(24);
+                CH_25 = row.createCell(25);
 
                 CH_00.setCellValue(lst.get(vi).A3389PAIS);
                 CH_01.setCellValue(lst.get(vi).A3389IATA);
@@ -291,6 +311,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
                 CH_19.setCellValue(lst.get(vi).A3389PORPE);
                 CH_20.setCellValue(lst.get(vi).A3389TOTAL);
                 CH_21.setCellValue(lst.get(vi).A3389DIAS);
+                CH_22.setCellValue(lst.get(vi).A3389FECOR);
+                CH_23.setCellValue(lst.get(vi).A3401STATU);
+                CH_24.setCellValue(lst.get(vi).A3401RAAG);
+                CH_25.setCellValue(lst.get(vi).A3389CHANEL);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -314,6 +338,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
                 CH_19.setCellStyle(bodyStyle);
                 CH_20.setCellStyle(bodyStyle);
                 CH_21.setCellStyle(bodyStyle);
+                CH_22.setCellStyle(bodyStyle);
+                CH_23.setCellStyle(bodyStyle);
+                CH_24.setCellStyle(bodyStyle);
+                CH_25.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -359,11 +387,12 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
         }
 
     }
+
     @RequestMapping(value = "SearchReportStatis")
     public @ResponseBody
     String SearchReportStatis(ModelMap map, HttpServletRequest request) {
         A3389Filter filter = new A3389Filter();
-        HashMap map01, map02, map03, map04, map05, map06, map07,map08,map09;
+        HashMap map01, map02, map03, map04, map05, map06, map07, map08, map09;
         ArrayList<HashMap<String, String>> lst_stadistica = new ArrayList<>();
         ArrayList<HashMap<String, String>> lst_stadUserTypeRFND = new ArrayList<>();
         ArrayList<HashMap<String, String>> lst_stadTypeRFND = new ArrayList<>();
@@ -376,10 +405,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            
+
             BsplinkReportsStatisticsdetLogic logic = new BsplinkReportsStatisticsdetLogic();
             logic.setSession(this.serverSession.getServerSession());
-            A3389Filter lst_general = logic.SearchReportStatis(filter,"1");
+            A3389Filter lst_general = logic.SearchReportStatis(filter, "1");
             /*List<A3389Filter> lst_stadUserTypeRFND = logic.SearchReportStatis(filter,"2");
             List<A3389Filter> lst_stadTypeRFND = logic.SearchReportStatis(filter,"3");
             List<A3389Filter> lst_stadPais = logic.SearchReportStatis(filter,"4");
@@ -388,7 +417,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             List<A3389Filter> lst_stadRAZONES = logic.SearchReportStatis(filter,"6");
             List<A3389Filter> lst_stadTYPEPAGO = logic.SearchReportStatis(filter,"7");
             List<A3389Filter> lst_stadDIAS = logic.SearchReportStatis(filter,"8");*/
-            
+
             // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_stadistica">
             for (int vi = 0; vi < lst_general.lst_stadistica.size(); ++vi) {
                 map01 = new HashMap<>();
@@ -498,9 +527,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
                 lst_stadRAZONES_REJECT.add(map09);
             }
             // </editor-fold>
-            
-            
-            
+
             map.put("success", true);
             map.put("datastadis", lst_stadistica);
             map.put("dataUserTypeRFND", lst_stadUserTypeRFND);
@@ -508,10 +535,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
             map.put("datastadPais", lst_stadPais);
             map.put("datastadFauto", lst_stadFauto);
             map.put("dataDIAS", lst_stadDIAS);
-            
+
             map.put("dataRAZONES", lst_stadRAZONES);
             map.put("dataTYPEPAGO", lst_stadTYPEPAGO);
-             map.put("dataRAZONES_REJECT", lst_stadRAZONES_REJECT);
+            map.put("dataRAZONES_REJECT", lst_stadRAZONES_REJECT);
 
         } catch (SQLException e) {
             map.put("success", false);
@@ -523,7 +550,4 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
         return new Gson().toJson(map);
     }
 
-   
-   
-   
 }

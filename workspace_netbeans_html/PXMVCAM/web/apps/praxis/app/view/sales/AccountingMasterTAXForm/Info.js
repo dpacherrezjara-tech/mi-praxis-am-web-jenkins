@@ -39,31 +39,31 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                             align: 'center'
                         },
                         items: [
-                            {text: 'Type', width: 80, dataIndex: 'A1741TIPO', hidden: true,
+                            {text: 'Type', width: 70, dataIndex: 'A1741TIPO', hidden: true,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Type', width: 80, dataIndex: 'A1741TIPO_00',
+                            {text: 'Type', width: 70, dataIndex: 'A1741TIPO_00',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Country', width: 80, dataIndex: 'A1741PAIS',
+                            {text: 'Country', width: 70, dataIndex: 'A1741PAIS',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Tax', width: 80, dataIndex: 'A1741CODE',
+                            {text: 'Tax', width: 70, dataIndex: 'A1741CODE',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Tax Type', width: 80, dataIndex: 'A1741TPTAX',
+                            {text: 'Tax Type', width: 70, dataIndex: 'A1741TPTAX',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -75,43 +75,43 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Currency', width: 80, dataIndex: 'A1741MONED',
+                            {text: 'Currency', width: 70, dataIndex: 'A1741MONED',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Company', width: 80, dataIndex: 'A1741CIA',
+                            {text: 'Company', width: 70, dataIndex: 'A1741CIA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Unit', width: 80, dataIndex: 'A1741UNIDA',
+                            {text: 'Unit', width: 50, dataIndex: 'A1741UNIDA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'C.Cost', width: 80, dataIndex: 'A1741CECOS',
+                            {text: 'C.Cost', width: 70, dataIndex: 'A1741CECOS',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Location', width: 80, dataIndex: 'A1741UBICA',
+                            {text: 'Location', width: 70, dataIndex: 'A1741UBICA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Account', width: 80, dataIndex: 'A1741CTA',
+                            {text: 'Account', width: 70, dataIndex: 'A1741CTA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Sub account', width: 100, dataIndex: 'A1741SCTA',
+                            {text: 'Sub account', width: 90, dataIndex: 'A1741SCTA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -124,6 +124,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                                 }
                             },
                             {text: 'Inter company', width: 100, dataIndex: 'A1741ICIA',
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center;";
+                                    return value;
+                                }
+                            },
+                            {text: 'Country Location', width: 120, dataIndex: 'A1741INTNU',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;

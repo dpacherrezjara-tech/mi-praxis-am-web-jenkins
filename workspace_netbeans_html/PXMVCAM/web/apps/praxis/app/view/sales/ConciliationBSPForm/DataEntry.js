@@ -467,9 +467,9 @@ Ext.define('Ext.Praxis.view.sales.ConciliationBSPForm.DataEntry', {
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 1,
-                                            maskRe: /[A/M/D/a/m/d]/,
+                                            maskRe: /[M/m]/,
                                             listeners: {
-                                                change: 'onUpperValue',                                                
+                                                change: 'onUpperValue',                                             
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
                                                         Ext.getCmp(prototype.id + '-de-txtA1698COMEN').focus();
@@ -480,8 +480,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationBSPForm.DataEntry', {
                                         },
                                         {
                                             xtype: 'label',
-                                            width: 200,
-                                            text: 'A=Macht M=Manual D=Difference',
+                                            width: 250,
+                                            text: 'A=Match M=Manual Match D=Difference',
                                             style: 'font-weight:normal;text-align:left;'
 
                                         }

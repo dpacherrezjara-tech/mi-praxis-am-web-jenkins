@@ -7,7 +7,7 @@
 prototype.id = 'Dashboard01Form';
 prototype.url = CONTEXTPATH + '/Dashboard01';
 prototype.urlMaster = CONTEXTPATH + '/MasterController';
-prototype.widthContenedor = 1550;
+prototype.widthContenedor = 1850;
 prototype.widthGrid = 1147;
 
 
@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                     border: false,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1850,
+                                        width: 1750,
                                         align: 'center'
                                     },
                                     items: [
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                             border: false,
                                             autoScroll: true,
                                             defaults: {
-                                                width: 1550,
+                                                width: 1650,
                                                 align: 'center'
                                             },
                                             layout: {

@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
         console.log(this.p);
 //        this.obtainData();
     },
+    
     afterRender: function() {
         console.log('afterRender');
         this.obtainData();

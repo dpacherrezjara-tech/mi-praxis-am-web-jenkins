@@ -114,9 +114,15 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         field.setValue(newValue.toUpperCase());
     },
     obtainData: function() {
+        
+        var month = this.fecha.getMonth() + 1;
+
+        if (month < 10) {
+            month = '0' + month;
+        }
 
         var storeComboDataYear = win.getStoreYear(false);
-        var storeComboDataMonth = win.getStoreMonth(false);
+        var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
         
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
@@ -125,6 +131,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
 
 
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
@@ -133,6 +140,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
         var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbSVFOPSG');
         cmbFecFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {

@@ -9,6 +9,7 @@ public class A1691Filter2 {
     public String strTitulo = "";
     public String NFLIGHT = "";
     public String CARRI = "";
+    public String DESCRIP = "";
     public String strDescFFLOW = "";
     public String CDEPART = "";
     public String CARRIVA = "";
@@ -42,6 +43,7 @@ public class A1691Filter2 {
     public String strFormatDate3 = "";
     public int QCPNFI = 0;
     public int QCPNFRE = 0;
+    public String IN_OBS = "";
     public String yearFrom = "";
     public String monthFrom = "";
     public String dayFrom = "";
@@ -79,4 +81,5 @@ public class A1691Filter2 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
+    public String FMULTI = "";
 }

@@ -64,6 +64,48 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.DataEntry',{
                                 change: 'onUpperValue',
                                 blur: 'onTITRABlur'
                             }
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'label',
+                            text: 'Country Location',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 110
+                        },
+                        {
+                            xtype: 'label',
+                            text: '(*)',
+                            id: prototype.id+'-label_required04',
+                            style: 'font-weight:bold;color:red;',
+                            width: 20,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype:'combo',
+                            id: prototype.id + '-cmbINTNU',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "Select"],
+                                    ["Y", "YES"],
+                                    ["N", "NO"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            forceSelection: true,
+                            caseSensitive: true,
+                            editable: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            width: 100,
+                            listConfig: {height: 111}
                         }
                     ]
                 },

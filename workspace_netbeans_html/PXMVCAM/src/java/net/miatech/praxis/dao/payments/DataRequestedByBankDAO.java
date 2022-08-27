@@ -3461,6 +3461,218 @@ public class DataRequestedByBankDAO {
         return list;
     }
 
+    public List<A2331Filter> loadPX404SQP02680(A2331Filter filter) throws SQLException, Exception {
+
+        List<A2331Filter> list = new ArrayList<A2331Filter>();
+        A2331Filter objRtn;
+        HashMap hmDescSTVAL = new HashMap();
+        hmDescSTVAL.put("", "");
+        hmDescSTVAL.put("1", "Stand By");
+        hmDescSTVAL.put("2", "Sent to Office");
+        hmDescSTVAL.put("3", "Linked");
+        hmDescSTVAL.put("4", "Sent to Bank");
+        hmDescSTVAL.put("5", "Chargeback");
+        hmDescSTVAL.put("6", "Reverse Chargeback");
+        HashMap hmDescUse = new HashMap();
+        hmDescUse.put("F", "Flown");
+        hmDescUse.put("I", "Interline Flown");
+        hmDescUse.put("E", "Exchange");
+        hmDescUse.put("R", "Refund");
+        hmDescUse.put("D", "Discharge");
+        hmDescUse.put("", "No Use");
+
+        CallableStatement cstmt = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        try {
+            //Para aquellos Merchant que tienen nombre de Banco
+            if (Long.parseLong(filter.MERCHN) <= 0) {
+                filter.MERCHN = "";
+            }
+        } catch (Exception e) {
+            filter.MERCHN = "";
+        }
+
+        long QTKT = 0, TOTCUP = 0;
+        double AUTAMOUNT = 0, VFOP = 0;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02680(?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_TDOC.substring(0, 3));//CIA
+            cstmt.setString(3, filter.IN_TDOC.substring(3, 7));//FORMA
+            cstmt.setString(4, filter.IN_TDOC.substring(7, 13));//SERIE
+            cstmt.execute();
+
+            rs01 = cstmt.getResultSet();
+
+            if (rs01.next()) {
+                TOTCUP = rs01.getLong("TOTCUP");
+                QTKT = rs01.getLong("QTKT");
+                AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                VFOP = rs01.getDouble("VFOP");
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+            if (cstmt.getMoreResults()) {
+                rs01 = cstmt.getResultSet();
+                while (rs01.next()) {
+
+                    objRtn = new A2331Filter();
+                    objRtn.IN_DATE = rs01.getString("SENTDATE").trim();;
+
+                    /* objRtn.IN_CARDC = filter.IN_CARDC;
+                     //objRtn.IN_CARDN = filter.IN_CARDN;
+                     objRtn.IN_CARDN1 = filter.IN_CARDN1;
+                     objRtn.IN_CARDN2 = filter.IN_CARDN2;*/
+                    objRtn.IN_AGENT = rs01.getString("AGENTE").trim();
+                    objRtn.IN_AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    objRtn.IN_CODEBANK = rs01.getString("CODEBANK").trim();
+                    objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
+                    objRtn.strFormatDate = rs01.getString("SENTDATE").trim();
+                    objRtn.IN_COUNTRY = rs01.getString("SCOUNTRY").trim();
+
+                    objRtn.pos = 1;
+                    objRtn.TDOC = rs01.getString("TDOC").trim();
+                    objRtn.SEQNUM = rs01.getString("SEQNUM").trim();
+                    objRtn.NUMREFER = rs01.getString("NUMREFER").trim();
+                    objRtn.SQCRFILE = rs01.getString("SQCRFILE").trim();
+                    objRtn.SENTDATE = rs01.getString("SENTDATE").trim();
+                    objRtn.DATES = rs01.getString("DATES").trim();
+                    if (!rs01.getString("MERCHN").trim().isEmpty() && !rs01.getString("MERCHN").trim().equals("0")) {
+                        objRtn.MERCHN = rs01.getString("MERCHN").trim();
+                        objRtn.MERCHNAM = rs01.getString("MERCHNAM").trim();
+                    } else {
+                        objRtn.MERCHN = rs01.getString("NAMEBANK").trim();
+                        objRtn.MERCHNAM = rs01.getString("NAMEBANK").trim();
+                    }
+                    objRtn.FOLIO = rs01.getString("FOLIO").trim();
+                    objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                    objRtn.SALEDATE = rs01.getString("SALEDATE").trim();
+                    objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    objRtn.STVAL = rs01.getString("STVAL").trim();
+                    objRtn.DATEN = rs01.getString("DATEN").trim();
+                    objRtn.STSND = rs01.getString("STSND").trim();
+                    objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
+                    if (objRtn.STSND.trim().equals("1")) {
+                        objRtn.STSND = "Bank Notice";
+                    }
+                    objRtn.AGENTE = rs01.getString("AGENTE").trim();
+                    objRtn.STUSO = rs01.getString("STUSO").trim();
+                    objRtn.TOTCUP = rs01.getInt("TOTCUP");
+                    objRtn.strCANAL = rs01.getString("CANAL").trim();
+                    if (objRtn.strCANAL.trim().equals("WEB") || objRtn.strCANAL.trim().equals("CCT")) {
+                        objRtn.strFlag = "CC";
+                    } else if (objRtn.MERCHNAM.trim().toUpperCase().contains("CALL CENT")) {
+                        objRtn.strFlag = "CC";
+                    }
+
+                    if (!objRtn.STUSO.trim().isEmpty()) {
+                        switch (objRtn.STUSO.trim().length()) {
+                            case 4:
+                                objRtn.strUsoCpn1 = rs01.getString("STUSO").trim().substring(0, 1);
+                                objRtn.strUsoCpn2 = rs01.getString("STUSO").trim().substring(1, 2);
+                                objRtn.strUsoCpn3 = rs01.getString("STUSO").trim().substring(2, 3);
+                                objRtn.strUsoCpn4 = rs01.getString("STUSO").trim().substring(3, 4);
+                                break;
+                            case 3:
+                                objRtn.strUsoCpn1 = rs01.getString("STUSO").trim().substring(0, 1);
+                                objRtn.strUsoCpn2 = rs01.getString("STUSO").trim().substring(1, 2);
+                                objRtn.strUsoCpn3 = rs01.getString("STUSO").trim().substring(2, 3);
+                                break;
+                            case 2:
+                                objRtn.strUsoCpn1 = rs01.getString("STUSO").trim().substring(0, 1);
+                                objRtn.strUsoCpn2 = rs01.getString("STUSO").trim().substring(1, 2);
+                                break;
+                            case 1:
+                                objRtn.strUsoCpn1 = rs01.getString("STUSO").trim().substring(0, 1);
+                                break;
+                        }
+                    }
+                    try {
+                        objRtn.strDescUsoCpn1 = hmDescUse.get(objRtn.strUsoCpn1).toString();
+                        objRtn.strDescUsoCpn2 = hmDescUse.get(objRtn.strUsoCpn2).toString();
+                        objRtn.strDescUsoCpn3 = hmDescUse.get(objRtn.strUsoCpn3).toString();
+                        objRtn.strDescUsoCpn4 = hmDescUse.get(objRtn.strUsoCpn4).toString();
+                    } catch (Exception e) {
+                    }
+                    objRtn.CCIA = rs01.getString("CCIA").trim();
+                    objRtn.FORMA = rs01.getString("FORMA").trim();
+                    objRtn.SERIE = rs01.getString("SERIE").trim();
+                    objRtn.strTicket = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
+                    objRtn.VFOP = rs01.getDouble("VFOP");
+                    objRtn.LINKDATE = rs01.getString("LINKDATE").trim();
+                    objRtn.LINKHORA = rs01.getString("LINKHORA").trim();
+                    objRtn.RUTA = rs01.getString("RUTA").trim();
+                    if (!objRtn.RUTA.trim().isEmpty()) {
+                        objRtn.strImgLink = "Y";
+                    }
+
+                    if (!objRtn.CARDNBR.contains("*") && !objRtn.CARDNBR.contains("X")) {
+                        //Enmascarando
+                        if (objRtn.SCARCOD.trim().equals("AX")) {
+                            objRtn.strDescripcion = rs01.getString("CARDNBR").trim().substring(0, 6) + "*****" + rs01.getString("CARDNBR").trim().substring(11);
+                        } else {
+                            objRtn.strDescripcion = rs01.getString("CARDNBR").trim().substring(0, 6) + "******" + rs01.getString("CARDNBR").trim().substring(12);
+                        }
+
+                    } else {
+                        objRtn.strDescripcion = objRtn.CARDNBR;
+                    }
+                    objRtn.strDescStatus = hmDescSTVAL.get(objRtn.STVAL).toString();
+
+                    objRtn.lngTotDocs = QTKT;
+                    objRtn.lngTotTOTCUP = TOTCUP;
+                    objRtn.dblTotAUTAMOUNT = AUTAMOUNT;
+                    objRtn.dblTotVFOP = VFOP;
+
+                    list.add(objRtn);
+                }
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            try {
+                cstmt.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return list;
+    }
     
     
 }

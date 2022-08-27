@@ -7,7 +7,7 @@
 prototype.id = 'AbnormalValuesForm';
 prototype.url = CONTEXTPATH + '/AbnormalValues';
 prototype.urlMaster = CONTEXTPATH + '/MasterController';
-prototype.widthContenedor = 1200;
+prototype.widthContenedor = 1800;
 prototype.widthGrid = 1147;
 
 
@@ -63,22 +63,18 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.AbnormalValuesForm', {
                                     border: false,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1550,
+                                        width: 1700,
                                         align: 'center'
                                     },
                                     items: [
-                                        {
-                                            xtype:prototype.id + '-options'
-                                        }
-                                        ,
+                                        {xtype:prototype.id + '-options'},
                                         {
                                             xtype:prototype.id+ '-filters',
                                             id: prototype.id+'-contentFilter'
-                                        }             
-                                        ,
+                                        },
                                         {
                                             xtype: 'panel',
-                                            height: 580,
+                                            height: 700,
                                             layout: 'fit',
                                             items: [
                                                 {

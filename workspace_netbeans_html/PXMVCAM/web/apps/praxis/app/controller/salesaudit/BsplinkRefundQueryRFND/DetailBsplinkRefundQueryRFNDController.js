@@ -55,6 +55,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         this.onLoadData();
         this.setStoresGrids();
     },
+    onLoadCargaData: function () {
+        this.onLoadData();
+        this.setStoresGrids();
+    },
     setStoresGrids: function () {
         var grid01 = Ext.getCmp(prototype.id01 + '-gridtkt');
         var grid02 = Ext.getCmp(prototype.id01 + '-gridtktAGENT');
@@ -98,13 +102,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         ComboEstatus.setValue('');
     },
     onSabreStatusClick: function () {
-        
+        var me = this;
+        rec = me.view.params.rec;
         var win = new Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormSabreEstatus({
             params: {
                 rec_preme: Ext.getCmp(prototype.id01 + '-txtPreme').getValue(),
-                rec_number:  Ext.getCmp(prototype.id01 + '-txtNumber').getValue(),
+                rec_number: Ext.getCmp(prototype.id01 + '-txtNumber').getValue(),
                 rec_tkt: Ext.getCmp(prototype.id01 + '-txtSNumber').getValue(),
-                rec_aplidate: Ext.getCmp(prototype.id01 + '-txtAplidate').getValue()
+                rec_aplidate: Ext.getCmp(prototype.id01 + '-txtAplidate').getValue(),
+                rec_flagsoli: rec.get('A3389FLAG')
             }
         });
         win.show();
@@ -197,7 +203,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
             case 'G':
                 Ext.getCmp(prototype.id01 + '-txtStatusRFND').setValue('NO REEMBOLSABLE');
                 break;
-             case 'Z':
+            case 'Z':
                 Ext.getCmp(prototype.id01 + '-txtStatusRFND').setValue('UNDER INVESTIGATION');
                 break;
         }
@@ -225,9 +231,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         Ext.getCmp(prototype.id01 + '-txtPenaltyAGENT').setValue(Ext.util.Format.number(rec.get('A3389PENAL'), '0,000.00'));
         Ext.getCmp(prototype.id01 + '-txtTAXCPAGENT').setValue(Ext.util.Format.number(rec.get('A3389PORPE'), '0,000.00'));
         Ext.getCmp(prototype.id01 + '-txtREFUNDTOAGENT').setValue(Ext.util.Format.number(rec.get('A3389TOTAL'), '0,000.00'));
-        Ext.getCmp(prototype.id01 + '-txaReference').setValue(rec.get('A3389RAAG'));
+        if (rec.get('A3389PAIS') === 'CN') {
+            Ext.getCmp(prototype.id01 + '-txaReference').setValue(me.ToGB2312(rec.get('A3389RAAG')));
+        } else {
+            Ext.getCmp(prototype.id01 + '-txaReference').setValue(rec.get('A3389RAAG'));
+        }
         //alert(rec.get('A3389COMIS') + rec.get('A3389PORCO'));
         this.onLoadCalculosImpuestos(rec);
+    },
+    ToGB2312: function (str) {
+        var cadena = str.replace(/\\u/gi, '%u');
+        cadena = cadena.replace(/\\n/gi, "\n");
+        cadena = cadena.replace(/\\t/gi, "\t");
+        return unescape(cadena);
     },
     onLoadCalculosImpuestos: function (rec) {
         var me = this;
@@ -446,6 +462,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         var bvalida = true;
         var vl_razon = '';
         var vl_razon2 = '';
+        var me = this;
+        rec = me.view.params.rec;
+
         var vl_STATUS = Ext.getCmp(prototype.id01 + '-ComboEstatus').getValue();
         var grid03 = Ext.getCmp(prototype.id01 + '-gridRazones');
         var regs = grid03.getStore().getCount();
@@ -482,8 +501,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                     return;
                 }
             }
-            if (vl_razon.length > 440) {
-                Ext.Msg.alert('.: PRAXIS :.', 'The description total must not exceed 440 characters');
+            if (vl_razon.length > 420) {
+                Ext.Msg.alert('.: PRAXIS :.', 'The description total must not exceed 420 characters');
                 bvalida = false;
             }
         }
@@ -504,7 +523,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                 return;
             }
         }
+        if (vl_STATUS === 'F' || vl_STATUS === 'Z') {
+            if (Ext.String.trim(rec.get('A3389FRERR')) === 'SALE' && parseFloat(rec.get('A3389TARIA')) > 0) {
+                var txtREFUNDTOAGENT = parseFloat(Ext.getCmp(prototype.id01 + '-txtREFUNDTOAGENT').getValue().replace(',', ''));
+                var vl_A3389TARIA = parseFloat(rec.get('A3389TARIA'));
+                var vl_totaldif = (vl_A3389TARIA - txtREFUNDTOAGENT);
+                if (vl_totaldif < 0) {
 
+                    Ext.Msg.alert('.: PRAXIS :.', 'Total to refund cannot be higher than paid amount' + ' sale ' + rec.get('A3389TARIA') + '  refund ' + Ext.getCmp(prototype.id01 + '-txtREFUNDTOAGENT').getValue());
+                    bvalida = false;
+                    return;
+                }
+            }
+        }
+        //rec.get('A3389MDA')
 
 
         return bvalida;
@@ -522,7 +554,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                 buttons: 3,
                 fn: function (btn) {
                     if (btn === 'yes') {
-
                         me.beanGuardar.IN_STATUS = Ext.getCmp(prototype.id01 + '-ComboEstatus').getValue();
                         me.beanGuardar.IN_PREME = Ext.getCmp(prototype.id01 + '-txtPreme').getValue();
                         me.beanGuardar.IN_A3389PAIS = Ext.getCmp(prototype.id01 + '-txtCOUNTRY').getValue();

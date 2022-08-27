@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 3},
+                                {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbPERIOD',
@@ -114,6 +114,26 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 10}
+                                ,
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 60
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-txtStatus',
+                                    store: new Ext.data.SimpleStore({
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ["",''],["1",'Processed'], ["0",'Closed']
+                                        ]
+                                    }),
+                                    fieldStyle: 'text-align:center',
+                                    width: 80,
+                                    valueField: 'code', displayField: 'name'
+                                }
                             ]
                         },
                         {

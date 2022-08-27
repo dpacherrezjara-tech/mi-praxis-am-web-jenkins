@@ -273,7 +273,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                 items: [
                                     {text: 'Seq', width: 60, dataIndex: 'RN'},
                                     {text: 'Source', width: 120, dataIndex: 'FUENTE'},
-                                    {text: 'Flight <br> Date', width: 120, dataIndex: 'strFormatDate3',
+                                    {text: 'Flight <br> Date', id: prototype.id + '-flightDate', width: 120, dataIndex: 'strFormatDate3',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = 'text-decoration:underline; color:#008FE3; ';
                                             return '<a href="#flown-inputs-control-form" style="color:#008FE3">' + value + '</a>';
@@ -822,8 +822,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                             {text: 'Details/Error Message', width: 300, dataIndex: 'MENSA'}
                         ]
                     }
-                }
-                ,
+                },
                 {
                     xtype: 'panel',
                     id: prototype.id + '-pie',
@@ -884,6 +883,103 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                             ]
                         }
                     ]
+                },
+                
+                // -----------------------------------------------------------------------------
+                
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-gridDataLOG',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    labelAlign: 'left',
+                    height: 550,
+                    width: 1300,
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: true,
+                            align: 'center'
+                        },
+                        items: [
+//                            {text: 'Nbr', width: 60, dataIndex: 'RN'},
+                            {text: 'Description', width: 300, dataIndex: 'strFormatDate2',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    var data = record.data;
+                                    metaData.style = "text-align:left;";
+                                    metaData.tdAttr = 'data-qtip="' + data.strFormatDate2+'"';
+                                    return  value;
+                                }
+                            },
+                            {text: 'Program',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center',
+                                    border: true
+                                },
+                                columns: [
+                                    {text: 'Name', width: 80, dataIndex: 'FUENTE',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var data = record.data;
+                                            metaData.style = "text-align:center;";
+                                            metaData.tdAttr = 'data-qtip="' + data.FUENTE+'"';
+                                            return  value;
+                                        }
+                                    }
+
+                                ]
+                            },
+                            {text: 'Status ', width: 50, dataIndex: 'STVAL'},
+                            {text: 'Read ', width: 60, dataIndex: 'QRECOR',
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                    metaData.style = 'text-align:right;background-color:#d5f4d5;';
+                                    return Ext.util.Format.number(value, '0,000');
+                                }
+                            },
+                            {text: 'Write ', width: 60, dataIndex: 'QRECORG',
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                    metaData.style = 'text-align:right;background-color:#d5f4d5;';
+                                    return Ext.util.Format.number(value, '0,000');
+                                }
+                            },
+                            {text: 'Create',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center',
+                                    border: true
+                                },
+                                columns: [
+                                    {text: 'User', width: 80, dataIndex: 'USCR'},
+                                    {text: 'Date', width: 80, dataIndex: 'FECR'}
+
+                                ]
+                            },
+                            {text: 'Time',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center',
+                                    border: true
+                                },
+                                columns: [
+                                    {text: 'Start', width: 80, dataIndex: 'HOCR'},
+                                    {text: 'End', width: 80, dataIndex: 'strFormatDate'},
+                                    {text: 'Diff', width: 80, dataIndex: 'strFormatDate4'}
+
+                                ]
+                            },
+                            {text: 'Message', width: 350, dataIndex: 'MENSA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    var data = record.data;
+                                    metaData.style = "text-align:left;";
+                                    metaData.tdAttr = 'data-qtip="' + data.MENSA+'"';
+                                    return  value;
+                                }
+                            }
+                        ]
+                    }
                 }
             ]
         }

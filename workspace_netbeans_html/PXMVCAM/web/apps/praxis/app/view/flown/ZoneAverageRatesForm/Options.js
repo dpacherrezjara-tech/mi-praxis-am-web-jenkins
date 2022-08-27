@@ -64,6 +64,14 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Options', {
                             displayInfo: false,
                             hidden: true
                         }
+                         , {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin3',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        }
                     ]
                 }
             ]

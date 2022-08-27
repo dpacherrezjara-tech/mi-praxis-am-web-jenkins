@@ -80,10 +80,11 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             hiddenLabel: false,
                             listConfig: {maxHeight: 111},
                             listeners: {
-                                change: 'onFromYearChange',
-                                focus: function(combo) {
-                                    combo.expand();
-                                },
+//                                change: 'onFromYearChange',
+                                change: 'cbxDateFromYear_changeHandler',
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                },
                                 blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
@@ -109,10 +110,11 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             anchor: '100%',
                             listConfig: {maxHeight: 111},
                             listeners: {
-                                change: 'onFromMonthChange',
-                                focus: function(combo) {
-                                    combo.expand();
-                                },
+//                                change: 'onFromMonthChange',
+                                change: 'cbxDateFromMonth_changeHandler',
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                },
                                 blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
@@ -141,9 +143,9 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             listConfig: {maxHeight: 111},
                             listeners: {
                                 change: 'onFromDayChange',
-                                focus: function(combo) {
-                                    combo.expand();
-                                },
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                },
                                 blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
@@ -177,9 +179,9 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             listConfig: {maxHeight: 111},
                             listeners: {
                                 change: 'onToYearChange',
-                                focus: function(combo) {
-                                    combo.expand();
-                                },
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                },
                                 blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
@@ -206,9 +208,9 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             listConfig: {maxHeight: 111},
                             listeners: {
                                 change: 'onToMonthChange',
-                                focus: function(combo) {
-                                    combo.expand();
-                                },
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                },
                                 blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
@@ -237,9 +239,9 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             listConfig: {maxHeight: 111},
                             listeners: {
                                 change: 'onToDayChange',
-                                focus: function(combo) {
-                                    combo.expand();
-                                },
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                },
                                 blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
@@ -249,6 +251,7 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 10},
                         // </editor-fold>
+                        
                         {xtype: 'tbspacer', width: 700},
                         {
                             xtype: 'radiogroup',

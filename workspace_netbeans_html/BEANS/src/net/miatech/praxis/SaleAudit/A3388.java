@@ -42,6 +42,15 @@ public class A3388 {
     public String A3388STATO;
     public String A3388REGAS;
     public String A3388DIAS;
+    public String A3388CHANEL;
+
+    public String getA3388CHANEL() {
+        return A3388CHANEL;
+    }
+
+    public void setA3388CHANEL(String A3388CHANEL) {
+        this.A3388CHANEL = A3388CHANEL;
+    }
 
     public String getA3388STATO() {
         return A3388STATO;
@@ -66,7 +75,7 @@ public class A3388 {
     public void setA3388DIAS(String A3388DIAS) {
         this.A3388DIAS = A3388DIAS;
     }
-    
+
     public String getA3388FINA() {
         return A3388FINA;
     }
@@ -74,6 +83,7 @@ public class A3388 {
     public void setA3388FINA(String A3388FINA) {
         this.A3388FINA = A3388FINA;
     }
+
     public String getA3388TOTALPAG() {
         return A3388TOTALPAG;
     }
@@ -81,9 +91,11 @@ public class A3388 {
     public void setA3388TOTALPAG(String A3388TOTALPAG) {
         this.A3388TOTALPAG = A3388TOTALPAG;
     }
+
     public String getA3388ROBOT() {
         return A3388ROBOT;
     }
+
     public void setA3388ROBOT(String A3388ROBOT) {
         this.A3388ROBOT = A3388ROBOT;
     }

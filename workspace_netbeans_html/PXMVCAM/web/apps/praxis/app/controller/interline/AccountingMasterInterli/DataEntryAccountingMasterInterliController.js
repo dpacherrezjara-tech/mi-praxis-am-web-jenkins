@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
                 break;
         }
         this.focus('txtA1740TITRA');
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     Handler_Change_DocumentType: function() {
         var TypeDocument = this.getValue("txtA1740TITRA");
@@ -169,6 +169,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
         this.setValue('txtA1740TITRA', this.bean.A1740TITRA);
         this.setValue('txtA1740SUBTI', this.bean.A1740SUBTI);
         this.setValue('txtA1740CATEG', this.bean.A1740CATEG);
+        this.setValue('cmbINTNU', this.bean.A1740INTNU === 'YES' ? 'Y' : 'N');
         this.setValue('txtA1740CIA', this.bean.A1740CIA);
         this.setValue('txtA1740UNIDA', this.bean.A1740UNIDA);
         this.setValue('txtA1740CECOS', this.bean.A1740CECOS);
@@ -201,6 +202,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
 	beanOption.A1740TITRA = this.getValue("txtA1740TITRA");//String(cmbDocumentType.selectedItem.data);
 	beanOption.A1740TIPO = this.getValue("cmbCtaType");
 	beanOption.A1740SUBTI = this.getValue("txtA1740SUBTI");
+        beanOption.A1740INTNU = this.getValue("cmbINTNU");
 	beanOption.A1740CATEG = this.getValue("txtA1740CATEG");
 	beanOption.A1740CIA = this.getValue("txtA1740CIA");
 	beanOption.A1740UNIDA = this.getValue("txtA1740UNIDA");
@@ -224,19 +226,20 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
     validaRequiredFields: function() {
         var bvalida = true;
         var TypeDocument = this.getValue("txtA1740TITRA");
+        var cmbINTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         switch (TypeDocument) {
             case 'EMD':
-                if (this.getValue("cmbCtaType2")==0 || this.getValue("txtA1740SUBTI") == "" || this.getValue("txtA1740CATEG") == "") {
+                if (cmbINTNU ==="" || this.getValue("cmbCtaType2")==0 || this.getValue("txtA1740SUBTI") == "" || this.getValue("txtA1740CATEG") == "") {
                     bvalida = false;
                 }
                 break;
             case 'MPD':
-                if (this.getValue("cmbCtaType2")==0 || this.getValue("txtA1740SUBTI") == "") {
+                if (cmbINTNU ==="" ||  this.getValue("cmbCtaType2")==0 || this.getValue("txtA1740SUBTI") == "") {
                     bvalida = false;
                 }
                 break;
             default :
-                if (this.getValue("txtA1740TITRA").length == 0 || this.getValue("cmbCtaType2")=="") {
+                if (cmbINTNU ==="" ||  this.getValue("txtA1740TITRA").length == 0 || this.getValue("cmbCtaType2")=="") {
                     bvalida = false;
                 }
                 break;

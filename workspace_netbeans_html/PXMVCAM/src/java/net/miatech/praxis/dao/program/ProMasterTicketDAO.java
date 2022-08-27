@@ -369,6 +369,7 @@ public class ProMasterTicketDAO {
                         objRtn02.fileA730.A730SER720 = rs02.getString("A730SER720");
                         objRtn02.fileA730.A730SEQUEN = rs02.getString("A730SEQUEN");
                         objRtn02.fileA730.A730SEQ720 = rs02.getString("A730SEQ720");
+                        objRtn02.fileA730.A730TYPCP1 = rs02.getString("A730TYPCP1");
 
                         //<editor-fold defaultstate="collapsed" desc="{...} A730 Coupon 1">
                         objRtn02.fileA730.A730CONEX1 = rs02.getString("A730CONEX1");
@@ -432,6 +433,7 @@ public class ProMasterTicketDAO {
 
                             objRtn03.fileA713.A713MONREG = rs03.getString("A713MONREG");
                             objRtn03.fileA713.A713FECVTA = rs03.getString("A713FECVTA");
+                            objRtn03.fileA713.A713TDOC = rs03.getString("A713TDOC");
                             //<editor-fold defaultstate="collapsed" desc="{...} A713 Coupon 1">
                             objRtn03.fileA713.A713CONEX1 = rs03.getString("A713CONEX1");
                             objRtn03.fileA713.A713RUTA0 = rs03.getString("A713RUTA0");
@@ -568,6 +570,7 @@ public class ProMasterTicketDAO {
                                                         while (rs11.next()) {
                                                             objRtn11 = new PX040S01A720ResultSet11();
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
+                                                            objRtn11.fileA1692.SEQRO = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CCIA = rs11.getString("CCIA");
                                                             objRtn11.fileA1692.FORMA = rs11.getString("FORMA");
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
@@ -592,6 +595,8 @@ public class ProMasterTicketDAO {
                                                                 objRtn12.fileA1818.FORMA = rs12.getString("FORMA");
                                                                 objRtn12.fileA1818.SERIE = rs12.getString("SERIE");
                                                                 objRtn12.fileA1818.CUPON = rs12.getString("CUPON");
+                                                                objRtn12.fileA1818.SEQ = rs12.getString("SEQ");
+                                                                objRtn12.fileA1818.SEQRO = rs12.getString("SEQRO");
                                                                 objRtn12.fileA1818.CDEPART = rs12.getString("CDEPART");
                                                                 objRtn12.fileA1818.CARRIVA = rs12.getString("CARRIVA");
                                                                 objRtn12.fileA1818.CARR = rs12.getString("CARR");
@@ -743,14 +748,94 @@ public class ProMasterTicketDAO {
     }
     
     @Deprecated
+    public List<PX040S01A720Filter> SQP04422(PX040S01A720Filter filter) throws SQLException, Exception {
+        PX040S01A720ResultSet01 objRtn;
+        PX040S01A720Filter pX040S01A720Filter = new PX040S01A720Filter();
+        List<PX040S01A720Filter> lstPX040S01A720Filter = new ArrayList<PX040S01A720Filter>();
+        PreparedStatement pstmt01 = null, pstmt02 = null;
+        ResultSet rstst01 = null, rstst02 = null;
+        
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
+        String SQLQRY01 = "SELECT";
+
+        //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
+        if(filter.IN_CIA.equals("139"))
+        {
+            SQLQRY01 = "SELECT"
+                + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                + " FROM PRAXIS.A720 WHERE"
+                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?"
+                + " UNION"
+                + " SELECT  A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                + " FROM PRAXIS.A720HST WHERE"
+                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
+        }
+        else
+        {
+            SQLQRY01 = "SELECT"
+                + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                + " FROM PRAXIS.A3200 WHERE"
+                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
+        }
+        //</editor-fold>
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            if(filter.IN_CIA.equals("139")){
+                pstmt01 = cnx.prepareStatement(SQLQRY01);
+                pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                pstmt01.setString(2, filter.IN_CIA);
+                pstmt01.setString(3, filter.IN_FORMA);
+                pstmt01.setString(4, filter.IN_SERIE);
+                pstmt01.setString(5, session.getUserView().getCustomerInfo().CCUST);
+                pstmt01.setString(6, filter.IN_CIA);
+                pstmt01.setString(7, filter.IN_FORMA);
+                pstmt01.setString(8, filter.IN_SERIE);
+                rstst01 = pstmt01.executeQuery();
+                while(rstst01.next()){
+                    pX040S01A720Filter = new PX040S01A720Filter();
+                    pX040S01A720Filter.IN_CIA = rstst01.getString("A720CIA");
+                    pX040S01A720Filter.IN_FORMA = rstst01.getString("A720FORMA");
+                    pX040S01A720Filter.IN_SERIE = rstst01.getString("A720SERIE");
+                    pX040S01A720Filter.IN_SEQ = rstst01.getString("A720SEQ");
+                    lstPX040S01A720Filter.add(pX040S01A720Filter);
+                }                
+            }
+            else
+            {
+                pstmt01 = cnx.prepareStatement(SQLQRY01);
+                pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                pstmt01.setString(2, filter.IN_CIA);
+                pstmt01.setString(3, filter.IN_FORMA);
+                pstmt01.setString(4, filter.IN_SERIE);
+                rstst01 = pstmt01.executeQuery();
+                while(rstst01.next()){
+                    pX040S01A720Filter = new PX040S01A720Filter();
+                    pX040S01A720Filter.IN_CIA = rstst01.getString("A720CIA");
+                    pX040S01A720Filter.IN_FORMA = rstst01.getString("A720FORMA");
+                    pX040S01A720Filter.IN_SERIE = rstst01.getString("A720SERIE");
+                    pX040S01A720Filter.IN_SEQ = rstst01.getString("A720SEQ");
+                    lstPX040S01A720Filter.add(pX040S01A720Filter);
+                }
+            }
+            
+        } finally {
+            
+        }
+        return lstPX040S01A720Filter;
+    }
+    
+    
+    @Deprecated
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         List<PX040S01A1716Filter> lstRtn = new ArrayList<PX040S01A1716Filter>(0);
         PX040S01A1716Filter objRtn;
 
         CallableStatement cstmt01 = null;
-        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
 
-        String SQLCLL01 = "{CALL PX040S01A1716(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL SQP04220(?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX040S01A1716
         //String SQLCLL01 = "{CALL PRAXIS.SQP00362(?,?,?,?)}";
         Connection cnx = null;
         try {
@@ -848,6 +933,7 @@ public class ProMasterTicketDAO {
                     objRtn.A1716CUR = rs02.getString("A1716CUR");
                     objRtn.A1716ACTIV = rs02.getDouble("A1716ACTIV");
                     objRtn.A1716PASIV = rs02.getDouble("A1716PASIV");
+                    objRtn.A1716CURRV = rs02.getString("A1716CURRV");
                     objRtn.A1716ACTRV = rs02.getDouble("A1716ACTRV");
                     objRtn.A1716PASRV = rs02.getDouble("A1716PASRV");
                     objRtn.A1716CUENT = rs02.getString("A1716CUENT");
@@ -901,6 +987,7 @@ public class ProMasterTicketDAO {
                         objRtn.A1716CUR = rs03.getString("A1716CUR");
                         objRtn.A1716ACTIV = rs03.getDouble("A1716ACTIV");
                         objRtn.A1716PASIV = rs03.getDouble("A1716PASIV");
+                        objRtn.A1716CURRV = rs03.getString("A1716CURRV");
                         objRtn.A1716ACTRV = rs03.getDouble("A1716ACTRV");
                         objRtn.A1716PASRV = rs03.getDouble("A1716PASRV");
                         objRtn.A1716CUENT = rs03.getString("A1716CUENT");
@@ -954,6 +1041,9 @@ public class ProMasterTicketDAO {
                             objRtn.A1716CUR = rs04.getString("A1716CUR");
                             objRtn.A1716ACTIV = rs04.getDouble("A1716ACTIV");
                             objRtn.A1716PASIV = rs04.getDouble("A1716PASIV");
+                            objRtn.A1716CURRV = rs04.getString("A1716CURRV");
+                            objRtn.A1716ACTRV = rs04.getDouble("A1716ACTRV");
+                            objRtn.A1716PASRV = rs04.getDouble("A1716PASRV");
                             objRtn.A1716CUENT = rs04.getString("A1716CUENT");
                             objRtn.A1716SUBCU = rs04.getString("A1716SUBCU");
                             objRtn.A1716IDFIL = rs04.getString("A1716IDFIL");
@@ -1005,6 +1095,9 @@ public class ProMasterTicketDAO {
                                 objRtn.A1716CUR = rs05.getString("A1716CUR");
                                 objRtn.A1716ACTIV = rs05.getDouble("A1716ACTIV");
                                 objRtn.A1716PASIV = rs05.getDouble("A1716PASIV");
+                                objRtn.A1716CURRV = rs05.getString("A1716CURRV");
+                                objRtn.A1716ACTRV = rs05.getDouble("A1716ACTRV");
+                                objRtn.A1716PASRV = rs05.getDouble("A1716PASRV");
                                 objRtn.A1716CUENT = rs05.getString("A1716CUENT");
                                 objRtn.A1716SUBCU = rs05.getString("A1716SUBCU");
                                 objRtn.A1716IDFIL = rs05.getString("A1716IDFIL");
@@ -1109,6 +1202,9 @@ public class ProMasterTicketDAO {
                                         objRtn.A1716CUR = rs07.getString("A1716CUR");
                                         objRtn.A1716ACTIV = rs07.getDouble("A1716ACTIV");
                                         objRtn.A1716PASIV = rs07.getDouble("A1716PASIV");
+                                        objRtn.A1716CURRV = rs07.getString("A1716CURRV");
+                                        objRtn.A1716ACTRV = rs07.getDouble("A1716ACTRV");
+                                        objRtn.A1716PASRV = rs07.getDouble("A1716PASRV");
                                         objRtn.A1716CUENT = rs07.getString("A1716CUENT");
                                         objRtn.A1716SUBCU = rs07.getString("A1716SUBCU");
                                         objRtn.A1716IDFIL = rs07.getString("A1716IDFIL");
@@ -1495,6 +1591,61 @@ public class ProMasterTicketDAO {
 
                                                                     lstRtn.add(objRtn);
                                                                 }
+                                                                if (cstmt01.getMoreResults()) {
+                                                                        rs15 = cstmt01.getResultSet();
+                                                                        while (rs15.next()) {
+                                                                            objRtn = new PX040S01A1716Filter();
+                                                                            objRtn.A1716CCUST = rs15.getString("A4070CCUST");
+                                                                            objRtn.A1716CIA = rs15.getString("A4070CIA");
+                                                                            objRtn.A1716FORMA = rs15.getString("A4070FORMA");
+                                                                            objRtn.A1716SERIE = rs15.getString("A4070SERIE");
+                                                                            objRtn.A1716CUPON = rs15.getString("A4070CUPON");
+                                                                            objRtn.A1716SEQT = rs15.getString("A4070SEQT");
+                                                                            objRtn.A1716SEQ = rs15.getString("A4070SEQ");
+
+                                                                            objRtn.A1716MODO = rs15.getString("A4070MODO");
+                                                                            objRtn.A1716FUENT = rs15.getString("A4070FUENT");
+                                                                            objRtn.A1716SUBFU = rs15.getString("A4070SUBFU");
+                                                                            objRtn.A1716FP = rs15.getString("A4070FP");
+
+                                                                            objRtn.A1716FUENT = rs15.getString("A4070FUENT");
+                                                                            objRtn.A1716ESTAD = rs15.getString("A4070ESTAD");
+                                                                            objRtn.A1716FFILE = rs15.getString("A4070FFILE");
+                                                                            objRtn.A1716FPRO = rs15.getString("A4070FPRO");
+                                                                            objRtn.A1716GRUPO = rs15.getString("A4070GRUPO");
+                                                                            objRtn.A1716CUR = rs15.getString("A4070CUR");
+                                                                            objRtn.A1716ACTIV = rs15.getDouble("A4070ACTIV");
+                                                                            objRtn.A1716PASIV = rs15.getDouble("A4070PASIV");
+                                                                            objRtn.A1716CURRV = rs15.getString("A4070CURRV");
+                                                                            objRtn.A1716ACTRV = rs15.getDouble("A4070ACTRV");
+                                                                            objRtn.A1716PASRV = rs15.getDouble("A4070PASRV");
+                                                                            objRtn.A1716CUENT = rs15.getString("A4070CUENT");
+                                                                            objRtn.A1716SUBCU = rs15.getString("A4070SUBCU");
+                                                                            objRtn.A1716IDFIL = rs15.getString("A4070IDFIL");
+                                                                            objRtn.A1716TIDOC = rs15.getString("A4070TIDOC");
+                                                                            objRtn.A1716ORIG = rs15.getString("A4070ORIG");
+                                                                            objRtn.A1716FCONT = rs15.getString("A4070FCONT");
+
+                                                                            objRtn.A1716TITU = rs15.getString("A4070TITU");
+
+                                                                            objRtn.A1716COPE = rs15.getString("A4070COPE");
+                                                                            objRtn.A1716PROV = rs15.getString("A4070PROV");
+
+                                                                            objRtn.A1716IDCON = rs15.getString("A4070IDCON");
+
+                                                                            objRtn.TCOL = rs15.getString("TCOL");
+                                                        //                    
+                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                        //
+                                                        //                     }
+                                                        //                    
+                                                                            if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
+                                                                                objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
+                                                                            }
+
+                                                                            lstRtn.add(objRtn);
+                                                                        }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -1744,8 +1895,14 @@ public class ProMasterTicketDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
+        String SQLCLL01 = "";
        
+        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; 
+        if(filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3)))
+        {
+            SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}"; 
+        }
+        
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -1759,6 +1916,7 @@ public class ProMasterTicketDAO {
             cstmt01.setString(6, filter.IN_DATE_FROM);
             cstmt01.setString(7, filter.IN_DATE_TO);
             cstmt01.setString(8, filter.IN_IATA);
+            cstmt01.setString(9, filter.IN_CAPL);
 
             cstmt01.execute();
 
@@ -1776,6 +1934,8 @@ public class ProMasterTicketDAO {
                 objRtn.A720MONEDA = rs01.getString("A720MONEDA");
                 objRtn.A720PNR = rs01.getString("A720PNR");
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
+                objRtn.A1531MFOP = rs01.getString("A1531MFOP");
+                objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 lstRtn.add(objRtn);
             }
@@ -2647,6 +2807,7 @@ public class ProMasterTicketDAO {
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
                                                             objRtn11.fileA1692.CUPON = rs11.getString("CUPON");
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
+                                                            objRtn11.fileA1692.SEQRO =  "00"; // = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CDEPART = rs11.getString("CDEPART");
                                                             objRtn11.fileA1692.CARRIVA = rs11.getString("CARRIVA");
                                                             objRtn11.fileA1692.CARR = rs11.getString("CARR");
@@ -2670,6 +2831,8 @@ public class ProMasterTicketDAO {
                                                                 objRtn12.fileA1818.FORMA = rs12.getString("FORMA");
                                                                 objRtn12.fileA1818.SERIE = rs12.getString("SERIE");
                                                                 objRtn12.fileA1818.CUPON = rs12.getString("CUPON");
+                                                                objRtn12.fileA1818.SEQ = rs12.getString("SEQ");
+                                                                objRtn12.fileA1818.SEQRO = rs12.getString("SEQRO");
                                                                 objRtn12.fileA1818.CDEPART = rs12.getString("CDEPART");
                                                                 objRtn12.fileA1818.CARRIVA = rs12.getString("CARRIVA");
                                                                 objRtn12.fileA1818.CARR = rs12.getString("CARR");

@@ -7,6 +7,7 @@ package net.miatech.praxis.logic.program;
 
 import java.sql.SQLException;
 import java.util.List;
+import net.miatech.beans.IMF145Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.program.ProPaymentsControlDAO;
 import net.miatech.praxis.payment.filter.A2331Filter;
@@ -106,4 +107,14 @@ public class ProPaymentsControlLogic {
     
     
     
+    
+    // -------------------------------------------------------------------------------------------
+    
+    public List<IMF145Filter> loadSQP04546(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04546(filter);
+    }
+    
+    public List<IMF145Filter> loadSQP04541(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04541(filter);
+    }
 }

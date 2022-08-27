@@ -515,7 +515,7 @@ public class ADMReportController extends BaseController {
                 CH_14.setCellValue(listaData.get(vi).A2548FFILE);
                 CH_15.setCellValue(listaData.get(vi).A2548NFACT);
                 CH_16.setCellValue(listaData.get(vi).A2548REGIS);
-                CH_17.setCellValue(listaData.get(vi).A2548DESC1);
+                CH_17.setCellValue(listaData.get(vi).A2548DESC3);
                 String base = "";
                 if (listaData.get(vi).A2548BASE.equals("PR")) {
                     base = "PROCESO REGULAR";
@@ -679,7 +679,7 @@ public class ADMReportController extends BaseController {
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(10, true); 
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
@@ -1459,6 +1459,7 @@ public class ADMReportController extends BaseController {
                 map03.put("A1673TXORI", lst.lst_CalcuImpuestos.get(vi).A1673TXORI);
                 map03.put("A1673TXMIA", lst.lst_CalcuImpuestos.get(vi).A1673TXMIA);
                 map03.put("A1673TXDIF", lst.lst_CalcuImpuestos.get(vi).A1673TXDIF);
+                map03.put("A1673CDATO", lst.lst_CalcuImpuestos.get(vi).A1673CDATO);
 
                 lst_CalculosImpuestos.add(map03);
             }

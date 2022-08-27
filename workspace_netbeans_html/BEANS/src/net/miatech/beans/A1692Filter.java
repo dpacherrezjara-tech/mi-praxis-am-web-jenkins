@@ -13,8 +13,12 @@ import net.miatech.praxis.flown.A1692;
 public class A1692Filter extends A1692 {
 
     public long RN;
+    public String DATE = "";
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String IN_SEQ = "";
+    public String FLAG_ALL = "";
+    public String IN_DATE = "";
     public String IN_DATEF = "";
     public String IN_DATET = "";
     public String IN_TKT = "";
@@ -29,6 +33,7 @@ public class A1692Filter extends A1692 {
     public int IN_TIPOFECHA = 0;
     public String CUPONNEW = "";
     public String STNEW = "";
+    public String PRDA = "";
     public String strFormatDate = "";
     public String strFormatDate2 = "";
     public String strFormatFVTA = "";
@@ -139,4 +144,15 @@ public class A1692Filter extends A1692 {
     public String COD_DESC_ARRI = "";
     public String IN_CCIA = "";
     public String FLAGLEG = "";
+    //CAMPOS PARA TARIFA PROMEDIO POR ZONAS
+    public double AVRG_ASI = 0;
+    public double AVRG_CAM = 0;
+    public double AVRG_CAN = 0;
+    public double AVRG_CAR = 0;
+    public double AVRG_EUR = 0;
+    public double AVRG_FRO = 0;
+    public double AVRG_LOC = 0;
+    public double AVRG_PLA = 0;
+    public double AVRG_SUD = 0;
+    public double AVRG_USA = 0;
 }

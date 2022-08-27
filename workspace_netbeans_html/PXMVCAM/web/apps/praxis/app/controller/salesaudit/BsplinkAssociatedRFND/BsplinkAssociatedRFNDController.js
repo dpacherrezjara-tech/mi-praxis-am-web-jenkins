@@ -417,9 +417,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;
     },
-
+    ToGB2312: function (str) {
+        var cadena = str.replace(/\\u/gi, '%u');
+        cadena = cadena.replace(/\\n/gi, "\n");
+        cadena = cadena.replace(/\\t/gi, "\t");
+        return unescape(cadena);
+    },
     onRendererColumnReason: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.tdAttr = 'data-qtip="' + value + '"';
+        var me = this;
+        if (record.get('A3389PAIS') === 'CN') {
+            metaData.tdAttr = 'data-qtip="' + me.ToGB2312(value) + '"';
+        } else {
+            metaData.tdAttr = 'data-qtip="' + value + '"';
+        }
         return value;
     },
 

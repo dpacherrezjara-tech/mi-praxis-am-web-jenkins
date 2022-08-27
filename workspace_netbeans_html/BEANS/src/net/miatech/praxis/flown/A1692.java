@@ -28,6 +28,7 @@ public class A1692 {
     public String CARRIVA = "";
     public String ITINERA = "";
     public String LEGSEQ = "";
+    public String FDUP = "";
     public String NPLANE = "";
     public String ZONA = "" ; 
     

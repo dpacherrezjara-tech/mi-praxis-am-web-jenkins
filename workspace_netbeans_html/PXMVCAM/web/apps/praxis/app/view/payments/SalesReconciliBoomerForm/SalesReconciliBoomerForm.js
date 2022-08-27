@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1550,
+                                        width: 1750,
                                         align: 'center'
                                     },
                                     items: [
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
                                         {
                                             xtype: 'panel',
                                             height: 700,
-                                            width: 1550,
+                                            width: 1750,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1550,
+                                                    width: 1750,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

@@ -94,7 +94,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Options', {
                         },
 //                        {
 //                            xtype: 'button',
-//                            id: prototype.id + '-btnAdd',
+//                            id: prototype.id + '-btnProcess',
 //                            iconCls: 'prx-icon-add',
 //                            tooltip: 'New'
 //                        },

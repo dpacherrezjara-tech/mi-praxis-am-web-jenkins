@@ -22,50 +22,19 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
 //        this.btnSearch_click();
     },
     onMostrarFiltrosChange: function(cmp, newValue, oldValue, eOpts) {
-        this.limpiarFiltros();
         
-        var strModulo = this.getValue('cboModulo');
-        
-        switch (strModulo) {
-            case 'PSALES':
-            case 'PADM':
-            case 'PFOB':
-            case 'PCONSORTIA':
-            case 'PPSALES':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PFLOWN':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PAPINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-            case 'PARINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;            
-            case 'PADJMA':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-        }
     },
+    
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     setStoreData: function() {
-        var storeComboDataYear = win.getStoreYear(true);
-        Ext.getCmp(prototype.id+'-cmbDateYearFrom').bindStore(storeComboDataYear);
-        Ext.getCmp(prototype.id+'-cmbDateYearTo').bindStore(storeComboDataYear);
-
-        var storeComboDataMonth = win.getStoreMonth(true);
-        Ext.getCmp(prototype.id+'-cmbDateMonthFrom').bindStore(storeComboDataMonth);
-        Ext.getCmp(prototype.id+'-cmbDateMonthTo').bindStore(storeComboDataMonth);
+        var cboGroup = Ext.getCmp(prototype.id + '-cboGroup');
+        cboGroup.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "User"]
+            ]
+        }));
     },
     // </editor-fold>
     
@@ -74,8 +43,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         console.log(rec);
-        if(rec.data.A1955MODUL!=='PADM')
-            this.winDataEntry('U', rec);
+        this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -95,7 +63,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
-        var strModulo = this.getValue('cboModulo');
+        var strModulo = this.getValue('cboGroup');
         if (strModulo!=='') {
             this.setFormatParameter();
             this.setGridData();
@@ -103,7 +71,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
             global.Msg({
                 msg: 'Please select module.'
             });
-            this.focus('cboModulo');
+            this.focus('cboGroup');
         }
     },
     btnFilter_click: function(obj) {
@@ -127,9 +95,9 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
         });
     },
     btnClear_click: function(obj, e) {
-        this.limpiarFiltros();
+        //this.limpiarFiltros();
         
-        this.setValue("cboModulo", "");
+        //this.setValue("cboGroup", "");
         
         // <editor-fold defaultstate="collapsed" desc="Clear Grilla">
         Ext.getCmp(prototype.id+'-gridData').getStore().removeAll();
@@ -156,39 +124,18 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     
     // <editor-fold defaultstate="collapsed" desc="setFormatParameter">
     setFormatParameter: function() {
-        searchParams = {};
+        var group = Ext.getCmp(prototype.id + '-cboGroup').getValue();
+        var option = Ext.getCmp(prototype.id+'-codigo-option').getValue();
         
-        // <editor-fold defaultstate="collapsed" desc="llenarData">
-        var cboModulo = this.getValue('cboModulo');
-        switch (cboModulo) {
-            case 'PSALES': case 'PFLOWN': case 'PADJMA': case 'PCADUCOS': case 'PPSALES': case 'PADM': case 'PFOB': case 'PCONSORTIA':
-                searchParams.IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateFrom').getValue(), 'Ymd');
-                searchParams.IN_FECHA_ACUSE = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateTo').getValue(), 'Ymd');
-                break;
-            case 'PAPINT': case 'PARINT':
-                // <editor-fold defaultstate="collapsed" desc="Combo Date">
-                var fyear = Ext.getCmp(prototype.id+'-cmbDateYearFrom').getValue();
-                var fmonth = Ext.getCmp(prototype.id+'-cmbDateMonthFrom').getValue();
-                var fperiod = Ext.getCmp(prototype.id+'-cmbDatePeriodFrom').getValue();
-
-                var tyear = Ext.getCmp(prototype.id+'-cmbDateYearTo').getValue();
-                var tmonth = Ext.getCmp(prototype.id+'-cmbDateMonthTo').getValue();
-                var tperiod = Ext.getCmp(prototype.id+'-cmbDatePeriodTo').getValue();
-                // </editor-fold>
-                searchParams.IN_FECHA_PROCESO = fyear + fmonth + fperiod;
-                searchParams.IN_FECHA_ACUSE = tyear + tmonth + tperiod;
-                break;
-        }
-        searchParams.IN_MODULO = cboModulo;
-        searchParams.A1955STATU = this.getValue('cboEstado');
-        // </editor-fold>
+        searchParams = { 
+                group: group,
+                option: option
+            };
         
         // <editor-fold defaultstate="collapsed" desc="asignación">
         _path = prototype.url+'/getXLSX?' +
-                'IN_MODULO='+searchParams.IN_MODULO+'&' +
-                'IN_FECHA_PROCESO='+searchParams.IN_FECHA_PROCESO+'&' +
-                'IN_FECHA_ACUSE='+searchParams.IN_FECHA_ACUSE+'&' +
-                'A1955STATU='+searchParams.A1955STATU;
+                'group='+searchParams.group+'&' +
+                'option='+searchParams.option;
         // </editor-fold>
     },
     // </editor-fold>
@@ -236,27 +183,10 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
         }
     },
     limpiarFiltros: function() {
-        // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
-        Ext.getCmp(prototype.id+'-cmbDatePeriodFrom').setValue('');
-        Ext.getCmp(prototype.id+'-cmbDatePeriodTo').setValue('');
-        var mes = new Date().getMonth()+1;
-        if(mes < 10) mes = "0"+mes;
-        Ext.getCmp(prototype.id+'-cmbDateMonthFrom').setValue(mes);
-        Ext.getCmp(prototype.id+'-cmbDateMonthTo').setValue(mes);
-        Ext.getCmp(prototype.id+'-cmbDateYearFrom').setValue(new Date().getFullYear());
-        Ext.getCmp(prototype.id+'-cmbDateYearTo').setValue(new Date().getFullYear());
-        // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="Clear Campos">
-        this.setValue("cboEstado", "");
-        
-        this.setValue("txtDateFrom", "");
-        this.setValue("txtDateTo", "");
-        // </editor-fold>
-//      
-        // <editor-fold defaultstate="collapsed" desc="show">
-        Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-        Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
+        Ext.getCmp(prototype.id+'-cboGroup').setValue('1');
+        Ext.getCmp(prototype.id+'-codigo-option').setValue('');        
         // </editor-fold>
     },
 

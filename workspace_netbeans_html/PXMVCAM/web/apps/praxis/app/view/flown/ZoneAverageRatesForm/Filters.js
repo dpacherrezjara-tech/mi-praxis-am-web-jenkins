@@ -46,10 +46,26 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Filters', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<strong style="color:#000;">Flight Date </strong>',
+                            html: '<strong style="color:#000;">Search By: </strong>',
                             align: 'left',
                             fieldStyle: 'text-align: left;',
                             padding: '11px 7px 8px 10px'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbDateSel',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            width: 110,
+                            hidden: false,
+                             listeners:{
+                                change: 'showCheck'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -190,7 +206,29 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Filters', {
                             labelWidth: 60,
                             width: 150,
                             anchor: '100%'
-                        }
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkDetailAll',
+                            margin: '0 10 0 10',
+                            width: 50,
+                            boxLabel: '<b>All</b>',
+                            inputValue: '1',
+                            listeners:{
+                                change: 'btnSearch_click'
+                            }
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkChangeView',
+                            margin: '0 10 0 10',
+                            width: 140,
+                            boxLabel: '<b>Average By Zone</b>',
+                            inputValue: '0',
+                            listeners:{
+                                change: 'btnSearch_click'
+                            }
+                        },
                     ]
                 }
 

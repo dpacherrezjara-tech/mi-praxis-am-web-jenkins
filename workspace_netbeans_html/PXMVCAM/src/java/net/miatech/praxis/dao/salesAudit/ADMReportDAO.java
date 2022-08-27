@@ -289,9 +289,8 @@ public class ADMReportDAO {
                     if (rs01.getString("A2548CODR2") != null) {
                         objRtn.A2548CODR2 = rs01.getString("A2548CODR2") + "-" + rs01.getString("A2548DESC2");
                     }
-                    if (rs01.getString("A2548CODR3") != null) {
-                        objRtn.A2548DESC3 = rs01.getString("A2548CODR3") + "-" + rs01.getString("A2548DESC3");
-                    }
+                    objRtn.A2548DESC3 = rs01.getString("A2548DESC3");
+                    
                     objRtn.A2548CATNDOCUM = rs01.getInt("VL_CANTDOC");
                     objRtn.A2548CATNMEMO = rs01.getInt("A2548CATNMEMO");
 
@@ -1107,10 +1106,12 @@ public class ADMReportDAO {
                     objlst_CalcuImpuestos = new A1673();
 
                     objlst_CalcuImpuestos.A1673CDTAX = rs03.getString("A1673CDTAX");
-
+                    objlst_CalcuImpuestos.A1673CDATO = rs03.getString("A2739CDATO");
+                    
                     objlst_CalcuImpuestos.A1673TXORI = rs03.getDouble("A1673TXORI");
                     objlst_CalcuImpuestos.A1673TXMIA = rs03.getDouble("A1673TXMIA");
                     objlst_CalcuImpuestos.A1673TXDIF = rs03.getDouble("A1673TXDIF");
+                    
                     lst_CalcuImpuestos.add(objlst_CalcuImpuestos);
                 }
             }

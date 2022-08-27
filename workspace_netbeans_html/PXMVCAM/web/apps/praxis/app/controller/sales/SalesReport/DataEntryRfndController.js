@@ -15,6 +15,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
     exch: '',
     locCurr: '',
     revCurr: 'USD',
+    fare: 0,
     cant: 0,
     validador: 0,
     paramsDET: {},
@@ -472,6 +473,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
             Ext.getCmp(prototype.idRfnd + '-det-lblAuthorityNumber').setValue(file.TICKETAUTH.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblFARE2Cur').setValue(file.A713MDAFA.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').setValue(Ext.util.Format.number(file.A713FARE, '0,000.00'));
+            meDET.fare = file.A713FARE;
             Ext.getCmp(prototype.idRfnd + '-det-lblVoucherReason').setValue(file.A713VRIC.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblFFOP').setValue(file.A713FLAGTN.trim());
             if (file.A713TDOC.substr(0, 3) === 'EMD') {
@@ -485,7 +487,14 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
             Ext.getCmp(prototype.idRfnd + '-det-lblCpn2_1').setValue(file.A713CUPON2.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblCpn3_1').setValue(file.A713CUPON3.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblCpn4_1').setValue(file.A713CUPON4.trim());
-
+            
+            var status = meDET.modo==='R'?'CLOSED':Ext.String.trim(Ext.getCmp(prototype.idGr + '-de-lblStatus').getValue());
+            if(file.A713ORIG.trim()!=='MAN' || status==='CLOSED'){
+                Ext.getCmp(prototype.idRfnd + '-det-gridDetCpn-delete').hide();
+                Ext.getCmp(prototype.idRfnd + '-det-panelGridEMD-delete').hide();
+                Ext.getCmp(prototype.idRfnd + '-btnADD').hide();
+                Ext.getCmp(prototype.idRfnd + '-btnADDEmd').hide();
+            }
             meDET.llenarGrillaRFND(lstRFNDGrilla);
 
             var IN_TIPOCAP = meDET.modo==='R'?'A':Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
@@ -515,6 +524,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
             };
 
             meDET.cargarTotales();
+        }else{
+            Ext.getCmp(prototype.idRfnd + '-dataEntryRfnd').unmask('Loading...', '');
         }
     },
     cargarTotales: function () {
@@ -546,7 +557,10 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
 
                     //Ext.getCmp(prototype.id01 + '-txtFAREAero').getValue().replace(new RegExp(',', 'g'), '');
                     //Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').setValue(Ext.util.Format.number(file.A713FARE, '0,000.00'));
-                    if ((file2.FOP - (parseFloat(Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').getValue().replace(new RegExp(',', 'g'), '')) + file2.TAX)) !== 0) {
+                    //alert("Suma New 100:" + ((meDET.fare*100 + file2.TAX*100)/100));
+                    //alert("Calculo:" + file2.FOP - (parseFloat(Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').getValue().replace(new RegExp(',', 'g'), '')) + file2.TAX)));
+                    //if ((file2.FOP - (parseFloat(Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').getValue().replace(new RegExp(',', 'g'), '')) + file2.TAX)) !== 0) {
+                    if ((file2.FOP - ((meDET.fare * 100 + file2.TAX * 100) / 100)) !== 0) {
                         Ext.getCmp(prototype.idRfnd + '-det-lblUnbalance').show();
                     } else {
                         Ext.getCmp(prototype.idRfnd + '-det-lblUnbalance').hide();
@@ -1312,6 +1326,42 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                                 strVoid: ''//me1.gloA720TKVOID
                             }
                         }).show();
+                    }else{
+                        if (Ext.getCmp(prototype.idRfnd + '-det-lblConjuction').getValue() === 'C'){
+                            var ticket = '';
+                            var inttkt = Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().substr(2, 8);
+                            ticket = parseInt(inttkt) + 1;
+                            var valueValid = '00000000';
+                            var resultado = valueValid + ticket;
+                            resultado = resultado.substring(resultado.length - valueValid.length);
+                            ticket = Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().substr(0, 2) + resultado;
+                            bean.TDNR = Ext.getCmp(prototype.idRfnd + '-det-lblCia').getValue().trim() + ticket;
+                            Ext.Ajax.request({
+                                url: prototype.ProrrateoNew.url + '/searchDeliveryRFND',
+                                method: 'POST',
+                                timeout: 60000000,
+                                params: {beanString: JSON.stringify(bean)},
+                                success: function (response, opts) {
+                                    var res = Ext.JSON.decode(response.responseText);
+                                    if (res.success) {
+                                        var texto = res.strTextoBSP;
+                                        if (texto !== '') {
+                                            Ext.create('Ext.Praxis.view.screens.CtrlDeliveryOrigForm', {
+                                                id: 'CtrlDeliveryOrigForm',
+                                                params: {
+                                                    strTexto: texto,
+                                                    strVoid: ''//me1.gloA720TKVOID
+                                                }
+                                            }).show();
+                                        }
+                                    } else
+                                        global.Msg({msg: res.sesion});
+                                },
+                                failure: function (response, opts) {
+                                    console.log('server-side failure with status code ' + response.status);
+                                }
+                            });
+                        }
                     }
                 } else
                     global.Msg({msg: res.sesion});

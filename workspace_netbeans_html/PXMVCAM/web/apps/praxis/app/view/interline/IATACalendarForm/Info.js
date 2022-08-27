@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
-                            width: 820,
+                            width: 920,
                             height: 440,
                             columnLines: true,
                             columns: {
@@ -127,6 +127,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Info', {
                                         ]
                                     },
                                     {
+                                        text: 'Status', dataIndex: 'desSTVAL', width: 100
+                                    },                                    
+                                    {
                                         xtype: 'actioncolumn',
                                         text: 'Edit',
                                         sortable: false,
@@ -139,7 +142,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Info', {
                                                 handler: 'onEditClick'
                                             }
                                         ]
-                                    }
+                                    } 
                                 ]
                             }
                         }
