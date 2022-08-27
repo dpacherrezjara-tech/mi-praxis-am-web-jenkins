@@ -25,7 +25,10 @@ public class A1971 {
     public long QTYPAX = 0;
     public long QTYVNR = 0;
     public long QTYNRE = 0;
+    public long BASICM = 0;
+    public long QCPNVAL = 0;
     public double VCPN = 0;
+    public double TBASICM = 0;
     public double REVENUE = 0;
     public double YIELD = 0;
     //Auditoria

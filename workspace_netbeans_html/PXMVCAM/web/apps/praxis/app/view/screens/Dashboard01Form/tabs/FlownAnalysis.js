@@ -102,7 +102,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             click: 'viewDetFAFlight',
                                             args: ['']
                                         },
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "color:#057ECB;";
                                             value = '<b>' + value + '</b>';
                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
@@ -121,12 +121,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 columns: [
                                     {
                                         text: 'Flights', dataIndex: 'QTYFlight', width: 90,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#fcf9ec;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
@@ -134,12 +134,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: 'Pax', dataIndex: 'QTYPAX', width: 90,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#fcf9ec;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -148,12 +148,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: 'USD', dataIndex: 'VCPN', width: 100,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#fcf9ec;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -180,12 +180,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#e8f9e8";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -194,12 +194,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN_J', width: 65,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#e8f9e8";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -208,12 +208,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: '%', dataIndex: 'PerJ', width: 65,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#e8f9e8";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -222,12 +222,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'Avg', dataIndex: 'AVG_J', width: 65,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#e8f9e8";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -246,12 +246,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#deedfb";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -260,12 +260,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN_Y', width: 95,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#deedfb";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -274,12 +274,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: '%', dataIndex: 'PerY', width: 75,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#deedfb";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -288,12 +288,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'Avg', dataIndex: 'AVG_Y', width: 75,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#deedfb";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -322,12 +322,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Reported', dataIndex: 'QTYVNR', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -346,12 +346,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Revenue', dataIndex: 'QTYNRE', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -362,12 +362,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: '%', dataIndex: 'Per2', width: 80,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -377,7 +377,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 ]
                             },
                             {text: '', dataIndex: 'strRuta', width: 20,
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     if (value === '1')
                                         return '<img src="resources/img/botones/check.png">';
                                     else
@@ -397,12 +397,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 columns: [
                                     {
                                         text: 'Pax', dataIndex: 'QBNPAX', width: 70,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -411,12 +411,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: 'USD', dataIndex: 'AMTBN', width: 70,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -461,7 +461,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "color:#057ECB;";
                                             value = '<b>' + value + '</b>';
                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
@@ -481,12 +481,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 columns: [
                                     {
                                         text: 'Pax', dataIndex: 'QTYPAX', width: 90,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#fcf9ec;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -494,12 +494,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: 'USD', dataIndex: 'VCPN', width: 100,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#fcf9ec;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -526,12 +526,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'PAX', dataIndex: 'QTYVNR', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -540,12 +540,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'PerCAP', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -554,12 +554,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: '%', dataIndex: 'Per1', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -578,12 +578,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'PAX', dataIndex: 'QTYNRE', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -592,12 +592,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPNRE', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -608,12 +608,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: '%', dataIndex: 'Per2', width: 80,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridFAmonth').getStore().getData().items[0].data;
 
                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -623,7 +623,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 ]
                             },
                             {text: '', dataIndex: 'strRuta', width: 20,
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     if (value === '1')
                                         return '<img src="resources/img/botones/check.png">';
                                     else
@@ -688,7 +688,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "color:#057ECB;";
                                             value = '<b>' + value + '</b>';
                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
@@ -710,12 +710,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
@@ -737,11 +737,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -752,11 +752,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -778,11 +778,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#9ccfbf;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_F, '0,000') + '<b>';
@@ -793,11 +793,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#9ccfbf;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPN_F, '0,000') + '<b>';
@@ -819,11 +819,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
@@ -834,11 +834,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPN_J, '0,000') + '<b>';
@@ -860,11 +860,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#04C5DA;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQCPNON, '0,000') + '<b>';
@@ -875,11 +875,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#04C5DA;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPNON, '0,000') + '<b>';
@@ -901,11 +901,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQCPNOAL, '0,000') + '<b>';
@@ -916,11 +916,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totPer1, '0,000.00') + '<b>';
@@ -931,11 +931,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPNOAL, '0,000') + '<b>';
@@ -946,11 +946,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         /*listeners: {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
-                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totPer2, '0,000.00') + '<b>';
@@ -960,93 +960,92 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                             },
                         ]
                     }
-                },  
+                },
                 /*
-                
-                {
-                    xtype: 'cartesian',
-                    id: prototype.id + '-displayChart01',
-                    width: '100%',
-                    hidden: false,
-                    border: false,
-//                    height: 350,
-                    background: '#E0F8F7',
-                    captions: {
-                        title: {
-                            text: 'Total by Month\n\Tickets',
-                            alignTo: 'chart'
-                        }
-                    },
-                    animation: {
-                        duration: 200
-                    },
-                    interactions: ['itemhighlight'],
-                    legend: {
-                        docked: 'bottom',
-                        background: '#E3EAEF'
-                    },
-                    axes: [{
-                            type: 'numeric3d',
-                            position: 'left',
-                            fields: ['QTYFlight', 'QTYPAX_F'],
-                            grid: true,
-                            title: '',
-                            //title: 'Millions of USD',
-                            renderer: function (obj, value) {
-                                if (value > 1) {
-                                    if ((value / 1000).toString().length > 3) {
-                                        return  '$' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
-                                    } else {
-                                        return  '$' + Ext.util.Format.number((value / 1000), '0') + 'K';
-                                    }
-                                } else {
-                                    return '';
-                                }
-                            }
-                        }, {
-                            type: 'category3d',
-                            position: 'bottom',
-    //                                                            fields: 'strFormatDate',
-                            grid: true,
-                            title: {
-                                text: 'State',
-                                translationX: -30
-                            }
-                        }],
-                    series: [{
-                            type: 'bar3d',
-                            stacked: false,
-                            title: ['Received', 'Accounted'],
-                            xField: 'strFormatDate',
-                            yField: ['QTYFlight', 'QTYPAX_F'],
-                            colors: ['#3333FF', '#ADFFAD'],
-                            highlight: true,
-                            style: {
-                                inGroupGapWidth: -7,
-                                minGapWidth: 2,
-                                maxBarWidth: 1200
-                            },
-                            tooltip: {
-                                trackMouse: true,
-                                height: 28,
-                                renderer: function (toolTip, record, ctx) {
-                                    var label = '';
-                                    if (ctx.field === 'QTYFlight') {
-                                        label = 'Received';
-                                    } else if (ctx.field === 'QTYPAX_F') {
-                                        label = 'Accounted';
-                                    }
-                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
-                                }
-                            }
-                        }]
-                }
-                
-                */
-                
+                 
+                 {
+                 xtype: 'cartesian',
+                 id: prototype.id + '-displayChart01',
+                 width: '100%',
+                 hidden: false,
+                 border: false,
+                 //                    height: 350,
+                 background: '#E0F8F7',
+                 captions: {
+                 title: {
+                 text: 'Total by Month\n\Tickets',
+                 alignTo: 'chart'
+                 }
+                 },
+                 animation: {
+                 duration: 200
+                 },
+                 interactions: ['itemhighlight'],
+                 legend: {
+                 docked: 'bottom',
+                 background: '#E3EAEF'
+                 },
+                 axes: [{
+                 type: 'numeric3d',
+                 position: 'left',
+                 fields: ['QTYFlight', 'QTYPAX_F'],
+                 grid: true,
+                 title: '',
+                 //title: 'Millions of USD',
+                 renderer: function (obj, value) {
+                 if (value > 1) {
+                 if ((value / 1000).toString().length > 3) {
+                 return  '$' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                 } else {
+                 return  '$' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                 }
+                 } else {
+                 return '';
+                 }
+                 }
+                 }, {
+                 type: 'category3d',
+                 position: 'bottom',
+                 //                                                            fields: 'strFormatDate',
+                 grid: true,
+                 title: {
+                 text: 'State',
+                 translationX: -30
+                 }
+                 }],
+                 series: [{
+                 type: 'bar3d',
+                 stacked: false,
+                 title: ['Received', 'Accounted'],
+                 xField: 'strFormatDate',
+                 yField: ['QTYFlight', 'QTYPAX_F'],
+                 colors: ['#3333FF', '#ADFFAD'],
+                 highlight: true,
+                 style: {
+                 inGroupGapWidth: -7,
+                 minGapWidth: 2,
+                 maxBarWidth: 1200
+                 },
+                 tooltip: {
+                 trackMouse: true,
+                 height: 28,
+                 renderer: function (toolTip, record, ctx) {
+                 var label = '';
+                 if (ctx.field === 'QTYFlight') {
+                 label = 'Received';
+                 } else if (ctx.field === 'QTYPAX_F') {
+                 label = 'Accounted';
+                 }
+                 toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                 }
+                 }
+                 }]
+                 }
+                 
+                 */
+
             ]
         },
-        
         // -------------------------- FLOWN --------------------------
         {
             xtype: 'panel',
@@ -1123,7 +1122,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                         {
                             xtype: 'radiogroup',
                             id: prototype.id + '-radioFlownAnalysis',
-                            width: 530,
+                            width: 650,
                             border: 1,
                             style: {
                                 borderColor: 'black',
@@ -1134,6 +1133,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 {boxLabel: '<b style="color:#148D28;">By Zone</b>', inputValue: 'Z', name: 'rbgpDetail'},
                                 {boxLabel: '<b style="color:#148D28;">By City Pair</b>', inputValue: 'C', name: 'rbgpDetail'},
                                 {boxLabel: '<b style="color:#148D28;">By Aircraft</b>', inputValue: 'P', name: 'rbgpDetail'},
+                                {boxLabel: '<b style="color:#148D28;">Flight Profitability</b>', inputValue: 'FP', name: 'rbgpDetail'},
                             ],
                             listeners: {
                                 change: 'ChangueFlown_clickHandler'
@@ -1192,7 +1192,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     click: 'viewDetail',
                                                     args: ['FLIGHT']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -1210,12 +1210,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Flight', dataIndex: 'QTYFlight', width: 60,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
 //                                                    value = '<b>' + value + '</b>';
                                                     return value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
@@ -1247,14 +1247,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 90,
                                                 listeners: {
                                                     click: 'viewDetailByCabin',
-                                                    args: ['','FLIGHT']
+                                                    args: ['', 'FLIGHT']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;color:#057ECB;";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -1262,12 +1262,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -1295,14 +1295,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
                                                         listeners: {
                                                             click: 'viewDetailByCabin',
-                                                            args: ['J','FLIGHT']
+                                                            args: ['J', 'FLIGHT']
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8;color:#057ECB;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1311,12 +1311,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1325,12 +1325,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -1350,14 +1350,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
                                                         listeners: {
                                                             click: 'viewDetailByCabin',
-                                                            args: ['Y','FLIGHT']
+                                                            args: ['Y', 'FLIGHT']
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb;color:#057ECB;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1366,12 +1366,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1380,12 +1380,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_Y', width: 75,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -1413,12 +1413,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Reported', dataIndex: 'QTYVNR', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYVNR, '0,000') + '<b>';
@@ -1436,12 +1436,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYNRE', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1450,12 +1450,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPNRE', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1476,12 +1476,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QBNPAX', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -1490,12 +1490,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'AMTBN', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -1547,7 +1547,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     align: 'center'
                                 },
                                 items: [
-
                                     {
                                         text: 'Zone',
                                         defaults: {
@@ -1561,14 +1560,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     click: 'viewDetail',
                                                     args: ['ZONE']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 }
                                             },
                                             {text: 'Name', dataIndex: 'strZona', width: 130,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left";
                                                     return value;
                                                 }
@@ -1585,12 +1584,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Flight', dataIndex: 'QTYFlight', width: 60,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
-        //                                            value = '<b>' + value + '</b>';
+                                                    //                                            value = '<b>' + value + '</b>';
                                                     return value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
@@ -1610,14 +1609,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 90,
                                                 listeners: {
                                                     click: 'viewDetailByCabin',
-                                                    args: ['','ZONE']
+                                                    args: ['', 'ZONE']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;text-align:right;background-color:#fcf9ec;";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -1625,12 +1624,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -1658,14 +1657,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
                                                         listeners: {
                                                             click: 'viewDetailByCabin',
-                                                            args: ['J','ZONE']
+                                                            args: ['J', 'ZONE']
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#e8f9e8;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
@@ -1673,12 +1672,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1687,12 +1686,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -1712,14 +1711,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
                                                         listeners: {
                                                             click: 'viewDetailByCabin',
-                                                            args: ['Y','ZONE']
+                                                            args: ['Y', 'ZONE']
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#deedfb;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1728,12 +1727,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1742,12 +1741,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_Y', width: 75,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -1775,12 +1774,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Reported', dataIndex: 'QTYVNR', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYVNR, '0,000') + '<b>';
@@ -1798,12 +1797,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Revenue', dataIndex: 'QTYNRE', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -1824,12 +1823,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QBNPAX', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -1838,12 +1837,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'AMTBN', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -1909,7 +1908,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
 //                                                    click: 'viewDetail',
 //                                                    args: ['FLIGHT']
 //                                                },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -1926,11 +1925,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         },
                                         columns: [
                                             {text: 'Orig - Dest', dataIndex: 'strRuta', width: 100,
-        //                                        listeners: {
-        //                                            click: 'viewDetail',
-        //                                            args: ['FLIGHT']
-        //                                        },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                //                                        listeners: {
+                                                //                                            click: 'viewDetail',
+                                                //                                            args: ['FLIGHT']
+                                                //                                        },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -1948,12 +1947,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Flight', dataIndex: 'QTYFlight', width: 60,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
-        //                                            value = '<b>' + value + '</b>';
+                                                    //                                            value = '<b>' + value + '</b>';
                                                     return value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
@@ -1973,15 +1972,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 90,
                                                 listeners: {
-        //                                            click: 'viewDetail',
-        //                                            args: ['FLIGHT']
+                                                    //                                            click: 'viewDetail',
+                                                    //                                            args: ['FLIGHT']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;text-align:right;background-color:#fcf9ec;";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -1989,12 +1988,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -2020,12 +2019,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#e8f9e8;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2034,12 +2033,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2048,12 +2047,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -2071,12 +2070,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#deedfb;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2085,12 +2084,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2099,12 +2098,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_Y', width: 75,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -2132,12 +2131,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Reported', dataIndex: 'QTYVNR', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYVNR, '0,000') + '<b>';
@@ -2155,12 +2154,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Revenue', dataIndex: 'QTYNRE', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2181,12 +2180,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QBNPAX', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -2195,12 +2194,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'AMTBN', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByCityPair').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -2260,18 +2259,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
 //                                            align: 'center'
 //                                        },
 //                                        columns: [
-                                            {
-                                                text: 'Aircraft', dataIndex: 'NPLANE', width: 90,
+                                    {
+                                        text: 'Aircraft', dataIndex: 'NPLANE', width: 90,
 //                                                listeners: {
 //                                                    click: 'viewDetail',
 //                                                    args: ['FLIGHT']
 //                                                },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "color:#057ECB;";
-                                                    value = '<b>' + value + '</b>';
-                                                    return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
-                                                }
-                                            },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "color:#057ECB;";
+                                            value = '<b>' + value + '</b>';
+                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                        }
+                                    },
 //                                        ]
 //                                    },
                                     {
@@ -2284,12 +2283,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Flight', dataIndex: 'QTYFlight', width: 60,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
-        //                                            value = '<b>' + value + '</b>';
+                                                    //                                            value = '<b>' + value + '</b>';
                                                     return value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
@@ -2309,15 +2308,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 90,
                                                 listeners: {
-        //                                            click: 'viewDetail',
-        //                                            args: ['FLIGHT']
+                                                    //                                            click: 'viewDetail',
+                                                    //                                            args: ['FLIGHT']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;text-align:right;background-color:#fcf9ec;";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -2325,12 +2324,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -2356,12 +2355,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#e8f9e8;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2370,12 +2369,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2384,12 +2383,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -2407,12 +2406,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#deedfb;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2421,12 +2420,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2435,12 +2434,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_Y', width: 75,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -2468,12 +2467,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Reported', dataIndex: 'QTYVNR', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYVNR, '0,000') + '<b>';
@@ -2491,12 +2490,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Revenue', dataIndex: 'QTYNRE', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2517,12 +2516,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QBNPAX', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -2531,12 +2530,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'AMTBN', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -2550,7 +2549,297 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                         }
                     ]
                 },
-                
+                // -------------------------- BY FLIGHT PROFITABILITY --------------------------
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxByFlightProfitability',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-gridDataByFlightProfitability',
+                            width: 1420,
+                            height: 'auto',
+//                            height: 353,
+                            columnLines: true,
+                            hidden: false,
+                            margin: "5 0 0 0",
+                            features: [{
+                                    ftype: 'summary',
+                                    //dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {
+                                        text: 'Flight',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Date', dataIndex: 'DFLIGHT', width: 80,
+//                                                listeners: {
+//                                                    click: 'viewDetail',
+//                                                    args: ['FLIGHT']
+//                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "color:#057ECB;";
+                                                    //value = '<b>' + value + '</b>';
+                                                    //return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Number', dataIndex: 'NFLIGHT', width: 80,
+//                                                listeners: {
+//                                                    click: 'viewDetail',
+//                                                    args: ['FLIGHT']
+//                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "color:#057ECB;";
+                                                    //value = '<b>' + value + '</b>';
+                                                    //return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                    return value;
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Aircraft', dataIndex: 'NPLANE', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            //metaData.style = "color:#057ECB;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Route',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Orig - Dest', dataIndex: 'strRuta', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "color:#057ECB;";
+                                                    return value;
+                                                }
+                                            }
+                                        ]
+                                    },                                    
+                                    {
+                                        text: 'Class', dataIndex: 'CLAS', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            //metaData.style = "color:#057ECB;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Pax',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Type', dataIndex: '', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "color:#057ECB;";
+                                                    return value;
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'USD',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Amount', dataIndex: 'VCPN', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return Ext.util.Format.number(data.totVCPN, '0,000.00');
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Miles', dataIndex: 'BASICM', width: 100,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                            //                                            value = '<b>' + value + '</b>';
+                                            return value;
+                                        },
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return Ext.util.Format.number(data.totBASICM, '0,000');
+                                        }
+                                    },
+                                    {
+                                        text: 'Mile',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Amount', dataIndex: 'TBASICM', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.000000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return Ext.util.Format.number(data.totTBASICM, '0,000.000000');
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Operation',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Cost', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#fcf9ec";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'General',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Cost', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#fcf9ec";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                   return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Operation',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Difference', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#fcf9ec";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Utility',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Loss', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#fcf9ec";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Accumulated Month',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Revenue', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#f5cebf";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                            {
+                                                text: 'Cost', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;background-color:#f5cebf";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                            {
+                                                text: 'Loss', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;background-color:#f5cebf";
+                                                    //                                            value = '<b>' + value + '</b>';
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },                                                
+                                            },
+                                        ]
+                                    },
+                                ]
+                            }
+                        }
+                    ]
+                },
                 // ----------------- Drilldown BY ALL---------------------
                 {
                     xtype: 'panel',
@@ -2602,7 +2891,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     click: 'viewDetailByCupon',
                                                     args: ['DETAIL']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -2610,7 +2899,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'Number', dataIndex: 'NFLIGHT', width: 60,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 //                                                    metaData.style = "color:#057ECB;";
 //                                                    value = '<b>' + value + '</b>';
                                                     return value;
@@ -2641,12 +2930,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 90,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -2654,12 +2943,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             },
                                             {
                                                 text: 'USD', dataIndex: 'VCPN', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -2687,14 +2976,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
                                                         listeners: {
                                                             click: 'viewDetailByCabin',
-                                                            args: ['J','DETAIL']
+                                                            args: ['J', 'DETAIL']
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8;color:#057ECB;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
@@ -2702,12 +2991,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2716,12 +3005,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_J', width: 65,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e8f9e8";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -2741,15 +3030,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
                                                         listeners: {
                                                             click: 'viewDetailByCabin',
-                                                            args: ['Y','DETAIL']
+                                                            args: ['Y', 'DETAIL']
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb;color:#057ECB;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_Y, '0,000') + '<b>';
@@ -2757,12 +3046,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPN_Y', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
 
                                                             metaData.style = 'text-align:right; margin-right:3px ';
@@ -2771,12 +3060,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'Avg', dataIndex: 'AVG_Y', width: 75,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#deedfb";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '';
@@ -2794,12 +3083,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QBNPAX', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQBNPAX, '0,000') + '<b>';
@@ -2807,12 +3096,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'AMTBN', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totAMTBN, '0,000') + '<b>';
@@ -2868,7 +3157,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         listeners: {
                                             click: 'displayMasterTkt_clickHandler'
                                         },
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "color:#057ECB;";
                                             value = '<b>' + value + '</b>';
                                             return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -2885,18 +3174,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             {text: 'Date', dataIndex: 'strFormatFVTA', width: 100},
                                             {
                                                 text: 'Country', dataIndex: 'PSVVTA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;";
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescPSVVTA+'"';
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescPSVVTA + '"';
                                                     return  value;
                                                 }
                                             },
                                             {text: 'Agent', dataIndex: 'AGTIA', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;";
-                                                    metaData.tdAttr = 'data-qtip="' + data.strDescAgente+'"';
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescAgente + '"';
                                                     return  value;
                                                 }
                                             },
@@ -2909,11 +3198,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 },
                                                 columns: [
                                                     {text: 'Basis', dataIndex: 'FBASE', width: 110,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        metaData.style = "text-align:left;";
-                                                        return  value;
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+                                                            return  value;
+                                                        }
                                                     }
-                                                }
                                                 ]
                                             }
                                         ]
@@ -2928,7 +3217,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {text: 'Date', dataIndex: 'strFormatDate', width: 100},
                                             {text: 'Zone', dataIndex: 'ZONA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + data.strZona + '"';
@@ -2936,7 +3225,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 }
                                             },
                                             {text: 'Orig', dataIndex: 'CDEPART', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + data.strDescCDEPART + '"';
@@ -2944,7 +3233,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 }
                                             },
                                             {text: 'Dest', dataIndex: 'CARRIVA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + data.strDescCARRIVA + '"';
@@ -2966,12 +3255,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'USD', dataIndex: 'VCPN', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridCoupon').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.difVakues, '0,000') + '<b>';
@@ -2984,7 +3273,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                         }
                     ]
                 },
-                
                 {
                     xtype: 'panel',
                     id: prototype.id + '-boxDetailByCabin',
@@ -3035,7 +3323,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     click: 'viewDetailByCupon',
                                                     args: ['CABIN']
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -3053,7 +3341,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Basis', dataIndex: 'FBASE', width: 150,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left;";
                                                     return value;
                                                 }
@@ -3063,12 +3351,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     {text: 'RBD', dataIndex: 'CLAS', width: 70},
                                     {
                                         text: 'Pax', dataIndex: 'QTYPAX', width: 80,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridDetailByCabin').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
@@ -3077,12 +3365,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     {text: 'Currency', dataIndex: 'strDescripcion4', width: 90},
                                     {
                                         text: 'Value', dataIndex: 'VCPN', width: 90,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
-                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridDetailByCabin').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
@@ -3098,7 +3386,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         columns: [
                                             {
                                                 text: 'Fare', dataIndex: 'AVG', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;

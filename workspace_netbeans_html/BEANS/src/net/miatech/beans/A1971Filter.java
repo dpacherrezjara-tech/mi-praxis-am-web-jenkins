@@ -111,7 +111,9 @@ public class A1971Filter extends A1971 {
     public long totQCPNOAL = 0;
     public double totVCPNOAL = 0;
     
-
+    public double totTBASICM = 0;
+    public long totBASICM = 0;
+    public long totQCPNVAL= 0;
     
     public Pagination page = new Pagination();
 }
