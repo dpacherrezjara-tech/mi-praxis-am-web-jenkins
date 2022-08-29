@@ -5507,6 +5507,11 @@ public class Dashboard01DAO {
 
         List<A1971Filter> lstRtn = new ArrayList<A1971Filter>(0);
         A1971Filter objRtn;
+        HashMap hmDescTPAX = new HashMap();
+        hmDescTPAX.put("", "");
+        hmDescTPAX.put("A", "Adult");
+        hmDescTPAX.put("C", "Children");
+        hmDescTPAX.put("I", "Infant");
         long QCPNVAL = 0, BASICM = 0;
         double VCPN = 0, TBASICM = 0;
 
@@ -5564,7 +5569,7 @@ public class Dashboard01DAO {
                     objRtn.IN_NFLIGHT = filter.IN_NFLIGHT;
                     objRtn.IN_CPAIR = filter.IN_CPAIR;
                     objRtn.DFLIGHT = rs01.getString("DFLIGHT");
-                    objRtn.strFormatDate = Functions.getMonthConvert6(objRtn.DFLIGHT.substring(0,6));
+                    objRtn.strFormatDate = Functions.getMonthConvert6(objRtn.DFLIGHT.substring(0, 6));
                     objRtn.CDEPART = rs01.getString("CDEPART");
                     objRtn.CARRIVA = rs01.getString("CARRIVA");
                     //objRtn.strDescripcion1 = rs01.getString("DES_CO") + " - " + rs01.getString("DES_CD");
@@ -5574,12 +5579,18 @@ public class Dashboard01DAO {
                     objRtn.NPLANE = rs01.getString("NPLANE").trim();
                     objRtn.CLAS = rs01.getString("CLAS").trim();
                     objRtn.CABI = rs01.getString("CABI").trim();
+                    objRtn.TPAX = rs01.getString("TPAX").trim();
+                    if (hmDescTPAX.containsKey(objRtn.TPAX)) {
+                        objRtn.strDescTPAX = hmDescTPAX.get(objRtn.TPAX).toString();
+                    } else {
+                        objRtn.strDescTPAX = objRtn.TPAX;
+                    }
                     
                     //Total
                     objRtn.VCPN = rs01.getDouble("VCPN");
                     objRtn.TBASICM = rs01.getDouble("TBASICM");
-                    objRtn.BASICM = rs01.getLong("BASICM");                    
-                    objRtn.QCPNVAL = rs01.getLong("QCPNVAL");                    
+                    objRtn.BASICM = rs01.getLong("BASICM");
+                    objRtn.QCPNVAL = rs01.getLong("QCPNVAL");
 
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;

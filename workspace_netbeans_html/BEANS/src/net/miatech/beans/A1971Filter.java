@@ -34,6 +34,8 @@ public class A1971Filter extends A1971 {
     public String strTop = "";
     public String strTipoQTY = "";
     public String strTipoInfo = "";
+    public String TPAX = "";
+    public String strDescTPAX = "";
     public long QTYFlight = 0;
     public long KMS_1 = 0;
     //CLASE F
