@@ -2662,7 +2662,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         },
                                         columns: [
                                             {
-                                                text: 'Type', dataIndex: '', width: 90,
+                                                text: 'Type', dataIndex: 'strDescTPAX', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     //metaData.style = "color:#057ECB;";
                                                     return value;
