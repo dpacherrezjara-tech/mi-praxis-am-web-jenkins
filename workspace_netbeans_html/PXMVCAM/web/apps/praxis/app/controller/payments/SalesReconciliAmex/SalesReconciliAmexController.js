@@ -2612,6 +2612,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         if (rec.data.RECTYPE !== 'CHARGEBACK') {
             this.winDataEntrySettlement('U', rec);
         }
+        if (rec.data.RECTYPE === 'CHARGEBACK') {
+            this.winDataEntryChargeback('U', rec);
+        }
 
     },
     winDataEntrySettlement: function (action, rec) {
@@ -2620,6 +2623,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement', {
             id: prototype.id + '-dataEntrySettlement',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    winDataEntryChargeback: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback', {
+            id: prototype.id + '-dataEntryChargeback',
             params: {
                 action: action,
                 rec: rec

@@ -740,10 +740,10 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
-                    
-                    if (beanTkt.DIFF_PNETAMOU != 0){
+
+                    if (beanTkt.DIFF_PNETAMOU != 0) {
                         lstTkts.add(beanTkt);
-                    }                    
+                    }
                 }
                 rst.close();
             }
@@ -2854,6 +2854,116 @@ public class SalesReconciliAmexDAO {
                 }
                 rst.close();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+
+    public List<A4116Filter> loadPX570SQP04619(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", "Sales Without Settlement");
+        hmDescEstados.put("3", "Settlement Without Sales");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
+        hmDescEstados.put("8", "Pending RFND");
+
+        HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
+        hmDescTDOC.put("", "");
+        hmDescTDOC.put("S", "Sales");
+        hmDescTDOC.put("R", "Refund");
+        hmDescTDOC.put("A", "Adjust.");
+        hmDescTDOC.put("N", "ADM");
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04619(?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.CHADJNBR);
+            cstmt.setString(3, filter.CHAADJCOD);
+            cstmt.setString(4, filter.MERCHID);
+            cstmt.setString(5, filter.SMERCHID);
+            cstmt.setString(6, filter.AXPAYNBR);
+            cstmt.setString(7, filter.PRDA);
+            cstmt.setString(8, filter.PAYDATE);
+            cstmt.setString(9, filter.BSUMDATE);
+            cstmt.setString(10, filter.ISREFNBR);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+
+                beanTkt = new A4116Filter();
+
+                beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                beanTkt.ZONA = rst.getString("ZONA").trim();
+                beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                beanTkt.PRDA = rst.getString("PRDA").trim();
+                beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
+                beanTkt.CHAADJCOD = rst.getString("CHAADJCOD");
+                beanTkt.CHAADJDES = rst.getString("CHAADJDES").trim();
+                beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
+                beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
+                beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
+                beanTkt.SDATES = rst.getString("SDATES").trim();
+                beanTkt.SAGENT = rst.getString("SAGENT").trim();
+                beanTkt.SPNR = rst.getString("SPNR").trim();
+                beanTkt.IDCONFLE = rst.getString("IDCONFLE").trim();
+                beanTkt.IDCON = rst.getString("IDCON").trim();
+                beanTkt.FCONT = rst.getString("FCONT").trim();
+                beanTkt.STCON = rst.getString("STCON").trim();
+
+                beanTkt.USCR = rst.getString("USCR");
+                beanTkt.FECR = rst.getString("FECR");
+                beanTkt.HOCR = rst.getString("HOCR");
+                beanTkt.USUP = rst.getString("USUP");
+                beanTkt.FEUP = rst.getString("FEUP");
+                beanTkt.HOUP = rst.getString("HOUP");
+
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
 
         } catch (Exception e) {
             e.printStackTrace();
