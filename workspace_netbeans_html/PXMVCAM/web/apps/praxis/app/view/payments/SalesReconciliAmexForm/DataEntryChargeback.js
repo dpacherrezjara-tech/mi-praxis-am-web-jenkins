@@ -295,7 +295,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtSAUTHOC',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
+                                    fieldStyle: 'text-align:center;',
                                     readOnly: true,
                                     width: 100,
                                 },
@@ -359,7 +359,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                     id: prototype.id + '-de-txtNETAMOUN',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     readOnly: true,
-                                    fieldStyle: 'text-align:center;',
+                                    fieldStyle: 'text-align:right;',
                                     width: 100,
                                 },
                                 
@@ -393,8 +393,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtSDATES',
-                                    fieldStyle: 'text-align:right',
+                                    id: prototype.id + '-de-txtSDATES',
+                                    fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
@@ -409,7 +409,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtSAGENT',
+                                    id: prototype.id + '-de-txtSAGENT',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -425,7 +425,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtSPNR',
+                                    id: prototype.id + '-de-txtSPNR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -461,8 +461,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtIDCONFLE',
-                                    fieldStyle: 'text-align:right',
+                                    id: prototype.id + '-de-txtIDCONFLE',
+                                    fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 640
@@ -486,8 +486,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtIDCON',
-                                    fieldStyle: 'text-align:right',
+                                    id: prototype.id + '-de-txtIDCON',
+                                    fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 370
@@ -502,8 +502,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFCONT',
-                                    fieldStyle: 'text-align:right',
+                                    id: prototype.id + '-de-txtFCONT',
+                                    fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
@@ -527,8 +527,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtSTCON',
-                                    fieldStyle: 'text-align:right',
+                                    id: prototype.id + '-de-txtSTCON',
+                                    fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100

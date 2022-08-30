@@ -740,10 +740,10 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
-                    
-                    if (beanTkt.DIFF_PNETAMOU != 0){
+
+                    if (beanTkt.DIFF_PNETAMOU != 0) {
                         lstTkts.add(beanTkt);
-                    }                    
+                    }
                 }
                 rst.close();
             }
@@ -2878,7 +2878,7 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4116Filter> loadPX570SQP04619(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
@@ -2903,7 +2903,6 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
 
-
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -2927,46 +2926,44 @@ public class SalesReconciliAmexDAO {
 
             cstmt.execute();
 
-                rst = cstmt.getResultSet();
-                while (rst.next()) {
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
-                    beanTkt.IN_DATE = filter.IN_DATE.trim();
-                    beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
-                    beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
-                    beanTkt.IN_ISREFNBR = filter.ISREFNBR.trim();
-                    beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
-                    beanTkt.IN_TGROSAMOUN = filter.IN_TGROSAMOUN;
-                    beanTkt.IN_descSTVAL = filter.IN_descSTVAL;
+                beanTkt = new A4116Filter();
 
-                    beanTkt.RN = rst.getString("RN").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
-                    beanTkt.ZONA = rst.getString("ZONA").trim();
-                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
-                    beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
-                    beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
-                    beanTkt.PRDA = rst.getString("PRDA").trim();
-                    beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
-                    beanTkt.CHAADJCOD = rst.getString("CHAADJCOD");
-                    beanTkt.CHAADJDES = rst.getString("CHAADJDES").trim();
-                    beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
-                    beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                    beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
-                    beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
-                    beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
-                    beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
-                    beanTkt.SDATES = rst.getString("SDATES").trim();
-                    beanTkt.SAGENT = rst.getString("SAGENT").trim();
-                    beanTkt.SPNR = rst.getString("SPNR").trim();
-                    beanTkt.IDCONFLE = rst.getString("SPNR").trim();
-                    beanTkt.IDCON = rst.getString("IDCON").trim();
-                    beanTkt.FCONT = rst.getString("FCONT").trim();
-                    beanTkt.STCON = rst.getString("STCON").trim();
+                beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                beanTkt.ZONA = rst.getString("ZONA").trim();
+                beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                beanTkt.PRDA = rst.getString("PRDA").trim();
+                beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
+                beanTkt.CHAADJCOD = rst.getString("CHAADJCOD");
+                beanTkt.CHAADJDES = rst.getString("CHAADJDES").trim();
+                beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
+                beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
+                beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
+                beanTkt.SDATES = rst.getString("SDATES").trim();
+                beanTkt.SAGENT = rst.getString("SAGENT").trim();
+                beanTkt.SPNR = rst.getString("SPNR").trim();
+                beanTkt.IDCONFLE = rst.getString("IDCONFLE").trim();
+                beanTkt.IDCON = rst.getString("IDCON").trim();
+                beanTkt.FCONT = rst.getString("FCONT").trim();
+                beanTkt.STCON = rst.getString("STCON").trim();
 
-                    lstTkts.add(beanTkt);
-                }
-                rst.close();
-            
+                beanTkt.USCR = rst.getString("USCR");
+                beanTkt.FECR = rst.getString("FECR");
+                beanTkt.HOCR = rst.getString("HOCR");
+                beanTkt.USUP = rst.getString("USUP");
+                beanTkt.FEUP = rst.getString("FEUP");
+                beanTkt.HOUP = rst.getString("HOUP");
+
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
 
         } catch (Exception e) {
             e.printStackTrace();

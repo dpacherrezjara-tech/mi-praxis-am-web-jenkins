@@ -1,7 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebackSalesReconciliAmexController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryChargebackSalesReconciliAmexController',
-    meDE: '',
+    meCBDE: '',
     actionCode: '',
     msjValidate: '',
     bean: {},
@@ -13,13 +13,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
     dataObtain: {},
     lstSendManual: [],
     beanChargebackTktsDetail: {},
-    paramsDetailDEDetTktChargeback : {},
+    paramsDetailDEDetTktChargeback: {},
     beanStringGrid: {},
     sumAmount: 0,
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
-        meDE = this;
+        meCBDE = this;
 
         this.lstSendManual = [];
 
@@ -47,7 +47,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
         }
     },
     mostrarData: function () {
-
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
         this.setValue('de-txtZone', this.beanResult.ZONA);
         this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
@@ -71,7 +70,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
         this.setValue('de-txtFCONT', this.beanResult.FCONT);
         this.setValue('de-txtSTCON', this.beanResult.STCON);
         
-        this.getDataGrid();
+        this.setValue('txtUSCR', this.beanResult.USCR);
+        this.setValue('txtFECR', this.beanResult.FECR);
+        this.setValue('txtHOCR', this.beanResult.HOCR);
+        this.setValue('txtUSUP', this.beanResult.USUP);
+        this.setValue('txtFEUP', this.beanResult.FEUP);
+        this.setValue('txtHOUP', this.beanResult.HOUP);
     },
     obtainData: function () {
     },
@@ -99,12 +103,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
         beanTemp.IDCON = this.getValue("de-txtIDCON");
         beanTemp.FCONT = this.getValue("de-txtFCONT");
         beanTemp.STCON = this.getValue("de-txtSTCON");
-   
-    },
-    getData: function () {
         
     },
-
+    getData: function () {
+        var beanString = JSON.stringify(meCBDE.bean);
+        Ext.Ajax.request({
+            url: prototype.url + '/searchDetTktChargeback',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryChargeback').mask('Loading...'),
+            params: {beanString: beanString},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-dataEntryChargeback').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                meCBDE.beanResult = res.data[0];
+                meCBDE.mostrarData();
+            }
+        });
+    },
     getDataGrid: function () {
         this.beanChargebackTktsDetail = {},
         this.beanChargebackTktsDetail.CHADJNBR = this.bean.CHADJNBR;
@@ -116,14 +133,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
         this.beanChargebackTktsDetail.PAYDATE = this.bean.PAYDATE;
         this.beanChargebackTktsDetail.BSUMDATE = this.bean.BSUMDATE;
         this.beanChargebackTktsDetail.ISREFNBR = this.bean.ISREFNBR;
-        meDE.paramsDetailDEDetTktChargeback.beanString = JSON.stringify(this.beanChargebackTktsDetail);
-        
+        meCBDE.paramsDetailDEDetTktChargeback.beanString = JSON.stringify(this.beanChargebackTktsDetail);
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktChargeback'
             }, listeners: {
                 beforeload: function (obj) {
-                    obj.proxy.extraParams = meDE.paramsDetailDEDetTktChargeback;
+                    obj.proxy.extraParams = meCBDE.paramsDetailDEDetTktChargeback;
                 },
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask();
@@ -188,7 +205,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
     onCancelClick: function (btn) {
         this.view.close();
     },
-
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
     MaintenanceA4116: function (beanTemp) {
 //        console.log(beanTemp);
@@ -219,7 +235,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
             }
         });
     },
-    
     validacionInsert: function () {
         var msjResult = '';
         if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtISREFNBR") === '') {
@@ -330,7 +345,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
     },
     resetScan_keyDownHandler: function () {
-        this.getDataGrid(this.beanResult);
+        
     },
     txtTKTScan_keyDownHandler: function (e, eOpts) {
         this.helpByticket();
@@ -356,16 +371,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanInfo = res.lstInfo;
-                console.log(meDE.beanInfo);
+                meCBDE.beanInfo = res.lstInfo;
+                console.log(meCBDE.beanInfo);
 
                 if (res.lstInfo.length > 0) {
-                    meDE.insertTKT(store_gridInfoScan, res.lstInfo[0]);
+                    meCBDE.insertTKT(store_gridInfoScan, res.lstInfo[0]);
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
                 }
 
-                meDE.calcularMontos();
+                meCBDE.calcularMontos();
 
             }
         });
