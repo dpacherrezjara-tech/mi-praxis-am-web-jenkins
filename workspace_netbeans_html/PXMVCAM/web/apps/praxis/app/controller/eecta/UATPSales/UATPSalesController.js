@@ -65,10 +65,10 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
         this.winDataEntry();
     },
     winDataEntry: function () {
-           alert("Ingreso de datos");
-//        Ext.create('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
-//            id: prototype.id + '-CatalogoClienteEntry'
-//        }).show();
+         Ext.create('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
+            id: prototype.id + '-UATPSalesEntry'
+        }).show();
+        
     },
     //here
 

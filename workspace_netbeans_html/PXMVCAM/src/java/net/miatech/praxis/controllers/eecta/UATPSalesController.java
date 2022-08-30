@@ -20,6 +20,7 @@ import net.miatech.praxis.eecta.SQP04627Filter;
 import net.miatech.praxis.eecta.SQP04628Filter;
 import net.miatech.praxis.logic.eecta.UATPSalesLogic;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,9 +41,11 @@ public class UATPSalesController extends BaseController{
     
     private UATPSalesLogic logic;
     
-    @RequestMapping(value = "/saveFileA4264",method = RequestMethod.POST)
-    public @ResponseBody String saveFileUATP(ModelMap map, HttpServletRequest request, 
+    @RequestMapping(value = "/postFile",method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public @ResponseBody String saveFileUATP(ModelMap map, 
                @RequestParam("textfile") MultipartFile textfile) throws IOException{
+        System.out.println("Ingresando a post file");
         final List<String> listX3155 = new ArrayList<>();
         boolean truncate = false;
         SQP04627Filter response = new SQP04627Filter();
@@ -55,6 +58,8 @@ public class UATPSalesController extends BaseController{
                     listX3155.add(arg0);
                 }
             });
+            logic = new UATPSalesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
             truncate =  logic.saveX3155(listX3155);
             if (truncate) {
                 response = logic.setSQP04627Filter();
