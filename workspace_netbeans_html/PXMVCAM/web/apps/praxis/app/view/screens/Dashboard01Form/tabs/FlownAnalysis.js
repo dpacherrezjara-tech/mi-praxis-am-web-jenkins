@@ -2700,11 +2700,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             //                                            value = '<b>' + value + '</b>';
                                             return value;
                                         },
-                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                            var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
-                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                            return Ext.util.Format.number(data.totBASICM, '0,000');
-                                        }
+//                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                            var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
+//                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                            return Ext.util.Format.number(data.totBASICM, '0,000');
+//                                        }
                                     },
                                     {
                                         text: 'Mile',
@@ -2721,11 +2721,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     //                                            value = '<b>' + value + '</b>';
                                                     return Ext.util.Format.number(value, '0,000.000000');
                                                 },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return Ext.util.Format.number(data.totTBASICM, '0,000.000000');
-                                                }
+//                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                    var data = Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').getStore().getData().items[0].data;
+//                                                    metaData.style = 'text-align:right; margin-right:3px ';
+//                                                    return Ext.util.Format.number(data.totTBASICM, '0,000.000000');
+//                                                }
                                             },
                                         ]
                                     },
@@ -2792,7 +2792,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         },
                                         columns: [
                                             {
-                                                text: 'Loss', dataIndex: 'QTYVNR', width: 80,
+                                                text: 'Loss', dataIndex: 'VCPN', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec";
                                                     //                                            value = '<b>' + value + '</b>';
@@ -2810,7 +2810,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         },
                                         columns: [
                                             {
-                                                text: 'Revenue', dataIndex: 'QTYVNR', width: 80,
+                                                text: 'Revenue', dataIndex: 'VCPN', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#f5cebf";
                                                     //                                            value = '<b>' + value + '</b>';
@@ -2826,7 +2826,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 },                                                
                                             },
                                             {
-                                                text: 'Loss', dataIndex: 'QTYVNR', width: 80,
+                                                text: 'Profit/Loss', dataIndex: 'QTYVNR', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                      metaData.style = "text-align:right;background-color:#f5cebf";
                                                     //                                            value = '<b>' + value + '</b>';
