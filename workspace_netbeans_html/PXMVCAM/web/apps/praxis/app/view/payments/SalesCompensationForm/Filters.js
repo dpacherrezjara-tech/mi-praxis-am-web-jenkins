@@ -153,6 +153,46 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
+                {xtype: 'tbspacer', width: 5},
+                {
+                    xtype: 'label',
+                    text: 'PNR:',
+                    padding: '8px 1px 2px 1px',
+                    width: 40,
+                },
+                {
+                    xtype: 'textfield',
+                    id: prototype.id + '-txtPNR',
+                    fieldStyle: 'text-align:center',
+                    enforceMaxLength: true,
+                    maskRe: /[a-zA-Z]/,
+                    maxLength: 6,
+                    width: 80,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'filterPNRSettlement'
+                    }
+                },
+                {xtype: 'tbspacer', width: 5},
+                {
+                    xtype: 'label',
+                    text: 'Agent:',
+                    padding: '8px 1px 2px 1px',
+                    width: 40,
+                },
+                {
+                    xtype: 'textfield',
+                    id: prototype.id + '-txtAGENT',
+                    fieldStyle: 'text-align:center',
+                    enforceMaxLength: true,
+                    maskRe: /[0-9]/,
+                    maxLength: 8,
+                    width: 80,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'filterPNRSettlement'
+                    }
+                },
             ]
         }
     ]

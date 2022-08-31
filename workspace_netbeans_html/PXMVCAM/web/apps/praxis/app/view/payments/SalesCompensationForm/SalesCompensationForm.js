@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.SalesCompensationForm
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1700,
+                                        width: 1800,
                                         align: 'center'
                                     },
                                     items: [
@@ -70,14 +70,14 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.SalesCompensationForm
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 600,
-                                            width: 1700,
+                                            height: 650,
+                                            width: 1800,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1700,
+                                                    width: 1800,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

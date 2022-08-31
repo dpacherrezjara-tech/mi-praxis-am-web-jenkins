@@ -143,6 +143,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_AGENT = Ext.getCmp(prototype.id + '-txtAGENT').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -155,7 +157,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
         this.setGridData();
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
-
+    filterPNRSettlement: function (e, eOpts) {
+            switch (eOpts.getKey()) {
+                case 13:
+                    this.btnSearch_click();
+            }
+        },
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-panelGridData';
@@ -201,6 +208,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var strTkt = rowData.data.ISREFNBR;
+
+        prototypeProgram.view = 'payments-sales-compensation-form';
+        prototypeProgram.nprog = 'PX00000588';
+        prototypeProgram.title = 'Sales Compensation ';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+
+        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    viewTicketAS: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        var strTkt = rowData.data.A1721FRCA;
 
         prototypeProgram.view = 'payments-sales-compensation-form';
         prototypeProgram.nprog = 'PX00000588';
