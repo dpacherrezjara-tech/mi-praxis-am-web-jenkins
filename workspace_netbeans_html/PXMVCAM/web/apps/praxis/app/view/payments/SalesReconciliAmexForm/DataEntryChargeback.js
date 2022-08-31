@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
         'Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebackSalesReconciliAmexController'
     ],
     controller: 'DataEntryChargebackSalesReconciliAmexController',
-    title: 'Sales Reconciliation by Amex - Chargeback Form',
+    title: 'Record Chargeback',
     header: true,
 //    height: 650,
     width: 840,
@@ -189,14 +189,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Chargeback   Reason Code',
+                                    text: 'Loc Merch ID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCHAADJCOD',
+                                    id: prototype.id + '-de-txtLMERCHID',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -205,14 +205,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Chargeback   Reason Desc',
+                                    text: 'Reason Code',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCHAADJDES',
+                                    id: prototype.id + '-de-txtCHAADJCOD',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -231,19 +231,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Loc Merch ID',
+                                    text: 'Reason Desc',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtLMERCHID',
-                                    fieldStyle: 'text-align:center',
+                                    id: prototype.id + '-de-txtCHAADJDES',
+                                    fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     readOnly: true,
-                                    width: 100
+                                    width: 270
                                 },
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -263,7 +264,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                             //bodyStyle: 'background:#efe5e5;',
                             margin: '0 2 0 20',
                             items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {xtype: 'tbspacer', width: 7, height: 30},
                                 {
                                     xtype: 'label',
                                     text: 'Card Number',
@@ -302,12 +303,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Indust.Spec.Ref.Nbr',
+                                    text: 'Indust.Spec.Ref.Nbr  (Tkt/Others)',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
-                                {xtype: 'tbspacer', width: 5},
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtISREFNBR',
@@ -326,7 +327,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                             //bodyStyle: 'background:#efe5e5;',
                             margin: '0 2 0 20',
                             items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {xtype: 'tbspacer', width: 7, height: 30},
                                 {
                                     xtype: 'label',
                                     text: 'Payment Currency',
@@ -342,6 +343,69 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                     style: 'font-weight:bold;color:#0B333C;',
                                     readOnly: true,
                                     fieldStyle: 'text-align:center;',
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Amount',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtGROSAMOUN',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    readOnly: true,
+                                    fieldStyle: 'text-align:right;',
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Comission',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtDISCAMOUN',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    readOnly: true,
+                                    fieldStyle: 'text-align:right;',
+                                    width: 100,
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            //bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'VAT',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtTAXAMOUN',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    readOnly: true,
+                                    fieldStyle: 'text-align:right;',
                                     width: 100,
                                 },
                                 {xtype: 'tbspacer', width: 40},
@@ -386,7 +450,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryChargeback'
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'PRAXIS Sales Date',
+                                    text: 'Sales Date',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },

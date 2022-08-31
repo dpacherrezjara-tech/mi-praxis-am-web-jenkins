@@ -2453,7 +2453,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUN_CB = rst.getDouble("DISCAMOUN_CB");
                     beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
-                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD - beanTkt.DISCAMOUN_CB;
+                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU + beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD - beanTkt.DISCAMOUN_CB;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.FREGLA = rst.getString("FREGLA").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
@@ -2945,6 +2945,9 @@ public class SalesReconciliAmexDAO {
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
                 beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
+                beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                beanTkt.TAXAMOUN = rst.getDouble("TAXAMOUN");
                 beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
                 beanTkt.SDATES = rst.getString("SDATES").trim();
                 beanTkt.SAGENT = rst.getString("SAGENT").trim();
