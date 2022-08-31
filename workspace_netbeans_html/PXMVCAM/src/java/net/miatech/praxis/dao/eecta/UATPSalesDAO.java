@@ -171,13 +171,13 @@ public class UATPSalesDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cnx.prepareStatement("TRUNCATE TABLE PXUATP.X3155").execute();
             pstmt = cnx.prepareStatement(SQL);
-            cnx.setAutoCommit(false);
+            //cnx.setAutoCommit(false);
             for(String line : lines){
                 pstmt.setString(1, line);
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
-            cnx.commit();
+            //cnx.commit();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             return false;

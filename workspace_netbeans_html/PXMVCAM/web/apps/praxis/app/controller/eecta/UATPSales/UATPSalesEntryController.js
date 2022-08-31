@@ -68,8 +68,8 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesEntryController', {
             waitMsg: 'Procesando archivo...',
             success: function (fp, o) {
                 //var res = Ext.JSON.decode(response.responseText);
-                var res = Ext.decode(o.response.responseText);                 
-                console.log(res);
+                console.log(fp);
+                console.log(o);
             },
             failure: function(response, opts) {
                 console.log(opts);

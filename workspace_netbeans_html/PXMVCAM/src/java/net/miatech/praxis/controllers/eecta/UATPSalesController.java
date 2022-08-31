@@ -63,8 +63,8 @@ public class UATPSalesController extends BaseController{
             truncate =  logic.saveX3155(listX3155);
             if (truncate) {
                 response = logic.setSQP04627Filter();
-                map.put("success", true);
-                map.put("response", response);
+                map.put("success", response.getOU_SQLCODE().equals("1"));
+                map.put("response", response.getOU_MESSAGE());
             }else{
                 throw new Exception("Error");
             }

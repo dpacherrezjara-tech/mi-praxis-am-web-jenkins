@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
                     xtype: 'filefield',
                     padding: '10 2 2 2',
                     id: prototype.id + '-file',
-                    name: 'excelfile',
+                    name: 'textfile',
                     labelAlign: 'right',
                     fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Input File</strong>',
                     allowBlank: false,
@@ -45,18 +45,18 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
                     width: 340,
                     //buttonText: 'Select logo...',
                     regex: /(.)+((\.txt)(\w)?)$/i,
-                    regexText: 'Only XLS,XLSX,TXT formats are accepted',
+                    regexText: 'Only TXT formats are accepted',
                     buttonConfig: {
                         text: 'Browse...',
                         width: 75,
                         glyph: 'xf3b6@Ionicons'
                     },
                     listeners: {
-                        change: function(fld, value) {
-                            var newValue = value.replace(/C:\\fakepath\\/g, '');
-                            console.log(fld);
-                            fld.setRawValue(newValue);
-                        }
+//                        change: function(fld, value) {
+//                            var newValue = value.replace(/C:\\fakepath\\/g, '');
+//                            console.log(fld);
+//                            fld.setRawValue(newValue);
+//                        }
                     }
                 },
                 {
