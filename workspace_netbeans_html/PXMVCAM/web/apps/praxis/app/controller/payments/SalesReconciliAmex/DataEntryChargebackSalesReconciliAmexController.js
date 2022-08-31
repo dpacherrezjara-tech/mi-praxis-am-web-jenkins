@@ -61,10 +61,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryChargebac
         this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
         this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
-        this.setValue('de-txtGROSAMOUN', this.beanResult.GROSAMOUN);
-        this.setValue('de-txtDISCAMOUN', this.beanResult.DISCAMOUN);
-        this.setValue('de-txtTAXAMOUN', this.beanResult.TAXAMOUN);
-        this.setValue('de-txtNETAMOUN', this.beanResult.NETAMOUN);
+        this.setValue('de-txtGROSAMOUN', Ext.util.Format.number(this.beanResult.GROSAMOUN, '0,000.00'));
+        this.setValue('de-txtDISCAMOUN', Ext.util.Format.number(this.beanResult.DISCAMOUN, '0,000.00'));
+        this.setValue('de-txtTAXAMOUN', Ext.util.Format.number(this.beanResult.TAXAMOUN, '0,000.00'));
+        this.setValue('de-txtNETAMOUN', Ext.util.Format.number(this.beanResult.NETAMOUN, '0,000.00'));        
         this.setValue('de-txtSDATES', this.beanResult.SDATES);
         this.setValue('de-txtSAGENT', this.beanResult.SAGENT);
         this.setValue('de-txtSPNR', this.beanResult.SPNR);
