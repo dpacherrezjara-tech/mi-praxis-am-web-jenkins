@@ -223,6 +223,8 @@ public class A4116Filter extends A4116 {
     public String SDATES = "";
     public String IDCONFLE = "";
     public String STCON = "";
+    public String IN_AGENT = "";
+    public String A1721FRCA = "";
     public double TAXAMOUN = 0;
     
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);

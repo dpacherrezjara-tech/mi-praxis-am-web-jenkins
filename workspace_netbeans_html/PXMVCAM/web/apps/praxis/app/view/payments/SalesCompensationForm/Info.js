@@ -19,8 +19,8 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1700,
-                height: 700,
+                width: 1720,
+                height: 600,
                 align: 'center'
             },
             items: [
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             padding: '1',
                             border: true,
                             height: 580,
-                            width: 1604,
+                            width: 1720,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -53,8 +53,8 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridData',
-                                    height: 550,
-                                    width: 1604,
+                                    height: 553,
+                                    width: 1708,
                                     hidden: false,
                                     columnLines: true,
                                     features: {
@@ -82,6 +82,16 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                             {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
                                                 listeners: {
                                                     click: 'viewTicket'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;";
+                                                    return '<a href="#payments-sales-compensation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Associated<br>Ticket', dataIndex: 'A1721FRCA', width: 120,
+                                                listeners: {
+                                                    click: 'viewTicketAS'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
