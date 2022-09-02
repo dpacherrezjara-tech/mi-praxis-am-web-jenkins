@@ -100,6 +100,8 @@ public class SalesComplementAmexDAO {
                 bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 bean.SDATE = rst.getString("SDATE").trim();
                 bean.SDATES = rst.getString("SDATES").trim();
+                bean.SCARDN = rst.getString("SCARDN").trim();
+                bean.SAUTHOC = rst.getString("SAUTHOC").trim();
                 bean.SCARCOD = rst.getString("SCARCOD").trim();
                 bean.SCARDBIN = rst.getString("SCARDBIN").trim();
                 bean.PNR = rst.getString("PNR").trim();
