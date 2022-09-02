@@ -1,8 +1,6 @@
 prototype.widthContenedor = 1200;   
 prototype.widthGrid = '100%';
 
-console.log("uatp");
-
 Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.UATPSalesForm',

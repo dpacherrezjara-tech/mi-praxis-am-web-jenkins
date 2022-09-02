@@ -11,6 +11,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.eecta.UATPSalesDAO;
 import net.miatech.praxis.eecta.SQP04627Filter;
 import net.miatech.praxis.eecta.SQP04628Filter;
+import net.miatech.praxis.eecta.SQP04629Filter;
 
 /**
  *
@@ -29,7 +30,11 @@ public class UATPSalesLogic {
     }
     
     public List<SQP04628Filter> getSQP04628Filter(SQP04628Filter filter)throws SQLException,Exception{
-        return dao.getSQP0A4628Filter(filter);
+        return dao.getSQP04628Filter(filter);
+    }
+    
+    public SQP04629Filter setSQP04629Filter(SQP04629Filter filter)throws SQLException,Exception{
+        return dao.getSQP04629Filter(filter);
     }
     
     public boolean saveX3155(List<String> lines)throws SQLException,Exception{

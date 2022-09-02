@@ -89,10 +89,13 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
         if (grid.getSelectionModel().hasSelection()) {
 //            let gridSelRows = grid.getSelectionModel().getSelected().items;
             let gridSelRow = grid.getSelectionModel().getSelected().items[0].data;
-            if (gridSelRow.A4264STCAR === 'P'&&gridSelRow.A4264STREC==='0') {
-                selObj = {CCUST: gridSelRow.A4264CCUST, IDFILE: gridSelRow.A4264IDFIL};
-                alert(selObj.IDFILE + ' procesado!');
-            }else{
+            if (gridSelRow.A4264STCAR === 'P' && gridSelRow.A4264STREC === '0') {
+                selObj = {
+                    CCUST: gridSelRow.A4264CCUST,
+                    IDFILE: gridSelRow.A4264IDFIL,
+                    PRDA: gridSelRow.A4264PRDA
+                };
+            } else {
                 global.Msg({
                     msg: 'Registro debe estar Pendiente'
                 });
@@ -110,6 +113,15 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
                 msg: 'Debe seleccionar un registro'
             });
             return;
+        }
+
+        if (selObj !== null) {
+            Ext.create('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesProcess', {
+                id: prototype.id + '-UATPSaleProcessEntry',
+                params: {
+                    obj:selObj
+                }
+            }).show();
         }
     },
     //here

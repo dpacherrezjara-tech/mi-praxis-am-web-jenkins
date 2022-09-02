@@ -16,6 +16,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.eecta.SQP04627Filter;
 import net.miatech.praxis.eecta.SQP04628Filter;
+import net.miatech.praxis.eecta.SQP04629Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -74,7 +75,7 @@ public class UATPSalesDAO {
         return response;
     }
     
-    public List<SQP04628Filter> getSQP0A4628Filter(SQP04628Filter filter)throws SQLException,Exception{
+    public List<SQP04628Filter> getSQP04628Filter(SQP04628Filter filter)throws SQLException,Exception{
         List<SQP04628Filter> response = new ArrayList<>();
         CallableStatement cstmt = null;
         String SQL = "{CALL PXUATP.SQP04628(?,?,?,?,?,?,?)}";
@@ -193,6 +194,38 @@ public class UATPSalesDAO {
             pasarGarbageCollector();
         }
         return true;
+    }
+    
+    public SQP04629Filter getSQP04629Filter(SQP04629Filter filter) throws SQLException, Exception{
+        Connection cnx = null;
+        CallableStatement cstmt = null;
+        String SQL = "{CALL PXUATP.SQP04629(?,?,?,?)}";
+        SQP04629Filter response = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQL);
+            cstmt.setString(1,filter.getIN_CCUST());
+            cstmt.setString(2, filter.getIN_IDFILE());
+            cstmt.registerOutParameter(3, Types.VARCHAR);
+            cstmt.registerOutParameter(4, Types.VARCHAR);
+            cstmt.execute();
+            response = new SQP04629Filter();
+            response.setOU_SQLCODE(cstmt.getString(3));
+            response.setOU_MESSAGE(cstmt.getString(4));
+        } catch (Exception e) {
+            logError.info("Exception -> User: " + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(),e);
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return response;
     }
     
 }

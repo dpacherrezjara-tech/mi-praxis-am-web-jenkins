@@ -6,6 +6,7 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +19,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04627Filter;
 import net.miatech.praxis.eecta.SQP04628Filter;
+import net.miatech.praxis.eecta.SQP04629Filter;
 import net.miatech.praxis.logic.eecta.UATPSalesLogic;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -102,6 +104,22 @@ public class UATPSalesController extends BaseController{
         } catch (Exception ex) {
             map.put("success", false);
             map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value="/formatDelivery",method = RequestMethod.POST)
+    public @ResponseBody String formatDelivery(ModelMap map,HttpServletRequest request){
+        SQP04629Filter filter = new SQP04629Filter();
+        try {
+            JsonObject jsonObject = new Gson().fromJson(request.getParameter("beanString"), JsonObject.class);
+            filter.setIN_CCUST(jsonObject.get("CCUST").toString());
+            filter.setIN_IDFILE(jsonObject.get("IDFILE").toString());
+            map.put("success", true);
+            map.put("response",filter);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("response",filter);
         }
         return new Gson().toJson(map);
     }
