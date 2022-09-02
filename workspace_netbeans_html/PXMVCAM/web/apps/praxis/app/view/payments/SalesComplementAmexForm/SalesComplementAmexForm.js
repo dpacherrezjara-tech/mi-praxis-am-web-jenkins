@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.SalesComplementAmex
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1700,
+                                        width: 1850,
                                         align: 'center'
                                     },
                                     items: [
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.SalesComplementAmex
                                         {
                                             xtype: 'panel',
                                             height: 630,
-                                            width: 1700,
+                                            width: 1850,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1700,
+                                                    width: 1850,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

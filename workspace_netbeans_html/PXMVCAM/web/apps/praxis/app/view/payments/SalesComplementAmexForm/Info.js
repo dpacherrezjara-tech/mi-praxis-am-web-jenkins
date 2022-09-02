@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1700,
+                width: 1830,
                 height: 'auto',
                 align: 'center'
             },
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                             id: prototype.id + '-panelGridData',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1700,
+                            width: 1830,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1760,
+                                    width: 1830,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -65,14 +65,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                         items: [
                                             {
                                                 text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 90
-                                            },
-                                            {
-                                                text: 'Token', dataIndex: 'PAYTOKEN', width: 120,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    value = '<b>' + value + '</b>';
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
-                                                }
                                             },
                                             {
                                                 text: 'Merchant', dataIndex: 'MERCHID', width: 90
@@ -165,7 +157,14 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         },
                                                     },
                                                     {
-                                                        text: 'Bin', dataIndex: 'SCARDBIN', width: 70,
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 70,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#8ac6eb";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Auth.', dataIndex: 'SAUTHOC', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#8ac6eb";
                                                             return value;
@@ -367,6 +366,14 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'Ticket Number', dataIndex: 'ADDPAXTKT', width: 280
                                                     },
                                                 ]
+                                            },
+                                            {
+                                                text: 'Token', dataIndex: 'PAYTOKEN', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
                                             },
                                         ]
                                     }
