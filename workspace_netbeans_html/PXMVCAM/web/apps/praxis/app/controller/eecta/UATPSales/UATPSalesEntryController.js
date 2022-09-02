@@ -60,20 +60,31 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesEntryController', {
             return;
         }
          var form = Ext.getCmp(prototype.id + '-form01').getForm();
-         console.log(form);
-         console.log(prototype.url);
          form.submit({
             url: prototype.url + '/postFile',
             method:'POST',
             waitMsg: 'Procesando archivo...',
             success: function (fp, o) {
-                //var res = Ext.JSON.decode(response.responseText);
-                console.log(fp);
+                let response = o.result;
+                if (response.success){
+                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
+                    global.Msg({
+                        msg: response.response.toString(),
+                        icon:1
+                    });
+                }
                 console.log(o);
             },
-            failure: function(response, opts) {
-                console.log(opts);
-                console.log('server-side failure with status code ' + response.status);
+            failure: function(res, opts) {
+                let response = opts.result;
+                if (!response.success){
+                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
+                    global.Msg({
+                        msg: response.response.toString(),
+                        icon:0
+                    });
+                }
+                console.log('server-side failure with status code ' + opts.response.status);
             }
         });
     }

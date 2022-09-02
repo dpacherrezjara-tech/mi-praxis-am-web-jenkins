@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             //width: 990,
-                            width: '99%',
+                            width: '100%',
                             height: 510,
                             padding: '0px 5px 1px 5px',                           
                             features: [
@@ -54,9 +54,23 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                     ftype: 'summary'
                                 }
                             ],
+                            resizable: false,
+                            selModel: {                                
+                                selType: 'checkboxmodel',
+                                mode:'SINGLE',
+                                listeners: {
+                                    beforeselect: function (grid, record, index, eOpts, metaData) {
+                                        return true;
+                                    }
+                                }
+                            },
+                            selectable: {
+                                columns: false, // Can select cells and rows, but not columns
+                                extensible: false // Uses the draggable selection extender
+                            },
                             columns: {
                                 items: [
-                                    {text: 'Id File', dataIndex: 'A4264IDFIL', width: 120, align: 'center'},
+                                    {text: 'Id File', dataIndex: 'A4264IDFIL', width: 110, align: 'center',padding:8},
                                     {text: 'Invoice Code', dataIndex: 'A4264INVC', align: 'left', width: 120},
                                     {text: 'Processing Date', dataIndex: 'A4264PRDA', align: 'left', width:120},
                                     {text: 'File Name', dataIndex: 'A4264FLNM', width: 120, align: 'left',flex:1},
@@ -121,17 +135,17 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                     sortable: false,
                                     menuDisabled: true,
                                     align: 'center',
-                                    padding:'8px'
+                                    //padding:'8px'
                                 }
                             },
                             viewConfig: {
                                 stripeRows: true,
                                 enableTextSelection: true,
                                 markDirty: false,
-                                getRowClass: function (record, rowIndex, rowParams, store) {
-                                    if (rowIndex % 2 == 0)
-                                        return 'rowA';
-                                }
+//                                getRowClass: function (record, rowIndex, rowParams, store) {
+//                                    if (rowIndex % 2 == 0)
+//                                        return 'rowA';
+//                                }
                             },
                             trackMouseOver: true,
                             scope: this,

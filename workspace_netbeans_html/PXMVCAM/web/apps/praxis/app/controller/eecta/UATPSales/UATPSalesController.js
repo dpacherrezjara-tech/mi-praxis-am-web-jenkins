@@ -10,6 +10,12 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
         var me = this;
     },
     afterRender: function () {
+        let fecha1 = new Date();
+        let fecha2 = new Date();
+        fecha2.setDate(fecha1.getDate() - 30)
+        Ext.getCmp(prototype.id + '-fecha1').setValue(fecha2);
+        Ext.getCmp(prototype.id + '-fecha2').setValue(fecha1);
+        this.OnSearch();
         // this.search_complemento();
         //alert('1');
     },
@@ -25,7 +31,12 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
         bean.IN_FROMDATE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
         bean.IN_TODATE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
-        bean.IN_IDFILE = Ext.getCmp(prototype.id + '-IDFILE').getValue();
+        let idFile = Ext.getCmp(prototype.id + '-IDFILE').getValue();
+        if (idFile.length < 9 && idFile !== '') {
+            idFile = '000000000' + idFile;
+            idFile = idFile.slice(-9);
+        }
+        bean.IN_IDFILE = idFile;
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.UATPSales.GridData', {
             proxy: {
@@ -46,7 +57,6 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(total);
-                    console.log(pagData);
                     // </editor-fold>
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -58,17 +68,49 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesController', {
             }
         });
         Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
-        console.log(Ext.getCmp(prototype.id + '-paggin'));
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     btnAdd_click: function () {
         this.winDataEntry();
     },
     winDataEntry: function () {
-         Ext.create('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
+        Ext.create('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
             id: prototype.id + '-UATPSalesEntry'
         }).show();
-        
+
+    },
+    btnProcess_click: function () {
+        this.winDataProcess();
+    },
+    winDataProcess: function () {
+        //let selectedRows = [];
+        let selObj = null;
+        let grid = Ext.getCmp(prototype.id + '-gridData');
+        if (grid.getSelectionModel().hasSelection()) {
+//            let gridSelRows = grid.getSelectionModel().getSelected().items;
+            let gridSelRow = grid.getSelectionModel().getSelected().items[0].data;
+            if (gridSelRow.A4264STCAR === 'P'&&gridSelRow.A4264STREC==='0') {
+                selObj = {CCUST: gridSelRow.A4264CCUST, IDFILE: gridSelRow.A4264IDFIL};
+                alert(selObj.IDFILE + ' procesado!');
+            }else{
+                global.Msg({
+                    msg: 'Registro debe estar Pendiente'
+                });
+                return;
+            }
+//            for (let obj of gridSelRows) {
+//                console.log(obj);
+//                if (obj.data.A4264STCAR === 'P'&&obj.data.A4264STREC==='0') {
+//                    let selObj = {CCUST: obj.data.A4264CCUST, IDFILE: obj.data.A4264IDFIL};
+//                    selectedRows.push(selObj);
+//                }
+//            }
+        } else {
+            global.Msg({
+                msg: 'Debe seleccionar un registro'
+            });
+            return;
+        }
     },
     //here
 

@@ -52,11 +52,11 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
                         glyph: 'xf3b6@Ionicons'
                     },
                     listeners: {
-//                        change: function(fld, value) {
-//                            var newValue = value.replace(/C:\\fakepath\\/g, '');
-//                            console.log(fld);
-//                            fld.setRawValue(newValue);
-//                        }
+                        change: function(fld, value) {
+                            var newValue = value.replace(/C:\\fakepath\\/g, '');
+                            console.log(fld);
+                            fld.setRawValue(newValue);
+                        }
                     }
                 },
                 {

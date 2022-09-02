@@ -77,6 +77,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnSearch',
+                            text:'Buscar',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
                             listeners: {
@@ -86,10 +87,20 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnAdd',
+                            text:'Agregar Archivo',
                             iconCls: 'prx-icon-add',
-                            tooltip: 'New',
+                            tooltip: 'Add File',
                             listeners: {
                                 click: 'btnAdd_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-apl-reporte',
+                            text: 'Procesar Delivery',
+                            icon: 'resources/img/botones/process.png',
+                            listeners: {
+                                click: 'btnProcess_click'
                             }
                         },
                         {
