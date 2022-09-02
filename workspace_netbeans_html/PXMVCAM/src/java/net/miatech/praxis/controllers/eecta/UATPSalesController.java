@@ -6,7 +6,9 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -112,9 +114,12 @@ public class UATPSalesController extends BaseController{
     public @ResponseBody String formatDelivery(ModelMap map,HttpServletRequest request){
         SQP04629Filter filter = new SQP04629Filter();
         try {
-            JsonObject jsonObject = new Gson().fromJson(request.getParameter("beanString"), JsonObject.class);
-            filter.setIN_CCUST(jsonObject.get("CCUST").toString());
-            filter.setIN_IDFILE(jsonObject.get("IDFILE").toString());
+            //JSONObject jsonObject = new Gson().fromJson(request.getParameter("beanString"), JSONObject.class);
+            JsonParser parser = new JsonParser();
+            JsonObject gson_detail = parser.parse(request.getParameter("beanString")).getAsJsonObject();
+            filter.setIN_CCUST(gson_detail.get("CCUST").getAsString());
+            filter.setIN_IDFILE(gson_detail.get("IDFILE").getAsString());
+            
             map.put("success", true);
             map.put("response",filter);
         } catch (Exception e) {
