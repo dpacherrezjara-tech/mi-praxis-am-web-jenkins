@@ -157,7 +157,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         },
                                                     },
                                                     {
-                                                        text: 'Number', dataIndex: 'SCARDN', width: 70,
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#8ac6eb";
                                                             return value;
