@@ -240,6 +240,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
                 }
             });
             global.clear();
+            Ext.getCmp(prototype.id + '-displayChart1').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridCData').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridCData').setStore(storeGridDatas);
         }
@@ -270,6 +271,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
                 }
             });
             global.clear();
+            Ext.getCmp(prototype.id + '-displayChart2').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridCData1').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridCData1').setStore(storeGridDatas);
         }

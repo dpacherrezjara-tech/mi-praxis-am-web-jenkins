@@ -285,7 +285,6 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             bodyStyle: 'background: transparent;',
                             padding: '1',
                             border: true,
-                            
                             height: 800,
                             width: 1700,
                             layout: {
@@ -299,9 +298,8 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                     //bodyStyle: 'background-color: #E3EAEF;',
                                     padding: '1',
                                     border: true,
-                                    height: 300,
-                                    width: 304,
-                                    
+                                    height: 350,
+                                    //width: 304,
                                     layout: {
                                         type: 'hbox',
                                         align: 'left'
@@ -354,9 +352,99 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
                                                         }
                                                     }
-                                                    
+
                                                 ]
                                             }
+                                        },
+                                        {
+                                            xtype: 'cartesian',
+                                            // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                            id: prototype.id + '-displayChart1',
+                                            width: 1000,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+//                                                    captions: {
+//                                                        title: {
+//                                                            text: 'Bank Date',
+//                                                            alignTo: 'chart'
+//                                                        }
+//                                                    },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['TGROSAMOUN'],
+                                                    grid: true,
+                                                    title: '',
+                                                            minimum: -1000000,
+                                                            maximum: 0,
+                                                    //title: 'Millions of USD',
+                                                    renderer: function (obj, value) {
+                                                        /*if (value > 1) {
+                                                            return  ' ' + Ext.util.Format.number(value);
+                                                        } else {
+                                                            return '0';
+                                                        }*/
+                                                        return  ' ' + Ext.util.Format.number(value);
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                                    grid: true,
+                                                    title: {
+                                                        text: 'Dates',
+                                                        translationX: -30
+                                                    }
+                                                }],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    //title: ['Amount', 'Commision', 'Tax', 'YQ + YR'],
+                                                    xField: 'BSUMDATE',
+                                                    yField: ['TGROSAMOUN'],
+                                                    colors: ['#ffff99', '#339933', '#CC0000', '#ff9900'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: ['TGROSAMOUN'],
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function (value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            if (value === 100) {
+                                                                return Ext.util.Format.number(value, '0,000');
+                                                            } else {
+                                                                return Ext.util.Format.number(value, '0,000.00');
+                                                            }
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            toolTip.setHtml(record.get('BSUMDATE') + ' :  ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                                        }
+                                                    }
+                                                }]
                                         }
                                     ]
                                 },
@@ -367,7 +455,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                     padding: '1',
                                     border: true,
                                     height: 300,
-                                    width: 444,
+                                    //width: 444,
                                     layout: {
                                         type: 'hbox',
                                         align: 'left'
@@ -423,6 +511,68 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            xtype: 'polar',
+//                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-displayChart2',
+                                            width: 400,
+                                            border: true,
+                                            margin: '0 0 0 5',
+                                            innerPadding: 40,
+                                            height: 290,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Total Documents',
+//                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+//                                                    legend: {
+//                                                        docked: 'bottom',
+//                                                        background: '#E3EAEF'
+//                                                    },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'TGROSAMOUN',
+                                                    colors: ['#339933', '#EC3838', '#ff9900', '#0066ff', '#ffff99'],
+                                                    label: {
+                                                        field: 'DES_MERCHANT',
+//                                                            field: 'TYPE',
+//                                                                display: 'rotate',
+//                                                                contrast: true,
+//                                                                font: '12px Arial'
+                                                    },
+//                                                        style: {
+//                                                            miterLimit: 100,
+//                                                            lineCap: 'miter',
+//                                                            lineWidth: 50
+//                                                        },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+//                                                                    if (ctx.field === 'QMATCH') {
+//                                                                        label = 'Match';
+//                                                                    } else if (ctx.field === 'QLIQUI') {
+//                                                                        label = 'Settlement';
+//                                                                    } else if (ctx.field === 'QBANK') {
+//                                                                        label = 'Bank';
+//                                                                    } else if (ctx.field === 'QDIFF') {
+//                                                                        label = 'Diff';
+//                                                                    }
+//                                                                    toolTip.setHtml(record.get('TOOLTIP'));
+                                                            toolTip.setHtml(record.get('DES_MERCHANT') + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '' + '</b>');
+                                                        }
+                                                    }
+                                                }]
                                         }
                                     ]
                                 },
