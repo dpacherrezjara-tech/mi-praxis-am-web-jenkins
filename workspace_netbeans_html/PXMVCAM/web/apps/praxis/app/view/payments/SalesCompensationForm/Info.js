@@ -284,20 +284,20 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             id: prototype.id + '-panelChartData',
                             bodyStyle: 'background: transparent;',
                             padding: '1',
-                            border: true,
+                            border: false,
                             height: 800,
                             width: 1700,
                             layout: {
                                 type: 'vbox',
-                                align: 'center'
+                                align: 'left'
                             },
                             items: [
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-panelCData',
-                                    //bodyStyle: 'background-color: #E3EAEF;',
+                                    bodyStyle: 'background: transparent;',
                                     padding: '1',
-                                    border: true,
+                                    border: false,
                                     height: 350,
                                     //width: 304,
                                     layout: {
@@ -305,11 +305,13 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                         align: 'left'
                                     },
                                     items: [
+                                        {xtype: 'tbspacer', width: 80},
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridCData',
-                                            height: 280,
-                                            width: 304,
+                                            border: false,
+                                            //height: 280,
+                                            width: 302,
                                             hidden: false,
                                             columnLines: true,
                                             features: {
@@ -352,10 +354,10 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
                                                         }
                                                     }
-
                                                 ]
                                             }
                                         },
+                                        {xtype: 'tbspacer', width: 80},
                                         {
                                             xtype: 'cartesian',
                                             // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
@@ -384,15 +386,15 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     fields: ['TGROSAMOUN'],
                                                     grid: true,
                                                     title: '',
-                                                            minimum: -1000000,
-                                                            maximum: 0,
+                                                    minimum: -1000000,
+                                                    maximum: 0,
                                                     //title: 'Millions of USD',
                                                     renderer: function (obj, value) {
                                                         /*if (value > 1) {
-                                                            return  ' ' + Ext.util.Format.number(value);
-                                                        } else {
-                                                            return '0';
-                                                        }*/
+                                                         return  ' ' + Ext.util.Format.number(value);
+                                                         } else {
+                                                         return '0';
+                                                         }*/
                                                         return  ' ' + Ext.util.Format.number(value);
                                                     }
                                                 }, {
@@ -451,10 +453,10 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-panelCData1',
-                                    //bodyStyle: 'background-color: #E3EAEF;',
+                                    bodyStyle: 'background: transparent;',
                                     padding: '1',
-                                    border: true,
-                                    height: 300,
+                                    border: false,
+                                    height: 350,
                                     //width: 444,
                                     layout: {
                                         type: 'hbox',
@@ -464,8 +466,8 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridCData1',
-                                            height: 280,
-                                            width: 444,
+                                            //height: 350,
+                                            width: 383,
                                             hidden: false,
                                             columnLines: true,
                                             features: {
@@ -479,7 +481,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    {text: 'Merchant', dataIndex: 'SMERCHID', width: 100,
+                                                    {text: 'Merchant', dataIndex: 'SMERCHID', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return  value;
@@ -491,7 +493,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'Country', dataIndex: 'SCOUNTRY', width: 100,
+                                                    {text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return  value;
@@ -512,12 +514,13 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                 ]
                                             }
                                         },
+                                        {xtype: 'tbspacer', width: 80},
                                         {
                                             xtype: 'polar',
 //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
                                             id: prototype.id + '-displayChart2',
                                             width: 400,
-                                            border: true,
+                                            border: false,
                                             margin: '0 0 0 5',
                                             innerPadding: 40,
                                             height: 290,

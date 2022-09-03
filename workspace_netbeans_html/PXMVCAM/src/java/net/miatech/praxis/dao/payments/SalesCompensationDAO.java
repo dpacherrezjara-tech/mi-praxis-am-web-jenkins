@@ -15,6 +15,7 @@ import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
 /**
@@ -199,6 +200,7 @@ public class SalesCompensationDAO {
                 while (rst.next()) {
                     bean = new A4116Filter();
                     bean.BSUMDATE = rst.getString("BSUMDATE").trim();
+                    bean.BSUMDATE = Functions.getMonthConvert(bean.BSUMDATE);
                     bean.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     bean.QTY_TRANSACTIONS = rst.getDouble("QTY_TRANSACTIONS");
                     bean.totTGROSAMOUN = totTGROSAMOUN;

@@ -18,6 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     panelActual: '',
     fileName: '',
     me: '',
+    a : 0,
     searchParams: {},
     paramsDetail: {},
     dataObtain: {},
@@ -154,16 +155,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     },
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
-        console.log(me.panelActual);
-        //var selectedValue = me.panelActual;
-        //switch (selectedValue) {
-        //    case '-panelGridData':
+        switch (this.a) {
+            case 0:
                 this.setGridData();
-           //     break;
-           // case '-panelChartData':
-           //     this.btnDisplay_click();
-           //     break;    
-        //}
+                break;
+            case 1:
+                this.setGridDataSQP04620();
+                this.setGridDataSQP04633();
+                break;    
+        }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     filterPNRSettlement: function (e, eOpts) {
@@ -175,7 +175,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-panelGridData';
-        console.log(me.panelActual);
         global.selectedChild(me.childs, prototype.id + me.panelActual);        
         var msj = this.validateFields();
         if (msj !== '') {
@@ -216,7 +215,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     },
     setGridDataSQP04620: function () {
         me.panelActual = '-panelChartData';
-        console.log(me.panelActual);
         global.selectedChild(me.childs, prototype.id + me.panelActual);        
         var msj = this.validateFields();
         if (msj !== '') {
@@ -247,7 +245,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     },
     setGridDataSQP04633: function () {
         me.panelActual = '-panelChartData';
-        console.log(me.panelActual);
         global.selectedChild(me.childs, prototype.id + me.panelActual);        
         var msj = this.validateFields();
         if (msj !== '') {
@@ -322,44 +319,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
         Ext.getCmp(prototype.id + '-pie').show();
     },
     btnDisplay_click: function() {
+        this.btnSearch_click();
         this.hidePagination_clickHandler();
         var panelTab = Ext.getCmp(prototype.id + '-panelGridData');
         var panelChart = Ext.getCmp(prototype.id + '-panelChartData');
         if (panelTab.isVisible()) {
             panelTab.hide();
             panelChart.show();
-            
-            this.setFormatParameter();
+            me.panelActual = '-panelChartData';
             this.setGridDataSQP04620();
             this.setGridDataSQP04633();
-            //Esto es temporal, hasta que se implementen todos los graficos de las pestañas
-//            if (!this.showCurrentChart()) {
-//                panelTab.show();
-//                panelChart.hide();
-//            }
-
-
+            this.a = 1;
         } else {
+            me.panelActual = '-panelGridData';
+            this.setGridData();
             this.NoHideOseaShowPagination_clickHandler();
             panelTab.show();
             panelChart.hide();
+            this.a = 0;
         }
-    },
-//    showCurrentChart: function() {
-//        var isOK = true;
-//        this.hidePanelsChart();
-//        switch (me.screen_actual) {
-//            case prototype.id + '-panelGridData' :
-//                Ext.getCmp(prototype.id + '-panelChartData').show();
-//                break;
-//        }
-//        return isOK;
-//    },
-    hidePanelsChart: function() {
-
-        //Ext.getCmp(prototype.id + '-panelChartData').hide();
-        //Ext.getCmp(prototype.id + '-panelChartData').hide();
-
     },
     validateFields: function () {
         var msj = '';
