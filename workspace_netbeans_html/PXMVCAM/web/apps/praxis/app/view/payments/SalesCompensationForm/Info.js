@@ -278,7 +278,156 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                     ]
                                 }
                             ]
-                        }
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelChartData',
+                            bodyStyle: 'background: transparent;',
+                            padding: '1',
+                            border: true,
+                            
+                            height: 800,
+                            width: 1700,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelCData',
+                                    //bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '1',
+                                    border: true,
+                                    height: 300,
+                                    width: 304,
+                                    
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'left'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridCData',
+                                            height: 280,
+                                            width: 304,
+                                            hidden: false,
+                                            columnLines: true,
+                                            features: {
+                                                dock: 'bottom',
+                                                ftype: 'summary',
+                                            },
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Sales Date', dataIndex: 'BSUMDATE', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Qty Tickets', dataIndex: 'QTY_TRANSACTIONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_TRANSACTIONS, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Total Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                    
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelCData1',
+                                    //bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '1',
+                                    border: true,
+                                    height: 300,
+                                    width: 444,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'left'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridCData1',
+                                            height: 280,
+                                            width: 444,
+                                            hidden: false,
+                                            columnLines: true,
+                                            features: {
+                                                dock: 'bottom',
+                                                ftype: 'summary',
+                                            },
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Merchant', dataIndex: 'SMERCHID', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Description', dataIndex: 'DES_MERCHANT', width: 140,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Country', dataIndex: 'SCOUNTRY', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return  value;
+                                                        },
+                                                    },
+                                                    {text: 'Total Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCData1').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
                     ]
                 },
                 {

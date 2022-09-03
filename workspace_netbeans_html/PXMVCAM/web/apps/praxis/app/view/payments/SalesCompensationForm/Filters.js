@@ -153,7 +153,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
-                {xtype: 'tbspacer', width: 5},
+                {xtype: 'tbspacer', width: 50},
                 {
                     xtype: 'label',
                     text: 'PNR:',
@@ -173,7 +173,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Filters', {
                         keypress: 'filterPNRSettlement'
                     }
                 },
-                {xtype: 'tbspacer', width: 5},
+                {xtype: 'tbspacer', width: 50},
                 {
                     xtype: 'label',
                     text: 'Agent:',
