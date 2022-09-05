@@ -241,9 +241,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         this.beanPGTkt.IN_SDATES = rowData.data.SDATES;
         this.beanPGTkt.IN_SPNR = rowData.data.PNR;
         this.beanPGTkt.IN_PLUSGRADE = rowData.data.PLUSGRAID;
-        
+
         console.log(this.beanPGTkt);
-       
+
         //me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
         me.paramsDetailPGTkt.beanString = JSON.stringify(this.beanPGTkt);
         this.setGridDataDetPGTkt();
@@ -364,7 +364,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
         var stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
         console.log(selectedValue);
-        
+
         switch (selectedValue) {
             case 'P':
                 cmbFindByFAMEX.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -539,8 +539,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
-                this.setFormatParameter();
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                var stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
+                if (stval === '2') {
+                    this.setFormatParameter();
+                    global.getFile(prototype.url + '/getXLSX1?beanString=' + searchParams.beanString);
+                } else {
+                    this.setFormatParameter();
+                    global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                }
                 break;
             case  '-panelGridDataLiga':
                 this.setFormatParameter();

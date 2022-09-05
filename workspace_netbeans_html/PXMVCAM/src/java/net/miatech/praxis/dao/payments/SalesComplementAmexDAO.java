@@ -133,6 +133,7 @@ public class SalesComplementAmexDAO {
 
                 bean.FCONT = rst.getString("FCONT").trim();
                 bean.IDCON = rst.getString("IDCON").trim();
+                bean.IDCONFLE = rst.getString("IDCONFLE").trim();
                 bean.QTYTKT = rst.getInt("QTYTKT");
                 bean.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
                 if (bean.FAMEX.equals("")) {
