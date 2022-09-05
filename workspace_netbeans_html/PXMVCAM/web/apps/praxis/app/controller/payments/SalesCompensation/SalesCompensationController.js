@@ -18,6 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     panelActual: '',
     fileName: '',
     me: '',
+    a : 0,
     searchParams: {},
     paramsDetail: {},
     dataObtain: {},
@@ -154,7 +155,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     },
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
-        this.setGridData();
+        switch (this.a) {
+            case 0:
+                this.setGridData();
+                break;
+            case 1:
+                this.setGridDataSQP04620();
+                this.setGridDataSQP04633();
+                break;    
+        }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     filterPNRSettlement: function (e, eOpts) {
@@ -204,6 +213,66 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
+    setGridDataSQP04620: function () {
+        me.panelActual = '-panelChartData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);        
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchSQP04620'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams
+                    },
+                    load: function (obj) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-displayChart1').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridCData').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridCData').setStore(storeGridDatas);
+        }
+    },
+    setGridDataSQP04633: function () {
+        me.panelActual = '-panelChartData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);        
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchSQP04633'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams
+                    },
+                    load: function (obj) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-displayChart2').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridCData1').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridCData1').setStore(storeGridDatas);
+        }
+    },
     // </editor-fold>
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -242,6 +311,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    hidePagination_clickHandler: function() {
+        Ext.getCmp(prototype.id + '-pie').hide();
+    },
+    NoHideOseaShowPagination_clickHandler: function() {
+        Ext.getCmp(prototype.id + '-pie').show();
+    },
+    btnDisplay_click: function() {
+        this.btnSearch_click();
+        this.hidePagination_clickHandler();
+        var panelTab = Ext.getCmp(prototype.id + '-panelGridData');
+        var panelChart = Ext.getCmp(prototype.id + '-panelChartData');
+        if (panelTab.isVisible()) {
+            panelTab.hide();
+            panelChart.show();
+            me.panelActual = '-panelChartData';
+            this.setGridDataSQP04620();
+            this.setGridDataSQP04633();
+            this.a = 1;
+        } else {
+            me.panelActual = '-panelGridData';
+            this.setGridData();
+            this.NoHideOseaShowPagination_clickHandler();
+            panelTab.show();
+            panelChart.hide();
+            this.a = 0;
+        }
     },
     validateFields: function () {
         var msj = '';

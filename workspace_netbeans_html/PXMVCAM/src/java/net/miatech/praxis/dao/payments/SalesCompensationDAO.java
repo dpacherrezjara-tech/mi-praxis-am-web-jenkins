@@ -15,6 +15,7 @@ import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
 /**
@@ -156,6 +157,151 @@ public class SalesCompensationDAO {
             pasarGarbageCollector();
         }
 
+        return lstData;
+    }
+    
+    public List<A4116Filter> loadPX588SQP04620(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstData = new ArrayList<A4116Filter>(0);
+        A4116Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        double totTGROSAMOUN = 0;
+        double totQTY_TRANSACTIONS = 0;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04620(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM.trim());
+            cstmt.setString(3, filter.IN_DATETO.trim());
+            cstmt.setString(4, filter.IN_DATE.trim());
+            cstmt.setString(5, filter.IN_PNR.trim());
+            cstmt.setString(6, filter.IN_AGENT.trim());
+            
+            cstmt.execute();
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                totQTY_TRANSACTIONS = rst.getDouble("QTY_TRANSACTIONS");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new A4116Filter();
+                    bean.BSUMDATE = rst.getString("BSUMDATE").trim();
+                    bean.BSUMDATE = Functions.getMonthConvert(bean.BSUMDATE);
+                    bean.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    bean.QTY_TRANSACTIONS = rst.getDouble("QTY_TRANSACTIONS");
+                    bean.totTGROSAMOUN = totTGROSAMOUN;
+                    bean.totQTY_TRANSACTIONS = totQTY_TRANSACTIONS;
+                    
+                    lstData.add(bean);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstData;
+    }
+    
+    public List<A4116Filter> loadPX588SQP04633(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstData = new ArrayList<A4116Filter>(0);
+        A4116Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        double totTGROSAMOUN = 0;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04633(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM.trim());
+            cstmt.setString(3, filter.IN_DATETO.trim());
+            cstmt.setString(4, filter.IN_DATE.trim());
+            cstmt.setString(5, filter.IN_PNR.trim());
+            cstmt.setString(6, filter.IN_AGENT.trim());
+            
+            cstmt.execute();
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new A4116Filter();
+                    bean.SMERCHID = rst.getString("SMERCHID").trim();
+                    bean.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+                    bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    bean.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    bean.totTGROSAMOUN = totTGROSAMOUN;
+                    
+                    lstData.add(bean);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
         return lstData;
     }
 }

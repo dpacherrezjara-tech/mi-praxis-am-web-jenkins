@@ -86,15 +86,15 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Options', {
                             iconCls: 'prx-icon-add',
                             tooltip: 'New'
                         },
-//                        {
-//                            xtype:'button',
-//                            id: prototype.id+'-btnDisplay',
-//                            icon: 'resources/img/botones/FalseChart.png',
-//                            tooltip: 'Display Charts',
-//                            listeners: {
-//                                click: 'btnDisplay_click'
-//                            }
-//                        },
+                        {
+                            xtype:'button',
+                            id: prototype.id+'-btnDisplay',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+                            listeners: {
+                                click: 'btnDisplay_click'
+                            }
+                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',

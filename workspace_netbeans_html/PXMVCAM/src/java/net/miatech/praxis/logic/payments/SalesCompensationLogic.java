@@ -27,4 +27,12 @@ public class SalesCompensationLogic {
     public List<A4116Filter> loadPX588SQP04425(A4116Filter filter) throws SQLException, Exception {
         return banksCatalogDAO.loadPX588SQP04425(filter);
     }
+    
+    public List<A4116Filter> loadPX588SQP04620(A4116Filter filter) throws SQLException, Exception {
+        return banksCatalogDAO.loadPX588SQP04620(filter);
+    }
+    
+    public List<A4116Filter> loadPX588SQP04633(A4116Filter filter) throws SQLException, Exception {
+        return banksCatalogDAO.loadPX588SQP04633(filter);
+    }
 }
