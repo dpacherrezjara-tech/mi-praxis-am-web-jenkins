@@ -42,4 +42,5 @@ public class A4124Filter extends A4124 {
     public Pagination page = new Pagination();
     public String SCARDN = "";
     public String SAUTHOC = "";
+    public String IDCONFLE = "";
 }

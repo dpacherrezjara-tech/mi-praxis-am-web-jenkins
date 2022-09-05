@@ -325,11 +325,14 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
+                                                        text: 'ID Sales FLEX', dataIndex: 'IDCONFLE', width: 250
+                                                    },
+                                                    {
                                                         text: 'Date', dataIndex: 'FCONT', width: 100
                                                     },
                                                     {
-                                                        text: 'ID', dataIndex: 'IDCON', width: 100
-                                                    },
+                                                        text: 'ID', dataIndex: 'IDCON', width: 250
+                                                    }
                                                 ]
                                             },
                                             {
@@ -368,7 +371,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Token', dataIndex: 'PAYTOKEN', width: 120,
+                                                text: 'Token', dataIndex: 'PAYTOKEN', width: 140,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
                                                     metaData.style = "text-align:center;";
