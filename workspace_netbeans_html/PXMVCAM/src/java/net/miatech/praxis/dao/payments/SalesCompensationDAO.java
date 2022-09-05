@@ -199,6 +199,7 @@ public class SalesCompensationDAO {
 
                 while (rst.next()) {
                     bean = new A4116Filter();
+                    bean.PCURRENCY = rst.getString("PCURRENCY").trim();
                     bean.BSUMDATE = rst.getString("BSUMDATE").trim();
                     bean.BSUMDATE = Functions.getMonthConvert(bean.BSUMDATE);
                     bean.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
@@ -271,6 +272,7 @@ public class SalesCompensationDAO {
 
                 while (rst.next()) {
                     bean = new A4116Filter();
+                    bean.PCURRENCY = rst.getString("PCURRENCY").trim();
                     bean.SMERCHID = rst.getString("SMERCHID").trim();
                     bean.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
