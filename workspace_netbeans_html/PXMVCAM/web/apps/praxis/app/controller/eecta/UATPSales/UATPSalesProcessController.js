@@ -57,42 +57,42 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesProcessController', {
         }
         return true;
     },
-    callFormatFile:function (oparam) {
-        console.log(JSON.stringify(oparam));
+    callFormatFile: function (oparam) {
+        let me = this;
         let form = Ext.getCmp(prototype.id + '-formProcess').getForm();
         form.submit({
             url: prototype.url + '/formatDelivery',
             waitMsg: 'Procesando archivo...',
-            method:'POST',
-            params:{
-                beanString:JSON.stringify(oparam)
+            method: 'POST',
+            params: {
+                beanString: JSON.stringify(oparam)
             },
             success: function (fp, o) {
-//                let response = o.result;
-//                if (response.success){
-//                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
-//                    global.Msg({
-//                        msg: response.response.toString(),
-//                        icon:1
-//                    });
-//                }
-                console.log(o);
+                let response = o.result;
+                me.reloadGrid(response.success,response.response.OU_MESSAGE);
+                console.log(response);
             },
-            failure: function(res, opts) {
-//                let response = opts.result;
-//                if (!response.success){
-//                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
-//                    global.Msg({
-//                        msg: response.response.toString(),
-//                        icon:0
-//                    });
-//                }
+            failure: function (res, opts) {
+                let response = opts.result;
+                me.reloadGrid(response.success,response.response.OU_MESSAGE);
                 console.log('server-side failure with status code ' + opts.response.status);
             }
         });
-        //alert('Formateando');
-        //Ext.getCmp(prototype.id + '-UATPSaleProcessEntry').close();
-        //Ext.getCmp(prototype.id + '-btnSearch').click();
+    },
+    reloadGrid: function (status,message) {
+        if (status) {
+            global.Msg({
+                msg: message,
+                icon: 1
+            });
+        } else {
+            global.Msg({
+                msg: message,
+                icon: 0
+            });
+        }
+        Ext.getCmp(prototype.id + '-UATPSaleProcessEntry').close();
+        Ext.getCmp(prototype.id + '-btnSearch').click();
     }
 
 });
