@@ -117,6 +117,19 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             ]
         }));
         cmbTDOC.setValue("");
+        
+        var cmbComplements = Ext.getCmp(prototype.id + '-cmbComplements');
+        cmbComplements.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["9353227755", "Plusgrade"],
+                //["8133735688", "Ligas"],
+                //["9352724851", "Tablet"]
+            ]
+        }));
+        cmbComplements.setValue("");
 
         var cmbDateSel = Ext.getCmp(prototype.id + '-cmbDateSel');
         cmbDateSel.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -139,6 +152,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
 
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        me.bean.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplements').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -201,6 +215,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByDate.IN_DATE = rowData.data.IN_DATE;
         this.beanDetByDate.IN_DATE_VALUE = rowData.data.PAYDATE;
         this.beanDetByDate.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        this.beanDetByDate.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
+        
         console.log(this.beanDetByDate);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDate);
         this.setGridDataDetByDate();
@@ -215,6 +231,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByAcount.IN_DATE_VALUE = rowData.data.PAYDATE;
         this.beanDetByAcount.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByAcount.IN_STCONL = '1';
+        this.beanDetByAcount.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
+        
         console.log(this.beanDetByAcount);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByAcount);
         this.setGridDataDetByDate();
@@ -229,6 +247,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByDebug.IN_DATE_VALUE = rowData.data.PAYDATE;
         this.beanDetByDebug.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByDebug.IN_STCONL = '2';
+        this.beanDetByDebug.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
+        
         console.log(this.beanDetByDebug);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDebug);
         this.setGridDataDetByDate();
@@ -243,6 +263,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByPNR.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanDetByPNR.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByPNR.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        this.beanDetByPNR.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
         
         console.log(this.beanDetByPNR);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByPNR);
@@ -299,6 +320,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByQty.IN_FREGLA = rowData.data.FREGLA;
         this.beanDetByQty.IN_SCARDN = rowData.data.SCARDN;
         this.beanDetByQty.IN_SAUTHOC = rowData.data.SAUTHOC;
+        this.beanDetByQty.IDITEMS = rowData.data.IDITEMS;
+        this.beanDetByQty.IDITEMT = rowData.data.IDITEMT;
 
         console.log(this.beanDetByQty);
 
@@ -349,6 +372,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByDay.IN_DATE_VALUE = rowData.data.PAYDATE;
         this.beanDetByDay.strFormatDate = rowData.data.strFormatDate;
         this.beanDetByDay.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        this.beanDetByDay.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
+        
         console.log(this.beanDetByDay);
 
         me.paramsDetailByDay.beanString = JSON.stringify(this.beanDetByDay);

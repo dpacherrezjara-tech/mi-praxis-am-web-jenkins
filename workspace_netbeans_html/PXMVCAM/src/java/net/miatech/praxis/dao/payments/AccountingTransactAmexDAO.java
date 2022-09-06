@@ -59,17 +59,17 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04416(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04416_1(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -77,17 +77,18 @@ public class AccountingTransactAmexDAO {
             cstmt.setString(4, filter.IN_DATE);
             cstmt.setString(5, filter.IN_STCONL);
             cstmt.setString(6, filter.IN_TDOC);
-            cstmt.setInt(7, filter.page.PAGNUM);
-            cstmt.setInt(8, filter.page.PAGROW);
-            cstmt.setInt(9, filter.page.TOTPAG);
-            cstmt.setInt(10, filter.page.TOTROW);
+            cstmt.setString(7, filter.IN_COMPLEMENT);
+            cstmt.setInt(8, filter.page.PAGNUM);
+            cstmt.setInt(9, filter.page.PAGROW);
+            cstmt.setInt(10, filter.page.TOTPAG);
+            cstmt.setInt(11, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(7);
-            filter.page.PAGROW = cstmt.getInt(8);
-            filter.page.TOTPAG = cstmt.getInt(9);
-            filter.page.TOTROW = cstmt.getInt(10);
+            filter.page.PAGNUM = cstmt.getInt(8);
+            filter.page.PAGROW = cstmt.getInt(9);
+            filter.page.TOTPAG = cstmt.getInt(10);
+            filter.page.TOTROW = cstmt.getInt(11);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -112,6 +113,7 @@ public class AccountingTransactAmexDAO {
                     beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
+                    beanTkt.IN_COMPLEMENT = filter.IN_COMPLEMENT.trim();
 
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.PAYDATE);
@@ -215,33 +217,34 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04454(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04454_1(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
             cstmt.setString(3, filter.IN_DATE_VALUE);
             cstmt.setString(4, filter.IN_TDOC);
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setString(5, filter.IN_COMPLEMENT);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -267,6 +270,7 @@ public class AccountingTransactAmexDAO {
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
+                    beanTkt.IN_COMPLEMENT = filter.IN_COMPLEMENT.trim();
 
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
@@ -362,17 +366,17 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04417(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04417_1(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
@@ -380,17 +384,18 @@ public class AccountingTransactAmexDAO {
             cstmt.setString(4, filter.IN_STCONL);
             cstmt.setString(5, filter.IN_TDOC);
             cstmt.setString(6, filter.IN_PNR);
-            cstmt.setInt(7, filter.page.PAGNUM);
-            cstmt.setInt(8, filter.page.PAGROW);
-            cstmt.setInt(9, filter.page.TOTPAG);
-            cstmt.setInt(10, filter.page.TOTROW);
+            cstmt.setString(7, filter.IN_COMPLEMENT);
+            cstmt.setInt(8, filter.page.PAGNUM);
+            cstmt.setInt(9, filter.page.PAGROW);
+            cstmt.setInt(10, filter.page.TOTPAG);
+            cstmt.setInt(11, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(7);
-            filter.page.PAGROW = cstmt.getInt(8);
-            filter.page.TOTPAG = cstmt.getInt(9);
-            filter.page.TOTROW = cstmt.getInt(10);
+            filter.page.PAGNUM = cstmt.getInt(8);
+            filter.page.PAGROW = cstmt.getInt(9);
+            filter.page.TOTPAG = cstmt.getInt(10);
+            filter.page.TOTROW = cstmt.getInt(11);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -406,6 +411,7 @@ public class AccountingTransactAmexDAO {
                     beanTkt = new A4116Filter();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
                     beanTkt.IN_DATE_VALUE = filter.IN_DATE_VALUE.trim();
+                    beanTkt.IN_COMPLEMENT = filter.IN_COMPLEMENT.trim();
 
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
@@ -448,6 +454,8 @@ public class AccountingTransactAmexDAO {
                     }
                     beanTkt.FCONTL = rst.getString("FCONTL").trim();
                     beanTkt.IDCONL = rst.getString("IDCONL").trim();
+                    beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
+                    beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
 
                     //TOTALEs
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
@@ -519,17 +527,17 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04418(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04418_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(10, Types.INTEGER);
-            cstmt.registerOutParameter(11, Types.INTEGER);
             cstmt.registerOutParameter(12, Types.INTEGER);
             cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE_VALUE);
@@ -540,17 +548,19 @@ public class AccountingTransactAmexDAO {
             cstmt.setString(7, filter.IN_FREGLA);
             cstmt.setString(8, filter.IN_SCARDN);
             cstmt.setString(9, filter.IN_SAUTHOC);
-            cstmt.setInt(10, filter.page.PAGNUM);
-            cstmt.setInt(11, filter.page.PAGROW);
-            cstmt.setInt(12, filter.page.TOTPAG);
-            cstmt.setInt(13, filter.page.TOTROW);
+            cstmt.setString(10, filter.IDITEMS);
+            cstmt.setString(11, filter.IDITEMT);
+            cstmt.setInt(12, filter.page.PAGNUM);
+            cstmt.setInt(13, filter.page.PAGROW);
+            cstmt.setInt(14, filter.page.TOTPAG);
+            cstmt.setInt(15, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(10);
-            filter.page.PAGROW = cstmt.getInt(11);
-            filter.page.TOTPAG = cstmt.getInt(12);
-            filter.page.TOTROW = cstmt.getInt(13);
+            filter.page.PAGNUM = cstmt.getInt(12);
+            filter.page.PAGROW = cstmt.getInt(13);
+            filter.page.TOTPAG = cstmt.getInt(14);
+            filter.page.TOTROW = cstmt.getInt(15);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
