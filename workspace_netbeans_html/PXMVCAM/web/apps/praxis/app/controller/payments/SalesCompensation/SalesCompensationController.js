@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     panelActual: '',
     fileName: '',
     me: '',
-    a : 0,
+    a: 0,
     searchParams: {},
     paramsDetail: {},
     dataObtain: {},
@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onChangeCmbType: function(obj, value) {
+    onChangeCmbType: function (obj, value) {
 
         Ext.getCmp(prototype.id + '-panelFilter1').hide();
         Ext.getCmp(prototype.id + '-panelFilter2').hide();
@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
         Ext.getCmp(prototype.id + '-panelFilter4').hide();
         Ext.getCmp(prototype.id + '-panelFilter5').hide();
         Ext.getCmp(prototype.id + '-panelFilter6').hide();
-        Ext.getCmp(prototype.id + '-panelFilter7').hide(); 
+        Ext.getCmp(prototype.id + '-panelFilter7').hide();
         Ext.getCmp(prototype.id + '-panelFilter8').hide();
 
         if (value !== '') {
@@ -162,20 +162,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
             case 1:
                 this.setGridDataSQP04620();
                 this.setGridDataSQP04633();
-                break;    
+                break;
         }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     filterPNRSettlement: function (e, eOpts) {
-            switch (eOpts.getKey()) {
-                case 13:
-                    this.btnSearch_click();
-            }
-        },
+        switch (eOpts.getKey()) {
+            case 13:
+                this.btnSearch_click();
+        }
+    },
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-panelGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);        
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -215,7 +215,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     },
     setGridDataSQP04620: function () {
         me.panelActual = '-panelChartData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);        
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -245,7 +245,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
     },
     setGridDataSQP04633: function () {
         me.panelActual = '-panelChartData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);        
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -312,13 +312,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
-    hidePagination_clickHandler: function() {
+    hidePagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-pie').hide();
     },
-    NoHideOseaShowPagination_clickHandler: function() {
+    NoHideOseaShowPagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-pie').show();
     },
-    btnDisplay_click: function() {
+    btnDisplay_click: function () {
         this.btnSearch_click();
         this.hidePagination_clickHandler();
         var panelTab = Ext.getCmp(prototype.id + '-panelGridData');
@@ -366,25 +366,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesCompensation.SalesCompensationCo
         }).show();
     },
     btnBack_click: function (obj, e) {
-
-        if (me.drillDown.length > 0) {
-            me.panelActual = me.drillDown.pop();
-            global.selectedChild(me.childs, prototype.id + me.panelActual);
-            me.setWidthPie();
-
-            this.getPaggin();
-            if (me.pagginActual !== '') {
-                var pag = Ext.getCmp(prototype.id + me.pagginActual);
-                var pagData = pag.getPageData();
-                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-            }
-        } else {
+        
+        var panelTab = Ext.getCmp(prototype.id + '-panelGridData');
+        var panelChart = Ext.getCmp(prototype.id + '-panelChartData');
+        if (panelChart.isVisible()) {
+            panelChart.hide();
+            panelTab.show();
+            me.panelActual = '-panelGridData';
+            this.btnSearch_click();
+            this.setGridData();
+            this.NoHideOseaShowPagination_clickHandler();
+            this.a = 0;
+        }else{
             global.showMenu();
         }
     },
-    btnClear_click: function (obj, e) {        
+    btnClear_click: function (obj, e) {
 
     },
     btnExcel_click: function (obj, e) {
