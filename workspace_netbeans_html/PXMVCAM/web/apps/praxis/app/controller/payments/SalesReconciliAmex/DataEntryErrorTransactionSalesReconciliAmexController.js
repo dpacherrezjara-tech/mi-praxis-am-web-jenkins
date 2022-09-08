@@ -809,6 +809,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
         beanGrid.TDOC = this.beanResult.TDOC;
+        beanGrid.SMERCHID = this.beanResult.SMERCHID;
         var beanStringGrid = JSON.stringify(beanGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
@@ -1106,6 +1107,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
         beanGrid.TDOC = this.beanResult.TDOC;
+        beanGrid.SMERCHID = this.beanResult.SMERCHID;
         var beanStringGrid = JSON.stringify(beanGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
