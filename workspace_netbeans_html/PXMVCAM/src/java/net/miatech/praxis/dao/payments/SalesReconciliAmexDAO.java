@@ -4535,9 +4535,9 @@ public class SalesReconciliAmexDAO {
             IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
 
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04457(?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04457(?,?,?,?,?,?,?,?,?)}";
         } else {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -4553,6 +4553,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(6, IN_FECVTA_TO);
             cstmt.setString(7, IN_FECVTA_FROM);
             cstmt.setString(8, filter.INSTANBR.trim());
+            cstmt.setString(9, filter.SMERCHID.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();
