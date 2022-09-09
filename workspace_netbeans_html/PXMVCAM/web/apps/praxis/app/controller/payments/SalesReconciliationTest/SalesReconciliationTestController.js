@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.enabled('cmbDateFromMonth', true);
         win.enabled('cmbDateToYear', true);
         win.enabled('cmbDateToMonth', true);
-        win.enabled('cmbAFTE', true);
+        win.enabled('cmbCURRENCY', true);
         win.enabled('cmbCardType', true);
         win.enabled('cmbCountry', true);
         win.enabled('cmbFOP', true);
@@ -178,7 +178,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         win.enabled('cmbDateFromMonth', false);
                         win.enabled('cmbDateToYear', false);
                         win.enabled('cmbDateToMonth', false);
-                        win.enabled('cmbAFTE', false);
+                        win.enabled('cmbCURRENCY', false);
                         win.enabled('cmbCardType', false);
                         win.enabled('cmbCountry', false);
                         win.enabled('cmbFOP', false);
@@ -228,7 +228,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         global.Msg({msg: 'CC Number must contain 10 digits.'});
                     }
                     if (win.getValue('txtCard1').trim() !== '' && win.getValue('txtCard2').trim() !== '') {
-                        win.enabled('cmbAFTE', false);
+                        win.enabled('cmbCURRENCY', false);
                         win.enabled('cmbCardType', false);
                         win.enabled('cmbCountry', false);
                         win.enabled('cmbFOP', false);
@@ -274,7 +274,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         global.Msg({msg: 'Merchant number must contain 20 digits.'});
                     }
                     if (win.getValue('txtMERCHN').trim() !== '') {
-                        win.enabled('cmbAFTE', false);
+                        win.enabled('cmbCURRENCY', false);
                         win.enabled('cmbCardType', false);
                         win.enabled('cmbCountry', false);
                         win.enabled('cmbFOP', false);
@@ -362,28 +362,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetCountry');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
         this.searchDetCountry(beanDet);
+        console.log('searchDetCountry');
         this.strSTVAL = '';
     },
     gridDetCard_clickHandler: function(column, e, row, column, x, rowData) {
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetCard');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
         this.searchDetCardCode(beanDet);
+        console.log('searchDetCardCode');
         this.strSTVAL = '';
     },
     gridDetDay_clickHandler: function(column, e, row, column, x, rowData) {
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetDay');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
         this.searchDetDay(beanDet);
+        console.log('searchDetDay');
         this.strSTVAL = '';
     },
     gridDetTicket_clickHandler: function(column, e, row, column, x, rowData) {
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetTicket');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
         this.searchDetTicket(beanDet);
+        console.log('searchDetTicket');
         this.strSTVAL = '';
     },
     viewDataEntry_clickHandler: function(tableview, e, rowNum, columnNum, x, model, a, b) {
@@ -405,14 +413,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         this.searchBean(data, this.peek());
     },
     gridCashDetCountry_clickHandler: function(column, e, row, column, x, rowData) {
+        console.log('searchCashCountry');
         var obj = x.record.data;
         this.searchCashCountry(obj);
     },
     gridCashDetDay_clickHandler: function(column, e, row, column, x, rowData) {
+        console.log('searchCashDay');
         var obj = x.record.data;
         this.searchCashDay(obj);
     },
     gridDetCountryS_clickHandler: function(column, e, row, column, x, rowData) {
+        console.log('searchDetCountryByStval');
         var beanDet = x.record.data;
         var dataIndex = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex;
         var estado, cant;
@@ -443,12 +454,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             beanDet.IN_STVAL = estado;
             win.selectedChild('vskMain', 'boxDetCountryS');
             beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+            beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
             this.searchDetCountryByStval(beanDet);
         } else {
             global.Msg({msg: 'Data Not Found'});
         }
     },
     gridDetCountrySEr_clickHandler: function(column, e, row, column, x, rowData) {
+        console.log('searchDetCountryByStval_1');
         var beanDet = x.record.data;
 
         beanDet.IN_CERROR = beanDet.CERROR;
@@ -468,6 +481,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.displayProMasterTicket(this, 'ViewConciliation', this.beanProMasterTicket);
     },
     gridDetCardS_clickHandler: function(column, e, row, column, x, rowData) {
+        console.log('searchDetCardCodeByStval');
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetCardS');
 
@@ -481,6 +495,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         }
     },
     gridDetDayS_clickHandler: function(column, e, row, column, x, rowData) {
+        console.log('searchDetDayByStval');
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetDayS');
 
@@ -496,7 +511,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
     
     
     gridDetTicketS_clickHandler: function(column, e, row, column, x, rowData) {
-        
+        console.log('searchDetTktByStval');
         Ext.getCmp(prototype.id + '-chkDIFF').setVisible(true);
         this.beanDetE = x.record.data;
 
@@ -525,6 +540,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         }
     },
     searchDifferences:function(){
+        console.log('searchDetTktByStval');
         this.beanDetE.IN_FCOMPL = win.getValue('cmbFCOMPL');
         if (win.getValue('chkDIFF')) {
                 this.beanDetE.IN_DIFF = '1';
@@ -635,6 +651,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                     this.beanDetailTar.IN_CARDN2 = win.getValue('txtCard2');
                     this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                     this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
+                    this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
                     console.log(this.beanDetailTar);
                     this.searchDetTARJETA(this.beanDetailTar);
                 } else {
@@ -700,6 +717,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                 this.beanDetailTar.IN_CARDN2 = win.getValue('txtCard2');
                 this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                 this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
+                this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
                 console.log(this.beanDetailTar);
 
                 if (win.getValue('txtAUTHNBR').trim().length === 6) {
@@ -762,7 +780,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             this.bean.IN_CARDC = win.getValue('cmbCardType');
             this.bean.IN_TICKET = win.getValue('txtTicket').trim();
             this.bean.IN_FTE = win.getValue('cmbSource');
-            this.bean.IN_AFTE = win.getValue('cmbAFTE');
+            this.bean.IN_CURRENCY = win.getValue('cmbCURRENCY');
             this.bean.IN_MERCHN = win.getValue('txtMERCHN').trim();
             this.bean.IN_AUTHNBR = win.getValue('txtAUTHNBR').trim();
             //            if(vskPrincipal.selectedChild == boxCharts){
@@ -918,6 +936,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
+            }
+        });
+        Ext.Ajax.request({
+            url: prototype.url + '/getMoneda',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify({
+                    COUNTRY: 2, CARD: 2
+                })
+            },
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbCURRENCY').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbCURRENCY').setValue('');
+
+                }
             }
         });
     },
@@ -2083,14 +2121,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.enabled('cmbDateFromMonth', true);
         win.enabled('cmbDateToYear', true);
         win.enabled('cmbDateToMonth', true);
-        win.enabled('cmbAFTE', true);
+        win.enabled('cmbCURRENCY', true);
         win.enabled('cmbCardType', true);
         win.enabled('cmbCountry', true);
         win.enabled('cmbFOP', true);
         win.enabled('cmbSource', true);
     },
     habilitarFiltros2: function() {
-        win.enabled('cmbAFTE', true);
+        win.enabled('cmbCURRENCY', true);
         win.enabled('cmbCardType', true);
         win.enabled('cmbCountry', true);
         win.enabled('cmbFOP', true);

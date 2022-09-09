@@ -240,21 +240,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             }
                         },
                         {xtype: 'tbspacer', width: 30},
-                        {
-                            xtype: 'label',
-                            text: 'Settlement Type:',
-                            padding: '3 0',
-                            width: 94
-                        },
+//                        {
+//                            xtype: 'label',
+//                            text: 'Currency:',
+//                            padding: '3 0',
+//                            width: 66
+//                        },
                         {
                             xtype:'combo',
-                            id: prototype.id+'-cmbAFTE',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "All"], ["AX", "AMEX"]//, ["N", "Not Billed"], ["L", "Local"], ["X", "BSP Billed"]
-                                ]
-                            }),
+                            id: prototype.id+'-cmbCURRENCY',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -262,15 +256,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: true,
-                            width: 100,
-                            value: "",
+                            width: 80,
                             typeAhead: true,
-                            valueField: 'code', displayField: 'name',
+                            valueField: 'CODE', displayField: 'NAME',
+                            listConfig: {maxHeight: 111},
                             enableKeyEvents: true,
                             triggerAction: 'all',
+                            hidden:true,
                             listeners:{
                             }
-                        }
+                        },
+                        
                     ]
                 },
                 {

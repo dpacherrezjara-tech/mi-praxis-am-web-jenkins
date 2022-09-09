@@ -52,18 +52,18 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04338(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04338(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(16, Types.VARCHAR);
-            cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.VARCHAR);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
+            cstmt.registerOutParameter(21, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro);
@@ -80,21 +80,22 @@ public class LoadConciliationTestDAO {
             cstmt.setString(13, filter.IN_STVAL.trim());
             cstmt.setString(14, filter.IN_MERCHN.trim());
             cstmt.setString(15, filter.IN_ADYEN.trim());
-            cstmt.setString(16, "");
+            cstmt.setString(16, filter.IN_CURRENCY.trim());
+            cstmt.setString(17, "");
 
-            cstmt.setInt(17, filter.page.PAGNUM);
-            cstmt.setInt(18, filter.page.PAGROW);
-            cstmt.setInt(19, filter.page.TOTPAG);
-            cstmt.setInt(20, filter.page.TOTROW);
+            cstmt.setInt(18, filter.page.PAGNUM);
+            cstmt.setInt(19, filter.page.PAGROW);
+            cstmt.setInt(20, filter.page.TOTPAG);
+            cstmt.setInt(21, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            Fec = cstmt.getString(16);
-            filter.page.PAGNUM = cstmt.getInt(17);
-            filter.page.PAGROW = cstmt.getInt(18);
-            filter.page.TOTPAG = cstmt.getInt(19);
-            filter.page.TOTROW = cstmt.getInt(20);
+            Fec = cstmt.getString(17);
+            filter.page.PAGNUM = cstmt.getInt(18);
+            filter.page.PAGROW = cstmt.getInt(19);
+            filter.page.TOTPAG = cstmt.getInt(20);
+            filter.page.TOTROW = cstmt.getInt(21);
 
             while (rst.next()) {
                 lngTotQMATCH = rst.getLong("QMATCH");
@@ -1944,17 +1945,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04340(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04340(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
+            cstmt.registerOutParameter(20, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -1971,19 +1972,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(13, filter.IN_MERCHN.trim());
             cstmt.setString(14, filter.IN_AUTHNBR.trim());
             cstmt.setString(15, filter.IN_ADYEN.trim());
+            cstmt.setString(16, filter.IN_CURRENCY.trim());
 
-            cstmt.setInt(16, filter.page.PAGNUM);
-            cstmt.setInt(17, filter.page.PAGROW);
-            cstmt.setInt(18, filter.page.TOTPAG);
-            cstmt.setInt(19, filter.page.TOTROW);
+            cstmt.setInt(17, filter.page.PAGNUM);
+            cstmt.setInt(18, filter.page.PAGROW);
+            cstmt.setInt(19, filter.page.TOTPAG);
+            cstmt.setInt(20, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(16);
-            filter.page.PAGROW = cstmt.getInt(17);
-            filter.page.TOTPAG = cstmt.getInt(18);
-            filter.page.TOTROW = cstmt.getInt(19);
+            filter.page.PAGNUM = cstmt.getInt(17);
+            filter.page.PAGROW = cstmt.getInt(18);
+            filter.page.TOTPAG = cstmt.getInt(19);
+            filter.page.TOTROW = cstmt.getInt(20);
 
             while (rst.next()) {
                 lngTotQMATCH = rst.getLong("QMATCH");
@@ -2114,17 +2116,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04344(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04344(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
+            cstmt.registerOutParameter(21, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim()); //ADATE
@@ -2142,19 +2144,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(14, filter.IN_AUTHNBR.trim()); //
             cstmt.setString(15, filter.IN_ADYEN.trim()); //
             cstmt.setString(16, filter.IN_FCOMPL.trim()); //
+            cstmt.setString(17, filter.IN_CURRENCY.trim()); //
 
-            cstmt.setInt(17, filter.page.PAGNUM);
-            cstmt.setInt(18, filter.page.PAGROW);
-            cstmt.setInt(19, filter.page.TOTPAG);
-            cstmt.setInt(20, filter.page.TOTROW);
+            cstmt.setInt(18, filter.page.PAGNUM);
+            cstmt.setInt(19, filter.page.PAGROW);
+            cstmt.setInt(20, filter.page.TOTPAG);
+            cstmt.setInt(21, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(17);
-            filter.page.PAGROW = cstmt.getInt(18);
-            filter.page.TOTPAG = cstmt.getInt(19);
-            filter.page.TOTROW = cstmt.getInt(20);
+            filter.page.PAGNUM = cstmt.getInt(18);
+            filter.page.PAGROW = cstmt.getInt(19);
+            filter.page.TOTPAG = cstmt.getInt(20);
+            filter.page.TOTROW = cstmt.getInt(21);
 
             while (rst.next()) {
                 lngTotQMATCH = rst.getLong("QMATCH");
@@ -2278,17 +2281,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04345(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04345(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
+            cstmt.registerOutParameter(21, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -2306,19 +2309,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(14, filter.IN_AUTHNBR.trim());
             cstmt.setString(15, filter.IN_ADYEN.trim());
             cstmt.setString(16, filter.IN_FCOMPL.trim());
+            cstmt.setString(17, filter.IN_CURRENCY.trim());
 
-            cstmt.setInt(17, filter.page.PAGNUM);
-            cstmt.setInt(18, filter.page.PAGROW);
-            cstmt.setInt(19, filter.page.TOTPAG);
-            cstmt.setInt(20, filter.page.TOTROW);
+            cstmt.setInt(18, filter.page.PAGNUM);
+            cstmt.setInt(19, filter.page.PAGROW);
+            cstmt.setInt(20, filter.page.TOTPAG);
+            cstmt.setInt(21, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(17);
-            filter.page.PAGROW = cstmt.getInt(18);
-            filter.page.TOTPAG = cstmt.getInt(19);
-            filter.page.TOTROW = cstmt.getInt(20);
+            filter.page.PAGNUM = cstmt.getInt(18);
+            filter.page.PAGROW = cstmt.getInt(19);
+            filter.page.TOTPAG = cstmt.getInt(20);
+            filter.page.TOTROW = cstmt.getInt(21);
 
             while (rst.next()) {
                 lngTotQMATCH = rst.getLong("QMATCH");
@@ -2458,17 +2462,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
+            cstmt.registerOutParameter(21, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -2486,19 +2490,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(14, filter.IN_AUTHNBR.trim());
             cstmt.setString(15, filter.IN_ADYEN.trim());
             cstmt.setString(16, filter.IN_FCOMPL.trim());
+            cstmt.setString(17, filter.IN_CURRENCY.trim());
 
-            cstmt.setInt(17, filter.page.PAGNUM);
-            cstmt.setInt(18, filter.page.PAGROW);
-            cstmt.setInt(19, filter.page.TOTPAG);
-            cstmt.setInt(20, filter.page.TOTROW);
+            cstmt.setInt(18, filter.page.PAGNUM);
+            cstmt.setInt(19, filter.page.PAGROW);
+            cstmt.setInt(20, filter.page.TOTPAG);
+            cstmt.setInt(21, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(17);
-            filter.page.PAGROW = cstmt.getInt(18);
-            filter.page.TOTPAG = cstmt.getInt(19);
-            filter.page.TOTROW = cstmt.getInt(20);
+            filter.page.PAGNUM = cstmt.getInt(18);
+            filter.page.PAGROW = cstmt.getInt(19);
+            filter.page.TOTPAG = cstmt.getInt(20);
+            filter.page.TOTROW = cstmt.getInt(21);
 
             while (rst.next()) {
                 dblTotSVFOP = rst.getDouble("SVFOP");
@@ -3741,17 +3746,17 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
+            cstmt.registerOutParameter(22, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim()); //ADATE
@@ -3770,19 +3775,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(15, filter.IN_AUTHNBR.trim());
             cstmt.setString(16, filter.IN_ADYEN.trim());
             cstmt.setString(17, filter.IN_FCOMPL.trim());
+            cstmt.setString(18, filter.IN_CURRENCY.trim());
 
-            cstmt.setInt(18, filter.page.PAGNUM);
-            cstmt.setInt(19, filter.page.PAGROW);
-            cstmt.setInt(20, filter.page.TOTPAG);
-            cstmt.setInt(21, filter.page.TOTROW);
+            cstmt.setInt(19, filter.page.PAGNUM);
+            cstmt.setInt(20, filter.page.PAGROW);
+            cstmt.setInt(21, filter.page.TOTPAG);
+            cstmt.setInt(22, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(18);
-            filter.page.PAGROW = cstmt.getInt(19);
-            filter.page.TOTPAG = cstmt.getInt(20);
-            filter.page.TOTROW = cstmt.getInt(21);
+            filter.page.PAGNUM = cstmt.getInt(19);
+            filter.page.PAGROW = cstmt.getInt(20);
+            filter.page.TOTPAG = cstmt.getInt(21);
+            filter.page.TOTROW = cstmt.getInt(22);
 
             while (rst.next()) {
                 lngTotCant += rst.getLong("CANT");
@@ -3897,7 +3903,7 @@ public class LoadConciliationTestDAO {
             filter.IN_SDATE = filter.SDATE.trim();
         }
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04349(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04349(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3920,6 +3926,7 @@ public class LoadConciliationTestDAO {
             cstmt.setString(14, filter.IN_MERCHN.trim());//VACIO
             cstmt.setString(15, filter.IN_AUTHNBR.trim());
             cstmt.setString(16, filter.CERROR.trim());//VACIO
+            cstmt.setString(17, filter.IN_CURRENCY.trim());//VACIO
 
             cstmt.execute();
             rst = cstmt.getResultSet();
@@ -5060,6 +5067,66 @@ public class LoadConciliationTestDAO {
         }
 
         return hmResultado;
+    }
+    
+    public List<A4164Filter> loadPX584SQP04604(A4164Filter filter) throws SQLException, Exception {
+
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
+
+        A4164Filter objRtn;
+        objRtn = new A4164Filter();
+        objRtn.CODE = "";
+        objRtn.NAME = "All";
+        lstTkts.add(objRtn);
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04604(?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A4164Filter();
+
+                beanTkt.CODE = rst.getString("SCURRENCY").trim();
+                beanTkt.NAME = rst.getString("SCURRENCY").trim();
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
     }
 
     public static void pasarGarbageCollector() {
