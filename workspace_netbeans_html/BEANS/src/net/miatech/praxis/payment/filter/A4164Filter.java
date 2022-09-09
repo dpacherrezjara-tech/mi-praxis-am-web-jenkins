@@ -413,6 +413,9 @@ public class A4164Filter extends A4164 {
 
     public Pagination page = new Pagination();
     public String IN_DIFF = "";
+    public String CODE = "";
+    public String NAME = "";
+    public String IN_CURRENCY = "";
     
     
     public String bufferToString(String ccust) {

@@ -97,4 +97,8 @@ public class LoadConciliationTestLogic {
     public HashMap<String, List<A4164Filter>> loadPX584SQP04343(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04343(filter);
     }
+    
+    public List<A4164Filter> loadPX584SQP04604(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04604(filter);
+    }
 }
