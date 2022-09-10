@@ -64,6 +64,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
+                            id: prototype.id+'-pagginCopy',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
                             id: prototype.id+'-paggin2',
                             pageSize: 10,
                             border: false,
