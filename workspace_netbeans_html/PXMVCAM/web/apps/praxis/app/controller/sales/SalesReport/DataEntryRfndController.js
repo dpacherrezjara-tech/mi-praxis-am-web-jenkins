@@ -520,7 +520,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                 IN_CUPON2: Ext.getCmp(prototype.idRfnd + '-det-lblCpn2_1').getValue(),
                 IN_CUPON3: Ext.getCmp(prototype.idRfnd + '-det-lblCpn3_1').getValue(),
                 IN_CUPON4: Ext.getCmp(prototype.idRfnd + '-det-lblCpn4_1').getValue(),
-                IN_FORCE: ''
+                IN_FORCE: '',
+                IN_IDFIL: file.A713IDFIL
             };
 
             meDET.cargarTotales();
