@@ -494,7 +494,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                 estado = '4';
                 cant = Number(beanDet.lngQDIFF);
                 break;
-            case 'lngQSALES':
+            case 'lngQPEND':
                 estado = '2';
                 cant = Number(beanDet.lngQSALES);
                 break;
