@@ -517,7 +517,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                         },
                                                                         columns: [
                                                                             {
-                                                                                text: 'by Ticket', dataIndex: 'lngQTOTSAL', width: 70,
+                                                                                text: 'by Ticket', dataIndex: 'lngQSALES', width: 70,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "text-align:right;background-color:#b5d0f9";
                                                                                     return Ext.util.Format.number(value, '0,000');
@@ -582,7 +582,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                         },
                                                                         columns: [
                                                                             {
-                                                                                text: 'w/o Reconcili.', dataIndex: 'lngQSALES', width: 90,
+                                                                                text: 'w/o Reconcili.', dataIndex: 'lngQPEND', width: 90,
                                                                                 listeners: {
                                                                                     click: 'gridDetCountryS_clickHandlerCopy'
                                                                                 },
