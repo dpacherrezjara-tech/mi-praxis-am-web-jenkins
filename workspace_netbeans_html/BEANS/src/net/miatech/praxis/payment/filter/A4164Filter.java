@@ -416,7 +416,24 @@ public class A4164Filter extends A4164 {
     public String CODE = "";
     public String NAME = "";
     public String IN_CURRENCY = "";
-    
+    public long lngQPEND = 0;
+    public long lngQCOMPS = 0;
+    public long lngQCOMPM = 0;
+    public long lngQPLUSS = 0;
+    public long lngQPLUSM = 0;
+    public long lngQTABES = 0;
+    public long lngQTABEM = 0;
+    public long lngQLIGEA = 0;
+    public long lngQLIGEM = 0;
+    public long lngTotQPEND = 0;
+    public long lngTotQCOMPS = 0;
+    public long lngTotQCOMPM = 0;
+    public long lngTotQPLUSS = 0;
+    public long lngTotQPLUSM = 0;
+    public long lngTotQTABES = 0;
+    public long lngTotQTABEM = 0;
+    public long lngTotQLIGEA = 0;
+    public long lngTotQLIGEM = 0;
     
     public String bufferToString(String ccust) {
 

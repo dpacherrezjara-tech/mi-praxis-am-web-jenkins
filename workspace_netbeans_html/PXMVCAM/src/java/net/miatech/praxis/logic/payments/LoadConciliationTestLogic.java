@@ -26,6 +26,10 @@ public class LoadConciliationTestLogic {
         return loadConciliationTestDAO.loadPX584SQP04338(filter);
     }
     
+    public List<A4164Filter> loadPX584SQP04338Copy(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04338Copy(filter);
+    }
+    
     public List<A2370Filter> loadPX584SQP00899(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP00899(filter);
     }
@@ -44,6 +48,10 @@ public class LoadConciliationTestLogic {
     
     public List<A4164Filter> loadPX584SQP04340(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04340(filter);
+    }
+    
+    public List<A4164Filter> loadPX584SQP04340Copy(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04340Copy(filter);
     }
     
     public List<A4164Filter> loadPX584SQP04344(A4164Filter filter) throws SQLException, Exception {
@@ -78,8 +86,16 @@ public class LoadConciliationTestLogic {
         return loadConciliationTestDAO.loadPX584SQP04339(filter);
     }
     
+    public List<A4164Filter> loadPX584SQP04339Copy(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04339Copy(filter);
+    }
+    
     public List<A4164Filter> loadPX584SQP04349(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04349(filter);
+    }
+    
+    public List<A4164Filter> loadPX584SQP04349Copy(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04349Copy(filter);
     }
     
     public List<A4164Filter> loadPX584SQP04341(A4164Filter filter) throws SQLException, Exception {
