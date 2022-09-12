@@ -102,10 +102,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         var newabel = tipo;
 
         win.setText('label_1', Ext.getCmp(prototype.id + '-label_1').text.replace(oldLabel, newabel) + this.DateControl);
+        win.setText('label_1Copy', Ext.getCmp(prototype.id + '-label_1Copy').text.replace(oldLabel, newabel) + this.DateControl);
         win.setText('label_2', Ext.getCmp(prototype.id + '-label_2').text.replace(oldLabel, newabel));
+        win.setText('label_2Copy', Ext.getCmp(prototype.id + '-label_2Copy').text.replace(oldLabel, newabel));
         win.setText('label_3', Ext.getCmp(prototype.id + '-label_3').text.replace(oldLabel, newabel));
         win.setText('label_4', Ext.getCmp(prototype.id + '-label_4').text.replace(oldLabel, newabel));
+        win.setText('label_4Copy', Ext.getCmp(prototype.id + '-label_4Copy').text.replace(oldLabel, newabel));
         win.setText('label_5', Ext.getCmp(prototype.id + '-label_5').text.replace(oldLabel, newabel));
+        win.setText('label_5Copy', Ext.getCmp(prototype.id + '-label_5Copy').text.replace(oldLabel, newabel));
         win.setText('label_6', Ext.getCmp(prototype.id + '-label_6').text.replace(oldLabel, newabel));
         win.setText('label_7', Ext.getCmp(prototype.id + '-label_7').text.replace(oldLabel, newabel));
         win.setText('label_8', Ext.getCmp(prototype.id + '-label_8').text.replace(oldLabel, newabel));
@@ -364,8 +368,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.selectedChild('vskMain', 'boxDetCountry');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
         beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        console.log(beanDet);
         this.searchDetCountry(beanDet);
         console.log('searchDetCountry');
+        this.strSTVAL = '';
+    },
+    gridDetCountry_clickHandlerCopy: function (column, e, row, column, x, rowData) {
+        var beanDet = x.record.data;
+        win.selectedChild('vskMain', 'boxDetCountryCopy');
+        beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        console.log(beanDet);
+        this.searchDetCountryCopy(beanDet);
+        console.log('searchDetCountryCopy');
         this.strSTVAL = '';
     },
     gridDetCard_clickHandler: function (column, e, row, column, x, rowData) {
@@ -457,6 +472,44 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
             beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
             this.searchDetCountryByStval(beanDet);
+        } else {
+            global.Msg({msg: 'Data Not Found'});
+        }
+    },
+    gridDetCountryS_clickHandlerCopy: function (column, e, row, column, x, rowData) {
+        console.log('searchDetCountryByStvalCopy');
+        var beanDet = x.record.data;
+        var dataIndex = Ext.getCmp(prototype.id + '-gridCopyData').headerCt.getGridColumns()[column].dataIndex;
+        var estado, cant;
+        switch (dataIndex) {
+            case 'lngQMATCH':
+                estado = '1';
+                cant = Number(beanDet.lngQMATCH);
+                break;
+            case 'lngQMANUAL':
+                estado = '5';
+                cant = Number(beanDet.lngQMANUAL);
+                break;
+            case 'lngQDIFF':
+                estado = '4';
+                cant = Number(beanDet.lngQDIFF);
+                break;
+            case 'lngQSALES':
+                estado = '2';
+                cant = Number(beanDet.lngQSALES);
+                break;
+            case 'lngQACCB':
+                estado = '3';
+                cant = Number(beanDet.lngQACCB);
+                break;
+        }
+        if (cant > 0) {
+            this.strSTVAL = '';
+            beanDet.IN_STVAL = estado;
+            win.selectedChild('vskMain', 'boxDetCountrySCopy');
+            beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+            beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+            this.searchDetCountryByStvalCopy(beanDet);
         } else {
             global.Msg({msg: 'Data Not Found'});
         }
@@ -1002,16 +1055,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         if (obj.data.length > 0) {
                             var obj = obj.data.items[0].data;
                             if (obj.strFecFiltro === 'DATEC') {
-                                win.setText('adgSalDate', 'Reconciliation');
+                                win.setText('adgCopySalDate', 'Reconciliation');
                             } else {
                                 if (obj.IN_TDOC === 'R') {
-                                    win.setText('adgSalDate', 'Refund');
+                                    win.setText('adgCopySalDate', 'Refund');
                                 } else {
-                                    win.setText('adgSalDate', 'Sales');
+                                    win.setText('adgCopySalDate', 'Sales');
                                 }
                                 me.DateControl = obj.strDescripcion;
-                                win.setText('label_1', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCtry', 'Sales Reconciliation ' + me.DateControl);
+                                win.setText('label_1Copy', 'Sales Reconciliation ' + me.DateControl);
+                                win.setText('ahDetCtryCopy', 'Sales Reconciliation ' + me.DateControl);
                                 win.setText('ahDetCard', 'Sales Reconciliation ' + me.DateControl);
                                 win.setText('ahDetDay', 'Sales Reconciliation ' + me.DateControl);
                             }
@@ -1128,6 +1181,58 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         });
         Ext.getCmp(prototype.id + '-gridDetCountry').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+    },
+    searchDetCountryCopy: function (beanDet) {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetCountryCopy'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(beanDet)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    win.lblUser_toolTip("Estructura: A4164");
+
+                    me.selectedChild('vskMain', 'boxDetCountryCopy');
+
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        if (obj.data.length > 0) {
+                            var obj = obj.data.items[0].data;
+                            if (obj.strFecFiltro === 'DATEC') {
+                                Ext.getCmp(prototype.id + '-gridDetCountryCopy').setTitle("Reconciliation Date : " + obj.strFormatDate);
+                                if (obj.IN_TDOC === 'R') {
+                                    win.setText('ahDetCtryCopy', 'Refund Reconciliation');
+                                } else {
+                                    win.setText('ahDetCtryCopy', 'Sales Reconciliation');
+                                }
+                            } else {
+                                if (obj.IN_TDOC === 'R') {
+                                    Ext.getCmp(prototype.id + '-gridDetCountryCopy').setTitle("Refund Date : " + obj.strFormatDate);
+                                    win.setText('ahDetCtryCopy', 'Refund Reconciliation');
+                                } else {
+                                    Ext.getCmp(prototype.id + '-gridDetCountryCopy').setTitle("Sales Date : " + obj.strFormatDate);
+                                    win.setText('ahDetCtryCopy', 'Sales Reconciliation');
+                                }
+                            }
+                            //                            bxPag1.width = 1200;
+                            //                            bxPag2.width = 1;
+                            //                            bxPag2.visible = false;
+                        } else {
+                            Ext.getCmp(prototype.id + '-gridDetCountryCopy').setTitle('');
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetCountryCopy').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin2Copy').bindStore(storeGridDatas);
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetCardCode">
@@ -1624,6 +1729,77 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         });
         Ext.getCmp(prototype.id + '-gridDetCountryS').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+    },
+    searchDetCountryByStvalCopy: function (beanDet) {
+        this.beanDet = beanDet;
+        console.log(this.beanDet);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetCountryByStvalCopy'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: JSON.stringify(me.beanDet)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+
+                    me.selectedChild('vskMain', 'boxDetCountrySCopy');
+                    win.lblUser_toolTip("Estructura: A4164");
+
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetCountrySAC = res.data;
+                        if (gridDetCountrySAC.length > 0) {
+                            var Objtemp = gridDetCountrySAC[0];
+                            win.setTitle('gridDetCountrySCopy', Objtemp.strTitulo);
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                        }
+                        console.log(res.lstDetError);
+                        var cbxDetErrorAC = res.lstDetError;
+                        Ext.getCmp(prototype.id + '-gridDetCSECopy').bindStore(
+                                Ext.create("Ext.Praxis.store.payments.GridData", {data: cbxDetErrorAC})
+                                );
+                        if (cbxDetErrorAC.length > 0) {
+                            var objER = {};
+                            for (var q = 0; q < cbxDetErrorAC.length; q++) {
+                                objER = cbxDetErrorAC[q];
+                            }
+                            if (objER.IN_STVAL === '4') {
+                                Ext.getCmp(prototype.id + '-con').show();
+                                Ext.getCmp(prototype.id + '-verQuery').show();
+                                Ext.getCmp(prototype.id + '-sin').hide();
+                                Ext.getCmp(prototype.id + '-noQuery').hide();
+                            } else {
+                                Ext.getCmp(prototype.id + '-con').hide();
+                                Ext.getCmp(prototype.id + '-verQuery').hide();
+                                Ext.getCmp(prototype.id + '-sin').show();
+                                Ext.getCmp(prototype.id + '-noQuery').show();
+                            }
+
+                            Ext.getCmp(prototype.id + '-gridDetCSECopy').show();
+                        } else {
+                            Ext.getCmp(prototype.id + '-gridDetCSECopy').hide();
+                        }
+                        //                        //Calculando tamanio del Datagrid
+                        //                        if(gridDetCountrySAC.length >= cbxDetErrorAC.length){
+                        //                            gridDetCountryS.rowCount = gridDetCountrySAC.length+4;
+                        //                            gridDetCSE.rowCount = gridDetCountrySAC.length+4;
+                        //                        }else if(cbxDetErrorAC.length >= gridDetCountrySAC.length){
+                        //                            gridDetCountryS.rowCount = cbxDetErrorAC.length+4;
+                        //                            gridDetCSE.rowCount = cbxDetErrorAC.length+4;
+                        //                        }else{
+                        //                            gridDetCountryS.rowCount = 6;
+                        //                            gridDetCSE.rowCount = 6;
+                        //                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetCountrySCopy').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin6Copy').bindStore(storeGridDatas);
     },
     //</editor-fold>
     searchDetCountryByStval_1: function (beanDet) {
