@@ -1370,8 +1370,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetSubmission: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-
-        if (rowData.data.AXPAYNBR.trim() === '') {
+        console.log(rowData.data)
+        if (rowData.data.AXPAYNBR.trim() === '' && rowData.data.PGROSAMOU === 0) { //&& rowData.data.ZONA.trim() !== 'SAME' Cambio solicitado por SVILCHEZ
             this.onGridDetAdjustment(obj, metaData, rowNum, columnNum, obj2, rowData);
             return;
         }
