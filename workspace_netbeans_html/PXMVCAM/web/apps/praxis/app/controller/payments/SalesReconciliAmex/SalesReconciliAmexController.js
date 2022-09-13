@@ -597,8 +597,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case 'ER':
                 if ((Ext.getCmp(prototype.id + '-txtPNRError').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC1').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC2').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthE').getValue() !== '')) {
-                    this.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
-                    this.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue();
+                    this.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+                    this.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
                     this.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
                     this.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
                     this.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
