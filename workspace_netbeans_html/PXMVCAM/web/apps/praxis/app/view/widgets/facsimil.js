@@ -652,6 +652,7 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
         bean104.FUENTE = params.IN_FTE;
         bean104.TDNR = params.IN_CIA + params.IN_FORMA + params.IN_SERIE;
         bean104.TRNC = params.IN_TRX;
+        bean104.IDFILE = params.IN_IDFIL;
 
         me.beanGrid = bean104;
 

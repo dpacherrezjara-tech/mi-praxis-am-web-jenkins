@@ -40,6 +40,9 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +50,12 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -166,7 +175,13 @@ public class ProMasterTicketController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanSabre"), filter.getClass());            
             
-            SabreRecordLocator sabre = new SabreRecordLocator();
+            //Get the endpoint
+            String wsURL = serverSession.getServerSession().getPropertySession().get("SABRE_WS").toString(); // "http://10.101.2.137/SabreRecloc/SabreReclocRetriever.asmx" ;
+            
+            disableSslVerification(); // Deshabilitamos validacion certificado
+            
+            URL url = new URL(wsURL);
+            SabreRecordLocator sabre = new SabreRecordLocator(url);
             SabreRecordLocatorSoap relocSOA = sabre.getSabreRecordLocatorSoap();
             TicketREQ ticketREQ = new TicketREQ();
             ticketREQ.setTicketNumber(filter.VP_A1716CIA + filter.VP_A1716FORMA + filter.VP_A1716SERIE);
@@ -186,7 +201,44 @@ public class ProMasterTicketController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
-    }  
+    }
+    
+    private static void disableSslVerification() 
+    {
+        try
+        {
+            // Create a trust manager that does not validate certificate chains
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+            };
+
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
        
     public static String prettyPrintXml(String sourceXml) {
         try {
@@ -211,6 +263,8 @@ public class ProMasterTicketController extends BaseController {
         String fileNameDownload = String.format("Sabre File-" + strTicket + "-" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString(); 
         try {
+            
+            disableSslVerification();
             
             //Get the endpoint
             String wsURL = serverSession.getServerSession().getPropertySession().get("SABRE_WS").toString(); // "http://10.101.2.137/SabreRecloc/SabreReclocRetriever.asmx" ;
