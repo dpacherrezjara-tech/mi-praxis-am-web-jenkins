@@ -601,8 +601,8 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.IVA = rst.getLong("IVA");
                     beanTkt.SVFOPOL = rst.getLong("SVFOPOL");
                     beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                    //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                    beanTkt.NET = rst.getLong("SVFOPN");
+                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    //beanTkt.NET = rst.getLong("SVFOPN"); SOLICITADO POR ING ELMER NEVES Y SARA VILCHEZ
 
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
@@ -753,8 +753,8 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                 beanTkt.IVA = rst.getLong("IVA");
                 beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                beanTkt.NET = rst.getLong("SVFOPN");
+                beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                //beanTkt.NET = rst.getLong("SVFOPN"); SOLICITADO POR ING ELMER NEVES Y SARA VILCHEZ
 
                 beanTkt.totSVFOP = totSVFOP;
                 beanTkt.totSVFOPS = totSVFOPS;
@@ -1498,12 +1498,6 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.CODEBANK = rst.getString("CODEBANK").trim();
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
-                    beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
-                    beanTkt.IVA = rst.getLong("IVA");
-                    beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                    //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                    beanTkt.NET = rst.getLong("SVFOPN");
-
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
                     //beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
@@ -1525,6 +1519,12 @@ public class SalesReconciliBoomerDAO {
                     } else if (beanTkt.difIMPORT > 0) {
                         beanTkt.REVCON = "ND";
                     }
+
+                    beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
+                    beanTkt.IVA = rst.getLong("IVA");
+                    beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
+                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    //beanTkt.NET = rst.getLong("SVFOPN");
 
                     beanTkt.totTOTCOMISI = totTOTCOMISI;
                     beanTkt.totIVA = totIVA;
