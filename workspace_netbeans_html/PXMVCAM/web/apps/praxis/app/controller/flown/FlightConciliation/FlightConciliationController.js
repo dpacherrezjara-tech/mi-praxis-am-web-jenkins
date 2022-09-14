@@ -1785,4 +1785,20 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
 
     },
+    
+    btnDuplicate_click: function() {
+        
+        Ext.create('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryDelete', {
+//            id: 'DataEntryDeleteFlightConciliationForm',
+            id: prototype.id + '-DataEntryDeleteFlightConciliationForm',
+            params: {
+                strFecha: '',
+                strFuente: '',
+                strccust: ''
+            }
+        }).show();
+        
+    }
+    
+    
 });

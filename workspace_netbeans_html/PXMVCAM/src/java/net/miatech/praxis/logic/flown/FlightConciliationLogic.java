@@ -137,5 +137,9 @@ public class FlightConciliationLogic {
     }
     
     
+    public String SQP04550(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04550(filter);
+    }
+    
     
 }

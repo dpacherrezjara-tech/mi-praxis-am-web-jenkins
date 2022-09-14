@@ -2532,5 +2532,60 @@ public class FlightConciliationDAO {
         return strMsj;
 
     }
+    
+    
+    public String SQP04550(A3729Filter filter) throws SQLException, Exception {
+        //REALIZA DELETE DE DULPICADOS EN LA TABLA A3729.
+
+        String strMsj = "";
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04550(?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(2, filter.DFLIGHT.trim());
+            cstmt.setString(3, filter.NFLIGHT.trim());
+            cstmt.setString(4, filter.CDEPART.trim());
+            cstmt.setString(5, filter.CARRIVA.trim());
+
+            cstmt.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt.setString(7, Functions.getFechaActual());
+            cstmt.setString(8, Functions.getHoraActual());
+            cstmt.setInt(9, 0);
+            cstmt.execute();
+            
+            
+            if(cstmt.getInt(9) > 0){
+                strMsj = "Upgrade was successful.";
+            }else{
+                strMsj = "No records found.";
+            }
+            
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+
+    }
 
 }
