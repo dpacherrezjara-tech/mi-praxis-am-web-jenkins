@@ -1,6 +1,10 @@
 Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
+    requires: [
+        'Ext.Praxis.view.widgets.facsimil',
+        'Ext.Praxis.view.widgets.prorrate'
+    ],
     border: false,
     layout: 'column',
     bodyStyle: 'background-color: #E3EAEF;',
