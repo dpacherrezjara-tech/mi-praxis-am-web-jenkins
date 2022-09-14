@@ -476,56 +476,6 @@ public class SalesReconciliationTestController extends BaseController {
         return (dw_excel) ? null : (new Gson().toJson(map));
     }
     
-    @RequestMapping(value = "/searchDetCountryByStvalCopy")
-    public @ResponseBody
-    String searchDetCountryByStvalCopy(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        List<A4164Filter> listaError = new ArrayList<A4164Filter>();
-        A4164Filter filter = new A4164Filter();
-        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
-        try {
-            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            if (!dw_excel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP04339Copy(filter);
-
-            if (dw_excel) {
-                ExportUtil.exportFields(request, response, listaData);
-//                map.put("nameExcel", nameExcel);
-            } else {
-                if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX584SQP04349Copy(filter);
-                }
-                map.put("success", true);
-                map.put("data", listaData);
-                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
-                map.put("lstDetError", listaError);
-            }
-        } catch (SQLException e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
-        } catch (Exception e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
-        }
-        return (dw_excel) ? null : (new Gson().toJson(map));
-    }
-
     //Drill Down por Estado ****************************************************
     @RequestMapping(value = "/searchDetCountryByStval_1")
     public @ResponseBody
