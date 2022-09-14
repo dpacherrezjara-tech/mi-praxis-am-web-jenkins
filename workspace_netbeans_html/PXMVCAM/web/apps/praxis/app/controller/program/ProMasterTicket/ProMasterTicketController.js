@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                 var paramsProrrate = {};
                 paramsProrrate = {
                     IN_TIPOCAP: 'A',
-                    IN_AIRLIN: this.beanResultSet01.fileA720.A720CIA,
+                    IN_AIRLIN: this.beanResultSet01.fileA720.A720AIRLIN,
                     IN_GRUPO: this.beanResultSet01.fileA720.A720GRUPO,
                     IN_CIA: this.beanResultSet01.fileA720.A720CIAI,
                     IN_FORMA: this.beanResultSet01.fileA720.A720FORMAI,
