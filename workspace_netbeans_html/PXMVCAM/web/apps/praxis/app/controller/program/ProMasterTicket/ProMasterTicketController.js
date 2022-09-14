@@ -367,9 +367,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     },
     btnProrrate_clickHandler: function () {
         if(win.getValue('lblTicketNumber') !== ''){
-            var params = {};
+            //var params = {};
             
-            var bean104 = {};
+            /*var bean104 = {};
             bean104.FUENTE = win.getValue('lblSource').trim().substr(0, 3);
             bean104.TDNR = this.beanResultSet01.fileA720.A720CIAI + this.beanResultSet01.fileA720.A720FORMAI + this.beanResultSet01.fileA720.A720SERIEI;
             bean104.AGTN = this.beanResultSet01.fileA720.A720AGENTE;
@@ -379,7 +379,49 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             Ext.create('Ext.Praxis.view.screens.ScrProrrateoNewForm', {
                 id: 'ScrProrrateoNewForm',
                 params: params
-            }).show();
+            }).show();*/
+            try{
+                console.log('prorate call');
+                console.log(this.beanResultSet01);        
+                console.log(this.params);
+                var paramsProrrate = {};
+                paramsProrrate = {
+                    IN_TIPOCAP: 'A',
+                    IN_AIRLIN: this.beanResultSet01.fileA720.A720CIA,
+                    IN_GRUPO: this.beanResultSet01.fileA720.A720GRUPO,
+                    IN_CIA: this.beanResultSet01.fileA720.A720CIAI,
+                    IN_FORMA: this.beanResultSet01.fileA720.A720FORMAI,
+                    IN_SERIE: this.beanResultSet01.fileA720.A720SERIEI,
+                    IN_SEQ: this.beanResultSet01.fileA720.A720SEQ,
+                    IN_FTE: this.beanResultSet01.fileA1530.A1530FUENT,
+                    IN_TRX: this.beanResultSet01.fileA720.A720TRNCU,
+                    IN_EDITABLE: false,
+                    IN_TCAMB: this.beanResultSet01.fileA720.A720TCAMB,
+                    IN_REVENUE: 'USD',
+                    IN_STATUS: 'CLOSED',
+                    IN_ERROR: '',
+                    IN_TDOC: this.beanResultSet01.fileA720.A720TDOC,
+                    IN_ISSUEDATE: this.beanResultSet01.fileA720.A720FECVTA,
+                    IN_CUPON1: '',
+                    IN_CUPON2: '',
+                    IN_CUPON3: '',
+                    IN_CUPON4: '',
+                    IN_FORCE: '',
+                    IN_IDFIL: this.beanResultSet01.fileA720.A720IDFIL
+                };
+                
+                    Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryProrate', {
+                    id: 'DataEntryProrate',
+                    params: paramsProrrate
+                }).show();
+
+                
+            }catch(e){
+                    console.log('prorate');
+                   console.log(e);
+            }
+            
+            
 	}
     },
     lnkLeg_clickHandler: function (obj, metaData, rowNum, column, obj2, rowData) {
