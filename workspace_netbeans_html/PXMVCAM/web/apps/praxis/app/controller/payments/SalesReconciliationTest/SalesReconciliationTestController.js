@@ -111,6 +111,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.setText('label_5', Ext.getCmp(prototype.id + '-label_5').text.replace(oldLabel, newabel));
         win.setText('label_5Copy', Ext.getCmp(prototype.id + '-label_5Copy').text.replace(oldLabel, newabel));
         win.setText('label_6', Ext.getCmp(prototype.id + '-label_6').text.replace(oldLabel, newabel));
+        win.setText('label_6', Ext.getCmp(prototype.id + '-label_6Copy').text.replace(oldLabel, newabel));
         win.setText('label_7', Ext.getCmp(prototype.id + '-label_7').text.replace(oldLabel, newabel));
         win.setText('label_8', Ext.getCmp(prototype.id + '-label_8').text.replace(oldLabel, newabel));
         win.setText('label_9', Ext.getCmp(prototype.id + '-label_9').text.replace(oldLabel, newabel));
@@ -535,7 +536,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.displayProMasterTicket(this, 'ViewConciliation', this.beanProMasterTicket);
     },
     gridDetCardS_clickHandler: function (column, e, row, column, x, rowData) {
-        console.log('searchDetCardCodeByStval');
+        console.log('gridDetCardS_clickHandler');
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetCardS');
 
@@ -549,7 +550,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         }
     },
     gridDetDayS_clickHandler: function (column, e, row, column, x, rowData) {
-        console.log('searchDetDayByStval');
+        console.log('gridDetDayS_clickHandler');
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetDayS');
 
@@ -564,7 +565,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
     },
 
     gridDetTicketS_clickHandler: function (column, e, row, column, x, rowData) {
-        console.log('searchDetTktByStval');
+        console.log('gridDetTicketS_clickHandler');
         Ext.getCmp(prototype.id + '-chkDIFF').setVisible(true);
         this.beanDetE = x.record.data;
 
@@ -1034,52 +1035,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             this.a = 0;
         }
     },
-    searchCopy: function (bean) {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-            proxy: {
-                url: prototype.url + '/searchCopy'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
-                },
-                load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4165");
-
-                    me.selectedChild('vskMain', 'boxCopyMainData');
-
-                    var res = Ext.JSON.decode(response._response.responseText);
-                    if (res.success) {
-                        if (obj.data.length > 0) {
-                            var obj = obj.data.items[0].data;
-                            if (obj.strFecFiltro === 'DATEC') {
-                                win.setText('adgCopySalDate', 'Reconciliation');
-                            } else {
-                                if (obj.IN_TDOC === 'R') {
-                                    win.setText('adgCopySalDate', 'Refund');
-                                } else {
-                                    win.setText('adgCopySalDate', 'Sales');
-                                }
-                                me.DateControl = obj.strDescripcion;
-                                win.setText('label_1Copy', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCtryCopy', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCard', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetDay', 'Sales Reconciliation ' + me.DateControl);
-                            }
-                        } else {
-                            global.Msg({msg: 'Data not found'});
-                        }
-                    } else
-                        global.Msg({msg: res.sesion});
-                    global.clear();
-                }
-            }
-        });
-        Ext.getCmp(prototype.id + '-gridCopyData').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-pagginCopy').bindStore(storeGridDatas);
-    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="search">
     search: function (bean) {
@@ -1127,6 +1082,52 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         });
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    searchCopy: function (bean) {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchCopy'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    win.lblUser_toolTip("Estructura: A4165");
+
+                    me.selectedChild('vskMain', 'boxCopyMainData');
+
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        if (obj.data.length > 0) {
+                            var obj = obj.data.items[0].data;
+                            if (obj.strFecFiltro === 'DATEC') {
+                                win.setText('adgCopySalDate', 'Reconciliation');
+                            } else {
+                                if (obj.IN_TDOC === 'R') {
+                                    win.setText('adgCopySalDate', 'Refund');
+                                } else {
+                                    win.setText('adgCopySalDate', 'Sales');
+                                }
+                                me.DateControl = obj.strDescripcion;
+                                win.setText('label_1Copy', 'Sales Reconciliation ' + me.DateControl);
+                                win.setText('ahDetCtryCopy', 'Sales Reconciliation ' + me.DateControl);
+                                win.setText('ahDetCard', 'Sales Reconciliation ' + me.DateControl);
+                                win.setText('ahDetDay', 'Sales Reconciliation ' + me.DateControl);
+                            }
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridCopyData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-pagginCopy').bindStore(storeGridDatas);
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetCountry">
@@ -1735,7 +1736,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         console.log(this.beanDet);
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
-                url: prototype.url + '/searchDetCountryByStvalCopy'
+                url: prototype.url + '/searchDetCountryByStval'
             },
             listeners: {
                 beforeload: function (obj) {
