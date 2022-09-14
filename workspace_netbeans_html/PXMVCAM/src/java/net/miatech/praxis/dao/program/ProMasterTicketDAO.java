@@ -152,6 +152,7 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A720FORMAI = rs01.getString("A720FORMAI");
                     objRtn.fileA720.A720SERIEI = rs01.getString("A720SERIEI");
                     
+                    objRtn.fileA720.A720AIRLIN = rs01.getString("A720AIRLIN");
                     objRtn.fileA720.A720GRUPO = rs01.getString("A720GRUPO");
                     objRtn.fileA720.A720ORIG = rs01.getString("A720ORIG");
                     objRtn.fileA720.A720IDFIL = rs01.getString("A720IDFIL");
