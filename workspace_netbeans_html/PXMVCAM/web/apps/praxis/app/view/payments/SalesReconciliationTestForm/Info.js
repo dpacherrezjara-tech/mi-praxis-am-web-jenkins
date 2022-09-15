@@ -732,7 +732,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                                 }
                                                                             },
                                                                             {
-                                                                                text: 'Pending', dataIndex: 'lngQLIGSEM', width: 70,
+                                                                                text: 'Pending', dataIndex: 'lngQLIGEM', width: 70,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "text-align:right;background-color:#FFFFCC";
                                                                                     return Ext.util.Format.number(value, '0,000');
@@ -740,7 +740,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                                     metaData.style = "text-align:right;";
                                                                                     var data = Ext.getCmp(prototype.id + '-gridCopyData').getStore().getData().items[0].data;
-                                                                                    return Ext.util.Format.number(data.lngTotQLIGSEM, '0,000');
+                                                                                    return Ext.util.Format.number(data.lngTotQLIGEM, '0,000');
                                                                                 }
                                                                             }
                                                                         ]
@@ -1804,7 +1804,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                                 }
                                                                             },
                                                                             {
-                                                                                text: 'Pending', dataIndex: 'lngQLIGSEM', width: 70,
+                                                                                text: 'Pending', dataIndex: 'lngQLIGEM', width: 70,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "text-align:right;background-color:#FFFFCC";
                                                                                     return Ext.util.Format.number(value, '0,000');
@@ -1812,7 +1812,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                                     metaData.style = "text-align:right;";
                                                                                     var data = Ext.getCmp(prototype.id + '-gridDetCountryCopy').getStore().getData().items[0].data;
-                                                                                    return Ext.util.Format.number(data.lngTotQLIGSEM, '0,000');
+                                                                                    return Ext.util.Format.number(data.lngTotQLIGEM, '0,000');
                                                                                 }
                                                                             }
                                                                         ]
@@ -2607,7 +2607,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
-                                                            //resizable: true,
+                                                            resizable: true,
                                                             align: 'center'
                                                         },
                                                         items: [
@@ -3304,7 +3304,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center'
                                                                 },
                                                                 items: [
@@ -3425,7 +3425,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center'
                                                                 },
                                                                 items: [
@@ -3548,7 +3548,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center'
                                                                 },
                                                                 items: [
@@ -3656,7 +3656,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center'
                                                                 },
                                                                 items: [
@@ -3771,7 +3771,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center'
                                                                 },
                                                                 items: [
@@ -3917,7 +3917,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
-                                                            //resizable: true,
+                                                            resizable: true,
                                                             align: 'center'
                                                         },
                                                         items: [
@@ -3926,7 +3926,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center',
                                                                     border: true
                                                                 },
@@ -4251,7 +4251,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
-                                                            //resizable: true,
+                                                            resizable: true,
                                                             align: 'center'
                                                         },
                                                         items: [
@@ -4260,7 +4260,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    //resizable: true,
+                                                                    resizable: true,
                                                                     align: 'center',
                                                                     border: true
                                                                 },
