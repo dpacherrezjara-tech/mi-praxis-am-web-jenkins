@@ -125,8 +125,9 @@ public class SalesReconciliationTestController extends BaseController {
 
     @RequestMapping(value = "/searchDetCountry")
     public @ResponseBody
-    String searchDetCountry(ModelMap map, HttpServletRequest request) {
+    String searchDetCountry(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A4164Filter filter = new A4164Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -136,17 +137,29 @@ public class SalesReconciliationTestController extends BaseController {
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04340(filter);
 
+            
             map.put("success", true);
-            map.put("data", listaData);
-            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -154,13 +167,14 @@ public class SalesReconciliationTestController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return new Gson().toJson(map);
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
     
     @RequestMapping(value = "/searchDetCountryCopy")
     public @ResponseBody
-    String searchDetCountryCopy(ModelMap map, HttpServletRequest request) {
+    String searchDetCountryCopy(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A4164Filter filter = new A4164Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -170,17 +184,28 @@ public class SalesReconciliationTestController extends BaseController {
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04340Copy(filter);
 
             map.put("success", true);
-            map.put("data", listaData);
-            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -188,13 +213,14 @@ public class SalesReconciliationTestController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return new Gson().toJson(map);
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
 
     @RequestMapping(value = "/searchDetCardCode")
     public @ResponseBody
-    String searchDetCardCode(ModelMap map, HttpServletRequest request) {
+    String searchDetCardCode(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A4164Filter filter = new A4164Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -204,17 +230,28 @@ public class SalesReconciliationTestController extends BaseController {
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04344(filter);
 
             map.put("success", true);
-            map.put("data", listaData);
-            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -222,13 +259,14 @@ public class SalesReconciliationTestController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return new Gson().toJson(map);
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-
-    @RequestMapping(value = "/searchDetDay")
+    
+    @RequestMapping(value = "/searchDetCardCodeCopy")
     public @ResponseBody
-    String searchDetDay(ModelMap map, HttpServletRequest request) {
+    String searchDetCardCodeCopy(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A4164Filter filter = new A4164Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -238,17 +276,74 @@ public class SalesReconciliationTestController extends BaseController {
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
+            LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4164Filter> listaData = logic.loadPX584SQP04344Copy(filter);
+
+            map.put("success", true);
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return (dw_excel) ? null : (new Gson().toJson(map));
+    }
+
+    @RequestMapping(value = "/searchDetDay")
+    public @ResponseBody
+    String searchDetDay(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        A4164Filter filter = new A4164Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04345(filter);
 
             map.put("success", true);
-            map.put("data", listaData);
-            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -256,13 +351,14 @@ public class SalesReconciliationTestController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return new Gson().toJson(map);
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
 
     @RequestMapping(value = "/searchDetTicket")
     public @ResponseBody
-    String searchDetTicket(ModelMap map, HttpServletRequest request) {
+    String searchDetTicket(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A4164Filter filter = new A4164Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -272,17 +368,28 @@ public class SalesReconciliationTestController extends BaseController {
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04346(filter);
 
             map.put("success", true);
-            map.put("data", listaData);
-            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -290,7 +397,7 @@ public class SalesReconciliationTestController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return new Gson().toJson(map);
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
 
     @RequestMapping(value = "/searchCashMonth")

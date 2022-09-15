@@ -58,6 +58,10 @@ public class LoadConciliationTestLogic {
         return loadConciliationTestDAO.loadPX584SQP04344(filter);
     }
     
+    public List<A4164Filter> loadPX584SQP04344Copy(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04344Copy(filter);
+    }
+    
     public List<A4164Filter> loadPX584SQP04345(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04345(filter);
     }

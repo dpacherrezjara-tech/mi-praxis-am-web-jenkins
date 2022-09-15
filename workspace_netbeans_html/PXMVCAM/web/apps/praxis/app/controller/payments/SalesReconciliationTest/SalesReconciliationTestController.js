@@ -10,6 +10,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
     beanProMasterTicket: {},
     beanDetE: {},
     beanDet: {},
+    beanDetCopy1: {},
     beanDet2: {},
     beanDet3: {},
     beanDet4: {},
@@ -109,9 +110,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.setText('label_4', Ext.getCmp(prototype.id + '-label_4').text.replace(oldLabel, newabel));
         win.setText('label_4Copy', Ext.getCmp(prototype.id + '-label_4Copy').text.replace(oldLabel, newabel));
         win.setText('label_5', Ext.getCmp(prototype.id + '-label_5').text.replace(oldLabel, newabel));
-        win.setText('label_5Copy', Ext.getCmp(prototype.id + '-label_5Copy').text.replace(oldLabel, newabel));
+        //win.setText('label_5Copy', Ext.getCmp(prototype.id + '-label_5Copy').text.replace(oldLabel, newabel));
         win.setText('label_6', Ext.getCmp(prototype.id + '-label_6').text.replace(oldLabel, newabel));
-        win.setText('label_6', Ext.getCmp(prototype.id + '-label_6Copy').text.replace(oldLabel, newabel));
+        win.setText('label_6Copy', Ext.getCmp(prototype.id + '-label_6Copy').text.replace(oldLabel, newabel));
         win.setText('label_7', Ext.getCmp(prototype.id + '-label_7').text.replace(oldLabel, newabel));
         win.setText('label_8', Ext.getCmp(prototype.id + '-label_8').text.replace(oldLabel, newabel));
         win.setText('label_9', Ext.getCmp(prototype.id + '-label_9').text.replace(oldLabel, newabel));
@@ -370,17 +371,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
         beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
         console.log(beanDet);
+        me.beanDet = beanDet;
         this.searchDetCountry(beanDet);
         console.log('searchDetCountry');
         this.strSTVAL = '';
     },
     gridDetCountry_clickHandlerCopy: function (column, e, row, column, x, rowData) {
-        var beanDet = x.record.data;
+        var beanDetCopy1 = x.record.data;
         win.selectedChild('vskMain', 'boxDetCountryCopy');
-        beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
-        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
-        console.log(beanDet);
-        this.searchDetCountryCopy(beanDet);
+        beanDetCopy1.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDetCopy1.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        console.log(beanDetCopy1);
+        me.beanDetCopy1 = beanDetCopy1;
+        this.searchDetCountryCopy(beanDetCopy1);
         console.log('searchDetCountryCopy');
         this.strSTVAL = '';
     },
@@ -389,8 +392,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.selectedChild('vskMain', 'boxDetCard');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
         beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        me.beanDet = beanDet;
         this.searchDetCardCode(beanDet);
         console.log('searchDetCardCode');
+        this.strSTVAL = '';
+    },
+    gridDetCard_clickHandlerCopy: function (column, e, row, column, x, rowData) {
+        var beanDet = x.record.data;
+        win.selectedChild('vskMain', 'boxDetCardCopy');
+        beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+        beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        me.beanDet = beanDet;
+        this.searchDetCardCodeCopy(beanDet);
+        console.log('searchDetCardCodeCopy');
         this.strSTVAL = '';
     },
     gridDetDay_clickHandler: function (column, e, row, column, x, rowData) {
@@ -398,6 +412,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.selectedChild('vskMain', 'boxDetDay');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
         beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        me.beanDet = beanDet;
         this.searchDetDay(beanDet);
         console.log('searchDetDay');
         this.strSTVAL = '';
@@ -407,6 +422,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         win.selectedChild('vskMain', 'boxDetTicket');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
         beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        me.beanDet = beanDet;
         this.searchDetTicket(beanDet);
         console.log('searchDetTicket');
         this.strSTVAL = '';
@@ -472,6 +488,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             win.selectedChild('vskMain', 'boxDetCountryS');
             beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
             beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+            me.beanDet = beanDet;
             this.searchDetCountryByStval(beanDet);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -510,6 +527,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             win.selectedChild('vskMain', 'boxDetCountrySCopy');
             beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
             beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+            me.beanDet = beanDet;
             this.searchDetCountryByStvalCopy(beanDet);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -560,6 +578,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             //            this.searchDetDayByStval_Pay(beanDet);
         } else {
             beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
+            me.beanDet = beanDet;
             this.searchDetDayByStval(beanDet);
         }
     },
@@ -581,7 +600,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             } else {
                 this.beanDetE.IN_CERROR = "";
             }
-            win.selectedChild('vskMain', 'boxDetTicket');
+            //win.selectedChild('vskMain', 'boxDetTicket');
 
             if (win.getValue('chkDIFF')) {
                 this.beanDetE.IN_DIFF = '1';
@@ -589,6 +608,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                 this.beanDetE.IN_DIFF = '';
             }
             this.beanDetE.IN_FCOMPL = win.getValue('cmbFCOMPL');
+            
             this.searchDetTktByStval(this.beanDetE);
             console.log(this.beanDetE.IN_DIFF);
         }
@@ -601,6 +621,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         } else {
             this.beanDetE.IN_DIFF = '';
         }
+        me.beanDetE = beanDetE;
         this.searchDetTktByStval(this.beanDetE);
     },
     btnQuery_click: function (obj, e) {
@@ -889,11 +910,32 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
 
         switch (this.peek()) {
             case prototype.id + '-boxMainData':
-                global.getFileExcelPost('search', JSON.stringify(this.bean), Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+                global.getFileExcelPost('search', JSON.stringify(me.bean), Ext.getCmp(prototype.id + '-gridData').config.columns.items);
                 break;
+            case prototype.id + '-boxCopyMainData':
+                global.getFileExcelPost('searchCopy', JSON.stringify(me.bean), Ext.getCmp(prototype.id + '-gridCopyData').config.columns.items);
+                break;
+            case prototype.id + '-boxDetCountryCopy':
+                global.getFileExcelPost('searchDetCountryCopy', JSON.stringify(me.beanDetCopy1), Ext.getCmp(prototype.id + '-gridDetCountryCopy').config.columns.items);
+                break;
+            case prototype.id + '-boxDetCountry':
+                global.getFileExcelPost('searchDetCountry', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDetCountry').config.columns.items);
+                break; 
+            case prototype.id + '-boxDetCard':
+                global.getFileExcelPost('searchDetCardCode', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDetCard').config.columns.items);
+                break;  
+            case prototype.id + '-boxDetDay':
+                global.getFileExcelPost('searchDetDay', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDetDay').config.columns.items);
+                break;   
+            case prototype.id + '-boxDetTicket':
+                global.getFileExcelPost('searchDetTicket', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDetTicket').config.columns.items);
+                break;  
             case prototype.id + '-boxDetCountryS':
                 global.getFileExcelPost('searchDetCountryByStval', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDetCountryS').config.columns.items);
                 break;
+            case prototype.id + '-boxDetCountrySCopy':
+                global.getFileExcelPost('searchDetCountryByStval', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDetCountrySCopy').config.columns.items);
+                break;    
             case prototype.id + '-boxDetCardS':
                 global.getFileExcelPost('searchDetCardCodeByStval', JSON.stringify(me.beanDet2), Ext.getCmp(prototype.id + '-gridDetCardS').config.columns.items);
                 break;
@@ -1183,7 +1225,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         Ext.getCmp(prototype.id + '-gridDetCountry').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
-    searchDetCountryCopy: function (beanDet) {
+    searchDetCountryCopy: function (beanDetCopy1) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetCountryCopy'
@@ -1191,7 +1233,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             listeners: {
                 beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(beanDet)};
+                    obj.proxy.extraParams = {beanString: JSON.stringify(beanDetCopy1)};
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -1288,6 +1330,58 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         });
         Ext.getCmp(prototype.id + '-gridDetCard').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
+    },
+    searchDetCardCodeCopy: function (beanDet) {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetCardCodeCopy'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(beanDet)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    win.lblUser_toolTip("Estructura: A4165");
+
+                    me.selectedChild('vskMain', 'boxDetCardCopy');
+
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        if (obj.data.length > 0) {
+                            var obj = obj.data.items[0].data;
+                            if (obj.strFecFiltro === 'DATEC') {
+                                Ext.getCmp(prototype.id + '-gridDetCardCopy').setTitle("Reconciliation Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry);
+                                if (obj.IN_TDOC === 'R') {
+                                    win.setText('ahDetCardCopy', 'Refund Reconciliation');
+                                } else {
+                                    win.setText('ahDetCardCopy', 'Sales Reconciliation');
+                                }
+                            } else {
+                                if (obj.IN_TDOC === 'R') {
+                                    Ext.getCmp(prototype.id + '-gridDetCardCopy').setTitle("Refund Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry);
+                                    win.setText('ahDetCardCopy', 'Refund Reconciliation');
+                                } else {
+                                    Ext.getCmp(prototype.id + '-gridDetCardCopy').setTitle("Sales Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry);
+                                    win.setText('ahDetCardCopy', 'Sales Reconciliation');
+                                }
+                            }
+                            //                            bxPag1.width = 1200;
+                            //                            bxPag2.width = 1;
+                            //                            bxPag2.visible = false;
+                        } else {
+                            Ext.getCmp(prototype.id + '-gridDetCardCopy').setTitle('');
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetCardCopy').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin3Copy').bindStore(storeGridDatas);
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetDay">
@@ -2438,10 +2532,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         switch (this.peek()) {
             case prototype.id + '-boxMainData':
                 return Ext.getCmp(prototype.id + '-paggin');
+            case prototype.id + '-boxCopyMainData':
+                return Ext.getCmp(prototype.id + '-pagginCopy');    
             case prototype.id + '-boxDetCountry':
                 return Ext.getCmp(prototype.id + '-paggin2');
+            case prototype.id + '-boxDetCountryCopy':
+                return Ext.getCmp(prototype.id + '-paggin2Copy');    
             case prototype.id + '-boxDetCard':
-                return Ext.getCmp(prototype.id + '-paggin3');
+                return Ext.getCmp(prototype.id + '-paggin3');   
             case prototype.id + '-boxDetDay':
                 return Ext.getCmp(prototype.id + '-paggin4');
             case prototype.id + '-boxDetTicket':

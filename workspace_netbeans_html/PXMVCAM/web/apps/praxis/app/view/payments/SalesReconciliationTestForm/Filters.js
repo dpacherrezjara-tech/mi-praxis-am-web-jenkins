@@ -514,6 +514,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             xtype: 'label',
                             text: 'Complement:',
                             padding: '3 0',
+                            hidden:true,
                             width: 75
                         },
                         {
