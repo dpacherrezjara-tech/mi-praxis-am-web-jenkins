@@ -161,12 +161,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFLAG', this.beanResult.FSELEC);
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
+        this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
         this.setValue('de-txtZone', this.beanResult.ZONA);
         this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
         this.setValue('de-txtTDOC', this.beanResult.descTDOC);
-        this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
+        this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
@@ -174,6 +175,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
         // this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
         // this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
+       
+        if(this.beanResult.SMERCHID === '9353227755'){
+            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
+        }else if(this.beanResult.SMERCHID === '8133735688'){
+            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+        }else if(this.beanResult.SMERCHID === '9352724851'){
+            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+        }
 
         this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
         this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
@@ -211,7 +220,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.PRDA = this.getValue("de-txtPRDA");
         beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
         beanTemp.MERCHID = this.getValue("de-txtMERCHID");
-        beanTemp.SMERCHID = this.getValue("de-txtSMERCHID");
+        beanTemp.SMERCHID = this.beanResult.SMERCHID;
         beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
         beanTemp.SCARDN = this.getValue("de-txtSCARDN");
