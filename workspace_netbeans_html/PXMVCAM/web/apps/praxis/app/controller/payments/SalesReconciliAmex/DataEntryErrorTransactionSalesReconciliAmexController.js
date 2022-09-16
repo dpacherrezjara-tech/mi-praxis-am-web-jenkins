@@ -82,6 +82,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
+                    Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
+                    Ext.getCmp(prototype.id + '-gridColumnFill').hide();
+                    Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
+                    Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(790);
+                    Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(795);
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }

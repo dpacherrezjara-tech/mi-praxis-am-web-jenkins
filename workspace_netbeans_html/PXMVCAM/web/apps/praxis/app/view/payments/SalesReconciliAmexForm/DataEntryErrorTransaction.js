@@ -1281,6 +1281,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             },
                                             {
                                                 header: 'Del.',
+                                                id: prototype.id + '-gridColumnDelete',
                                                 dataIndex: '',
                                                 xtype: 'widgetcolumn',
                                                 align: 'center',
@@ -1306,6 +1307,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 xtype: 'actioncolumn',
                                                 width: 30,
                                                 text: 'Fill',
+                                                id: prototype.id + '-gridColumnFill',
                                                 align: 'center',
                                                 items: [
                                                     {
@@ -1320,6 +1322,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 xtype: 'actioncolumn',
                                                 width: 40,
                                                 text: 'Adj.',
+                                                id: prototype.id + '-gridColumnAdj',
                                                 align: 'center',
                                                 items: [
                                                     {
