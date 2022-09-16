@@ -84,12 +84,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         //SALES ===================================
         win.setValue('2-txtACOUNTRY', this.bean.ACOUNTRY.trim());
         win.setValue("2-txtAAGENT", this.bean.AAGENT.trim());
-        win.setValue("2-txtAAGNAME", this.bean.AAGNAME.trim());
+        win.setValue("2-txtAAGNAME", this.bean.AAGNAME);
         win.setValue('2-txtADATE', this.bean.ADATE.trim());
         win.setValue("2-txtATCNTR", this.bean.ATCNTR.trim());
         win.setValue('2-txtAVFOP', win.formatDblNumber(this.bean.AVFOP));
         win.setValue('2-txtACURRENCY', this.bean.ACURRENCY.trim());
-        win.setValue('2-txtACARDN', this.bean.strACARDN.trim());
+        win.setValue('2-txtACARDN', this.bean.strACARDN);
         win.setValue('2-txtADATEXP', this.bean.ADATEXP.trim());
         win.setValue("2-txtAAUTHOC", this.bean.AAUTHOC.trim());
         win.setValue("2-txtAPNR", this.bean.APNR.trim());
