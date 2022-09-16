@@ -3959,7 +3959,7 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(14, beanDet.A720FECVTA.trim());
                     cstmt01.setString(15, beanDet.A720SEQ.trim());
                     cstmt01.setString(16, beanDet.A720GRUPO.trim());
-                    cstmt01.setDouble(17, beanDet.SADJUST);
+                    cstmt01.setDouble(17, 0); //beanDet.SADJUST
                     cstmt01.setString(18, filter.ADJ_TYPE.trim());
                     cstmt01.setString(19, beanDet.STMANUAL);
                     cstmt01.setString(20, beanDet.A720AGENTE.trim());
