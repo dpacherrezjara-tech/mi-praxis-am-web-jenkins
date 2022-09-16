@@ -27,6 +27,7 @@ public class A4164 {
     public String SFLOAD = "";
     public String SCOUNTRY = "";
     public String SAGENT = "";
+    public String SAGNAME = "";
     public String SDATE = "";
     public String SDATEVTA = "";
     public String SPAYMENT = "";
