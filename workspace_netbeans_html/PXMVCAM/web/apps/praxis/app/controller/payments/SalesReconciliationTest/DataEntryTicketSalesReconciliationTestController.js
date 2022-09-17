@@ -55,11 +55,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
             html: this.bean.SCARCOD.trim()+" - "+this.bean.strSDescCard.trim()
         });
         
-//        win.setValue('2-txtACARCOD', this.bean.ACARCOD.trim()+" - "+this.bean.strADescCard.trim());
-//        Ext.create('Ext.tip.ToolTip', {
-//            target: prototype.id+'-2-txtACARCOD',
-//            html: this.bean.ACARCOD.trim()+" - "+this.bean.strADescCard.trim()
-//        });
+        win.setValue('2-txtACARCOD', this.bean.ACARCOD.trim()+" - "+this.bean.strADescCard.trim());
+        Ext.create('Ext.tip.ToolTip', {
+            target: prototype.id+'-2-txtACARCOD',
+            html: this.bean.ACARCOD.trim()+" - "+this.bean.strADescCard.trim()
+        });
         
         win.setValue('2-txtTicket', this.bean.strTicket.trim());
         win.setValue("2-txtSEQ", this.bean.SEQ.trim());
@@ -101,6 +101,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
             win.setValue('2-txtMERCHN', this.bean.MERCHN.trim()+' - '+this.bean.strDescMerchn.trim());
 	}else{
             win.setValue('2-txtMERCHN', this.bean.MERCHN.trim());
+	}
+        if(this.bean.strDescMerchn.trim() !== ''){
+            win.setValue('2-txtMERCHN1', this.bean.MERCHN.trim()+' - '+this.bean.strDescMerchn.trim());
+	}else{
+            win.setValue('2-txtMERCHN1', this.bean.MERCHN.trim());
 	}
        
         win.setValue('2-txtUSCR', this.bean.USCR.trim());

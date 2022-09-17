@@ -738,7 +738,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAMERCHN',
+                                    id: prototype.id+'-2-txtMERCHN1',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 20,
