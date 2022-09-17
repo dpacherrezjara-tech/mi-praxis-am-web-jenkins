@@ -3099,9 +3099,14 @@ public class LoadConciliationTestDAO {
                         beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
                         beanTkt.strDescCountry = filter.strDescCountry.trim();
                         beanTkt.strDescCard = filter.strDescCard.trim();
-                        beanTkt.strPEM = "";
+                        if (rst.getString("TDOC").trim().equals("R")) {
+                            beanTkt.strPEM = "REFUND";
+                        } else {
+                            beanTkt.strPEM = "SALES";
+                        }
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();
+                        beanTkt.RFIC = rst.getString("RFIC").trim();
                         beanTkt.FORMA = rst.getString("FORMA").trim();
                         beanTkt.SERIE = rst.getString("SERIE").trim();
                         beanTkt.TDOC = rst.getString("TDOC").trim();
@@ -3183,7 +3188,7 @@ public class LoadConciliationTestDAO {
                             beanTkt.SDATEL = rst.getString("ADATEL").trim();
                             beanTkt.SFLOAD = rst.getString("AFLOAD").trim();
                             beanTkt.SCOUNTRY = rst.getString("ACOUNTRY").trim();
-                            beanTkt.SAGENT = rst.getString("AAGENT").trim();
+                            beanTkt.SAGENT = rst.getString("SAGENT").trim();
                             beanTkt.SDATE = rst.getString("ADATE").trim();
                             beanTkt.SPAYMENT = rst.getString("APAYMENT").trim();
                             beanTkt.SCARCOD = rst.getString("ACARCOD").trim();

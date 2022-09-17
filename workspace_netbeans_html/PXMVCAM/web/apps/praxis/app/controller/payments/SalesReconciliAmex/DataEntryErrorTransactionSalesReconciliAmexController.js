@@ -82,6 +82,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
+                    Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
+                    Ext.getCmp(prototype.id + '-gridColumnFill').hide();
+                    Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
+                    Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(790);
+                    Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(795);
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }
@@ -161,7 +166,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFLAG', this.beanResult.FSELEC);
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
-        this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
+        this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
         this.setValue('de-txtZone', this.beanResult.ZONA);
         this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
@@ -586,7 +591,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var suma_montos = 0;
         var monto_venta = 0;
         for (var j = 0; j < this.lstSendManual.length; j++) {
-            suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP + this.lstSendManual[j].SADJUST;
+            suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP; //+ this.lstSendManual[j].SADJUST; CAMBIO A PEDIDO DEL ING ELMER NEVES YA QUE SE GENERA EL AJUSTE COMO UN NUEVO REGISTRO
         }
 
         for (var i = 0; i < this.lstAdjustment.length; i++) {
@@ -931,7 +936,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             var dataRow1 = store_gridInfoScan.data.items[i];
             this.lstSendManual.push(dataRow1.data);
             if (dataRow1.data.STMANUAL !== 'Blocked') {
-                this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP + dataRow1.data.SADJUST;
+                this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP; //+ dataRow1.data.SADJUST;
             }            
         }
 
@@ -970,7 +975,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
                 rec.A1531VFOP = monto_ajustado;
                 rec.tot_VFOP = monto_ajustado;
-                rec.SADJUST = 0;
+                //rec.SADJUST = 0;
                 rec.A720AGENTE = $('#menuUser').text();
                 rec.CERROR = '01';
 
