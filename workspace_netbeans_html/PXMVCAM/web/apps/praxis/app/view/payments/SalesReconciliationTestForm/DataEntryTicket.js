@@ -339,7 +339,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     style: 'font-weight:bold;color:#121E31;',
                                     margin: '0 0 0 10',
                                     padding: '4 0',
-                                    width: 120
+                                    width: 90
                                 },
                                 {
                                     xtype: 'textfield',
@@ -713,7 +713,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     style: 'font-weight:bold;color:#121E31;',
                                     margin: '0 0 0 10',
                                     padding: '4 0',
-                                    width: 120
+                                    width: 90
                                 },
                                 {
                                     xtype: 'textfield',
