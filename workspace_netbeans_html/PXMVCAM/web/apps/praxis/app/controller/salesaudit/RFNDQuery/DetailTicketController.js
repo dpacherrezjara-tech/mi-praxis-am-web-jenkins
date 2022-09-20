@@ -10,6 +10,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
     beanINI: {},
     beanIniTem: {},
     beanHistorical: {},
+    lsta_Documents: 0,
     totalcpn: 0,
     totalcpnuse: 0,
     beanTMP: {},
@@ -41,9 +42,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 txtCpn4.disable();
                 CbtStatus.hide();
                 save.hide();
-                Ext.getCmp(prototype.idDetailTicket + '-txtConto').setReadOnly(true);
+                Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setReadOnly(true);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setReadOnly(true);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyrobot').setReadOnly(true);
+                Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setReadOnly(true);
                 //Ext.getCmp(prototype.idDetailTicket + '-win').setHeight(Ext.getCmp(prototype.idDetailTicket + '-win').getHeight() - 200);
                 break;
             case 'FORMPENDIRFND':
@@ -59,7 +61,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 txtCpn2.enable();
                 txtCpn3.enable();
                 txtCpn4.enable();
-                Ext.getCmp(prototype.idDetailTicket + '-txtConto').setReadOnly(false);
+                Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setReadOnly(false);
+                Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setReadOnly(false);
                 save.show();
                 break;
 
@@ -123,6 +126,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
                 }
                 me.beanHistorical = res.lsta_HISTORY;
+                me.lsta_Documents = res.lsta_DOCUMENTS.length;
 
                 switch (String(me.view.params.action)) {
                     case 'FORMQUERYRFND':
@@ -288,7 +292,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         Ext.getCmp(prototype.idDetailTicket + '-txtIssdate').setValue(rec.get('A3648XFSAL'));
         Ext.getCmp(prototype.idDetailTicket + '-txtpnr').setValue(rec.get('A3648XPNR'));
         Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648COCD'));
-        Ext.getCmp(prototype.idDetailTicket + '-txtConto').getValue(Ext.String.trim(rec.get('A3648CONJT')));
+        Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setValue(Ext.String.trim(rec.get('A3648CONJT')));
+        Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setValue(Ext.String.trim(rec.get('A3648TRFND')));
         Ext.getCmp(prototype.idDetailTicket + '-txtEndorse').setValue(rec.get('A3648XENDR'));
         var tip = Ext.create('Ext.tip.ToolTip', {
             target: prototype.idDetailTicket + '-txtEndorse',
@@ -336,7 +341,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         }
         Ext.getCmp(prototype.idDetailTicket + '-txtStatus').setValue(rec.get('A3648STATO'));
         Ext.getCmp(prototype.idDetailTicket + '-txtFlag').setValue(vl_A3648FLAG);
-        if ((Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R') && Ext.String.trim(rec.get('A3647REGAS'))==='AUTOPR') {
+        if ((Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R') && Ext.String.trim(rec.get('A3647REGAS')) === 'AUTOPR') {
             Ext.getCmp(prototype.idDetailTicket + '-btn-save').hide();
         }
         if (Ext.String.trim(rec.get('A3648FLAG')) === 'F') {
@@ -582,12 +587,27 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
     },
     setStoresFilters: function () {
         var ComboEstatus = Ext.getCmp(prototype.idDetailTicket + '-ComboStatus');
-
+        var CmbConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto');
+        var CmbTRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND');
         ComboEstatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "R", "name": "REJECT"},
                 {"code": "F", "name": "AUTHORISED"}
+            ]
+        }));
+        CmbConto.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "SELECT"},
+                {"code": "I", "name": "START"},
+                {"code": "C", "name": "CONTINUATION"}
+            ]
+        }));
+        CmbTRFND.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "SELECT"},
+                {"code": "P", "name": "PARTIAL"},
+                {"code": "T", "name": "TOTAL"}
             ]
         }));
 
@@ -845,7 +865,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         Ext.getCmp(prototype.idDetailTicket + '-txtCpn6').hide();
         Ext.getCmp(prototype.idDetailTicket + '-txtCpn7').hide();
         Ext.getCmp(prototype.idDetailTicket + '-txtCpn8').hide();
-        var txtConto = Ext.getCmp(prototype.idDetailTicket + '-txtConto').getValue();
+        var txtConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
         if (txtConto === 'C') {
             Ext.getCmp(prototype.idDetailTicket + '-txtCpn5').show();
             Ext.getCmp(prototype.idDetailTicket + '-txtCpn6').show();
@@ -932,6 +952,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
     },
     validaRequiredFields: function () {
         var bvalida = true;
+        var me = this;
         var vl_razon = '';
         var Stat1 = '';
         var Stat2 = '';
@@ -952,7 +973,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var cbox7 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn7').getValue();
         var cbox8 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn8').getValue();
         var vl_type = Ext.getCmp(prototype.idDetailTicket + '-txttidoc').getValue();
-        var txtConto = Ext.getCmp(prototype.idDetailTicket + '-txtConto').getValue();
+        var txtConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
+        var CmbTRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
         var vl_Showcoupons = Ext.getCmp(prototype.idDetailTicket + '-txtShowcoupons').getValue();
         var grid04 = Ext.getCmp(prototype.idDetailTicket + '-gridTaxes');
         var reg4 = grid04.getStore().getCount();
@@ -990,10 +1012,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
             totaldif = (txtTotalram - txtTotalXml);
         }
-
+        if (vl_STATUS === '') {
+            Ext.Msg.alert('.: PRAXIS :.', 'You must select the status');
+            bvalida = false;
+            return;
+        }
         if (vl_STATUS === 'F') {
             if (totaldif > 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'The amount of the RFND must not be greater than the Ticket');
+                bvalida = false;
+                return;
+            }
+            if (me.lsta_Documents > 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'The ticket has more than one document');
+                bvalida = false;
+                return;
+            }
+            if (CmbTRFND > 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of RFND');
                 bvalida = false;
                 return;
             }
@@ -1019,27 +1055,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     return;
                 }
             }
-
             if (!vl_Showcoupons) {
                 if (!cbox1 && !cbox2 && !cbox3 && !cbox4 && !cbox5 && !cbox6 && !cbox7 && !cbox8) {
                     Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one coupon');
                     bvalida = false;
                     return;
                 }
-                var grid03 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
-                var regs = grid03.getStore().getCount();
+                var grid05 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
+                var regs = grid05.getStore().getCount();
                 for (var i = 0; i < regs; i++) {
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '1') {
-                        Stat1 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '1') {
+                        Stat1 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '2') {
-                        Stat2 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '2') {
+                        Stat2 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '3') {
-                        Stat3 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '3') {
+                        Stat3 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
-                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '4') {
-                        Stat4 = Ext.String.trim(grid03.getStore().getAt(i).get('A3654CURS1'));
+                    if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '4') {
+                        Stat4 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
 
                 }
@@ -1107,8 +1142,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     bvalida = false;
                     return;
                 }
+            } else {
+                if (vl_STATUS === 'F') {
+                    if (!cbox1 && !cbox2 && !cbox3 && !cbox4 && !cbox5 && !cbox6 && !cbox7 && !cbox8) {
+                        Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one coupon');
+                        bvalida = false;
+                        return;
+                    }
+                }
             }
-
             //Validar las FOP
             if (reg5 === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'Enter payment method');
@@ -1261,6 +1303,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         if (regs !== 0) {
             for (var i = 0; i < regs; i++) {
                 vl_razon = vl_razon + grid03.getStore().getAt(i).get('A3649ERROR');
+                console.log(grid03.getStore().getAt(i).get('A3649ERROR'));
                 if (grid03.getStore().getAt(i).get('A3649ERROR').length > 250) {
                     Ext.Msg.alert('.: PRAXIS :.', 'The description must not exceed 250 characters');
                     bvalida = false;
@@ -1323,7 +1366,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         me.beanTMP.IN_COMMI = Ext.getCmp(prototype.idDetailTicket + '-txtCommissionAm').getValue().replace(',', '');
                         me.beanTMP.IN_TOTALRFND = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(',', '');
                         me.beanTMP.IN_STATUS = Ext.getCmp(prototype.idDetailTicket + '-ComboStatus').getValue();
-                        me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idDetailTicket + '-txtConto').getValue();
+                        me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
+                        me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
                         me.beanTMP.IN_MARCA = checkApply;
                         //me.beanTMP.IN_MARCA = Ext.getCmp(prototype.idDetailTicket + '-Combochangestatus').getValue();
                         var cbox1 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn1').getValue();

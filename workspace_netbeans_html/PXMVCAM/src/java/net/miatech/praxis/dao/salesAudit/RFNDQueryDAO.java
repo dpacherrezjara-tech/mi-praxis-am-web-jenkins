@@ -270,7 +270,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648MDAQD = rs01.getString("A3648MDAQD");
                 objRtn.A3648MDA = rs01.getString("A3648MDA");
                 objRtn.A3648TARID = rs01.getDouble("A3648TARID");
-                objRtn.A3648STAQD  = rs01.getDouble("A3648STAQD");
+                objRtn.A3648STAQD = rs01.getDouble("A3648STAQD");
                 objRtn.A3648TTAXD = rs01.getDouble("A3648TTAXD");
                 objRtn.A3648COMID = rs01.getDouble("A3648COMID");
                 objRtn.A3648SCOMD = rs01.getDouble("A3648SCOMD");
@@ -535,7 +535,7 @@ public class RFNDQueryDAO {
         String STR_RESULT = "";
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXRFNDESP.SQP03104(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXRFNDESP.SQP03104(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             String SQLCLL02 = "{CALL PXRFNDESP.SQP04572(?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
@@ -567,6 +567,7 @@ public class RFNDQueryDAO {
             cs.setString("IN_CPN6", filter.IN_CPN6);
             cs.setString("IN_CPN7", filter.IN_CPN7);
             cs.setString("IN_CPN8", filter.IN_CPN8);
+            cs.setString("IN_TRFND", filter.IN_TRFND);
             cs.setString("IN_LSTATaxes", lstaTaxes);
             cs.setString("IN_LSTARazones", lstaRazones);
             cs.setString("IN_LSTAfop", lstafop);
@@ -835,6 +836,17 @@ public class RFNDQueryDAO {
                     lst_USOS.add(objlst_USOS);
                 }
             }
+            ////LISTA DE BOLETOS REPETIDOS 
+            if (cstmt01.getMoreResults()) {
+                rs07 = cstmt01.getResultSet();
+                while (rs07.next()) {
+                    objlst_DOCUMENTS = new A3648();
+                    objlst_DOCUMENTS.A3648CCUST = rs07.getString("A3648CCUST");
+
+                    lst_DOCUMENTS.add(objlst_DOCUMENTS);
+                }
+            }
+
             // FIN DE LA AGENCIA
             objRtnGeneral = new A3647Filter();
             objRtnGeneral.lst_TAXESAGEN = TEM_TAXESAGEN;
@@ -843,6 +855,7 @@ public class RFNDQueryDAO {
             objRtnGeneral.LIS_HISTORY = TEM_HISTORY;
             objRtnGeneral.lst_RAZON = lst_RAZON;
             objRtnGeneral.lst_USOS = lst_USOS;
+            objRtnGeneral.lst_DOCUMENTS = lst_DOCUMENTS;
 
             lstGeneral = objRtnGeneral;
         } catch (SQLException e) {

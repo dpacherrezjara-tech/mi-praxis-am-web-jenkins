@@ -1027,6 +1027,7 @@ public class RFNDQueryController extends BaseController {
         ArrayList<HashMap<String, String>> lsta_COUPNS = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_HISTORY = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_USOS = new ArrayList<>();
+         ArrayList<HashMap<String, String>> lsta_DOCUMENTS = new ArrayList<>();
 
         try {
             logic = new RFNDQueryLogic();
@@ -1218,6 +1219,15 @@ public class RFNDQueryController extends BaseController {
                 lsta_USOS.add(map06);
             }
             // </editor-fold>
+            
+            // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_DOCUMENTS">
+            for (int vi = 0; vi < lst.lst_DOCUMENTS.size(); ++vi) {
+                map07 = new HashMap<>();
+
+                map07.put("A3648CCUST", lst.lst_DOCUMENTS.get(vi).A3648CCUST);
+                lsta_DOCUMENTS.add(map07);
+            }
+            // </editor-fold>
 
         } catch (Exception e) {
             throw new SpringException(e);
@@ -1230,6 +1240,7 @@ public class RFNDQueryController extends BaseController {
         map.put("lsta_Card", lsta_Card);
         map.put("lsta_COUPNS", lsta_COUPNS);
         map.put("lsta_HISTORY", lsta_HISTORY);
+        map.put("lsta_DOCUMENTS", lsta_DOCUMENTS);
 
         return new Gson().toJson(map);
     }
