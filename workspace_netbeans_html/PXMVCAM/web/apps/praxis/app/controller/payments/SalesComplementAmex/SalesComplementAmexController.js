@@ -140,6 +140,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_DATE = "SDATE";
+        me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
+        me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
+        me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {

@@ -265,6 +265,65 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                                 keypress: 'txtField_keyDownHandler'
                             }
                         },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'label',
+                            text: 'Credit Card:',
+                            padding: '8px 1px 2px 1px',
+                            width: 70
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC1',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 80,
+                            enableKeyEvents: true,
+//                            listeners: {
+//                                keypress: 'filterPNRSettlement'
+//                            }
+                        },
+                        {
+                            xtype: 'label',
+                            text: '******',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC2',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 4,
+                            width: 60,
+                            enableKeyEvents: true,
+//                            listeners: {
+//                                keypress: 'filterPNRSettlement'
+//                            }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'label',
+                            text: 'Auth:',
+                            padding: '8px 1px 2px 1px',
+                            width: 40,
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtAuth',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 60,
+                            enableKeyEvents: true,
+//                            listeners: {
+//                                keypress: 'filterPNRSettlement'
+//                            }
+                        },
                     ]
                 },
             ]
