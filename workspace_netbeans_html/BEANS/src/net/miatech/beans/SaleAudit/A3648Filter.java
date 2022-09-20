@@ -42,6 +42,7 @@ public class A3648Filter extends A3648 {
     public String IN_CPN7 = "";
     public String IN_CPN8 = "";
     public String IN_CONJU = "";
+    public String IN_TRFND = "";
 
     public double IN_TARIF = 0;
     public double IN_TTAX = 0;
