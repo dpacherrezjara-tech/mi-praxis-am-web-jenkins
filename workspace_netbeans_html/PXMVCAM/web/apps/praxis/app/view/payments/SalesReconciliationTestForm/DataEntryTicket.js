@@ -34,8 +34,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             xtype: 'label',
                             text: 'Ticket Number',
                             style: 'font-weight:bold;color:#121E31;',
+                            margin: '0 0 0 10',
+                            padding: '4 0',
                             width: 109,
-                            padding: '3 0',
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'CCIA(3)+FORMA(4)+SERIE(6)+CUPON (1)'
@@ -55,8 +56,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             xtype: 'label',
                             text: 'Sequence',
                             style: 'font-weight:bold;color:#121E31;',
-                            width: 90,
-                            padding: '3 0'
+                            margin: '0 0 0 10',
+                            padding: '4 0',
+                            width: 90
                         },
                         {
                             xtype: 'textfield',
@@ -72,8 +74,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             xtype: 'label',
                             text: 'Document Type',
                             style: 'font-weight:bold;color:#121E31;',
-                            width: 120,
-                            padding: '3 0'
+                            margin: '0 0 0 10',
+                            padding: '4 0',
+                            width: 120
                         },
                         {
                             xtype: 'combobox',
@@ -113,8 +116,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             xtype: 'label',
                             text: 'Source',
                             style: 'font-weight:bold;color:#121E31;',
-                            width: 70,
-                            padding: '3 0'
+                            margin: '0 0 0 10',
+                            padding: '4 0',
+                            width: 70
                         },
                         {
                             xtype: 'combobox',
@@ -155,8 +159,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             xtype: 'label',
                             text: 'Status',
                             style: 'font-weight:bold;color:#121E31;',
-                            width: 60,
-                            padding: '3 0'
+                            margin: '0 0 0 10',
+                            padding: '4 0',
+                            width: 60
                         },
                         {
                             xtype: 'combobox',
@@ -211,7 +216,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             items: [
                                 {
                                     xtype: 'label',
-                                    padding: '0px 114px 0px 0px',
+                                    padding: '0px 159px 0px 0px',
                                     html: '<strong style="color:#121E31; text-decoration: underline; ">Sales Information</strong>'
                                 }
                             ]
@@ -298,7 +303,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Country',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 55',
                                     padding: '4 0',
                                     width: 120
                                 },
@@ -334,7 +339,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     style: 'font-weight:bold;color:#121E31;',
                                     margin: '0 0 0 10',
                                     padding: '4 0',
-                                    width: 120
+                                    width: 90
                                 },
                                 {
                                     xtype: 'textfield',
@@ -343,7 +348,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 150
+                                    width: 120
                                 }
                             ]
                         },
@@ -375,7 +380,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'PNR',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 55',
                                     padding: '4 0',
                                     width: 120,
                                     autoEl: {
@@ -451,7 +456,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Authoriz. Code',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 55',
                                     padding: '4 0',
                                     width: 100,
                                     autoEl: {
@@ -547,7 +552,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Payment Date',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 15',
                                     padding: '4 0',
                                     width: 120,
                                     autoEl: {
@@ -602,7 +607,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             items: [
                                 {
                                     xtype: 'label',
-                                    padding: '0px 80px 0px 0px',
+                                    padding: '0px 123px 0px 0px',
                                     html: '<strong style="color:#121E31; text-decoration: underline; ">Liquidation Information</strong>'
                                 }
                             ]
@@ -672,7 +677,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Country',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 55',
                                     padding: '4 0',
                                     width: 120
                                 },
@@ -708,7 +713,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     style: 'font-weight:bold;color:#121E31;',
                                     margin: '0 0 0 10',
                                     padding: '4 0',
-                                    width: 120
+                                    width: 90
                                 },
                                 {
                                     xtype: 'textfield',
@@ -717,7 +722,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 150
+                                    width: 120
                                 }
                             ]
                         },
@@ -749,7 +754,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'PNR',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 55',
                                     padding: '4 0',
                                     width: 120,
                                     autoEl: {
@@ -825,7 +830,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Authoriz. Code',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 55',
                                     padding: '4 0',
                                     width: 100,
                                     autoEl: {
@@ -921,7 +926,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Payment Date',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 15',
                                     padding: '4 0',
                                     width: 120,
                                     autoEl: {

@@ -4784,7 +4784,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420_1(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
