@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 880,
-    width: 1050,
+    width: 1090,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -91,15 +91,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtpnr',
-                            fieldLabel: 'PNR',
-                            labelWidth: 35,
-                            width: 120,
-                            value: '0000',
-                            readOnly: true
-                        },
-                        {
-                            xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txttidoc',
                             fieldLabel: 'Type',
                             labelWidth: 35,
@@ -108,15 +99,39 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtConto',
+                            xtype: 'combo',
+                            id: prototype.idDetailTicket + '-CmbConto',
                             fieldLabel: 'CJT',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 120,
                             labelWidth: 30,
-                            width: 80,
-                            value: '',
-                            readOnly: true,
+                            labelAlign: 'right',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 100
+                            },
                             listeners: {
-                                change: 'onchange'
+                                afterrender: 'onCmbStatusAfterRender'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.idDetailTicket + '-CmbTRFND',
+                            fieldLabel: 'T.RFND',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 120,
+                            labelWidth: 40,
+                            labelAlign: 'right',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 100
+                            },
+                            listeners: {
+                                afterrender: 'onCmbStatusAfterRender'
                             }
                         }
                     ]
@@ -251,13 +266,13 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txtrefundable',
                             fieldLabel: 'Refundable',
-                            labelWidth: 80,
-                            width: 150,
+                            labelWidth: 70,
+                            width: 120,
                             value: 'xxxxxx',
                             readOnly: true,
                             labelAlign: 'right'
                         }
-                        
+
                     ]
                 },
                 {
@@ -283,21 +298,29 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txtStatus',
                             fieldLabel: 'BPO',
-                            labelWidth: 40,
+                            labelWidth: 25,
                             value: 'xxxxxx',
                             readOnly: true,
                             width: 200
                         },
-                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txtCOUNTRY',
                             fieldLabel: 'Country',
-                            labelWidth: 50,
+                            labelWidth: 45,
                             width: 100,
                             value: 'xxxxxx',
                             readOnly: true,
                             labelAlign: 'right'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idDetailTicket + '-txtpnr',
+                            fieldLabel: 'PNR',
+                            labelWidth: 25,
+                            width: 100,
+                            value: '0000',
+                            readOnly: true
                         }
                     ]
                 },
@@ -442,7 +465,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                                             }
                                         }},
                                     {text: 'Net', dataIndex: 'A3652TXDIF', flex: 1, align: 'right', editor: 'numberfield',
-                                         hideTrigger: true,keyNavEnabled: false,mouseWheelEnabled: false,
+                                        hideTrigger: true, keyNavEnabled: false, mouseWheelEnabled: false,
                                         renderer: 'onColumnAirlineRenderer', summaryRenderer: 'OnAirlineSummary', //summaryType: 'sum',
                                         summaryType: function (records) {
                                             // do your logic and return a value.
@@ -1090,7 +1113,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             xtype: 'checkboxfield',
                             name: 'Cupon6',
                             id: prototype.idDetailTicket + '-txtCpn6',
-                             hidden: true,
+                            hidden: true,
                             labelWidth: 3,
                             fieldLabel: '6'
                         },
@@ -1098,7 +1121,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             xtype: 'checkboxfield',
                             name: 'Cupon7',
                             id: prototype.idDetailTicket + '-txtCpn7',
-                             hidden: true,
+                            hidden: true,
                             labelWidth: 3,
                             fieldLabel: '7'
                         },
@@ -1106,20 +1129,20 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             xtype: 'checkboxfield',
                             name: 'Cupon8',
                             id: prototype.idDetailTicket + '-txtCpn8',
-                             hidden: true,
+                            hidden: true,
                             labelWidth: 3,
                             fieldLabel: '8'
                         },
                         {xtype: 'tbspacer', width: 5},
                         /*{
-                            xtype: 'displayfield',
-                            id: prototype.idDetailTicket + '-txtusoCpn',
-                            fieldLabel: 'All coupons are used',
-                            labelStyle: 'font-weight: bold; color:red;',
-                            labelWidth: 150,
-                            labelSeparator: '',
-                            hidden: true
-                        },*/
+                         xtype: 'displayfield',
+                         id: prototype.idDetailTicket + '-txtusoCpn',
+                         fieldLabel: 'All coupons are used',
+                         labelStyle: 'font-weight: bold; color:red;',
+                         labelWidth: 150,
+                         labelSeparator: '',
+                         hidden: true
+                         },*/
                         {
                             xtype: 'checkboxfield',
                             id: prototype.idDetailTicket + '-txtShowcoupons',
@@ -1128,7 +1151,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             fieldLabel: 'Show all coupons',
                             listeners: {
                                 change: 'onChkChangeCPN'
-                               // checkchange:'onChkChangeCPN',
+                                        // checkchange:'onChkChangeCPN',
                             }
                         }
 
