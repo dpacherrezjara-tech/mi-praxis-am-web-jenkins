@@ -281,9 +281,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             maxLength: 6,
                             width: 80,
                             enableKeyEvents: true,
-//                            listeners: {
-//                                keypress: 'filterPNRSettlement'
-//                            }
+                            listeners: {
+                                keypress: 'filterPNRSettlement'
+                            }
                         },
                         {
                             xtype: 'label',
@@ -300,9 +300,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             maxLength: 4,
                             width: 60,
                             enableKeyEvents: true,
-//                            listeners: {
-//                                keypress: 'filterPNRSettlement'
-//                            }
+                            listeners: {
+                                keypress: 'filterPNRSettlement'
+                            }
                         },
                         {xtype: 'tbspacer', width: 5},
                         {
@@ -320,9 +320,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             maxLength: 6,
                             width: 60,
                             enableKeyEvents: true,
-//                            listeners: {
-//                                keypress: 'filterPNRSettlement'
-//                            }
+                            listeners: {
+                                keypress: 'filterPNRSettlement'
+                            }
                         },
                     ]
                 },

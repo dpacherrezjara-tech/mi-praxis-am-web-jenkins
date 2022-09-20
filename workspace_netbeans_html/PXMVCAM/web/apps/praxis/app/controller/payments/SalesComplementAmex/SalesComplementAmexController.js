@@ -130,6 +130,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
 
         //me.btnSearch_click();
     },
+    filterPNRSettlement: function (e, eOpts) {
+        switch (eOpts.getKey()) {
+            case 13:
+                this.btnSearch_click();
+        }
+    },
     setFormatParameter: function () {
         me.bean = {};
 
