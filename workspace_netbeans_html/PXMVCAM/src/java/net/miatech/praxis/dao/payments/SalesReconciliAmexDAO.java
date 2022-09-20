@@ -2390,8 +2390,7 @@ public class SalesReconciliAmexDAO {
                 totIVACOM12 = rst.getDouble("totIVACOM12");
                 totGROSAMOUN_CB = rst.getDouble("totGROSAMOUN_CB");
                 totDISCAMOUN = rst.getDouble("totDISCAMOUN");
-                totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");
-                totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD;
+                totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");                
                 totDISCAMOSC = rst.getDouble("totDISCAMOSC");
 
                 ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
@@ -2403,6 +2402,8 @@ public class SalesReconciliAmexDAO {
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
                 DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
                 SVFOPS_TOTAL = rst.getDouble("SVFOPS_TOTAL");
+                
+                totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD - DISCAMOUN_CB_TOTAL;
             }
             rst.close();
 
@@ -2455,7 +2456,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUN_CB = rst.getDouble("DISCAMOUN_CB");
                     beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
-                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU + beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD - beanTkt.DISCAMOUN_CB;
+                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU + beanTkt.GROSAMOUN_CB - rst.getDouble("DISCAMOUN") - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD - beanTkt.DISCAMOUN_CB;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.FREGLA = rst.getString("FREGLA").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
