@@ -317,12 +317,16 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQPEND = rst.getLong("QPEND");
                     beanTkt.lngQCOMPS = rst.getLong("QCOMPS");
                     beanTkt.lngQCOMPM = rst.getLong("QCOMPM");
+                    beanTkt.lngQCOMPP = beanTkt.lngQCOMPS - beanTkt.lngQCOMPM;
                     beanTkt.lngQPLUSS = rst.getLong("QPLUSS");
                     beanTkt.lngQPLUSM = rst.getLong("QPLUSM");
+                    beanTkt.lngQPLUSP = beanTkt.lngQPLUSS - beanTkt.lngQPLUSM;
                     beanTkt.lngQTABES = rst.getLong("QTABES");
                     beanTkt.lngQTABEM = rst.getLong("QTABEM");
+                    beanTkt.lngQTABEP = beanTkt.lngQTABES - beanTkt.lngQTABEM;
                     beanTkt.lngQLIGEA = rst.getLong("QLIGEA");
                     beanTkt.lngQLIGEM = rst.getLong("QLIGEM");
+                    beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
                     
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
                 
@@ -332,12 +336,16 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQPEND = lngTotQPEND;
                     beanTkt.lngTotQCOMPS = lngTotQCOMPS;
                     beanTkt.lngTotQCOMPM = lngTotQCOMPM;
+                    beanTkt.lngTotQCOMPP = beanTkt.lngTotQCOMPS - beanTkt.lngTotQCOMPM;
                     beanTkt.lngTotQPLUSS = lngTotQPLUSS;
                     beanTkt.lngTotQPLUSM = lngTotQPLUSM;
+                    beanTkt.lngTotQPLUSP = beanTkt.lngTotQPLUSS - beanTkt.lngTotQPLUSM;
                     beanTkt.lngTotQTABES = lngTotQTABES;
                     beanTkt.lngTotQTABEM = lngTotQTABEM;
+                    beanTkt.lngTotQTABEP = beanTkt.lngTotQTABES - beanTkt.lngTotQTABEM;
                     beanTkt.lngTotQLIGEA = lngTotQLIGEA;
                     beanTkt.lngTotQLIGEM = lngTotQLIGEM;
+                    beanTkt.lngTotQLIGEP = beanTkt.lngTotQLIGEA - beanTkt.lngTotQLIGEM;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQMANUAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
@@ -2401,8 +2409,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
-                    beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQACCB + lngTotQDIFF + lngTotQMANUAL;
-
+                   
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
                     beanTkt.lngTotQSOSP = lngTotQSOSP;
@@ -2417,26 +2424,33 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQPEND = rst.getLong("QPEND");
                     beanTkt.lngQCOMPS = rst.getLong("QCOMPS");
                     beanTkt.lngQCOMPM = rst.getLong("QCOMPM");
+                    beanTkt.lngQCOMPP = beanTkt.lngQCOMPS - beanTkt.lngQCOMPM;
                     beanTkt.lngQPLUSS = rst.getLong("QPLUSS");
                     beanTkt.lngQPLUSM = rst.getLong("QPLUSM");
+                    beanTkt.lngQPLUSP = beanTkt.lngQPLUSS - beanTkt.lngQPLUSM;
                     beanTkt.lngQTABES = rst.getLong("QTABES");
                     beanTkt.lngQTABEM = rst.getLong("QTABEM");
+                    beanTkt.lngQTABEP = beanTkt.lngQTABES - beanTkt.lngQTABEM;
                     beanTkt.lngQLIGEA = rst.getLong("QLIGEA");
                     beanTkt.lngQLIGEM = rst.getLong("QLIGEM");
-                    
+                    beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
                 
                     beanTkt.lngTotQPEND = lngTotQPEND;
                     beanTkt.lngTotQCOMPS = lngTotQCOMPS;
                     beanTkt.lngTotQCOMPM = lngTotQCOMPM;
+                    beanTkt.lngTotQCOMPP = beanTkt.lngTotQCOMPS - beanTkt.lngTotQCOMPM;
                     beanTkt.lngTotQPLUSS = lngTotQPLUSS;
                     beanTkt.lngTotQPLUSM = lngTotQPLUSM;
+                    beanTkt.lngTotQPLUSP = beanTkt.lngTotQPLUSS - beanTkt.lngTotQPLUSM;
                     beanTkt.lngTotQTABES = lngTotQTABES;
                     beanTkt.lngTotQTABEM = lngTotQTABEM;
+                    beanTkt.lngTotQTABEP = beanTkt.lngTotQTABES - beanTkt.lngTotQTABEM;
                     beanTkt.lngTotQLIGEA = lngTotQLIGEA;
                     beanTkt.lngTotQLIGEM = lngTotQLIGEM;
+                    beanTkt.lngTotQLIGEP = beanTkt.lngTotQLIGEA - beanTkt.lngTotQLIGEM;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQMANUAL;
-
+                    
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;
@@ -2763,7 +2777,6 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
-                    beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQACCB + lngTotQDIFF + lngTotQMANUAL;
 
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
@@ -2779,26 +2792,34 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQPEND = rst.getLong("QPEND");
                     beanTkt.lngQCOMPS = rst.getLong("QCOMPS");
                     beanTkt.lngQCOMPM = rst.getLong("QCOMPM");
+                    beanTkt.lngQCOMPP = beanTkt.lngQCOMPS - beanTkt.lngQCOMPM;
                     beanTkt.lngQPLUSS = rst.getLong("QPLUSS");
                     beanTkt.lngQPLUSM = rst.getLong("QPLUSM");
+                    beanTkt.lngQPLUSP = beanTkt.lngQPLUSS - beanTkt.lngQPLUSM;
                     beanTkt.lngQTABES = rst.getLong("QTABES");
                     beanTkt.lngQTABEM = rst.getLong("QTABEM");
+                    beanTkt.lngQTABEP = beanTkt.lngQTABES - beanTkt.lngQTABEM;
                     beanTkt.lngQLIGEA = rst.getLong("QLIGEA");
                     beanTkt.lngQLIGEM = rst.getLong("QLIGEM");
+                    beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
                     
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
                 
                     beanTkt.lngTotQPEND = lngTotQPEND;
                     beanTkt.lngTotQCOMPS = lngTotQCOMPS;
                     beanTkt.lngTotQCOMPM = lngTotQCOMPM;
+                    beanTkt.lngTotQCOMPP = beanTkt.lngTotQCOMPS - beanTkt.lngTotQCOMPM;
                     beanTkt.lngTotQPLUSS = lngTotQPLUSS;
                     beanTkt.lngTotQPLUSM = lngTotQPLUSM;
+                    beanTkt.lngTotQPLUSP = beanTkt.lngTotQPLUSS - beanTkt.lngTotQPLUSM;
                     beanTkt.lngTotQTABES = lngTotQTABES;
                     beanTkt.lngTotQTABEM = lngTotQTABEM;
+                    beanTkt.lngTotQTABEP = beanTkt.lngTotQTABES - beanTkt.lngTotQTABEM;
                     beanTkt.lngTotQLIGEA = lngTotQLIGEA;
                     beanTkt.lngTotQLIGEM = lngTotQLIGEM;
+                    beanTkt.lngTotQLIGEP = beanTkt.lngTotQLIGEA - beanTkt.lngTotQLIGEM;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQMANUAL;
-
+                    
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;

@@ -988,7 +988,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelDataInfoScan',
+                            id: prototype.id + '-panelDataInfoConci',
                             layout: 'vbox',
                             border: false,
                             width: 956,
@@ -1000,7 +1000,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             items: [
                                 {
                                     xtype: 'grid',
-                                    id: prototype.id + '-gridDataInfoScan',
+                                    id: prototype.id + '-gridDataInfoConci',
                                     width: 952,
                                     height: 180,
                                     columnLines: true,
@@ -1017,7 +1017,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Status', dataIndex: 'STMANUAL', width: 50,
+                                            {text: 'Status', dataIndex: 'TDOC', width: 50,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     value = 'Sales';
@@ -1030,7 +1030,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Doc.<br>Type', dataIndex: 'descTDOC', width: 61,
+                                            {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     if (record.data.TDOC === 'A') {
@@ -1047,20 +1047,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
+                                                    {text: 'Type', dataIndex: 'SPAYMENT', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 115,
+                                                    {text: 'Number', dataIndex: 'strSCARDN', width: 115,
                                                         editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
+                                                    {text: 'Approval', dataIndex: 'SAUTHOC', width: 65,
                                                         editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
@@ -1069,49 +1069,42 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                     }
                                                 ]
                                             },
-                                            {text: 'Adjust.', dataIndex: 'SADJUST', width: 55,
+                                            {text: 'Amount', dataIndex: 'SVFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'SVFOP', width: 70,hidden:true,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'SDATE', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
                                                     return value;
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 62,
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 62,
                                                 editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
+                                            {text: 'Ticket', dataIndex: 'strTicket', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 },
                                                 editor: {xtype: 'textfield', editable: false},
                                             },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
+                                            {text: 'Agent', dataIndex: 'SAGENT', width: 62,
                                                 editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
