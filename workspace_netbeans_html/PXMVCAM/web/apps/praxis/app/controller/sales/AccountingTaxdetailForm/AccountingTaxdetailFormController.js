@@ -60,6 +60,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
     },
     setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
+        var cmbModo = Ext.getCmp(prototype.idAccountingTaxdetail + '-Modo');
         //var cmbContrytax = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax');
         //var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES');
         //var cmbBANK = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK');
@@ -74,6 +75,20 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
             ]
         }));
         cmbSearch.setValue("2");
+        
+        cmbModo.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "SELECTED"},
+                {"code": "SA", "name": "SALE"},
+                {"code": "FL", "name": "FLOWN"},
+                {"code": "AD ", "name": "ADMs/ACMs"},
+                {"code": "IC", "name": "IXC"},
+                {"code": "IP", "name": "IXP"},
+                {"code": "AJ", "name": "ADJ"} 
+            ]
+        }));
+        cmbModo.setValue("");
+        
 
         /*cmbContrytax.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -204,7 +219,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
         var txtFilterGRUPO = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterGRUPO').getValue();
         var txtFilterTax = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterTax').getValue();
         var cmbContrytax = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax').getValue();
-        var cmbSALES = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES').getValue();
+        var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-Modo').getValue();
         var cmbBANK = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').getValue();
         var txtFilterCOUNTRY = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').getValue();
         var txtFilterCHANNEL = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL').getValue();
@@ -306,7 +321,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
         var txtFilterGRUPO = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterGRUPO').getValue();
         var txtFilterTax = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterTax').getValue();
         var cmbContrytax = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax').getValue();
-        var cmbSALES = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES').getValue();
+       var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-Modo').getValue();
         var cmbBANK = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').getValue();
         var txtFilterCOUNTRY = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').getValue();
         var txtFilterCHANNEL = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL').getValue();

@@ -168,10 +168,12 @@ public class A2552 {
     public String A2552PROVIDES2 = "";
     public double A2552PROVI3 = 0d;
     public String A2552PROVIDES3 = "";
+    public double A2552PROVI4 = 0d;
 
     public String A2552REGIS = "";
     public String A2552FREGI = "";
 
+    
     public String getA2552CCUST() {
         return A2552CCUST;
     }
