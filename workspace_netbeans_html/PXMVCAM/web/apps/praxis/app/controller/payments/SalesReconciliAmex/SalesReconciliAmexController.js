@@ -682,7 +682,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-boxMainChangePayment';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+        //me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchChangePayment'
@@ -694,11 +694,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
-                    var pag = Ext.getCmp(prototype.id + '-paggin19');
-                    var pagData = pag.getPageData();
-                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+//                    var pag = Ext.getCmp(prototype.id + '-paggin19');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
@@ -713,7 +713,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         global.clear();
         Ext.getCmp(prototype.id + '-gridMainChangePayment').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridMainChangePayment').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin19').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin19').bindStore(storeGridDatas);
     },
     setGridDataSummaryTransactionError: function () {
         win.lblUser_toolTip("Estructura: A4116");
