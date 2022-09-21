@@ -7238,7 +7238,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1445,
+                            width: 1500,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -7248,6 +7248,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainChangePayment',
                                     width: 1475,
+                                    height: 600,
                                     columnLines: true,
 //                                    features: [{
 //                                        ftype: 'summary'
