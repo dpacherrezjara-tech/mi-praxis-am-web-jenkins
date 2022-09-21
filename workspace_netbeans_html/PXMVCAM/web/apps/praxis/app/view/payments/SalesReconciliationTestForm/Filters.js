@@ -533,6 +533,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: true,
+                            hidden:true,
                             width: 100,
                             value: "",
                             typeAhead: true,

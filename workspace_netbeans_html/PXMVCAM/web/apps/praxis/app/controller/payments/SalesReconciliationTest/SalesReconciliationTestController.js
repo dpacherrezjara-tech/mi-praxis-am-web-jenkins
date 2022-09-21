@@ -865,14 +865,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             if (win.getValue('cmbFOP') === 'CA') {
                 this.searchCashMonth(this.bean);
             } else {
-                switch (this.a) {
-                    case 0:
-                        this.search(this.bean);
-                        break;
-                    case 1:
-                        this.searchCopy(this.bean);
-                        break;
-                }
+                this.searchCopy(this.bean);
             }
             //            }	
         }
@@ -998,7 +991,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
 //        MatchTkt.show();
 //    },
     btnBack_click: function (obj, e) {
-        if (this.peek() === prototype.id + '-boxMainData') {
+        if (this.peek() === prototype.id + '-boxCopyMainData') {
             global.showMenu();
         } else {
             this.stack.pop();
@@ -1060,71 +1053,71 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             }
         });
     },
-    btnDisplay_click: function () {
-        var panelTab = Ext.getCmp(prototype.id + '-boxMainData');
-        var panelChart = Ext.getCmp(prototype.id + '-boxCopyMainData');
-        if (panelTab.isVisible()) {
-            panelTab.hide();
-            panelChart.show();
-            me.panelActual = '-boxCopyMainData';
-            this.searchCopy(this.bean);
-            this.a = 1;
-        } else {
-            me.panelActual = '-boxMainData';
-            this.search(this.bean);
-            panelTab.show();
-            panelChart.hide();
-            this.a = 0;
-        }
-    },
+//    btnDisplay_click: function () {
+//        var panelTab = Ext.getCmp(prototype.id + '-boxMainData');
+//        var panelChart = Ext.getCmp(prototype.id + '-boxCopyMainData');
+//        if (panelTab.isVisible()) {
+//            panelTab.hide();
+//            panelChart.show();
+//            me.panelActual = '-boxCopyMainData';
+//            this.searchCopy(this.bean);
+//            this.a = 1;
+//        } else {
+//            me.panelActual = '-boxMainData';
+//            this.search(this.bean);
+//            panelTab.show();
+//            panelChart.hide();
+//            this.a = 0;
+//        }
+//    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="search">
-    search: function (bean) {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-            proxy: {
-                url: prototype.url + '/search'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
-                },
-                load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4165");
-
-                    me.selectedChild('vskMain', 'boxMainData');
-
-                    var res = Ext.JSON.decode(response._response.responseText);
-                    if (res.success) {
-                        if (obj.data.length > 0) {
-                            var obj = obj.data.items[0].data;
-                            if (obj.strFecFiltro === 'DATEC') {
-                                win.setText('adgSalDate', 'Reconciliation');
-                            } else {
-                                if (obj.IN_TDOC === 'R') {
-                                    win.setText('adgSalDate', 'Refund');
-                                } else {
-                                    win.setText('adgSalDate', 'Sales');
-                                }
-                                me.DateControl = obj.strDescripcion;
-                                win.setText('label_1', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCtry', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCard', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetDay', 'Sales Reconciliation ' + me.DateControl);
-                            }
-                        } else {
-                            global.Msg({msg: 'Data not found'});
-                        }
-                    } else
-                        global.Msg({msg: res.sesion});
-                    global.clear();
-                }
-            }
-        });
-        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-    },
+//    search: function (bean) {
+//        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+//            proxy: {
+//                url: prototype.url + '/search'
+//            },
+//            listeners: {
+//                beforeload: function (obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+//                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
+//                },
+//                load: function (obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                    win.lblUser_toolTip("Estructura: A4165");
+//
+//                    me.selectedChild('vskMain', 'boxMainData');
+//
+//                    var res = Ext.JSON.decode(response._response.responseText);
+//                    if (res.success) {
+//                        if (obj.data.length > 0) {
+//                            var obj = obj.data.items[0].data;
+//                            if (obj.strFecFiltro === 'DATEC') {
+//                                win.setText('adgSalDate', 'Reconciliation');
+//                            } else {
+//                                if (obj.IN_TDOC === 'R') {
+//                                    win.setText('adgSalDate', 'Refund');
+//                                } else {
+//                                    win.setText('adgSalDate', 'Sales');
+//                                }
+//                                me.DateControl = obj.strDescripcion;
+//                                win.setText('label_1', 'Sales Reconciliation ' + me.DateControl);
+//                                win.setText('ahDetCtry', 'Sales Reconciliation ' + me.DateControl);
+//                                win.setText('ahDetCard', 'Sales Reconciliation ' + me.DateControl);
+//                                win.setText('ahDetDay', 'Sales Reconciliation ' + me.DateControl);
+//                            }
+//                        } else {
+//                            global.Msg({msg: 'Data not found'});
+//                        }
+//                    } else
+//                        global.Msg({msg: res.sesion});
+//                    global.clear();
+//                }
+//            }
+//        });
+//        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+//    },
     searchCopy: function (bean) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -2530,8 +2523,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
     },
     getPaggin: function () {
         switch (this.peek()) {
-            case prototype.id + '-boxMainData':
-                return Ext.getCmp(prototype.id + '-paggin');
+//            case prototype.id + '-boxMainData':
+//                return Ext.getCmp(prototype.id + '-paggin');
             case prototype.id + '-boxCopyMainData':
                 return Ext.getCmp(prototype.id + '-pagginCopy');    
             case prototype.id + '-boxDetCountry':
