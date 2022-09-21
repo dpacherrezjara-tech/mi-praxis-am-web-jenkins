@@ -67,7 +67,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue('2-cmbFTE', this.bean.FTE);
         win.setValue('2-cmbSTVAL', this.bean.STVAL);
         
-        
+        this.llenarGrilla(this.bean);
         //SALES ===================================
         win.setValue('2-txtSCOUNTRY', this.bean.SCOUNTRY.trim());
         win.setValue("2-txtSAGENT", this.bean.SAGENT.trim());
@@ -114,6 +114,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue('2-txtUSUP', this.bean.USUP.trim());
         win.setValue('2-txtFEUP', this.bean.FEUP.trim());
         win.setValue('2-txtHOUP', this.bean.HOUP.trim());
+    },
+    llenarGrilla: function (bean) {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                //url: prototype.url + '/search'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDataInfoConci').bindStore(storeGridDatas);
     },
     //</editor-fold>
     onUpperValue: function(field, newValue, oldValue){
