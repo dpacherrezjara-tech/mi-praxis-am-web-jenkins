@@ -58,6 +58,7 @@ public class A4116 {
     
     public String ZONA = "";
     public String SCOUNTRY = "";
+    public String SDATE = "";
         
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;
