@@ -71,8 +71,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue('2-txtTicket', this.bean.strTicket.trim());
         win.setValue("2-txtSEQ", this.bean.SEQ.trim());
         win.setValue('2-cmbTDOC', this.bean.TDOC);
+        if(this.bean.TDOC === 'R'){
+            console.log('refund ' + this.bean.TDOC);
+            Ext.getCmp(prototype.id + '-2-cmbSTVALR').setVisible(true);
+            Ext.getCmp(prototype.id + '-2-cmbSTVALS').setVisible(false);
+        }
+        if(this.bean.TDOC === 'S'){
+            console.log('sales ' + this.bean.TDOC);
+            Ext.getCmp(prototype.id + '-2-cmbSTVALS').setVisible(true);   
+            Ext.getCmp(prototype.id + '-2-cmbSTVALR').setVisible(false);
+        }
         win.setValue('2-cmbFTE', this.bean.FTE);
-        win.setValue('2-cmbSTVAL', this.bean.STVAL);
+        win.setValue('2-cmbSTVALS', this.bean.STVAL);
+        win.setValue('2-cmbSTVALR', this.bean.STVAL);
         
         //SALES ===================================
         win.setValue('2-txtSCOUNTRY', this.bean.SCOUNTRY.trim());

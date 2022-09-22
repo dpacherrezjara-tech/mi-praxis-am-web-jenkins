@@ -2777,7 +2777,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetDay',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 500,
+                                                    width: 450,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
