@@ -2758,7 +2758,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                             xtype: 'panel',
                                             id: prototype.id + '-boxDetDay',
                                             hidden: true,
-                                            width: '100%',
+                                            width: 500,
                                             bodyStyle: 'background: transparent;',
                                             border: false,
                                             layout: {
@@ -2775,7 +2775,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetDay',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 995,
+                                                    width: 440,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -2933,7 +2933,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    align: 'center'
+                                                                    align: 'center',
+                                                                    hidden:true,
                                                                 },
                                                                 columns: [
                                                                     {
@@ -3003,7 +3004,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    align: 'center'
+                                                                    align: 'center',
+                                                                    hidden:true,
                                                                 },
                                                                 columns: [
                                                                     {
@@ -3025,7 +3027,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
-                                                                    align: 'center'
+                                                                    align: 'center',
+                                                                    hidden:true,
                                                                 },
                                                                 columns: [
                                                                     {

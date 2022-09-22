@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
     controller: 'DataEntryTicketSalesReconciliationTestController',
     title: 'Ticket - Data Entry Form',
     header: true,
-    height: 750,
+    height: 650,
     width: 1021,
     border: false,
     resizable: false,
@@ -345,8 +345,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'textfield',
                                     id: prototype.id+'-2-txtSAGNAME',
                                     fieldStyle: 'text-align:left',
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
                                     readOnly: true,
                                     width: 120
                                 }
@@ -991,18 +989,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             id: prototype.id + '-panelDataInfoConci',
                             layout: 'vbox',
                             border: false,
-                            width: 956,
-                            height: 230,
                             hidden: false,
                             autoScroll: true,
                             bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 20',
+                            margin: '10 2 12 40',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoConci',
-                                    width: 952,
-                                    height: 180,
+                                    width: 828,
+                                    height: 77,
                                     columnLines: true,
                                     plugins: [
                                         {
@@ -1090,7 +1086,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                     return value;
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'SPNR', width: 62,
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 80,
                                                 editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
@@ -1369,7 +1365,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                     width: 760,
                     border: true,
                     defaults: {
-                        style: 'margin: 10 0 10 50',
+                        style: 'margin: 10 0 10 100',
                         border: false
                     },
                     items: [

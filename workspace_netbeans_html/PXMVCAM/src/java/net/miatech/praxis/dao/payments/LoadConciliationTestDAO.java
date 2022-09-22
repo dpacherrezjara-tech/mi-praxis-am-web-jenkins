@@ -3926,6 +3926,8 @@ public class LoadConciliationTestDAO {
                 beanTkt.SFLOAD = rst.getString("SFLOAD").trim();
                 beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 beanTkt.SAGENT = rst.getString("SAGENT").trim();
+                beanTkt.SAGNAME = rst.getString("SAGNAME").trim();
+                beanTkt.AAGNAME = rst.getString("AAGNAME").trim();
                 beanTkt.SDATE = rst.getString("SDATE").trim();
                 beanTkt.SPAYMENT = rst.getString("SPAYMENT").trim();
                 beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
