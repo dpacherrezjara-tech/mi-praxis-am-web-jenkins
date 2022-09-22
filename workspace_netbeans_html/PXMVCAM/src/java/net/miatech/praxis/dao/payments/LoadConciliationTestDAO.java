@@ -358,6 +358,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
            // }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
