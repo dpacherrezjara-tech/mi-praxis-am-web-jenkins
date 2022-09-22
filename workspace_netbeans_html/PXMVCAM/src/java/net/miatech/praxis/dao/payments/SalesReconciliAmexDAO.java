@@ -2766,6 +2766,7 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    beanTkt.SDATE = rst.getString("SDATE").trim();
 
                     /*if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
@@ -2842,7 +2843,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.A1531CAPL = beanTkt.SAUTHOC;
                     beanTkt.A1531VFOP = beanTkt.TGROSAMOUN;
                     beanTkt.tot_VFOP = beanTkt.totTGROSAMOUN;
-                    beanTkt.A720FECVTA = beanTkt.TRANSDATE;
+                    beanTkt.A720FECVTA = beanTkt.SDATE;
                     beanTkt.A720PNR = beanTkt.SPNR;
                     beanTkt.A1531TKT = beanTkt.ISREFNBR;
                     beanTkt.A720AGENTE = beanTkt.SAGENT;

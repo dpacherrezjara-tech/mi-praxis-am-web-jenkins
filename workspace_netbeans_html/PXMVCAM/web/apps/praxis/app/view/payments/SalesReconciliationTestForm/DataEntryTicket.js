@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
     items: [
         {
             xtype: 'form',
-            id: prototype.id+'-2-box1',
+            id: prototype.id + '-2-box1',
             defaults: {
                 style: 'margin: 2px 5px;',
                 border: false
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-2-txtTicket',
+                            id: prototype.id + '-2-txtTicket',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             maxLength: 14,
@@ -62,7 +62,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-2-txtSEQ',
+                            id: prototype.id + '-2-txtSEQ',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             readOnly: true,
@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                         {
                             xtype: 'combobox',
-                            id: prototype.id+'-2-cmbTDOC',
+                            id: prototype.id + '-2-cmbTDOC',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -122,7 +122,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                         {
                             xtype: 'combobox',
-                            id: prototype.id+'-2-cmbFTE',
+                            id: prototype.id + '-2-cmbFTE',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                         {
                             xtype: 'combobox',
-                            id: prototype.id+'-2-cmbSTVAL',
+                            id: prototype.id + '-2-cmbSTVALS',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -197,7 +197,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     }
                                 }
                             }
+                        },
+                        {
+                            xtype: 'combobox',
+                            id: prototype.id + '-2-cmbSTVALR',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    [null, "&nbsp;"],
+                                    ["1", "Match"],
+                                    ["2", "Refund without Reconciliation"],
+                                    ["3", "Reconciliation without Refund"],
+                                    ["4", "Match with Differences"],
+                                    ["5", "Match Manual"]
+                                ]
+                            }),
+                            fieldStyle: 'color:#074066;',
+                            queryMode: 'local',
+                            forceSelection: true,
+                            selectOnFocus: false,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            width: 150,
+                            disabled: true,
+                            value: "",
+                            typeAhead: true,
+                            hidden: true,
+                            valueField: 'code', displayField: 'name',
+                            triggerAction: 'all',
+                            listeners: {
+                                select: function (comp, record, index) {
+                                    if (comp.rawValue === "&nbsp;") {
+                                        comp.setValue(null);
+                                    }
+                                }
+                            }
                         }
+
                     ]
                 },
                 //<editor-fold defaultstate="collapsed" desc="Sales Information">
@@ -235,7 +272,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     margin: '0 0 0 10',
                                     padding: '4 0',
                                     width: 100,
-                                    
+
                                 },
                                 {xtype: 'tbspacer', width: 3},
                                 {
@@ -251,7 +288,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSCARCOD',
+                                    id: prototype.id + '-2-txtSCARCOD',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
                                     width: 50
@@ -260,13 +297,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     text: 'Transaction Code',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 60',
+                                    margin: '0 0 0 40',
                                     padding: '4 0',
                                     width: 120,
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtTRNCU',
+                                    id: prototype.id + '-2-txtTRNCU',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 6,
@@ -292,7 +329,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSDATE',
+                                    id: prototype.id + '-2-txtSDATE',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
@@ -309,29 +346,29 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSCOUNTRY',
+                                    id: prototype.id + '-2-txtSCOUNTRY',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
                                     readOnly: true,
-                                    width: 100
+                                    width: 50
                                 },
                                 {
                                     xtype: 'label',
                                     text: 'Agent',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 40',
                                     padding: '4 0',
                                     width: 120
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSAGENT',
+                                    id: prototype.id + '-2-txtSAGENT',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -343,10 +380,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSAGNAME',
+                                    id: prototype.id + '-2-txtSAGNAME',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
-                                    width: 120
+                                    width: 180
                                 }
                             ]
                         },
@@ -367,7 +404,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtMERCHN',
+                                    id: prototype.id + '-2-txtMERCHN',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 20,
@@ -388,12 +425,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSPNR',
+                                    id: prototype.id + '-2-txtSPNR',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -405,12 +442,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSTCNTR',
+                                    id: prototype.id + '-2-txtSTCNTR',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 4,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 }
                             ]
                         },
@@ -442,7 +479,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSCARDN',
+                                    id: prototype.id + '-2-txtSCARDN',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 16,
@@ -475,12 +512,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSAUTHOC',
+                                    id: prototype.id + '-2-txtSAUTHOC',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -492,13 +529,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSDATEXP',
+                                    id: prototype.id + '-2-txtSDATEXP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    width: 100
-                                } 
+                                    width: 80
+                                }
                             ]
                         },
                         {
@@ -529,7 +566,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSVFOP',
+                                    id: prototype.id + '-2-txtSVFOP',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 15,
@@ -539,7 +576,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSCURRENCY',
+                                    id: prototype.id + '-2-txtSCURRENCY',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     maxLength: 3,
@@ -560,10 +597,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSPAYDATE',
+                                    id: prototype.id + '-2-txtSPAYDATE',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -579,10 +616,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtSPRODATE',
+                                    id: prototype.id + '-2-txtSPRODATE',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 }
                             ]
                         }
@@ -624,7 +661,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     margin: '0 0 0 10',
                                     padding: '4 0',
                                     width: 100,
-                                    
+
                                 },
                                 {xtype: 'tbspacer', width: 3},
                                 {
@@ -640,7 +677,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtACARCOD',
+                                    id: prototype.id + '-2-txtACARCOD',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
                                     width: 50
@@ -664,7 +701,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtADATE',
+                                    id: prototype.id + '-2-txtADATE',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
@@ -681,29 +718,29 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtACOUNTRY',
+                                    id: prototype.id + '-2-txtACOUNTRY',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
                                     readOnly: true,
-                                    width: 100
+                                    width: 50
                                 },
                                 {
                                     xtype: 'label',
                                     text: 'Agent',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    margin: '0 0 0 10',
+                                    margin: '0 0 0 40',
                                     padding: '4 0',
                                     width: 120
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAAGENT',
+                                    id: prototype.id + '-2-txtAAGENT',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -715,12 +752,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAAGNAME',
+                                    id: prototype.id + '-2-txtAAGNAME',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 120
+                                    width: 180
                                 }
                             ]
                         },
@@ -741,7 +778,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtMERCHN1',
+                                    id: prototype.id + '-2-txtMERCHN1',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 20,
@@ -762,12 +799,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAPNR',
+                                    id: prototype.id + '-2-txtAPNR',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -779,12 +816,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtATCNTR',
+                                    id: prototype.id + '-2-txtATCNTR',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 4,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 }
                             ]
                         },
@@ -816,7 +853,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtACARDN',
+                                    id: prototype.id + '-2-txtACARDN',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 16,
@@ -849,12 +886,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAAUTHOC',
+                                    id: prototype.id + '-2-txtAAUTHOC',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -866,13 +903,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtADATEXP',
+                                    id: prototype.id + '-2-txtADATEXP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    width: 100
-                                } 
+                                    width: 80
+                                }
                             ]
                         },
                         {
@@ -903,7 +940,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAVFOP',
+                                    id: prototype.id + '-2-txtAVFOP',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 15,
@@ -913,7 +950,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtACURRENCY',
+                                    id: prototype.id + '-2-txtACURRENCY',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     maxLength: 3,
@@ -934,10 +971,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAPAYDATE',
+                                    id: prototype.id + '-2-txtAPAYDATE',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'label',
@@ -953,10 +990,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtAPRODATE',
+                                    id: prototype.id + '-2-txtAPRODATE',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
-                                    width: 100
+                                    width: 80
                                 }
                             ]
                         }
@@ -997,7 +1034,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoConci',
-                                    width: 828,
+                                    width: 898,
                                     height: 77,
                                     columnLines: true,
                                     plugins: [
@@ -1010,18 +1047,46 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
+                                            resizable: true,
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Status', dataIndex: 'TDOC', width: 50,
+                                            {text: 'Status', dataIndex: 'STVAL', width: 120,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    value = 'Sales';
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        value = 'Blocked'
+                                                    if (record.data.TDOC === 'S') {
+                                                        if (record.data.STVAL === '1') {
+                                                            value = 'Match';
+                                                        }
+                                                        if (record.data.STVAL === '2') {
+                                                            value = 'Sales without Settlement';
+                                                        }
+                                                        if (record.data.STVAL === '3') {
+                                                            value = 'Settlement without Sales';
+                                                        }
+                                                        if (record.data.STVAL === '4') {
+                                                            value = 'Match with Differences';
+                                                        }
+                                                        if (record.data.STVAL === '5') {
+                                                            value = 'Match Manual';
+                                                        }
                                                     }
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        value = 'Concil.'
+                                                    if (record.data.TDOC === 'R') {
+                                                        if (record.data.STVAL === '1') {
+                                                            value = 'Match';
+                                                        }
+                                                        if (record.data.STVAL === '2') {
+                                                            value = 'Refund without Reconciliation';
+                                                        }
+                                                        if (record.data.STVAL === '3') {
+                                                            value = 'Settlement without Sales';
+                                                        }
+                                                        if (record.data.STVAL === '4') {
+                                                            value = 'Match with Differences';
+                                                        }
+                                                        if (record.data.STVAL === '5') {
+                                                            value = 'Match Manual';
+                                                        }
                                                     }
                                                     return value;
                                                 }
@@ -1031,6 +1096,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                     metaData.style = "text-align:center;";
                                                     if (record.data.TDOC === 'A') {
                                                         metaData.tdAttr = 'data-qtip="' + record.data.desCERROR + '"';
+                                                    }
+                                                    if (record.data.TDOC === 'R') {
+                                                        value = 'Refund';
+                                                    }
+                                                    if (record.data.TDOC === 'S') {
+                                                        value = 'Sales';
                                                     }
                                                     return value;
                                                 }
@@ -1072,7 +1143,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'SVFOP', width: 70,hidden:true,
+                                            {text: 'Sales<br>Amount', dataIndex: 'SVFOP', width: 70, hidden: true,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -1360,7 +1431,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                 //<editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'fieldset',
-                    id: prototype.id+'-2-ControlData',
+                    id: prototype.id + '-2-ControlData',
                     title: '<strong style="color:#121E31; text-decoration: underline; ">Control Data</strong>',
                     width: 760,
                     border: true,
@@ -1386,7 +1457,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtUSCR',
+                                    id: prototype.id + '-2-txtUSCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1403,7 +1474,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtFECR',
+                                    id: prototype.id + '-2-txtFECR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1420,7 +1491,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtHOCR',
+                                    id: prototype.id + '-2-txtHOCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1447,7 +1518,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtUSUP',
+                                    id: prototype.id + '-2-txtUSUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1464,7 +1535,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtFEUP',
+                                    id: prototype.id + '-2-txtFEUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1481,7 +1552,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-2-txtHOUP',
+                                    id: prototype.id + '-2-txtHOUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1513,7 +1584,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
             items: [
                 {
                     text: 'Cancel',
-                    id: prototype.id+'-2-btnCancel',
+                    id: prototype.id + '-2-btnCancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
@@ -1522,7 +1593,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                 {xtype: 'tbspacer', width: 15},
                 {
                     xtype: 'button',
-                    id: prototype.id+'-2-imgPrev',
+                    id: prototype.id + '-2-imgPrev',
                     icon: 'resources/img/botones/prev.png',
                     tooltip: 'View Previous Flight Manifest',
                     border: false,
@@ -1532,7 +1603,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                 },
                 {
                     xtype: 'button',
-                    id: prototype.id+'-2-imgNext',
+                    id: prototype.id + '-2-imgNext',
                     icon: 'resources/img/botones/next2.png',
                     tooltip: 'View Next Flight Manifest',
                     border: false,
