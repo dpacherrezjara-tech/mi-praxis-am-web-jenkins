@@ -102,11 +102,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         }
         var newabel = tipo;
 
-        win.setText('label_1', Ext.getCmp(prototype.id + '-label_1').text.replace(oldLabel, newabel) + this.DateControl);
+//        win.setText('label_1', Ext.getCmp(prototype.id + '-label_1').text.replace(oldLabel, newabel) + this.DateControl);
         win.setText('label_1Copy', Ext.getCmp(prototype.id + '-label_1Copy').text.replace(oldLabel, newabel) + this.DateControl);
-        win.setText('label_2', Ext.getCmp(prototype.id + '-label_2').text.replace(oldLabel, newabel));
+//        win.setText('label_2', Ext.getCmp(prototype.id + '-label_2').text.replace(oldLabel, newabel));
         win.setText('label_2Copy', Ext.getCmp(prototype.id + '-label_2Copy').text.replace(oldLabel, newabel));
-        win.setText('label_3', Ext.getCmp(prototype.id + '-label_3').text.replace(oldLabel, newabel));
+//        win.setText('label_3', Ext.getCmp(prototype.id + '-label_3').text.replace(oldLabel, newabel));
         win.setText('label_4', Ext.getCmp(prototype.id + '-label_4').text.replace(oldLabel, newabel));
         win.setText('label_4Copy', Ext.getCmp(prototype.id + '-label_4Copy').text.replace(oldLabel, newabel));
         win.setText('label_5', Ext.getCmp(prototype.id + '-label_5').text.replace(oldLabel, newabel));
@@ -458,7 +458,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
     gridDetCountryS_clickHandler: function (column, e, row, column, x, rowData) {
         console.log('searchDetCountryByStval');
         var beanDet = x.record.data;
-        var dataIndex = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex;
+        var dataIndex = Ext.getCmp(prototype.id + '-gridCopyData').headerCt.getGridColumns()[column].dataIndex;
         var estado, cant;
         switch (dataIndex) {
             case 'lngQMATCH':
@@ -902,9 +902,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         console.log(me.f_boxDetTktS);
 
         switch (this.peek()) {
-            case prototype.id + '-boxMainData':
-                global.getFileExcelPost('search', JSON.stringify(me.bean), Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-                break;
+//            case prototype.id + '-boxMainData':
+//                global.getFileExcelPost('search', JSON.stringify(me.bean), Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+//                break;
             case prototype.id + '-boxCopyMainData':
                 global.getFileExcelPost('searchCopy', JSON.stringify(me.bean), Ext.getCmp(prototype.id + '-gridCopyData').config.columns.items);
                 break;
@@ -1143,14 +1143,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                             } else {
                                 if (obj.IN_TDOC === 'R') {
                                     win.setText('adgCopySalDate', 'Refund');
+                                    win.setText('label_1Copy', 'Refund Reconciliation');
                                 } else {
                                     win.setText('adgCopySalDate', 'Sales');
+                                    win.setText('label_1Copy', 'Sales Reconciliation');
                                 }
                                 me.DateControl = obj.strDescripcion;
-                                win.setText('label_1Copy', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCtryCopy', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetCard', 'Sales Reconciliation ' + me.DateControl);
-                                win.setText('ahDetDay', 'Sales Reconciliation ' + me.DateControl);
                             }
                         } else {
                             global.Msg({msg: 'Data not found'});
@@ -1409,9 +1407,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                                 if (obj.IN_TDOC === 'R') {
                                     Ext.getCmp(prototype.id + '-gridDetDay').setTitle("Refund Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry + " - Card : " + obj.SCARCOD + ' : ' + obj.strDescCard);
                                     win.setText('ahDetDay', 'Refund Reconciliation');
+                                    win.setText('label_13', 'Refund');
+                                    
                                 } else {
                                     Ext.getCmp(prototype.id + '-gridDetDay').setTitle("Sales Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry + " - Card : " + obj.SCARCOD + ' : ' + obj.strDescCard);
                                     win.setText('ahDetDay', 'Sales Reconciliation');
+                                    win.setText('label_13', 'Sales');
                                 }
                             }
                         } else {
