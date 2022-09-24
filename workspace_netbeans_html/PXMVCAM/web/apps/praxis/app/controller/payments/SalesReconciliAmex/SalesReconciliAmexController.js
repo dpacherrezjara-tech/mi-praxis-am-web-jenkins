@@ -352,6 +352,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbZONASumm').setValue('');
+                    
+                    me.obtenerPaisesSett();
+                    me.obtenerPaisesErr();
+                    me.obtenerPaisesSumm();
 
                 }
             }

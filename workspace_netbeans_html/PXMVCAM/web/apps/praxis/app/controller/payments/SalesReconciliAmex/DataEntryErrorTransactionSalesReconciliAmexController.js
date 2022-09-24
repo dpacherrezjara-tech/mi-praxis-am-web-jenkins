@@ -817,7 +817,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var sales_date = (this.getValue("txtFromDate") === null) ? fecha_a_validar : Ext.util.Format.date(this.getValue("txtFromDate"), 'Ymd');
         var tkt = this.getValue("input-txtTKTScan");
         var beanGrid = {};
-        beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
+        if(cc1.length === 0 && cc2.length ===0) {
+            beanGrid.SCARDN = '';
+        } else {
+            beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
+        }
+        
         beanGrid.SAUTHOC = approval;
         beanGrid.BSUMDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
@@ -835,6 +840,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 var flag_blocked = false;
+                var flag_dupli = false;
                 meDE.beanInfo = res.lstInfo;
                 console.log(meDE.beanInfo);
                 if (res.lstInfo.length > 0) {
@@ -849,12 +855,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 meDE.lstBlocked.push(res.lstInfo[i]);
                                 flag_blocked = true;
                             } else {
-                                meDE.lstSendManual.push(res.lstInfo[i]);
+                                for (var j = 0; j < meDE.lstSendManual.length; j++) {
+                                    if(meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT){
+                                        flag_dupli = true;
+                                    }
+                                }
+                                if (!flag_dupli) {
+                                    meDE.lstSendManual.push(res.lstInfo[i]);
+                                }
                             }
                         }
                         console.log(flag_blocked);
                         if (flag_blocked) {
                             global.Msg({msg: 'There are some blocked tickets'});
+                        }
+                        if (flag_dupli) {
+                            global.Msg({msg: 'There are some duplicate tickets'});
                         }
                     }
                 } else {
