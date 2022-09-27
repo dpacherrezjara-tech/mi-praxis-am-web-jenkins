@@ -29,6 +29,7 @@ import net.miatech.beans.SaleAudit.A3649Filter;
 import net.miatech.beans.SaleAudit.A3652Filter;
 import net.miatech.beans.SaleAudit.A3653Filter;
 import net.miatech.beans.SaleAudit.A3656Filter;
+import net.miatech.beans.SaleAudit.A3669Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.RFNDQueryLogic;
@@ -1264,6 +1265,36 @@ public class RFNDQueryController extends BaseController {
         }
         map.put("success", true);
         map.put("data", result);
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "SearchDetailError")
+    public @ResponseBody
+    String SearchDetailError(ModelMap map, HttpServletRequest request) {
+        List<A3669Filter> lst;
+        A3669Filter filter = new A3669Filter();
+
+        try {
+            logic = new RFNDQueryLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_PREME = request.getParameter("IN_PREME").trim();
+            filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
+            filter.IN_CIA = request.getParameter("IN_CIA").trim();
+            filter.IN_FORMA = request.getParameter("IN_FORMA").trim();
+            filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
+            filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
+            filter.IN_CORRL = request.getParameter("IN_CORRL").trim();
+            
+            lst = logic.SearchDetailError(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("lst_Error", lst);
+
         return new Gson().toJson(map);
     }
 

@@ -271,6 +271,21 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             value: 'xxxxxx',
                             readOnly: true,
                             labelAlign: 'right'
+                        },
+                        {
+                            xtype: 'displayfield',
+                            fieldLabel: 'Error',
+                            labelStyle: 'font-weight: bold;',
+                            labelWidth: 35
+                        },
+                        {
+                            xtype: 'button',
+                            icon: 'resources/img/botones/16x16/swap.png',
+                            id: prototype.idDetailTicket + '-txterror',
+                            tooltip: 'Check Error Detail',
+                            listeners: {
+                                click: 'onSeguimietoClick'
+                            }
                         }
 
                     ]

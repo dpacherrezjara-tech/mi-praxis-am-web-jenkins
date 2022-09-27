@@ -1062,8 +1062,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     return;
                 }
                 var grid05 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
-                var regs = grid05.getStore().getCount();
-                for (var i = 0; i < regs; i++) {
+                var regscpn = grid05.getStore().getCount();
+                for (var i = 0; i < regscpn; i++) {
                     if (Ext.String.trim(grid05.getStore().getAt(i).get('A3654CPN')) === '1') {
                         Stat1 = Ext.String.trim(grid05.getStore().getAt(i).get('A3654CURS1'));
                     }
@@ -1301,10 +1301,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             }
         }
         if (regs !== 0) {
-            for (var i = 0; i < regs; i++) {
-                vl_razon = vl_razon + grid03.getStore().getAt(i).get('A3649ERROR');
-                console.log(grid03.getStore().getAt(i).get('A3649ERROR'));
-                if (grid03.getStore().getAt(i).get('A3649ERROR').length > 250) {
+            for (var t = 0; t < regs; t++) {
+                vl_razon = vl_razon + grid03.getStore().getAt(t).get('A3649ERROR');
+                if (grid03.getStore().getAt(t).get('A3649ERROR').length > 250) {
                     Ext.Msg.alert('.: PRAXIS :.', 'The description must not exceed 250 characters');
                     bvalida = false;
                     return;
@@ -1315,13 +1314,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 bvalida = false;
             }
         }
-        for (var e = 0; e < regs; e++) {
-            if (grid03.getStore().getAt(e).get('A3649FAMIL') === 'Authorise' && vl_STATUS === 'R') {
+        for (var w = 0; w < regs; w++) {
+            if (grid03.getStore().getAt(w).get('A3649FAMIL') === 'Authorise' && vl_STATUS === 'R') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Check the answer, the rejected status cannot be used with authorise answer');
                 bvalida = false;
                 return;
             }
-            if (grid03.getStore().getAt(e).get('A3649FAMIL') !== 'Authorise' && vl_STATUS === 'F') {
+            if (grid03.getStore().getAt(w).get('A3649FAMIL') !== 'Authorise' && vl_STATUS === 'F') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Check the answer, the Authorise status cannot be used with rejected answer');
                 bvalida = false;
                 return;
@@ -1644,6 +1643,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var win = new Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory({
             params: {
                 rec: me.beanHistorical
+            }
+        });
+        win.show();
+    },
+    onSeguimietoClick: function (grid, rowIndex, colIndex) {
+        var me = this;
+        rec = me.view.params.rec;
+        rec = rec === null || rec === undefined ? {} : rec;
+        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.RFNDFormErrorBPO({
+            params: {
+                rec: rec
             }
         });
         win.show();

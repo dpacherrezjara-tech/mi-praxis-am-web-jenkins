@@ -15,6 +15,7 @@ import java.util.List;
 import net.miatech.beans.SaleAudit.A3647Filter;
 import net.miatech.beans.SaleAudit.A3648Filter;
 import net.miatech.beans.SaleAudit.A3652Filter;
+import net.miatech.beans.SaleAudit.A3669Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.SaleAudit.A3648;
 import net.miatech.praxis.SaleAudit.A3649;
@@ -1007,6 +1008,71 @@ public class RFNDQueryDAO {
         }
 
         return STR_RESULT;
+    }
+    
+    public List<A3669Filter> SearchDetailError(A3669Filter filter) throws SQLException, Exception {
+        List<A3669Filter> lstRtn = new ArrayList<A3669Filter>(0);
+        A3669Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL PXRFNDESP.SQP04648(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_PREME);
+            cstmt01.setString(3, filter.IN_ANIO);
+            cstmt01.setString(4, filter.IN_CIA);
+            cstmt01.setString(5, filter.IN_FORMA);
+            cstmt01.setString(6, filter.IN_SERIE);
+            cstmt01.setString(7, filter.IN_SEQ);
+            cstmt01.setString(8, filter.IN_CORRL);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new A3669Filter();
+
+                objRtn.A3669CCUST = rs01.getString("A3669CCUST");
+                objRtn.A3669PREME = rs01.getString("A3669PREME");
+                objRtn.A3669ANIO = rs01.getString("A3669ANIO");
+                objRtn.A3669CORR = rs01.getString("A3669CORR");
+                objRtn.A3669SEQ = rs01.getString("A3669SEQ");
+                objRtn.A3669FLAG = rs01.getString("A3669FLAG");
+                objRtn.A3669DESC = rs01.getString("A3669DESC");
+                objRtn.A3669REGIS = rs01.getString("A3669REGIS");
+                objRtn.A3669FREGI = rs01.getString("A3669FREGI");
+                objRtn.A3669HREGI = rs01.getString("A3669HREGI");
+                objRtn.A3669REVIS = rs01.getString("A3669REVIS");
+                objRtn.A3669FREVI = rs01.getString("A3669FREVI");
+                objRtn.A3669HREVI = rs01.getString("A3669HREVI");
+
+                lstRtn.add(objRtn);
+
+                //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
+            }
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
     }
 
 }
