@@ -113,12 +113,19 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
+        
+        var month = this.fecha.getMonth() + 1;
+        
+        if (month < 10) {
+            month = '0' + month;
+        }
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
 
 
@@ -127,6 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
 
         Ext.getCmp(prototype.id + '-cmbYear').bindStore(storeComboDataYear);
