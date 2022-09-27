@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     dateTo: '',
     bean: '',
     searchParams: {},
+    searchParams_M: {},
     params: {},
     me: '',
     setContext: function() {
@@ -397,6 +398,8 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     searchA1686: function(obj, val) {
         this.hideAllGrid();
         Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
+        console.log(searchParams);
+        searchParams_M = searchParams;
         
         Ext.Ajax.request({
             url: prototype.url + '/searchA1686',
@@ -1466,10 +1469,16 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var boxA1419 = Ext.getCmp(prototype.id + '-panelGridDataA1419');
 
         if (!boxMainA1686.hidden) {
-            global.getFile(prototype.url + '/GetXLSXA1686?tipoFecha=' + searchParams.tipoFecha
-                    + '&dateFrom=' + searchParams.dateFrom
-                    + '&dateTo=' + searchParams.dateTo
-                    + '&source=' + searchParams.source);
+            
+            console.log('waaaaaa');
+            console.log(searchParams_M);
+            
+            global.getFile(prototype.url + '/GetXLSXA1686?beanString=' + searchParams_M.beanString);
+            
+//            global.getFile(prototype.url + '/GetXLSXA1686?tipoFecha=' + searchParams.tipoFecha
+//                    + '&dateFrom=' + searchParams.dateFrom
+//                    + '&dateTo=' + searchParams.dateTo
+//                    + '&source=' + searchParams.source);
         }
         if (!boxA1686ProcDateData.hidden) {
             global.getFile(prototype.url + '/GetXLSXProcDate?IN_TIPOFECHA=' + params.IN_TIPOFECHA
