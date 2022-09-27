@@ -10,6 +10,7 @@ import java.util.List;
 import net.miatech.beans.SaleAudit.A3647Filter;
 import net.miatech.beans.SaleAudit.A3648Filter;
 import net.miatech.beans.SaleAudit.A3652Filter;
+import net.miatech.beans.SaleAudit.A3669Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.salesAudit.RFNDQueryDAO;
 
@@ -50,6 +51,9 @@ public class RFNDQueryLogic {
     }
     public A3647Filter ProcesaUpdateUsosCPN(A3647Filter filter) throws SQLException, Exception {
         return objDAO.ProcesaUpdateUsosCPN(filter);
+    }
+     public List<A3669Filter> SearchDetailError(A3669Filter filter) throws SQLException, Exception {
+        return objDAO.SearchDetailError(filter);
     }
 
 }
