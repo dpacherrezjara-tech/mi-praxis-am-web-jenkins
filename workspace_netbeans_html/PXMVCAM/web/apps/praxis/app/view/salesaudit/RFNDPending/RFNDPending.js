@@ -21,7 +21,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket',
         'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDAddTax',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory',
-        'Ext.Praxis.view.salesaudit.RFNDPending.RFNDFormRazones'
+        'Ext.Praxis.view.salesaudit.RFNDPending.RFNDFormRazones',
+        'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDFormErrorBPO'
     ],
 
     controller: 'RFNDPendingController',

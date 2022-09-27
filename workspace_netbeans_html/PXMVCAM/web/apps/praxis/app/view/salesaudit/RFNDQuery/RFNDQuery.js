@@ -19,7 +19,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
         'Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket',
         'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDAddTax',
-        'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory'
+        'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory',
+        'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDFormErrorBPO'
     ],
 
     controller: 'RFNDQueryController',
