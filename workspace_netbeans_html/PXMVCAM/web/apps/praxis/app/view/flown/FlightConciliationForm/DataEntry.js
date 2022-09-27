@@ -1036,7 +1036,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             xtype: 'datefield',
                             id: prototype.id + '-txtFSENDVC',
                             fieldStyle: 'text-align:left',
-                            disabled: true,
+                            disabled: false,
                             value: '',
                             format: 'Ymd',
                             formatText: '',

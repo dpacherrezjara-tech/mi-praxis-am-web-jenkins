@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         this.setValue('cmbDateToYear', new Date().getFullYear());
         
         var month = new Date().getMonth() + 1;
-        if (month < 9) {
+        if (month < 10) {
             Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('0' + month);
             Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('0' + month);
         } else {
