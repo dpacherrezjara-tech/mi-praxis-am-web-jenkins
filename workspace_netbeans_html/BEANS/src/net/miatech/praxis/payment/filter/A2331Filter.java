@@ -22,6 +22,10 @@ public class A2331Filter extends A2331 {
 
     public String IN_CARDN = "";
     public String IN_CARDC = "";
+    public String IN_PNR = "";
+    public String IN_SCARDN1 = "";
+    public String IN_SCARDN2 = "";
+    public String IN_AUTH = "";
     public String IN_STVAL = "";
     public String IN_MERCHN = "";
     public String IN_DATE = "";
@@ -179,6 +183,6 @@ public class A2331Filter extends A2331 {
     public double totAMTGDSBU = 0;
     
     public Pagination page = new Pagination();
-    
 
+    
 }
