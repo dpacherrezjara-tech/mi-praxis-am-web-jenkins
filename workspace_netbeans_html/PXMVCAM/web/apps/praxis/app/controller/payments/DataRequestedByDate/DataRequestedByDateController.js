@@ -215,6 +215,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
+        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
+        me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
+        me.bean.IN_AUTH = Ext.getCmp(prototype.id + '-txtAuth').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -256,6 +260,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
+        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
+        me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
+        me.bean.IN_AUTH = Ext.getCmp(prototype.id + '-txtAuth').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParamsStatusDifference = {
@@ -273,6 +281,13 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                     win.setValue('txtTICKET', '');
                     global.Msg({msg: 'Ticket number must contain 13 digits.'});
                 }
+                break;
+        }
+    },
+    BuscarFiltro: function(obj, e, eOpts) {
+        switch (e.getKey()) {
+            case 13:
+                this.btnSearch_click();
                 break;
         }
     },
