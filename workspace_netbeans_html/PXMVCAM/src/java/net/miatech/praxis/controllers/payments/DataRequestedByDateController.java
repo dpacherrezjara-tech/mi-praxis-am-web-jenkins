@@ -301,7 +301,14 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH1_21 = row1.createCell(21);
             Cell CH1_22 = row1.createCell(22);
 
-            CH1_0.setCellValue("Creation");
+            if (listaData.get(0).IN_DATE.trim().equals("FECR")){
+                CH1_0.setCellValue("Creation");
+            } else if (listaData.get(0).IN_DATE.trim().equals("DATEN")){
+                CH1_0.setCellValue("Payment");
+            } else {
+                CH1_0.setCellValue("");
+            }
+            
             CH1_1.setCellValue("Sales");
             CH1_2.setCellValue("IATA");
             CH1_3.setCellValue("PNR");
@@ -948,7 +955,13 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH1_21 = row1.createCell(21);
             Cell CH1_22 = row1.createCell(22);
 
-            CH1_0.setCellValue("Creation");
+            if (listaData.get(0).IN_DATE.trim().equals("FECR")){
+                CH1_0.setCellValue("Creation");
+            } else if (listaData.get(0).IN_DATE.trim().equals("DATEN")){
+                CH1_0.setCellValue("Payment");
+            } else {
+                CH1_0.setCellValue("");
+            }
             CH1_1.setCellValue("Sales");
             CH1_2.setCellValue("IATA");
             CH1_3.setCellValue("PNR");

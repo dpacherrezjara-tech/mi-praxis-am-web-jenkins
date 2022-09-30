@@ -229,7 +229,8 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     setFormatParameterInteract: function() {
         me.bean = {};
-
+        
+        me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateDay').getValue();
@@ -249,7 +250,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     setFormatParameterDifference: function() {
         me.bean = {};
-
+        
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
         me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
@@ -734,11 +735,11 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 break;
             case  '-panelGridStatusSabre':
                 this.setFormatParameterInteract();
-                global.getFile(prototype.url + '/getXLSXInteractSabre?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSXInteractSabre?beanString=' + searchParamsStatusInteract.beanString);
                 break;
             case  '-panelGridDifference':
                 this.setFormatParameterDifference();
-                global.getFile(prototype.url + '/getXLSXDifference?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSXDifference?beanString=' + searchParamsStatusDifference.beanString);
                 break;    
         }
     },
