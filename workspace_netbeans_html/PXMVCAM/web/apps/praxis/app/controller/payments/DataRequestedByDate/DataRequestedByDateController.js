@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 //["SALEDATE", "Sale Date"],
                 ["FECR", "Creation Date"],
                         //["FECSELEC", "GDS Date"],
-                        //["DATEN", "Bank Date"]
+                ["DATEN", "Payment Date"]
             ]
         }));
         cmbFecFiltro.setValue("FECR");
@@ -340,7 +340,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                             } else if (IN_DATE === 'FECR') {
                                 titIN_DATE = 'Creation';
                             } else if (IN_DATE === 'DATEN') {
-                                titIN_DATE = 'Bank';
+                                titIN_DATE = 'Payment';
                             } else if (IN_DATE === 'FECSELEC') {
                                 titIN_DATE = 'GDS';
                             } else {
@@ -444,7 +444,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                             } else if (IN_DATE === 'FECR') {
                                 titIN_DATE = 'Creation';
                             } else if (IN_DATE === 'DATEN') {
-                                titIN_DATE = 'Bank';
+                                titIN_DATE = 'Payment';
                             } else if (IN_DATE === 'FECSELEC') {
                                 titIN_DATE = 'GDS';
                             } else {
