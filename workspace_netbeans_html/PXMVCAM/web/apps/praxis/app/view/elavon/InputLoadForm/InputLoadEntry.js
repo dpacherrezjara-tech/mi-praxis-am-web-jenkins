@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InputLoadEntry', {
                     xtype: 'filefield',
                     padding: '10 2 2 2',
                     id: prototype.id + '-file',
-                    name: 'textfile',
+                    name: 'excelfile',
                     labelAlign: 'right',
                     fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Input File</strong>',
                     allowBlank: false,

@@ -46,6 +46,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
     },
     callLoadFile:function(){
         var file = Ext.getCmp(prototype.id + '-file').getValue().trim();
+        console.log(file);
         if (file === '') {
             Ext.MessageBox.alert('PRAXIS', "Seleccionar archivo", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
@@ -54,11 +55,14 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
             return;
         }
          var form = Ext.getCmp(prototype.id + '-form01').getForm();
+         console.log(prototype.url + '/uploadExcelRecon');
          form.submit({
-            url: prototype.url + '/postFile',
+            url: prototype.url + '/uploadExcelRecon',
             method:'POST',
+            timeout: 60000000,
             waitMsg: 'Procesando archivo...',
             success: function (fp, o) {
+                console.log(o);
                 let response = o.result;
                 if (response.success){
                     //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
@@ -70,14 +74,16 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
                 console.log(o);
             },
             failure: function(res, opts) {
+                console.log("Ha ocurrido un error: ");
+                console.log(opts);
                 let response = opts.result;
-                if (!response.success){
-                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
-                    global.Msg({
-                        msg: response.response.toString(),
-                        icon:0
-                    });
-                }
+//                if (!response.success){
+//                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
+//                    global.Msg({
+//                        msg: response.response.toString(),
+//                        icon:0
+//                    });
+//                }
                 console.log('server-side failure with status code ' + opts.response.status);
             }
         });
