@@ -300,30 +300,43 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH1_20 = row1.createCell(20);
             Cell CH1_21 = row1.createCell(21);
             Cell CH1_22 = row1.createCell(22);
+            Cell CH1_23 = row1.createCell(23);
+            Cell CH1_24 = row1.createCell(24);
+            Cell CH1_25 = row1.createCell(25);
 
-            CH1_0.setCellValue("Creation");
+            if (listaData.get(0).IN_DATE.trim().equals("FECR")){
+                CH1_0.setCellValue("Creation");
+            } else if (listaData.get(0).IN_DATE.trim().equals("DATEN")){
+                CH1_0.setCellValue("Payment");
+            } else {
+                CH1_0.setCellValue("");
+            }
+            
             CH1_1.setCellValue("Sales");
             CH1_2.setCellValue("IATA");
             CH1_3.setCellValue("PNR");
             CH1_4.setCellValue("Merchant");
-            CH1_5.setCellValue("Credit Card");
-            CH1_6.setCellValue("");
-            CH1_7.setCellValue("");
+            CH1_5.setCellValue("Status");
+            CH1_6.setCellValue("Chargeback");
+            CH1_7.setCellValue("Credit Card");
             CH1_8.setCellValue("");
             CH1_9.setCellValue("");
-            CH1_10.setCellValue("Ticket");
-            CH1_11.setCellValue("Indicator");
-            CH1_12.setCellValue("Used Praxis");
-            CH1_13.setCellValue("");
-            CH1_14.setCellValue("Used Sabre");
-            CH1_15.setCellValue("");
+            CH1_10.setCellValue("");
+            CH1_11.setCellValue("");
+            CH1_12.setCellValue("");
+            CH1_13.setCellValue("Ticket");
+            CH1_14.setCellValue("Indicator");
+            CH1_15.setCellValue("Used Praxis");
             CH1_16.setCellValue("");
-            CH1_17.setCellValue("");
+            CH1_17.setCellValue("Used Sabre");
             CH1_18.setCellValue("");
-            CH1_19.setCellValue("Flag");
-            CH1_20.setCellValue("Accounting");
+            CH1_19.setCellValue("");
+            CH1_20.setCellValue("");
             CH1_21.setCellValue("");
-            CH1_22.setCellValue("Rule");
+            CH1_22.setCellValue("Flag");
+            CH1_23.setCellValue("Accounting");
+            CH1_24.setCellValue("");
+            CH1_25.setCellValue("Rule");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -348,6 +361,9 @@ public class DataRequestedByDateController extends BaseController {
             CH1_20.setCellStyle(headerStyle);
             CH1_21.setCellStyle(headerStyle);
             CH1_22.setCellStyle(headerStyle);
+            CH1_23.setCellStyle(headerStyle);
+            CH1_24.setCellStyle(headerStyle);
+            CH1_25.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -355,14 +371,16 @@ public class DataRequestedByDateController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 18));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 21));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 21));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 25));
 
             ++vj;
              //============================================
@@ -392,26 +410,32 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH2_20 = row2.createCell(20);
             Cell CH2_21 = row2.createCell(21);
             Cell CH2_22 = row2.createCell(22);
+            Cell CH2_23 = row2.createCell(23);
+            Cell CH2_24 = row2.createCell(24);
+            Cell CH2_25 = row2.createCell(25);
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Date");
-            CH2_5.setCellValue("Code");
             CH2_6.setCellValue("Number");
-            CH2_7.setCellValue("Auth");
-            CH2_8.setCellValue("Curr");
-            CH2_9.setCellValue("Auth Amount");
-            CH2_11.setCellValue("cpns Sales");
-            CH2_12.setCellValue("First");
-            CH2_13.setCellValue("Last");
-            CH2_14.setCellValue("First");
-            CH2_15.setCellValue("");
-            CH2_16.setCellValue("Date");
-            CH2_17.setCellValue("Last");
+            CH2_7.setCellValue("Code");
+            CH2_8.setCellValue("Number");
+            CH2_9.setCellValue("Auth");
+            CH2_10.setCellValue("Curr");
+            CH2_11.setCellValue("Chargeback");
+            CH2_12.setCellValue("Ticket");
+            CH2_13.setCellValue("");
+            CH2_14.setCellValue("cpns Sales");
+            CH2_15.setCellValue("First");
+            CH2_16.setCellValue("Last");
+            CH2_17.setCellValue("First");
             CH2_18.setCellValue("");
-            CH2_19.setCellValue("Exchange");
-            CH2_20.setCellValue("ID");
-            CH2_21.setCellValue("Date");
-            CH2_22.setCellValue("Policy");
+            CH2_19.setCellValue("Date");
+            CH2_20.setCellValue("Last");
+            CH2_21.setCellValue("");
+            CH2_22.setCellValue("Exchange");
+            CH2_23.setCellValue("ID");
+            CH2_24.setCellValue("Date");
+            CH2_25.setCellValue("Policy");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -436,25 +460,30 @@ public class DataRequestedByDateController extends BaseController {
             CH2_20.setCellStyle(headerStyle);
             CH2_21.setCellStyle(headerStyle);
             CH2_22.setCellStyle(headerStyle);
+            CH2_23.setCellStyle(headerStyle);
+            CH2_24.setCellStyle(headerStyle);
+            CH2_25.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 13, 13));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 15));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 17, 18));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 20, 20));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 19, 19));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 20, 21));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 25, 25));
             ++vj;
              //============================================
 
@@ -483,6 +512,9 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH3_20 = row3.createCell(20);
             Cell CH3_21 = row3.createCell(21);
             Cell CH3_22 = row3.createCell(22);
+            Cell CH3_23 = row3.createCell(23);
+            Cell CH3_24 = row3.createCell(24);
+            Cell CH3_25 = row3.createCell(25);
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -495,18 +527,21 @@ public class DataRequestedByDateController extends BaseController {
             CH3_8.setCellValue("");
             CH3_9.setCellValue("");
             CH3_10.setCellValue("");
-            CH3_11.setCellValue("");
-            CH3_12.setCellValue("");
+            CH3_11.setCellValue("Amount");
+            CH3_12.setCellValue("Amount");
             CH3_13.setCellValue("");
-            CH3_14.setCellValue("Status");
-            CH3_15.setCellValue("Date");
-            CH3_16.setCellValue("Application");
+            CH3_14.setCellValue("");
+            CH3_15.setCellValue("");
+            CH3_16.setCellValue("");
             CH3_17.setCellValue("Status");
             CH3_18.setCellValue("Date");
-            CH3_19.setCellValue("");
-            CH3_20.setCellValue("");
-            CH3_21.setCellValue("");
+            CH3_19.setCellValue("Application");
+            CH3_20.setCellValue("Status");
+            CH3_21.setCellValue("Date");
             CH3_22.setCellValue("");
+            CH3_23.setCellValue("");
+            CH3_24.setCellValue("");
+            CH3_25.setCellValue("");
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -531,14 +566,19 @@ public class DataRequestedByDateController extends BaseController {
             CH3_20.setCellStyle(headerStyle);
             CH3_21.setCellStyle(headerStyle);
             CH3_22.setCellStyle(headerStyle);
+            CH3_23.setCellStyle(headerStyle);
+            CH3_24.setCellStyle(headerStyle);
+            CH3_25.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 18, 18));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 19, 19));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 21, 21));
             ++vj;
             //============================================
 
@@ -564,33 +604,39 @@ public class DataRequestedByDateController extends BaseController {
                 Cell rcell17 = row1.createCell(17);
                 Cell rcell18 = row1.createCell(18);
                 Cell rcell19 = row1.createCell(19);
-                Cell rcell20 = row1.createCell(19);
-                Cell rcell21 = row1.createCell(19);
-                Cell rcell22 = row1.createCell(19);
+                Cell rcell20 = row1.createCell(20);
+                Cell rcell21 = row1.createCell(21);
+                Cell rcell22 = row1.createCell(22);
+                Cell rcell23 = row1.createCell(23);
+                Cell rcell24 = row1.createCell(24);
+                Cell rcell25 = row1.createCell(25);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).SALEDATE);
                 rcell2.setCellValue(listaData.get(vi).AGENTE);
                 rcell3.setCellValue(listaData.get(vi).PNR);
                 rcell4.setCellValue(listaData.get(vi).MERCHN);
-                rcell5.setCellValue(listaData.get(vi).SCARCOD);
-                rcell6.setCellValue(listaData.get(vi).CARDNBR);
-                rcell7.setCellValue(listaData.get(vi).AUTHNBR);
-                rcell8.setCellValue(listaData.get(vi).MFOP);
-                rcell9.setCellValue(listaData.get(vi).AUTAMOUNT);
-                rcell10.setCellValue(listaData.get(vi).TICKET);
-                rcell11.setCellValue(listaData.get(vi).INDCPN);
-                rcell12.setCellValue(listaData.get(vi).STUSO);
-                rcell13.setCellValue(listaData.get(vi).STUSOS);
-                rcell14.setCellValue(listaData.get(vi).INDCPNS);
-                rcell15.setCellValue(listaData.get(vi).DATSABF);
-                rcell16.setCellValue(listaData.get(vi).DATAPLICA);
-                rcell17.setCellValue(listaData.get(vi).INDCPNSL);
-                rcell18.setCellValue(listaData.get(vi).DATSABL);
-                rcell19.setCellValue(listaData.get(vi).FSELECX);
-                rcell20.setCellValue(listaData.get(vi).IDCON);
-                rcell21.setCellValue(listaData.get(vi).FCONT);
-                rcell22.setCellValue(listaData.get(vi).strDescCRULE);
+                rcell5.setCellValue(listaData.get(vi).descSTVAL);
+                rcell6.setCellValue(listaData.get(vi).FOLIO);
+                rcell7.setCellValue(listaData.get(vi).SCARCOD);
+                rcell8.setCellValue(listaData.get(vi).CARDNBR);
+                rcell9.setCellValue(listaData.get(vi).AUTHNBR);
+                rcell10.setCellValue(listaData.get(vi).MFOP);
+                rcell11.setCellValue(listaData.get(vi).AUTAMOUNT);
+                rcell12.setCellValue(listaData.get(vi).VFOP);
+                rcell13.setCellValue(listaData.get(vi).TICKET);
+                rcell14.setCellValue(listaData.get(vi).INDCPN);
+                rcell15.setCellValue(listaData.get(vi).STUSO);
+                rcell16.setCellValue(listaData.get(vi).STUSOS);
+                rcell17.setCellValue(listaData.get(vi).INDCPNS);
+                rcell18.setCellValue(listaData.get(vi).DATSABF);
+                rcell19.setCellValue(listaData.get(vi).DATAPLICA);
+                rcell20.setCellValue(listaData.get(vi).INDCPNSL);
+                rcell21.setCellValue(listaData.get(vi).DATSABL);
+                rcell22.setCellValue(listaData.get(vi).FSELECX);
+                rcell23.setCellValue(listaData.get(vi).IDCON);
+                rcell24.setCellValue(listaData.get(vi).FCONT);
+                rcell25.setCellValue(listaData.get(vi).strDescCRULE);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -619,6 +665,9 @@ public class DataRequestedByDateController extends BaseController {
             sheet.autoSizeColumn(20, true);
             sheet.autoSizeColumn(21, true);
             sheet.autoSizeColumn(22, true);
+            sheet.autoSizeColumn(23, true);
+            sheet.autoSizeColumn(24, true);
+            sheet.autoSizeColumn(25, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -946,9 +995,14 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH1_19 = row1.createCell(19);
             Cell CH1_20 = row1.createCell(20);
             Cell CH1_21 = row1.createCell(21);
-            Cell CH1_22 = row1.createCell(22);
 
-            CH1_0.setCellValue("Creation");
+            if (listaData.get(0).IN_DATE.trim().equals("FECR")){
+                CH1_0.setCellValue("Creation");
+            } else if (listaData.get(0).IN_DATE.trim().equals("DATEN")){
+                CH1_0.setCellValue("Payment");
+            } else {
+                CH1_0.setCellValue("");
+            }
             CH1_1.setCellValue("Sales");
             CH1_2.setCellValue("IATA");
             CH1_3.setCellValue("PNR");
@@ -967,10 +1021,9 @@ public class DataRequestedByDateController extends BaseController {
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
             CH1_18.setCellValue("");
-            CH1_19.setCellValue("Flag");
-            CH1_20.setCellValue("Accounting");
-            CH1_21.setCellValue("");
-            CH1_22.setCellValue("Rule");
+            CH1_19.setCellValue("Accounting");
+            CH1_20.setCellValue("");
+            CH1_21.setCellValue("Rule");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -994,7 +1047,6 @@ public class DataRequestedByDateController extends BaseController {
             CH1_19.setCellStyle(headerStyle);
             CH1_20.setCellStyle(headerStyle);
             CH1_21.setCellStyle(headerStyle);
-            CH1_22.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -1007,9 +1059,8 @@ public class DataRequestedByDateController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 18));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 21));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
 
             ++vj;
              //============================================
@@ -1038,7 +1089,6 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH2_19 = row2.createCell(19);
             Cell CH2_20 = row2.createCell(20);
             Cell CH2_21 = row2.createCell(21);
-            Cell CH2_22 = row2.createCell(22);
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Date");
@@ -1055,10 +1105,9 @@ public class DataRequestedByDateController extends BaseController {
             CH2_16.setCellValue("Date");
             CH2_17.setCellValue("Last");
             CH2_18.setCellValue("");
-            CH2_19.setCellValue("Exchange");
-            CH2_20.setCellValue("ID");
-            CH2_21.setCellValue("Date");
-            CH2_22.setCellValue("Policy");
+            CH2_19.setCellValue("ID");
+            CH2_20.setCellValue("Date");
+            CH2_21.setCellValue("Policy");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -1082,7 +1131,6 @@ public class DataRequestedByDateController extends BaseController {
             CH2_19.setCellStyle(headerStyle);
             CH2_20.setCellStyle(headerStyle);
             CH2_21.setCellStyle(headerStyle);
-            CH2_22.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
@@ -1101,7 +1149,6 @@ public class DataRequestedByDateController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 20, 20));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 21, 21));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
             ++vj;
              //============================================
 
@@ -1129,7 +1176,6 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH3_19 = row3.createCell(19);
             Cell CH3_20 = row3.createCell(20);
             Cell CH3_21 = row3.createCell(21);
-            Cell CH3_22 = row3.createCell(22);
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -1153,7 +1199,6 @@ public class DataRequestedByDateController extends BaseController {
             CH3_19.setCellValue("");
             CH3_20.setCellValue("");
             CH3_21.setCellValue("");
-            CH3_22.setCellValue("");
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -1177,7 +1222,6 @@ public class DataRequestedByDateController extends BaseController {
             CH3_19.setCellStyle(headerStyle);
             CH3_20.setCellStyle(headerStyle);
             CH3_21.setCellStyle(headerStyle);
-            CH3_22.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             
@@ -1211,9 +1255,8 @@ public class DataRequestedByDateController extends BaseController {
                 Cell rcell17 = row1.createCell(17);
                 Cell rcell18 = row1.createCell(18);
                 Cell rcell19 = row1.createCell(19);
-                Cell rcell20 = row1.createCell(19);
-                Cell rcell21 = row1.createCell(19);
-                Cell rcell22 = row1.createCell(19);
+                Cell rcell20 = row1.createCell(20);
+                Cell rcell21 = row1.createCell(21);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).SALEDATE);
@@ -1234,10 +1277,9 @@ public class DataRequestedByDateController extends BaseController {
                 rcell16.setCellValue(listaData.get(vi).DATAPLICA);
                 rcell17.setCellValue(listaData.get(vi).INDCPNSL);
                 rcell18.setCellValue(listaData.get(vi).DATSABL);
-                rcell19.setCellValue(listaData.get(vi).FSELECX);
-                rcell20.setCellValue(listaData.get(vi).IDCON);
-                rcell21.setCellValue(listaData.get(vi).FCONT);
-                rcell22.setCellValue(listaData.get(vi).strDescCRULE);
+                rcell19.setCellValue(listaData.get(vi).IDCON);
+                rcell20.setCellValue(listaData.get(vi).FCONT);
+                rcell21.setCellValue(listaData.get(vi).strDescCRULE);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1265,7 +1307,6 @@ public class DataRequestedByDateController extends BaseController {
             sheet.autoSizeColumn(19, true);
             sheet.autoSizeColumn(20, true);
             sheet.autoSizeColumn(21, true);
-            sheet.autoSizeColumn(22, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
