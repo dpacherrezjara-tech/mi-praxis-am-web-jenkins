@@ -44,7 +44,7 @@ public class InputLoadDAO {
         String SQL = "INSERT INTO PRAXIS.X3147 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cnx.prepareStatement("TRUNCATE TABLE PXUATP.X3147").execute();
+            cnx.prepareStatement("TRUNCATE TABLE PRAXIS.X3147").execute();
             pstmt = cnx.prepareStatement(SQL);
             //cnx.setAutoCommit(false);
             for(X3147temp line : temp){
