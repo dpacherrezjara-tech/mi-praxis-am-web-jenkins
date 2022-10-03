@@ -335,16 +335,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             case 'F':
                 vl_A3648FLAG = 'AUTHORISED';
                 break;
+             case 'B':
+                vl_A3648FLAG = 'GIVE USE IN PRAXIS';
+                break;
             case 'Y':
                 vl_A3648FLAG = 'PENDING';
                 break;
         }
         Ext.getCmp(prototype.idDetailTicket + '-txtStatus').setValue(rec.get('A3648STATO'));
         Ext.getCmp(prototype.idDetailTicket + '-txtFlag').setValue(vl_A3648FLAG);
-        if ((Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R') && Ext.String.trim(rec.get('A3647REGAS')) === 'AUTOPR') {
+        if ((Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R' || Ext.String.trim(rec.get('A3648FLAG')) === 'B') && Ext.String.trim(rec.get('A3647REGAS')) === 'AUTOPR') {
             Ext.getCmp(prototype.idDetailTicket + '-btn-save').hide();
         }
-        if (Ext.String.trim(rec.get('A3648FLAG')) === 'F') {
+        if (Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'B') {
             if (rec.get('A3648MARCA') === 'Y') {
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setValue(true);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyrobot').setValue(false);
@@ -376,7 +379,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         // total
         Ext.getCmp(prototype.idDetailTicket + '-txtTotal').setValue(Ext.util.Format.number(rec.get('A3648STOTL'), '0,000.00'));
         Ext.getCmp(prototype.idDetailTicket + '-txtTotalXml').setValue(Ext.util.Format.number(rec.get('A3648XTOTL'), '0,000.00'));
-        if (Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R') {
+        if (Ext.String.trim(rec.get('A3648FLAG')) === 'F' || Ext.String.trim(rec.get('A3648FLAG')) === 'R' || Ext.String.trim(rec.get('A3648FLAG')) === 'B') {
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(rec.get('A3648TARID'));
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalEqFareAm').setValue(rec.get('A3648STAQD'));
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').setValue(Ext.util.Format.number(rec.get('A3648TTAXD'), '0,000.00'));
