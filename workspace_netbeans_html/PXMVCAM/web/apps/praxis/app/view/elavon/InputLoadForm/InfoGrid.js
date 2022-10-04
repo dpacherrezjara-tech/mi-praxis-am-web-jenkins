@@ -61,10 +61,10 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                             resizable: false,
                             columns: {
                                 items: [
-                                    {text: 'Id Consecutivo', dataIndex: 'A4294IDFIL', width: 110, align: 'center', padding: 8},
+                                    {text: 'Id <br> Consecutivo', dataIndex: 'A4294IDFIL', width: 110, align: 'center', padding: 8},
                                     {text: 'Fecha Proceso', dataIndex: 'A4294PRDA', align: 'center', width: 120},
                                     {text: 'Nombre de Archivo', dataIndex: 'A4294FLNM', align: 'left', width: 120, flex: 1},
-                                    {text: 'Total de Registros de Archivo', dataIndex: 'A4294TTRF', width: 120, align: 'left',
+                                    {text: 'Total de <br> Registros de <br> Archivo', dataIndex: 'A4294TTRF', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');
@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0');
                                         }
                                     },
-                                    {text: 'Registros Cargados', dataIndex: 'A4294TTRC', width: 120, align: 'left',
+                                    {text: 'Registros <br> Cargados', dataIndex: 'A4294TTRC', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');
@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0');
                                         }
                                     },
-                                    {text: 'Registros procesados', dataIndex: 'A4294TTRP', width: 120, align: 'left',
+                                    {text: 'Registros <br> procesados', dataIndex: 'A4294TTRP', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                                         }
                                     },
                                     {
-                                        text: 'Registros MATCH', dataIndex: 'A4294TTRM', width: 120, align: 'left',
+                                        text: 'Registros <br> MATCH', dataIndex: 'A4294TTRM', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');

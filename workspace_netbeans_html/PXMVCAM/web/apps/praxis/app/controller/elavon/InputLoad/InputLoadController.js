@@ -69,6 +69,11 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
+    onDownloadClick:function(grid, rowIndex, colIndex){
+        var rec = grid.getStore().getAt(rowIndex);
+        console.log(rec);
+        alert("Descargando Exceles");
+    },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function(obj, e) {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
