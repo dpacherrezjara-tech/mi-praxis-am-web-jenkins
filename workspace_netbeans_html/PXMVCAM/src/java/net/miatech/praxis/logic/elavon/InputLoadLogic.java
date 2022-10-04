@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.elavon.InputLoadDAO;
+import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.X3147temp;
 
 /**
@@ -23,5 +24,9 @@ public class InputLoadLogic {
     
     public boolean saveX3147(List<X3147temp> temp)throws SQLException,Exception{
         return dao.setX3147(temp);
+    }
+    
+    public SQP04650Filter getSQP04650 (SQP04650Filter filter)throws SQLException,Exception{
+        return dao.getSQP04650Filter(filter);
     }
 }

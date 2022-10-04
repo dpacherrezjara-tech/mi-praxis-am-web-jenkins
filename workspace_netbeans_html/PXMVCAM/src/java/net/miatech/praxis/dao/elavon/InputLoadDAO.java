@@ -9,8 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import org.apache.log4j.Logger;
 
@@ -82,5 +84,36 @@ public class InputLoadDAO {
             pasarGarbageCollector();
         }
         return true;
+    }
+    
+    public SQP04650Filter getSQP04650Filter(SQP04650Filter filter)throws SQLException,Exception{
+        Connection cnx = null;
+        CallableStatement cstmt = null;
+        String SQL = "{CALL PRAXIS.SQP04650(?,?,?,?)}";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQL);
+            cstmt.setString(1, filter.getIN_FILENAME());
+            cstmt.setInt(2, filter.getIN_ROWSRCV());
+            cstmt.registerOutParameter(3, Types.VARCHAR);
+            cstmt.registerOutParameter(4, Types.VARCHAR);
+            cstmt.execute();
+            filter.setOUT_SQLCODE(cstmt.getString(3));
+            filter.setOUT_MESSAGE(cstmt.getString(4));
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            return null;
+        }finally{
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
     }
 }
