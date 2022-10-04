@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         fecha2.setDate(fecha1.getDate() - 30)
         Ext.getCmp(prototype.id + '-fecha1').setValue(fecha2);
         Ext.getCmp(prototype.id + '-fecha2').setValue(fecha1);
+        this.OnSearch();
     },
     btnSearch_click: function () {
         this.OnSearch();
