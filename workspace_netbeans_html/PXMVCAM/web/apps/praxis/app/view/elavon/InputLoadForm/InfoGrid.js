@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                             //width: 990,
                             width: '100%',
                             height: 510,
-                            padding: '0px 5px 1px 5px',                           
+                            padding: '0px 5px 1px 5px',
                             features: [
                                 {
                                     dock: 'bottom',
@@ -59,81 +59,61 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                                 }
                             ],
                             resizable: false,
-                            selModel: {                                
-                                selType: 'checkboxmodel',
-                                mode:'SINGLE',
-                                listeners: {
-                                    beforeselect: function (grid, record, index, eOpts, metaData) {
-                                        return true;
-                                    }
-                                }
-                            },
-                            selectable: {
-                                columns: false, // Can select cells and rows, but not columns
-                                extensible: false // Uses the draggable selection extender
-                            },
                             columns: {
                                 items: [
-                                    {text: 'Id File', dataIndex: 'A4264IDFIL', width: 110, align: 'center',padding:8},
-                                    {text: 'Invoice Code', dataIndex: 'A4264INVC', align: 'left', width: 120},
-                                    {text: 'Processing Date', dataIndex: 'A4264PRDA', align: 'left', width:120},
-                                    {text: 'File Name', dataIndex: 'A4264FLNM', width: 120, align: 'left',flex:1},
-                                    {text: 'Total Nbr. of Batches', dataIndex: 'A4264TTRNC', width: 155, align: 'left',
+                                    {text: 'Id Consecutivo', dataIndex: 'A4294IDFIL', width: 110, align: 'center', padding: 8},
+                                    {text: 'Fecha Proceso', dataIndex: 'A4294PRDA', align: 'center', width: 120},
+                                    {text: 'Nombre de Archivo', dataIndex: 'A4294FLNM', align: 'left', width: 120, flex: 1},
+                                    {text: 'Total de Registros de Archivo', dataIndex: 'A4294TTRF', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000');
+                                            return Ext.util.Format.number(value, '0');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000');
+                                            return Ext.util.Format.number(value, '0');
                                         }
                                     },
-                                    {text: 'Total Received', dataIndex: 'A4264TLINVC', width: 120, align: 'left',
+                                    {text: 'Registros Cargados', dataIndex: 'A4294TTRC', width: 120, align: 'left',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000');
+                                            return Ext.util.Format.number(value, '0');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000');
+                                            return Ext.util.Format.number(value, '0');
+                                        }
+                                    },
+                                    {text: 'Registros procesados', dataIndex: 'A4294TTRP', width: 120, align: 'left',
+                                        summaryType: 'sum',
+                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                            return Ext.util.Format.number(value, '0');
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0');
                                         }
                                     },
                                     {
-                                        text: 'Status', dataIndex: 'A4264STREC', width: 120, align: 'left',
+                                        text: 'Registros MATCH', dataIndex: 'A4294TTRM', width: 120, align: 'left',
+                                        summaryType: 'sum',
+                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                            return Ext.util.Format.number(value, '0');
+                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            switch (value) {
-                                                case '0':
-                                                    return 'OK';
-                                                    break;
-                                                case '1':
-                                                    return 'With Errors';
-                                                    break;
-                                                default:
-                                                    return 'Error';
-                                                    break;
-                                            }
+                                            return Ext.util.Format.number(value, '0');
                                         }
                                     },
                                     {
-                                        text: 'St. Formateo', dataIndex: 'A4264STCAR', width: 120, align: 'left',
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            switch (value) {
-                                                case 'P':
-                                                    return 'Pending';
-                                                    break;
-                                                case '0':
-                                                    return 'Loaded OK';
-                                                    break;
-                                                case '1':
-                                                    return 'With Errors';
-                                                    break;
-                                                case '2':
-                                                    return 'Without Sales';
-                                                    break;
-                                                default:
-                                                    return 'Error';
-                                                    break;
+                                        xtype: 'actioncolumn',
+                                        sortable: false,
+                                        width: 50,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Click for download',
+                                                handler: 'onDownloadClick'
                                             }
-                                        }
-                                    },
+                                        ]
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,

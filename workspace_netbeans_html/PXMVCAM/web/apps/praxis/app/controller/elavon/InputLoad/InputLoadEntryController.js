@@ -59,7 +59,6 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
          form.submit({
             url: prototype.url + '/uploadExcelRecon',
             method:'POST',
-            timeout: 60000000,
             waitMsg: 'Procesando archivo...',
             success: function (fp, o) {
                 console.log(o);
@@ -75,6 +74,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
             },
             failure: function(res, opts) {
                 console.log("Ha ocurrido un error: ");
+                console.log(res);
                 console.log(opts);
                 let response = opts.result;
 //                if (!response.success){

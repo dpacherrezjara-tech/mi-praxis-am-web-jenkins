@@ -58,7 +58,6 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InputLoadEntry', {
                     listeners: {
                         change: function(fld, value) {
                             var newValue = value.replace(/C:\\fakepath\\/g, '');
-                            console.log(fld);
                             fld.setRawValue(newValue);
                         }
                     }

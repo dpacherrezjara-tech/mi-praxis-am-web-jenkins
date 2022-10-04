@@ -10,7 +10,15 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
     init: function(view) {
         me = this;
     },
-    afterRender: function() {    
+    afterRender: function() {
+        let fecha1 = new Date();
+        let fecha2 = new Date();
+        fecha2.setDate(fecha1.getDate() - 30)
+        Ext.getCmp(prototype.id + '-fecha1').setValue(fecha2);
+        Ext.getCmp(prototype.id + '-fecha2').setValue(fecha1);
+    },
+    btnSearch_click: function () {
+        this.OnSearch();
     },
     btnProcess_click: function () {
         this.winDataEntry();
@@ -20,6 +28,46 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
             id: prototype.id + '-InputLoadEntry'
         }).show();
 
+    },
+    OnSearch:function(){
+        this.search();
+    },
+    search:function(){
+        var bean = {};
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        bean.IN_FROMDATE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+        bean.IN_TODATE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.elavon.InputLoad.GridData', {
+            proxy: {
+                url: prototype.url + '/getHeaderInfo'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, obj2, success, obj4, obj5) {
+                    win.lblUser_toolTip("Estructura: A4294");
+                    // <editor-fold defaultstate="collapsed" desc="paggin">
+                    var pag = Ext.getCmp(prototype.id + '-paggin');
+                    var pagData = pag.getPageData();
+                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
+                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
+                    var total = Ext.util.Format.number(pagData.total, '0,000');
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+                    // </editor-fold>
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found'
+                        });
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function(obj, e) {

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.elavon.SQP04650Filter;
+import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import net.miatech.praxis.logic.elavon.InputLoadLogic;
 import org.apache.poi.ss.usermodel.Row;
@@ -106,6 +107,33 @@ public class InputLoadController extends BaseController{
         }catch(Exception e){
             map.put("success", false);
             map.put("response",e.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/getHeaderInfo")
+    public @ResponseBody String getInputHeader(ModelMap map, HttpServletRequest request){
+        List<SQP04651Filter> listObj = new ArrayList<>();
+        SQP04651Filter filter = new SQP04651Filter();
+        filter.getPagination().TOTROW = -1;
+        filter.getPagination().START =0;
+        filter.getPagination().LIMIT = 0;
+        try {
+            filter.setIN_FROMDATE(request.getParameter("IN_FROMDATE"));
+            filter.setIN_TODATE(request.getParameter("IN_TODATE"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.getPagination().PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.getPagination().PAGNUM = (start / filter.getPagination().PAGROW) + 1;
+            logic = new InputLoadLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listObj = logic.getSQP04651(filter);
+            map.put("success", true);
+            map.put("total", !listObj.isEmpty() ? listObj.get(0).getPagination().TOTROW : 0);            
+            map.put("data", listObj);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
     }
