@@ -92,6 +92,9 @@ public class InputLoadController extends BaseController{
                 filter.setIN_FILENAME(filename);
                 filter.setIN_ROWSRCV(filerows);
                 filter = logic.getSQP04650(filter);
+                if (filter == null) {
+                    throw new SQLException();
+                }
                 map.put("success", filter.getOUT_SQLCODE().equals("1"));
                 map.put("response",filter.getOUT_MESSAGE());
             }else{
