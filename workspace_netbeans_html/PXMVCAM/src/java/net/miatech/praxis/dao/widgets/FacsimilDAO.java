@@ -71,7 +71,8 @@ public class FacsimilDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.setString(1, filter.TDNR.trim());
+            //cs.setString(1, filter.TDNR.trim());
+            cs.setString(1, filter.TDNR.trim() + "  " + filter.IDFILE.trim());
             cs.execute();
 
             beanFacsimil.CCUST = ccust.trim();
@@ -730,13 +731,14 @@ public class FacsimilDAO {
         Connection cnx = null;
         try {
             //String strSQL = "{CALL " + session.getMainLibrary() + ".PXBSPFACSIMILNEW(?)}";
-            String strSQL = "{CALL PXBSPFACSIMILNEW(?,?,?)}";
+            String strSQL = "{CALL PXBSPFACSIMILNEW(?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
-            cs.registerOutParameter(2, Types.CHAR);
             cs.registerOutParameter(3, Types.CHAR);
+            cs.registerOutParameter(4, Types.CHAR);
 
             cs.setString(1, filter.TDNR.trim());
+            cs.setString(2, filter.IDFILE.trim());
             cs.execute();
 
             beanFacsimil.CCUST = ccust.trim();
@@ -744,9 +746,9 @@ public class FacsimilDAO {
             beanFacsimil.COUNTRY = filter.COUNTRY.trim();
             beanFacsimil.nombre = filter.nombre.trim();
 
-            OU_SEQ = cs.getString(2);
+            OU_SEQ = cs.getString(3);
             if (OU_SEQ.equals("220")) {
-                OU_NROID = cs.getString(3);
+                OU_NROID = cs.getString(4);
                 session.getCNXIBMDB2().openSystem();
                 ProgramCall program = new ProgramCall(session.getCNXIBMDB2().getSystem());
                 try {
@@ -2555,7 +2557,8 @@ public class FacsimilDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.setString(1, filter.TDNR.trim());
+            //cs.setString(1, filter.TDNR.trim());
+            cs.setString(1, filter.TDNR.trim() + "  " + filter.IDFILE.trim());
             cs.execute();
 
             beanFacsimil.CCUST = ccust.trim();

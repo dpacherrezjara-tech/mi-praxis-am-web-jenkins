@@ -277,7 +277,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 IN_CUPON2: '',
                 IN_CUPON3: '',
                 IN_CUPON4: '',
-                IN_FORCE: ''
+                IN_FORCE: '',
+                IN_IDFIL: file.A720IDFIL
             };
 
             Ext.Ajax.request({
