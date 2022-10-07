@@ -4,19 +4,29 @@ package net.miatech.praxis.controllers.elavon;
 import com.google.gson.Gson;
 import com.monitorjbl.xlsx.StreamingReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.elavon.ElavonExcelFile;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.X3147temp;
+import net.miatech.praxis.logic.elavon.ElavonExcel;
 import net.miatech.praxis.logic.elavon.InputLoadLogic;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +43,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Scope("request")
 @RequestMapping("/InputLoad")
 public class InputLoadController extends BaseController{
+    
+    @Autowired
+    private ElavonExcel elavonExcel;
     
     private InputLoadLogic logic;
     
@@ -136,5 +149,33 @@ public class InputLoadController extends BaseController{
             map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/getReconFormat",produces = "application/octet-stream")
+    public void downloadReconFormat(HttpServletResponse response) throws IOException{
+        List<ElavonExcelFile> files = new ArrayList<>();
+        List<List<Map<String, Object>>> fileObjects = new ArrayList<>();
+        try {
+            logic = new InputLoadLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            fileObjects = logic.getResultElavon();
+            if (fileObjects.isEmpty()) {
+                throw new Exception("Error al obtener resultados");
+            }
+            int cont = 0;
+            for(List<Map<String,Object>> rs : fileObjects){
+                cont++;
+                ElavonExcelFile ef = new ElavonExcelFile();
+                ef.setFileName("Query_"+cont);
+                ef.setFileObjects(rs);
+                files.add(ef);
+            }
+            OutputStream os =  response.getOutputStream();
+            response.setHeader("Content-Disposition", "attachment;filename=elavon_"+new Date()+".zip");
+            //response.setContentType("application/octet-stream");
+            elavonExcel.compressFiles(os, files);
+        } catch (Exception e) {
+            System.out.println("Error al descargar");
+        }
     }
 }

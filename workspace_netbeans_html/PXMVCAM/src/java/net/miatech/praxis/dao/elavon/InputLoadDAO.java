@@ -8,15 +8,19 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -42,6 +46,7 @@ public class InputLoadDAO {
         System.gc();
     }
     
+    //guarda excel en archivo temporal
     public boolean setX3147(List<X3147temp> temp)throws SQLException,Exception{
         Connection cnx = null;
         PreparedStatement pstmt = null;
@@ -88,6 +93,7 @@ public class InputLoadDAO {
         return true;
     }
     
+    //guarda datos de excel en cabecera
     public SQP04650Filter getSQP04650Filter(SQP04650Filter filter)throws SQLException,Exception{
         Connection cnx = null;
         CallableStatement cstmt = null;
@@ -119,6 +125,7 @@ public class InputLoadDAO {
         return filter;
     }
     
+    //cabecera ELAVON
     public List<SQP04651Filter> getSQP04651Filter(SQP04651Filter filter)throws SQLException,Exception{
         List<SQP04651Filter> response = new ArrayList<>();
         CallableStatement cstmt = null;
@@ -190,5 +197,50 @@ public class InputLoadDAO {
             pasarGarbageCollector();
         }
         return response;
+    }
+    
+    //obtiene lista de resultsets en forma de Map
+    @Transactional
+    public List<List<Map<String,Object>>> getResultElavon() throws Exception{
+        final String sql = "{CALL LIBSAP51.MULTFILES()}";
+        Connection cnx = null;
+        CallableStatement cstmt = null;
+        //lista de resultset (cada resut set se guarda en un listado de Map)
+        List<List<Map<String, Object>>> list = new ArrayList<>();
+        try{
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(sql);
+            boolean resultsAvailable = cstmt.execute();
+            while (resultsAvailable) {
+                ResultSet resultSet = cstmt.getResultSet();
+                List<Map<String, Object>> subList = new ArrayList<>();
+                while (resultSet.next()) {
+                    ResultSetMetaData meta = resultSet.getMetaData();
+                    int colcount = meta.getColumnCount();
+                    Map<String, Object> map = new HashMap<>();
+                    for (int i = 1; i <= colcount; i++) {
+                        String name = meta.getColumnLabel(i);
+                        map.put(name, resultSet.getString(i));
+                    }
+                    subList.add(map);
+                }
+                list.add(subList);
+                resultsAvailable = cstmt.getMoreResults();
+            }
+        }catch(Exception ex){
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + ex.getMessage(), ex);
+            list = new ArrayList<>();
+        }finally{
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return list;
     }
 }
