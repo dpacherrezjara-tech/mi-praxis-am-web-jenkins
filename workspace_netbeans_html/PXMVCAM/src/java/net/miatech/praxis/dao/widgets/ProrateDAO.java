@@ -223,7 +223,7 @@ public class ProrateDAO {
                 beanA720.A713CIAI = rst.getString("A720CIAI").trim();
                 beanA720.A713FORMAI = rst.getString("A720FORMAI").trim();
                 beanA720.A713SERIEI = rst.getString("A720SERIEI").trim();
-                
+                beanA720.A713VALOL1 = rst.getDouble("A720VALOL1");
                 lstA720.add(beanA720);
             }
         } finally {
@@ -424,6 +424,7 @@ public class ProrateDAO {
                 beanA713.A713CIAI = rst.getString("A713CIAI").trim();
                 beanA713.A713FORMAI = rst.getString("A713FORMAI").trim();
                 beanA713.A713SERIEI = rst.getString("A713SERIEI").trim();
+                beanA713.A713VALOL1 = rst.getDouble("A713VALOL1");
                 
                 lstA713.add(beanA713);
             }
