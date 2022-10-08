@@ -1848,6 +1848,11 @@ Ext.define('Ext.Praxis.view.widgets.prorrate', {
                                                 return Ext.util.Format.number(value, '0,000.00');
                                             }
                                         },
+                                        {text: '<span style="font-size: 10px;">Local Curr</span>', dataIndex: 'A713VALOL1', width: 80,
+                                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                        },
                                         {text: '<span style="font-size: 10px;">YQ</span>', dataIndex: 'A713YQ1', width: 50,
                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                 return Ext.util.Format.number(value, '0,000.00');
