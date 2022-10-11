@@ -4350,7 +4350,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTktByStval',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1250,
+                                                    width: 1340,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -4408,6 +4408,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                     var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
                                                                     metaData.style = "text-align:center;color:" + color + ";";
                                                                     metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Status', dataIndex: 'STVAL', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
                                                                     return value;
                                                                 }
                                                             },
