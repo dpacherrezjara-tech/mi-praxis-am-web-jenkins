@@ -88,7 +88,12 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
         obj.setValue(this.fecha.getFullYear());
     },
     afterRenderMonth: function(obj) {
-        obj.setValue('0' + (this.fecha.getMonth() + 1));
+        var month = this.fecha.getMonth() + 1;
+        if (month < 9) {
+            obj.setValue('0' + month);
+        } else {
+            obj.setValue((month));
+        }
     },
     selectComboFromDay: function(obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
