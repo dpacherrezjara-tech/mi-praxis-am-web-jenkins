@@ -171,8 +171,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 data: [
                                     [null, "&nbsp;"],
                                     ["1", "Match"],
-                                    ["2", "Sales without Settlement"],
-                                    ["3", "Settlement without Sales"],
+                                    ["2", "Sales without Reconciliation"],
+                                    ["3", "Reconciliation without Sales"],
                                     ["4", "Match with Differences"],
                                     ["5", "Match Manual"]
                                 ]
@@ -1059,10 +1059,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                             value = 'Match';
                                                         }
                                                         if (record.data.STVAL === '2') {
-                                                            value = 'Sales without Settlement';
+                                                            value = 'Sales without Reconciliation';
                                                         }
                                                         if (record.data.STVAL === '3') {
-                                                            value = 'Settlement without Sales';
+                                                            value = 'Reconciliation without Sales';
                                                         }
                                                         if (record.data.STVAL === '4') {
                                                             value = 'Match with Differences';
@@ -1079,7 +1079,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                             value = 'Refund without Reconciliation';
                                                         }
                                                         if (record.data.STVAL === '3') {
-                                                            value = 'Settlement without Sales';
+                                                            value = 'Reconciliation without Sales';
                                                         }
                                                         if (record.data.STVAL === '4') {
                                                             value = 'Match with Differences';
