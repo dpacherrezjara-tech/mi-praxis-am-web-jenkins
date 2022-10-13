@@ -639,15 +639,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     helpByticket: function () {
         this.setValue('de-txtSumAmount', Ext.util.Format.number('0', '0,000.00'));
         this.lstSendManual = [];
-
         var tkt = this.getValue("input-txtTKTScan");
         var beanGrid = {};
         beanGrid.TKT = tkt;
-
         var beanStringGrid = JSON.stringify(beanGrid);
-
         var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
-
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
             method: 'POST',
@@ -725,10 +721,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var approval = this.getValue("txtApproval");
         var sales_date = (this.getValue("txtFromDate") === null) ? fecha_a_validar : Ext.util.Format.date(this.getValue("txtFromDate"), 'Ymd');
         var tkt = this.getValue("input-txtTKTScan");
-
         var beanGrid = {};
-
-        beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
+        if(cc1.length === 0 && cc2.length ===0) {
+            beanGrid.SCARDN = '';
+        } else {
+            beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
+        }
+        
         beanGrid.SAUTHOC = approval;
         beanGrid.BSUMDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
@@ -736,7 +735,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanGrid.TDOC = this.beanResult.TDOC;
 
         var beanStringGrid = JSON.stringify(beanGrid);
-
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
             method: 'POST',
@@ -746,10 +744,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanInfo = res.lstInfo;
                 var flag_blocked = false;
+                var flag_dupli = false;
+                meDE.beanInfo = res.lstInfo;
                 console.log(meDE.beanInfo);
-
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
@@ -762,13 +760,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 meDE.lstBlocked.push(res.lstInfo[i]);
                                 flag_blocked = true;
                             } else {
-                                meDE.lstSendManual.push(res.lstInfo[i]);
+                                for (var j = 0; j < meDE.lstSendManual.length; j++) {
+                                    if(meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT){
+                                        flag_dupli = true;
+                                    }
+                                }
+                                if (!flag_dupli) {
+                                    meDE.lstSendManual.push(res.lstInfo[i]);
+                                }
                             }
-                        }
-
+                        }                        
+                        console.log(flag_blocked);
                         if (flag_blocked) {
                             global.Msg({msg: 'There are some blocked tickets'});
                         }
+                        if (flag_dupli) {
+                            global.Msg({msg: 'There are some duplicate tickets'});
+                        }                        
                     }
                 } else {
                     global.Msg({msg: 'Not Found in Refund'});
