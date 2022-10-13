@@ -406,7 +406,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Sett. vs Sales',
+                                    text: 'Sett. vs Refund',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -986,7 +986,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Date',
+                                    text: 'Refund Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
