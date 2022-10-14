@@ -583,7 +583,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     enforceMaxLength: true,
-                                    maskRe: /[A-Z]/,
+                                    maskRe: /[0-9a-zA-Z]/,
                                     maxLength: 6,
                                     width: 100,
                                 },
