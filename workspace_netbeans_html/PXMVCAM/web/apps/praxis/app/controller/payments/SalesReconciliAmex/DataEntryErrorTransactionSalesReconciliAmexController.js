@@ -252,6 +252,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
+        beanTemp.OBSERV = this.getValue("de-txtOBSERV");
+        
         beanTemp.lstSendManual = [];
         //console.log(this.lstSendManual.length);
         for (var i = 0; i < this.lstSendManual.length; i++) {
@@ -366,6 +368,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 meDE.beanInfo = res.data;
                 for (var i = 0; i < res.data.length; i++) {
                     meDE.lstSendManual.push(res.data[i]);
+                    if(res.data[i].TDOC == 'A' || res.data[i].TDOC == 'N'){
+                        meDE.setValue('de-txtOBSERV-RO', res.data[i].OBSERV);
+                    }
                 }
 
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(

@@ -2737,6 +2737,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+                    beanTkt.OBSERV = rst.getString("OBSERV").trim();
                     //beanTkt.QTYTKT = rst.getInt("QTYTKT");
                     beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
@@ -3954,8 +3955,7 @@ public class SalesReconciliAmexDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-                String SQLCLL03 = "{CALL " + session.getMainLibrary() + ".SQP04636()}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -3985,11 +3985,12 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(22, session.getUserView().getUserInfo().USR);
                     cstmt01.setString(23, Functions.getFechaActual());
                     cstmt01.setString(24, Functions.getHoraActual());
+                    cstmt01.setString(25, filter.OBSERV.trim());
                     if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
+                        }
                     }
                 }
-            }
 
         } catch (Exception e) {
             msj = e.getMessage();
