@@ -3919,6 +3919,7 @@ public class SalesReconciliAmexDAO {
         //lstSendManual
         List<A4116Filter> lstSendManual = filter.lstSendManual;
         A4116Filter beanDet;
+        A4116Filter beanObser;
         String msj = "";
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -3954,6 +3955,7 @@ public class SalesReconciliAmexDAO {
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
                 String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL03 = "{CALL " + session.getMainLibrary() + ".SQP04636()}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
