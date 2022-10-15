@@ -56,6 +56,7 @@ public class A4116Filter extends A4116 {
     public String IN_SCOUNTRY_ERR = "";
     public String IN_CERROR = "";
     public String IN_TDOC = "";
+    public String IN_SCOUNTRY = "";
     public String IN_COMPLEMENT = "";
 
     public double DISCAMOUN_IMPORT = 0;
