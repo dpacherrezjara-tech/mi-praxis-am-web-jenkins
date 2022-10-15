@@ -81,12 +81,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
-                    Ext.getCmp(prototype.id + '-panelMsiTracing').show();
+                    Ext.getCmp(prototype.id + '-panelMsiTracing').show();                    
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
                     Ext.getCmp(prototype.id + '-gridColumnFill').hide();
                     Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(790);
                     Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(795);
+                    //Coupons solo si es "match"
+                    if (this.bean.STVAL === '1') {
+                        Ext.getCmp(prototype.id + '-coupons_sales').show();
+                        Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(930);
+                        Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(935);
+                    }                    
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }

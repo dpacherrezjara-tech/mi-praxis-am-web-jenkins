@@ -2391,7 +2391,7 @@ public class SalesReconciliAmexDAO {
                 totIVACOM12 = rst.getDouble("totIVACOM12");
                 totGROSAMOUN_CB = rst.getDouble("totGROSAMOUN_CB");
                 totDISCAMOUN = rst.getDouble("totDISCAMOUN");
-                totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");                
+                totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");
                 totDISCAMOSC = rst.getDouble("totDISCAMOSC");
 
                 ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
@@ -2403,7 +2403,7 @@ public class SalesReconciliAmexDAO {
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
                 DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
                 SVFOPS_TOTAL = rst.getDouble("SVFOPS_TOTAL");
-                
+
                 totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD - DISCAMOUN_CB_TOTAL;
             }
             rst.close();
@@ -2646,9 +2646,11 @@ public class SalesReconciliAmexDAO {
         double SADJUST_TOTAL = 0;
 
         CallableStatement cstmt = null;
+        CallableStatement cstmt_usos = null;
         ResultSet rst = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04377(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SPRUT01556(?)}";
 
         Connection cnx = null;
         try {
@@ -2768,6 +2770,10 @@ public class SalesReconciliAmexDAO {
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.SDATE = rst.getString("SDATE").trim();
+                    
+                    beanTkt.CCIA = rst.getString("CCIA").trim();
+                    beanTkt.FORMA = rst.getString("FORMA").trim();
+                    beanTkt.SERIE = rst.getString("SERIE").trim();
 
                     /*if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
@@ -2837,6 +2843,13 @@ public class SalesReconciliAmexDAO {
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
                     beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
                     beanTkt.SADJUST_TOTAL = SADJUST_TOTAL;
+
+                    cstmt_usos = cnx.prepareCall(SQLCLL02);
+                    cstmt_usos.registerOutParameter(1, Types.VARCHAR);
+                    cstmt_usos.setString(1, beanTkt.CCIA + beanTkt.FORMA + beanTkt.SERIE);
+                    cstmt_usos.execute();
+                    beanTkt.USOS = cstmt_usos.getString(1);
+                    cstmt_usos.close();
 
                     beanTkt.A1531TTARJ = "AX";
                     beanTkt.FDESGLOSE = "1";
