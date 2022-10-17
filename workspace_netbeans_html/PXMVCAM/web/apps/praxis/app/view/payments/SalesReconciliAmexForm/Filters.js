@@ -539,9 +539,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'checkboxfield',
+                            hidden: true,
                             id: prototype.id + '-chkWarnings',
                             width: 50,
                             boxLabel: 'Warnings',
