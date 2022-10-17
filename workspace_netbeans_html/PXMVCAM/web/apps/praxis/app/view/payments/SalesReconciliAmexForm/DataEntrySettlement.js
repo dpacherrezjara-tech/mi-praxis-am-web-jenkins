@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
     title: 'Sales Reconciliation by Amex - Settlement Form',
     header: true,
 //    height: 650,
-    width: 840,
+    //width: 985,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                     xtype: 'panel',
                     bodyStyle: 'background: transparent;"',
                     layout: 'vbox',
-                    width: 930,
+                    //width: 970,
                     defaults: {
                         anchor: '100%'
                     },
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'AX Number',
@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Merchant ID',
@@ -128,7 +128,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'ID Transaction',
@@ -144,7 +144,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Sales Merchant ID',
@@ -187,7 +187,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Inst. Number',
@@ -203,7 +203,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Flag Compl.',
@@ -245,7 +245,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Country',
@@ -261,7 +261,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 275}
+                                {xtype: 'tbspacer', width: 315}
                             ]
                         },
                         {
@@ -306,7 +306,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 40
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
@@ -323,7 +323,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     text: 'ID',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 40
                                 },
                                 {xtype: 'tbspacer', width: 5},
                                 {
@@ -332,7 +332,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     readOnly: true,
-                                    width: 100,
+                                    width: 340,
                                 },
                                 {xtype: 'tbspacer', width: 5}
                             ]
@@ -370,7 +370,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Description',
@@ -386,7 +386,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 200
                                 },
-                                {xtype: 'tbspacer', width: 175}
+                                {xtype: 'tbspacer', width: 215}
                             ]
                         },
                         {
@@ -413,7 +413,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Description',
@@ -429,7 +429,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 200
                                 },
-                                {xtype: 'tbspacer', width: 175}
+                                {xtype: 'tbspacer', width: 215}
                             ]
                         },
                         {
@@ -455,7 +455,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -471,7 +471,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 200
                                 },
-                                {xtype: 'tbspacer', width: 175}
+                                {xtype: 'tbspacer', width: 215}
                             ]
                         },
                         {
@@ -511,7 +511,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     fieldStyle: 'text-align:center;',
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Payment Date',
@@ -527,7 +527,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Diff. Days',
@@ -569,7 +569,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'TICKET',
@@ -586,7 +586,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     width: 100,
                                     readOnly: true
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'PNR',
@@ -630,7 +630,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Approval Code',
@@ -646,7 +646,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 275},
+                                {xtype: 'tbspacer', width: 315},
                             ]
                         },
                         {
@@ -682,7 +682,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Currency',
@@ -698,7 +698,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Transact. Amount',
@@ -740,7 +740,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Qty Tkts',
@@ -756,7 +756,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -899,6 +899,62 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                                     return value;
                                                 }
                                             },
+                                            {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-coupons_sales',
+                                                hidden: true,
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: '1', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[0] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[0];
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: '2', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[1] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[1];
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: '3', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[2] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[2];
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: '4', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[3] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[3];
+                                                            }
+                                                        }
+                                                    },
+                                                ]
+                                            },
                                             /*{
                                              header: '',
                                              dataIndex: '',
@@ -987,7 +1043,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Creation Date',
@@ -1004,7 +1060,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Creation Time',
@@ -1049,7 +1105,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Update Date',
@@ -1066,7 +1122,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'label',
                                     text: 'Update Time',

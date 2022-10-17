@@ -303,12 +303,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtIDCONL',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
+                                    fieldStyle: 'text-align:left;',
                                     readOnly: true,
-                                    width: 100,
+                                    width: 355,
                                 },
                                 {xtype: 'tbspacer', width: 5},
-                                {xtype: 'tbspacer', width: 255},
                             ]
                         },
                         {

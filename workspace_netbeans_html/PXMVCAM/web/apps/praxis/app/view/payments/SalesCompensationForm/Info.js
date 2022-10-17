@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1720,
+                width: 1780,
                 height: 600,
                 align: 'center'
             },
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             padding: '1',
                             border: true,
                             height: 580,
-                            width: 1720,
+                            width: 1780,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridData',
                                     height: 553,
-                                    width: 1708,
+                                    width: 1768,
                                     hidden: false,
                                     columnLines: true,
                                     features: {
@@ -183,6 +183,13 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#AFDBF3;";
                                                             return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'RFIC', dataIndex: 'RFIC', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AFDBF3;";
+                                                            return value;
                                                         }
                                                     },
                                                     {text: 'Flight',
@@ -372,12 +379,12 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                             border: false,
                                             height: 400,
                                             background: '#E0F8F7',
-                                                    captions: {
-                                                        title: {
-                                                            text: 'Total Amount per Month',
-                                                            alignTo: 'chart'
-                                                        }
-                                                    },
+                                            captions: {
+                                                title: {
+                                                    text: 'Total Amount per Month',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
                                             animation: {
                                                 duration: 200
                                             },
@@ -436,7 +443,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
 //                                                                color: '#FFFFFF',
                                                         },
                                                         renderer: function (value, b, callout) {
-                                                            callout.calloutVertical = false;                                                         
+                                                            callout.calloutVertical = false;
                                                             if (value === 100) {
                                                                 return Ext.util.Format.number(value, '0,000');
                                                             } else {
@@ -555,7 +562,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                             series: [{
                                                     type: 'pie3d',
                                                     angleField: 'TGROSAMOUN',
-                                                    colors: ['#43aaf7','#339933', '#EC3838', '#ff9900', '#0066ff', '#ffff99'],
+                                                    colors: ['#43aaf7', '#339933', '#EC3838', '#ff9900', '#0066ff', '#ffff99'],
                                                     label: {
                                                         field: 'DES_MERCHANT',
 //                                                            field: 'TYPE',
