@@ -56,6 +56,7 @@ public class A4116Filter extends A4116 {
     public String IN_SCOUNTRY_ERR = "";
     public String IN_CERROR = "";
     public String IN_TDOC = "";
+    public String IN_SCOUNTRY = "";
     public String IN_COMPLEMENT = "";
 
     public double DISCAMOUN_IMPORT = 0;
@@ -210,6 +211,7 @@ public class A4116Filter extends A4116 {
     public String A1531CAPL = "";
     public String A1531CFOP = "";
     public String A1531TTARJ = "";
+    public String USOS = "";
     public double A1531VFOP = 0.0;    
     public double tot_VFOP = 0.0;
     public double tot_VFOPB = 0.0;
@@ -225,6 +227,7 @@ public class A4116Filter extends A4116 {
     public String STCON = "";
     public String IN_AGENT = "";
     public String A1721FRCA = "";
+    public String OBSERV = "";
     public double TAXAMOUN = 0;
     public double QTY_TRANSACTIONS = 0;
     public double totQTY_TRANSACTIONS = 0;

@@ -976,6 +976,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.DATE = rowData.data.DATE;
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanSettlement.IN_SCOUNTRY = rowData.data.SCOUNTRY;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
@@ -1131,6 +1132,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
         this.beanSettlement.IN_MERCHID = rowData.data.MERCHID;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanSettlement.IN_SCOUNTRY_SETT = rowData.data.SCOUNTRY;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();

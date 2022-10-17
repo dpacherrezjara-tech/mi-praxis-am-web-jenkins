@@ -1085,6 +1085,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
+                                    plugins: [
+                                        {
+                                            ptype: 'cellediting',
+                                            clicksToEdit: 1
+                                        }
+                                    ],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1203,9 +1209,66 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-coupons_refund',
+                                                hidden: true,
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: '1', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[0] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[0];
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: '2', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[1] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[1];
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: '3', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[2] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[2];
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: '4', dataIndex: 'USOS', width: 35,                                                        
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            var cpn = value.slice(-4);
+                                                            if (cpn[3] === undefined) {
+                                                                return '';
+                                                            } else {
+                                                                return cpn[3];
+                                                            }
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
                                                 header: '',
                                                 dataIndex: '',
                                                 xtype: 'widgetcolumn',
+                                                id: prototype.id + '-gridColumnDelete',
                                                 align: 'center',
                                                 width: 40,
                                                 widget: {
@@ -1228,7 +1291,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
                                                 width: 30,
-                                                text: '',
+                                                text: '',                                                
+                                                id: prototype.id + '-gridColumnFill',
                                                 align: 'center',
                                                 items: [
                                                     {

@@ -81,12 +81,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
-                    Ext.getCmp(prototype.id + '-panelMsiTracing').show();
+                    Ext.getCmp(prototype.id + '-panelMsiTracing').show();                    
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
                     Ext.getCmp(prototype.id + '-gridColumnFill').hide();
                     Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(790);
                     Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(795);
+                    //Coupons solo si es "match"
+                    if (this.bean.STVAL === '1') {
+                        Ext.getCmp(prototype.id + '-coupons_sales').show();
+                        Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(930);
+                        Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(935);
+                    }                    
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }
@@ -246,6 +252,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
+        beanTemp.OBSERV = this.getValue("de-txtOBSERV");
+        
         beanTemp.lstSendManual = [];
         //console.log(this.lstSendManual.length);
         for (var i = 0; i < this.lstSendManual.length; i++) {
@@ -360,6 +368,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 meDE.beanInfo = res.data;
                 for (var i = 0; i < res.data.length; i++) {
                     meDE.lstSendManual.push(res.data[i]);
+                    if(res.data[i].TDOC == 'A' || res.data[i].TDOC == 'N'){
+                        meDE.setValue('de-txtOBSERV-RO', res.data[i].OBSERV);
+                    }
                 }
 
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(

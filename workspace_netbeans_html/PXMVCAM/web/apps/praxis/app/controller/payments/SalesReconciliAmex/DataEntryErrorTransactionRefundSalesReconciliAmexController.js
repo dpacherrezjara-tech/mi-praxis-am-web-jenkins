@@ -18,6 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     paramsDetailDEDetTktSettlement: {},
     sumAmount: 0,
     sumAmountBlocked: 0,
+    status_match: ['1', '5', '6', '7'],
     // </editor-fold>
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
@@ -61,6 +62,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
                     Ext.getCmp(prototype.id + '-panelScan').hide();
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
+                    Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
+                    Ext.getCmp(prototype.id + '-gridColumnFill').hide();
+                    if (this.bean.STVAL === '1') {
+                        Ext.getCmp(prototype.id + '-coupons_refund').show();
+                        Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(870);
+                        Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(875);
+                    } 
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }
