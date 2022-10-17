@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         me.bean = {};
 
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
-        me.bean.IN_FATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         me.bean.IN_FAMEX = Ext.getCmp(prototype.id + '-cmbFindByFAMEX').getValue();
         me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
