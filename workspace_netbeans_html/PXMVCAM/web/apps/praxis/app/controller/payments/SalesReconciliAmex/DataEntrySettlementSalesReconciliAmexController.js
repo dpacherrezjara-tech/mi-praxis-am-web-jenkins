@@ -43,6 +43,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
+                if (this.bean.STVAL === '1') {
+                        Ext.getCmp(prototype.id + '-coupons_sales').show();
+                        Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(935);
+                        Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(940);
+                    }
                 break;
         }
     },

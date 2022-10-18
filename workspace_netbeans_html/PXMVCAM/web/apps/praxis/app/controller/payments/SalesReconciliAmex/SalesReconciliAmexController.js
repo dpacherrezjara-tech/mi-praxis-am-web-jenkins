@@ -286,7 +286,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
-            data: [                
+            data: [
                 ["", "All"],
                 ["1", "Transact."],
                 ["2", "Chargeback"]
@@ -352,7 +352,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbZONASumm').setValue('');
-                    
+
                     me.obtenerPaisesSett();
                     me.obtenerPaisesErr();
                     me.obtenerPaisesSumm();
@@ -556,8 +556,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         });
     },
+    chkVoid_Click: function () {
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.bean.IN_VOID = "V";
+            console.log('V');
+        } else {
+            this.bean.IN_VOID = "";
+            console.log('VACIO');
+        }
+        me.btnSearch_click();
+    },
     rbChangeType: function () {
-
+        var N = 1;
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
 
         this.setFormatParameter();
@@ -613,6 +623,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     this.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
                     this.bean.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
                     this.bean.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+
+                    if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+                        this.bean.IN_VOID = "V";
+                    } else {
+                        this.bean.IN_VOID = "";
+                    }
                     //this.bean.IN_TDOCError = "";
 
                     var beanString = JSON.stringify(this.bean);
@@ -622,6 +638,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     };
                     this.setGridDataMainErrorTransaction();
                 } else {
+                    if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+                        this.bean.IN_VOID = "V";
+                    } else {
+                        this.bean.IN_VOID = "";
+                    }
+                    var beanString = JSON.stringify(this.bean);
+                    searchParamsMainSettlement = {
+                        beanString: beanString,
+                        bean: this.bean
+                    };
                     this.setGridDataSummaryTransactionError();
                 }
                 break;
@@ -764,6 +790,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -777,6 +808,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -789,6 +825,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -801,6 +842,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -813,6 +859,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -825,6 +876,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -837,6 +893,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -849,6 +910,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -861,6 +927,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -873,6 +944,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -885,6 +961,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
+            this.beanSettlement.IN_VOID = "V";
+        } else {
+            this.beanSettlement.IN_VOID = "";
+        }
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -1482,7 +1563,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
                         var data = obj.data.items[0].data;
-                        console.log(data);                        
+                        console.log(data);
                     }
                 }
             }
@@ -2336,7 +2417,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         });
     },
-    onMsiTracking: function(a, b, c, d, e, rowData) {
+    onMsiTracking: function (a, b, c, d, e, rowData) {
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking', {
             id: prototype.id + '-msiTrackingGrid',
             params: {
@@ -2464,7 +2545,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case  '-boxDetailTktSettlement':
                 global.getFile(prototype.url + '/getXLSXDetailTktSettlement?beanString=' + me.paramsDetailDetTktSettlement.beanString);
-                break;    
+                break;
             case  '-boxMainAdjustment':
                 global.getFile(prototype.url + '/getXLSXMainAdjustment?beanString=' + searchParams.beanString);
                 break;
@@ -2566,7 +2647,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setWidthPie: function () {
 
         console.log(me.panelActual);
-        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment' || me.panelActual === '-boxDetailTktSettlement' || me.panelActual === '-panelGridData' || me.panelActual === '-boxDetSubmission' || me.panelActual === '-boxMainSummary' || me.panelActual === '-boxSummaryTransactionError' || me.panelActual === '-boxMainChangePayment' || me.panelActual === '-boxDiffTransaction' || me.panelActual === '-boxDetTaxes' ) {
+        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment' || me.panelActual === '-boxDetailTktSettlement' || me.panelActual === '-panelGridData' || me.panelActual === '-boxDetSubmission' || me.panelActual === '-boxMainSummary' || me.panelActual === '-boxSummaryTransactionError' || me.panelActual === '-boxMainChangePayment' || me.panelActual === '-boxDiffTransaction' || me.panelActual === '-boxDetTaxes') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);

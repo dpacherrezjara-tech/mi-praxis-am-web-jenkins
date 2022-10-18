@@ -117,6 +117,7 @@ public class SalesCompensationDAO {
                     bean.CERROR = rst.getString("CERROR").trim();
                     bean.desCERROR = "Compensation";
                     bean.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+                    bean.RFIC = rst.getString("RFIC").trim();
                     
                     bean.A720AGENTE = rst.getString("A720AGENTE").trim();
                     bean.A720FRESV = rst.getString("A720FRESV").trim();

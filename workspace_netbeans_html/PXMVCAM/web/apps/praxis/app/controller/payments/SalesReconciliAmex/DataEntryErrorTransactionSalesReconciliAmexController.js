@@ -178,6 +178,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
         this.setValue('de-txtTDOC', this.beanResult.descTDOC);
+        this.setValue('de-txtVOID', this.beanResult.descVOID);
         this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));

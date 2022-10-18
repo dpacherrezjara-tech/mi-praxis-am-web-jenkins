@@ -343,12 +343,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtIDCONL',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
+                                    fieldStyle: 'text-align:left;',
                                     readOnly: true,
-                                    width: 100,
+                                    width: 355,
                                 },
                                 {xtype: 'tbspacer', width: 5},
-                                {xtype: 'tbspacer', width: 255},
                             ]
                         },
                         {
@@ -768,7 +767,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 260},
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Void',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtVOID',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',

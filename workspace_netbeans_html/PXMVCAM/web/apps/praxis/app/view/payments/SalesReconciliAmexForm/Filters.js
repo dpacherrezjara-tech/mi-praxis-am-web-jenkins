@@ -539,9 +539,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'checkboxfield',
+                            hidden: true,
                             id: prototype.id + '-chkWarnings',
                             width: 50,
                             boxLabel: 'Warnings',
@@ -687,6 +688,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             listeners: {
                                 // change: 'cmbSTVAL_keyDownHandler',
                                 change: 'btnSearch_click'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'checkboxfield',
+                            hidden: false,
+                            id: prototype.id + '-chkVoid',
+                            width: 50,
+                            boxLabel: 'Void',
+                            inputValue: '0',
+                            checked: false,
+                            listeners: {
+                                change: 'chkVoid_Click'
                             }
                         },
                         {
