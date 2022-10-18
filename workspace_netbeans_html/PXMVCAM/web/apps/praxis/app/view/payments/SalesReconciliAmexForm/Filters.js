@@ -690,7 +690,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'btnSearch_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'checkboxfield',
                             hidden: false,
@@ -698,6 +697,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             width: 50,
                             boxLabel: 'Void',
                             inputValue: '0',
+                            padding: '5px 0px 0px 20px',
                             checked: false,
                             listeners: {
                                 change: 'chkVoid_Click'
