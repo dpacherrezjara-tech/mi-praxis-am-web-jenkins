@@ -105,6 +105,7 @@ public class A4116 {
     public String STVAL = "";
     public String descSTVAL = "";
     public String descTDOC = "";
+    public String descVOID = "";
     public String descFREGLA = "";
     public String descFCOMPL = "";
     public String descSTCONL = "";

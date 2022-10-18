@@ -228,6 +228,7 @@ public class A4116Filter extends A4116 {
     public String IN_AGENT = "";
     public String A1721FRCA = "";
     public String RFIC = "";
+    public String IN_VOID = "";
     public String OBSERV = "";
     public double TAXAMOUN = 0;
     public double QTY_TRANSACTIONS = 0;
@@ -236,5 +237,5 @@ public class A4116Filter extends A4116 {
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
-    
+
 }

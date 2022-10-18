@@ -5417,7 +5417,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             }, 
                                             {
-                                                text: 'Zone', dataIndex: 'ZONA', width: 60,
+                                                text: 'Zone', dataIndex: 'ZONA', width: 50,
                                             },
                                             {
                                                 text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
@@ -5464,6 +5464,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
+                                            {text: 'Void', dataIndex: 'descVOID', width: 40,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'Transaction',
                                                 defaults: {
@@ -5478,7 +5484,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Description', dataIndex: 'DES_SMERCHANT', width: 90,
+                                                    {text: 'Description', dataIndex: 'DES_SMERCHANT', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#FCF6DC";
                                                             return value;
@@ -5505,7 +5511,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'PNR', dataIndex: 'SPNR', width: 65,
+                                                    {text: 'PNR', dataIndex: 'SPNR', width: 60,
                                                         listeners: {
                                                             click: 'onViewPNRbySPNR'
                                                         },
@@ -5856,7 +5862,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 columns: [
                                                     {text: 'Code', dataIndex: 'CERROR', width: 45},
                                                     {
-                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 210,
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 200,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left";
                                                             return value;
