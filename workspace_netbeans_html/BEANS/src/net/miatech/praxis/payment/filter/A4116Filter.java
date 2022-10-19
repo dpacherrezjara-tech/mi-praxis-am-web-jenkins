@@ -123,6 +123,8 @@ public class A4116Filter extends A4116 {
     public String DES_CERROR = "";
     public String DES_CERROIN = "";
     public String CERROIN = "";
+    public String DES_CODADJU = "";
+    public String CODADJU = "";
     public String IN_CERROIN = "";
     public String desCERROIN = "";
     public String IN_SPNR = "";
