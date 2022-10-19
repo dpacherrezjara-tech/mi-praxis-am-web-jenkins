@@ -810,9 +810,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7, height: 24},
-                                {xtype: 'tbspacer', width: 120},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reverse',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
                                 {xtype: 'tbspacer', width: 10},
-                                {xtype: 'tbspacer', width: 100},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFREVERSA',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
                                 {xtype: 'tbspacer', width: 30},
                                 {xtype: 'tbspacer', width: 120},
                                 {xtype: 'tbspacer', width: 10},
@@ -1125,6 +1137,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     }
 
                                 },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reverse Match',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-image-log',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'Reverse match',
+                                    listeners: {
+                                        click: 'reverseMatch_keyDownHandler'
+                                    }
+                                },                                
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',

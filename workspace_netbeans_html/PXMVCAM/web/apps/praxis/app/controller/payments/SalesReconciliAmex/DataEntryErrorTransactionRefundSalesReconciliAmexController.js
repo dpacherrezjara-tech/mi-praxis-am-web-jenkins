@@ -64,11 +64,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
                     Ext.getCmp(prototype.id + '-gridColumnFill').hide();
-                    if (this.bean.STVAL === '1') {
-                        Ext.getCmp(prototype.id + '-coupons_refund').show();
-                        Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(870);
-                        Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(875);
-                    } 
+                    Ext.getCmp(prototype.id + '-coupons_refund').show();
+                    Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(870);
+                    Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(875);
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }
@@ -132,7 +130,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
         this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
         this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
-
+        this.setValue('de-txtFREVERSA', this.beanResult.FREVERSA);
+        
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -633,7 +632,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFromDate', '');
         this.lstSendManual = [];
         this.lstBlocked = [];
-         //Limpiar grilla Scan
+        //Limpiar grilla Scan
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
         //Limpiar grilla Bloqueados
@@ -731,12 +730,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var sales_date = (this.getValue("txtFromDate") === null) ? fecha_a_validar : Ext.util.Format.date(this.getValue("txtFromDate"), 'Ymd');
         var tkt = this.getValue("input-txtTKTScan");
         var beanGrid = {};
-        if(cc1.length === 0 && cc2.length ===0) {
+        if (cc1.length === 0 && cc2.length === 0) {
             beanGrid.SCARDN = '';
         } else {
             beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
         }
-        
+
         beanGrid.SAUTHOC = approval;
         beanGrid.BSUMDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
@@ -770,7 +769,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 flag_blocked = true;
                             } else {
                                 for (var j = 0; j < meDE.lstSendManual.length; j++) {
-                                    if(meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT){
+                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT) {
                                         flag_dupli = true;
                                     }
                                 }
@@ -778,14 +777,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                     meDE.lstSendManual.push(res.lstInfo[i]);
                                 }
                             }
-                        }                        
+                        }
                         console.log(flag_blocked);
                         if (flag_blocked) {
                             global.Msg({msg: 'There are some blocked tickets'});
                         }
                         if (flag_dupli) {
                             global.Msg({msg: 'There are some duplicate tickets'});
-                        }                        
+                        }
                     }
                 } else {
                     global.Msg({msg: 'Not Found in Refund'});

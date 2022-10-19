@@ -773,6 +773,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
+                                    text: 'Reverse',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFREVERSA',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
                                     text: 'Flag Compl.',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -786,10 +802,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 30},
-                                {xtype: 'tbspacer', width: 120},
-                                {xtype: 'tbspacer', width: 10},
-                                {xtype: 'tbspacer', width: 100},
                                 {xtype: 'tbspacer', width: 30},
                                 {xtype: 'tbspacer', width: 120},
                                 {xtype: 'tbspacer', width: 10},
