@@ -3772,6 +3772,7 @@ public class SalesReconciliAmexDAO {
                     objRtn.descTDOC = rs01.getString("TDOC").trim();
                 }
                 objRtn.descVOID = rs01.getString("VOID").trim();
+                objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
                 objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
                 objRtn.SPNR = rs01.getString("SPNR").trim();
