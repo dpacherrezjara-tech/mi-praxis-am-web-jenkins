@@ -2771,7 +2771,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.SDATE = rst.getString("SDATE").trim();
-                    
+
                     beanTkt.CCIA = rst.getString("CCIA").trim();
                     beanTkt.FORMA = rst.getString("FORMA").trim();
                     beanTkt.SERIE = rst.getString("SERIE").trim();
@@ -3990,9 +3990,62 @@ public class SalesReconciliAmexDAO {
                     cstmt01.setString(25, filter.OBSERV.trim());
                     if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
-                        }
                     }
                 }
+            }
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX570SQP04636(A4116Filter filter) throws SQLException, Exception {
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+        
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04636(?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.PRDA.trim());
+            cstmt01.setString(3, filter.PAYDATE.trim());            
+            cstmt01.setString(4, filter.BSUMDATE.trim());
+            cstmt01.setString(5, filter.IDITEMS.trim());
+            cstmt01.setString(6, filter.IDITEMT.trim());            
+            cstmt01.setString(7, filter.CERROR.trim());
+            cstmt01.setString(8, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(9, Functions.getFechaActual());
+            cstmt01.setString(10, Functions.getHoraActual());
+
+            cstmt01.execute();            
 
         } catch (Exception e) {
             msj = e.getMessage();
