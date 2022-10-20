@@ -1112,7 +1112,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             layout: 'hbox',
                             hidden: true,
                             border: false,
-                            margin: '0 2 0 100',
+                            margin: '0 2 0 2',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
@@ -1141,6 +1141,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'label',
                                     text: 'Reverse Match',
+                                    id: prototype.id + '-labelReverse',
+                                    hidden: true,
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
@@ -1152,18 +1154,40 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 25,
                                     //margin: '4 4 4 4',
                                     iconCls: 'prx-icon-image-log',
+                                    id: prototype.id + '-btnReverse',
+                                    hidden: true,
                                     //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
                                     tooltip: 'Reverse match',
                                     listeners: {
                                         click: 'reverseMatch_keyDownHandler'
                                     }
-                                },                                
-                                {xtype: 'tbspacer', width: 30},
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'Adjustment',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-CODADJU',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    maxLength: 50,
+                                    width: 200,
+                                },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Observation',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 100
+                                    margin: '4 4 4 4',
+                                    width: 80
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
@@ -1330,10 +1354,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
 
-                                                    return value;
                                                 },
-                                                editor: {xtype: 'textfield', editable: false},
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                //editor: {xtype: 'textfield', editable: false},
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
                                                 editor: {xtype: 'textfield', editable: false},
@@ -1830,10 +1857,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 120,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
 
-                                                    return value;
-                                                }
-                                            },
+                                                },
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                            },                                            
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";

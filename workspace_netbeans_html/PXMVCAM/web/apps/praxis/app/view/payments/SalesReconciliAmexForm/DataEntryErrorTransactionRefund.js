@@ -1088,6 +1088,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     }
 
                                 },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reverse Match',
+                                    id: prototype.id + '-labelReverse',
+                                    textAlign: 'center',
+                                    hidden: true,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-image-log',
+                                    hidden: true,
+                                    id: prototype.id + '-btnReverse',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'Reverse match',
+                                    listeners: {
+                                        click: 'reverseMatch_keyDownHandler'
+                                    }
+                                },
                             ]
                         },
                         {
@@ -1216,12 +1241,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
-                                                editor: {xtype: 'textfield', editable: false},
+                                                //editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
 
-                                                    return value;
-                                                }
+                                                },
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
                                                 editor: {xtype: 'textfield', editable: false},
@@ -1484,9 +1512,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-
-                                                    return value;
-                                                }
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                },
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
