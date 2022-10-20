@@ -67,6 +67,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-coupons_refund').show();
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(870);
                     Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(875);
+                    if (this.bean.STVAL === '5') {
+                        Ext.getCmp(prototype.id + '-labelReverse').show();
+                        Ext.getCmp(prototype.id + '-btnReverse').show();
+                    }
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 }
@@ -131,7 +135,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
         this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
         this.setValue('de-txtFREVERSA', this.beanResult.FREVERSA);
-        
+
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -369,29 +373,32 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onUpdateClick: function (btn) {
 //        console.log('onUpdateClick');        
         //var txtMsjInsert = this.validacionInsert();
-        var txtMsjDesglose = this.validacionDesglose();
-        var txtMsjMontos = this.validacionMontos();
-        var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
-
-        if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
-            var beanTemp = {};
-            this.llenarData(beanTemp);
-            beanTemp.option = 'U';
-            this.ValidateTicketPNR(beanTemp, btn);
+        if (this.bean.FREVERSA = 'R') {
+            global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
         } else {
-            if (txtMsjValidacionTktPNR !== '') {
-                console.log(txtMsjValidacionTktPNR);
-                global.Msg({msg: txtMsjValidacionTktPNR});
-            } else if (txtMsjDesglose !== '') {
-                console.log(txtMsjDesglose);
-                global.Msg({msg: txtMsjDesglose});
-            } else if (txtMsjMontos !== '') {
-                console.log(txtMsjMontos);
-                global.Msg({msg: txtMsjMontos});
+            var txtMsjDesglose = this.validacionDesglose();
+            var txtMsjMontos = this.validacionMontos();
+            var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
+
+            if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
+                var beanTemp = {};
+                this.llenarData(beanTemp);
+                beanTemp.option = 'U';
+                this.ValidateTicketPNR(beanTemp, btn);
+            } else {
+                if (txtMsjValidacionTktPNR !== '') {
+                    console.log(txtMsjValidacionTktPNR);
+                    global.Msg({msg: txtMsjValidacionTktPNR});
+                } else if (txtMsjDesglose !== '') {
+                    console.log(txtMsjDesglose);
+                    global.Msg({msg: txtMsjDesglose});
+                } else if (txtMsjMontos !== '') {
+                    console.log(txtMsjMontos);
+                    global.Msg({msg: txtMsjMontos});
+                }
+
             }
-
         }
-
     },
     onDeleteClick: function (btn) {
 
@@ -879,5 +886,65 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 //                lstCountry: me.lstCountry
             }
         }).show();
-    }
+    },
+    reverseMatch_keyDownHandler: function (btn) {
+        var beanTemp = {};
+        this.llenarData(beanTemp);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to reverse this transaction?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            meDE.ReverseA4116(beanTemp);
+                        }
+                    }
+                });
+    },
+    ReverseA4116: function (beanTemp) {
+        var beanString = JSON.stringify(beanTemp);
+        Ext.Ajax.request({
+            url: prototype.url + '/ReverseTransaction',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-dataEntryError').unmask();
+                    me.setGridDataMainErrorTransaction();
+                    Ext.getCmp(prototype.id + '-dataEntryError').close();
+                } else {
+                    global.Msg({msg: res.msjOption});
+                    //global.Msg({msg: 'Failed to Update Transaction'});
+                }
+
+            }
+        });
+    },
+    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {        
+        var strTkt = rowData.data.ISREFNBR;
+
+        prototypeProgram.view = 'payments-sales-reconcili-amex-form';
+        prototypeProgram.nprog = 'PX00000570';
+        prototypeProgram.title = 'Sales Reconciliation By Amex';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+
+        console.log(beanProMasterTicket);
+        Ext.getCmp(prototype.id + '-dataEntryError').close();
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
 });

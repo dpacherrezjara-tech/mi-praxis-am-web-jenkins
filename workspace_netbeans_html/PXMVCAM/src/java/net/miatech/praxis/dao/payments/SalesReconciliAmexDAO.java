@@ -3811,6 +3811,12 @@ public class SalesReconciliAmexDAO {
                 if ("".equals(objRtn.CERROIN.trim())) {
                     objRtn.DES_CERROIN = "";
                 }
+                
+                objRtn.CODADJU = rs01.getString("CODADJU");
+                objRtn.DES_CODADJU = rs01.getString("DES_CODADJU");
+                if ("".equals(objRtn.CODADJU.trim())) {
+                    objRtn.DES_CODADJU = "";
+                }
 
                 objRtn.FSELEC = rs01.getString("FSELEC");
                 if ("".equals(objRtn.FSELEC.trim())) {
