@@ -470,9 +470,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         return '';
     },
     onUpdateClick: function (btn) {
-//        console.log('onUpdateClick');
+        //console.log(this.beanResult.FREVERSA);
         //var txtMsjInsert = this.validacionInsert();
-        if (this.bean.FREVERSA = 'R') {
+        if (this.beanResult.FREVERSA === 'R') {
             global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
         } else {
             var txtMsjDesglose = this.validacionDesglose();
