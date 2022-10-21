@@ -773,7 +773,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Reverse',
+                                    text: 'Reverse Policy',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },

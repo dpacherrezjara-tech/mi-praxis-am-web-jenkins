@@ -812,7 +812,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Reverse',
+                                    text: 'ADM',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFADM',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reverse Policy',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -826,13 +842,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100
                                 },
                                 {xtype: 'tbspacer', width: 30},
-                                {xtype: 'tbspacer', width: 120},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reverse ADM',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
                                 {xtype: 'tbspacer', width: 10},
-                                {xtype: 'tbspacer', width: 100},
-                                {xtype: 'tbspacer', width: 30},
-                                {xtype: 'tbspacer', width: 120},
-                                {xtype: 'tbspacer', width: 10},
-                                {xtype: 'tbspacer', width: 100},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFREVADM',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
