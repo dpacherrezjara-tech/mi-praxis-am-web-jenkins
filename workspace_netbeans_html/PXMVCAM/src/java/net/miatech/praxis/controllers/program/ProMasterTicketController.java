@@ -482,7 +482,7 @@ public class ProMasterTicketController extends BaseController {
     }
     
     
-    @RequestMapping(value = "getXLSX")
+    @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
     
@@ -494,6 +494,7 @@ public class ProMasterTicketController extends BaseController {
             //filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             filter.IN_TFILTER = Integer.parseInt(request.getParameter("IN_TFILTER").trim());
             filter.IN_TEXT = request.getParameter("IN_TEXT").trim();            
+            filter.IN_TEXT = filter.IN_TEXT.replaceAll("_","%");
             filter.IN_IATA = request.getParameter("IN_IATA").trim();
             filter.IN_DATE_FROM = request.getParameter("IN_DATE_FROM").trim();
             filter.IN_DATE_TO = request.getParameter("IN_DATE_TO").trim();            

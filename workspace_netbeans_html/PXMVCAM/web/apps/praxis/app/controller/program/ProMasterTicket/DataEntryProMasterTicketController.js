@@ -349,7 +349,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
     //<editor-fold defaultstate="collapsed" desc="XLS">
     getXLSX: function (bean) {
         console.log('_getXLSX_');
-        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+bean.IN_TEXT+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO+'&IN_CAPL='+bean.IN_CAPL);
+        
+        var IN_TEXT_TMP = bean.IN_TEXT;
+        IN_TEXT_TMP  = IN_TEXT_TMP.replaceAll("%","_");
+        
+        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+IN_TEXT_TMP+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO+'&IN_CAPL='+bean.IN_CAPL);
         
     },
     //</editor-fold>
