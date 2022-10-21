@@ -482,18 +482,20 @@ public class ProMasterTicketController extends BaseController {
     }
     
     
-    @RequestMapping(value = "getXLSX")
+    @RequestMapping(value = "/getXLSX")
     public @ResponseBody
-    void GetXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
         SQP00697Filter filter = new SQP00697Filter();
         String strALL = "";
         Functions.msjConsola("PRAXIS",  this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ScrProrationFactorsPMP");
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             //filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
             filter.IN_TFILTER = Integer.parseInt(request.getParameter("IN_TFILTER").trim());
-            filter.IN_TEXT = request.getParameter("IN_TEXT").trim();            
+            filter.IN_TEXT = request.getParameter("IN_TEXT").trim();
+            filter.IN_TEXT = filter.IN_TEXT.replaceAll("_","%");
             filter.IN_IATA = request.getParameter("IN_IATA").trim();
             filter.IN_DATE_FROM = request.getParameter("IN_DATE_FROM").trim();
             filter.IN_DATE_TO = request.getParameter("IN_DATE_TO").trim();            
