@@ -492,6 +492,7 @@ public class ProMasterTicketController extends BaseController {
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             //filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
             filter.IN_TFILTER = Integer.parseInt(request.getParameter("IN_TFILTER").trim());
             filter.IN_TEXT = request.getParameter("IN_TEXT").trim();            
             filter.IN_TEXT = filter.IN_TEXT.replaceAll("_","%");
