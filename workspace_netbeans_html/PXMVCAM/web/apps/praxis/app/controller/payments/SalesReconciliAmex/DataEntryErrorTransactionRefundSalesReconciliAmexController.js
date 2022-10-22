@@ -134,7 +134,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
         this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
         this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
-        this.setValue('de-txtFREVERSA', this.beanResult.FREVERSA);
+        this.setValue('de-txtFREVERSA', this.beanResult.descFREVERSA);
+//        this.setValue('de-txtFADM', this.beanResult.FADM);
+//        this.setValue('de-txtFREVADM', this.beanResult.FREVADM);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -373,7 +375,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onUpdateClick: function (btn) {
 //        console.log('onUpdateClick');        
         //var txtMsjInsert = this.validacionInsert();
-        if (this.beanResult.FREVERSA === 'R') {
+        if (this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1' ) {
             global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
         } else {
             var txtMsjDesglose = this.validacionDesglose();

@@ -3773,6 +3773,21 @@ public class SalesReconciliAmexDAO {
                 }
                 objRtn.descVOID = rs01.getString("VOID").trim();
                 objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
+                if(rs01.getString("FREVERSA").equals("0")){
+                    objRtn.descFREVERSA = "Processed Reverse";
+                }else if(rs01.getString("FREVERSA").equals("1")){
+                    objRtn.descFREVERSA = "Pending reverse";
+                }
+                objRtn.FREVADM = rs01.getString("FREVADM").trim();
+                if(rs01.getString("FREVADM").equals("0")){
+                    objRtn.descFREVADM = "Processed Reverse";
+                }else if(rs01.getString("FREVADM").equals("1")){
+                    objRtn.descFREVADM = "Pending reverse";
+                }
+                objRtn.FADM = rs01.getString("FADM").trim();
+                if(rs01.getString("FADM").equals("1")){
+                    objRtn.descFADM = "ADM generado";
+                }
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
                 objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
                 objRtn.SPNR = rs01.getString("SPNR").trim();

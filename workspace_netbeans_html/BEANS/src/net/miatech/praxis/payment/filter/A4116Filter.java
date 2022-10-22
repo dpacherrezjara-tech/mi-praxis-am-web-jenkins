@@ -232,6 +232,11 @@ public class A4116Filter extends A4116 {
     public String RFIC = "";
     public String IN_VOID = "";
     public String FREVERSA = "";
+    public String descFREVERSA = "";
+    public String FREVADM = "";
+    public String descFREVADM = "";
+    public String FADM = "";
+    public String descFADM = "";
     public String OBSERV = "";
     public double TAXAMOUN = 0;
     public double QTY_TRANSACTIONS = 0;
