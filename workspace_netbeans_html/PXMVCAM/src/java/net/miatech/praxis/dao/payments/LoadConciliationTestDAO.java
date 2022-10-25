@@ -564,7 +564,8 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.strPEM = "SALES";
                         }
-
+                        beanTkt.RFIC = rst.getString("RFIC").trim();
+                        
                         if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
                             beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
                         } else {
@@ -1208,6 +1209,7 @@ public class LoadConciliationTestDAO {
                         if (beanTkt.SFLOAD.trim().equals("M")) {
                             beanTkt.SFLOAD = "Manual";
                         }
+                        beanTkt.RFIC = rst.getString("RFIC").trim();
                         beanTkt.MERCHN = rst.getString("MERCHN").trim();
                         beanTkt.SEQNUM = rst.getString("SEQNUM").trim();
                         beanTkt.SEQCOUNT = rst.getString("SEQCOUNT").trim();
@@ -4011,7 +4013,14 @@ public class LoadConciliationTestDAO {
                 beanTkt.FNOBANK = rst.getString("FNOBANK").trim();
                 beanTkt.DATEC2 = rst.getString("DATEC2").trim();
                 beanTkt.DATEC3 = rst.getString("DATEC3").trim();
+                
+                if (rst.getString("TKVOID").trim().equals("V")) {
+                            beanTkt.strFlagStat = "Void";
 
+                        } else if (rst.getString("FLAGC").trim().equals("C")) {
+                            beanTkt.strFlagStat = "CNJ";
+                        }
+                
                 beanTkt.USCR = rst.getString("USCR").trim();
                 beanTkt.FECR = rst.getString("FECR").trim();
                 beanTkt.HOCR = rst.getString("HOCR").trim();

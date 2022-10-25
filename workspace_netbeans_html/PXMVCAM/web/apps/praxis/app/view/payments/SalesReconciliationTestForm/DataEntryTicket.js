@@ -309,6 +309,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     maxLength: 6,
                                     readOnly: true,
                                     width: 50
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Flag Void',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 40',
+                                    padding: '4 0',
+                                    width: 90,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtFLVOID',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 6,
+                                    readOnly: true,
+                                    width: 50
                                 }
                             ]
                         },
