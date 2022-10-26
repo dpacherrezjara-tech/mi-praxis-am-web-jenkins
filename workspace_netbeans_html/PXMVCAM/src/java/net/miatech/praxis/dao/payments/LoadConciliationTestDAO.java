@@ -189,6 +189,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -457,6 +459,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -564,7 +568,8 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.strPEM = "SALES";
                         }
-
+                        beanTkt.RFIC = rst.getString("RFIC").trim();
+                        
                         if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
                             beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
                         } else {
@@ -704,7 +709,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -844,7 +849,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -989,7 +994,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -1023,6 +1028,8 @@ public class LoadConciliationTestDAO {
             hmResultado.put("TKT", lstTkts);
             hmResultado.put("ERROR", lstError);
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -1208,6 +1215,7 @@ public class LoadConciliationTestDAO {
                         if (beanTkt.SFLOAD.trim().equals("M")) {
                             beanTkt.SFLOAD = "Manual";
                         }
+                        beanTkt.RFIC = rst.getString("RFIC").trim();
                         beanTkt.MERCHN = rst.getString("MERCHN").trim();
                         beanTkt.SEQNUM = rst.getString("SEQNUM").trim();
                         beanTkt.SEQCOUNT = rst.getString("SEQCOUNT").trim();
@@ -1254,7 +1262,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard /* + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** " */ ;
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -1376,7 +1384,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -1503,7 +1511,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -1776,7 +1784,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -1910,7 +1918,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -2049,7 +2057,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -2083,6 +2091,8 @@ public class LoadConciliationTestDAO {
             hmResultado.put("TKT", lstTkts);
             hmResultado.put("ERROR", lstError);
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -2254,6 +2264,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -2463,6 +2475,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -2627,6 +2641,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -2832,6 +2848,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -2861,7 +2879,7 @@ public class LoadConciliationTestDAO {
         //String strSCARF = "";
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
-        long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0;
+        long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0, lngTotQVOID = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -2915,6 +2933,7 @@ public class LoadConciliationTestDAO {
                 lngTotQACCB = rst.getLong("QACCB");
                 lngTotQDIFF = rst.getLong("QDIFF");
                 lngTotQMANUAL = rst.getLong("QMANUAL");
+                lngTotQVOID = rst.getLong("QVOID");
                 lngTotQACEP = rst.getLong("QACEP");
                 lngTotQRECH = rst.getLong("QRECH");
                 lngTotQSOSP = rst.getLong("QSOSP");
@@ -2956,6 +2975,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQACCB = rst.getLong("QACCB");
                     beanTkt.lngQDIFF = rst.getLong("QDIFF");
                     beanTkt.lngQMANUAL = rst.getLong("QMANUAL");
+                    beanTkt.lngQVOID = rst.getLong("QVOID");
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QSALES")
                             + rst.getLong("QACCB") + rst.getLong("QDIFF") + rst.getLong("QMANUAL");
 
@@ -2976,6 +2996,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
+                    beanTkt.lngTotQVOID = lngTotQVOID;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQACCB + lngTotQDIFF + lngTotQMANUAL;
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
@@ -2997,6 +3018,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -3047,17 +3070,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
+            cstmt.registerOutParameter(22, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -3076,19 +3099,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(15, filter.IN_ADYEN.trim());
             cstmt.setString(16, filter.IN_FCOMPL.trim());
             cstmt.setString(17, filter.IN_CURRENCY.trim());
+            cstmt.setString(18, filter.IN_FVOID.trim());
 
-            cstmt.setInt(18, filter.page.PAGNUM);
-            cstmt.setInt(19, filter.page.PAGROW);
-            cstmt.setInt(20, filter.page.TOTPAG);
-            cstmt.setInt(21, filter.page.TOTROW);
+            cstmt.setInt(19, filter.page.PAGNUM);
+            cstmt.setInt(20, filter.page.PAGROW);
+            cstmt.setInt(21, filter.page.TOTPAG);
+            cstmt.setInt(22, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(18);
-            filter.page.PAGROW = cstmt.getInt(19);
-            filter.page.TOTPAG = cstmt.getInt(20);
-            filter.page.TOTROW = cstmt.getInt(21);
+            filter.page.PAGNUM = cstmt.getInt(19);
+            filter.page.PAGROW = cstmt.getInt(20);
+            filter.page.TOTPAG = cstmt.getInt(21);
+            filter.page.TOTROW = cstmt.getInt(22);
 
             while (rst.next()) {
                 dblTotSVFOP = rst.getDouble("SVFOP");
@@ -3289,7 +3313,7 @@ public class LoadConciliationTestDAO {
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + beanTkt.strDescCountry + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard;
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -3448,7 +3472,7 @@ public class LoadConciliationTestDAO {
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + beanTkt.strDescCountry + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard;
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -3606,7 +3630,7 @@ public class LoadConciliationTestDAO {
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + beanTkt.strDescCountry + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard;
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -3624,6 +3648,8 @@ public class LoadConciliationTestDAO {
 
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -3729,6 +3755,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -3835,6 +3863,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -4011,7 +4041,14 @@ public class LoadConciliationTestDAO {
                 beanTkt.FNOBANK = rst.getString("FNOBANK").trim();
                 beanTkt.DATEC2 = rst.getString("DATEC2").trim();
                 beanTkt.DATEC3 = rst.getString("DATEC3").trim();
+                
+                if (rst.getString("FVOID").trim().equals("V")) {
+                            beanTkt.strFlagStat = "Void";
 
+                        } else if (rst.getString("FLAGC").trim().equals("C")) {
+                            beanTkt.strFlagStat = "CNJ";
+                        }
+                
                 beanTkt.USCR = rst.getString("USCR").trim();
                 beanTkt.FECR = rst.getString("FECR").trim();
                 beanTkt.HOCR = rst.getString("HOCR").trim();
@@ -4022,6 +4059,8 @@ public class LoadConciliationTestDAO {
             }
             rst.close();
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -4296,6 +4335,8 @@ public class LoadConciliationTestDAO {
             }
             rst.close();
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -4456,6 +4497,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -4553,6 +4596,8 @@ public class LoadConciliationTestDAO {
             }
             rst.close();
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -4719,6 +4764,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -4880,6 +4927,8 @@ public class LoadConciliationTestDAO {
                 rst.close();
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {
@@ -5285,7 +5334,7 @@ public class LoadConciliationTestDAO {
                         } catch (Exception e) {
                         }
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -5444,7 +5493,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -5601,7 +5650,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
 
-                        if (rst.getString("TKVOID").trim().equals("V")) {
+                        if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
 
                         } else if (rst.getString("FLAGC").trim().equals("C")) {
@@ -5639,6 +5688,8 @@ public class LoadConciliationTestDAO {
             hmResultado.put("TKT", lstTkts);
             hmResultado.put("ERROR", lstError);
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rst != null) {
                 try {

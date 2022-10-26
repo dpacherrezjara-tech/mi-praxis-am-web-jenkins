@@ -44,6 +44,7 @@ public class A4164 {
     public String SPNR = "";
     public String SPNRSP = "";
     public String FCONC = "";
+    public String FVOID = "";
     //Datos del archivo ACCB
     public String AFTE = "";
     public String ADATEL = "";

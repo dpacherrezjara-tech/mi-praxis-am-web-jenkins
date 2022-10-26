@@ -98,6 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue("2-txtSAUTHOC", this.bean.SAUTHOC.trim());
         win.setValue("2-txtSPNR", this.bean.SPNR.trim());
         win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());
+        win.setValue("2-txtFLVOID", this.bean.strFlagStat.trim());
         //SALES ===================================
         win.setValue('2-txtACOUNTRY', this.bean.ACOUNTRY.trim());
         win.setValue("2-txtAAGENT", this.bean.AAGENT.trim());
