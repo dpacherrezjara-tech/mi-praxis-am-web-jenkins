@@ -2880,6 +2880,7 @@ public class LoadConciliationTestDAO {
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
         long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0, lngTotQVOID = 0;
+        long lngTotQVOIDMATCH = 0, lngTotQVOIDMANUAL = 0, lngTotQVOIDSALES = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -2932,14 +2933,18 @@ public class LoadConciliationTestDAO {
                 lngTotQSALES = rst.getLong("QSALES");
                 lngTotQACCB = rst.getLong("QACCB");
                 lngTotQDIFF = rst.getLong("QDIFF");
-                lngTotQMANUAL = rst.getLong("QMANUAL");
-                lngTotQVOID = rst.getLong("QVOID");
+                lngTotQMANUAL = rst.getLong("QMANUAL");                
                 lngTotQACEP = rst.getLong("QACEP");
                 lngTotQRECH = rst.getLong("QRECH");
                 lngTotQSOSP = rst.getLong("QSOSP");
                 lngTotQPAID = rst.getLong("QPAID");
                 lngTotQWSET = rst.getLong("QWSET");
                 lngTotQTHTEF = rst.getLong("QTHTEF");
+                //VOID
+                lngTotQVOID = rst.getLong("QVOID");
+                lngTotQVOIDMATCH = rst.getLong("QVOIDMATCH");
+                lngTotQVOIDMANUAL = rst.getLong("QVOIDMANUAL"); 
+                lngTotQVOIDSALES = rst.getLong("QVOIDSALES");
             }
             rst.close();
 
@@ -2974,8 +2979,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQSALES = rst.getLong("QSALES");
                     beanTkt.lngQACCB = rst.getLong("QACCB");
                     beanTkt.lngQDIFF = rst.getLong("QDIFF");
-                    beanTkt.lngQMANUAL = rst.getLong("QMANUAL");
-                    beanTkt.lngQVOID = rst.getLong("QVOID");
+                    beanTkt.lngQMANUAL = rst.getLong("QMANUAL");                    
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QSALES")
                             + rst.getLong("QACCB") + rst.getLong("QDIFF") + rst.getLong("QMANUAL");
 
@@ -2983,6 +2987,12 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQRECH = rst.getLong("QRECH");
                     beanTkt.lngQSOSP = rst.getLong("QSOSP");
                     beanTkt.lngQTHTEF = rst.getLong("QTHTEF");
+                    
+                    //VOID
+                    beanTkt.lngQVOID = rst.getLong("QVOID");
+                    beanTkt.lngQVOIDMATCH = rst.getLong("QVOIDMATCH");
+                    beanTkt.lngQVOIDMANUAL = rst.getLong("QVOIDMANUAL");
+                    beanTkt.lngQVOIDSALES = rst.getLong("QVOIDSALES");                                        
                     //Sin Settlement
                     /*beanTkt.lngQTOTWS = beanTkt.lngQTOTSAL - (rst.getLong("QACEP")
                      + rst.getLong("QRECH") + rst.getLong("QSOSP"));*/
@@ -2995,13 +3005,17 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQSALES = lngTotQSALES;
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
-                    beanTkt.lngTotQMANUAL = lngTotQMANUAL;
-                    beanTkt.lngTotQVOID = lngTotQVOID;
+                    beanTkt.lngTotQMANUAL = lngTotQMANUAL;                    
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQACCB + lngTotQDIFF + lngTotQMANUAL;
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
                     beanTkt.lngTotQSOSP = lngTotQSOSP;
                     beanTkt.lngTotQTHTEF = lngTotQTHTEF;
+                    //VOID
+                    beanTkt.lngTotQVOID = lngTotQVOID;
+                    beanTkt.lngTotQVOIDMATCH = lngTotQVOIDMATCH;
+                    beanTkt.lngTotQVOIDMANUAL = lngTotQVOIDMANUAL;
+                    beanTkt.lngTotQVOIDSALES = lngTotQVOIDSALES;
                     //Sin Settlement
                     //beanTkt.lngTotQTOTWS = beanTkt.lngTotQTOTSAL - (lngTotQACEP + lngTotQRECH + lngTotQSOSP);
                     beanTkt.lngTotQTOTWS = lngTotQWSET;
