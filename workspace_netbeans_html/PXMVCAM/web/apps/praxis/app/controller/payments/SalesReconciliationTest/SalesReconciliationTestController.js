@@ -417,11 +417,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         console.log('searchDetDay');
         this.strSTVAL = '';
     },
-    gridDetTicket_clickHandler: function (column, e, row, column, x, rowData) {
+    gridDetTicket_clickHandler: function (param, column, e, row, column, x, rowData) {        
         var beanDet = x.record.data;
         win.selectedChild('vskMain', 'boxDetTicket');
         beanDet.IN_FCOMPL = win.getValue('cmbFCOMPL');
         beanDet.IN_CURRENCY = win.getValue('cmbCURRENCY');
+        
+        switch (param) {
+            case '':
+                beanDet.IN_STVAL = param;
+                break;
+            case '1':
+                beanDet.IN_STVAL = param;
+                break;
+            case '2':
+                beanDet.IN_STVAL = param;
+                break;
+            case '4':
+                beanDet.IN_STVAL = param;
+                break;
+            case '5':
+                beanDet.IN_STVAL = param;
+                break;
+            case 'V':
+                beanDet.IN_FVOID = param;
+                break;
+        }
+        
         me.beanDet = beanDet;
         this.searchDetTicket(beanDet);
         console.log('searchDetTicket');
@@ -1474,8 +1496,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                                 //                                win.setText('lblTotSVFOP', win.formatDblNumber(obj.dblTotSVFOP));
                             }
                         } else {
-                            Ext.getCmp(prototype.id + '-gridDetTicket').setTitle('');
-                            win.setText('lblTotSVFOP', '0');
+                            Ext.getCmp(prototype.id + '-gridDetTicket').setTitle('');                            
                             global.Msg({msg: 'Data not found'});
                         }
                     } else
