@@ -139,6 +139,9 @@ public class A4164Filter extends A4164 {
     public long lngQMATCH = 0;
     public long lngQMANUAL = 0;
     public long lngQVOID = 0;
+    public long lngQVOIDMATCH = 0;
+    public long lngQVOIDMANUAL = 0;
+    public long lngQVOIDSALES = 0;
     public long lngQSALES = 0;
     public long lngQACCB = 0;
     public long lngQDIFF = 0;
@@ -162,6 +165,9 @@ public class A4164Filter extends A4164 {
     public long lngTotQMATCH = 0;
     public long lngTotQMANUAL = 0;
     public long lngTotQVOID = 0;
+    public long lngTotQVOIDMATCH = 0;
+    public long lngTotQVOIDMANUAL = 0;
+    public long lngTotQVOIDSALES = 0;
     public long lngTotQSALES = 0;
     public long lngTotQACCB = 0;
     public long lngTotQDIFF = 0;

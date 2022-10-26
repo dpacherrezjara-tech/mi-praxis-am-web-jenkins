@@ -442,6 +442,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             case 'V':
                 beanDet.IN_FVOID = param;
                 break;
+            case 'V1':
+                beanDet.IN_FVOID = 'V';
+                beanDet.IN_STVAL = '1';
+                break;
+            case 'V5':
+                beanDet.IN_FVOID = 'V';
+                beanDet.IN_STVAL = '5';
+                break;
+            case 'V2':
+                beanDet.IN_FVOID = 'V';
+                beanDet.IN_STVAL = '2';
+                break;
         }
         
         me.beanDet = beanDet;
