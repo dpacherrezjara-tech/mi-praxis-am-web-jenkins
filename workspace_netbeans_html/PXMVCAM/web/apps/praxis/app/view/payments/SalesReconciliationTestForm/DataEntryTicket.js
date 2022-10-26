@@ -1472,8 +1472,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                 },
                 {xtype: 'tbspacer', width: 15},
                 {
+                    text: 'Update',
+                    id: prototype.id + '-2-btnUpdate',
+                    hidden: true,
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateClick'
+                    }
+                },
+                {xtype: 'tbspacer', width: 15},
+                {
                     xtype: 'button',
                     id: prototype.id + '-2-imgPrev',
+                    hidden: true,
                     icon: 'resources/img/botones/prev.png',
                     tooltip: 'View Previous Flight Manifest',
                     border: false,
@@ -1484,6 +1495,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                 {
                     xtype: 'button',
                     id: prototype.id + '-2-imgNext',
+                    hidden: true,
                     icon: 'resources/img/botones/next2.png',
                     tooltip: 'View Next Flight Manifest',
                     border: false,

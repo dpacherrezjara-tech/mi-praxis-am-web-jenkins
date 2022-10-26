@@ -161,9 +161,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbADJTYPE').setValue('');
+                    //Mostrar panel de ajuste y botón update
                     Ext.getCmp(prototype.id + '-panelAdjustment').setVisible(true);
+                    Ext.getCmp(prototype.id + '-2-btnUpdate').setVisible(true);
                 } else
                     global.Msg({msg: res.sesion});
+            }
+        });
+    },
+    onUpdateClick: function () {
+        console.log('onUpdateClick');
+    },
+    MaintenanceAdjustA4164: function (beanTemp) {
+        console.log('MaintenanceAdjustA4164');
+        var beanString = JSON.stringify(beanTemp);
+        Ext.Ajax.request({
+            url: prototype.url + '/MaintenanceAdjustA4164',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+                if (res.success) {                    
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();      
+                } else {
+                    global.Msg({msg: res.msjOption});
+                    
+                }
+
             }
         });
     },
