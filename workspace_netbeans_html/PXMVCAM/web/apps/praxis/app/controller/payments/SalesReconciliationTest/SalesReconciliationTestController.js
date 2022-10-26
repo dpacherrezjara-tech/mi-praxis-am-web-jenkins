@@ -1436,19 +1436,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                                 Ext.getCmp(prototype.id + '-gridDetDay').setTitle("Reconciliation Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry + " - Card : " + obj.SCARCOD + ' : ' + obj.strDescCard);
                                 if (obj.IN_TDOC === 'R') {
                                     win.setText('ahDetDay', 'Refund Reconciliation');
+                                    win.setText('label_8Void', 'Refund');
                                 } else {
                                     win.setText('ahDetDay', 'Sales Reconciliation');
+                                    win.setText('label_8Void', 'Sales');
                                 }
                             } else {
                                 if (obj.IN_TDOC === 'R') {
                                     Ext.getCmp(prototype.id + '-gridDetDay').setTitle("Refund Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry + " - Card : " + obj.SCARCOD + ' : ' + obj.strDescCard);
                                     win.setText('ahDetDay', 'Refund Reconciliation');
                                     win.setText('label_13', 'Refund');
+                                    win.setText('label_8Void', 'Refund');
                                     
                                 } else {
                                     Ext.getCmp(prototype.id + '-gridDetDay').setTitle("Sales Date : " + obj.strFormatDate + " - Country : " + obj.strDescCountry + " - Card : " + obj.SCARCOD + ' : ' + obj.strDescCard);
                                     win.setText('ahDetDay', 'Sales Reconciliation');
                                     win.setText('label_13', 'Sales');
+                                    win.setText('label_8Void', 'Sales');
                                 }
                             }
                         } else {
