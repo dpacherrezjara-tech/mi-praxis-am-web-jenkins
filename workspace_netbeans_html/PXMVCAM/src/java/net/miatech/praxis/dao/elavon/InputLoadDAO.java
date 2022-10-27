@@ -18,6 +18,7 @@ import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
+import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +51,7 @@ public class InputLoadDAO {
     public boolean setX3147(List<X3147temp> temp)throws SQLException,Exception{
         Connection cnx = null;
         PreparedStatement pstmt = null;
-        String SQL = "INSERT INTO PRAXIS.X3147 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO PRAXIS.X3147 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cnx.prepareStatement("TRUNCATE TABLE PRAXIS.X3147").execute();
@@ -72,6 +73,7 @@ public class InputLoadDAO {
                 pstmt.setDouble(13, line.getTRN_AMT());
                 pstmt.setDouble(14, line.getCONV_TRN_AMT());
                 pstmt.setString(15, line.getCPT_ID());
+                pstmt.setString(16, "");
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -108,6 +110,37 @@ public class InputLoadDAO {
             cstmt.execute();
             filter.setOUT_SQLCODE(cstmt.getString(3));
             filter.setOUT_MESSAGE(cstmt.getString(4));
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            return null;
+        }finally{
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
+    }
+    
+    //procesa datos de archivo temporal a tabla A4323
+    public SQP04674Filter getSQP04674Filter(SQP04674Filter filter)throws SQLException,Exception{
+        Connection cnx = null;
+        CallableStatement cstmt = null;
+        String SQL = "{CALL PRAXIS.SQP04674(?,?,?)}";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQL);
+            cstmt.setString(1,"139" );
+            cstmt.registerOutParameter(2, Types.VARCHAR);
+            cstmt.registerOutParameter(3, Types.VARCHAR);
+            cstmt.execute();
+            filter.setOUT_SQLCODE(cstmt.getString(2));
+            filter.setOUT_MESSAGE(cstmt.getString(3));
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             return null;

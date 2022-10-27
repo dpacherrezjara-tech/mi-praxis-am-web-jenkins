@@ -18,6 +18,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.elavon.ElavonExcelFile;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
+import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import net.miatech.praxis.logic.elavon.ElavonExcel;
 import net.miatech.praxis.logic.elavon.InputLoadLogic;
@@ -28,6 +29,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,11 +51,13 @@ public class InputLoadController extends BaseController{
     
     private InputLoadLogic logic;
     
+    @Transactional
     @RequestMapping(value = "/uploadExcelRecon",method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public @ResponseBody String uploadExcelRecon(ModelMap map,@RequestParam(value = "excelfile",required = true) MultipartFile excelfile,HttpServletRequest request)throws IOException{
         System.out.println("Ejecutando Proceso Elavon");
         List<X3147temp> temp = new ArrayList<>();
         SQP04650Filter filter = new SQP04650Filter();
+        SQP04674Filter filter2 = new SQP04674Filter();
         try {
             logic = new InputLoadLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
@@ -109,8 +113,14 @@ public class InputLoadController extends BaseController{
                 if (filter == null) {
                     throw new SQLException();
                 }
-                map.put("success", filter.getOUT_SQLCODE().equals("1"));
-                map.put("response",filter.getOUT_MESSAGE());
+                filter2.setIN_CCUST("139");
+                filter2 = logic.getSQP04674(filter2);
+                 if (filter2 == null) {
+                    throw new SQLException();
+                }
+                map.put("success", filter.getOUT_SQLCODE().equals("1")&&filter2.getOUT_SQLCODE().equals("1"));
+                map.put("responseHeader",filter.getOUT_MESSAGE());
+                map.put("responseData",filter2.getOUT_MESSAGE());
             }else{
                 throw new SQLException();
             }

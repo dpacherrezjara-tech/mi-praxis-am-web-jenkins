@@ -1,4 +1,6 @@
 
+/* global URL, fetch */
+
 Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.InputLoadController',
@@ -13,7 +15,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
     afterRender: function () {
         let fecha1 = new Date();
         let fecha2 = new Date();
-        fecha2.setDate(fecha1.getDate() - 30)
+        fecha2.setDate(fecha1.getDate() - 30);
         Ext.getCmp(prototype.id + '-fecha1').setValue(fecha2);
         Ext.getCmp(prototype.id + '-fecha2').setValue(fecha1);
         this.OnSearch();
@@ -87,7 +89,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         const a = Object.assign(document.createElement("a"), {
             href,
             style: "display:none",
-            download: name,
+            download: name
         });
         document.body.appendChild(a);
         a.click();
