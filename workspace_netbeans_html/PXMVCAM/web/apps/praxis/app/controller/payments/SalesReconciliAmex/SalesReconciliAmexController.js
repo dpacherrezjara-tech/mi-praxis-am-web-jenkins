@@ -618,8 +618,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     this.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
                     this.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
                     this.bean.IN_AUTHE = Ext.getCmp(prototype.id + '-txtAuthE').getValue();
-                    this.bean.IN_CERROR = "";
-                    this.bean.IN_COMPLEMENT = "";
+                    this.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
+                    this.bean.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
                     this.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
                     this.bean.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
                     this.bean.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
