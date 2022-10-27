@@ -467,7 +467,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridCopyData',
-                                                    width: 1230,
+                                                    width: 1440,
                                                     columnLines: true,
                                                     features: [{
                                                             ftype: 'summary'
@@ -796,7 +796,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                         ]
                                                                     }
                                                                 ]
-                                                            }
+                                                            },
+                                                            {
+                                                                text: 'Total Void',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Sales', dataIndex: 'lngQVSALES', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridCopyData').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVSALES, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Match', dataIndex: 'lngQVMATCH', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridCopyData').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVMATCH, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Pending', dataIndex: 'lngQVPEND', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridCopyData').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVPEND, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
                                                         ]
                                                     }
                                                 }
@@ -1570,7 +1616,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetCountryCopy',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1420,
+                                                    width: 1630,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -1916,7 +1962,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                         ]
                                                                     }
                                                                 ]
-                                                            }
+                                                            },
+                                                            {
+                                                                text: 'Total Void',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Sales', dataIndex: 'lngQVSALES', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDetCountryCopy').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVSALES, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Match', dataIndex: 'lngQVMATCH', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDetCountryCopy').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVMATCH, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Pending', dataIndex: 'lngQVPEND', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDetCountryCopy').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVPEND, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
                                                         ]
                                                     }
                                                 }
@@ -2403,7 +2495,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetCardCopy',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1420,
+                                                    width: 1630,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -2749,7 +2841,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                         ]
                                                                     }
                                                                 ]
-                                                            }
+                                                            },
+                                                            {
+                                                                text: 'Total Void',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Sales', dataIndex: 'lngQVSALES', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDetCardCopy').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVSALES, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Match', dataIndex: 'lngQVMATCH', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDetCardCopy').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVMATCH, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Pending', dataIndex: 'lngQVPEND', width: 70,
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#def7d5";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDetCardCopy').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.lngTotQVPEND, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
                                                         ]
                                                     }
                                                 }
@@ -3071,7 +3209,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                                 }
                                                                             }
                                                                         ]
-                                                                    },                                                                    
+                                                                    },
                                                                     {
                                                                         text: 'Total', dataIndex: 'lngQVOID', width: 70,
                                                                         listeners: {

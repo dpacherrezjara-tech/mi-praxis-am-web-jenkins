@@ -218,6 +218,7 @@ public class LoadConciliationTestDAO {
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
         long lngTotQSALES = 0, lngTotQMATCH = 0, lngTotQMANUAL = 0, lngTotQPEND = 0;
+        long lngTotQVSALES = 0, lngTotQVMATCH = 0, lngTotQVMANUAL = 0, lngTotQVPEND = 0;
         long lngTotQCOMPS = 0, lngTotQCOMPM = 0, lngTotQPLUSS = 0, lngTotQPLUSM = 0;
         long lngTotQTABES = 0, lngTotQTABEM = 0, lngTotQLIGEA = 0, lngTotQLIGEM = 0;
         String Fec = "";
@@ -287,6 +288,11 @@ public class LoadConciliationTestDAO {
                 lngTotQTABEM = rst.getLong("QTABEM");
                 lngTotQLIGEA = rst.getLong("QLIGEA");
                 lngTotQLIGEM = rst.getLong("QLIGEM");
+                //Void
+                lngTotQVSALES = rst.getLong("QVSALES");
+                lngTotQVMATCH = rst.getLong("QVMATCH");
+                lngTotQVMANUAL = rst.getLong("QVMANUAL");
+                lngTotQVPEND = rst.getLong("QVPEND");
             }
             rst.close();
 
@@ -331,6 +337,12 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
                     
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
+                    
+                    //Void
+                    beanTkt.lngQVSALES = rst.getLong("QVSALES");
+                    beanTkt.lngQVMATCH = rst.getLong("QVMATCH");
+                    beanTkt.lngQVMANUAL = rst.getLong("QVMANUAL");
+                    beanTkt.lngQVPEND = rst.getLong("QVPEND");
                 
                     beanTkt.lngTotQSALES = lngTotQSALES;
                     beanTkt.lngTotQMATCH = lngTotQMATCH;
@@ -349,6 +361,11 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQLIGEM = lngTotQLIGEM;
                     beanTkt.lngTotQLIGEP = beanTkt.lngTotQLIGEA - beanTkt.lngTotQLIGEM;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQMANUAL;
+                    //Void
+                    beanTkt.lngTotQVSALES = lngTotQVSALES;
+                    beanTkt.lngTotQVMATCH = lngTotQVMATCH;
+                    beanTkt.lngTotQVMANUAL = lngTotQVMANUAL;
+                    beanTkt.lngTotQVPEND = lngTotQVPEND;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -2293,6 +2310,7 @@ public class LoadConciliationTestDAO {
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
+        long lngTotQVSALES = 0, lngTotQVMATCH = 0, lngTotQVMANUAL = 0, lngTotQVPEND = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
         long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0, lngTotQPEND = 0;
         long lngTotQCOMPS = 0, lngTotQCOMPM = 0, lngTotQPLUSS = 0, lngTotQPLUSM = 0;
@@ -2364,6 +2382,11 @@ public class LoadConciliationTestDAO {
                 lngTotQTABEM = rst.getLong("QTABEM");
                 lngTotQLIGEA = rst.getLong("QLIGEA");
                 lngTotQLIGEM = rst.getLong("QLIGEM");
+                //Void
+                lngTotQVSALES = rst.getLong("QVSALES");
+                lngTotQVMATCH = rst.getLong("QVMATCH");
+                lngTotQVMANUAL = rst.getLong("QVMANUAL");
+                lngTotQVPEND = rst.getLong("QVPEND");
             }
             rst.close();
 
@@ -2423,6 +2446,12 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
+                    
+                    //Void
+                    beanTkt.lngQVSALES = rst.getLong("QVSALES");
+                    beanTkt.lngQVMATCH = rst.getLong("QVMATCH");
+                    beanTkt.lngQVMANUAL = rst.getLong("QVMANUAL");
+                    beanTkt.lngQVPEND = rst.getLong("QVPEND");
                    
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
@@ -2464,6 +2493,11 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQLIGEM = lngTotQLIGEM;
                     beanTkt.lngTotQLIGEP = beanTkt.lngTotQLIGEA - beanTkt.lngTotQLIGEM;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQMANUAL;
+                    //Void
+                    beanTkt.lngTotQVSALES = lngTotQVSALES;
+                    beanTkt.lngTotQVMATCH = lngTotQVMATCH;
+                    beanTkt.lngTotQVMANUAL = lngTotQVMANUAL;
+                    beanTkt.lngTotQVPEND = lngTotQVPEND;
                     
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -2670,6 +2704,7 @@ public class LoadConciliationTestDAO {
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
+        long lngTotQVSALES = 0, lngTotQVMATCH = 0, lngTotQVMANUAL = 0, lngTotQVPEND = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
         long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0, lngTotQPEND = 0;
         long lngTotQCOMPS = 0, lngTotQCOMPM = 0, lngTotQPLUSS = 0, lngTotQPLUSM = 0;
@@ -2742,6 +2777,11 @@ public class LoadConciliationTestDAO {
                 lngTotQTABEM = rst.getLong("QTABEM");
                 lngTotQLIGEA = rst.getLong("QLIGEA");
                 lngTotQLIGEM = rst.getLong("QLIGEM");
+                //Void
+                lngTotQVSALES = rst.getLong("QVSALES");
+                lngTotQVMATCH = rst.getLong("QVMATCH");
+                lngTotQVMANUAL = rst.getLong("QVMANUAL");
+                lngTotQVPEND = rst.getLong("QVPEND");
             }
             rst.close();
 
@@ -2777,6 +2817,12 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQACCB = rst.getLong("QACCB");
                     beanTkt.lngQDIFF = rst.getLong("QDIFF");
                     beanTkt.lngQMANUAL = rst.getLong("QMANUAL");
+                    
+                    //Void
+                    beanTkt.lngQVSALES = rst.getLong("QVSALES");
+                    beanTkt.lngQVMATCH = rst.getLong("QVMATCH");
+                    beanTkt.lngQVMANUAL = rst.getLong("QVMANUAL");
+                    beanTkt.lngQVPEND = rst.getLong("QVPEND");
 
                     beanTkt.lngQACEP = rst.getLong("QACEP");
                     beanTkt.lngQRECH = rst.getLong("QRECH");
@@ -2837,6 +2883,11 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQLIGEM = lngTotQLIGEM;
                     beanTkt.lngTotQLIGEP = beanTkt.lngTotQLIGEA - beanTkt.lngTotQLIGEM;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQMANUAL;
+                    //Void
+                    beanTkt.lngTotQVSALES = lngTotQVSALES;
+                    beanTkt.lngTotQVMATCH = lngTotQVMATCH;
+                    beanTkt.lngTotQVMANUAL = lngTotQVMANUAL;
+                    beanTkt.lngTotQVPEND = lngTotQVPEND;                    
                     
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
