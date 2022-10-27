@@ -196,6 +196,15 @@ public class A4164Filter extends A4164 {
     public String TYPE = "";
     public String IN_FECHA = "";
     public String TKTS_CONCATENADOS = "";
+    //Void
+    public long lngQVSALES = 0;
+    public long lngQVMATCH = 0;
+    public long lngQVMANUAL = 0;
+    public long lngQVPEND = 0;
+    public long lngTotQVSALES  = 0;
+    public long lngTotQVMATCH  = 0;
+    public long lngTotQVMANUAL  = 0;
+    public long lngTotQVPEND  = 0;
     //Perc
     public double dblPerc01 = 0;
     public double dblPerc02 = 0;
@@ -354,9 +363,9 @@ public class A4164Filter extends A4164 {
     public String INVSEQNO = "";
     public String SEREFNO = "";
     public String ELECREFNO = "";
-    
+
     public String SAUTHOC1 = "";
-    public String SCARCOD1 = "";        
+    public String SCARCOD1 = "";
     public String IN_PLUSGRADE = "";
     //A2240
     //A2240
@@ -451,7 +460,7 @@ public class A4164Filter extends A4164 {
     public long lngTotQPLUSP = 0;
     public long lngTotQTABEP = 0;
     public long lngTotQLIGEP = 0;
- 
+
     public String bufferToString(String ccust) {
 
         String strValue = "";
@@ -580,5 +589,4 @@ public class A4164Filter extends A4164 {
         return strValue.toUpperCase();
     }
 
-    
 }
