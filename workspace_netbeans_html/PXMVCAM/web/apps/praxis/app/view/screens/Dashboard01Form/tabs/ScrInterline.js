@@ -340,6 +340,112 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                 }
 
             ]
+        },
+        {
+            xtype: 'panel',
+            id: prototype.id + '-boxMainData_interline2',
+            width: '100%',
+            hidden: false,
+            layout: {
+                type: 'hbox',
+                align: 'center',
+                pack: 'center'
+            },
+            defaults: {
+                bodyStyle: 'background: transparent;',
+                border: false,
+                align: 'center',
+                margin: "0 15 0 0"  // (top, right, bottom, left)
+            },
+            items: [
+                {
+                    xtype: 'panel',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    padding: '5 0 0 5',
+                    hidden: false,
+                    border: true,
+                    layout: {
+                        type: 'vbox'
+                    },
+                    items: [
+                        {
+                            xtype: 'cartesian',
+                            id: prototype.id + '-ChtExchangeMB_01112',
+                            width: 1300,
+                            border: false,
+                            height: 260,
+                            background: '#D1E8FE',
+                            captions: {
+                                title: {
+                                    text: ' Billing - USD ',
+                                    alignTo: 'chart'
+                                }
+                            },
+                            animation: {
+                                duration: 200
+                            },
+                            interactions: ['itemhighlight'],
+                            legend: {
+                                docked: 'bottom',
+                                background: '#E3EAEF'
+                            },
+                            axes: [{
+                                    type: 'numeric3d',
+                                    position: 'left',
+                                    fields: ['TNETOCAR', 'TNET'],
+                                    grid: true,
+                                    title: '',
+                                    renderer: function (obj, value) {
+                                        if (value > 1) {
+                                            if ((value / 1000).toString().length > 3) {
+                                                return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                            } else {
+                                                return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                            }
+                                        } else {
+                                            return '';
+                                        }
+                                    }
+                                }, {
+                                    type: 'category3d',
+                                    position: 'bottom',
+                                    grid: true,
+                                    title: {
+                                        text: '',
+                                        translationX: -30
+                                    }
+                                }],
+                            series: [{
+                                    type: 'bar3d',
+                                    stacked: false,
+                                    title: ['Outgoing', 'Incoming'],
+                                    xField: 'strFormatDate',
+                                    yField: ['TNETOCAR', 'TNET'],
+                                    colors: ['#67BFFF', '#ffff99'],
+                                    highlight: true,
+                                    style: {
+                                        inGroupGapWidth: -7,
+                                        minGapWidth: 2,
+                                        maxBarWidth: 1000
+                                    },
+                                    tooltip: {
+                                        trackMouse: true,
+                                        height: 28,
+                                        renderer: function (toolTip, record, ctx) {
+                                            var label = '';
+                                            if (ctx.field === 'TNETOCAR') {
+                                                label = 'Outgoing Billing';
+                                            } else if (ctx.field === 'TNET') {
+                                                label = 'Incoming Billing';
+                                            }
+                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                        }
+                                    },
+                                }]
+                        }
+                    ]
+                }
+            ]
         }
         ,
         {

@@ -91,16 +91,17 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ScrInterlineControlle
                         } else {
                             global.Msg({msg: 'Data not found'});
                         }
-                    } else
+                    } else{
                         global.Msg({msg: res.sesion});
-                    global.clear();
+                    } 
                 }
             }
         });
+        global.clear();
         Ext.getCmp(prototype.id + '-gridData_interline').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataP1_interline').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataP2_interline').bindStore(storeGridDatas);
-
+        Ext.getCmp(prototype.id + '-ChtExchangeMB_01112').bindStore(storeGridDatas);
     },
 
     searchInterline: function () {
