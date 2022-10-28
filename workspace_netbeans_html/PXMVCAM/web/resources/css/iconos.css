@@ -119,8 +119,11 @@
 .prx-icon-polizas {
   background-image: url("../img/botones/16x16/img_polizas.png");
 }
-.prx-icon-panel {
-  background-image: url("../img/botones/16x16/panel.png");
+.prx-icon-cancel {
+  background-image: url("../img/botones/24x24/1337982061_001_05.gif");
+}
+.prx-icon-expanded {
+  background-image: url("../img/botones/expanded.png");
 }
 .prx-icon-image-facsimil {
   background-image: url("../img/botones/facsimil.png");
