@@ -89,19 +89,27 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 //        console.clear();
         this.setFormatParameter();
         var valueRadio = Ext.getCmp(prototype.id + '-rbChart_IA').getValue().rb;
-
+//        if(this.a === 1){
+//            valueRadio = 'rbc1_IA';
+//        }
+//        console.log('aqui2');
+//        console.log(valueRadio);
+//        
         switch (valueRadio) {
             case 'rbc1_IA':
                 this.searchInterline();
+                console.log('aqui3');
                 break;
-
+                
             case 'rbc2_IA':
                 this.searchInterlineByAir();
+                a = 0;
                 break;
 
             case 'rbc3_IA' :
 //                this.obtainDataFilter_WK();
                 this.search_WK();
+                a = 0;
                 break;
 
         }
@@ -195,6 +203,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue(Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue());
     },
     onClickSearch: function () {
+        console.log('aqui1');
         this.inicio();
     },
 

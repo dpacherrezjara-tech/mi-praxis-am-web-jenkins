@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ScrInterlineControlle
 
                             Ext.getCmp(prototype.id + '-HD_CURRENTYEAR').setText(obj.yearTo);
                             Ext.getCmp(prototype.id + '-HD_LASTYEAR').setText((parseInt(obj.yearFrom) - 1) + '');
-
+                           
                         } else {
                             global.Msg({msg: 'Data not found'});
                         }

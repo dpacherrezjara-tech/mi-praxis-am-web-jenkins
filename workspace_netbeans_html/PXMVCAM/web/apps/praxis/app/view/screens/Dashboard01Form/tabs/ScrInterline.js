@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                                             var strDescripcion2 = record.data.strDescripcion2;
                                                             var color = '';
                                                             if (strDescripcion2 === 'rojo') {
-                                                                color = '#9C0101';
+                                                                color = '#fa0505';
                                                             } else {
                                                                 color = '#020202';
                                                             }
@@ -315,7 +315,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                                             var strDescripcion2 = record.data.strDescripcion2;
                                                             var color = '';
                                                             if (strDescripcion2 === 'rojo') {
-                                                                color = '#9C0101';
+                                                                color = '#fa0505';
                                                             } else {
                                                                 color = '#020202';
                                                             }
@@ -344,7 +344,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
         {
             xtype: 'panel',
             id: prototype.id + '-boxMainData_interline2',
-            width: '100%',
+            width: 1350, //1350 para ocultar la ultima columna 
             hidden: false,
             layout: {
                 type: 'hbox',
@@ -371,13 +371,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                         {
                             xtype: 'cartesian',
                             id: prototype.id + '-ChtExchangeMB_01112',
-                            width: 1300,
+                            width: 1480,
                             border: false,
-                            height: 260,
+                            height: 280,
                             background: '#D1E8FE',
                             captions: {
                                 title: {
-                                    text: ' Billing - USD ',
+                                    text: ' Billing 2022 - USD ',
                                     alignTo: 'chart'
                                 }
                             },
@@ -392,7 +392,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                             axes: [{
                                     type: 'numeric3d',
                                     position: 'left',
-                                    fields: ['TNETOCAR', 'TNET'],
+                                    fields: ['TNETOCARGRA', 'TNETGRA'],
                                     grid: true,
                                     title: '',
                                     renderer: function (obj, value) {
@@ -419,8 +419,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                     type: 'bar3d',
                                     stacked: false,
                                     title: ['Outgoing', 'Incoming'],
-                                    xField: 'strFormatDate',
-                                    yField: ['TNETOCAR', 'TNET'],
+                                    xField: 'strFormatDateGRA',
+                                    yField: ['TNETOCARGRA', 'TNETGRA'],
                                     colors: ['#67BFFF', '#ffff99'],
                                     highlight: true,
                                     style: {
@@ -433,9 +433,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                         height: 28,
                                         renderer: function (toolTip, record, ctx) {
                                             var label = '';
-                                            if (ctx.field === 'TNETOCAR') {
+                                            if (ctx.field === 'TNETOCARGRA') {
                                                 label = 'Outgoing Billing';
-                                            } else if (ctx.field === 'TNET') {
+                                            } else if (ctx.field === 'TNETGRA') {
                                                 label = 'Incoming Billing';
                                             }
                                             toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
