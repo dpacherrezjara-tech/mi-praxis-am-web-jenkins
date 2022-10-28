@@ -4050,7 +4050,15 @@ public class Dashboard01DAO {
                     objRtn.totISCI = AMTCAR;//USD
                     objRtn.totGROSSI_LY = PAXCARL_LY;
                     objRtn.totISCI_LY = AMTCAR_LY;
-
+                    //GRAFICO
+                    if ((objRtn.TNET == 0) && (objRtn.TNETOCAR == 0)) {
+                        //nadine
+                    } else {
+                        objRtn.BDATEGRA = rs01.getString("MES");
+                        objRtn.strFormatDateGRA = Functions.getAbreviaturaMes(objRtn.BDATEGRA);
+                        objRtn.TNETGRA = rs01.getDouble("AMTFAV");
+                        objRtn.TNETOCARGRA = rs01.getDouble("AMTCAR");
+                    }
                     //Totales de Diferencias favor - a cargo
                     objRtn.totTAXI = PAXCAR - PAXFAV;//QITEMS
                     objRtn.totTAXI_LY = PAXCARL_LY - PAXFAV_LY;//QITEMS 
@@ -5553,8 +5561,8 @@ public class Dashboard01DAO {
             while (rs01.next()) {
 
                 QCPNVAL = rs01.getLong("QCPNVAL");
-                BASICM = rs01.getLong("BASICM");
-                TBASICM = rs01.getDouble("TBASICM");
+                //BASICM = rs01.getLong("BASICM");
+                //TBASICM = rs01.getDouble("TBASICM");
                 VCPN = rs01.getDouble("VCPN");
             }
             rs01.close();
@@ -5579,17 +5587,17 @@ public class Dashboard01DAO {
                     objRtn.NPLANE = rs01.getString("NPLANE").trim();
                     objRtn.CLAS = rs01.getString("CLAS").trim();
                     objRtn.CABI = rs01.getString("CABI").trim();
-                    objRtn.TPAX = rs01.getString("TPAX").trim();
-                    if (hmDescTPAX.containsKey(objRtn.TPAX)) {
-                        objRtn.strDescTPAX = hmDescTPAX.get(objRtn.TPAX).toString();
-                    } else {
-                        objRtn.strDescTPAX = objRtn.TPAX;
-                    }
-                    
+                    //objRtn.TPAX = rs01.getString("TPAX").trim();
+//                    if (hmDescTPAX.containsKey(objRtn.TPAX)) {
+//                        objRtn.strDescTPAX = hmDescTPAX.get(objRtn.TPAX).toString();
+//                    } else {
+//                        objRtn.strDescTPAX = objRtn.TPAX;
+//                    }
+
                     //Total
                     objRtn.VCPN = rs01.getDouble("VCPN");
-                    objRtn.TBASICM = rs01.getDouble("TBASICM");
-                    objRtn.BASICM = rs01.getLong("BASICM");
+                    //objRtn.TBASICM = rs01.getDouble("TBASICM");
+                    //objRtn.BASICM = rs01.getLong("BASICM");
                     objRtn.QCPNVAL = rs01.getLong("QCPNVAL");
 
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
