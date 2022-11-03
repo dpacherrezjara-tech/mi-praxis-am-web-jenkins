@@ -1,19 +1,21 @@
 
+/* global URL, fetch */
+
 Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.InputLoadController',
     page_current: 0,
     me: '',
-    setContext: function() {
+    setContext: function () {
         me = this;
     },
-    init: function(view) {
+    init: function (view) {
         me = this;
     },
-    afterRender: function() {
+    afterRender: function () {
         let fecha1 = new Date();
         let fecha2 = new Date();
-        fecha2.setDate(fecha1.getDate() - 30)
+        fecha2.setDate(fecha1.getDate() - 30);
         Ext.getCmp(prototype.id + '-fecha1').setValue(fecha2);
         Ext.getCmp(prototype.id + '-fecha2').setValue(fecha1);
         this.OnSearch();
@@ -30,10 +32,10 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         }).show();
 
     },
-    OnSearch:function(){
+    OnSearch: function () {
         this.search();
     },
-    search:function(){
+    search: function () {
         var bean = {};
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
         bean.IN_FROMDATE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
@@ -70,52 +72,83 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
-    onDownloadClick:function(grid, rowIndex, colIndex){
+    onDownloadClick: function (grid, rowIndex, colIndex) {
+        let pb = Ext.getCmp(prototype.id + '-progressBar');
+        let formatFile = Object.values(Ext.getCmp(prototype.id + '-formatFile').getValue())[0];
+        pb.setVisible(true);
+        pb.wait({
+            text: 'Downloading...',
+            interval: 500
+        });
         var rec = grid.getStore().getAt(rowIndex);
-        console.log(rec);
-        alert("Descargando Exceles");
+        console.log(rec.data.A4294IDFIL);
+        let params = rec.data.A4294IDFIL + '?format=' + formatFile;
+        fetch(prototype.url + '/getReconFormat/' + params)
+                .then(response =>  response.blob() )
+                .then(blob => {
+                    this.downloadFile(blob);
+                    pb.reset();
+                    pb.setVisible(false);
+                });
+    },
+    downloadFile: function (blob, name = "Elavon") {
+        console.log("datos recibidos");
+        let fecha = new Date();
+        let fechaformat = "";
+        fechaformat = fechaformat.concat(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours(), fecha.getMinutes(), fecha.getSeconds());
+        name = name + "_" + fechaformat + ".zip";
+        const href = URL.createObjectURL(blob);
+        const a = Object.assign(document.createElement("a"), {
+            href,
+            style: "display:none",
+            download: name
+        });
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(href);
+        a.remove();
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
-    pagFirst: function(obj, e) {
+    pagFirst: function (obj, e) {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             Ext.getCmp(prototype.id + '-paggin').moveFirst();
         }
     },
-    pagPrevious: function(obj, e) {
+    pagPrevious: function (obj, e) {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             Ext.getCmp(prototype.id + '-paggin').movePrevious();
         }
     },
-    pagNext: function(obj, e) {
+    pagNext: function (obj, e) {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             Ext.getCmp(prototype.id + '-paggin').moveNext();
         }
     },
-    pagLast: function(obj, e) {
+    pagLast: function (obj, e) {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             Ext.getCmp(prototype.id + '-paggin').moveLast();
         }
     },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getValue: function(id) {
+    getValue: function (id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();
     },
-    focus: function(id) {
+    focus: function (id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
     },
-    setValue: function(id, txt) {
+    setValue: function (id, txt) {
         return Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onTextKeypress: function(obj, e, eOpts) {
+    onTextKeypress: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
             this.btnSearch_click();
         }
     },
-    onCmbByOrder: function() {
+    onCmbByOrder: function () {
 //        var option_order = Ext.getCmp(prototype.id + '-cmbByOrder').getValue();
 //        Ext.getCmp(prototype.id + '-txt-filter').show();
 //        Ext.getCmp(prototype.id + '-txt-filter').focus();
@@ -128,7 +161,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
     },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="FormatRenderer">
-    onStringRenderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onStringRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (record.get('typeColumn')) {
 //            case 1:
 //                value = value;
@@ -141,7 +174,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         }
         return value;
     },
-    onAmountRenderer01: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onAmountRenderer01: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (record.get('typeColumn')) {
             case 1:
                 value = Ext.util.Format.number(value, '0,000.00');
@@ -156,7 +189,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         }
         return value;
     },
-    onAmountRenderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (record.get('typeColumn')) {
             case 1:
                 value = Ext.util.Format.number(value, '0,000');
@@ -171,7 +204,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         }
         return value;
     },
-    onMonthStringRenderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onMonthStringRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         //console.log(value.substring(4,6));
         var m = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'];
         var valor = m[parseInt(value.substring(4, 6)) - 1] + ' - ' + value.substring(0, 4);

@@ -4,21 +4,31 @@ package net.miatech.praxis.controllers.elavon;
 import com.google.gson.Gson;
 import com.monitorjbl.xlsx.StreamingReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.elavon.ElavonExcelFile;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
+import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
+import net.miatech.praxis.logic.elavon.ElavonExcel;
 import net.miatech.praxis.logic.elavon.InputLoadLogic;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,13 +44,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/InputLoad")
 public class InputLoadController extends BaseController{
     
+    @Autowired
+    private ElavonExcel elavonExcel;
+    
     private InputLoadLogic logic;
     
+    @Transactional
     @RequestMapping(value = "/uploadExcelRecon",method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public @ResponseBody String uploadExcelRecon(ModelMap map,@RequestParam(value = "excelfile",required = true) MultipartFile excelfile,HttpServletRequest request)throws IOException{
         System.out.println("Ejecutando Proceso Elavon");
         List<X3147temp> temp = new ArrayList<>();
         SQP04650Filter filter = new SQP04650Filter();
+        SQP04674Filter filter2 = new SQP04674Filter();
         try {
             logic = new InputLoadLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
@@ -96,8 +111,14 @@ public class InputLoadController extends BaseController{
                 if (filter == null) {
                     throw new SQLException();
                 }
-                map.put("success", filter.getOUT_SQLCODE().equals("1"));
-                map.put("response",filter.getOUT_MESSAGE());
+                filter2.setIN_CCUST("139");
+                filter2 = logic.getSQP04674(filter2);
+                 if (filter2 == null) {
+                    throw new SQLException();
+                }
+                map.put("success", filter.getOUT_SQLCODE().equals("1")&&filter2.getOUT_SQLCODE().equals("1"));
+                map.put("responseHeader",filter.getOUT_MESSAGE());
+                map.put("responseData",filter2.getOUT_MESSAGE());
             }else{
                 throw new SQLException();
             }
@@ -136,5 +157,32 @@ public class InputLoadController extends BaseController{
             map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/getReconFormat/{idFile}",produces = "application/octet-stream")
+    public void downloadReconFormat(@PathVariable String idFile,@RequestParam(required = false,defaultValue = "xlsx") String format,HttpServletResponse response) throws IOException{
+        List<ElavonExcelFile> files = new ArrayList<>();
+        try {
+            logic = new InputLoadLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            //obtiene los resultados del proceso elavon
+            files = logic.getResultElavon(idFile);
+            if (files.isEmpty()) {
+                throw new Exception("Error al obtener resultados");
+            }
+            OutputStream os =  response.getOutputStream();
+            response.setHeader("Content-Disposition", "attachment;filename=elavon_"+new Date()+".zip");
+            //response.setContentType("application/octet-stream");
+            if (format.equals("xlsx")) {
+                //convierte los resultados a excel y comprime
+                elavonExcel.compressFiles(os, files);
+            }else{
+                //convierte los resultados a texto y comprime
+                elavonExcel.compressFilesTxt(os, files);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error al descargar");
+        }
     }
 }
