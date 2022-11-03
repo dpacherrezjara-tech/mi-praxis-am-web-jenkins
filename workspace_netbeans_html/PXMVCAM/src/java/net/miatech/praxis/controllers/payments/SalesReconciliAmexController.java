@@ -6786,7 +6786,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_18.setCellStyle(headerStyle);
             CH2_19.setCellStyle(headerStyle);
             CH2_20.setCellStyle(headerStyle);
-            CH2_22.setCellStyle(headerStyle);
+            CH2_21.setCellStyle(headerStyle);
             CH2_22.setCellStyle(headerStyle);
 
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
