@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Filters', {
+Ext.define('Ext.Praxis.view.sales.AccountingProcessFOBForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
     border: false,
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "(Select)"],
-                                            ["PCONSORTIA", "CONSORTIA Accounting"]
+                                            ["PFOB", "FOB Accounting"]
                                         ]
                                     }),
                                     queryMode: 'local',
