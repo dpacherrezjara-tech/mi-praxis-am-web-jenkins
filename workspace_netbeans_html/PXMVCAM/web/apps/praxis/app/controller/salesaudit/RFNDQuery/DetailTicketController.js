@@ -335,6 +335,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             case 'F':
                 vl_A3648FLAG = 'AUTHORISED';
                 break;
+            case 'C':
+                vl_A3648FLAG = 'REACTIVATION';
+                break;
              case 'B':
                 vl_A3648FLAG = 'GIVE USE IN PRAXIS';
                 break;
@@ -596,7 +599,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "R", "name": "REJECT"},
-                {"code": "F", "name": "AUTHORISED"}
+                {"code": "F", "name": "AUTHORISED"},
+                {"code": "C", "name": "REACTIVATION"}
             ]
         }));
         CmbConto.bindStore(Ext.create('Ext.data.Store', {

@@ -139,7 +139,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDPending.RFNDPendingController',
                 {"code": "F", "name": "AUTHORISED"},
                 {"code": "Y", "name": "PENDING"},
                 {"code": "R", "name": "REJECT"},
-                 {"code": "B", "name": "GIVE USE IN PRAXIS"}
+                {"code": "B", "name": "GIVE USE IN PRAXIS"},
+                {"code": "C", "name": "REACTIVATION"}
 
             ]
         }));
@@ -437,6 +438,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDPending.RFNDPendingController',
                 color = '#81F781';
                 value = 'AUTHORISED';
                 break;
+            case 'C':
+                color = '#F781D8';
+                value = 'REACTIVATION';
+                break;                
             case 'Y':
                 color = '#CCFF00';
                 value = 'PENDING';
