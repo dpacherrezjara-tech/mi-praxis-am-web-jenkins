@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     dw_excel: false,
     boxActual: '-boxMainData_interline',
     drillDown: [],
+    //a:0,
     colors: [
         '#8ca640',
         '#974144',
@@ -42,7 +43,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     init: function (view) {
         meIChart = this;
         this.setStoreData();
-
+        
     },
     afterRender: function () {
 
@@ -50,12 +51,17 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         
         var mes = new Date().getMonth() + 1;
         if (mes < 10) mes = "0" + mes;
-        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue(mes);
-        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue(mes);
+//        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue(mes);
+        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("");
+//        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue(mes);
+        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue("");
+        
+        Ext.getCmp(prototype.id + '-rbChart_IA').items.items[0].setValue(true);
+        Ext.getCmp(prototype.id + '-rbChart_IA').cheked = true;
+        Ext.getCmp(prototype.id + '-cmbAirline_INT2').setValue("");
         
         meIChart.inicio();
-
-        Ext.getCmp(prototype.id + '-rbChart_IA').items.items[0].setValue(true);
+        
     },
     setStoreData: function () {
 
@@ -86,32 +92,29 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         });
     },
     inicio: function () {
-//        console.clear();
         this.setFormatParameter();
         var valueRadio = Ext.getCmp(prototype.id + '-rbChart_IA').getValue().rb;
-//        if(this.a === 1){
+//        if(a=1){
 //            valueRadio = 'rbc1_IA';
+//            a=0;
 //        }
-//        console.log('aqui2');
-//        console.log(valueRadio);
-//        
+        //valueRadio = 'rbc1_IA';
+        console.log(valueRadio);
+       // console.log(a);
         switch (valueRadio) {
             case 'rbc1_IA':
                 this.searchInterline();
-                console.log('aqui3');
                 break;
-                
             case 'rbc2_IA':
                 this.searchInterlineByAir();
-                a = 0;
+                //a = 0;
                 break;
 
             case 'rbc3_IA' :
 //                this.obtainDataFilter_WK();
                 this.search_WK();
-                a = 0;
+                //a = 0;
                 break;
-
         }
     },
     setFormatParameter: function () {
@@ -122,6 +125,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 //        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue('')
 
         var valueRadio = Ext.getCmp(prototype.id + '-rbChart_IA').getValue().rb;
+        //valueRadio = 'rbc1_IA';
         switch (valueRadio) {
             case 'rbc1_IA':
                 Ext.getCmp(prototype.id + '-cmbAirline_INT2').show();
@@ -203,7 +207,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue(Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue());
     },
     onClickSearch: function () {
-        console.log('aqui1');
         this.inicio();
     },
 
@@ -256,7 +259,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 
     },
     searchInterline: function () {
-
+        //a=1;
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchInterline'
@@ -666,7 +669,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     },
 
     onChangeRadio: function (obj, rb_new, rb_old, func) {
-        console.log('onChangeRadio');
+        
         var valueRadio = rb_new.rb;
         this.hidePanelGraficos();
         switch (valueRadio) {
