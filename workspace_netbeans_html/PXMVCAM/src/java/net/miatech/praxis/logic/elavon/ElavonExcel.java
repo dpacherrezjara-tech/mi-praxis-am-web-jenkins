@@ -6,6 +6,9 @@ package net.miatech.praxis.logic.elavon;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -87,6 +90,50 @@ public class ElavonExcel {
                 wb.write(bos);
                 bos.writeTo(zipstream);
                 //cierra archivo y comieza otro
+                zipstream.closeEntry();
+            }
+        }
+    }
+    
+    //comprime la cantidad indicada de textos en un archivo zip
+    @Transactional
+    public void compressFilesTxt(OutputStream os, List<ElavonExcelFile> listeOfObject) throws IOException {
+        try (ZipOutputStream zipstream = new ZipOutputStream(os)) {
+            for (ElavonExcelFile file: listeOfObject) {
+                File fil = new File(file.getFileName() + ".txt");
+                try (FileWriter fw = new FileWriter(fil)) {
+                    final StringBuilder sbHeader = new StringBuilder();
+                    //obtiene las cabeceras del map y agrega a la primera fila
+                    Set<String> keys = file.getFileObjects().get(0).keySet();
+                    final AtomicInteger contkeys= new AtomicInteger();
+                    keys.forEach(new Consumer<String>() {
+                        @Override
+                        public void accept(String t) {
+                            sbHeader.append(t).append("|");
+                            contkeys.getAndIncrement();
+                        }
+                    });
+                    sbHeader.deleteCharAt(sbHeader.length()-1);
+                    sbHeader.append("\n");
+                    fw.append(sbHeader.toString());
+                    
+                    //recorre todos los objetos de la lista y añade al texto
+                    for(int i = 0;i<file.getFileObjects().size();i++){
+                        final StringBuilder sbLine = new StringBuilder();
+                        Map<String,Object> map = file.getFileObjects().get(i);
+                        for (Object obj: map.values()) {
+                            sbLine.append(obj.toString()).append("|");
+                        }
+                        sbLine.deleteCharAt(sbLine.length()-1);
+                        sbLine.append("\n");
+                        fw.append(sbLine.toString());
+                    }
+                }
+                FileInputStream in = new FileInputStream(fil);
+                zipstream.putNextEntry(new ZipEntry(file.getFileName()+ ".txt"));
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bos.write(in.readAllBytes());
+                bos.writeTo(zipstream);
                 zipstream.closeEntry();
             }
         }

@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.elavon.ElavonExcelFile;
+import net.miatech.praxis.elavon.ElavonFilesEnum;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.SQP04674Filter;
@@ -234,18 +236,29 @@ public class InputLoadDAO {
     
     //obtiene lista de resultsets en forma de Map
     @Transactional
-    public List<List<Map<String,Object>>> getResultElavon() throws Exception{
-        final String sql = "{CALL LIBSAP51.MULTFILES()}";
+    public List<ElavonExcelFile> getResultElavon(String IdFile) throws Exception{
+        final String sql = "{CALL PRAXIS.SQP04675(?)}";
         Connection cnx = null;
         CallableStatement cstmt = null;
         //lista de resultset (cada resut set se guarda en un listado de Map)
-        List<List<Map<String, Object>>> list = new ArrayList<>();
+        List<ElavonExcelFile> list = new ArrayList<>();
+       
         try{
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(sql);
+            cstmt.setString(1, IdFile);
+            if (IdFile.length()!=9) {
+                throw  new SQLException("Parameter length must be 9");
+            }
             boolean resultsAvailable = cstmt.execute();
+             int cont = 0;
             while (resultsAvailable) {
+                ElavonExcelFile elavonExcelFile = new ElavonExcelFile();
                 ResultSet resultSet = cstmt.getResultSet();
+                String rsname = ElavonFilesEnum.getById(cont);
+                if (rsname==null) {throw new Exception("Error en nombre");}
+                elavonExcelFile.setFileName(rsname+ "_" + IdFile);
+                cont++;
                 List<Map<String, Object>> subList = new ArrayList<>();
                 while (resultSet.next()) {
                     ResultSetMetaData meta = resultSet.getMetaData();
@@ -257,7 +270,8 @@ public class InputLoadDAO {
                     }
                     subList.add(map);
                 }
-                list.add(subList);
+                elavonExcelFile.setFileObjects(subList);
+                list.add(elavonExcelFile);
                 resultsAvailable = cstmt.getMoreResults();
             }
         }catch(Exception ex){

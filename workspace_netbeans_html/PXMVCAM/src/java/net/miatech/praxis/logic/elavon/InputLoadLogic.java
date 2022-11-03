@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.elavon.InputLoadDAO;
+import net.miatech.praxis.elavon.ElavonExcelFile;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.SQP04674Filter;
@@ -41,7 +42,7 @@ public class InputLoadLogic {
         return dao.getSQP04651Filter(filter);
     }
     
-    public List<List<Map<String,Object>>> getResultElavon()throws Exception{
-        return dao.getResultElavon();
+    public List<ElavonExcelFile> getResultElavon(String idFile)throws Exception{
+        return dao.getResultElavon(idFile);
     }
 }
