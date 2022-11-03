@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import net.miatech.praxis.elavon.ElavonExcelFile;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -132,7 +133,7 @@ public class ElavonExcel {
                 FileInputStream in = new FileInputStream(fil);
                 zipstream.putNextEntry(new ZipEntry(file.getFileName()+ ".txt"));
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bos.write(in.readAllBytes());
+                bos.write(IOUtils.toByteArray(in));
                 bos.writeTo(zipstream);
                 zipstream.closeEntry();
             }
