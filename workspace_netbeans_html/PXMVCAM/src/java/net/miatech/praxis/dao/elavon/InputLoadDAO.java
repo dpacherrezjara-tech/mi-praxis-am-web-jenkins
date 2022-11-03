@@ -8,22 +8,15 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.elavon.ElavonExcelFile;
-import net.miatech.praxis.elavon.ElavonFilesEnum;
 import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
-import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import org.apache.log4j.Logger;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -49,11 +42,10 @@ public class InputLoadDAO {
         System.gc();
     }
     
-    //guarda excel en archivo temporal
     public boolean setX3147(List<X3147temp> temp)throws SQLException,Exception{
         Connection cnx = null;
         PreparedStatement pstmt = null;
-        String SQL = "INSERT INTO PRAXIS.X3147 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO PRAXIS.X3147 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cnx.prepareStatement("TRUNCATE TABLE PRAXIS.X3147").execute();
@@ -75,7 +67,6 @@ public class InputLoadDAO {
                 pstmt.setDouble(13, line.getTRN_AMT());
                 pstmt.setDouble(14, line.getCONV_TRN_AMT());
                 pstmt.setString(15, line.getCPT_ID());
-                pstmt.setString(16, "");
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -97,7 +88,6 @@ public class InputLoadDAO {
         return true;
     }
     
-    //guarda datos de excel en cabecera
     public SQP04650Filter getSQP04650Filter(SQP04650Filter filter)throws SQLException,Exception{
         Connection cnx = null;
         CallableStatement cstmt = null;
@@ -129,38 +119,6 @@ public class InputLoadDAO {
         return filter;
     }
     
-    //procesa datos de archivo temporal a tabla A4323
-    public SQP04674Filter getSQP04674Filter(SQP04674Filter filter)throws SQLException,Exception{
-        Connection cnx = null;
-        CallableStatement cstmt = null;
-        String SQL = "{CALL PRAXIS.SQP04674(?,?,?)}";
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt = cnx.prepareCall(SQL);
-            cstmt.setString(1,"139" );
-            cstmt.registerOutParameter(2, Types.VARCHAR);
-            cstmt.registerOutParameter(3, Types.VARCHAR);
-            cstmt.execute();
-            filter.setOUT_SQLCODE(cstmt.getString(2));
-            filter.setOUT_MESSAGE(cstmt.getString(3));
-        } catch (Exception e) {
-            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            return null;
-        }finally{
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-        return filter;
-    }
-    
-    //cabecera ELAVON
     public List<SQP04651Filter> getSQP04651Filter(SQP04651Filter filter)throws SQLException,Exception{
         List<SQP04651Filter> response = new ArrayList<>();
         CallableStatement cstmt = null;
@@ -232,62 +190,5 @@ public class InputLoadDAO {
             pasarGarbageCollector();
         }
         return response;
-    }
-    
-    //obtiene lista de resultsets en forma de Map
-    @Transactional
-    public List<ElavonExcelFile> getResultElavon(String IdFile) throws Exception{
-        final String sql = "{CALL PRAXIS.SQP04675(?)}";
-        Connection cnx = null;
-        CallableStatement cstmt = null;
-        //lista de resultset (cada resut set se guarda en un listado de Map)
-        List<ElavonExcelFile> list = new ArrayList<>();
-       
-        try{
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt = cnx.prepareCall(sql);
-            cstmt.setString(1, IdFile);
-            if (IdFile.length()!=9) {
-                throw  new SQLException("Parameter length must be 9");
-            }
-            boolean resultsAvailable = cstmt.execute();
-             int cont = 0;
-            while (resultsAvailable) {
-                ElavonExcelFile elavonExcelFile = new ElavonExcelFile();
-                ResultSet resultSet = cstmt.getResultSet();
-                String rsname = ElavonFilesEnum.getById(cont);
-                if (rsname==null) {throw new Exception("Error en nombre");}
-                elavonExcelFile.setFileName(rsname+ "_" + IdFile);
-                cont++;
-                List<Map<String, Object>> subList = new ArrayList<>();
-                while (resultSet.next()) {
-                    ResultSetMetaData meta = resultSet.getMetaData();
-                    int colcount = meta.getColumnCount();
-                    Map<String, Object> map = new HashMap<>();
-                    for (int i = 1; i <= colcount; i++) {
-                        String name = meta.getColumnLabel(i);
-                        map.put(name, resultSet.getString(i));
-                    }
-                    subList.add(map);
-                }
-                elavonExcelFile.setFileObjects(subList);
-                list.add(elavonExcelFile);
-                resultsAvailable = cstmt.getMoreResults();
-            }
-        }catch(Exception ex){
-            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + ex.getMessage(), ex);
-            list = new ArrayList<>();
-        }finally{
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-        return list;
     }
 }

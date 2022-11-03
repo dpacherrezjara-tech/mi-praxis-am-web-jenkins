@@ -108,7 +108,7 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                                         align: 'center',
                                         items: [
                                             {
-                                                icon:'resources/img/icon/downloadfile.png',
+                                                iconCls: 'prx-icon-detail',
                                                 tooltip: 'Click for download',
                                                 handler: 'onDownloadClick'
                                             }

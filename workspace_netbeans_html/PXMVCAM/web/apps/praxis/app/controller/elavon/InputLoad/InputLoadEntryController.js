@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
                 if (response.success){
                     //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
                     global.Msg({
-                        msg: "Header: " + response.responseHeader.toString() + "<br>" + "Data: " + response.responseData.toString() ,
+                        msg: response.response.toString(),
                         icon:1
                     });
                 }
