@@ -3377,6 +3377,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
                     beanTkt.SIREFNBR = rst.getString("SIREFNBR").trim();
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    beanTkt.QTYTKT = rst.getInt("QTYTKT");
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
 
