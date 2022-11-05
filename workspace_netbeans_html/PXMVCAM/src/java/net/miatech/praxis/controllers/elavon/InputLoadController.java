@@ -10,9 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.classes.RunningThreads;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.elavon.ElavonExcelFile;
 import net.miatech.praxis.elavon.SQP04650Filter;
@@ -46,6 +51,12 @@ public class InputLoadController extends BaseController{
     
     @Autowired
     private ElavonExcel elavonExcel;
+    
+    @Autowired
+    private RunningThreads rt;
+    
+    @Autowired
+    private Executor executor;
     
     private InputLoadLogic logic;
     
@@ -184,5 +195,96 @@ public class InputLoadController extends BaseController{
             System.out.println(e.getMessage());
             System.out.println("Error al descargar");
         }
+    }
+    
+    
+    @Transactional
+    @RequestMapping(value = "/uploadExcelReconAsync",method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public @ResponseBody String uploadExcelReconAsync(ModelMap map,@RequestParam(value = "excelfile",required = true) MultipartFile excelfile,HttpServletRequest request)throws IOException{
+        System.out.println("Ejecutando Proceso Elavon");
+        List<X3147temp> temp = new ArrayList<>();
+        SQP04650Filter filter = new SQP04650Filter();
+        final SQP04674Filter filter2 = new SQP04674Filter();
+        try {
+            logic = new InputLoadLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            
+            String filename = excelfile.getOriginalFilename();
+            Double filesize = excelfile.getSize() * 0.00000095367432;
+            Integer filerows = 0;
+            System.out.println("Achivo actual Pesa: " + filesize + " MB.");
+            if (filesize>29) {
+                throw new Exception("Archivo demasiado grande para procesar");
+            }
+            
+            StreamingReader sr = StreamingReader.builder()
+                    .rowCacheSize(100)
+                    .bufferSize(4096)
+                    .sheetIndex(0)
+                    .read(excelfile.getInputStream());
+            for(Row fila : sr){
+                //fila empieza a contar desde 0 (la fila 0 es cabecera)
+                //se omite la cabecera
+                if (fila.getRowNum()>0) {
+                    if (fila.getCell(0) != null) {
+                        filerows++;
+                        X3147temp x = new X3147temp();
+                        x.setSYSTEM(fila.getCell(0)==null?"":fila.getCell(0).getStringCellValue());
+                        //si primera fila vacia no se procesa
+                        if (x.getSYSTEM().equals("")) {
+                            break;
+                        }
+                        x.setBATCH_DATE(fila.getCell(1)==null?"":fila.getCell(1).getStringCellValue());
+                        x.setEXT_MID(fila.getCell(2)==null?"":fila.getCell(2).getStringCellValue());
+                        x.setGLOBAL_NAME(fila.getCell(3)==null?"":fila.getCell(3).getStringCellValue());
+                        x.setFUNDED_CCY(fila.getCell(4)==null?"":fila.getCell(4).getStringCellValue());
+                        x.setUSD_RATE(fila.getCell(5)==null?0:fila.getCell(5).getNumericCellValue());
+                        x.setSALES_TYPE(fila.getCell(6)==null?"":fila.getCell(6).getStringCellValue());
+                        x.setCARD(fila.getCell(7)==null?"":fila.getCell(7).getStringCellValue());
+                        x.setROC_TEXT(fila.getCell(8)==null?"":fila.getCell(8).getStringCellValue());
+                        x.setCOMBTIC_NUM(fila.getCell(9)==null?"":fila.getCell(9).getStringCellValue());
+                        x.setTKT(fila.getCell(10)==null?"":fila.getCell(10).getStringCellValue());
+                        x.setTRX_DEPART_DTE(fila.getCell(11)==null?"":fila.getCell(11).getStringCellValue());
+                        x.setTRN_AMT(fila.getCell(12)==null?0:fila.getCell(12).getNumericCellValue());
+                        x.setCONV_TRN_AMT(fila.getCell(13)==null?0:fila.getCell(13).getNumericCellValue());
+                        x.setCPT_ID(fila.getCell(14)==null?"":fila.getCell(14).getStringCellValue());
+                        temp.add(x);
+                    }
+                }
+            }
+            boolean saveTemp = logic.saveX3147(temp);
+            if (saveTemp) {
+                filter.setIN_FILENAME(filename);
+                filter.setIN_ROWSRCV(filerows);
+                filter = logic.getSQP04650(filter);
+                if (filter == null) {
+                    throw new SQLException();
+                }
+                filter2.setIN_CCUST("139");
+                CompletableFuture.runAsync(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            logic.getSQP04674async(filter2);
+                        } catch (Exception ex) {
+                            System.out.println("Error al ejecutar metodo asyncrono");
+                        }
+                    }
+                },executor);
+                 System.out.println(rt.getRunningThreadsToString());
+                map.put("success", filter.getOUT_SQLCODE().equals("1"));
+                map.put("response",filter.getOUT_MESSAGE());
+                //map.put("responseData",filter2.getOUT_MESSAGE());
+            }else{
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("response","error in sql");
+        }catch(Exception e){
+            map.put("success", false);
+            map.put("response",e.getMessage());
+        }
+        return new Gson().toJson(map);
     }
 }

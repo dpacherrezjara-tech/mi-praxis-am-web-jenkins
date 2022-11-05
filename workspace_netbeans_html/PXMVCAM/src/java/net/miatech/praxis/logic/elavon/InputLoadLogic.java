@@ -6,7 +6,6 @@ package net.miatech.praxis.logic.elavon;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.elavon.InputLoadDAO;
 import net.miatech.praxis.elavon.ElavonExcelFile;
@@ -36,6 +35,10 @@ public class InputLoadLogic {
     
     public SQP04674Filter getSQP04674 (SQP04674Filter filter)throws SQLException,Exception{
         return dao.getSQP04674Filter(filter);
+    }
+    
+    public void getSQP04674async (SQP04674Filter filter)throws SQLException,Exception,InterruptedException{
+        dao.getSQP04674FilterAsync(filter);
     }
     
     public List<SQP04651Filter> getSQP04651 (SQP04651Filter filter)throws SQLException,Exception{

@@ -57,7 +57,8 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
          var form = Ext.getCmp(prototype.id + '-form01').getForm();
          console.log(prototype.url + '/uploadExcelRecon');
          form.submit({
-            url: prototype.url + '/uploadExcelRecon',
+            //url: prototype.url + '/uploadExcelRecon',
+            url: prototype.url + '/uploadExcelReconAsync',
             method:'POST',
             waitMsg: 'Procesando archivo...',
             success: function (fp, o) {
@@ -66,7 +67,8 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
                 if (response.success){
                     //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
                     global.Msg({
-                        msg: "Header: " + response.responseHeader.toString() + "<br>" + "Data: " + response.responseData.toString() ,
+                        //msg: "Header: " + response.responseHeader.toString() + "<br>" + "Data: " + response.responseData.toString() ,
+                        msg: "Header: " + response.response.toString(),
                         icon:1
                     });
                 }

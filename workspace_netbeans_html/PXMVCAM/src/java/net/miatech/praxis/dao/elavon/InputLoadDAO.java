@@ -23,6 +23,7 @@ import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,6 +39,8 @@ public class InputLoadDAO {
     private String strSQL;
     private static final Logger logError = Logger.getLogger("errorLog");
     // </editor-fold>
+    
+    
     
     public void setSession(IServerSession ss) {
         session = ss;
@@ -158,6 +161,40 @@ public class InputLoadDAO {
             pasarGarbageCollector();
         }
         return filter;
+    }
+    
+    //procesa datos de archivo temporal a tabla A4323, se ejecuta en back
+    @Async("specificTaskExecutor")
+    public void getSQP04674FilterAsync(SQP04674Filter filter)throws SQLException,Exception,InterruptedException{
+        System.out.println("Execute method asynchronously - " + Thread.currentThread().getName());
+        Connection cnx = null;
+        CallableStatement cstmt = null;
+        String SQL = "{CALL PRAXIS.SQP04674(?,?,?)}";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQL);
+            cstmt.setString(1,filter.getIN_CCUST());
+            cstmt.registerOutParameter(2, Types.VARCHAR);
+            cstmt.registerOutParameter(3, Types.VARCHAR);
+            cstmt.execute();
+            filter.setOUT_SQLCODE(cstmt.getString(2));
+            filter.setOUT_MESSAGE(cstmt.getString(3));
+            System.out.println(filter.getOUT_SQLCODE() + " : " + filter.getOUT_MESSAGE());
+        } catch (Exception e) {
+            System.out.println("Metodo asyncrono se ha completado con error");
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        }finally{
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                    System.out.println("Sesion cerrada de Metodo asyncrono");
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
     }
     
     //cabecera ELAVON
