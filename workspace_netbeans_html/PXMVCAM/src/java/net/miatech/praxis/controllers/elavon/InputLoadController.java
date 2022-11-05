@@ -271,7 +271,7 @@ public class InputLoadController extends BaseController{
                         }
                     }
                 },executor);
-                 System.out.println(rt.getRunningThreadsToString());
+                System.out.println(rt.getRunningThreadsToString()==null?"No async workers":rt.getRunningThreadsToString());
                 map.put("success", filter.getOUT_SQLCODE().equals("1"));
                 map.put("response",filter.getOUT_MESSAGE());
                 //map.put("responseData",filter2.getOUT_MESSAGE());
