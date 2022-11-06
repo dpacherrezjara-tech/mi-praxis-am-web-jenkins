@@ -743,6 +743,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 this.searchInterlineByAir();
                 break;
             case 'rbc3_IA' :
+                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("05");
                 Ext.getCmp(prototype.id + '-boxInt_WorkProgress').show();
                 this.llenarCombos();
                 this.setFormatParameter();
