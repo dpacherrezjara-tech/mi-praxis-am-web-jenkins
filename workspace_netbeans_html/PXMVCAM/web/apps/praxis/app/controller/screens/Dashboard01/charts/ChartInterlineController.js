@@ -143,9 +143,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 Ext.getCmp(prototype.id + '-cmbAirline_INT2_2').hide();
                 
                 var monthSelect = Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
-                var mesFrom = parseInt(monthSelect) + 1;
+//                var mesFrom = parseInt(monthSelect) + 1;
+                var mesFrom = monthSelect;
                 
-                if (mesFrom < 10) mesFrom = "0" + mesFrom;
+//                if (mesFrom < 10) mesFrom = "0" + mesFrom;
                                 
 //                meIChart.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
                 meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + mesFrom;
@@ -212,9 +213,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 Ext.getCmp(prototype.id + '-cmbAirline_INT2_2').hide();
                 
                 var monthSelect = Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
-                var mesFrom = parseInt(monthSelect) + 1;
+//                var mesFrom = parseInt(monthSelect) + 1;
+                var mesFrom = monthSelect;
                 
-                if (mesFrom < 10) mesFrom = "0" + mesFrom;
+//                if (mesFrom < 10) mesFrom = "0" + mesFrom;
                                 
 //                meIChart.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
                 meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + mesFrom;
@@ -240,8 +242,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         meIChart.beanWK = {};
        
 
-        meIChart.beanWK.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
-        meIChart.beanWK.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').getValue();
+        meIChart.beanWK.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + '' +  Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
+        meIChart.beanWK.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + '' + Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').getValue();
 
         
         meIChart.searchParams = JSON.stringify(meIChart.beanWK);
@@ -579,9 +581,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         if(cmbSelectGrafic === '1'){
 //            StyleGrafic01();
             this.displayWorkProgressChart_01();
-        }else if(cmbSelectGrafic === '2'){
-            this.displayWorkProgressChart_02();
         }
+//        else if(cmbSelectGrafic === '2'){
+//            this.displayWorkProgressChart_02();
+//        }
         
     },
     displayWorkProgressChart_01: function () {
@@ -733,17 +736,22 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         }
         switch (valueRadio) {
             case 'rbc1_IA':
+                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("");
                 Ext.getCmp(prototype.id + '-boxInt_Month').show();
                 this.setFormatParameter();
                 this.searchInterline();
                 break;
             case 'rbc2_IA':
+                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("");
                 Ext.getCmp(prototype.id + '-boxInt_Airline').show();
                 this.setFormatParameter();
                 this.searchInterlineByAir();
                 break;
             case 'rbc3_IA' :
-                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("05");
+                var mes = new Date().getMonth()+ 1;
+                if (mes < 10) mes = "0" + mes;
+                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue(mes);
+//                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("05");
                 Ext.getCmp(prototype.id + '-boxInt_WorkProgress').show();
                 this.llenarCombos();
                 this.setFormatParameter();
@@ -774,8 +782,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
             fields: ['code', 'name'],
             data: [
                 ["1", "Coupon"],
-                ["2", "Amount"],
-                ["3", "Tax"]
+                ["2", "Amount"]
+//                ["3", "Tax"]
             ]
         }));
         cmbSelectBy_WK.setValue("1");
