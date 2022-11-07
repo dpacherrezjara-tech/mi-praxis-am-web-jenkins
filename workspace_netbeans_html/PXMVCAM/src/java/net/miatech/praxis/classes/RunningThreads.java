@@ -7,9 +7,6 @@ package net.miatech.praxis.classes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RunningThreads {
 
+    //muestra los executor de clase PraxisAsync
     public String getRunningThreadsToString() {
         StringBuilder sb = new StringBuilder();
         Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
@@ -30,7 +28,7 @@ public class RunningThreads {
         for (Thread tr : tArray) {
             if (tr.getName().startsWith("PraxisAsync")) {
                 sb.append("*****************************************************************").append("\n");
-                sb.append("Thread #").append(cont).append(tr.getName()).append("\n");
+                sb.append("Thread #").append(cont + " ").append(tr.getName()).append("\n");
                 if (tr.getContextClassLoader() != null) {
                     sb.append("Class Loader -> ").append(tr.getContextClassLoader().toString()).append("\n");
                 }

@@ -13,13 +13,20 @@ import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dvicente
  */
+@Component
 public class InputLoadLogic {
-    private InputLoadDAO dao = new InputLoadDAO();
+    
+     // <editor-fold defaultstate="collapsed" desc="Dependencias">
+    @Autowired
+    private InputLoadDAO dao;
+     // </editor-fold>
     
     public void setSession(IServerSession ss){
         dao.setSession(ss);

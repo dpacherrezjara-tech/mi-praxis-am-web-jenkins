@@ -24,12 +24,14 @@ import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Dvicente
  */
+@Service
 public class InputLoadDAO {
     // <editor-fold defaultstate="collapsed" desc="Variables locales">
     private IServerSession session;
@@ -39,8 +41,6 @@ public class InputLoadDAO {
     private String strSQL;
     private static final Logger logError = Logger.getLogger("errorLog");
     // </editor-fold>
-    
-    
     
     public void setSession(IServerSession ss) {
         session = ss;
@@ -164,8 +164,8 @@ public class InputLoadDAO {
     }
     
     //procesa datos de archivo temporal a tabla A4323, se ejecuta en back
-    @Async("specificTaskExecutor")
-    public void getSQP04674FilterAsync(SQP04674Filter filter)throws SQLException,Exception,InterruptedException{
+    @Async("taskExecutor1")
+    public void getSQP04674FilterAsync(SQP04674Filter filter)throws SQLException,Exception{
         System.out.println("Execute method asynchronously - " + Thread.currentThread().getName());
         Connection cnx = null;
         CallableStatement cstmt = null;

@@ -4,13 +4,10 @@
  */
 package net.miatech.praxis.classes;
 
-import java.util.concurrent.Executor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -20,13 +17,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @Configuration
 @EnableAsync
-public class SpringAsyncConfig implements AsyncConfigurer {
+@ComponentScan("net.miatech")
+public class SpringAsyncConfig{
 
-    // Provide an Executor implementation in lieu of the default Spring implementation
-    @Override
-    @Bean(name = "specificTaskExecutor")
-    @Primary
-    public Executor getAsyncExecutor() {
+    @Bean
+    public TaskExecutor taskExecutor1() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(7);
         executor.setMaxPoolSize(42);
