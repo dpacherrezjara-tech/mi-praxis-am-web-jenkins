@@ -1569,7 +1569,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             AL: paramsResultSet02.fileA730.A730CARRA1,
                                             FLIGHT : paramsResultSet02.fileA730.A730NVLO1,
                                             DATE : paramsResultSet02.fileA730.A730FECVTA,
-                                            STAT : 'EXCH',
+                                            //STAT : 'EXCH',
+                                            STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                             AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR1, '0,000.00'),
                                             CRCY : paramsResultSet02.fileA730.A730MONREG,
                                             FARE : paramsResultSet02.fileA730.A730FBUSO1
@@ -1602,7 +1603,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     AL: paramsResultSet02.fileA730.A730CARRA2,
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO2,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
-                                                    STAT : 'EXCH',
+                                                    //STAT : 'EXCH',
+                                                    STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR2, '0,000.00'),
                                                     CRCY : paramsResultSet02.fileA730.A730MONREG,
                                                     FARE : paramsResultSet02.fileA730.A730FBUSO2
@@ -1637,7 +1639,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     AL: paramsResultSet02.fileA730.A730CARRA3,
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO3,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
-                                                    STAT : 'EXCH',
+                                                    //STAT : 'EXCH',
+                                                    STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR3, '0,000.00'),
                                                     CRCY : paramsResultSet02.fileA730.A730MONREG,
                                                     FARE : paramsResultSet02.fileA730.A730FBUSO3
@@ -1670,7 +1673,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     AL: paramsResultSet02.fileA730.A730CARRA4,
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO4,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
-                                                    STAT : 'EXCH',
+                                                    //STAT : 'EXCH',
+                                                    STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR4, '0,000.00'),
                                                     CRCY : paramsResultSet02.fileA730.A730MONREG,
                                                     FARE : paramsResultSet02.fileA730.A730FBUSO4
