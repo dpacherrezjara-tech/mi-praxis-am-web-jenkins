@@ -108,7 +108,19 @@ Ext.define('Ext.Praxis.view.elavon.InputLoadForm.InfoGrid', {
                                         align: 'center',
                                         items: [
                                             {
-                                                icon:'resources/img/icon/downloadfile.png',
+                                                getClass: function (v, meta, rec) {
+                                                    switch (rec.get("A4294STCAR")){
+                                                        case 'P':
+                                                            return 'prx-icon-incomplete';
+                                                            break;
+                                                        case '0':
+                                                            return 'prx-icon-downloadfile';
+                                                            break;
+                                                        default:
+                                                            return 'prx-icon-process-error';
+                                                    }
+                                                    console.log(rec.get("A4294STCAR"));
+                                                },
                                                 tooltip: 'Click for download',
                                                 handler: 'onDownloadClick'
                                             }

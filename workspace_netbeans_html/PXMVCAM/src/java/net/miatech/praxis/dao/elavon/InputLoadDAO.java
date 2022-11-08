@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class InputLoadDAO {
+
     // <editor-fold defaultstate="collapsed" desc="Variables locales">
     private IServerSession session;
     private CallableStatement cs = null;
@@ -41,7 +42,7 @@ public class InputLoadDAO {
     private String strSQL;
     private static final Logger logError = Logger.getLogger("errorLog");
     // </editor-fold>
-    
+
     public void setSession(IServerSession ss) {
         session = ss;
     }
@@ -51,9 +52,35 @@ public class InputLoadDAO {
         System.runFinalization();
         System.gc();
     }
-    
+
+    //valida que otro proceso no este en ejecucion
+    public boolean getRunningProcess() throws Exception {
+        Connection cnx = null;
+        String SQLvalida = "SELECT COUNT(0) FROM PRAXIS.A4294 WHERE A4294STCAR = 'P'";
+        ResultSet rs = null;
+        Integer processing = 0;
+        boolean res = true;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            rs = cnx.prepareStatement(SQLvalida).executeQuery();
+            while (rs.next()) {
+                processing = rs.getInt(1);
+            }
+            if (processing > 0) {
+                res = false;
+            }
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            res = false;
+        }finally{
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return res;
+    }
+
     //guarda excel en archivo temporal
-    public boolean setX3147(List<X3147temp> temp)throws SQLException,Exception{
+    public boolean setX3147(List<X3147temp> temp) throws SQLException, Exception {
         Connection cnx = null;
         PreparedStatement pstmt = null;
         String SQL = "INSERT INTO PRAXIS.X3147 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -62,7 +89,7 @@ public class InputLoadDAO {
             cnx.prepareStatement("TRUNCATE TABLE PRAXIS.X3147").execute();
             pstmt = cnx.prepareStatement(SQL);
             //cnx.setAutoCommit(false);
-            for(X3147temp line : temp){
+            for (X3147temp line : temp) {
                 pstmt.setString(1, line.getSYSTEM());
                 pstmt.setString(2, line.getBATCH_DATE());
                 pstmt.setString(3, line.getEXT_MID());
@@ -86,7 +113,7 @@ public class InputLoadDAO {
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             return false;
-        }finally{
+        } finally {
             if (pstmt != null) {
                 try {
                     pstmt.close();
@@ -99,9 +126,9 @@ public class InputLoadDAO {
         }
         return true;
     }
-    
+
     //guarda datos de excel en cabecera
-    public SQP04650Filter getSQP04650Filter(SQP04650Filter filter)throws SQLException,Exception{
+    public SQP04650Filter getSQP04650Filter(SQP04650Filter filter) throws SQLException, Exception {
         Connection cnx = null;
         CallableStatement cstmt = null;
         String SQL = "{CALL PRAXIS.SQP04650(?,?,?,?)}";
@@ -118,7 +145,7 @@ public class InputLoadDAO {
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             return null;
-        }finally{
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
@@ -131,16 +158,16 @@ public class InputLoadDAO {
         }
         return filter;
     }
-    
+
     //procesa datos de archivo temporal a tabla A4323
-    public SQP04674Filter getSQP04674Filter(SQP04674Filter filter)throws SQLException,Exception{
+    public SQP04674Filter getSQP04674Filter(SQP04674Filter filter) throws SQLException, Exception {
         Connection cnx = null;
         CallableStatement cstmt = null;
         String SQL = "{CALL PRAXIS.SQP04674(?,?,?)}";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQL);
-            cstmt.setString(1,"139" );
+            cstmt.setString(1, "139");
             cstmt.registerOutParameter(2, Types.VARCHAR);
             cstmt.registerOutParameter(3, Types.VARCHAR);
             cstmt.execute();
@@ -149,7 +176,7 @@ public class InputLoadDAO {
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             return null;
-        }finally{
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
@@ -162,10 +189,10 @@ public class InputLoadDAO {
         }
         return filter;
     }
-    
+
     //procesa datos de archivo temporal a tabla A4323, se ejecuta en back
     @Async("taskExecutor1")
-    public void getSQP04674FilterAsync(SQP04674Filter filter)throws SQLException,Exception{
+    public void getSQP04674FilterAsync(SQP04674Filter filter) throws SQLException, Exception {
         System.out.println("Execute method asynchronously - " + Thread.currentThread().getName());
         Connection cnx = null;
         CallableStatement cstmt = null;
@@ -173,7 +200,7 @@ public class InputLoadDAO {
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQL);
-            cstmt.setString(1,filter.getIN_CCUST());
+            cstmt.setString(1, filter.getIN_CCUST());
             cstmt.registerOutParameter(2, Types.VARCHAR);
             cstmt.registerOutParameter(3, Types.VARCHAR);
             cstmt.execute();
@@ -183,7 +210,7 @@ public class InputLoadDAO {
         } catch (Exception e) {
             System.out.println("Metodo asyncrono se ha completado con error");
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-        }finally{
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
@@ -196,9 +223,9 @@ public class InputLoadDAO {
             pasarGarbageCollector();
         }
     }
-    
+
     //cabecera ELAVON
-    public List<SQP04651Filter> getSQP04651Filter(SQP04651Filter filter)throws SQLException,Exception{
+    public List<SQP04651Filter> getSQP04651Filter(SQP04651Filter filter) throws SQLException, Exception {
         List<SQP04651Filter> response = new ArrayList<>();
         CallableStatement cstmt = null;
         String SQL = "{CALL PRAXIS.SQP04651(?,?,?,?,?,?)}";
@@ -223,7 +250,7 @@ public class InputLoadDAO {
             filter.getPagination().TOTPAG = cstmt.getInt(5);
             filter.getPagination().TOTROW = cstmt.getInt(6);
             rs = cstmt.getResultSet();
-            while(rs.next()){
+            while (rs.next()) {
                 SQP04651Filter obj = new SQP04651Filter();
                 obj.setA4294CCUST(rs.getString("A4294CCUST"));
                 obj.setA4294FECAC(rs.getString("A4294FECAC"));
@@ -241,11 +268,11 @@ public class InputLoadDAO {
                 obj.setA4294TTRF(rs.getInt("A4294TTRF"));
                 obj.setA4294TTRM(rs.getInt("A4294TTRM"));
                 obj.setA4294TTRP(rs.getInt("A4294TTRP"));
-                
+
                 //datos de ingreso
                 obj.setIN_FROMDATE(filter.getIN_FROMDATE());
                 obj.setIN_TODATE(filter.getIN_TODATE());
-                
+
                 //datos de paginacion
                 obj.getPagination().PAGNUM = filter.getPagination().PAGNUM;
                 obj.getPagination().PAGROW = filter.getPagination().PAGROW;
@@ -253,11 +280,10 @@ public class InputLoadDAO {
                 obj.getPagination().TOTROW = filter.getPagination().TOTROW;
                 response.add(obj);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             response = null;
-        }
-        finally {
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
@@ -270,31 +296,33 @@ public class InputLoadDAO {
         }
         return response;
     }
-    
+
     //obtiene lista de resultsets en forma de Map
     @Transactional
-    public List<ElavonExcelFile> getResultElavon(String IdFile) throws Exception{
+    public List<ElavonExcelFile> getResultElavon(String IdFile) throws Exception {
         final String sql = "{CALL PRAXIS.SQP04675(?)}";
         Connection cnx = null;
         CallableStatement cstmt = null;
         //lista de resultset (cada resut set se guarda en un listado de Map)
         List<ElavonExcelFile> list = new ArrayList<>();
-       
-        try{
+
+        try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(sql);
             cstmt.setString(1, IdFile);
-            if (IdFile.length()!=9) {
-                throw  new SQLException("Parameter length must be 9");
+            if (IdFile.length() != 9) {
+                throw new SQLException("Parameter length must be 9");
             }
             boolean resultsAvailable = cstmt.execute();
-             int cont = 0;
+            int cont = 0;
             while (resultsAvailable) {
                 ElavonExcelFile elavonExcelFile = new ElavonExcelFile();
                 ResultSet resultSet = cstmt.getResultSet();
                 String rsname = ElavonFilesEnum.getById(cont);
-                if (rsname==null) {throw new Exception("Error en nombre");}
-                elavonExcelFile.setFileName(rsname+ "_" + IdFile);
+                if (rsname == null) {
+                    throw new Exception("Error en nombre");
+                }
+                elavonExcelFile.setFileName(rsname + "_" + IdFile);
                 cont++;
                 List<Map<String, Object>> subList = new ArrayList<>();
                 while (resultSet.next()) {
@@ -311,10 +339,10 @@ public class InputLoadDAO {
                 list.add(elavonExcelFile);
                 resultsAvailable = cstmt.getMoreResults();
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + ex.getMessage(), ex);
             list = new ArrayList<>();
-        }finally{
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();

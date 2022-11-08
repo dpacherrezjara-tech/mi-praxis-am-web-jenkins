@@ -79,13 +79,13 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadEntryController', {
                 console.log(res);
                 console.log(opts);
                 let response = opts.result;
-//                if (!response.success){
-//                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
-//                    global.Msg({
-//                        msg: response.response.toString(),
-//                        icon:0
-//                    });
-//                }
+                if (!response.success){
+                    //Ext.Msg.alert('.:PRAXIS:.',response.response.toString());
+                    global.Msg({
+                        msg: response.response.toString(),
+                        icon:0
+                    });
+                }
                 console.log('server-side failure with status code ' + opts.response.status);
             }
         });

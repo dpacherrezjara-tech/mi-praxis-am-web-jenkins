@@ -32,6 +32,10 @@ public class InputLoadLogic {
         dao.setSession(ss);
     }
     
+    public boolean getProcessRunning()throws Exception{
+        return dao.getRunningProcess();
+    }
+    
     public boolean saveX3147(List<X3147temp> temp)throws SQLException,Exception{
         return dao.setX3147(temp);
     }

@@ -212,7 +212,9 @@ public class InputLoadController extends BaseController {
             if (filesize > 29) {
                 throw new Exception("Archivo demasiado grande para procesar");
             }
-
+            if(!logic.getProcessRunning()){
+                throw new SQLException("Another process running, please wait");
+            }
             StreamingReader sr = StreamingReader.builder()
                     .rowCacheSize(100)
                     .bufferSize(4096)
@@ -254,7 +256,7 @@ public class InputLoadController extends BaseController {
                 filter.setIN_ROWSRCV(filerows);
                 filter = logic.getSQP04650(filter);
                 if (filter == null) {
-                    throw new SQLException();
+                    throw new SQLException("Error in sql");
                 }
                 filter2.setIN_CCUST("139");
                 //se ejecuta asyncronamente
@@ -271,7 +273,7 @@ public class InputLoadController extends BaseController {
             }
         } catch (SQLException e) {
             map.put("success", false);
-            map.put("response", "error in sql");
+            map.put("response", e.getMessage());
         } catch (Exception e) {
             map.put("success", false);
             map.put("response", e.getMessage());
