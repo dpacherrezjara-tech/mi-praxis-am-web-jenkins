@@ -6,7 +6,6 @@ package net.miatech.praxis.logic.elavon;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.elavon.InputLoadDAO;
 import net.miatech.praxis.elavon.ElavonExcelFile;
@@ -14,16 +13,27 @@ import net.miatech.praxis.elavon.SQP04650Filter;
 import net.miatech.praxis.elavon.SQP04651Filter;
 import net.miatech.praxis.elavon.SQP04674Filter;
 import net.miatech.praxis.elavon.X3147temp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dvicente
  */
+@Component
 public class InputLoadLogic {
-    private InputLoadDAO dao = new InputLoadDAO();
+    
+     // <editor-fold defaultstate="collapsed" desc="Dependencias">
+    @Autowired
+    private InputLoadDAO dao;
+     // </editor-fold>
     
     public void setSession(IServerSession ss){
         dao.setSession(ss);
+    }
+    
+    public boolean getProcessRunning()throws Exception{
+        return dao.getRunningProcess();
     }
     
     public boolean saveX3147(List<X3147temp> temp)throws SQLException,Exception{
@@ -36,6 +46,10 @@ public class InputLoadLogic {
     
     public SQP04674Filter getSQP04674 (SQP04674Filter filter)throws SQLException,Exception{
         return dao.getSQP04674Filter(filter);
+    }
+    
+    public void getSQP04674async (SQP04674Filter filter)throws SQLException,Exception,InterruptedException{
+        dao.getSQP04674FilterAsync(filter);
     }
     
     public List<SQP04651Filter> getSQP04651 (SQP04651Filter filter)throws SQLException,Exception{

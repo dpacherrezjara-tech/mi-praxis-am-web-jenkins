@@ -73,23 +73,40 @@ Ext.define('Ext.Praxis.controller.elavon.InputLoad.InputLoadController', {
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     onDownloadClick: function (grid, rowIndex, colIndex) {
-        let pb = Ext.getCmp(prototype.id + '-progressBar');
-        let formatFile = Object.values(Ext.getCmp(prototype.id + '-formatFile').getValue())[0];
-        pb.setVisible(true);
-        pb.wait({
-            text: 'Downloading...',
-            interval: 500
-        });
-        var rec = grid.getStore().getAt(rowIndex);
-        console.log(rec.data.A4294IDFIL);
-        let params = rec.data.A4294IDFIL + '?format=' + formatFile;
-        fetch(prototype.url + '/getReconFormat/' + params)
-                .then(response =>  response.blob() )
-                .then(blob => {
-                    this.downloadFile(blob);
-                    pb.reset();
-                    pb.setVisible(false);
+        let rec = grid.getStore().getAt(rowIndex);
+        switch (rec.data.A4294STCAR){
+            case 'P':
+                global.Msg({
+                            icon:2,
+                            msg: 'File '+ rec.data.A4294IDFIL + '  in process. please wait'
+                        });
+                 break;
+            case '0':
+                let pb = Ext.getCmp(prototype.id + '-progressBar');
+                let formatFile = Object.values(Ext.getCmp(prototype.id + '-formatFile').getValue())[0];
+                pb.setVisible(true);
+                pb.wait({
+                    text: 'Downloading...',
+                    interval: 500
                 });
+                console.log(rec.data.A4294IDFIL);
+                let params = rec.data.A4294IDFIL + '?format=' + formatFile;
+                fetch(prototype.url + '/getReconFormat/' + params)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            this.downloadFile(blob);
+                            pb.reset();
+                            pb.setVisible(false);
+                        });
+                 break;
+             default:
+                 global.Msg({
+                            icon:1,
+                            msg: 'File '+ rec.data.A4294IDFIL + ' in Error'
+                        });
+                 break;
+        }
+
     },
     downloadFile: function (blob, name = "Elavon") {
         console.log("datos recibidos");
