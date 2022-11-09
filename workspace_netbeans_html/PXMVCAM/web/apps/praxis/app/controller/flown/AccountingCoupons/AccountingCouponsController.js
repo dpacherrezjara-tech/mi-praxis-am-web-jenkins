@@ -5,14 +5,14 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     searchParams: {},
     _path: '',
     lstPaginacion: '',
-    init: function(view) {
+    init: function (view) {
     },
-    afterRender: function() {
+    afterRender: function () {
         this.setStoreData();
         this.btnClear_click();
         this.btnSearch_click();
     },
-    gridData_VIEWTKT_clickHandler: function(column, e, row, column, x, rowData) {
+    gridData_VIEWTKT_clickHandler: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
         var strTkt = data.TICKET;
         var beanProMasterTicket = {};
@@ -20,10 +20,10 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
         beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
         beanProMasterTicket.IN_SEQ = '00';
-        
+
         win.displayProMasterTicket(this, 'ViewAccountingCoupons', beanProMasterTicket);
     },
-    post_to_url: function(path, params, method, id) {
+    post_to_url: function (path, params, method, id) {
         method = method || "post";
 
         var form = document.createElement("form");
@@ -34,36 +34,22 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         document.body.appendChild(form);
         form.submit();
     },
-    onSwapTKT_Click: function() {
-        var gridDetTKT = Ext.getCmp(prototype.id + '-gridDetTKT');
-        var gridDetTKT2 = Ext.getCmp(prototype.id + '-gridDetTKT2');
-        if (gridDetTKT.isVisible()) {
-            gridDetTKT.hide();
-            gridDetTKT2.show();
-        } else {
-            gridDetTKT.show();
-            gridDetTKT2.hide();
-        }
-    },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
-    setStoreData: function() {
+    setStoreData: function () {
         var storeComboDataYear = win.getStoreYear(true);
         var storeComboDataMonth = win.getStoreMonth(true);
-        var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
     },
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Export-DataEntry">
-    onOpenExportClick: function(grid, rowIndex, colIndex) {
-        var FECHA = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue()  + 
-                    Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + 
-                    Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+    onOpenExportClick: function (grid, rowIndex, colIndex) {
+        var FECHA = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         this.winDataEntry(FECHA);
     },
-    winDataEntry: function(FECHA) {
+    winDataEntry: function (FECHA) {
         FECHA = FECHA === null || FECHA === undefined ? {} : FECHA;
         Ext.create('Ext.Praxis.view.flown.AccountingCouponsForm.DataEntry', {
             id: 'DataEntryAccountingCouponsForm',
@@ -75,7 +61,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="onViewClick">
-    onViewDetailFTEClick: function(column, e, row, column, x, rowData) {
+    onViewDetailFTEClick: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
         this.setFormatParameterDetailFTE(data);
         // <editor-fold defaultstate="collapsed" desc="preparar">
@@ -84,7 +70,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         // </editor-fold>
         this.setGridDataSearchDetailFTE();
     },
-    onViewDetailTKTClick: function(column, e, row, column, x, rowData) {
+    onViewDetailTKTClick: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
         var dataIndex = Ext.getCmp(prototype.id + '-gridMainDataDetailFTE').headerCt.getGridColumns()[column].dataIndex
         var strTipo = '';
@@ -103,36 +89,18 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Options">
-    btnSearch_click: function(obj, e) {
-        var txtTKT = this.getValue("txtTKT");
-        if (txtTKT !== '') {
-            if (txtTKT.length === 13) {
-                /*
-                 * Código Java Flex Controller comentado. No tiene funcionalidad
-                 */
-                global.Msg({
-                    msg: 'Data Not Found'
-                });
-            } else {
-                global.Msg({
-                    msg: 'Ticket number must contain 13 digits.'
-                });
-                this.setValue("txtTKT", "");
-                this.focus("txtTKT");
-            }
-        } else {
-            this.setFormatParameter();
-            this.setGridData();
-        }
+    btnSearch_click: function (obj, e) {
+        this.setFormatParameter();
+        this.setGridData();
     },
-    btnFilter_click: function(obj) {
+    btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-boxSearchFilter');
         if (option.isVisible())
             option.setVisible(false);
         else
             option.setVisible(true);
     },
-    btnExcel_click: function(obj, e) {
+    btnExcel_click: function (obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',
@@ -140,24 +108,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'ok') {
                     this.exportExcel();
                 }
             }
         });
     },
-    btnClear_click: function(obj, e) {
+    btnClear_click: function (obj, e) {
         // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(new Date().getFullYear());
         // </editor-fold>
-
-        // <editor-fold defaultstate="collapsed" desc="Clear Campos">
-        this.setValue("cbxQuarter", "");
-        this.setValue("cbxSource", "");
-        this.setValue("txtTKT", "");
-        // </editor-fold>
-        this.focus("txtTKT");
 
         // <editor-fold defaultstate="collapsed" desc="Clear Grilla">
         Ext.getCmp(prototype.id + '-gridMainData').getStore().removeAll();
@@ -166,7 +127,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         Ext.getCmp(prototype.id + '-boxMainDataDetailFTE').hide();
         Ext.getCmp(prototype.id + '-boxMainData').show();
     },
-    btnBack_click: function() {
+    btnBack_click: function () {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             global.showMenu();
         } else if (Ext.getCmp(prototype.id + '-boxMainDataDetailFTE').isVisible()) {
@@ -183,22 +144,15 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="setFormatParameter">
-    setFormatParameter: function() {
+    setFormatParameter: function () {
         searchParams = {};
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
         var fyear = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
         // </editor-fold>
 
-        // <editor-fold defaultstate="collapsed" desc="llenarData">
-        var cbxQuarter = this.getValue("cbxQuarter");
-        var cbxSource = this.getValue("cbxSource");
-        // </editor-fold>
-
         // <editor-fold defaultstate="collapsed" desc="asignación">
         searchParams = {
-            IN_FECHA_FROM: fyear,
-            QUARTER: cbxQuarter,
-            FTE: cbxSource
+            IN_FECHA_FROM: fyear
         };
 
         _path = prototype.url + '/getXLSX?' +
@@ -207,7 +161,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
                 'FTE=' + searchParams.FTE;
         // </editor-fold>
     },
-    setFormatParameterDetailFTE: function(data) {
+    setFormatParameterDetailFTE: function (data) {
         searchParams = {};
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
         // </editor-fold>
@@ -231,7 +185,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
 //                'IN_CARR='+searchParams.IN_CARR;
         // </editor-fold>
     },
-    setFormatParameterDetailTKT: function(data, strTipo) {
+    setFormatParameterDetailTKT: function (data, strTipo) {
         searchParams = {};
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
         // </editor-fold>
@@ -268,16 +222,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
-    setGridData: function() {
+    setGridData: function () {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountingCoupons.GridData', {
             proxy: {
                 url: prototype.url + '/search'
             },
             listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
                 },
-                load: function(obj, obj2, success, obj4, obj5) {
+                load: function (obj, obj2, success, obj4, obj5) {
                     win.lblUser_toolTip("Estructura: A3085");
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -289,16 +243,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         });
         Ext.getCmp(prototype.id + '-gridMainData').bindStore(storeGridDatas);
     },
-    setGridDataSearchDetailFTE: function() {
+    setGridDataSearchDetailFTE: function () {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountingCoupons.GridDataDetailFTE', {
             proxy: {
                 url: prototype.url + '/searchDetailFTE'
             },
             listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
                 },
-                load: function(obj, obj2, success, obj4, obj5) {
+                load: function (obj, obj2, success, obj4, obj5) {
                     win.lblUser_toolTip("Estructura: A3085");
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -317,16 +271,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         });
         Ext.getCmp(prototype.id + '-gridMainDataDetailFTE').bindStore(storeGridDatas);
     },
-    setGridDataSearchDetailTKT: function() {
+    setGridDataSearchDetailTKT: function () {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountingCoupons.GridDataDetailTKT', {
             proxy: {
                 url: prototype.url + '/searchDetailTKT'
             },
             listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
                 },
-                load: function(obj, obj2, success, obj4, obj5) {
+                load: function (obj, obj2, success, obj4, obj5) {
                     win.lblUser_toolTip("Estructura: A3084B");
                     lstPaginacion = obj.data.items;
                     if (obj.data.length === 0) {
@@ -351,12 +305,12 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     },
     // </editor-fold>
 
-    exportExcel: function() {
+    exportExcel: function () {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             global.getFile(_path);
         }
     },
-    onValidarChange: function() {
+    onValidarChange: function () {
         var list = Ext.getCmp(prototype.id + '-txtTKT').getValue().replace(/\s/g, "").split("");
         var txtTicket = '';
         for (var i = 0; i < list.length; i++) {
@@ -366,11 +320,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         }
         Ext.getCmp(prototype.id + '-txtTKT').setValue(txtTicket.substring(0, 13));
     },
-    esNumero: function(valor) {
+    esNumero: function (valor) {
         return valor.toLowerCase() === valor.toUpperCase();
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
-    pagPrevious: function(obj, e) {
+    pagPrevious: function (obj, e) {
         var flagPag = true;
         if (Ext.getCmp(prototype.id + '-boxDetTKT').isVisible()) {
             searchParams.PAGNUM = 2;
@@ -391,7 +345,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
             }
         }
     },
-    pagNext: function(obj, e) {
+    pagNext: function (obj, e) {
         var flagPag = true;
         if (Ext.getCmp(prototype.id + '-boxDetTKT').isVisible()) {
             searchParams.PAGNUM = 3;
@@ -415,19 +369,19 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getValue: function(id) {
+    getValue: function (id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();
     },
-    focus: function(id) {
+    focus: function (id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
     },
-    setValue: function(id, txt) {
+    setValue: function (id, txt) {
         return Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onTextKeypress: function(obj, e, eOpts) {
+    onTextKeypress: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
             this.btnSearch_click();
         }

@@ -24,8 +24,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
     
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(FECHA) {
-        this.setValue('txtDate', FECHA);
-       // this.setValue('txtPernum', '0'+rec.data.QUARTER);
+        this.setValue('txtDate', FECHA.substring(0,4));
+        this.setValue('txtPernum', FECHA.substring(4,6));
         this.exportFile1(FECHA);
     },
     // </editor-fold>
@@ -65,7 +65,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
                         global.Msg({ msg: 'This File has not been created.' });
                         me.onCancelClick();
                     }
-                } else global.Msg({ msg: res.sesion });
+//                } else global.Msg({ msg: res.sesion });
+                } else global.Msg({ msg: 'This File has not been created.' });
                 Ext.getCmp(prototype.id + '-gridFileNames').unmask();
             },
             failure: function(response, opts) {

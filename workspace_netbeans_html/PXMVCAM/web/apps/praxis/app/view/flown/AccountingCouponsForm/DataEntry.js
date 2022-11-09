@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.DataEntry', {
     ],
     title: 'Export Information AccountingCoupons',
     header: true,
-    height: 200,
+    height: 300,
     width: 450,
     border: false,
     resizable: false,
@@ -40,13 +40,13 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.DataEntry', {
                         {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'label',
-                            text: 'CSV',
+                            text: 'TXT',
                             width: 20
                         },
                         {xtype: 'tbspacer', width: 60},
                         {
                             xtype: 'label',
-                            text: 'Year - Quarter:',
+                            text: 'Year - Month:',
                             width: 110
                         },
                         {xtype: 'tbspacer', width: 4},
@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.DataEntry', {
                     id: prototype.id + '-gridFileNames',
                     border: true,
                     width: 400,
-                    height: 90,
+                    height: 200,
                     columnLines: true,
                     columns: {
                         defaults: {
