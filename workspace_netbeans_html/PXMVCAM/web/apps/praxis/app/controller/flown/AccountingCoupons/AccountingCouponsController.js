@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         this.setStoreData();
         this.btnClear_click();
         this.btnSearch_click();
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('11');
     },
     gridData_VIEWTKT_clickHandler: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
@@ -37,7 +38,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     setStoreData: function () {
         var storeComboDataYear = win.getStoreYear(true);
-        var storeComboDataMonth = win.getStoreMonth(true);
+        var storeComboDataMonth = win.getStoreMonth(false);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
     },
@@ -156,9 +157,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         };
 
         _path = prototype.url + '/getXLSX?' +
-                'IN_FECHA_FROM=' + searchParams.IN_FECHA_FROM + '&' +
-                'QUARTER=' + searchParams.QUARTER + '&' +
-                'FTE=' + searchParams.FTE;
+                'IN_FECHA_FROM=' + searchParams.IN_FECHA_FROM ;
         // </editor-fold>
     },
     setFormatParameterDetailFTE: function (data) {

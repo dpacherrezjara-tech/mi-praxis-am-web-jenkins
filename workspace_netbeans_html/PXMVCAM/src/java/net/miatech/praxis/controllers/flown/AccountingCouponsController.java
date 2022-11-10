@@ -185,7 +185,7 @@ public class AccountingCouponsController extends BaseController {
             //OBTENIENDO NOMBRE DE ZIP REJECTION y BILLING MEMO,
             // listaArray=null;
             //String pathImgs = "\\\\wsfile\\Users\\eneves\\comparto\\RFND-AVIANCA\\descargaContabilidad\\202211\\";
-            String pathImgs = "\\\\10.0.0.87\\am\\ACC\\";
+            String pathImgs = "\\\\10.0.0.87\\am\\ACC\\"+ strFecha.substring(0,4)+"\\" ;
             File archivo = new File(pathImgs);
             lista = archivo.list(fnfZIP);//
             //if (lista != null && lista.length > 0) {

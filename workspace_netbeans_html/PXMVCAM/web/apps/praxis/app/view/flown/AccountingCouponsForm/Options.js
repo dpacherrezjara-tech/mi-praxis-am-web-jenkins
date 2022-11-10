@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
+                            icon: 'resources/img/botones/txt.png',
                             tooltip: 'Export to Excel',
                             listeners: {
                                 click: 'onOpenExportClick'
