@@ -217,7 +217,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         console.log('gridDataTktRealUses_act1_clickHandler');
         console.log(data);
         var me01 = this;
-        if(data.STAT === 'EXCH'){
+        if(data.STAT === 'EXCH' || data.STAT === 'EXCH-VOID'){
             /*var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
             var controller = ScrTKTForm.getController();
             controller.VP_DOCUMENTO = data.FOR + data.SER;
