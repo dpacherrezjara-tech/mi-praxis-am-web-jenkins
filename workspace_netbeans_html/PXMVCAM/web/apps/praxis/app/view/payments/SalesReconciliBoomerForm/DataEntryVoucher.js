@@ -106,9 +106,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntryVoucher',
                 {xtype: 'tbspacer', width: 250},
                 {
                     text: 'Update',
-                    id: prototype.id + '-btn-update',
+                    id: prototype.id + '-de-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }

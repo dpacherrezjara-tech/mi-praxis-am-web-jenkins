@@ -29,10 +29,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
         meDE.paramsExport.beanString = JSON.stringify(beanTemp);
     },
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function() {
-
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
