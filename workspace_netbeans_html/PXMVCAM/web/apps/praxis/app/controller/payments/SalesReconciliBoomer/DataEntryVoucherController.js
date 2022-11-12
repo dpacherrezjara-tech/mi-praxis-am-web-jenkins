@@ -24,9 +24,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
         //Llenar el voucher - monto
-        
-        //beanTemp.IN_TDOC = '';
-        
+        beanTemp.VOUCHER = Ext.getCmp(prototype.id+'-de-txtVoucher').getValue();
+        beanTemp.AMOUNT = Ext.getCmp(prototype.id+'-de-txtVoucherAmount').getValue();
         meDE.paramsExport.beanString = JSON.stringify(beanTemp);
     },
     //</editor-fold>

@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntryVoucher',
         'Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucherController'
     ],
     controller: 'DataEntryVoucherController',
-    title: 'Export by Date Form',
+    title: 'Voucher Data Entry Form',
     header: true,
 //    height: 575,
     width: 700,
@@ -105,9 +105,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntryVoucher',
             items: [
                 {xtype: 'tbspacer', width: 250},
                 {
-                    text: 'Export',
-                    id: prototype.id + '-de-btn-update',
-                    iconCls: 'prx-icon-excel',
+                    text: 'Update',
+                    id: prototype.id + '-btn-update',
+                    iconCls: 'prx-icon-update',
+                    hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }
