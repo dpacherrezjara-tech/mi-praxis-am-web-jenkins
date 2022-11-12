@@ -36,6 +36,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
 
     },
     //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="mostrarData">
+    mostrarData: function(){
+        var p = this.view.params;
+        rec = p.rec;
+        Ext.getCmp(prototype.id+'-de-txtVoucher').setValue(rec.get('SVFOP'));
+        Ext.getCmp(prototype.id+'-de-txtVoucherAmount').setValue(rec.get('VOUCHER'));
+    },
+    //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Botones">
     onUpdateClick: function(btn) {
         Ext.Msg.show({

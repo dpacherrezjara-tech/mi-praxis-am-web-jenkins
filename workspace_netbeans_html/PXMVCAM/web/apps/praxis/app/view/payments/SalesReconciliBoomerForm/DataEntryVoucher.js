@@ -1,10 +1,10 @@
-Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntryExportByDate', {
+Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntryVoucher', {
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryExportByDateSalesReconciliBoomerForm',
+    alias: 'widget.DataEntryVoucherSalesReconciliBoomerForm',
     requires: [
-        'Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryExportByDateController'
+        'Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucherController'
     ],
-    controller: 'DataEntryExportByDateController',
+    controller: 'DataEntryVoucherController',
     title: 'Export by Date Form',
     header: true,
 //    height: 575,
