@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX040S01A1716Filter;
@@ -568,6 +569,64 @@ public class SalesReconciliBoomerController extends BaseController {
 
     }
 
+    @RequestMapping(value = "searchVoucherDetail")
+    public @ResponseBody
+    String searchVoucherDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- MerchantNumber : searchVoucherDetail-------------");
+
+        Gson gson = new Gson();
+        A2324Filter filter = new A2324Filter();
+        A2324Filter result = new A2324Filter();
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A2324Filter.class);
+
+        logic = new SalesReconciliBoomerLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            result = logic.loadPX305SQP00935(filter);
+            map.put("result", result);
+            map.put("success", true);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(RejectionsController.class.getName()).log(Level.SEVERE, null, ex);
+            map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/updateVoucher")
+    public @ResponseBody
+    String updateVoucher(ModelMap map, HttpServletRequest request) {
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String msj = "";
+            A2324Filter filter;
+            Gson gson = new Gson();
+            String beanString;
+
+            logic = new SalesReconciliBoomerLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2324Filter.class);
+
+            msj = logic.loadPX559SQP04638(filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+
+    }
+
     //Excel
     @RequestMapping(value = "getXLSXDetHeaderByPeriod")
     public @ResponseBody
@@ -1102,7 +1161,7 @@ public class SalesReconciliBoomerController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "getXLSXDetHeaderByPeriod3th")
     public @ResponseBody
     void getXLSXDetHeaderByPeriod3th(HttpServletRequest request, HttpServletResponse response) {
@@ -2350,7 +2409,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 16, 16));
-            
+
             ++vj;
             //============================================
 
