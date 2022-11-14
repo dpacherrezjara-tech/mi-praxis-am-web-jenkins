@@ -149,7 +149,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
         me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
-
+        me.bean.IN_MERCHIDL = Ext.getCmp(prototype.id + '-cmbFindByLigas').getValue();
+        me.bean.IN_MERCHIDT = Ext.getCmp(prototype.id + '-cmbFindByTablet').getValue();
+        console.log(me.bean.IN_COMPLTYPE);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -207,6 +209,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4124");
         me.panelActual = '-panelGridData';
+        Ext.getCmp(prototype.id + '-cmbFindByLigas').setVisible(false);
+        Ext.getCmp(prototype.id + '-cmbFindByTablet').setVisible(false);
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -373,9 +377,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
         var stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue();
         console.log(selectedValue);
-
+        this.btnClear_click();
         switch (selectedValue) {
             case 'P':
+                Ext.getCmp(prototype.id + '-cmbFindByLigas').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbFindByTablet').setVisible(false);
                 cmbFindByFAMEX.bindStore(Ext.create('Ext.data.ArrayStore', {
                     autoLoad: false,
                     fields: ['code', 'name'],
@@ -399,6 +405,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 }
                 break;
             case 'L':
+                Ext.getCmp(prototype.id + '-cmbFindByLigas').setVisible(true);
+                Ext.getCmp(prototype.id + '-cmbFindByTablet').setVisible(false);
                 cmbFindByFAMEX.bindStore(Ext.create('Ext.data.ArrayStore', {
                     autoLoad: false,
                     fields: ['code', 'name'],
@@ -418,6 +426,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 }
                 break;
             case 'T':
+                Ext.getCmp(prototype.id + '-cmbFindByLigas').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbFindByTablet').setVisible(true);
                 cmbFindByFAMEX.bindStore(Ext.create('Ext.data.ArrayStore', {
                     autoLoad: false,
                     fields: ['code', 'name'],
@@ -526,7 +536,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
 //        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
 //        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-//        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');        
+//        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');   
+          Ext.getCmp(prototype.id + '-cmbFindByLigas').setValue('');
+          Ext.getCmp(prototype.id + '-cmbFindByTablet').setValue('');
     },
     btnExcel_click: function (obj, e) {
 

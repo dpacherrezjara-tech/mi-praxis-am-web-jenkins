@@ -265,7 +265,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                                 keypress: 'txtField_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'label',
                             text: 'Credit Card:',
@@ -304,7 +304,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                                 keypress: 'filterPNRSettlement'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'label',
                             text: 'Auth:',
@@ -323,6 +323,65 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             listeners: {
                                 keypress: 'filterPNRSettlement'
                             }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFindByLigas',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"],  
+                                    ["8133735688", "Ligas - 8133735688"], 
+                                    ["9592174866", "Ligas - 9592174866"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            value: "",
+                            fieldLabel: 'Sales Merchant',
+                            labelWidth: 100,
+                            labelAlign: 'right',
+                            //hidden: false,
+                            width: 230,
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFindByTablet',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"], 
+                                    ["9352724851", "Tablet - 9352724851"], 
+                                    ["8264209750", "Tablet - 8264209750"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            value: "",
+                            fieldLabel: 'Sales Merchant',
+                            labelWidth: 100,
+                            labelAlign: 'right',
+                            //hidden: false,
+                            width: 230,
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
                         },
                     ]
                 },
