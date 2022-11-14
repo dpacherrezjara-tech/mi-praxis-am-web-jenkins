@@ -13,36 +13,55 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
     lstA1852: {},
     dataObtain: {},
     // </editor-fold>
-    init: function(view) {
+    init: function (view) {
         prototype.id = 'SalesReconciliBoomerForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliBoomer';
         meDE = this;
+        this.p = this.view.params;
+        this.bean = this.p.rec;
     },
-    afterRender: function() {
-        //Llamado a base de datos para traer el recibo y monto
+    afterRender: function () {
+        this.getData();
+    },
+    getData: function () {
+//        console.log('getData');
+        var beanString = JSON.stringify(meDE.bean.data);
+
+        Ext.Ajax.request({
+            url: prototype.url + '/searchVoucherDetail',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            params: {beanString: beanString},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanResult = res.result;
+                meDE.mostrarData();
+
+            }
+        });
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
-    llenarData: function(beanTemp) {
+    llenarData: function (beanTemp) {
         //Llenar el voucher - monto
-        beanTemp.VOUCHER = Ext.getCmp(prototype.id+'-de-txtVoucher').getValue();
-        beanTemp.AMOUNT = Ext.getCmp(prototype.id+'-de-txtVoucherAmount').getValue();
+        beanTemp.VOUCHER = Ext.getCmp(prototype.id + '-de-txtVoucher').getValue();
+        beanTemp.AMOUNT = Ext.getCmp(prototype.id + '-de-txtVoucherAmount').getValue();
         meDE.paramsExport.beanString = JSON.stringify(beanTemp);
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
-    limpiarData: function() {
+    limpiarData: function () {
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
-    mostrarData: function(){
-        var p = this.view.params;
-        rec = p.rec;
-        Ext.getCmp(prototype.id+'-de-txtVoucher').setValue(rec.get('VOUCHER'));
-        Ext.getCmp(prototype.id+'-de-txtVoucherAmount').setValue(rec.get('VAMOUNT'));
+    mostrarData: function () {        
+        Ext.getCmp(prototype.id + '-de-txtVoucher').setValue(this.beanResult.VOUCHER);
+        Ext.getCmp(prototype.id + '-de-txtVoucherAmount').setValue(this.beanResult.VAMOUNT);
     },
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Botones">
-    onUpdateClick: function(btn) {
+    onUpdateClick: function (btn) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to update ?',
@@ -50,7 +69,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
@@ -60,24 +79,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
             }
         });
     },
-    onCancelClick: function(btn) {
+    onCancelClick: function (btn) {
         this.view.close();
     },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getValue: function(id) {
+    getValue: function (id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();
     },
-    focus: function(id) {
+    focus: function (id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
     },
-    setValue: function(id, txt) {
+    setValue: function (id, txt) {
         Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onTextKeypress: function(obj, e, eOpts) {
+    onTextKeypress: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
 //            this.btnSearch_click();
         }

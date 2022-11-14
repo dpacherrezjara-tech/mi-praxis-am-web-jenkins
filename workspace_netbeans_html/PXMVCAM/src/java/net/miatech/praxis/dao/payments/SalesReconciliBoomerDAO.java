@@ -1579,8 +1579,8 @@ public class SalesReconciliBoomerDAO {
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.IN_DATSET.trim());
-            cstmt01.setString(3, filter.IN_WEEKMO.trim());
+            cstmt01.setString(2, filter.DATSET.trim());
+            cstmt01.setString(3, filter.WEEKMO.trim());
 
             cstmt01.execute();
 
@@ -1630,8 +1630,8 @@ public class SalesReconciliBoomerDAO {
             cstmt = cnx.prepareCall(SQLCLL01);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);          
-            cstmt.setString(2, filter.IN_DATSET.trim());
-            cstmt.setString(3, filter.IN_WEEKMO.trim());
+            cstmt.setString(2, filter.DATSET.trim());
+            cstmt.setString(3, filter.WEEKMO.trim());
             cstmt.setString(4, filter.IN_VOUCHER.trim());
             cstmt.setDouble(5, filter.IN_VAMOUNT);
             //Campos para auditoria
