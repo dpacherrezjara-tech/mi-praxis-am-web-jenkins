@@ -1616,7 +1616,7 @@ public class SalesReconciliBoomerDAO {
     }
   
     public String loadPX559SQP04638(A2324Filter filter) throws SQLException, Exception {
-        String strMsj = "";
+        String strMsj = "SUCCESSFUL. Information Updated.";
         
         //strMsj = "SUCCESSFUL. Information Created.";
         CallableStatement cstmt = null;

@@ -45,9 +45,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
         //Llenar el voucher - monto
-        beanTemp.VOUCHER = Ext.getCmp(prototype.id + '-de-txtVoucher').getValue();
-        beanTemp.AMOUNT = Ext.getCmp(prototype.id + '-de-txtVoucherAmount').getValue();
-        meDE.paramsExport.beanString = JSON.stringify(beanTemp);
+        beanTemp.IN_VOUCHER = Ext.getCmp(prototype.id + '-de-txtVoucher').getValue();
+        beanTemp.IN_AMOUNT = Ext.getCmp(prototype.id + '-de-txtVoucherAmount').getValue();
+        beanTemp.DATSET = this.beanResult.DATSET;
+        beanTemp.WEEKMO = this.beanResult.WEEKMO;
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
@@ -55,7 +56,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
-    mostrarData: function () {        
+    mostrarData: function () {
         Ext.getCmp(prototype.id + '-de-txtVoucher').setValue(this.beanResult.VOUCHER);
         Ext.getCmp(prototype.id + '-de-txtVoucherAmount').setValue(this.beanResult.VAMOUNT);
     },
@@ -74,8 +75,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
                     var beanTemp = {};
                     this.llenarData(beanTemp);
                     console.log(beanTemp.beanString);
+                    this.MaintenanceA2318(beanTemp);
                     //global.getFile(prototype.url + '/getXLSXSearchDetail?beanString=' + meDE.paramsExport.beanString);
                 }
+            }
+        });
+    },
+    MaintenanceA2318: function (beanTemp) {
+//        console.log(beanTemp);
+        var beanString = JSON.stringify(beanTemp);
+        Ext.Ajax.request({
+            url: prototype.url + '/updateVoucher',
+            method: 'POST',
+            timeout: 60000000,
+//            params: beanTemp,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+                if (res.success) {
+                    global.Msg({msg: res.Mensaje});
+                    Ext.getCmp(prototype.id + '-dataEntry').unmask();
+                    Ext.getCmp(prototype.id + '-dataEntry').close();
+                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                } else
+                    global.Msg({msg: ''});
             }
         });
     },
