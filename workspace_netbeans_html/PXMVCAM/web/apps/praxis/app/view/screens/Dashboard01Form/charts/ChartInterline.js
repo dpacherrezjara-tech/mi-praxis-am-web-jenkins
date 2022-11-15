@@ -1379,7 +1379,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             autoSelect: false,
                                             enableKeyEvents: true,
                                             caseSensitive: true,
-                                            hidden: false,
+                                            hidden: true,
                                             valueField: 'code',
                                             displayField: 'name',
                                             labelWidth: 100,

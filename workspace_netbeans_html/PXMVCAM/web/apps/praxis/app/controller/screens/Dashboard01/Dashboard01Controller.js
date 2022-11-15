@@ -536,6 +536,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     showCurrentChart: function () {
         var isOK = true;
         this.hidePanelsChart();
+        me.screen_actual=Ext.getCmp(prototype.id + '-tabMain').activeTab.id;
         switch (me.screen_actual) {
 
             case prototype.id + '-SalesAnalysis_tab' :
