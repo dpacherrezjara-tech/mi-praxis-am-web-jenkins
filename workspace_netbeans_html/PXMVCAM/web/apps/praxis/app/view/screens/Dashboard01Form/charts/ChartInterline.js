@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                                {boxLabel: '<strong >Month</strong>', name: 'rb', inputValue: 'rbc1_IA', width: 120, checked: true},[
                                                 {boxLabel: '<strong >Month</strong>', name: 'rb', inputValue: 'rbc1_IA', width: 120},
                                                 {boxLabel: '<strong >Airline</strong>', name: 'rb', inputValue: 'rbc2_IA', width: 120},
-                                                {boxLabel: '<strong >Workp</strong>', name: 'rb', inputValue: 'rbc3_IA', width: 120}
+                                                {boxLabel: '<strong >WorkProgress</strong>', name: 'rb', inputValue: 'rbc3_IA', width: 120}
                                             ],
                                             listeners: {
                                                 change: 'onChangeRadio'
