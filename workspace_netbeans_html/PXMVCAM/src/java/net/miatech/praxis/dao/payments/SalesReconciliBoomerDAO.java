@@ -1173,6 +1173,8 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
 
                     beanTkt.SPNR = rst.getString("SPNR");
+                    beanTkt.VOUCHER = rst.getString("VOUCHER").trim();
+                    beanTkt.VAMOUNT = rst.getDouble("VAMOUNT");
 
                     beanTkt.totSVFOP = totSVFOP;
 
@@ -1586,8 +1588,10 @@ public class SalesReconciliBoomerDAO {
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-                objRtn.CCUST = rs01.getString("CCUST");
-                objRtn.VOUCHER = rs01.getString("VOUCHER");
+                objRtn.DATSET = filter.DATSET.trim();
+                objRtn.WEEKMO = filter.WEEKMO.trim();
+                objRtn.CCUST = rs01.getString("CCUST").trim();
+                objRtn.VOUCHER = rs01.getString("VOUCHER").trim();
                 objRtn.VAMOUNT = rs01.getDouble("VAMOUNT");               
                 //lstRtn.add(objRtn);
             }

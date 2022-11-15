@@ -4351,17 +4351,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Origin Transaction', width: 130,
+                                            {text: 'Origin Transaction', dataIndex: 'VOUCHER', width: 130,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
                                                     metaData.style = "text-align:center";
-                                                    if (data.FCOMPLEMENTO === '1') {
-                                                        metaData.style = "text-align:center;background-color:#FD7355";
-                                                        return "*123456";
-                                                    } else {
-                                                        return "*212477-85900389722";
-                                                    }
-
+                                                    return value;
                                                 }
                                             },
                                             {
@@ -4373,16 +4367,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Available', dataIndex: 'totSVFOP', width: 90, //flex: 1
+                                                        text: 'Available', dataIndex: 'VAMOUNT', width: 90, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
-                                                            metaData.style = "text-align:center";
-                                                            if (data.FCOMPLEMENTO === '1') {
-                                                                metaData.style = "text-align:center;background-color:#FD7355";
-                                                                value = data.totSVFOP_COMPLEMENTO;
-                                                            } else {
-                                                                value = data.totSVFOP;
-                                                            }
+                                                            metaData.style = "text-align:right;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             return value;
                                                         }

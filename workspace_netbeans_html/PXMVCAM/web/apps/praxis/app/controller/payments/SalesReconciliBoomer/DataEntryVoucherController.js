@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntryVoucher
     llenarData: function (beanTemp) {
         //Llenar el voucher - monto
         beanTemp.IN_VOUCHER = Ext.getCmp(prototype.id + '-de-txtVoucher').getValue();
-        beanTemp.IN_AMOUNT = Ext.getCmp(prototype.id + '-de-txtVoucherAmount').getValue();
+        beanTemp.IN_VAMOUNT = Ext.getCmp(prototype.id + '-de-txtVoucherAmount').getValue();
         beanTemp.DATSET = this.beanResult.DATSET;
         beanTemp.WEEKMO = this.beanResult.WEEKMO;
     },

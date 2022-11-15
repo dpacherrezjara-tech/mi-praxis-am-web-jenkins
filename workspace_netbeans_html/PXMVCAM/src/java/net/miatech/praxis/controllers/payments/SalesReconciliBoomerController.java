@@ -1434,8 +1434,8 @@ public class SalesReconciliBoomerController extends BaseController {
 
                 rcell0.setCellValue(contador++);
                 rcell1.setCellValue("02_AEROVIAS");
-                rcell2.setCellValue("*212477-85900389722");
-                rcell3.setCellValue(listaData.get(vi).totSVFOP);
+                rcell2.setCellValue(listaData.get(vi).VOUCHER);
+                rcell3.setCellValue(listaData.get(vi).VAMOUNT);
                 rcell4.setCellValue("MXN");
                 rcell5.setCellValue("R");
                 rcell6.setCellValue("N/A");
