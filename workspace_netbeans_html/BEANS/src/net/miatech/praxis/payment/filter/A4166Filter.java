@@ -34,7 +34,9 @@ public class A4166Filter extends A4166 {
     public String IN_SCARDN1 = "";
     public String IN_SCARDN2 = "";
     public String IN_SAUTHOC = "";
-
+    public String IN_MERCHIDT = "";
+    public String IN_MERCHIDL = "";
+    
     public Pagination page = new Pagination();
     
 }
