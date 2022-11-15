@@ -1214,7 +1214,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     },
                                     renderer: function (obj, value) {
                                         if (value > 1) {
-                                            return ' ' + (value / 1000000) + 'M ';
+                                            return ' ' + Ext.util.Format.number((value / 1000000), '0') + 'M';
                                         } else {
                                             return '';
                                         }
