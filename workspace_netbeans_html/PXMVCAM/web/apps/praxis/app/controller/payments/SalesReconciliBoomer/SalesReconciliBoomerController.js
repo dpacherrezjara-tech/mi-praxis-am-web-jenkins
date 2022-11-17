@@ -801,10 +801,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     SetOnGridDetHeaderByPeriod: function() {
         var layout = Ext.getCmp(prototype.id + '-cmbLayout').getValue();
         win.lblUser_toolTip("Estructura: A2324");
+        var url_layout = '/searchDetHeaderByPeriod';
+        if (layout === 'third') {
+            url_layout = '/searchDetHeaderByPeriod3rd'
+        }
 //        this.setFormatParameter();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
-                url: prototype.url + '/searchDetHeaderByPeriod'
+                url: prototype.url + url_layout
             }, listeners: {
                 beforeload: function(obj) {
 //                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
