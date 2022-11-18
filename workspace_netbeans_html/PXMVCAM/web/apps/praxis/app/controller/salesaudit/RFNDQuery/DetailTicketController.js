@@ -415,12 +415,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 VL_A3648STTAX = rec.get('A3648XTTAX');
             }
             if (rec.get('A3648STOTL') > 0) {
-                VL_A3648XMDA = rec.get('A3648SMDA');
-                VL_A3648XMDAQ = rec.get('A3648SMDAQ');
+               // VL_A3648XMDA = rec.get('A3648SMDA');
+               // VL_A3648XMDAQ = rec.get('A3648SMDAQ');
                 VL_A3648STOTL = rec.get('A3648STOTL');
             } else {
-                VL_A3648XMDA = rec.get('A3648XMDA');
-                VL_A3648XMDAQ = rec.get('A3648XMDAQ');
+               // VL_A3648XMDA = rec.get('A3648XMDA');
+               // VL_A3648XMDAQ = rec.get('A3648XMDAQ');
                 VL_A3648STOTL = rec.get('A3648XTOTL');
             }
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(VL_A3648STARF);
@@ -428,8 +428,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').setValue(Ext.util.Format.number(VL_A3648STTAX, '0,000.00'));
             //Ext.getCmp(prototype.idDetailTicket + '-txtCommissionAm').setValue(Ext.util.Format.number(rec.get('A3648SCOMI'), '0,000.00'));
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number(VL_A3648STOTL, '0,000.00'));
-            Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(VL_A3648XMDAQ);
-            Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(VL_A3648XMDA);
+            Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(rec.get('A3648MDAQD'));
+            Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(rec.get('A3648MDAD'));
+            //Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(VL_A3648XMDAQ);
+            //Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(VL_A3648XMDA);
 
         }
 
