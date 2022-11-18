@@ -383,7 +383,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                     {text: 'Folio', dataIndex: 'A3647FOLIO', width: 150, align: 'center', renderer: 'onRendererColumnOnPreme'},
                                     {text: 'System <br> date', dataIndex: 'A3647FREGI', width: 100, sortable: true, align: 'center'},
                                     {text: 'Auditor', dataIndex: 'A3647REGAS', width: 100},
-                                    {text: 'Zone', dataIndex: 'A3647COCD', width: 130, renderer: 'onRendererColumnTYPE'},
+                                    {text: 'Zone', dataIndex: 'A3647ARCD', width: 130, renderer: 'onRendererColumnTYPE'},
                                     {text: 'Ticket Qty',
                                         columns: [
                                             {text: 'Request',
@@ -689,8 +689,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                 items: [
                                     {text: 'System<br>Date', dataIndex: 'A3648FREGI', width: 70},
                                     {text: 'Issue<br>Date', dataIndex: 'A3648XFSAL', width: 70},
-                                    {text: 'Zone', dataIndex: 'A3648COCD', width: 120}, //renderer: 'onRendererColumnTYPE'
-                                    {text: 'Area', dataIndex: 'A3648ARCD', width: 70}, // renderer: 'onRendererColumnBase'
+                                    {text: 'Zone', dataIndex: 'A3648ARCD', width: 120}, //renderer: 'onRendererColumnTYPE'
+                                    {text: 'Area', dataIndex: 'A3648COCD', width: 70}, // renderer: 'onRendererColumnBase'
                                     {text: 'Ticket', dataIndex: 'A3648TICKET', width: 120},
                                     {text: 'CPN', dataIndex: 'A3648CPN', width: 40},
                                     {text: 'Country', dataIndex: 'A3648SPVTA', width: 60},
