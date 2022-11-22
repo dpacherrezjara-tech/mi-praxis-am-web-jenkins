@@ -167,11 +167,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                //["PRDA", "Processing Date"],
-                ["PAYDATE", "Payment Date"]
+                ["PRDA", "Processing Date"],
+                //["PAYDATE", "Payment Date"]
             ]
         }));
-        cmbDateSel.setValue("PAYDATE");
+        cmbDateSel.setValue("PRDA");
 
         var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
         cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
