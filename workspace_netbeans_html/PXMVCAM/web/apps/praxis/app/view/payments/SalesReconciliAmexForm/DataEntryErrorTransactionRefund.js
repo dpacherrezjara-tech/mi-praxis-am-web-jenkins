@@ -1124,7 +1124,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             height: 245,
                             hidden: false,
                             bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 100',
+                            margin: '10 2 12 20',
                             items: [
                                 {
                                     xtype: 'grid',
