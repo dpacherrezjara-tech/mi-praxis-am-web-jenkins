@@ -77,6 +77,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
+                //Coupons
+                Ext.getCmp(prototype.id + '-coupons_sales').show();
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(1030);
+                Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(1035);
+                
                 if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
                     Ext.getCmp(prototype.id + '-panelScanCard').hide();
@@ -84,9 +89,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
                     Ext.getCmp(prototype.id + '-gridColumnFill').hide();
-                    Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
-                    //Coupons
-                    Ext.getCmp(prototype.id + '-coupons_sales').show();
+                    Ext.getCmp(prototype.id + '-gridColumnAdj').hide();                    
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(930);
                     Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(935);
                     if (this.bean.STVAL === '5') {
