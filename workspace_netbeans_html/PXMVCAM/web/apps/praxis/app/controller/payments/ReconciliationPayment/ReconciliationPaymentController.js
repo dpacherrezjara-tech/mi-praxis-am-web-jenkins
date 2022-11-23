@@ -149,8 +149,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
 
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
+        //Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue('2021');
+        //Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
 
 
@@ -158,8 +160,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
-        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
+        //Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue('2021');
+        //Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
 
         var cmbDateSel = Ext.getCmp(prototype.id + '-cmbDateSel');
@@ -167,11 +171,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                //["PRDA", "Processing Date"],
-                ["PAYDATE", "Payment Date"]
+                ["PRDA", "Processing Date"],
+                //["PAYDATE", "Payment Date"]
             ]
         }));
-        cmbDateSel.setValue("PAYDATE");
+        cmbDateSel.setValue("PRDA");
 
         var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
         cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {

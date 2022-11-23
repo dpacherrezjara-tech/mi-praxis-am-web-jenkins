@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            width: 100,
+                            width: 110,
                             hidden: false
                         },
                         {
@@ -165,13 +165,13 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         {
                             xtype: 'radiogroup',
                             id: prototype.id + '-radiogroupType',
-                            width: 810,
+                            width: 480,
                             items: [
-                                {boxLabel: '<b style="color:#148D28;">Summary</b>', inputValue: 'SU', name: 'rbgType'},
+                                {boxLabel: '<b style="color:#148D28;">Summary</b>', inputValue: 'SU', name: 'rbgType', checked: true},
                                 {boxLabel: '<b style="color:#148D28;">Settlement</b>', inputValue: 'SE', name: 'rbgType'},
-                                {boxLabel: '<b style="color:#148D28;">Adjustment Queue</b>', inputValue: 'AD', name: 'rbgType'},
-                                {boxLabel: '<b style="color:#148D28;">Transact. Queue Error</b>', inputValue: 'ER', name: 'rbgType', checked: true},
-                                {boxLabel: '<b style="color:#148D28;">Change Payment</b>', inputValue: 'CP', name: 'rbgType'},
+                                //{boxLabel: '<b style="color:#148D28;">Adjustment Queue</b>', inputValue: 'AD', name: 'rbgType'},
+                                {boxLabel: '<b style="color:#148D28;">Transact. Queue Error</b>', inputValue: 'ER', name: 'rbgType'},
+                                //{boxLabel: '<b style="color:#148D28;">Change Payment</b>', inputValue: 'CP', name: 'rbgType'},
                             ],
                             listeners: {
                                 change: 'rbChangeType'

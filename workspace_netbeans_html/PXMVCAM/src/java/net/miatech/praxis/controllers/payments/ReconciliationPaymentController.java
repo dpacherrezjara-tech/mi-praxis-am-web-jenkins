@@ -120,7 +120,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04378(filter);
+            lst = logic.loadPX606SQP04692(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -170,7 +170,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04257(filter);
+            lst = logic.loadPX606SQP04693(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -186,7 +186,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            lst = logic.loadPX570SQP04329(filter);
+            lst = logic.loadPX606SQP04329(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -201,7 +201,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            lst = logic.loadPX570SQP04330(filter);
+            lst = logic.loadPX606SQP04330(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -251,7 +251,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04269(filter);
+            lst = logic.loadPX606SQP04269(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -301,7 +301,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04270(filter);
+            lst = logic.loadPX606SQP04270(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -351,7 +351,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04471(filter);
+            lst = logic.loadPX606SQP04471(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -401,7 +401,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04278(filter);
+            lst = logic.loadPX606SQP04278(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -435,7 +435,7 @@ public class ReconciliationPaymentController extends BaseController {
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A4118Filter.class);
 
-            lst = logic.loadPX570SQP04279(filter);
+            lst = logic.loadPX606SQP04279(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -484,7 +484,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04328(filter);
+            lst = logic.loadPX606SQP04694(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -533,7 +533,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04376(filter);
+            lst = logic.loadPX606SQP04376(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -583,7 +583,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04275(filter);
+            lst = logic.loadPX606SQP04695(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -633,7 +633,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04571(filter);
+            lst = logic.loadPX606SQP04571(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -683,7 +683,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04284(filter);
+            lst = logic.loadPX606SQP04284(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -733,7 +733,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04463(filter);
+            lst = logic.loadPX606SQP04463(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -785,7 +785,7 @@ public class ReconciliationPaymentController extends BaseController {
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
 
-            lst = logic.loadPX570SQP04420(filter);
+            lst = logic.loadPX606SQP04420(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -837,7 +837,7 @@ public class ReconciliationPaymentController extends BaseController {
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
 
-            lst = logic.loadPX570SQP04377(filter);
+            lst = logic.loadPX606SQP04377(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -889,7 +889,7 @@ public class ReconciliationPaymentController extends BaseController {
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
 
-            lst = logic.loadPX570SQP04619(filter);
+            lst = logic.loadPX606SQP04619(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -939,7 +939,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04357(filter);
+            lst = logic.loadPX606SQP04357(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -989,7 +989,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04468(filter);
+            lst = logic.loadPX606SQP04468(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -1038,8 +1038,8 @@ public class ReconciliationPaymentController extends BaseController {
         logic = new ReconciliationPaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX570SQP04359(filter);
-//            lstInfo = logic.loadPX570SQP04395(result);
+            result = logic.loadPX606SQP04359(filter);
+//            lstInfo = logic.loadPX606SQP04395(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -1066,7 +1066,7 @@ public class ReconciliationPaymentController extends BaseController {
         logic.setSession(this.serverSession.getServerSession());
         try {
 
-            lstInfo = logic.loadPX570SQP04395(filter);
+            lstInfo = logic.loadPX606SQP04395(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -1093,7 +1093,7 @@ public class ReconciliationPaymentController extends BaseController {
         logic.setSession(this.serverSession.getServerSession());
         try {
 
-            lstInfo = logic.loadPX570SQP04455(filter);
+            lstInfo = logic.loadPX606SQP04455(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -1119,7 +1119,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX570SQP04360(filter);
+            msj = logic.loadPX606SQP04360(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1156,7 +1156,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX570SQP04361(filter);
+            msj = logic.loadPX606SQP04361(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1193,7 +1193,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX570SQP04469(filter);
+            msj = logic.loadPX606SQP04469(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1230,7 +1230,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX570SQP04636(filter);
+            msj = logic.loadPX606SQP04636(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1267,8 +1267,8 @@ public class ReconciliationPaymentController extends BaseController {
         logic = new ReconciliationPaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX570SQP04466(filter);
-//            lstInfo = logic.loadPX570SQP04395(result);
+            result = logic.loadPX606SQP04466(filter);
+//            lstInfo = logic.loadPX606SQP04395(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -9120,7 +9120,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04414(filter);
+            lst = logic.loadPX606SQP04414(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -9172,7 +9172,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04465(filter);
+            lst = logic.loadPX606SQP04465(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -9223,7 +9223,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04569(filter);
+            lst = logic.loadPX606SQP04569(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -9274,7 +9274,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04570(filter);
+            lst = logic.loadPX606SQP04570(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -9325,7 +9325,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04470(filter);
+            lst = logic.loadPX606SQP04470(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -9342,7 +9342,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            lst = logic.loadPX570SQP04617(filter);
+            lst = logic.loadPX606SQP04617(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }

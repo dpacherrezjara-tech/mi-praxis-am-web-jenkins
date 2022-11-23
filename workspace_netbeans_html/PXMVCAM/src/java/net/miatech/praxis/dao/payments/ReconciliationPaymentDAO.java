@@ -56,7 +56,7 @@ public class ReconciliationPaymentDAO {
         session = ss;
     }
 
-    public List<A4113Filter> loadPX570SQP04378(A4113Filter filter) throws SQLException, Exception {
+    public List<A4113Filter> loadPX606SQP04692(A4113Filter filter) throws SQLException, Exception {
 
         List<A4113Filter> lstTkts = new ArrayList<A4113Filter>(0);
         A4113Filter beanTkt;
@@ -74,7 +74,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04378(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04692(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -232,7 +232,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4113Filter> loadPX570SQP04257(A4113Filter filter) throws SQLException, Exception {
+    public List<A4113Filter> loadPX606SQP04693(A4113Filter filter) throws SQLException, Exception {
 
         List<A4113Filter> lstTkts = new ArrayList<A4113Filter>(0);
         A4113Filter beanTkt;
@@ -250,7 +250,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04257(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04693(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -427,7 +427,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4113Filter> loadPX570SQP04329(A4113Filter filter) throws SQLException, Exception {
+    public List<A4113Filter> loadPX606SQP04329(A4113Filter filter) throws SQLException, Exception {
         List<A4113Filter> lstTkts = new ArrayList<A4113Filter>(0);
         A4113Filter beanTkt;
         double totPNETAMOU = 0, totPGROSAMOU = 0, totPDISCAMOU = 0, totPSFEEAMOU = 0, totODBALAMOU = 0, totNETAMOUNC = 0;
@@ -600,7 +600,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4113Filter> loadPX570SQP04330(A4113Filter filter) throws SQLException, Exception {
+    public List<A4113Filter> loadPX606SQP04330(A4113Filter filter) throws SQLException, Exception {
 
         List<A4113Filter> lstTkts = new ArrayList<A4113Filter>(0);
         A4113Filter beanTkt;
@@ -774,7 +774,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
+    public List<A4115Filter> loadPX606SQP04269(A4115Filter filter) throws SQLException, Exception {
 
         List<A4115Filter> lstTkts = new ArrayList<A4115Filter>(0);
         A4115Filter beanTkt, filaTotal, filaAdjustment;
@@ -965,7 +965,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04270(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04270(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -1178,7 +1178,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04471(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04471(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -1385,7 +1385,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4117Filter> loadPX570SQP04278(A4117Filter filter) throws SQLException, Exception {
+    public List<A4117Filter> loadPX606SQP04278(A4117Filter filter) throws SQLException, Exception {
 
         List<A4117Filter> lstTkts = new ArrayList<A4117Filter>(0);
         A4117Filter beanTkt;
@@ -1545,7 +1545,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4118Filter> loadPX570SQP04279(A4118Filter filter) throws SQLException, Exception {
+    public List<A4118Filter> loadPX606SQP04279(A4118Filter filter) throws SQLException, Exception {
 
         List<A4118Filter> lstTkts = new ArrayList<A4118Filter>(0);
         A4118Filter beanTkt;
@@ -1706,7 +1706,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4118Filter> loadPX570SQP04376(A4118Filter filter) throws SQLException, Exception {
+    public List<A4118Filter> loadPX606SQP04376(A4118Filter filter) throws SQLException, Exception {
 
         List<A4118Filter> lstTkts = new ArrayList<A4118Filter>(0);
         A4118Filter beanTkt;
@@ -1871,7 +1871,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4114Filter> loadPX570SQP04571(A4113Filter filter) throws SQLException, Exception {
+    public List<A4114Filter> loadPX606SQP04571(A4113Filter filter) throws SQLException, Exception {
 
         List<A4114Filter> lstTkts = new ArrayList<A4114Filter>(0);
         A4114Filter beanTkt;
@@ -2000,7 +2000,7 @@ public class ReconciliationPaymentDAO {
     }
 
     // ---------------------------------------------------
-    public List<A4116Filter> loadPX570SQP04328(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04694(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -2008,7 +2008,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04328(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04694(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2117,7 +2117,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04275(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04695(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -2125,7 +2125,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04275(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04695(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
 
@@ -2274,7 +2274,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04284(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04284(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -2598,7 +2598,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04377(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04377(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -2898,7 +2898,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04619(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04619(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -3084,7 +3084,7 @@ public class ReconciliationPaymentDAO {
         return lstRtn;
     }
 
-    public A4118Filter loadPX570SQP04466(A4118Filter filter) throws SQLException, Exception {
+    public A4118Filter loadPX606SQP04466(A4118Filter filter) throws SQLException, Exception {
 
         A4118Filter objRtn = new A4118Filter();
         CallableStatement cstmt01 = null;
@@ -3216,7 +3216,7 @@ public class ReconciliationPaymentDAO {
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    public List<A4116Filter> loadPX570SQP04357(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04357(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -3503,7 +3503,7 @@ public class ReconciliationPaymentDAO {
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    public List<A4116Filter> loadPX570SQP04468(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04468(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -3645,7 +3645,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
+    public A4116Filter loadPX606SQP04359(A4116Filter filter) throws SQLException, Exception {
 
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
@@ -3873,7 +3873,7 @@ public class ReconciliationPaymentDAO {
         return objRtn;
     }
 
-    public String loadPX570SQP04360(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04360(A4116Filter filter) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String msj = "";
@@ -3937,7 +3937,7 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX570SQP04361(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04361(A4116Filter filter) throws SQLException, Exception {
 
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
@@ -4043,7 +4043,7 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX570SQP04636(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04636(A4116Filter filter) throws SQLException, Exception {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -4096,7 +4096,7 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX570SQP04469(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04469(A4116Filter filter) throws SQLException, Exception {
 
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
@@ -4175,7 +4175,7 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public List<A4116Filter> loadPX570SQP04414(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04414(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4236,7 +4236,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04465(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04465(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4297,7 +4297,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04569(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04569(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4357,7 +4357,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04570(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04570(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4418,7 +4418,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04617(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04617(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4489,7 +4489,7 @@ public class ReconciliationPaymentDAO {
         return numero_a_cambiar;
     }
 
-    public List<A4116Filter> loadPX570SQP04395(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04395(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
         A4116Filter beanRec;
@@ -4610,7 +4610,7 @@ public class ReconciliationPaymentDAO {
         return lstInfo;
     }
 
-    public List<A4116Filter> loadPX570SQP04455(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04455(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
         A4116Filter beanRec;
@@ -4713,7 +4713,7 @@ public class ReconciliationPaymentDAO {
         return lstInfo;
     }
 
-    public List<A4116Filter> loadPX570SQP04463(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04463(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4834,7 +4834,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04420(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04420(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -4998,7 +4998,7 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04470(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
