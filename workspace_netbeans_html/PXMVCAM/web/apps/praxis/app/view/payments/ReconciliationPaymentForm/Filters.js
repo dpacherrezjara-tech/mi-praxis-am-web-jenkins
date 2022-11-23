@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            width: 100,
+                            width: 110,
                             hidden: false
                         },
                         {
