@@ -4,10 +4,12 @@ package net.miatech.praxis.controllers.flown;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.SocketException;
@@ -28,6 +30,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.interline.filter.SFI040Filter;
 import net.miatech.praxis.logic.flown.AccountingCouponsLogic;
 import net.miatech.utils.Functions;
 import org.apache.poi.ss.usermodel.Cell;
@@ -46,6 +49,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.commons.codec.binary.Base64;
 
 // </editor-fold>
 /**
@@ -130,25 +134,31 @@ public class AccountingCouponsController extends BaseController {
             filter.strQuarter = request.getParameter("strQuarter").trim();
             filter.strFte = request.getParameter("strFte").trim();
             filter.PrimerstrTicket = request.getParameter("PrimerstrTicket").trim();
-            
+
             String temp = request.getParameter("PAGNUM").trim();
-            if(temp != null) filter.page.PAGNUM = Integer.parseInt(temp);
+            if (temp != null) {
+                filter.page.PAGNUM = Integer.parseInt(temp);
+            }
             temp = request.getParameter("PAGROW").trim();
-            if(temp != null) filter.page.PAGROW = Integer.parseInt(temp);
+            if (temp != null) {
+                filter.page.PAGROW = Integer.parseInt(temp);
+            }
             temp = request.getParameter("RN").trim();
-            if(temp != null) filter.RN = Integer.parseInt(temp);
+            if (temp != null) {
+                filter.RN = Integer.parseInt(temp);
+            }
             filter.strPag = request.getParameter("strPag").trim();
-            
+
             masterDAO = new MasterDAO();
             masterDAO.setSession((IServerSession) serverSession.getServerSession());
             HashMap<String, String> hmAeropuertos = masterDAO.loadCiudadesHash();
-            
+
             logic = new AccountingCouponsLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
-            
+
             listaData = logic.loadAccountingCoupons_COBOL(filter, hmAeropuertos);
             // listaData = logic.loadAccountingCoupons_COBOL(filter);
-            
+
             map.put("success", true);
             map.put("data", listaData);
         } catch (NumberFormatException | SQLException ex) {
@@ -168,61 +178,41 @@ public class AccountingCouponsController extends BaseController {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         String strFecha;
+        String bytes = "";
 
         String[] lista;//Nombres de los archivos en general
         List<A3084Filter> listaArray = new ArrayList<>();
-        byte[] bytes = null;
+
         //OBTENIENDO EL ZIP DESEADO ========================================
         try {
             strFecha = request.getParameter("strFecha");
-            
+
             FilenameFilter fnfZIP = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return (name.startsWith("ACC_") /*&& name.endsWith(".txt")*/);
+                    return (name.startsWith("ACC_") && name.endsWith(".zip"));
                 }
             };
-            //OBTENIENDO NOMBRE DE ZIP REJECTION y BILLING MEMO,
-            // listaArray=null;
-            //String pathImgs = "\\\\wsfile\\Users\\eneves\\comparto\\RFND-AVIANCA\\descargaContabilidad\\202211\\";
-            String pathImgs = "\\\\10.0.0.87\\am\\ACC\\"+ strFecha.substring(0,4)+"\\" ;
+
+            String pathImgs = "\\\\10.0.0.87\\am\\ACC\\" + strFecha.substring(0, 4) + "\\";
             File archivo = new File(pathImgs);
-            lista = archivo.list(fnfZIP);//
-            //if (lista != null && lista.length > 0) {
+            lista = archivo.list(fnfZIP);
             for (int i = 0; i < lista.length; i++) {
-                if (lista[i].toString().trim().startsWith( "ACC_" + strFecha )) {
-                    //  file = lista[i].toString().trim();
+                if (lista[i].toString().trim().startsWith("ACC_" + strFecha)) {
                     A3084Filter nombre = new A3084Filter();
                     nombre.strFormatDate = lista[i].toString().trim();
                     listaArray.add(nombre);
                 }
             }
-            //  }
-            
             InputStream input;
-            try {
-                if (listaArray.size() > 0) {
-                    File f = new File(pathImgs + listaArray.get(0).strFormatDate);
-
-                    if (f.exists()) {
-                        bytes = new byte[(int) f.length()];
-                        input = new FileInputStream(f);
-                        input.read(bytes);
-                        input.close();
-                    }
-                }
-                
-            } catch (SocketException e) {
-                e.printStackTrace();
-            } catch (IOException eg) {
-                eg.printStackTrace();
+            if (listaArray.size() > 0) {
+                File f = new File(pathImgs + listaArray.get(0).strFormatDate);
             }
-            
+
             map.put("success", true);
             map.put("listaArray", listaArray);
-            map.put("str", new String(bytes));
+            map.put("str", bytes);
         } catch (Exception e) {
-            //e.printStackTrace();
             e.printStackTrace(pw);
             sw.toString();
             map.put("success", false);
@@ -231,26 +221,58 @@ public class AccountingCouponsController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "getIDECZip")
+    public @ResponseBody
+    void getIDECZip(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        SFI040Filter filter = new SFI040Filter();
+        String strFecha = request.getParameter("FECHA");
+        InputStream is = null;
+        try {
+            System.out.println("PassengerInvoices : getIDECZip");
+            String rutaFile = "\\\\10.0.0.87\\am\\ACC\\" + strFecha.substring(0, 4) + "\\";
+            String fileName = "ACC_" + strFecha + ".zip";
+
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+            OutputStream out = response.getOutputStream();
+            is = new FileInputStream(rutaFile + "\\" + fileName);
+
+            int bytes;
+            while ((bytes = is.read()) != -1) {
+                out.write(bytes);
+            }
+            is.close();
+            response.flushBuffer();
+        } catch (IOException ex) {
+            System.out.println("PassengerInvoices : getIDECZip");
+        } finally {
+            is.close();
+        }
+
+    }
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         List<A3084Filter> listaData;
         filter = new A3084Filter();
-        
+
         String fileNameDownload = String.format("AccountingCoupons - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-        
+
         try {
             Workbook workbook = null;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            
+
             filter.IN_FECHA_FROM = request.getParameter("IN_FECHA_FROM");
             filter.QUARTER = request.getParameter("QUARTER");
             filter.FTE = request.getParameter("FTE");
-            
+
             logic = new AccountingCouponsLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.loadSQP01807(filter);
-            
+
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("AccountingCoupons");
@@ -275,7 +297,7 @@ public class AccountingCouponsController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            
+
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -320,9 +342,9 @@ public class AccountingCouponsController extends BaseController {
             sheet.autoSizeColumn(1, true);
 
             ++vj;
-            
+
             Row row2 = sheet.createRow(vj);
-            
+
             Cell CH2_00 = row2.createCell(0);
             Cell CH2_01 = row2.createCell(1);
             Cell CH2_02 = row2.createCell(2);
@@ -364,9 +386,8 @@ public class AccountingCouponsController extends BaseController {
 //            sheet.autoSizeColumn(4, true);
 //            sheet.autoSizeColumn(5, true);
 //            sheet.autoSizeColumn(6, true);
-
             ++vj;
-            
+
             Row row3 = sheet.createRow(vj);
 
             Cell CH3_00 = row3.createCell(0);
@@ -411,18 +432,17 @@ public class AccountingCouponsController extends BaseController {
             CH3_08.setCellStyle(headerStyle);
             CH3_09.setCellStyle(headerStyle);
             CH3_10.setCellStyle(headerStyle);
-            
+
 //            sheet.autoSizeColumn(3, true);
 //            sheet.autoSizeColumn(4, true);
 //            sheet.autoSizeColumn(5, true);
 //            sheet.autoSizeColumn(6, true);
-
             ++vj;
             // </editor-fold>
-            
+
             while (iter.hasNext()) {
                 row = sheet.createRow(vj);
-                
+
                 // <editor-fold defaultstate="collapsed" desc="Iterativo">
                 Cell cell50 = row.createCell(0);
                 Cell cell51 = row.createCell(1);
@@ -472,7 +492,7 @@ public class AccountingCouponsController extends BaseController {
                 sheet.autoSizeColumn(9, true);
                 sheet.autoSizeColumn(10, true);
                 // </editor-fold>
-                
+
                 iter.next();
                 ++vi;
                 ++vj;
