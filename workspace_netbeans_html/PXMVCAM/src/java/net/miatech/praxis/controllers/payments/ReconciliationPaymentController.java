@@ -484,7 +484,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX606SQP04328(filter);
+            lst = logic.loadPX606SQP04694(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -583,7 +583,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX606SQP04275(filter);
+            lst = logic.loadPX606SQP04695(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }

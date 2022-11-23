@@ -71,16 +71,16 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04376(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04275(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04275(filter);
+    public List<A4116Filter> loadPX606SQP04695(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04695(filter);
     }
 
     public List<A4114Filter> loadPX606SQP04571(A4113Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04571(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04328(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04328(filter);
+    public List<A4116Filter> loadPX606SQP04694(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04694(filter);
     }
 
     public List<A4116Filter> loadPX606SQP04284(A4116Filter filter) throws SQLException, Exception {
