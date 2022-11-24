@@ -787,7 +787,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     },
     setGridDataFiltroPDATE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "PDATE";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();

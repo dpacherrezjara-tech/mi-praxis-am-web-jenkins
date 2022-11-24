@@ -3308,7 +3308,7 @@ public class ReconciliationPaymentDAO {
             filter.page.TOTPAG = cstmt.getInt(19);
             filter.page.TOTROW = cstmt.getInt(20);
 
-            cstmt.execute();
+            //cstmt.execute();
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -3575,7 +3575,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
 
-                    beanTkt.PAYDATE = rst.getString("PAYDATE");
+//                    beanTkt.PAYDATE = rst.getString("PAYDATE");
+                    beanTkt.PRDA = rst.getString("PRDA");
                     beanTkt.TNCM = rst.getInt("TNCM");
                     beanTkt.TNCP = rst.getInt("TNCP");
                     beanTkt.CPLM = rst.getInt("CPLM");
