@@ -99,8 +99,8 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadSQP00697(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04357(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04357(filter);
+    public List<A4116Filter> loadPX606SQP04697(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04697(filter);
     }
 
     public List<A4116Filter> loadPX606SQP04696(A4116Filter filter) throws SQLException, Exception {
