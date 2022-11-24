@@ -4,7 +4,6 @@
  */
 package net.miatech.praxis.controllers.payments;
 
-import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,11 +19,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -44,9 +41,20 @@ public class LoadDeliveryController extends BaseController{
     @RequestMapping(value = "/getHeaders",method = RequestMethod.POST)
     public ResponseEntity<?> getHeader(@RequestBody Map<String,Object> body){
         SQP04717Filter filter = new SQP04717Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        
         filter.setIN_CCUST(body.get("IN_CCUST").toString());
+        filter.setIN_PROCESADOR(body.get("IN_PROCESADOR").toString());
+        filter.setIN_OPCION(body.get("IN_OPCION").toString());
         filter.setIN_FROMDATE(body.get("IN_FROMDATE").toString());
         filter.setIN_TODATE(body.get("IN_TODATE").toString());
+        int start = (int) (body.get("start") == null ? 0 : body.get("start"));
+        filter.page.PAGROW = 20;
+        start = (start != 0 ? start : 0);
+        filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+
         List<SQP04717Filter> res =  new ArrayList<>();
         try{
             logic.setSession((IServerSession) serverSession.getServerSession());

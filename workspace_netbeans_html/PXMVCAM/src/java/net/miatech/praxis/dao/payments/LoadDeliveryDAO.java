@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
@@ -32,20 +33,36 @@ public class LoadDeliveryDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-
+    
     public List<SQP04717Filter> getSQP04717Filter(SQP04717Filter filter) throws Exception {
         Connection con = null;
         CallableStatement cstmt = null;
         ResultSet rs = null;
-        String sql = "{CALL PRAXISMP.SQP04717(?,?,?)}";
+        String sql = "{CALL PRAXISMP.SQP04717(?,?,?,?,?,?,?,?,?)}";
         List<SQP04717Filter> lstObj = new ArrayList<>();
         try {
             con = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = con.prepareCall(sql);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            
             cstmt.setString(1, filter.getIN_CCUST());
-            cstmt.setString(2, filter.getIN_FROMDATE());
-            cstmt.setString(3, filter.getIN_TODATE());
+            cstmt.setString(2, filter.getIN_PROCESADOR());
+            cstmt.setString(3, filter.getIN_OPCION ());
+            cstmt.setString(4, filter.getIN_FROMDATE());
+            cstmt.setString(5, filter.getIN_TODATE());
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);   
             cstmt.execute();
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
+            
             rs = cstmt.getResultSet();
             while (rs.next()) {
                 SQP04717Filter obj = new SQP04717Filter();
@@ -74,6 +91,10 @@ public class LoadDeliveryDAO {
                 obj.setA4298REGVI(rs.getString("A4298REGVI"));
                 obj.setA4298FREVI(rs.getString("A4298FREVI"));
                 obj.setA4298HREVI(rs.getString("A4298HREVI"));
+                obj.page.PAGNUM = filter.page.PAGNUM;
+                obj.page.PAGROW = filter.page.PAGROW;
+                obj.page.TOTPAG = filter.page.TOTPAG;
+                obj.page.TOTROW = filter.page.TOTROW;                
                 lstObj.add(obj);
             }
         } catch (Exception e) {
