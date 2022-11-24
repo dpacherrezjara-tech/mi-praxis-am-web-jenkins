@@ -28,21 +28,21 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
     },
     search: async function () {
         let url = prototype.url + '/getHeaders';
-        let fecha1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
-        ;
+        let fecha1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');        
         let fecha2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
-        ;
-        let body = {IN_CCUST: '139', IN_FROMDATE: fecha1, IN_TODATE: fecha2};
+        let opcion = '1';        
+        let procesador = '';
+        let body = {IN_CCUST: '139', IN_PROCESADOR: procesador, IN_OPCION: opcion, IN_FROMDATE: fecha1, IN_TODATE: fecha2};
         let data = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(res => res.json())
-                .then(data => data);
+        }).then(res => res.json()).then(data => data);
+        
         Ext.define('Ext.Praxis.store.payments.LoadDeliveryData', {
-            pageSize: 5,
+            pageSize: 20,
             extend: 'Ext.data.Store',
             autoSync: true,
             data: data,
@@ -52,19 +52,80 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                 reader: {
                     type: 'json'
                 }
-            }
+            },
+//             listeners: {
+//                beforeload: function (obj) {
+//                    obj.proxy.extraParams = body;
+//                },
+//                load: function (obj, obj2, success, obj4, obj5) {
+//                    win.lblUser_toolTip("Estructura: A4298");
+//                    // <editor-fold defaultstate="collapsed" desc="paggin">
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
+//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
+//                    var total = Ext.util.Format.number(pagData.total, '0,000');
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+//                    // </editor-fold>
+//                }
+//            }
+            
         });
         var store = Ext.create('Ext.Praxis.store.payments.LoadDeliveryData');
         store.loadPage(1);
-        let grid =  Ext.getCmp(prototype.id + '-gridData');
+        let grid = Ext.getCmp(prototype.id + '-gridData');
         let pag = Ext.getCmp(prototype.id + '-PagingToolbar');
         grid.bindStore(store);
         pag.bindStore(store);
+        
+        
+         
+//          var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.SalesList.GridData', {
+//            proxy: {
+//                url: prototype.url + '/search'
+//            },
+//            listeners: {
+//                beforeload: function (obj) {
+//                    obj.proxy.extraParams = bean;
+//                },
+//                load: function (obj, obj2, success, obj4, obj5) {
+//                    win.lblUser_toolTip("Estructura: A3957");
+//                    // <editor-fold defaultstate="collapsed" desc="paggin">
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
+//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
+//                    var total = Ext.util.Format.number(pagData.total, '0,000');
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+//                    // </editor-fold>
+//                    if (obj.data.length === 0) {
+//                        global.Msg({
+//                            msg: 'Data not found'
+//                        });
+//                    }
+//                    if (obj.data.length === 1) {                    
+//                        //console.log('abrir ventana en automatico');
+//                        //seleccionar el registro
+//                        var grid = Ext.getCmp(prototype.id + '-gridData');
+//                        me.onDetailClick( grid , 0, 0 );
+//                    }
+//                    
+//                    global.clear();
+//                }
+//            }
+//        });
+         
+        
+        
     },
-    onShowDelivery:function(obj,rec){
-        let grid =  Ext.getCmp(prototype.id + '-gridData');
+    onShowDelivery: function (obj, rec) {
+        let grid = Ext.getCmp(prototype.id + '-gridData');
         let row = grid.store.getAt(rec).data;
-        let params = {IN_TABLE:row.a4298NTAB.trim(),IN_IDFILE:row.a4298IDFIL};
+        let params = {IN_TABLE: row.a4298NTAB.trim(), IN_IDFILE: row.a4298IDFIL};
         Ext.create('Ext.Praxis.view.payments.LoadDeliveryForm.LoadDeliveryEntry', {
             id: prototype.id + '-LoadDeliveryEntry',
             params: params

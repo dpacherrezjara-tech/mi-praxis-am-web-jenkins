@@ -46,12 +46,43 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Filters', {
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id + '-cmbfiltro',
-                                            fieldLabel: 'Search by', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                            id: prototype.id + '-cmbfiltro-procesador',
+                                            fieldLabel: 'Procesador', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
-                                                    //["1", "System Date"],
+                                                    ["0", "-TODOS-"],
+                                                    ["1", "WORLDPAY"],
+                                                    ["2", "PRISMA"],
+                                                    ["3", "FIRSTDATA"]
+                                                ]
+                                            }),
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 240,
+                                            height: 26,
+                                            value: "0",
+                                            listConfig: {maxHeight: 111},
+                                            enableKeyEvents: true,
+                                            padding: '6 0',
+                                            listeners: {
+                                                // change: 'cmbfiltro_clickHandler'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbfiltro',
+                                            fieldLabel: 'Search by', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
+                                            store: new Ext.data.SimpleStore({
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ["1", "System Date"],
                                                     ["2", "Processing Date"]
                                                 ]
                                             }),

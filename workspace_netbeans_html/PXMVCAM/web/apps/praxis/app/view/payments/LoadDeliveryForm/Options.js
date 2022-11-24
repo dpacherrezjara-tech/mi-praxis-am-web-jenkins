@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Options', {
                         {
                             xtype: 'pagingtoolbar',
                             id: prototype.id + '-paggin',                            
-                            pageSize: 10,
+                            pageSize: 20,
                             border: false,
                             displayInfo: false,
                             hidden:true

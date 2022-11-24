@@ -49,14 +49,15 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Info', {
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             width: '100%',
-                            height: 510,
+                            height: 400,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
-                                    {text: 'Record Type', dataIndex: 'a4298TYPE', width: 110, align: 'center', padding: 8,flex:1},
-                                    {text: 'Fecha Proceso', dataIndex: 'a4298PRDA', align: 'center', width: 120},
-                                    {text: 'Secuencia', dataIndex: 'a4298SQFIL', align: 'left', width: 120},
-                                    {text: 'Total de <br> Lineas File', dataIndex: 'a4298TLIN', width: 120, align: 'left',
+                                    {text: 'Id File', dataIndex: 'a4298IDFIL', width: 110, align: 'center'},
+                                    {text: 'Seq.', dataIndex: 'a4298SQFIL', align: 'center', width: 80},
+                                    {text: 'Processing date', dataIndex: 'a4298PRDA', align: 'center', width: 120},
+                                    {text: 'Record Type', dataIndex: 'a4298TYPE', width: 110, align: 'center', padding: 8, flex: 1},
+                                    {text: 'Total de <br> Lineas File', dataIndex: 'a4298TLIN', width: 120, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');
@@ -65,7 +66,7 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Info', {
                                             return Ext.util.Format.number(value, '0');
                                         }
                                     },
-                                    {text: 'Transacciones <br> Grabadas', dataIndex: 'a4298QTRN', width: 120, align: 'left',
+                                    {text: 'Transacciones <br> Grabadas', dataIndex: 'a4298QTRN', width: 120, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');
@@ -74,13 +75,31 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Info', {
                                             return Ext.util.Format.number(value, '0');
                                         }
                                     },
-                                    {text: 'Lineas <br> Recibicidas', dataIndex: 'a4298QLIN', width: 120, align: 'left',
+                                    {text: 'Lineas <br> Recibicidas', dataIndex: 'a4298QLIN', width: 120, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0');
+                                        }
+                                    },
+                                    {
+                                        text: 'Estado<br>Carga', dataIndex: 'a4298STREC', width: 120, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="ERROR" >';
+                                            if (record.get('a4298STREC') === '0')
+                                                var html = '<img src="resources/img/semaforo/Circle_Green.png" title="OK" >';
+                                            return html;
+                                        }
+                                    },
+                                    {
+                                        text: 'Estado<br>Formateo', dataIndex: 'a4298STCAR', width: 120, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="PENDIENTE" >';
+                                            if (record.get('a4298STCAR') !== 'P')
+                                                var html = '<img src="resources/img/semaforo/Circle_Green.png" title="FORMATEADO" >';
+                                            return html;
                                         }
                                     },
                                     {
@@ -108,13 +127,53 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Info', {
                             },
                             bbar: Ext.create('Ext.PagingToolbar', {
                                 id: prototype.id + '-PagingToolbar',
-                                displayInfo: true,
+                                displayInfo: true,                                
                                 displayMsg: 'Displaying records {0} - {1} of {2}',
                                 emptyMsg: "No records to display",
                                 inputItemWidth: 35
                             })
+                        },
+                        {
+//                            xtype: 'panel',
+//                            id: prototype.id + '-pie',
+//                            width: 210,
+//                            height: 35,                            
+//                            layout: {
+//                                type: 'hbox',
+//                                pack: 'center'
+//                            },
+//                            border: true,                            
+//                            bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+//                            defaults: {
+//                                border: true
+//                            },
+//                            padding: '1px 1px 1px 1px',
+//                            items: [
+//                                {
+//                                    xtype: 'panel',
+//                                    id: prototype.id + '-boxPaginacion',
+//                                    width: 210,
+//                                    border: false,
+//                                    items: [
+//                                        {
+//                                            xtype: 'toolbar',
+//                                            cls: 'x-toolbar-pag',
+//                                            items: [
+//                                                {
+//                                                    xtype: 'pagingtoolbar',
+//                                                    id: prototype.id + '-paggin',
+//                                                    pageSize: 20,
+//                                                    border: false,
+//                                                    displayInfo: true,
+//                                                    hidden: false
+//                                                }
+//                                            ]
+//                                        }
+//                                    ]
+//                                }
+//                            ]
                         }
-                        // </editor-fold>
+                        // </editor-fold>                        
                     ]
                 }
             ]
