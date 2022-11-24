@@ -4,16 +4,21 @@
  */
 package net.miatech.praxis.payment.filter;
 
+import net.miatech.beans.Pagination;
 import net.miatech.praxis.payment.A4298;
 
 /**
  *
  * @author Dvicente
  */
-public class SQP04717Filter extends A4298{
+public class SQP04717Filter extends A4298 {
+
     private String IN_CCUST;
+    private String IN_PROCESADOR;
+    private String IN_OPCION;
     private String IN_FROMDATE;
     private String IN_TODATE;
+    public Pagination page = new Pagination();
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -21,6 +26,22 @@ public class SQP04717Filter extends A4298{
 
     public void setIN_CCUST(String IN_CCUST) {
         this.IN_CCUST = IN_CCUST;
+    }
+
+    public String getIN_PROCESADOR() {
+        return IN_PROCESADOR;
+    }
+
+    public void setIN_PROCESADOR(String IN_PROCESADOR) {
+        this.IN_PROCESADOR = IN_PROCESADOR;
+    }
+
+    public String getIN_OPCION() {
+        return IN_OPCION;
+    }
+
+    public void setIN_OPCION( String IN_OPCION ) {
+        this.IN_OPCION = IN_OPCION;
     }
 
     public String getIN_FROMDATE() {
@@ -38,6 +59,5 @@ public class SQP04717Filter extends A4298{
     public void setIN_TODATE(String IN_TODATE) {
         this.IN_TODATE = IN_TODATE;
     }
-    
-    
+
 }
