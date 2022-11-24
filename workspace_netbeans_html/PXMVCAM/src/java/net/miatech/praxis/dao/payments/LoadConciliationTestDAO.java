@@ -3223,6 +3223,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.SERIE = rst.getString("SERIE").trim();
                         beanTkt.TDOC = rst.getString("TDOC").trim();
                         beanTkt.SEQ = rst.getString("SEQ").trim();
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();
                         if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
@@ -5247,6 +5248,7 @@ public class LoadConciliationTestDAO {
 
                         beanTkt.TDOC = rst.getString("TDOC").trim();
                         beanTkt.SEQ = rst.getString("SEQ").trim();
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();
                         if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
