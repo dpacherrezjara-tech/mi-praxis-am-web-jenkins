@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAccountingCouponsController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
-    me: '',
+    meDta: '',
     strFormatDate: '',
     str: '',
     tempLink: '',
@@ -11,35 +11,25 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
     },
     afterRender: function(){
         this.p = this.view.params;
-        me = this;
+        meDta = this;
         this.mostrarData(this.p.FECHA);
     },
     onBtnExport_Click: function() {
-        var csvData = new Blob([this.str], {type: 'text/csv;base64;'});
-        var csvURL = window.URL.createObjectURL(csvData);
-        this.tempLink = document.createElement('a');
-        this.tempLink.href = csvURL;
         Ext.getCmp(prototype.id + '-btnDownload').show();
     },
-    
-    // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(FECHA) {
         this.setValue('txtDate', FECHA.substring(0,4));
         this.setValue('txtPernum', FECHA.substring(4,6));
         this.exportFile1(FECHA);
     },
-    // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Botones">
     onDownloadClick: function() {
-        this.tempLink.setAttribute('download', this.strFormatDate);
-        this.tempLink.click();
+        global.getFile(prototype.url + '/getIDECZip?FECHA=' + this.p.FECHA);
     },
     onCancelClick: function(btn){
         this.view.close();
     },
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="exportFile1">
     exportFile1: function(FECHA) {
         Ext.Ajax.request({
@@ -59,11 +49,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
                             data: listaFile
                         });
                         Ext.getCmp(prototype.id + '-gridFileNames').bindStore(storeGridData);
-                        me.strFormatDate = listaFile[0].strFormatDate;
-                        me.str = res.str;
+                        meDta.strFormatDate = listaFile[0].strFormatDate;
+                        meDta.str = res.str;
                     } else {
                         global.Msg({ msg: 'This File has not been created.' });
-                        me.onCancelClick();
+                        meDta.onCancelClick();
                     }
 //                } else global.Msg({ msg: res.sesion });
                 } else global.Msg({ msg: 'This File has not been created.' });
