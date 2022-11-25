@@ -5390,7 +5390,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Payment',
+                                                text: 'Processing',
                                                 id: prototype.id + '-htDateErrorTransaction',
                                                 hidden: false,
                                                 defaults: {
