@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
     lstCards: [],
     actionCode: '',
     msj: '',
+    meDE: '',
     adjust: {},
     adjust_amount: 0,
     dataObtain: {},
@@ -13,6 +14,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
 //    FUNCION: '',
 //    recalculoVuelo: '',
     init: function (view) {
+        meDE = this;
     },
     afterRender: function () {
         switch (this.actionCode) {
@@ -102,14 +104,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue('2-txtADATE', this.bean.ADATE.trim());
         win.setValue("2-txtATCNTR", this.bean.ATCNTR.trim());
         win.setValue('2-txtAVFOP', win.formatDblNumber(this.bean.AVFOP));
+        win.setValue('txtSVFOP_ADJ', win.formatDblNumber(this.bean.SVFOP_ADJ));
         win.setValue('2-txtACURRENCY', this.bean.ACURRENCY.trim());
         win.setValue('2-txtACARDN', this.bean.strSCARDN);
         win.setValue('2-txtADATEXP', this.bean.ADATEXP.trim());
         win.setValue("2-txtAAUTHOC", this.bean.AAUTHOC.trim());
         win.setValue("2-txtAPNR", this.bean.APNR.trim());
-        win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());
-
-
+        win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());                       
+        win.setValue("de-txtOBSERV", this.bean.OBSERV);
 
         if (this.bean.strDescMerchn.trim() !== '') {
             win.setValue('2-txtMERCHN', this.bean.MERCHN.trim() + ' - ' + this.bean.strDescMerchn.trim());
@@ -160,10 +162,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
                     Ext.getCmp(prototype.id + '-cmbADJTYPE').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
-                    Ext.getCmp(prototype.id + '-cmbADJTYPE').setValue('');
+                    //Ext.getCmp(prototype.id + '-cmbADJTYPE').setValue('');
+                    win.setValue("cmbADJTYPE", meDE.bean.CERROR);
                     //Mostrar panel de ajuste y botón update
                     Ext.getCmp(prototype.id + '-panelAdjustment').setVisible(true);
-                    Ext.getCmp(prototype.id + '-2-btnUpdate').setVisible(true);
+                    //Ext.getCmp(prototype.id + '-2-Payment/PX584').setVisible(true);
                 } else
                     global.Msg({msg: res.sesion});
             }

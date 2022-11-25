@@ -4011,6 +4011,9 @@ public class LoadConciliationTestDAO {
                 beanTkt.CCIA = rst.getString("CCIA").trim();
                 beanTkt.FORMA = rst.getString("FORMA").trim();
                 beanTkt.SERIE = rst.getString("SERIE").trim();
+                
+                beanTkt.OBSERV = rst.getString("OBSERV").trim();
+                beanTkt.SVFOP_ADJ = rst.getDouble("SVFOP_ADJ");
 
                 beanTkt.TDOC = rst.getString("TDOC").trim();
                 beanTkt.SEQ = rst.getString("SEQ").trim();
