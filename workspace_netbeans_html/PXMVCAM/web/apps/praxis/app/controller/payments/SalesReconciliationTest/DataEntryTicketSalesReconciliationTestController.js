@@ -33,7 +33,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
             case 'S':
                 this.limpiarData();
                 this.mostrarData();
-                if (this.bean.STVAL === '2') { //Venta sin liquidación
+                if (this.bean.STVAL === '5') { //Match Manual
                     this.configurarAjuste();
                 }
         }
