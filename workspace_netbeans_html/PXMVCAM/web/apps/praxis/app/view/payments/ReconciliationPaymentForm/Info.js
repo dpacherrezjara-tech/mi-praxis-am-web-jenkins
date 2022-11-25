@@ -5123,7 +5123,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Payment',
+                                                text: 'Processing',
                                                 id: prototype.id + '-htPreDateErrorTransaction',
                                                 hidden: false,
                                                 defaults: {
@@ -5133,7 +5133,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'PAYDATE', width: 90,
+                                                        text: 'Date', dataIndex: 'PRDA', width: 90,
                                                         listeners: {
                                                             click: 'setGridDataFiltroPDATE'
                                                         },
@@ -5390,7 +5390,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Payment',
+                                                text: 'Processing',
                                                 id: prototype.id + '-htDateErrorTransaction',
                                                 hidden: false,
                                                 defaults: {

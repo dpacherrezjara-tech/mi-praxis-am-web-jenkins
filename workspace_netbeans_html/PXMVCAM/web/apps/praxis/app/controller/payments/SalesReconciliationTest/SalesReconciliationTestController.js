@@ -2181,7 +2181,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         me.f_boxDetTktS = '2';
         me.beanboxDetTktS2 = beanDetE;
 
-
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktByStval'

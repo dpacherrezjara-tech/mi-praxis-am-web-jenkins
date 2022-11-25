@@ -3373,7 +3373,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTicket',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1245,
+                                                    width: 1280,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -3620,9 +3620,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'RFIC', dataIndex: 'RFIC', width: 45,
+                                                                text: 'RFIC', dataIndex: 'RFIS1', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;";
+                                                                    metaData.style = "text-align:left;";
                                                                     return value;
                                                                 }
                                                             },
@@ -4669,7 +4669,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTktByStval',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1455,
+                                                    width: 1490,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -4923,9 +4923,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'RFIC', dataIndex: 'RFIC', width: 45,
+                                                                text: 'RFIC', dataIndex: 'RFIS1', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;";
+                                                                    metaData.style = "text-align:left;";
                                                                     return value;
                                                                 }
                                                             },
