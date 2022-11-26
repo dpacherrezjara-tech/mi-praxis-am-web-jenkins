@@ -2187,10 +2187,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             },
             listeners: {
                 beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(me.beanboxDetTktS2)};
                 },
                 load: function (obj, obj2, success, response, obj5) {
-
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
 //                    me.selectedChild('vskMain', 'boxDetTktMatch');
                     win.lblUser_toolTip("Estructura: A4164");
 

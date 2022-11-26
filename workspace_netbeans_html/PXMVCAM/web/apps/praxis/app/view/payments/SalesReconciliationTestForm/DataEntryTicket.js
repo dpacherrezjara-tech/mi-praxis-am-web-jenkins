@@ -1011,7 +1011,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
                                     width: 80
-                                }
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Amount',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 10',
+                                    padding: '4 0',
+                                    width: 120,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtSVFOP_ADJ',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    readOnly: true,
+                                    width: 100
+                                },
                             ]
                         }
                     ]
@@ -1076,6 +1093,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                             triggerAction: 'all',
                                             valueField: 'CODE',
                                             displayField: 'NAME',
+                                            readOnly: true,
                                             width: 180,
                                             labelWidth: 10,
                                             hidden: false,
@@ -1095,6 +1113,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:left;',
                                             enforceMaxLength: true,
+                                            readOnly: true,
                                             maxLength: 50,
                                             width: 320,
                                         },
