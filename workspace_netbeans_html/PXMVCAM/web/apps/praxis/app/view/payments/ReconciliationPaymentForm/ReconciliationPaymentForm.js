@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.ReconciliationPay
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1850,
+                            width: 1870,
                             layout: 'border',
                             
                             items: [
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.ReconciliationPay
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1850,
+                                        width: 1870,
                                         align: 'center'
                                     },
                                     items: [
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.ReconciliationPay
                                         {
                                             xtype: 'panel',
                                             height: 700,
-                                            width: 1850,
+                                            width: 1870,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1850,
+                                                    width: 1870,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
