@@ -107,8 +107,8 @@ public class SalesReconciliAmexLogic {
         return SalesReconciliAmexDAO.loadPX570SQP04468(filter);
     }
 
-    public A4116Filter loadPX570SQP04720(A4116Filter filter) throws SQLException, Exception {
-        return SalesReconciliAmexDAO.loadPX570SQP04720(filter);
+    public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04359(filter);
     }
 
     public A4118Filter loadPX570SQP04466(A4118Filter filter) throws SQLException, Exception {

@@ -1038,7 +1038,7 @@ public class SalesReconciliAmexController extends BaseController {
         logic = new SalesReconciliAmexLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX570SQP04720(filter);
+            result = logic.loadPX570SQP04359(filter);
 //            lstInfo = logic.loadPX570SQP04395(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);

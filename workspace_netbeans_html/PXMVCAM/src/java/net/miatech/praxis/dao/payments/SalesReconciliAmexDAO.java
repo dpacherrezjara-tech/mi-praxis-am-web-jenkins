@@ -3645,7 +3645,7 @@ public class SalesReconciliAmexDAO {
         return lstTkts;
     }
 
-    public A4116Filter loadPX570SQP04720(A4116Filter filter) throws SQLException, Exception {
+    public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
 
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
@@ -3690,7 +3690,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04720(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
