@@ -805,7 +805,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     setGridDataFiltroTNCM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement = {};
         this.beanSettlement.IN_DRILLDOWN = "TNCM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
@@ -822,7 +822,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     },
     setGridDataFiltroTNCP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TNCP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
@@ -941,7 +941,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     },
     setGridDataFiltroTGP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TGP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
@@ -958,7 +958,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     },
     setGridDataFiltroTGM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TGM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();

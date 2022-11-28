@@ -89,6 +89,10 @@ public class A4164 {
     //A2298
     public String REFBOOMER = "";
     
+    //Ajuste
+    public String OBSERV = "";
+    public double SVFOP_ADJ = 0;
+    
     //a2340
     public int QTYTKT = 0;
     public double TOTALCOM = 0;

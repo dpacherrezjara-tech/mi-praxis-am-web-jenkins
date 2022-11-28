@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1840,
+                width: 1850,
                 height: 'auto',
                 align: 'center'
             },
@@ -5366,7 +5366,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1840,
+                            width: 1865,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -5376,7 +5376,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainErrorTransaction',
-                                    width: 1840,
+                                    width: 1865,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -5400,7 +5400,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'DATE', width: 65,
+                                                        text: 'Date', dataIndex: 'DATE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             return value;

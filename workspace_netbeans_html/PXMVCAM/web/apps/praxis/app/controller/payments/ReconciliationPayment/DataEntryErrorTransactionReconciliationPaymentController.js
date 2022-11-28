@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 this.p = this.view.params;
                 this.actionCode = this.p.action;
                 this.bean = this.p.rec.data;
-                //console.log(this.bean);
+                console.log(this.bean);
 
             },
     obtainGetAdjustmentCode: function () {
@@ -210,11 +210,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.formato(this.beanResult.HOUP));
-        if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
-            this.getBreakdownDataGridForMatch();
-        } else {
-            this.getBreakdownDataGrid();
-        }
+//        if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
+//            this.getBreakdownDataGridForMatch();
+//        } else {
+//            this.getBreakdownDataGrid();
+//        }
     },
     formato: function (numero) {
         var d, e;

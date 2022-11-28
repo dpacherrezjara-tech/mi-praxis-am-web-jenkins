@@ -837,7 +837,7 @@ public class ReconciliationPaymentController extends BaseController {
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
 
-            lst = logic.loadPX606SQP04377(filter);
+            lst = logic.loadPX606SQP04698(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -1038,7 +1038,7 @@ public class ReconciliationPaymentController extends BaseController {
         logic = new ReconciliationPaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX606SQP04359(filter);
+            result = logic.loadPX606SQP04720(filter);
 //            lstInfo = logic.loadPX606SQP04395(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
