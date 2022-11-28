@@ -1014,7 +1014,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 },
                                 {
                                     xtype: 'label',
-                                    text: 'Amount',
+                                    text: 'Adjustment',
                                     style: 'font-weight:bold;color:#121E31;',
                                     margin: '0 0 0 10',
                                     padding: '4 0',

@@ -586,6 +586,7 @@ public class LoadConciliationTestDAO {
                             beanTkt.strPEM = "SALES";
                         }
                         beanTkt.RFIC = rst.getString("RFIC").trim();
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();                        
                         
                         if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
                             beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
@@ -913,6 +914,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.TDOC = rst.getString("TDOC").trim();
                         beanTkt.TRNCU = rst.getString("TRNCU").trim();
                         beanTkt.SEQ = rst.getString("SEQ").trim();
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim(); 
                         if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
@@ -3673,6 +3675,8 @@ public class LoadConciliationTestDAO {
                         beanTkt.dblTotAVFOP = dblTotAVFOP;
                         //TEF
                         beanTkt.TDATE = rst.getString("TDATE").trim();
+                        
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();
 
                         try {
                             if (!beanTkt.BDATEP.trim().equals("") && !beanTkt.SDATE.trim().equals("")) {
