@@ -372,6 +372,7 @@ public class ProMasterTicketDAO {
                         objRtn02.fileA730.A730FECVTA = rs02.getString("A730FECVTA");
                         objRtn02.fileA730.A720TKVOID = rs02.getString("A720TKVOID");
                         objRtn02.fileA730.A730CIA720 = rs02.getString("A730CIA720");
+						objRtn02.fileA730.A720TKVOID = rs02.getString("A720TKVOID");
                         objRtn02.fileA730.A730FOR720 = rs02.getString("A730FOR720");
                         objRtn02.fileA730.A730SER720 = rs02.getString("A730SER720");
                         objRtn02.fileA730.A730SEQUEN = rs02.getString("A730SEQUEN");
