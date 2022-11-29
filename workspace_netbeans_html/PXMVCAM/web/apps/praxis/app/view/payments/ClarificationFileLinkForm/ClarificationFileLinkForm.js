@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.view.payments.ClarificationFileLinkForm.ClarificationFile
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: '100%',
+                                            height: 650,
                                             layout: 'fit',
                                             items: [
                                                 {

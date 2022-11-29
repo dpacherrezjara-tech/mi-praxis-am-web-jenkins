@@ -224,8 +224,8 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationFileLink.ClarificationFi
                     Ext.getCmp(prototype.id + '-txtNOMPAX').setValue(beanCall.PAX);
                     Ext.getCmp(prototype.id + '-txtNOMPAX2').setValue(beanCall.PAX);
                     Ext.getCmp(prototype.id + '-txtFVUELO').setValue(beanCall.FVLO1);
-                    Ext.getCmp(prototype.id + '-txtNOMTARHAB').setValue(beanCall.NOMTARHAB);
-                    Ext.getCmp(prototype.id + '-txtCOMMENT').setValue(beanCall.COMMENT);
+                    Ext.getCmp(prototype.id + '-txtNOMTARHAB').setValue(beanCall.txtNOMTARHAB);
+                    Ext.getCmp(prototype.id + '-txtCOMMENT').setValue(beanCall.txtCOMMENT);
                     Ext.getCmp(prototype.id + '-txtDESCVENTA').setValue('Mo/To');
                     Ext.getCmp(prototype.id + '-btnSave').hide();
                     if (beanCall.strImgLink === 'Y') {
