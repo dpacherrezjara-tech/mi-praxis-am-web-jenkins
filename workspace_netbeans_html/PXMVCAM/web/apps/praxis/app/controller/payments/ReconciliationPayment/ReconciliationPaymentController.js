@@ -1344,9 +1344,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
 
         var strTkt = rowData.data.ISREFNBR;
 
-        prototypeProgram.view = 'payments-sales-reconcili-amex-form';
-        prototypeProgram.nprog = 'PX00000570';
-        prototypeProgram.title = 'Sales Reconciliation By Amex';
+        prototypeProgram.view = 'payments-reconciliation-payment-form';
+        prototypeProgram.nprog = 'PX00000606';
+        prototypeProgram.title = 'Reconciliation Payment';
         prototypeProgram.modulo = '';
 
         var beanProMasterTicket = {};
