@@ -3692,7 +3692,7 @@ public class ReconciliationPaymentDAO {
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04720(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04720(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3711,6 +3711,7 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(10, filter.SAUTHOC.trim());
             cstmt01.setString(11, filter.IDITEMS.trim());
             cstmt01.setString(12, filter.IDITEMT.trim());
+            cstmt01.setString(13, filter.ISREFNBR.trim());
 
             cstmt01.execute();
 
