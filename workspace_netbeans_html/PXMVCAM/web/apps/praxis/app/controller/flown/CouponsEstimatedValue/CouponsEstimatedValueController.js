@@ -289,7 +289,7 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
     btnExcel_click: function(obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
+            msg: 'Download data?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
