@@ -478,32 +478,33 @@ public class SalesReportDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PX038S02A713(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PX038S02A713(?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             //cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
 
             cstmt01.setInt(1, filter.IN_OPCION);
             cstmt01.setString(2, filter.IN_AIRLIN);
             cstmt01.setString(3, filter.IN_GRUPO);
             cstmt01.setString(4, filter.IN_TKT);
-            cstmt01.setInt(5, filter.page.PAGNUM);
-            cstmt01.setInt(6, filter.page.PAGROW);
-            cstmt01.setInt(7, filter.page.TOTPAG);
-            cstmt01.setInt(8, filter.page.TOTROW);
+            cstmt01.setString(5, filter.IN_IATA);
+            cstmt01.setInt(6, filter.page.PAGNUM);
+            cstmt01.setInt(7, filter.page.PAGROW);
+            cstmt01.setInt(8, filter.page.TOTPAG);
+            cstmt01.setInt(9, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(5);
-            filter.page.PAGROW = cstmt01.getInt(6);
-            filter.page.TOTPAG = cstmt01.getInt(7);
-            filter.page.TOTROW = cstmt01.getInt(8);
+            filter.page.PAGNUM = cstmt01.getInt(6);
+            filter.page.PAGROW = cstmt01.getInt(7);
+            filter.page.TOTPAG = cstmt01.getInt(8);
+            filter.page.TOTROW = cstmt01.getInt(9);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -516,6 +517,7 @@ public class SalesReportDAO {
                 objRtn.A713FECVTA = rs01.getString("A713FECVTA");
                 objRtn.A713TRNCU = rs01.getString("A713TRNCU");
                 objRtn.CNJ = rs01.getString("CNJ");
+                objRtn.A713AGENTE = rs01.getString("A713AGENTE");
                 objRtn.A713TDOC = rs01.getString("A713TDOC");
                 objRtn.A713MONEDA = rs01.getString("A713MONEDA");
                 objRtn.A713TARIFA = rs01.getDouble("A713TARIFA");
@@ -600,6 +602,7 @@ public class SalesReportDAO {
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 objRtn.A720FECVTA = rs01.getString("A720FECVTA");
                 objRtn.CNJ = rs01.getString("CNJ");
+                objRtn.A720AGENTE = rs01.getString("A720AGENTE");
                 objRtn.A720TRNCU = rs01.getString("A720TRNCU");
                 objRtn.A720MDAAD = rs01.getString("A720MDAAD");
                 objRtn.A720ADC = rs01.getDouble("A720ADC");
@@ -648,34 +651,35 @@ public class SalesReportDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PX038S02A714(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PX038S02A714(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null; //session.getCNXIBMDB2().open();
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             //cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setInt(1, filter.IN_OPCION);
             cstmt01.setString(2, filter.IN_AIRLIN);
             cstmt01.setString(3, filter.IN_GRUPO);
             cstmt01.setString(4, filter.IN_TKT);
             cstmt01.setString(5, filter.IN_TRANSACTION);
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setString(6, filter.IN_IATA);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -686,6 +690,7 @@ public class SalesReportDAO {
                 objRtn.DOCUMENTO = rs01.getString("DOCUMENTO");
                 objRtn.A714FECVTA = rs01.getString("A714FECVTA");
                 objRtn.CNJ = rs01.getString("CNJ");
+                objRtn.A714AGENTE = rs01.getString("A714AGENTE");
                 objRtn.A714TRNCU = rs01.getString("A714TRNCU");
                 objRtn.A714TDOC = rs01.getString("A714TDOC");
                 objRtn.A714MDAFA = rs01.getString("A714MDAFA");
