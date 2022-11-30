@@ -3939,7 +3939,7 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04361(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04723(A4116Filter filter) throws SQLException, Exception {
 
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
@@ -3949,7 +3949,7 @@ public class ReconciliationPaymentDAO {
         A4116Filter beanDet;
         A4116Filter beanObser;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04723(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3982,7 +3982,7 @@ public class ReconciliationPaymentDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -4491,7 +4491,7 @@ public class ReconciliationPaymentDAO {
         return numero_a_cambiar;
     }
 
-    public List<A4116Filter> loadPX606SQP04395(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX606SQP04722(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
         A4116Filter beanRec;
@@ -4518,7 +4518,7 @@ public class ReconciliationPaymentDAO {
         } else {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04722(?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;

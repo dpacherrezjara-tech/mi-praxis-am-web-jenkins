@@ -119,8 +119,8 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04360(filter);
     }
 
-    public String loadPX606SQP04361(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04361(filter);
+    public String loadPX606SQP04723(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04723(filter);
     }
     
     public String loadPX606SQP04636(A4116Filter filter) throws SQLException, Exception {
@@ -155,8 +155,8 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04570(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04395(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04395(filter);
+    public List<A4116Filter> loadPX606SQP04722(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04722(filter);
     }
 
     public List<A4116Filter> loadPX606SQP04455(A4116Filter filter) throws SQLException, Exception {
