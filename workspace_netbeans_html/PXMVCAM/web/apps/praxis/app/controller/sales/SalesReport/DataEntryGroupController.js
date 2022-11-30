@@ -51,8 +51,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
             fields: ['code', 'name'],
             data: [
                 ["1", "Select"],
-                ["2", "Transaction"],
-                ["3", "Document"],
+                ["3", "Transaction"],
+                ["2", "Document"],
                 ["4", "Iata"]
             ]
         }));
@@ -68,14 +68,26 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
             ]
         }));
         cmbTransactionTKT.setValue("");
+        var cmbOptionRF = Ext.getCmp(prototype.idGr+ '-de-cmbOptionRF');
+        cmbOptionRF.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "Select"],
+                ["2", "Document"],
+                ["3", "Iata"]
+            ]
+        }));
+        cmbOptionRF.setValue("1");
         var cmbOptionADM = Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM');
         cmbOptionADM.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
                 ["1", "Select"],
-                ["2", "Transaction"],
-                ["3", "Document"]
+                ["3", "Transaction"],
+                ["2", "Document"],
+                ["4", "Iata"]
             ]
         }));
         cmbOptionADM.setValue("1");
@@ -99,13 +111,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 Ext.getCmp(prototype.idGr+ '-de-txtTKTNumber').hide();
                 Ext.getCmp(prototype.idGr+ '-de-txtIata').hide();
                 break;
-            case '2':
+            case '3':
                 Ext.getCmp(prototype.idGr+ '-de-cmbTransactionTKT').show();
                 Ext.getCmp(prototype.idGr+ '-de-txtTKTNumber').hide();
                 Ext.getCmp(prototype.idGr+ '-de-txtIata').hide();
                 this.onFocus('-de-cmbTransactionTKT');
                 break;
-            case '3':
+            case '2':
                 Ext.getCmp(prototype.idGr+ '-de-cmbTransactionTKT').hide();
                 Ext.getCmp(prototype.idGr+ '-de-txtTKTNumber').show();
                 Ext.getCmp(prototype.idGr+ '-de-txtIata').hide();
@@ -119,17 +131,48 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 break;
         }
     },
-    onChangeComboAdm: function(obj, val) {
+    onChangeComboRfnd: function(obj, val) {
         switch (val) {
+            case '1':
+                Ext.getCmp(prototype.idGr+ '-de-txtRFNNumber').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtRFIata').hide();
+                break;
             case '2':
-                Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').show();
-                Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').hide();
-                this.onFocus('-de-cmbTransactionADM');
+                Ext.getCmp(prototype.idGr+ '-de-txtRFNNumber').show();
+                Ext.getCmp(prototype.idGr+ '-de-txtRFIata').hide();
+                this.onFocus('-de-txtRFNNumber');
                 break;
             case '3':
+                Ext.getCmp(prototype.idGr+ '-de-txtRFNNumber').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtRFIata').show();
+                this.onFocus('-de-txtRFIata');
+                break;
+        }
+    },
+    onChangeComboAdm: function(obj, val) {
+        switch (val) {
+            case '1':
+                Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMIata').hide();
+                break;
+            case '3':
+                Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').show();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMIata').hide();
+                this.onFocus('-de-cmbTransactionADM');
+                break;
+            case '2':
                 Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').hide();
                 Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').show();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMIata').hide();
                 this.onFocus('-de-txtADMNumber');
+                break;
+            case '4':
+                Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').hide();
+                Ext.getCmp(prototype.idGr+ '-de-txtADMIata').show();
+                this.onFocus('-de-txtADMIata');
                 break;
         }
     },
@@ -690,7 +733,21 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
     },
     //</editor-fold>
     onClickBtnSearch: function() {
-        meDE.paramsDE.IN_OPCION = '2';
+        //meDE.paramsDE.IN_OPCION = '2';
+        switch (meDE.tabId) {
+            case '0':
+                meDE.paramsDE.IN_OPCION = Ext.getCmp(prototype.idGr+ '-de-cmbOptionTKT').getValue();
+                break;
+            case '1':
+                meDE.paramsDE.IN_OPCION = Ext.getCmp(prototype.idGr+ '-de-cmbOptionRF').getValue();
+                break;
+            case '2':
+                meDE.paramsDE.IN_OPCION = Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM').getValue();
+                break;
+            case '3':
+                meDE.paramsDE.IN_OPCION = '2';
+                break;
+        }
         this.btnSearch_click();
     },
     btnSearch_click: function() {
@@ -715,6 +772,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 pag += '-de-paggin2';
                 title += 'RFND';
                 meDE.paramsDE.IN_TKT = Ext.getCmp(prototype.idGr+ '-de-txtRFNNumber').getValue();
+                meDE.paramsDE.IN_IATA = Ext.getCmp(prototype.idGr+ '-de-txtRFIata').getValue();
                 break;
             case '2':
                 url1 += this.url + '/loadADM';
@@ -723,6 +781,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 title += 'ADM/ACM';
                 meDE.paramsDE.IN_TKT = Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').getValue();
                 meDE.paramsDE.IN_TRANSACTION = Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').getValue();
+                meDE.paramsDE.IN_IATA = Ext.getCmp(prototype.idGr+ '-de-txtADMIata').getValue();
                 break;
             case '3':
                 url1 += this.urlTotal + '/searchDet';
@@ -843,15 +902,17 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
             option.setVisible(true);
             switch (idNumber) {
                 case '1':
-                    Ext.getCmp(prototype.idGr+ '-de-cmbOptionTKT').setValue("3");
-                    this.onChangeComboTkt(null,'3');
+                    Ext.getCmp(prototype.idGr+ '-de-cmbOptionTKT').setValue("2");
+                    this.onChangeComboTkt(null,'2');
                     break;
                 case '2':
-                    this.onFocus('-de-txtRFNNumber');
+                    Ext.getCmp(prototype.idGr+ '-de-cmbOptionRF').setValue("2");
+                    this.onChangeComboRfnd(null,'2');
+                    //this.onFocus('-de-txtRFNNumber');
                     break;
                 case '3':
-                    Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM').setValue("3");
-                    this.onChangeComboAdm(null,'3');
+                    Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM').setValue("2");
+                    this.onChangeComboAdm(null,'2');
                     break;
             }
         }
@@ -868,8 +929,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         Ext.getCmp(prototype.idGr+ '-de-txtRFNNumber').setValue('');
         Ext.getCmp(prototype.idGr+ '-de-cmbTransactionTKT').setValue('');
         Ext.getCmp(prototype.idGr+ '-de-txtTKTNumber').setValue('');
-        Ext.getCmp(prototype.idGr+ '-de-cmbOptionTKT').setValue('3');
-        Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM').setValue('3');
+        Ext.getCmp(prototype.idGr+ '-de-cmbOptionTKT').setValue('2');
+        Ext.getCmp(prototype.idGr+ '-de-cmbOptionRF').setValue('2');
+        Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM').setValue('2');
         Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').setValue('');
         Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').setValue('');
     },
@@ -898,6 +960,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 + '&IN_GRUPO=' + meDE.paramsDE.IN_GRUPO
                 + '&IN_TKT=' + meDE.paramsDE.IN_TKT
                 + '&IN_TRANSACTION=' + meDE.paramsDE.IN_TRANSACTION
+                + '&IN_IATA=' + meDE.paramsDE.IN_IATA
                 );
     },
     onClosedGroup: function() {
@@ -987,6 +1050,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 + '&IN_GRUPO=' + meDE.paramsDE.IN_GRUPO
                 + '&IN_TKT=' + meDE.paramsDE.IN_TKT
                 + '&IN_TRANSACTION=' + meDE.paramsDE.IN_TRANSACTION
+                + '&IN_IATA=' + meDE.paramsDE.IN_IATA
                 );
     }
 });
