@@ -174,6 +174,7 @@ public class SalesReportControoller extends BaseController {
             filter.IN_AIRLIN = request.getParameter("IN_AIRLIN");
             filter.IN_GRUPO = request.getParameter("IN_GRUPO");
             filter.IN_TKT = request.getParameter("IN_TKT");
+            filter.IN_IATA = request.getParameter("IN_IATA");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -224,6 +225,7 @@ public class SalesReportControoller extends BaseController {
             filter.IN_GRUPO = request.getParameter("IN_GRUPO");
             filter.IN_TKT = request.getParameter("IN_TKT");
             filter.IN_TRANSACTION = request.getParameter("IN_TRANSACTION");
+            filter.IN_IATA = request.getParameter("IN_IATA");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -274,6 +276,7 @@ public class SalesReportControoller extends BaseController {
             filter.IN_GRUPO = request.getParameter("IN_GRUPO");
             filter.IN_TKT = request.getParameter("IN_TKT");
             filter.IN_TRANSACTION = request.getParameter("IN_TRANSACTION");
+            filter.IN_IATA = request.getParameter("IN_IATA");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
