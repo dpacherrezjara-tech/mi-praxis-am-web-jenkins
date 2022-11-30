@@ -90,8 +90,8 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel'
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Export to .txt'
                         },
                         {
                             xtype: 'button',
@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Options', {
                             id: prototype.id + '-btnBack',
                             iconCls: 'prx-icon-back',
                             tooltip: 'Back'
-                        }
+                        },
 //                        {
 //                            xtype: 'button',
 //                            id: prototype.id + '-btnQuery',
