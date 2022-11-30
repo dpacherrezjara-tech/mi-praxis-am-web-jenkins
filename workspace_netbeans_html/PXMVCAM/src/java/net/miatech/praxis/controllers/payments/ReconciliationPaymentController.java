@@ -683,7 +683,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX606SQP04284(filter);
+            lst = logic.loadPX606SQP04721(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -1039,7 +1039,7 @@ public class ReconciliationPaymentController extends BaseController {
         logic.setSession(this.serverSession.getServerSession());
         try {
             result = logic.loadPX606SQP04720(filter);
-//            lstInfo = logic.loadPX606SQP04395(result);
+//            lstInfo = logic.loadPX606SQP04722(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -1066,7 +1066,7 @@ public class ReconciliationPaymentController extends BaseController {
         logic.setSession(this.serverSession.getServerSession());
         try {
 
-            lstInfo = logic.loadPX606SQP04395(filter);
+            lstInfo = logic.loadPX606SQP04722(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -1156,7 +1156,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX606SQP04361(filter);
+            msj = logic.loadPX606SQP04723(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1268,7 +1268,7 @@ public class ReconciliationPaymentController extends BaseController {
         logic.setSession(this.serverSession.getServerSession());
         try {
             result = logic.loadPX606SQP04466(filter);
-//            lstInfo = logic.loadPX606SQP04395(result);
+//            lstInfo = logic.loadPX606SQP04722(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);

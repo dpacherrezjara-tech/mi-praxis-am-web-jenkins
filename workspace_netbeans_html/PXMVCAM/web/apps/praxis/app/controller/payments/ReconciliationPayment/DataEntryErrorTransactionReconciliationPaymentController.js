@@ -484,7 +484,22 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 var beanTemp = {};
                 this.llenarData(beanTemp);
                 beanTemp.option = 'U';
-                this.ValidateTicketPNR(beanTemp, btn);
+                //this.ValidateTicketPNR(beanTemp, btn);
+                Ext.Msg.show(
+                            {
+                                title: '.:PRAXIS:.',
+                                msg: 'Are you sure to update?',
+                                buttons: Ext.MessageBox.YESNO,
+                                scope: this,
+                                animateTarget: btn,
+                                icon: Ext.MessageBox.QUESTION,
+                                modal: true,
+                                fn: function (btn) {
+                                    if (btn === 'yes') {
+                                        meDE.MaintenanceA4116(beanTemp);
+                                    }
+                                }
+                            });
             } else {
                 if (txtMsjValidacionTktPNR !== '') {
                     console.log(txtMsjValidacionTktPNR);
