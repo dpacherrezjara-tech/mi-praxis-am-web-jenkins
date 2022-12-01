@@ -1068,26 +1068,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         });
         
         Ext.getCmp(prototype.id + '-cmbCURRENCY').setValue('');
-//        Ext.Ajax.request({
-//            url: prototype.url + '/getMoneda',
-//            method: 'POST',
-//            timeout: 60000000,
-//            params: {
-//                beanString: JSON.stringify({
-//                    COUNTRY: 2, CARD: 2
-//                })
-//            },
-//            success: function (response, options) {
-//                var res = Ext.JSON.decode(response.responseText);
-//                if (res.success) {
-//                    Ext.getCmp(prototype.id + '-cmbCURRENCY').bindStore(
-//                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-//                            );
-//                    Ext.getCmp(prototype.id + '-cmbCURRENCY').setValue('');
-//
-//                }
-//            }
-//        });
+        Ext.Ajax.request({
+            url: prototype.url + '/getMoneda',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify({
+                    COUNTRY: 2, CARD: 2
+                })
+            },
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbCURRENCY').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbCURRENCY').setValue('');
+
+                }
+            }
+        });
     },
 //    btnDisplay_click: function () {
 //        var panelTab = Ext.getCmp(prototype.id + '-boxMainData');
