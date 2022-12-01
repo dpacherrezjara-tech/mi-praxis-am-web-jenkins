@@ -1264,6 +1264,7 @@ public class SalesReportControoller extends BaseController {
                 + "Document" + delim
                 + "Issue date" + delim
                 + "CNJ" + delim
+                + "Iata" + delim
                 + "Transaction" + delim
                 + "Document Type" + delim
                 + "Type" + delim
@@ -1287,6 +1288,7 @@ public class SalesReportControoller extends BaseController {
                         + item.DOCUMENTO + delim
                         + item.A720FECVTA + delim
                         + item.CNJ + delim
+                        + item.A720AGENTE + delim
                         + item.A720TRNCU + delim
                         + item.A720TDOC + delim
                         + item.A720UFORMA + delim
@@ -1630,21 +1632,23 @@ public class SalesReportControoller extends BaseController {
             Cell CH1_11 = row.createCell(11);
             Cell CH1_12 = row.createCell(12);
             Cell CH1_13 = row.createCell(13);
+            Cell CH1_14 = row.createCell(14);
 
             CH1_00.setCellValue("Air");
             CH1_01.setCellValue("Document");
             CH1_02.setCellValue("Issue date");
             CH1_03.setCellValue("CNJ");
-            CH1_04.setCellValue("Transaction");
-            CH1_05.setCellValue("Document Type");
-            CH1_06.setCellValue("Type");
-            CH1_07.setCellValue("Fare Currency");
-            CH1_08.setCellValue("Fare Amount");
-            CH1_09.setCellValue("Equivalent Fare Curr");
-            CH1_10.setCellValue("Equivalent Fare Aount");
-            CH1_11.setCellValue("Add Curr");
-            CH1_12.setCellValue("Add Aount");
-            CH1_13.setCellValue("Error");
+            CH1_04.setCellValue("Iata");
+            CH1_05.setCellValue("Transaction");
+            CH1_06.setCellValue("Document Type");
+            CH1_07.setCellValue("Type");
+            CH1_08.setCellValue("Fare Currency");
+            CH1_09.setCellValue("Fare Amount");
+            CH1_10.setCellValue("Equivalent Fare Curr");
+            CH1_11.setCellValue("Equivalent Fare Aount");
+            CH1_12.setCellValue("Add Curr");
+            CH1_13.setCellValue("Add Aount");
+            CH1_14.setCellValue("Error");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -1660,6 +1664,7 @@ public class SalesReportControoller extends BaseController {
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -1680,21 +1685,23 @@ public class SalesReportControoller extends BaseController {
                 Cell rcell11 = row.createCell(11);
                 Cell rcell12 = row.createCell(12);
                 Cell rcell13 = row.createCell(13);
+                Cell rcell14 = row.createCell(14);
 
                 rcell0.setCellValue(listaData.get(vi).A720CIA);
                 rcell1.setCellValue(listaData.get(vi).DOCUMENTO);
                 rcell2.setCellValue(listaData.get(vi).A720FECVTA);
                 rcell3.setCellValue(listaData.get(vi).CNJ);
-                rcell4.setCellValue(listaData.get(vi).A720TRNCU);
-                rcell5.setCellValue(listaData.get(vi).A720TDOC);
-                rcell6.setCellValue(listaData.get(vi).A720UFORMA);
-                rcell7.setCellValue(listaData.get(vi).A720MONEDA);
-                rcell8.setCellValue(listaData.get(vi).A720TARIFA);
-                rcell9.setCellValue(listaData.get(vi).A720MDAPAG);
-                rcell10.setCellValue(listaData.get(vi).A720TRFPAG);
-                rcell11.setCellValue(listaData.get(vi).A720MDAAD);
-                rcell12.setCellValue(listaData.get(vi).A720ADC);
-                rcell13.setCellValue(listaData.get(vi).A720MIAERR);
+                rcell4.setCellValue(listaData.get(vi).A720AGENTE);
+                rcell5.setCellValue(listaData.get(vi).A720TRNCU);
+                rcell6.setCellValue(listaData.get(vi).A720TDOC);
+                rcell7.setCellValue(listaData.get(vi).A720UFORMA);
+                rcell8.setCellValue(listaData.get(vi).A720MONEDA);
+                rcell9.setCellValue(listaData.get(vi).A720TARIFA);
+                rcell10.setCellValue(listaData.get(vi).A720MDAPAG);
+                rcell11.setCellValue(listaData.get(vi).A720TRFPAG);
+                rcell12.setCellValue(listaData.get(vi).A720MDAAD);
+                rcell13.setCellValue(listaData.get(vi).A720ADC);
+                rcell14.setCellValue(listaData.get(vi).A720MIAERR);
 
                 iter.next();
                 ++vi;
