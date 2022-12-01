@@ -244,15 +244,16 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDReasonMaintenance.RFNDReasonMaintenan
                             height: 480,
                             columns:{
                                 items:[
-                                    { text: 'Cust', dataIndex: 'A3651CCUST', width: 40 },
+                                    //{ text: 'Cust', dataIndex: 'A3651CCUST', width: 40 },
                                     { text: 'Cod. Reason', dataIndex: 'A3651CODRZ', width: 90 },
+                                    { text: 'Family', dataIndex: 'A3651FAMIL', width: 90 },
                                     { text: 'Comment', flex: 1, 
                                         columns:[
                                             { text: 'Relation', dataIndex: 'A3651COMRE', flex: 1, renderer: 'onRendererColumDescription' },
-                                            { text: 'Description', dataIndex: 'A3651COMES', flex: 1, renderer: 'onRendererColumDescription' },
-                                            { text: 'Des. English', dataIndex: 'A3651COMEN', flex: 1, renderer: 'onRendererColumDescription' },
-                                            { text: 'Des. Portuguese', dataIndex: 'A3651COMPO', flex: 1, renderer: 'onRendererColumDescription' },
-                                            { text: 'Des. French', dataIndex: 'A3651COMFR', flex: 1, renderer: 'onRendererColumDescription' }
+                                            { text: 'Des. Spanish', dataIndex: 'A3651COMES', flex: 1, renderer: 'onRendererColumDescription' },
+                                            { text: 'Des. English', dataIndex: 'A3651COMEN', flex: 1, renderer: 'onRendererColumDescription' }
+                                            //{ text: 'Des. Portuguese', dataIndex: 'A3651COMPO', flex: 1, renderer: 'onRendererColumDescription' },
+                                            //{ text: 'Des. French', dataIndex: 'A3651COMFR', flex: 1, renderer: 'onRendererColumDescription' }
                                         ]
                                     },
                                     {

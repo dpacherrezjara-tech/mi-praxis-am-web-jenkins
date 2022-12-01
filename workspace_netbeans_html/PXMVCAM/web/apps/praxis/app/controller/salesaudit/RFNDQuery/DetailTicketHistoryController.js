@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketHistoryContro
                     compiled: true
                 }
         );
-        template.append(prototype.id4 + '-contenido_historica_html', {
+        template.append(prototype.idDetailTicketHistory + '-contenido_historica_html', {
             code: resultHtml
         });
     },

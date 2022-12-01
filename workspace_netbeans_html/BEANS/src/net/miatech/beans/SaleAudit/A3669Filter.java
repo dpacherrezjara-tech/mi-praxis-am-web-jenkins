@@ -6,15 +6,15 @@
 package net.miatech.beans.SaleAudit;
 
 import net.miatech.beans.DBException;
-import net.miatech.praxis.SaleAudit.A3648;
+import net.miatech.praxis.SaleAudit.A3669;
 
 /**
  *
  * @author zperez
  */
-public class A3648Filter extends A3648 {
-
-    public String IN_OPTION = "";
+public class A3669Filter  extends A3669{
+    
+     public String IN_OPTION = "";
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
     public String IN_STATUS = "";
@@ -52,5 +52,4 @@ public class A3648Filter extends A3648 {
     public String IN_MDAEQUI="";
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
-
 }

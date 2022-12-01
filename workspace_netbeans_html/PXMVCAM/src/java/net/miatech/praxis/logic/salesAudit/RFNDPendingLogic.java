@@ -26,8 +26,8 @@ public class RFNDPendingLogic {
         objDAO.setSession(ss);
     }
 
-    public List<A3647Filter> SearchReportQueryRFND(A3647Filter filter) throws SQLException, Exception {
-        return objDAO.SearchReportQueryRFND(filter);
+    public List<A3647Filter> SearchPendiRefund(A3647Filter filter) throws SQLException, Exception {
+        return objDAO.SearchPendiRefund(filter);
     }
 
     public List<A3651Filter> SearchRFNDRazon(A3651Filter filter) throws SQLException, Exception {

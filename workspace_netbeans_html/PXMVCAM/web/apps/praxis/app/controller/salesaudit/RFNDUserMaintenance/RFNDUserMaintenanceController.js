@@ -7,6 +7,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDUserMaintenance.RFNDUserMainten
      * Constructor
      */
     beanTMP: {},
+    beanEXCEL:{},
     init: function(view){
         var me = this;
         
@@ -68,9 +69,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDUserMaintenance.RFNDUserMainten
         cmbArea.bindStore(Ext.create('Ext.data.Store',{
             data: [
                 { "code": "", "name": "ALL"},
-                { "code": "0001", "name": "CENTRE AND SOUTH AMERICA"},
+                { "code": "0002", "name": "CENTRE AND SOUTH AMERICA"},
                 { "code": "0003", "name": "EUROPE AND ASIA"},
-                { "code": "0002", "name": "MEXICO"},
+                { "code": "0001", "name": "MEXICO"},
                 { "code": "0004", "name": "USA AND CANADA"}
             ]
         }));
@@ -161,7 +162,42 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDUserMaintenance.RFNDUserMainten
         dateTo = parseInt(String(dateTo.split('/')[0]) + String(dateTo.split('/')[1]) + String(dateTo.split('/')[2]));
         return dateFrom > dateTo ? true : false;
     },
+    onExcelClick: function () {
+        var me = this;
+        
+        var comboBy = String(Ext.getCmp(prototype.id+'-search-type').getValue());
+        
+        if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) !== '' &&
+             Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) !== '' ){
+            if ( this.compareDate(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue(), Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) ){
+                Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
+                return;
+            }
+        }
+        me.beanEXCEL.IN_OPTION = comboBy;
+        me.beanEXCEL.IN_DATEFROM = Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue();
+        me.beanEXCEL.IN_DATETO = Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue();
+        me.beanEXCEL.IN_COUNTRY = Ext.getCmp(prototype.id+'-search-Area').getValue();
+        me.beanEXCEL.IN_STATUS = Ext.getCmp(prototype.id+'-CmbStatus').getValue();
+        me.beanEXCEL.IN_USER = Ext.getCmp(prototype.id+'-txtUser').getValue();
+        me.beanEXCEL.IN_USER = me.beanTMP.IN_USER === 'ALL' ? '' : me.beanTMP.IN_USER;
 
+        if (Ext.Object.getSize(me.beanEXCEL) > 0) {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Download Excel ?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'ok') {
+                        global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(me.beanEXCEL)));
+                    }
+                }
+            });
+        }
+    },
     onSearchClick: function(btn){
         var me = this;
         var form = Ext.getCmp(prototype.id + '-contenedor-filters-form').getForm();
@@ -215,35 +251,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDUserMaintenance.RFNDUserMainten
 
     onRendererColumnAgency: function(value, metaData, record, rowIndex, colIndex, store, view){
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnPassenger: function(value, metaData, record, rowIndex, colIndex, store, view){
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnReason: function(value, metaData, record, rowIndex, colIndex, store, view){
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
-    getDataMes: function(data){
-        var index = "";
-	if(data == "JAN"){index = '01'}
-	if(data == "FEB"){index = '02'}
-	if(data == "MAR"){index = '03'}
-	if(data == "APR"){index = '04'}
-	if(data == "MAY"){index = '05'}
-	if(data == "JUN"){index = '06'}
-	if(data == "JUL"){index = '07'}
-	if(data == "AUG"){index = '08'}
-	if(data == "SEP"){index = '09'}
-	if(data == "OCT"){index = '10'}
-	if(data == "NOV"){index = '11'}
-	if(data == "DEC"){index = '12'}
-	return index;
-    },
     
     onBackClick: function(obj){
         var grid01 = Ext.getCmp(prototype.id + '-gridPediente');
