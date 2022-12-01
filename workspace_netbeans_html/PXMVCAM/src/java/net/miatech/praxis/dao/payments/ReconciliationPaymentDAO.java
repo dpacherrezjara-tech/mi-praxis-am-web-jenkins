@@ -3983,7 +3983,7 @@ public class ReconciliationPaymentDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -3996,24 +3996,25 @@ public class ReconciliationPaymentDAO {
                     cstmt01.setString(6, filter.PAYDATE.trim());
                     cstmt01.setString(7, filter.AXPAYNBR.trim());
                     cstmt01.setString(8, filter.BSUMDATE.trim());
+                    cstmt01.setString(9, filter.ISREFNBR.trim());
 
-                    cstmt01.setString(9, beanDet.A1531NREF.trim());
-                    cstmt01.setString(10, beanDet.A1531CAPL.trim());
-                    cstmt01.setDouble(11, beanDet.A1531VFOP);
-                    cstmt01.setString(12, beanDet.A720PNR.trim());
-                    cstmt01.setString(13, beanDet.A1531TKT.trim());
-                    cstmt01.setString(14, beanDet.A720FECVTA.trim());
-                    cstmt01.setString(15, beanDet.A720SEQ.trim());
-                    cstmt01.setString(16, beanDet.A720GRUPO.trim());
-                    cstmt01.setDouble(17, 0); //beanDet.SADJUST
-                    cstmt01.setString(18, filter.ADJ_TYPE.trim());
-                    cstmt01.setString(19, beanDet.STMANUAL);
-                    cstmt01.setString(20, beanDet.A720AGENTE.trim());
-                    cstmt01.setString(21, beanDet.A720ORIG.trim());
-                    cstmt01.setString(22, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(23, Functions.getFechaActual());
-                    cstmt01.setString(24, Functions.getHoraActual());
-                    cstmt01.setString(25, filter.OBSERV.trim());
+                    cstmt01.setString(10, beanDet.A1531NREF.trim());
+                    cstmt01.setString(11, beanDet.A1531CAPL.trim());
+                    cstmt01.setDouble(12, beanDet.A1531VFOP);
+                    cstmt01.setString(13, beanDet.A720PNR.trim());
+                    cstmt01.setString(14, beanDet.A1531TKT.trim());
+                    cstmt01.setString(15, beanDet.A720FECVTA.trim());
+                    cstmt01.setString(16, beanDet.A720SEQ.trim());
+                    cstmt01.setString(17, beanDet.A720GRUPO.trim());
+                    cstmt01.setDouble(18, 0); //beanDet.SADJUST
+                    cstmt01.setString(19, filter.ADJ_TYPE.trim());
+                    cstmt01.setString(20, beanDet.STMANUAL);
+                    cstmt01.setString(21, beanDet.A720AGENTE.trim());
+                    cstmt01.setString(22, beanDet.A720ORIG.trim());
+                    cstmt01.setString(23, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(24, Functions.getFechaActual());
+                    cstmt01.setString(25, Functions.getHoraActual());
+                    cstmt01.setString(26, filter.OBSERV.trim());
                     if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
                     }

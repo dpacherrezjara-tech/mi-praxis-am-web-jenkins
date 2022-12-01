@@ -559,9 +559,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
-                                    width: 100
+                                    width: 105
                                 },
-                                {xtype: 'tbspacer', width: 5}
+                                //{xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
