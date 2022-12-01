@@ -240,12 +240,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             }
                         },
                         {xtype: 'tbspacer', width: 30},
-//                        {
-//                            xtype: 'label',
-//                            text: 'Currency:',
-//                            padding: '3 0',
-//                            width: 66
-//                        },
+                        {
+                            xtype: 'label',
+                            text: 'Currency:',
+                            padding: '3 0',
+                            width: 66
+                        },
                         {
                             xtype:'combo',
                             id: prototype.id+'-cmbCURRENCY',
@@ -262,7 +262,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             listConfig: {maxHeight: 111},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            hidden:true,
                             listeners:{
                             }
                         },
