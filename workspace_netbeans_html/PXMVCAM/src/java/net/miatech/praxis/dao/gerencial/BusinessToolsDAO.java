@@ -259,6 +259,42 @@ public class BusinessToolsDAO {
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00768(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
+
+        if ("1".equals(filter.IN_FLAG_CPN_SALE)) {
+            String strSql_FVLO = "";
+            String strSql_NVLO = "";
+            String strSql_ORI = "";
+            String strSql_DES = "";
+            String strSql_VALUE= "";
+
+            strSql_FVLO = " CASE WHEN A1692.CUPON ='1' THEN  A720FVLO1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720FVLO2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720FVLO3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720FVLO4   END AS A720FVLO";
+
+            strSql_NVLO = " CASE WHEN A1692.CUPON='1' THEN  A720NVLO1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720NVLO2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720NVLO3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720NVLO4   END AS A720NVLO";
+
+            strSql_ORI = " CASE WHEN A1692.CUPON='1' THEN  A720RUTA0  "
+                    + "WHEN A1692.CUPON='2' THEN  A720RUTA1   "
+                    + "WHEN A1692.CUPON='3' THEN  A720RUTA2   "
+                    + "WHEN A1692.CUPON='4' THEN  A720RUTA3   END AS A720RUTA_0";
+
+            strSql_DES = " CASE WHEN A1692.CUPON='1' THEN  A720RUTA1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720RUTA2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720RUTA3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720RUTA4   END AS A720RUTA_1";
+            
+            strSql_VALUE = " CASE WHEN A1692.CUPON='1' THEN  A720VALOR1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720VALOR2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720VALOR3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720VALOR4   END AS A720VALOR";
+
+            filter.strSelectA = filter.strSelectA.trim() + "," + strSql_FVLO + "," + strSql_NVLO + "," + strSql_ORI + "," + strSql_DES+ "," + strSql_VALUE +", A720FECVTA";
+        }
+        System.out.println(filter.strSelectA);
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -501,6 +537,16 @@ public class BusinessToolsDAO {
                         obj.column63 = rst.getString("column77");
                     }
 
+                    if ("1".equals(filter.IN_FLAG_CPN_SALE)) {
+                        obj.A720FVLO = rst.getString("A720FVLO");
+                        obj.A720NVLO = rst.getString("A720NVLO");
+                        obj.A720RUTA_0 = rst.getString("A720RUTA_0");
+                        obj.A720RUTA_1 = rst.getString("A720RUTA_1");
+                        obj.A720FECVTA = rst.getString("A720FECVTA");
+                        obj.A720VALOR = rst.getDouble("A720VALOR");
+
+                    }
+                    
                     obj.tot1 = TOT1;
                     obj.tot2 = TOT2;
                     obj.tot3 = TOT3;
@@ -1199,6 +1245,7 @@ public class BusinessToolsDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+            filter.strMSG = e.getMessage();
         } finally {
             try {
                 if (rst != null) {
