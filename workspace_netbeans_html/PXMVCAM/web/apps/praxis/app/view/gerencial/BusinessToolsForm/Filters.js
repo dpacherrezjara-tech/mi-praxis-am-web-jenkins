@@ -276,7 +276,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                             align: 'center',
                             style: 'border-bottom: 2px #ffffff solid;border-left: 0px;',
                             layout: 'vbox',
-                            width: 800,
+                            width: 1000,
                             defaults: {
                                 labelStyle: 'font-weight:bold;',
                                 fieldStyle: 'text-align: center;',
@@ -458,7 +458,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                             margin: '0 0 0 0',
                                             bodyStyle: 'background: transparent',
                                             border: true,
-                                            width: 240,
+                                            width: 190,
+                                            layout: 'hbox',
                                             hidden: true,
                                             items: [
                                                 {
@@ -466,13 +467,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                     text: ' AND ',
                                                     width: 60,
                                                     style: 'font-weight:bold;',
-                                                    padding: '5px 0px 0px 15px'
+                                                    padding: '5px 0px 0px 10px'
                                                 },
                                                 {
                                                     xtype: 'textfield',
                                                     id: prototype.id + '-txtValue1B',
                                                     fieldLabel: '',
-                                                    width: 180,
+                                                    width: 130,
                                                     labelWidth: 0,
                                                     padding: '1px px 0px 0',
                                                     labelSeparator: ':'
@@ -662,7 +663,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                             margin: '0 0 0 0',
                                                             bodyStyle: 'background: transparent',
                                                             border: true,
-                                                            width: 240,
+                                                            width: 190,
+                                                            layout: 'hbox',
                                                             hidden: true,
                                                             items: [
                                                                 {
@@ -670,13 +672,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                                     text: ' AND ',
                                                                     width: 60,
                                                                     style: 'font-weight:bold;',
-                                                                    padding: '5px 0px 0px 15px'
+                                                                    padding: '5px 0px 0px 10px'
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.id + '-txtValue2B',
                                                                     fieldLabel: '',
-                                                                    width: 180,
+                                                                    width: 130,
                                                                     labelWidth: 0,
                                                                     padding: '1px px 0px 0',
                                                                     labelSeparator: ':'
@@ -850,7 +852,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                             margin: '0 0 0 0',
                                                             bodyStyle: 'background: transparent',
                                                             border: true,
-                                                            width: 240,
+                                                            width: 190,
+                                                            layout: 'hbox',
                                                             hidden: true,
                                                             items: [
                                                                 {
@@ -858,13 +861,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                                     text: ' AND ',
                                                                     width: 60,
                                                                     style: 'font-weight:bold;',
-                                                                    padding: '5px 0px 0px 15px'
+                                                                    padding: '5px 0px 0px 10px'
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.id + '-txtValue3B',
                                                                     fieldLabel: '',
-                                                                    width: 180,
+                                                                    width: 130,
                                                                     labelWidth: 0,
                                                                     padding: '1px px 0px 0',
                                                                     labelSeparator: ':'
@@ -1037,7 +1040,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                             margin: '0 0 0 0',
                                                             bodyStyle: 'background: transparent',
                                                             border: true,
-                                                            width: 240,
+                                                            width: 190,
+                                                            layout: 'hbox',
                                                             hidden: true,
                                                             items: [
                                                                 {
@@ -1045,13 +1049,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                                     text: ' AND ',
                                                                     width: 60,
                                                                     style: 'font-weight:bold;',
-                                                                    padding: '5px 0px 0px 15px'
+                                                                    padding: '5px 0px 0px 10px'
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.id + '-txtValue4B',
                                                                     fieldLabel: '',
-                                                                    width: 180,
+                                                                    width: 130,
                                                                     labelWidth: 0,
                                                                     padding: '1px px 0px 0',
                                                                     labelSeparator: ':'
@@ -1232,7 +1236,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                             margin: '0 0 0 0',
                                                             bodyStyle: 'background: transparent',
                                                             border: true,
-                                                            width: 240,
+                                                            width: 190,
+                                                            layout: 'hbox',
                                                             hidden: true,
                                                             items: [
                                                                 {
@@ -1240,13 +1245,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                                     text: ' AND ',
                                                                     width: 60,
                                                                     style: 'font-weight:bold;',
-                                                                    padding: '5px 0px 0px 15px'
+                                                                    padding: '5px 0px 0px 10px'
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.id + '-txtValue5B',
                                                                     fieldLabel: '',
-                                                                    width: 180,
+                                                                    width: 130,
                                                                     labelWidth: 0,
                                                                     padding: '1px px 0px 0',
                                                                     labelSeparator: ':'
@@ -1420,7 +1425,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                             margin: '0 0 0 0',
                                                             bodyStyle: 'background: transparent',
                                                             border: true,
-                                                            width: 240,
+                                                            width: 190,
+                                                            layout: 'hbox',
                                                             hidden: true,
                                                             items: [
                                                                 {
@@ -1428,13 +1434,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                                     text: ' AND ',
                                                                     width: 60,
                                                                     style: 'font-weight:bold;',
-                                                                    padding: '5px 0px 0px 15px'
+                                                                    padding: '5px 0px 0px 10px'
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.id + '-txtValue6B',
                                                                     fieldLabel: '',
-                                                                    width: 180,
+                                                                    width: 130,
                                                                     labelWidth: 0,
                                                                     padding: '1px px 0px 0',
                                                                     labelSeparator: ':'
@@ -1608,7 +1614,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                             margin: '0 0 0 0',
                                                             bodyStyle: 'background: transparent',
                                                             border: true,
-                                                            width: 240,
+                                                            width: 190,
+                                                            layout: 'hbox',
                                                             hidden: true,
                                                             items: [
                                                                 {
@@ -1616,13 +1623,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                                                     text: ' AND ',
                                                                     width: 60,
                                                                     style: 'font-weight:bold;',
-                                                                    padding: '5px 0px 0px 15px'
+                                                                    padding: '5px 0px 0px 10px'
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.id + '-txtValue7B',
                                                                     fieldLabel: '',
-                                                                    width: 180,
+                                                                    width: 130,
                                                                     labelWidth: 0,
                                                                     padding: '1px px 0px 0',
                                                                     labelSeparator: ':'
@@ -1657,14 +1664,14 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                         ,
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-boxFunctions',
                             hidden: true,
                             bodyStyle: 'background: transparent',
                             border: false,
-//                            hidden: true,
                             align: 'center',
 //                            style: 'border-bottom: 2px #ffffff solid;border-left: 0px;',
-                            layout: 'hbox',
-                            width: 500,
+                            layout: 'vbox',
+                            width: 250,
                             defaults: {
                                 labelStyle: 'font-weight:bold;',
 //                                fieldStyle: 'text-align: center;',
@@ -1707,6 +1714,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                 {
                                     xtype: 'button',
                                     id: prototype.id + '-btnFunct',
+                                    disabled: true,
                                     text: '<b>Process</b>',
                                     tooltip: 'Process',
                                     width: 80,

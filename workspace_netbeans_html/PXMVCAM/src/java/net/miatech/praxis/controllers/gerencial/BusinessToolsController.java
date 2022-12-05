@@ -447,7 +447,7 @@ public class BusinessToolsController extends BaseController {
 
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
-//            logic.executeValuation(filter);
+            logic.executeValuation(filter);
             msj = filter.strMSG;
             
         } catch (Exception e) {

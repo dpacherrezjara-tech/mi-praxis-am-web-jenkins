@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     paramsDetail: {},
     gridProviderDynamic: [],
     listaCampos : [],
+    info_perm: [],
     resObtainDataFavoritos: [],
     init: function(view) {
         prototype.id = 'BusinessToolsForm';
@@ -85,27 +86,33 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         this.setStoreData();
         //win.lblUser_toolTip("Estructura: CAF020");
         // this.btnSearch_click();
+        this.validateProgram('PX00000282');
     },
     showGridActual: function() {
         this.hideAllGrid();
-        Ext.getCmp(prototype.id + this.gridActual).show();
+//        Ext.getCmp(prototype.id + this.gridActual).show();
     },
     hideAllGrid: function() {
-        Ext.getCmp(prototype.id + '-gridData').hide();
+//        Ext.getCmp(prototype.id + '-gridData').hide();
     },
     onClickImgBuild: function() {
         
+        var vPag = Ext.getCmp(prototype.id + '-panelLabelPagination');
         var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
         
-        var vgridData = Ext.getCmp(prototype.id + '-gridData');
+        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
         var vpanelResult = Ext.getCmp(prototype.id + '-panelResult');
         var vpanelPag = Ext.getCmp(prototype.id + '-piePanel');
         
-        if(vPanel.isVisible()){
-            vgridData.setWidth(1200)
+        if(vPanel.isVisible()){ 
+            vgridData.setWidth(1200);
+            vPag.setWidth(1200);
+            vpanelResult.setWidth(1200);
             vPanel.setVisible(false);
         }else{
-            vgridData.setWidth(600)
+            vgridData.setWidth(600);
+            vPag.setWidth(600);
+            vpanelResult.setWidth(600);
             vPanel.setVisible(true);
         }
         /*Ext.getCmp(prototype.id + '-campo' + (i + 1)).hide();
@@ -144,6 +151,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
     },
     changeFile: function(tipo, dato) {
+        console.log('changeFile');
         var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
         
@@ -156,6 +164,17 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 this.obtainData(tabla, '', dato);
             }
         }
+        
+        //Panel para la funcion de valoracion
+        if(tabla ==='A1692'){
+            if(me.validateAccess('M')) {
+                Ext.getCmp(prototype.id + '-boxFunctions').show();
+            }
+        }else{
+            Ext.getCmp(prototype.id + '-boxFunctions').hide();
+        }
+        
+        
     },
     obtainData: function(tabla, tabla2, dato) {
         Ext.Ajax.request({
@@ -487,7 +506,12 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var strOrderByEtiquetas = me.orderbyEtiquetas;
         var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
 
-        searchParams = {
+        var v_flag_cpn_sale ='';
+        if(IN_TABLA === 'A1692' && IN_TABLA2 === 'A720'){
+            v_flag_cpn_sale ='1';
+        }
+
+        me.searchParams = {
             IN_FECHA_FROM: IN_FECHA_FROM,
             IN_FECHA_TO: IN_FECHA_TO,
             strSQL : strSQL,
@@ -503,7 +527,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             strSelect: '',
             strSelectA: '',
             strSelectN: '',
-            RN: ''
+            RN: '',
+            IN_FLAG_CPN_SALE:v_flag_cpn_sale,
+            IN_VALID_MFSTO:''
         };
 
 
@@ -512,7 +538,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         } else {
             this.createQuerySelect();
         }
-        console.log(searchParams);
+        console.log(me.searchParams);
     },
     getSystFieldByUserField: function(campo) {
         
@@ -744,11 +770,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
 
 
-        searchParams.strEtiquetas = etiq;
-        searchParams.strSelect = select;
-        searchParams.strSelectA = selectA;
-        searchParams.strSelectN = selectN;
-        searchParams.RN = arr2.length;
+        me.searchParams.strEtiquetas = etiq;
+        me.searchParams.strSelect = select;
+        me.searchParams.strSelectA = selectA;
+        me.searchParams.strSelectN = selectN;
+        me.searchParams.RN = arr2.length;
     },
     createQuerySelect: function() {
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
@@ -793,10 +819,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         if (!existsNumeric) {
             selectN = '';
         }
-        searchParams.strSelect = '';
-        searchParams.strSelectA = selectA;
-        searchParams.strSelectN = selectN;
-        searchParams.RN = arr2.length;
+        me.searchParams.strSelect = '';
+        me.searchParams.strSelectA = selectA;
+        me.searchParams.strSelectN = selectN;
+        me.searchParams.RN = arr2.length;
     },
     createOrderBy: function() {
         var arr1 = Ext.getCmp(prototype.id + '-gridDataColumns').getStore().data.items;
@@ -889,9 +915,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
     },*/
     configurarGridData: function() {
-        this.hideColumns();
+//        this.hideColumns();
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
-        var numColumns = searchParams.RN;
+        var numColumns = me.searchParams.RN;
         var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
         var anchoGrilla = numColumns * 100 + 2;
         if (anchoGrilla > 500) {
@@ -902,17 +928,135 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
 
         Ext.getCmp(prototype.id + '-panelLabelPagination').show();
-        Ext.getCmp(prototype.id + '-gridData').setWidth(anchoGrilla);
+        
+        
+        
+        if (Ext.getCmp(prototype.id + '-gridDanamic')) {
+            Ext.getCmp(prototype.id + '-gridDanamic').destroy();
+        }
+        var v_panelResult = Ext.getCmp(prototype.id + '-panelResult');
+        var myGrid = Ext.create('Ext.grid.Panel', {
+            id: prototype.id + '-gridDanamic',
+            cls: 'gridCss',
+            padding: '20 0 0 0',
+            bodyStyle: 'background: transparent;',
+            columnLines: true,
+            enableColumnMove: true,
+            store: {
+                fields: ['data']
+            }
+//            ,
+//            columns: [
+//                { text: 'Name',  dataIndex: 'name' },
+//                { text: 'Email', dataIndex: 'email' }
+//            ]
+        });
+
+
+        var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
+        var numColumns = me.searchParams.RN;
+        console.log(arr2);
+/*
+ * 
+ * 
+        var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
+        
+        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
+        var vpanelResult = Ext.getCmp(prototype.id + '-panelResult');
+        var vpanelPag = Ext.getCmp(prototype.id + '-piePanel');
+        
+ * */
+//        var v_boxContenedorGrid = Ext.getCmp(prototype.id + '-boxContenedorGrid');
+        var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
+        var vPag = Ext.getCmp(prototype.id + '-panelLabelPagination');
+
+        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
+
+        if(vPanel.isVisible()){ 
+            v_panelResult.setWidth(600);
+            vgridData.setWidth(600);
+            vPag.setWidth(600);
+        }else{
+            v_panelResult.setWidth(1200);
+            vgridData.setWidth(1200);
+            vPag.setWidth(1200);
+        }
+
+//        var gridView2 = Ext.getCmp(prototype.id + '-gridDanamic');
+
+        var column1 = Ext.create('Ext.grid.column.Column', {text: 'RN', width: 50, align: 'center', dataIndex: 'RN'});
+        vgridData.headerCt.insert(0, column1);
+        vgridData.getView().refresh();
+
+
         for (var i = 0; i < numColumns; i++) {
-            Ext.getCmp(prototype.id + '-campo' + (i + 1)).show();
-            Ext.getCmp(prototype.id + '-campo' + (i + 1)).setText(arr2[i].data["DCOLHDG"]);
+//            var gridView = Ext.getCmp(prototype.id + '-gridDanamic');
+            var v_align = 'center';
+            if (arr2[i].data["DATATYPE"] === 'N') {
+                v_align = 'right';
+            } else if (arr2[i].data["size"] > 50) {
+                v_align = 'left';
+            }
+
+            var column = Ext.create('Ext.grid.column.Column', {text: arr2[i].data["DCOLHDG"], dataIndex: 'column' + (i + 1), align: v_align});
+            vgridData.headerCt.insert(i + 1, column);
+            vgridData.getView().refresh();
+//            console.log(i+'-->'+Ext.getCmp(prototype.id+'-gridDanamic').columns.length);
         }
-        if (check && (numColumns>0)) {
-            Ext.getCmp(prototype.id + '-QTY').show();
-            Ext.getCmp(prototype.id + '-QTY').setText('Qty Record');
-        } else {
-            Ext.getCmp(prototype.id + '-QTY').hide();
+
+
+        
+        var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
+        var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
+        if(tabla === 'A1692' && tabla2 === 'A720'){
+            
+//            var gridView_d = Ext.getCmp(prototype.id + '-gridDanamic');
+            
+            var column_1ast = Ext.create('Ext.grid.column.Column', {text: 'Sale Date', width: 100, align: 'center', dataIndex: 'A720FECVTA'});
+            vgridData.headerCt.insert(numColumns+1, column_1ast);
+            vgridData.getView().refresh();
+
+            var column_1ast2 = Ext.create('Ext.grid.column.Column', {text: 'FVLO Sale', width: 100, align: 'center', dataIndex: 'A720FVLO'});
+            vgridData.headerCt.insert(numColumns+2, column_1ast2);
+            vgridData.getView().refresh();
+            
+            var column_1ast3 = Ext.create('Ext.grid.column.Column', {text: 'NVLO Sale', width: 100, align: 'center', dataIndex: 'A720NVLO'});
+            vgridData.headerCt.insert(numColumns+3, column_1ast3);
+            vgridData.getView().refresh();
+            
+            var column_1ast4 = Ext.create('Ext.grid.column.Column', {text: 'Orig Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_0'});
+            vgridData.headerCt.insert(numColumns+4, column_1ast4);
+            vgridData.getView().refresh();
+            
+            var column_1ast5 = Ext.create('Ext.grid.column.Column', {text: 'Dest Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_1'});
+            vgridData.headerCt.insert(numColumns+5, column_1ast5);
+            vgridData.getView().refresh();
+            
+            var column_1ast6 = Ext.create('Ext.grid.column.Column', {text: 'VALUE', width: 100, align: 'center', dataIndex: 'A720VALOR'});
+            vgridData.headerCt.insert(numColumns+6, column_1ast6);
+            vgridData.getView().refresh();
         }
+        
+        v_panelResult.insert(0, myGrid);
+        
+//        Ext.getCmp(prototype.id + '-gridData').setWidth(anchoGrilla);
+//        for (var i = 0; i < numColumns; i++) {
+//            Ext.getCmp(prototype.id + '-campo' + (i + 1)).show();
+//            Ext.getCmp(prototype.id + '-campo' + (i + 1)).setText(arr2[i].data["DCOLHDG"]);
+//        }
+//        if (check && (numColumns>0)) {
+//            Ext.getCmp(prototype.id + '-QTY').show();
+//            Ext.getCmp(prototype.id + '-QTY').setText('Qty Record');
+//        } else {
+//            Ext.getCmp(prototype.id + '-QTY').hide();
+//        }
+//        
+//        console.log(me.searchParams.IN_FLAG_CPN_SALE + '<<<<<<<<<<<<<<<<<(2)');
+//        if(me.searchParams.IN_FLAG_CPN_SALE === ''){
+//            Ext.getCmp(prototype.id + '-campo' + (numColumns + 1)).show();
+//            Ext.getCmp(prototype.id + '-campo' + (numColumns + 1)).setText("Sale Date");
+//            Ext.getCmp(prototype.id + '-campo' + (numColumns + 1)).setdataIndex("A720FECVTA");
+//        }
     },
     hideColumns: function() {
         for (var i = 1; i < 63; i++) {
@@ -927,7 +1071,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 url: prototype.url + '/searchFields'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = {beanString : JSON.stringify(searchParams)};
+                    obj.proxy.extraParams = {beanString : JSON.stringify(me.searchParams)};
                 },
                 load: function(obj) {
                     var pag = Ext.getCmp(prototype.id + '-paggin');
@@ -955,18 +1099,17 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
         });
         global.clear();
-        lg('---');
-        lg(storeGridDatas);    
         
-        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDanamic').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
         
-        var objitems = Ext.getCmp(prototype.id + '-gridData').getStore().data.items;
-        lg('-ttt');
-        lg(objitems);    
-        var objColumns = Ext.getCmp(prototype.id + '-gridData').config.columns.items;
-        lg('-columns');
-        lg(objColumns); 
+//        var objitems = Ext.getCmp(prototype.id + '-gridData').getStore().data.items;
+//        lg('-ttt');
+//        lg(objitems);    
+//        var objColumns = Ext.getCmp(prototype.id + '-gridData').config.columns.items;
+//        lg('-columns');
+//        lg(objColumns); 
         
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeGridDatas);
@@ -1226,7 +1369,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        var grid = Ext.getCmp(prototype.id + '-gridData');
 //                        
 //                        this.setFormatParameter();
-//                        var data = searchParams;
+//                        var data = me.searchParams;
 //
 //                        //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
 //                        var schema = JSON.stringify({text: "", columns: this.getColumns()});
@@ -1244,10 +1387,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        global.getFile(url);
                         
                         
-                        var grid = Ext.getCmp(prototype.id + '-gridData');
+//                        var grid = Ext.getCmp(prototype.id + '-gridData');
                         
                         this.setFormatParameter();
-                        var data = searchParams;
+                        var data = me.searchParams;
 
                         //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
                         var schema = JSON.stringify({text: "", columns: this.getColumns()});
@@ -1266,7 +1409,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
 
                         console.log(prototype.url + '/getFieldsXLSX');
-                        console.log(JSON.stringify(searchParams));
+                        console.log(JSON.stringify(me.searchParams));
                         console.log(schema);
 
                         var mapForm = document.createElement("form");
@@ -1277,7 +1420,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                         var mapInput = document.createElement("input");
                         mapInput.type = "text";
                         mapInput.name = "beanString";
-                        mapInput.value = JSON.stringify(searchParams);
+                        mapInput.value = JSON.stringify(me.searchParams);
                         mapForm.appendChild(mapInput);
 
                         var mapInput = document.createElement("input");
@@ -1318,13 +1461,15 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     changeFunction: function() {
         
         if(Ext.getCmp(prototype.id + '-cmbFunctions').getValue()==='') {
-            Ext.getCmp(prototype.id + '-btnFunct').setDisabled(false);
-        }else{
             Ext.getCmp(prototype.id + '-btnFunct').setDisabled(true);
+        }else{
+            Ext.getCmp(prototype.id + '-btnFunct').setDisabled(false);
         }
         
     },
     procesar_function: function(obj, e) {
+        
+        
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Confirm the process?',
@@ -1340,9 +1485,12 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         });
     },
     process_valuation: function() {
+        me.searchParams.IN_VALID_MFSTO = '';
+        if(Ext.getCmp(prototype.id + '-chkManifiesto').getValue()){
+            me.searchParams.IN_VALID_MFSTO = 'N';
+        }
         
-         me.searchParams.strMSG='xdxdxd';
-        
+//        console.log(me.searchParams);
          Ext.Ajax.request({
             url: prototype.url + '/executeValuation' ,
             params: {beanString : JSON.stringify(me.searchParams)},
@@ -1368,7 +1516,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        var grid = Ext.getCmp(prototype.id + '-gridData');
 //                        
 //                        this.setFormatParameter();
-//                        var data = searchParams;
+//                        var data = me.searchParams;
 //
 //                        //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
 //                        var schema = JSON.stringify({text: "", columns: this.getColumns()});
@@ -1397,10 +1545,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        global.getFile(url);
                         
                         
-                        var grid = Ext.getCmp(prototype.id + '-gridData');
+//                        var grid = Ext.getCmp(prototype.id + '-gridData');
                         
                         this.setFormatParameter();
-                        var data = searchParams;
+                        var data = me.searchParams;
 
                         //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
                         var schema = JSON.stringify({text: "", columns: this.getColumns()});
@@ -1436,7 +1584,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                         var mapInput = document.createElement("input");
                         mapInput.type = "text";
                         mapInput.name = "beanString";
-                        mapInput.value = JSON.stringify(searchParams);
+                        mapInput.value = JSON.stringify(me.searchParams);
                         mapForm.appendChild(mapInput);
 
                         var mapInput = document.createElement("input");
@@ -1463,7 +1611,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var columns = [ ];
 
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
-        var numColumns = searchParams.RN;
+        var numColumns = me.searchParams.RN;
         var colsize = 80;
         
         for (var j = 0; j < numColumns; j++) {
@@ -1501,7 +1649,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             
             
         }
-
+        
         return columns;
     },
     onChangeBox: function() {
@@ -1514,6 +1662,62 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         } else {
             option.setVisible(true);
         }
+    },
+    //<editor-fold defaultstate="collapsed" desc="validateProgram">
+    validateProgram: function( nprog) {
+//        console.log('------- validateProgram ---------');
+//        console.log('------- nprog ' + nprog);
+//        console.log('------- opcion  ' +opcion);
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/validateUserProgramAccess',
+            method: 'POST',
+            timeout: 60000000,
+            params: {nprog: nprog || ''},
+            success: function(response, opts) {
+//                console.log(response);
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    me.info_perm = res.matrix;
+                } else
+                    global.Msg({msg: res.sesion});
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    },
+    validateAccess: function(opcion) {
+        var info = me.info_perm;
+        var bolRtn = false;
+        switch (opcion)
+        {
+            case "A":
+                if (info.PERMA === "Y")
+                    bolRtn = true;
+                break;
+            case "L":
+                if (info.PERML === "Y" || info.PERMC === "Y" || info.PERMM === "Y" || info.PERME === "Y")
+                    bolRtn = true;
+                break;
+            case "C":
+                if (info.PERMC === "Y")
+                    bolRtn = true;
+                break;
+            case "M"://Modificar
+                if (info.PERMM === "Y")
+                    bolRtn = true;
+                break;
+            case "E":
+                if (info.PERME === "Y")
+                    bolRtn = true;
+                break;
+            case "X":
+                if (info.PERMX === "Y")
+                    bolRtn = true;
+                break;
+        }
+
+        return bolRtn;
     },
     /*     
      * Funciones para la paginacion     
