@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.DataEntry', {
                         {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'label',
-                            text: 'TXT',
+                            text: 'Zip',
                             width: 20
                         },
                         {xtype: 'tbspacer', width: 60},
@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.DataEntry', {
                         },
                         items: [
                             {
-                                text: 'Names', dataIndex: 'strFormatDate', width: 400,
+                                text: 'Files', dataIndex: 'strFormatDate', width: 400,
                                 listeners: {
                                     click: 'onBtnExport_Click'
                                 },
