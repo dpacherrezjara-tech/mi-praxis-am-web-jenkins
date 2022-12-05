@@ -1459,8 +1459,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 width: 40,
                                                 widget: {
                                                     xtype: 'button',
-                                                    icon: 'resources/img/icon/delete.png',
-                                                    tooltip: 'remove',
+                                                    icon: 'resources/img/botones/16x16/delete.png',
                                                     listeners: {
                                                         click: function (button, e, eOpts) {
                                                             var record = button.getWidgetRecord();
@@ -1473,21 +1472,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
 
                                             },
-                                            {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                width: 30,
-                                                text: 'Fill',
-                                                id: prototype.id + '-gridColumnFill',
-                                                align: 'center',
-                                                items: [
-                                                    {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Fill TKT & PNR',
-                                                        handler: 'onTktPnr'
-                                                    }
-                                                ]
-                                            },
+//                                            {
+//                                                sortable: false,
+//                                                xtype: 'actioncolumn',
+//                                                width: 30,
+//                                                text: 'Fill',
+//                                                id: prototype.id + '-gridColumnFill',
+//                                                align: 'center',
+//                                                items: [
+//                                                    {
+//                                                        iconCls: 'prx-icon-edit',
+//                                                        tooltip: 'Fill TKT & PNR',
+//                                                        handler: 'onTktPnr'
+//                                                    }
+//                                                ]
+//                                            },
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
