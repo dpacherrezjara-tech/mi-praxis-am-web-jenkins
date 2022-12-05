@@ -338,7 +338,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             case 'C':
                 vl_A3648FLAG = 'REACTIVATION';
                 break;
-             case 'B':
+            case 'B':
                 vl_A3648FLAG = 'GIVE USE IN PRAXIS';
                 break;
             case 'Y':
@@ -415,12 +415,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 VL_A3648STTAX = rec.get('A3648XTTAX');
             }
             if (rec.get('A3648STOTL') > 0) {
-               // VL_A3648XMDA = rec.get('A3648SMDA');
-               // VL_A3648XMDAQ = rec.get('A3648SMDAQ');
+                // VL_A3648XMDA = rec.get('A3648SMDA');
+                // VL_A3648XMDAQ = rec.get('A3648SMDAQ');
                 VL_A3648STOTL = rec.get('A3648STOTL');
             } else {
-               // VL_A3648XMDA = rec.get('A3648XMDA');
-               // VL_A3648XMDAQ = rec.get('A3648XMDAQ');
+                // VL_A3648XMDA = rec.get('A3648XMDA');
+                // VL_A3648XMDAQ = rec.get('A3648XMDAQ');
                 VL_A3648STOTL = rec.get('A3648XTOTL');
             }
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(VL_A3648STARF);
@@ -1032,11 +1032,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 bvalida = false;
                 return;
             }
-            if (me.lsta_Documents > 0) {
-                Ext.Msg.alert('.: PRAXIS :.', 'The ticket has more than one document');
-                bvalida = false;
-                return;
-            }
             if (CmbTRFND > 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of RFND');
                 bvalida = false;
@@ -1340,11 +1335,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
     },
     onClickSave: function (btn) {
         var me = this;
+        var vl_mensaje = 'Insert Data?';
         var checkApply = '';
         if (me.validaRequiredFields()) {
+            if (me.lsta_Documents > 0) {
+                vl_mensaje = 'The ticket has more than one document, do you want to continue?';
+            }
             rec = me.view.params.rec;
             global.Msg({
-                msg: 'Insert Data?',
+                msg: vl_mensaje,
                 icon: 3,
                 buttons: 3,
                 fn: function (btn) {

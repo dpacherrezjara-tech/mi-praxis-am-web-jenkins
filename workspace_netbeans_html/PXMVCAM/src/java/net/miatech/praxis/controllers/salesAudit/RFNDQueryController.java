@@ -766,7 +766,7 @@ public class RFNDQueryController extends BaseController {
 
             success = this.rfndnotifiUpdateCPN(filter);
             if (success) {
-                lst = logic.ProcesaUpdateUsosCPN(filter); 
+                lst = logic.ProcesaUpdateUsosCPN(filter);
                 // <editor-fold defaultstate="collapsed" desc="ArrayList -> LIS_COUPNS">
                 for (int vi = 0; vi < lst.lst_USOS.size(); ++vi) {
                     map03 = new HashMap<>();
@@ -1001,10 +1001,10 @@ public class RFNDQueryController extends BaseController {
 
             logic = new RFNDQueryLogic();
             logic.setSession(this.serverSession.getServerSession());
-           // result = logic.ProcesaManualRFNDTCKT(filter, taxes, razones, fop);
-           // if (result.equals("Proceso Culminado")) {
+            result = logic.ProcesaManualRFNDTCKT(filter, taxes, razones, fop);
+            if (result.equals("Proceso Culminado")) {
                 result2 = this.rfndnotifipagina(filter);
-            //}
+            }
 
         } catch (Exception e) {
             throw new SpringException(e);
@@ -1028,7 +1028,7 @@ public class RFNDQueryController extends BaseController {
         ArrayList<HashMap<String, String>> lsta_COUPNS = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_HISTORY = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_USOS = new ArrayList<>();
-         ArrayList<HashMap<String, String>> lsta_DOCUMENTS = new ArrayList<>();
+        ArrayList<HashMap<String, String>> lsta_DOCUMENTS = new ArrayList<>();
 
         try {
             logic = new RFNDQueryLogic();
@@ -1220,7 +1220,7 @@ public class RFNDQueryController extends BaseController {
                 lsta_USOS.add(map06);
             }
             // </editor-fold>
-            
+
             // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_DOCUMENTS">
             for (int vi = 0; vi < lst.lst_DOCUMENTS.size(); ++vi) {
                 map07 = new HashMap<>();
@@ -1267,7 +1267,7 @@ public class RFNDQueryController extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "SearchDetailError")
     public @ResponseBody
     String SearchDetailError(ModelMap map, HttpServletRequest request) {
@@ -1285,7 +1285,7 @@ public class RFNDQueryController extends BaseController {
             filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
             filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
             filter.IN_CORRL = request.getParameter("IN_CORRL").trim();
-            
+
             lst = logic.SearchDetailError(filter);
         } catch (Exception e) {
             throw new SpringException(e);
