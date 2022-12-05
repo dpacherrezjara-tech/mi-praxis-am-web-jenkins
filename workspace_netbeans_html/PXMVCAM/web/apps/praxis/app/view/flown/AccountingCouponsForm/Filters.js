@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Filters', {
                         // <editor-fold defaultstate="collapsed" desc="Combo Date">
                         {
                             xtype: 'label',
-                            html: '<strong style="color:#000;">Year :</strong>',
+                            html: '<strong style="color:#000;">Accounting Date :</strong>',
                             align: 'center',
                             fieldStyle: 'text-align: center;',
                             padding: '8px 7px 8px 0px'
