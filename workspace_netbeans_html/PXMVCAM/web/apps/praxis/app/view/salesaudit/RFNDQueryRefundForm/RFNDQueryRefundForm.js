@@ -1,24 +1,24 @@
 
-prototype.idRFNDAssociatedARCR = 'RFNDAssociatedARCRFNDForm';
+prototype.idRFNDQueryRefundForm = 'RFNDQueryRefundForm';
 prototype.idARCDetailTicket = 'ARCRFNDAssociatedTicketForm';
 prototype.idRFNDARCFormRazones = 'FNDARCFormRazones',
-prototype.url = CONTEXTPATH + '/RFNDAssociatedARCRFNDForm';
+prototype.url2 = CONTEXTPATH + '/RFNDAssociatedARCRFNDForm';
+prototype.url = CONTEXTPATH + '/RFNDQueryRefundForm';
 prototype.widthWindow = 1366;
 prototype.heightWindow = 768;
 
-Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedARCRFNDForm', {
+Ext.define('Ext.Praxis.view.salesaudit.RFNDQueryRefundForm.RFNDQueryRefundForm', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.RFNDAssociatedARCRFNDForm',
+    alias: 'widget.RFNDQueryRefundForm',
 
     requires: [
-        'Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedARCRFNDFormController',
-        'Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociatedTicketForm',
-        'Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDARCFormRazones'
+        'Ext.Praxis.controller.salesaudit.RFNDQueryRefundForm.RFNDQueryRefundFormController',
+        'Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociatedTicketForm'
     ],
 
-    controller: 'RFNDAssociatedARCRFNDFormController',
+    controller: 'RFNDQueryRefundFormController',
 
-    id: prototype.idRFNDAssociatedARCR + '-Contenedor',
+    id: prototype.idRFNDQueryRefundForm + '-Contenedor',
 
     layout: {
         type: 'vbox',
@@ -39,12 +39,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
 
     items: [{
             xtype: 'panel',
-            id: prototype.idRFNDAssociatedARCR + '-contenedor-form',
+            id: prototype.idRFNDQueryRefundForm + '-contenedor-form',
             width: prototype.widthWindow,
             items: [
                 {
                     xtype: 'panel',
-                    id: prototype.idRFNDAssociatedARCR + '-contenedor-options',
+                    id: prototype.idRFNDQueryRefundForm + '-contenedor-options',
                     border: false,
                     bodyStyle: 'background: transparent',
                     padding: '10px 5px 0px 5px',
@@ -63,11 +63,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                             items: [
                                 {
                                     xtype: 'Paginator',
-                                    id: prototype.idRFNDAssociatedARCR + '-pagginator-01',
+                                    id: prototype.idRFNDQueryRefundForm + '-pagginator-01',
                                     pagInfo: [
-                                        prototype.idRFNDAssociatedARCR + '-lbl-currentPage',
-                                        prototype.idRFNDAssociatedARCR + '-lbl-pageCount',
-                                        prototype.idRFNDAssociatedARCR + '-lbl-total'
+                                        prototype.idRFNDQueryRefundForm + '-lbl-currentPage',
+                                        prototype.idRFNDQueryRefundForm + '-lbl-pageCount',
+                                        prototype.idRFNDQueryRefundForm + '-lbl-total'
                                     ]
                                 }
                             ]
@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                             items: [
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnSearch',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnSearch',
                                     iconCls: 'prx-icon-search',
                                     tooltip: 'Search',
                                     listeners: {
@@ -87,14 +87,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnFilter',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnFilter',
                                     iconCls: 'prx-icon-filter',
                                     tooltip: 'Display filter',
                                     listeners: 'onFilterClick'
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnExcel',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnExcel',
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
@@ -103,7 +103,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnClear',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnClear',
                                     iconCls: 'prx-icon-clear',
                                     tooltip: 'Clear Options',
                                     listeners: {
@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnBack',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnBack',
                                     iconCls: 'prx-icon-back',
                                     tooltip: 'Back',
                                     listeners: 'onClearClick'
@@ -123,7 +123,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                 },
                 {
                     xtype: 'panel',
-                    id: prototype.idRFNDAssociatedARCR + '-contenedor-filters',
+                    id: prototype.idRFNDQueryRefundForm + '-contenedor-filters',
                     border: false,
                     defaults: {
                         bodyStyle: 'background-color: #E3EAF9;',
@@ -162,7 +162,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                 {
                                     xtype: 'combo',
                                     //fieldLabel: 'Search Type',
-                                    id: prototype.idRFNDAssociatedARCR + '-search-type',
+                                    id: prototype.idRFNDQueryRefundForm + '-search-type',
                                     labelAlign: 'left',
                                     queryMode: 'local',
                                     valueField: 'code',
@@ -190,7 +190,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                     items: [
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.idRFNDAssociatedARCR + '-txtFilterDateFrom',
+                                            id: prototype.idRFNDQueryRefundForm + '-txtFilterDateFrom',
                                             format: 'Y/m/d',
                                             fieldLabel: 'From:',
                                             labelWidth: 40,
@@ -204,7 +204,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.idRFNDAssociatedARCR + '-txtFilterDateTo',
+                                            id: prototype.idRFNDQueryRefundForm + '-txtFilterDateTo',
                                             format: 'Y/m/d',
                                             fieldLabel: 'To:',
                                             labelWidth: 30,
@@ -218,7 +218,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDAssociatedARCR + '-txtCia',
+                                            id: prototype.idRFNDQueryRefundForm + '-txtCia',
                                             hideLabel: true,
                                             maskRe: /[0-9]/,
                                             maxLength: 3,
@@ -229,7 +229,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDAssociatedARCR + '-txtFrmaSerie',
+                                            id: prototype.idRFNDQueryRefundForm + '-txtFrmaSerie',
                                             hideLabel: true,
                                             maskRe: /[0-9]/,
                                             maxLength: 10,
@@ -242,7 +242,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDAssociatedARCR + '-txtFrmaFolio',
+                                            id: prototype.idRFNDQueryRefundForm + '-txtFrmaFolio',
                                             hideLabel: true,
                                             maskRe: /[0-9]/,
                                             maxLength: 30,
@@ -255,7 +255,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRFNDAssociatedARCR + '-txtIATA',
+                                            id: prototype.idRFNDQueryRefundForm + '-txtIATA',
                                             width: 140,
                                             maskRe: /[0-9]/,
                                             maxLength: 8,
@@ -269,7 +269,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDAssociatedARCR + '-CmbStatus',
+                                            id: prototype.idRFNDQueryRefundForm + '-CmbStatus',
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -287,7 +287,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDAssociatedARCR + '-CmbStatusBPO',
+                                            id: prototype.idRFNDQueryRefundForm + '-CmbStatusBPO',
                                             fieldLabel: 'BPO',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -303,20 +303,19 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                                 afterrender: 'onCmbStatusAfterRender'
                                             }
                                         },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idRFNDAssociatedARCR+'-txtUser',
-                                            maxLength: 10,
-                                            enforceMaxLength: 10,
-                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                                            readOnly: true,
+                                         {
+                                            xtype: 'combo',
+                                             id: prototype.idRFNDQueryRefundForm + '-txtUser',
                                             fieldLabel: 'Auditor',
+                                            queryMode: 'local',
+                                            displayField: 'A4359USER',
+                                            valueField: 'A4359USER',
                                             width: 200,
                                             labelWidth: 50,
                                             labelAlign: 'right',
-                                            listeners: {
-                                               specialkey: 'onSearchkey',
-                                               change: 'onchange'
+                                            emptyText: '',
+                                            listConfig:{
+                                                minWidth: 200
                                             }
                                         }
                                     ]
@@ -337,7 +336,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                     items: [
                         {
                             xtype: 'grid',
-                            id: prototype.idRFNDAssociatedARCR + '-gridCabe',
+                            id: prototype.idRFNDQueryRefundForm + '-gridCabe',
                             columnLines: true,
                             autoScroll: true,
                             height: 250,
@@ -393,7 +392,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                                         summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
                                                     }
                                                 ]
-                                            }                                            
+                                            }
                                         ]
 
 
@@ -429,7 +428,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                         },
                         {
                             xtype: 'panel',
-                            iid: prototype.idRFNDAssociatedARCR + '-pagginator-legend',
+                            iid: prototype.idRFNDQueryRefundForm + '-pagginator-legend',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -460,7 +459,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                             width: 50
                                         },
                                         {
-                                            id: prototype.idRFNDAssociatedARCR + '-lbl-currentPage',
+                                            id: prototype.idRFNDQueryRefundForm + '-lbl-currentPage',
                                             text: '1',
                                             width: 50
                                         },
@@ -469,7 +468,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                             width: 50
                                         },
                                         {
-                                            id: prototype.idRFNDAssociatedARCR + '-lbl-pageCount',
+                                            id: prototype.idRFNDQueryRefundForm + '-lbl-pageCount',
                                             text: '0',
                                             width: 50
                                         },
@@ -479,7 +478,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                             width: 80
                                         },
                                         {
-                                            id: prototype.idRFNDAssociatedARCR + '-lbl-total',
+                                            id: prototype.idRFNDQueryRefundForm + '-lbl-total',
                                             text: '0',
                                             width: 50
                                         }
@@ -492,14 +491,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                             items: [
                                 {
                                     xtype: 'panel',
-                                    id: prototype.idRFNDAssociatedARCR + '-panelFilter1',
+                                    id: prototype.idRFNDQueryRefundForm + '-panelFilter1',
                                     hidden: true,
                                     width: 500, border: false,
                                     layout: 'column',
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRFNDAssociatedARCR + '-de-cmbOptionTKT',
+                                            id: prototype.idRFNDQueryRefundForm + '-de-cmbOptionTKT',
                                             margin: '5 0 5 0',
                                             fieldLabel: 'Search By',
                                             width: 180,
@@ -517,7 +516,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         {
                                             xtype: 'textfield',
                                             margin: '5 0 5 5',
-                                            id: prototype.idRFNDAssociatedARCR + '-de-txtTKT',
+                                            id: prototype.idRFNDQueryRefundForm + '-de-txtTKT',
                                             //hidden: true,
                                             fieldLabel: '',
                                             width: 110,
@@ -535,7 +534,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         {
                                             xtype: 'textfield',
                                             margin: '5 0 5 5',
-                                            id: prototype.idRFNDAssociatedARCR + '-de-txtIata',
+                                            id: prototype.idRFNDQueryRefundForm + '-de-txtIata',
                                             hidden: true,
                                             fieldLabel: '',
                                             width: 80,
@@ -552,11 +551,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                         }
                                     ]
                                 },
-                                {xtype: 'tbspacer', hidden: true, id: prototype.idRFNDAssociatedARCR + '-tbspacer1', width: 600},
-                                {xtype: 'tbspacer', id: prototype.idRFNDAssociatedARCR + '-tbspacer2', width: 1100},
+                                {xtype: 'tbspacer', hidden: true, id: prototype.idRFNDQueryRefundForm + '-tbspacer1', width: 600},
+                                {xtype: 'tbspacer', id: prototype.idRFNDQueryRefundForm + '-tbspacer2', width: 1100},
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnSearch1',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnSearch1',
                                     iconCls: 'prx-icon-search',
                                     tooltip: 'Search',
                                     listeners: {
@@ -566,23 +565,23 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnFilter1',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnFilter1',
                                     iconCls: 'prx-icon-filter',
                                     tooltip: 'Display filter',
                                     listeners: {
                                         click: 'onClickBtnFilter'
                                     }
                                 }, /*{
+                                 xtype: 'button',
+                                 id: prototype.idRFNDQueryRefundForm + '-Save_List',
+                                 icon: 'resources/img/icon/16x16/task-save.png',
+                                 tooltip: 'Process Change massive states',
+                                 listeners: {
+                                 click: 'img_clickHandler_save_List'
+                                 }
+                                 },*/ {
                                     xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-Save_List',
-                                    icon: 'resources/img/icon/16x16/task-save.png',
-                                    tooltip: 'Process Change massive states',
-                                    listeners: {
-                                        click: 'img_clickHandler_save_List'
-                                    }
-                                },*/ {
-                                    xtype: 'button',
-                                    id: prototype.idRFNDAssociatedARCR + '-btnExcel2',
+                                    id: prototype.idRFNDQueryRefundForm + '-btnExcel2',
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
@@ -593,11 +592,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                         },
                         {
                             xtype: 'grid', title: 'TICKET DETAIL',
-                            id: prototype.idRFNDAssociatedARCR + '-grid',
+                            id: prototype.idRFNDQueryRefundForm + '-grid',
                             columnLines: true,
                             autoScroll: true,
                             height: 350,
-                            
+
                             columns: {
                                 items: [
                                     {text: 'System<br>Date', dataIndex: 'A4363FREGI', width: 70},
@@ -618,7 +617,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                     {text: 'Neto<br>Praxis', dataIndex: 'A4363STOTL', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Neto<br>XML', dataIndex: 'A4363XTOTL', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Req. Reason', dataIndex: 'A4362ERROR', width: 100, align: 'left', renderer: 'onRendererColumnAttr'},
-                                    {text: 'Status Audit',dataIndex: 'A4363STATO',width: 200,align: 'left'},
+                                    {text: 'Status Audit', dataIndex: 'A4363STATO', width: 200, align: 'left'},
                                     {text: 'Status', dataIndex: 'A4363FLAG', width: 200, renderer: 'onRendererColumnStatus'},
                                     {
                                         text: '',
@@ -656,7 +655,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                         },
                         {
                             xtype: 'panel',
-                            iid: prototype.idRFNDAssociatedARCR + '-pagginator-legend2',
+                            iid: prototype.idRFNDQueryRefundForm + '-pagginator-legend2',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -688,7 +687,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
                                             width: 80
                                         },
                                         {
-                                            id: prototype.idRFNDAssociatedARCR + '-lbl-total2',
+                                            id: prototype.idRFNDQueryRefundForm + '-lbl-total2',
                                             text: '0',
                                             width: 50
                                         }
@@ -701,4 +700,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedA
             ]
         }]
 });
+
+
 

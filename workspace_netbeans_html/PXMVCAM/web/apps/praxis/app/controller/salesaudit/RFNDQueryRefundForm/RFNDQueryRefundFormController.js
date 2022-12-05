@@ -1,7 +1,7 @@
 
-Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssociatedARCRFNDFormController', {
+Ext.define('Ext.Praxis.controller.salesaudit.RFNDQueryRefundForm.RFNDQueryRefundFormController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.RFNDAssociatedARCRFNDFormController',
+    alias: 'controller.RFNDQueryRefundFormController',
 
     /**
      * Constructor
@@ -13,10 +13,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
 
     },
     OnBeforeShow: function () {
-        prototype.idRFNDAssociatedARCR = 'RFNDAssociatedARCRFNDForm';
+        prototype.idRFNDQueryRefundForm = 'RFNDQueryRefundForm';
         prototype.idARCDetailTicket = 'ARCRFNDAssociatedTicketForm';
         prototype.idRFNDARCFormRazones = 'FNDARCFormRazones',
-        prototype.url = CONTEXTPATH + '/RFNDAssociatedARCRFNDForm';
+        prototype.url2 = CONTEXTPATH + '/RFNDAssociatedARCRFNDForm';
+        prototype.url = CONTEXTPATH + '/RFNDQueryRefundForm';
         prototype.widthWindow = 1366;
         prototype.heightWindow = 768;
 
@@ -30,17 +31,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         me.setStoresFilters();
         me.setStoresGrids();
         me.setUser();
-        Ext.getCmp(prototype.idRFNDAssociatedARCR + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, me);
+        Ext.getCmp(prototype.idRFNDQueryRefundForm + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, me);
     },
     onPagingBeforeChange01: function (obj, page, opts) {
         var me = this;
         obj.store.proxy.extraParams = me.bean;
     },
     setStoresFilters: function () {
-        var cmbSearch = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-search-type');
-        var cmbStatus = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-CmbStatus');
-        var CmbStatusBPO = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-CmbStatusBPO');
-        var cmbOptionTKT = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-cmbOptionTKT');
+        var cmbSearch = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-search-type');
+        var cmbStatus = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-CmbStatus');
+        var CmbStatusBPO = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-CmbStatusBPO');
+        var cmbOptionTKT = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-cmbOptionTKT');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -93,29 +94,35 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
 
     },
     setUser: function () {
-        var me = this;
-        Ext.Ajax.request({
-            url: prototype.url + '/getUser',
-            timeout: 60000000,
-            method: 'POST',
-            //params: this.beanTMP,
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').setValue(Ext.String.trim(res.user.USR));
-                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'SAP26') {
-                    Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').setReadOnly(false);
-                }
-                //me.onSearchClickInitial();
 
+        var cmbUser = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtUser');
+        var store = Ext.create('Ext.data.Store', {
+            proxy: {
+                type: 'ajax',
+                url: prototype.url + '/Searchauditor',
+                timeout: 60000000,
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data',
+                    totalPorperty: 'total'
+                }
+            },
+            autoLoad: true,
+            listeners: {
+                load: function (obj, records, successful, operation, eOpts) {
+                    cmbUser.setValue('ALL');
+                }
             }
         });
+        cmbUser.setStore(store);
+
     },
     setStoresGrids: function () {
-        var gridData = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-grid');
-        var gridCabe = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-gridCabe');
+        var gridData = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-grid');
+        var gridCabe = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-gridCabe');
         //
         var store00 = Ext.create('Ext.data.Store', {
-            storeId: prototype.idRFNDAssociatedARCR + '-store-grid00',
+            storeId: prototype.idRFNDQueryRefundForm + '-store-grid00',
             pageSize: 20,
             proxy: {
                 type: 'ajax',
@@ -130,11 +137,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         });
         //
         var store01 = Ext.create('Ext.data.Store', {
-            storeId: prototype.idRFNDAssociatedARCR + '-store-grid00',
+            storeId: prototype.idRFNDQueryRefundForm + '-store-grid00',
             pageSize: 20,
             proxy: {
                 type: 'ajax',
-                url: prototype.url + '/searchDetail',
+                url: prototype.url2 + '/searchDetail',
                 timeout: 60000000,
                 reader: {
                     type: 'json',
@@ -147,7 +154,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         gridCabe.setStore(store00);
         gridData.setStore(store01);
 
-        Ext.getCmp(prototype.idRFNDAssociatedARCR + '-pagginator-01').setStore(store00);
+        Ext.getCmp(prototype.idRFNDQueryRefundForm + '-pagginator-01').setStore(store00);
     },
     onCmbSearchAfterRender: function (obj) {
         obj.setValue('2');
@@ -159,48 +166,48 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         field.setValue(newValue.toUpperCase());
     },
     onCmbSearchChange: function (obj, records, eOpts) {
-        var txtFilterDateFrom = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateFrom');
-        var txtFilterDateTo = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateTo');
-        var txtCia = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia');
-        var txtFrmaSerie = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie');
-        var txtfolio = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaFolio');
+        var txtFilterDateFrom = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateFrom');
+        var txtFilterDateTo = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateTo');
+        var txtCia = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia');
+        var txtFrmaSerie = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie');
+        var txtfolio = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaFolio');
         if (obj.getValue() === "2" || obj.getValue() === "4") {
             txtFilterDateFrom.show();
             txtFilterDateTo.show();
             txtCia.hide();
             txtFrmaSerie.hide();
             txtfolio.hide();
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaFolio').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaFolio').setValue("");
         } else if (obj.getValue() === "1") {
             txtfolio.show();
             txtFilterDateFrom.hide();
             txtFilterDateTo.hide();
             txtCia.hide();
             txtFrmaSerie.hide();
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateFrom').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateTo').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateFrom').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateTo').setValue("");
         } else if (obj.getValue() === "3") {
             txtFilterDateFrom.hide();
             txtFilterDateTo.hide();
             txtCia.show();
             txtFrmaSerie.show();
             txtfolio.hide();
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').setValue("139");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateFrom').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateTo').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaFolio').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').setValue("139");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateFrom').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateTo').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaFolio').setValue("");
         } else {
             txtFilterDateFrom.hide();
             txtFilterDateTo.hide();
             txtCia.hide();
             txtFrmaSerie.hide();
             txtfolio.hide();
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').setValue("");
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaFolio').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').setValue("");
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaFolio').setValue("");
         }
     },
     onSearchkey: function (f, e) {
@@ -212,30 +219,30 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
     onChangeComboTkt: function (obj, val) {
         switch (val) {
             case '1':
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtTKT').show();
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtIata').hide();
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtIata').setValue("");
-                setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtTKT').focus();", 100);
+                Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtTKT').show();
+                Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtIata').hide();
+                Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtIata').setValue("");
+                setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtTKT').focus();", 100);
                 break;
             case '2':
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtIata').show();
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtTKT').hide();
-                Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtTKT').setValue("");
-                setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtIata').focus();", 100);
+                Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtIata').show();
+                Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtTKT').hide();
+                Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtTKT').setValue("");
+                setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-de-txtIata').focus();", 100);
                 break;
         }
     },
     onSearchClick: function (obj, e) {
         var me = this;
-        me.bean.IN_OPTION = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-search-type').getValue();
-        me.bean.IN_DATEFROM = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateFrom').getRawValue();
-        me.bean.IN_DATETO = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateTo').getRawValue();
-        me.bean.IN_TICKET = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').getValue() + '' + Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').getValue();
-        me.bean.IN_IATA = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtIATA').getValue();
-        me.bean.IN_FLAG = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-CmbStatus').getValue();
-        me.bean.IN_STATUSBPO = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-CmbStatusBPO').getValue();
-        me.bean.IN_USER = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').getValue();
-        me.bean.IN_FOLIO = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaFolio').getValue();
+        me.bean.IN_OPTION = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-search-type').getValue();
+        me.bean.IN_DATEFROM = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateFrom').getRawValue();
+        me.bean.IN_DATETO = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateTo').getRawValue();
+        me.bean.IN_TICKET = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').getValue() + '' + Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').getValue();
+        me.bean.IN_IATA = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtIATA').getValue();
+        me.bean.IN_FLAG = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-CmbStatus').getValue();
+        me.bean.IN_STATUSBPO = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-CmbStatusBPO').getValue();
+        me.bean.IN_USER = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtUser').getValue();
+        me.bean.IN_FOLIO = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaFolio').getValue();
         if (me.bean.IN_USER === 'ALL') {
             me.bean.IN_USER = '';
         }
@@ -243,7 +250,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         if (me.bean.IN_OPTION === '') {
             Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-search-type').focus();", 100);
+                    setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-search-type').focus();", 100);
             });
             return;
 
@@ -251,7 +258,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         if (me.bean.IN_OPTION === '') {
             Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-search-type').focus();", 100);
+                    setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-search-type').focus();", 100);
             });
             return;
 
@@ -260,23 +267,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
             if (me.bean.IN_FOLIO === '') {
                 Ext.MessageBox.alert('PRAXIS', "Insert Folio", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
-                        setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaFolio').focus();", 100);
+                        setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaFolio').focus();", 100);
                 });
                 return;
             }
         }
         if (me.bean.IN_OPTION === "3") {
-            if (Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').getValue() === '') {
+            if (Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').getValue() === '') {
                 Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
-                        setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').focus();", 100);
+                        setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').focus();", 100);
                 });
                 return;
             }
-            if (Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').getValue() === '') {
+            if (Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').getValue() === '') {
                 Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
-                        setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').focus();", 100);
+                        setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').focus();", 100);
                 });
                 return;
             }
@@ -300,7 +307,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
                 if (global.existeFecha(me.bean.IN_DATEFROM) !== '') {
                     Ext.MessageBox.alert('PRAXIS', global.existeFecha(me.bean.IN_DATEFROM), function (btn, text) {
                         if (btn === 'ok' || btn === 'cancel')
-                            setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateFrom').focus();", 100);
+                            setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateFrom').focus();", 100);
                     });
                     return;
                 }
@@ -308,7 +315,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
                 if (global.existeFecha(me.bean.IN_DATETO) !== '') {
                     Ext.MessageBox.alert('PRAXIS', global.existeFecha(me.bean.IN_DATETO), function (btn, text) {
                         if (btn === 'ok' || btn === 'cancel')
-                            setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFilterDateTo').focus();", 100);
+                            setTimeout("Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFilterDateTo').focus();", 100);
                     });
                     return;
                 }
@@ -322,10 +329,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         if (bExcel) {
             me.exportExcel(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean)));
         } else {
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-lbl-total2').setText('0');
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-grid').getStore().removeAll();
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-gridCabe').getStore().removeAll();
-            Ext.getCmp(prototype.idRFNDAssociatedARCR + '-gridCabe').getStore().loadPage(1, {
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-lbl-total2').setText('0');
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-grid').getStore().removeAll();
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-gridCabe').getStore().removeAll();
+            Ext.getCmp(prototype.idRFNDQueryRefundForm + '-gridCabe').getStore().loadPage(1, {
                 params: bean,
                 callback: function (records, operation, success) {
                     if (records.length === 0) {
@@ -359,7 +366,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         var win = new Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociatedTicketForm({
             params: {
                 rec: rec,
-                action: 'FORMPENDIRFND'
+                action: 'FORMQUERYRFND'
             }
         });
         win.show();
@@ -384,35 +391,35 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
     },
     onRendererColumnOnPreme: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "font-weight:bold !important; color:#244066 !important; cursor: pointer !important; text-decoration: underline;";
-        return '<span onclick="Ext.getCmp(prototype.idRFNDAssociatedARCR + \'-Contenedor\').getController().searchform_detalle(' + rowIndex + ');">' + value + '</span>'
+        return '<span onclick="Ext.getCmp(prototype.idRFNDQueryRefundForm + \'-Contenedor\').getController().searchform_detalle(' + rowIndex + ');">' + value + '</span>'
     },
     searchform_detalle: function (rowIndex) {
         var me = this;
-        var grid = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-gridCabe');
+        var grid = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-gridCabe');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         me.bean2.IN_PREME = rec.data.A3647PREME;
         me.bean2.IN_ANIO = rec.data.A3647ANIO;
         me.bean2.IN_DATEFROM = rec.data.A3647FREGI;
         me.bean2.IN_USER = rec.data.A3647REGAS;
-        if (Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').getValue() !== '') {
-            me.bean2.IN_TICKET = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtCia').getValue() + "" + Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtFrmaSerie').getValue();
+        if (Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').getValue() !== '') {
+            me.bean2.IN_TICKET = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').getValue() + "" + Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').getValue();
         } else {
             me.bean2.IN_TICKET = '';
         }
 
-        me.bean2.IN_IATA = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtIATA').getValue();
+        me.bean2.IN_IATA = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtIATA').getValue();
         //
-        Ext.getCmp(prototype.idRFNDAssociatedARCR + '-grid').getStore().removeAll();
-        Ext.getCmp(prototype.idRFNDAssociatedARCR + '-grid').getStore().loadPage(1, {
+        Ext.getCmp(prototype.idRFNDQueryRefundForm + '-grid').getStore().removeAll();
+        Ext.getCmp(prototype.idRFNDQueryRefundForm + '-grid').getStore().loadPage(1, {
             params: {
                 beanString: JSON.stringify(me.bean2)
 
             }, callback: function (records, operation, success) {
                 if (records.length !== 0) {
-                    Ext.getCmp(prototype.idRFNDAssociatedARCR + '-lbl-total2').setText(records.length);
+                    Ext.getCmp(prototype.idRFNDQueryRefundForm + '-lbl-total2').setText(records.length);
                 } else {
-                    Ext.getCmp(prototype.idRFNDAssociatedARCR + '-lbl-total2').setText('0');
+                    Ext.getCmp(prototype.idRFNDQueryRefundForm + '-lbl-total2').setText('0');
                     global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                         }});
 
@@ -438,9 +445,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
     onRendererColumnOnCab: function (value, metaData, record, rowIndex, colIndex, store, view) {
         if (record.get('A4361DIAS') <= 3) {
             value = 'green';
-        } else if (record.get('A4361DIAS') > 3 || record.get('A4361DIAS') <= 5){
-             value = 'orange';
-        }else {
+        } else if (record.get('A4361DIAS') > 3 || record.get('A4361DIAS') <= 5) {
+            value = 'orange';
+        } else {
             value = 'red';
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
@@ -488,16 +495,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
     searchform_detalle2: function () {
         var me = this;
         //
-        Ext.getCmp(prototype.idRFNDAssociatedARCR + '-grid').getStore().removeAll();
-        Ext.getCmp(prototype.idRFNDAssociatedARCR + '-grid').getStore().loadPage(1, {
+        Ext.getCmp(prototype.idRFNDQueryRefundForm + '-grid').getStore().removeAll();
+        Ext.getCmp(prototype.idRFNDQueryRefundForm + '-grid').getStore().loadPage(1, {
             params: {
                 beanString: JSON.stringify(me.bean2)
 
             }, callback: function (records, operation, success) {
                 if (records.length !== 0) {
-                    Ext.getCmp(prototype.idRFNDAssociatedARCR + '-lbl-total2').setText(records.length);
+                    Ext.getCmp(prototype.idRFNDQueryRefundForm + '-lbl-total2').setText(records.length);
                 } else {
-                    Ext.getCmp(prototype.idRFNDAssociatedARCR + '-lbl-total2').setText('0');
+                    Ext.getCmp(prototype.idRFNDQueryRefundForm + '-lbl-total2').setText('0');
                     global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                         }});
 
@@ -508,4 +515,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
 
     }
 });
+
+
 

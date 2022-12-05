@@ -66,8 +66,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDARCReasonsForm.DataEntryRFNDARC
         cmbFamily.bindStore(Ext.create('Ext.data.Store',{
             data: [
                 { "code": "", "name": "SELECTED"},
-                {"code": "Autho", "name": "AUTHORISE"},
-                {"code": "rejec", "name": "REJECTED"}
+                {"code": "Authorise", "name": "AUTHORISE"},
+                {"code": "Rejected", "name": "REJECTED"}
             ]
         }));
         
