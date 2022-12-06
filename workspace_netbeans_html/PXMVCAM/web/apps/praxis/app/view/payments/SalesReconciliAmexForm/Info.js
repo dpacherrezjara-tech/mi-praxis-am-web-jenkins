@@ -7486,7 +7486,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                         style: 'margin: 1px;',
                         bodyStyle: 'background: transparent;',
                         border: false
-                    }
+                    } 
                 }
             ]
         }
