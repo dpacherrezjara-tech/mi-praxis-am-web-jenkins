@@ -105,6 +105,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
     },
     onNextClick: function () {
+        this.clear_keyDownHandler();
+        
         var all = this.p.all;
         var rec;
         var rowIndex = this.p.rowIndex;
