@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         this.setStoreData();
         this.btnClear_click();
         this.btnSearch_click();
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('11');
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
     },
     gridData_VIEWTKT_clickHandler: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
@@ -38,16 +38,31 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     setStoreData: function () {
         var storeComboDataYear = win.getStoreYear(true);
-        var storeComboDataMonth = win.getStoreMonth(false);
+        var storeComboDataMonth = win.getStoreMonth(true);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
+
+        var cmbUNIFiltro = Ext.getCmp(prototype.id + '-cmbUNIFiltro');
+        cmbUNIFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["1", "AM"],
+                ["2", "5D"]
+            ]
+        }));
+        cmbUNIFiltro.setValue("");
+        
     },
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Export-DataEntry">
     onOpenExportClick: function (grid, rowIndex, colIndex) {
-        var FECHA = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);
+        var FECHA = rec.data.FCONT;
+        
         this.winDataEntry(FECHA);
     },
     winDataEntry: function (FECHA) {
@@ -88,7 +103,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         this.setGridDataSearchDetailTKT();
     },
     // </editor-fold>
-
+    cmbTranType_changeHandler: function (e, eOpts) {
+        var a = Ext.getCmp(prototype.id + '-cmbUNIFiltro').getValue();
+        if(a === '' ){
+            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe GAM");
+        }else if(a === '1' ){
+            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe AM");
+        }else if(a === '2' ){
+            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe 5D");
+        }
+        this.btnSearch_click();
+    },
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
@@ -148,16 +173,25 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     setFormatParameter: function () {
         searchParams = {};
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
-        var fyear = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+        var fyear = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        var a = Ext.getCmp(prototype.id + '-cmbUNIFiltro').getValue();
+        var CARRYER;
+        if(a === '' ){
+            CARRYER = '';
+        }else if(a === '1' ){
+            CARRYER = 'AM';
+        }else if(a === '2' ){
+            CARRYER = '5D';
+        }
         // </editor-fold>
-
         // <editor-fold defaultstate="collapsed" desc="asignación">
         searchParams = {
-            IN_FECHA_FROM: fyear
+            IN_FECHA_FROM: fyear,
+            CARRYER: CARRYER
         };
 
         _path = prototype.url + '/getXLSX?' +
-                'IN_FECHA_FROM=' + searchParams.IN_FECHA_FROM ;
+                'IN_FECHA_FROM=' + searchParams.IN_FECHA_FROM;
         // </editor-fold>
     },
     setFormatParameterDetailFTE: function (data) {

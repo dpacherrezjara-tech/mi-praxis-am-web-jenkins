@@ -72,8 +72,7 @@ public class AccountingCouponsController extends BaseController {
         filter = new A3084Filter();
         try {
             filter.IN_FECHA_FROM = request.getParameter("IN_FECHA_FROM");
-            filter.QUARTER = request.getParameter("QUARTER");
-            filter.FTE = request.getParameter("FTE");
+            filter.CARRYER = request.getParameter("CARRYER");
 
             logic = new AccountingCouponsLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
