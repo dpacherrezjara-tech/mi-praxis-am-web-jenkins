@@ -19,7 +19,6 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-//                height: 570,
                 align: 'center',
                 hidden:true
             },
@@ -36,7 +35,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        width: prototype.widthGrid,
+                        width: 980,
 //                        height: 545,
                         align: 'center'
                     },
@@ -45,10 +44,10 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridMainData',
-                            width: prototype.widthGrid,
-                            height: 545,
+                            height: 910,
                             columnLines: true,
-                            hidden:true,
+                            hidden:false,
+                            margin: '50 0 0 0 ',
                             features: [{
                                     ftype: 'summary'
                                 }],
@@ -60,20 +59,18 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                 },
                                 items: [
                                     {
-                                        text: 'Year - Quarter', dataIndex: 'strDescripcion', width: 90,
-                                        listeners: {
-                                            click: 'onViewDetailFTEClick'
-                                        },
+                                        text: 'Year - Month', dataIndex: 'FCONT', width: 90,
+//                                        listeners: {
+//                                            click: 'onViewDetailFTEClick'
+//                                        },
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             value = '<b>' + value + '</b>';
                                             return '<a href="#flown-accounting-coupons-form" style="text-decoration:underline #057ECB;color:#008FE3;">' + value + '</a>';
                                         }
                                     },
                                     {
-                                        text: 'Currency', dataIndex: 'strFCON', width: 90, sortable: false
-                                    },
-                                    {
                                         text: 'Total Universe',
+                                        id: prototype.id + '-lblTitMein',
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
@@ -89,7 +86,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Tickets', dataIndex: 'QTYCOUP', width: 100,
+                                                        text: 'Tickets', dataIndex: 'QTY_CPN', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#D7F1FB;";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -97,25 +94,13 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQTYCOUP, '0,000');
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Passenger', dataIndex: 'QCPNTOT', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQCPNTOT, '0,000');
+                                                            return Ext.util.Format.number(data.TOTQTY_CPN, '0,000');
                                                         }
                                                     }
                                                 ]
                                             },
                                             {
-                                                text: 'Amount',
+                                                text: 'Amount USD',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -123,7 +108,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Fare', dataIndex: 'FARE', width: 120,
+                                                        text: 'Fare', dataIndex: 'VALOR', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#D7F1FB;";
                                                             return Ext.util.Format.number(value, '0,000.00');
@@ -131,57 +116,13 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.FARETOT, '0,000.00');
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        text: 'Total Universe Coupon 0',
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        columns: [
-                                            {
-                                                text: 'Quantity',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Tickets', dataIndex: 'QTYCOUPU', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#A9DAED;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQTYCOUPU, '0,000');
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Passenger', dataIndex: 'QCPNTOT', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#A9DAED;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQCPNTOTU, '0,000');
+                                                            return Ext.util.Format.number(data.TOTVALOR, '0,000.00');
                                                         }
                                                     }
                                                 ]
                                             },
                                             {
-                                                text: 'Amount',
+                                                text: 'Amount USD',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -189,65 +130,21 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Fare', dataIndex: 'FAREU', width: 120,
+                                                        text: 'YQ', dataIndex: 'VALOR_YQ', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#A9DAED;";
+                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.FARETOTU, '0,000.00');
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        text: 'Total AccountingCoupons',
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        columns: [
-                                            {
-                                                text: 'Quantity',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Tickets', dataIndex: 'QTYCOUPD', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQTYCOUPD, '0,000');
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Passenger', dataIndex: 'QCPNTOTD', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = "text-align:right;";
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQCPNTOTD, '0,000');
+                                                            return Ext.util.Format.number(data.TOTVALOR_YQ, '0,000.00');
                                                         }
                                                     }
                                                 ]
                                             },
                                             {
-                                                text: 'Amount',
+                                                text: 'Total USD',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -255,7 +152,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Fare', dataIndex: 'FARED', width: 120,
+                                                        text: 'Fa + YQ', dataIndex: 'totVALOR', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#D7F1FB;";
                                                             return Ext.util.Format.number(value, '0,000.00');
@@ -263,7 +160,73 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.FARETOTD, '0,000.00');
+                                                            return Ext.util.Format.number(data.TOTtotVALOR, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount MXN',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Fare', dataIndex: 'VALOR_MXN', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.TOTVALOR_MXN, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount MXN',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'YQ', dataIndex: 'VALOR__YQ_MXN', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.TOTVALOR__YQ_MXN, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Total MXN',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'FA + YQ', dataIndex: 'totVALOR_MXN', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.TOTtotVALOR_MXN, '0,000.00');
                                                         }
                                                     }
                                                 ]
@@ -279,14 +242,14 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                         },
                                         columns: [
                                             {
-                                                text: 'AccountingCoupons',
+                                                text: 'ACC',
                                                 xtype: 'actioncolumn',
                                                 width: 60,
                                                 align: 'center',
                                                 items: [
                                                     {
                                                         icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                                        tooltip: 'Export Information AccountingCoupons',
+                                                        tooltip: 'Export Information ACC',
                                                         handler: 'onOpenExportClick'
                                                     }
                                                 ]

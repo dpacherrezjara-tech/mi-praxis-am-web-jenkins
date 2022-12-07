@@ -39,80 +39,151 @@ public class AccountingCouponsDAO {
         session = ss;
     }
     
+//    public List<A3084Filter> loadSQP01807(A3084Filter filter) throws SQLException, Exception {
+//        List<A3084Filter> lstRtn = new ArrayList<>(0);
+//        A3084Filter objRtn;
+//
+//        int totQTYCOUP = 0, totQTYCOUPD = 0, totQTYCOUPU = 0, totQCPNTOT = 0, totQCPNTOTD = 0, totQCPNTOTU = 0;
+//        double totAMOUFARE = 0, totAMOUFARED = 0, totAMOUFAREU = 0;
+//
+//        strSQL = "{CALL " + session.getMainLibrary() + ".SQP01807(?,?,?,?)}";
+//        try {
+//            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+//            cs = cnx.prepareCall(strSQL);
+//
+//            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
+//            cs.setString(2, filter.IN_FECHA_FROM);
+//            cs.setString(3, filter.QUARTER); // quarter
+//            cs.setString(4, filter.FTE);//fte
+//
+//            cs.execute();
+//
+//            rst = cs.getResultSet();
+//            while (rst.next()) {
+//                totQTYCOUP += rst.getInt("QTYCOUP");
+//                totQCPNTOT += rst.getInt("QCPNTOT");
+//                totAMOUFARE += rst.getDouble("FARE");
+//
+//                totQTYCOUPD += rst.getInt("QTYCOUPD");
+//                totQCPNTOTD += rst.getInt("QCPNTOTD");
+//                totAMOUFARED += rst.getDouble("FARED");
+//
+//                totQTYCOUPU += rst.getInt("QTYCOUPU");
+//                totQCPNTOTU += rst.getInt("QCPNTOTU");
+//                totAMOUFAREU += rst.getDouble("FAREU");
+//
+//            }
+////            try {
+////                rst.close();
+////            } catch (SQLException e) {
+////                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+////            }
+//            if (cs.getMoreResults()) {
+//                rst = cs.getResultSet();
+//                while (rst.next()) {
+//                    objRtn = new A3084Filter();
+//                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+//                    objRtn.FTE = filter.FTE;
+//                    objRtn.YEAR = rst.getString("YEAR").trim();
+//                    objRtn.QUARTER = rst.getString("QUARTER").trim();
+//                    objRtn.strDescripcion = objRtn.YEAR + " - 0" + objRtn.QUARTER;
+//                    objRtn.strFCON = "USD";
+//
+//                    objRtn.QTYCOUP = (rst.getInt("QTYCOUP"));
+//                    objRtn.QCPNTOT = (rst.getInt("QCPNTOT"));
+//                    objRtn.FARE = (rst.getDouble("FARE"));
+//
+//                    objRtn.QTYCOUPD = (rst.getInt("QTYCOUPD"));
+//                    objRtn.QCPNTOTD = (rst.getInt("QCPNTOTD"));
+//                    objRtn.FARED = (rst.getDouble("FARED"));
+//
+//                    objRtn.QTYCOUPU = (rst.getInt("QTYCOUPU"));
+//                    objRtn.QCPNTOTU = (rst.getInt("QCPNTOTU"));
+//                    objRtn.FAREU = (rst.getDouble("FAREU"));
+//
+//                    objRtn.totQTYCOUP = totQTYCOUP;
+//                    objRtn.totQCPNTOT = totQCPNTOT;
+//                    objRtn.FARETOT = totAMOUFARE;
+//
+//                    objRtn.totQTYCOUPD = totQTYCOUPD;
+//                    objRtn.totQCPNTOTD = totQCPNTOTD;
+//                    objRtn.FARETOTD = totAMOUFARED;
+//
+//                    objRtn.totQTYCOUPU = totQTYCOUPU;
+//                    objRtn.totQCPNTOTU = totQCPNTOTU;
+//                    objRtn.FARETOTU = totAMOUFAREU;
+//
+//                    lstRtn.add(objRtn);
+//                }
+//            }
+//        } finally {
+//            setClose();
+//        }
+//
+//        return lstRtn;
+//    }
+    
     public List<A3084Filter> loadSQP01807(A3084Filter filter) throws SQLException, Exception {
         List<A3084Filter> lstRtn = new ArrayList<>(0);
         A3084Filter objRtn;
 
-        int totQTYCOUP = 0, totQTYCOUPD = 0, totQTYCOUPU = 0, totQCPNTOT = 0, totQCPNTOTD = 0, totQCPNTOTU = 0;
-        double totAMOUFARE = 0, totAMOUFARED = 0, totAMOUFAREU = 0;
+        int TOTQTY_CPN = 0;
+        double TOTVALOR = 0, TOTVALOR_YQ = 0;
+        double TOTVALOR_MXN = 0, TOTVALOR__YQ_MXN = 0;
 
-        strSQL = "{CALL " + session.getMainLibrary() + ".SQP01807(?,?,?,?)}";
+        strSQL = "{CALL " + session.getMainLibrary() + ".SQP01807_1(?,?,?)}";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.IN_FECHA_FROM);
-            cs.setString(3, filter.QUARTER); // quarter
-            cs.setString(4, filter.FTE);//fte
+            cs.setString(3, filter.CARRYER);
 
             cs.execute();
 
             rst = cs.getResultSet();
             while (rst.next()) {
-                totQTYCOUP += rst.getInt("QTYCOUP");
-                totQCPNTOT += rst.getInt("QCPNTOT");
-                totAMOUFARE += rst.getDouble("FARE");
-
-                totQTYCOUPD += rst.getInt("QTYCOUPD");
-                totQCPNTOTD += rst.getInt("QCPNTOTD");
-                totAMOUFARED += rst.getDouble("FARED");
-
-                totQTYCOUPU += rst.getInt("QTYCOUPU");
-                totQCPNTOTU += rst.getInt("QCPNTOTU");
-                totAMOUFAREU += rst.getDouble("FAREU");
+                TOTQTY_CPN += rst.getInt("QTY_CPN");
+                
+                TOTVALOR += rst.getDouble("VALOR");
+                TOTVALOR_YQ += rst.getDouble("VALOR_YQ");
+                
+                TOTVALOR_MXN += rst.getDouble("VALOR_MXN");
+                TOTVALOR__YQ_MXN += rst.getDouble("VALOR__YQ_MXN");
 
             }
-//            try {
-//                rst.close();
-//            } catch (SQLException e) {
-//                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-//            }
+            try {
+                rst.close();
+            } catch (SQLException e) {
+                //logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
             if (cs.getMoreResults()) {
                 rst = cs.getResultSet();
                 while (rst.next()) {
                     objRtn = new A3084Filter();
                     objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
-                    objRtn.FTE = filter.FTE;
-                    objRtn.YEAR = rst.getString("YEAR").trim();
-                    objRtn.QUARTER = rst.getString("QUARTER").trim();
-                    objRtn.strDescripcion = objRtn.YEAR + " - 0" + objRtn.QUARTER;
-                    objRtn.strFCON = "USD";
+                    objRtn.FCONT = rst.getString("FCONT").trim();
+                    objRtn.QTY_CPN = rst.getInt("QTY_CPN");
+                    
+                    objRtn.VALOR = rst.getDouble("VALOR");
+                    objRtn.VALOR_YQ = rst.getDouble("VALOR_YQ");
+                    objRtn.totVALOR = objRtn.VALOR + objRtn.VALOR_YQ;
+                    
+                    objRtn.VALOR_MXN = rst.getDouble("VALOR_MXN");
+                    objRtn.VALOR__YQ_MXN = rst.getDouble("VALOR__YQ_MXN");
+                    objRtn.totVALOR_MXN = objRtn.VALOR_MXN + objRtn.VALOR__YQ_MXN;
 
-                    objRtn.QTYCOUP = (rst.getInt("QTYCOUP"));
-                    objRtn.QCPNTOT = (rst.getInt("QCPNTOT"));
-                    objRtn.FARE = (rst.getDouble("FARE"));
-
-                    objRtn.QTYCOUPD = (rst.getInt("QTYCOUPD"));
-                    objRtn.QCPNTOTD = (rst.getInt("QCPNTOTD"));
-                    objRtn.FARED = (rst.getDouble("FARED"));
-
-                    objRtn.QTYCOUPU = (rst.getInt("QTYCOUPU"));
-                    objRtn.QCPNTOTU = (rst.getInt("QCPNTOTU"));
-                    objRtn.FAREU = (rst.getDouble("FAREU"));
-
-                    objRtn.totQTYCOUP = totQTYCOUP;
-                    objRtn.totQCPNTOT = totQCPNTOT;
-                    objRtn.FARETOT = totAMOUFARE;
-
-                    objRtn.totQTYCOUPD = totQTYCOUPD;
-                    objRtn.totQCPNTOTD = totQCPNTOTD;
-                    objRtn.FARETOTD = totAMOUFARED;
-
-                    objRtn.totQTYCOUPU = totQTYCOUPU;
-                    objRtn.totQCPNTOTU = totQCPNTOTU;
-                    objRtn.FARETOTU = totAMOUFAREU;
-
+                    objRtn.TOTQTY_CPN = TOTQTY_CPN;
+                    
+                    objRtn.TOTVALOR = TOTVALOR;
+                    objRtn.TOTVALOR_YQ = TOTVALOR_YQ;
+                    objRtn.TOTtotVALOR = objRtn.TOTVALOR + objRtn.TOTVALOR_YQ;
+                    
+                    objRtn.TOTVALOR_MXN = TOTVALOR_MXN;
+                    objRtn.TOTVALOR__YQ_MXN = TOTVALOR__YQ_MXN;
+                    objRtn.TOTtotVALOR_MXN = objRtn.TOTVALOR_MXN + objRtn.TOTVALOR__YQ_MXN;
+                    
                     lstRtn.add(objRtn);
                 }
             }
