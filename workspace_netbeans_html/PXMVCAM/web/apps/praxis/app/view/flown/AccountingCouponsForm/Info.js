@@ -65,7 +65,8 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
 //                                        },
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             value = '<b>' + value + '</b>';
-                                            return '<a href="#flown-accounting-coupons-form" style="text-decoration:underline #057ECB;color:#008FE3;">' + value + '</a>';
+                                            //return '<a href="#flown-accounting-coupons-form" style="text-decoration:underline #057ECB;color:#008FE3;">' + value + '</a>';
+                                            return value;
                                         }
                                     },
                                     {
@@ -86,7 +87,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Tickets', dataIndex: 'QTY_CPN', width: 100,
+                                                        text: 'Coupons', dataIndex: 'QTY_CPN', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#D7F1FB;";
                                                             return Ext.util.Format.number(value, '0,000');
