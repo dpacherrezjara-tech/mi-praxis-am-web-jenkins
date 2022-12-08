@@ -12,19 +12,21 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.LoadDeliveryEntry', {
     border: false,
     resizable: false,
     layout: {
-        type: 'border',
+        type: 'fit',
         align: 'center'
     },
     modal: true,
     items: [
         {
-            egion: 'center',
+            region: 'center',
             bodyStyle: 'background: white;',
             id: prototype.id + '-regionCenterGrid01',
-            margin: '10 ,0 ,10 ,0',
-            width: 750,
+            padding: '2 2 5 0',
+            border: false,
+            width: '100%',
+            heigth: '100%',
             layout: {
-                type: 'vbox',
+                type: 'fit',
                 align: 'center'
             },
             defaults: {
@@ -35,19 +37,44 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.LoadDeliveryEntry', {
             items: [
                 {
                     xtype: 'textareafield',
-                    height: 450,
+                    height: '100%',
+                    width: '100%',
                     border: false,
                     id: prototype.id + '-txaDelivery',
-                    padding: '0 0 0 0',
-                    autoScroll   :    true,
-                    width: 870,
-                    fieldLabel: '',
+                    fieldStyle: 'color: #FCFEFF; font-size: 13px; font-family : Courier New; background: black;',
                     readOnly: true,
-                    labelPad: 0,
-                    labelSeparator: ' ',
-                    fieldStyle: 'color: #0B333C; font-size: 10px; font-family : Courier New; background: white;',
-                    labelWidth: 0
-                            //fontFamily="keyDown="txtPagFilterValue_keyDownHandler(event)"
+                    scrollable:true
+                    //fontFamily="keyDown="txtPagFilterValue_keyDownHandler(event)"
+                }
+            ]
+        }
+    ],
+    dockedItems: [
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            border: true,
+            ui: 'footer',
+            margin: '2 5 5 10', // left/right/top/botton
+            defaults: {
+                scale: 'medium'
+            },
+            items: [
+                {
+                    text: 'Download',
+                    id: prototype.id + '-btn-download',
+                    iconCls: 'prx-icon-download',
+                    listeners: {
+                        click: 'onDownloadClick'
+                    }
+                },
+                {
+                    text: 'Close',
+                    id: prototype.id + '-btn-close',
+                    iconCls: 'prx-icon-cancel',
+                    listeners: {
+                        click: 'onCancelClick'
+                    }
                 }
             ]
         }
