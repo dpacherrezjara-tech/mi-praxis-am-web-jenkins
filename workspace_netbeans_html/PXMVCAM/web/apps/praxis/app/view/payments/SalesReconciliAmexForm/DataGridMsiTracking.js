@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
     title: 'MSI Tracking - Grid Data',
     header: true,
     height: 480,
-    width: 1490,
+    width: 1570,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -122,7 +122,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                             {
                                                 text: 'Document<br>Type', dataIndex: 'descTDOC', width: 80
                                             },
-                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL',hidden:true,
+                                            {text: 'New Status<br>Settlement vs Sales', width: 130, dataIndex: 'NEWSTVAL', hidden: true,
                                                 renderer: function (value, meta, record, row, col) {
                                                     meta.style = "background-color:#fae2a0;";
                                                     switch (value) {
@@ -179,6 +179,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                             {
                                                 text: 'Submission<br>Merchant ID', dataIndex: 'SMERCHID', width: 100,
                                             },
+                                            {
+                                                text: 'Select',
+                                                xtype: 'checkcolumn',
+//                                                        id: prototype.id + '-id_checkIATA',
+                                                width: 70,
+                                                dataIndex: 'false',
+                                                listeners: {
+                                                    checkchange: 'checkPP'
+                                                },
+                                                        renderer: function (value, meta, record, row, col) {
+                                                            var status_match = ['1', '5', '6', '7'];
+                                                            if (status_match.indexOf(record.data.STVAL)) {
+                                                                meta['tdCls'] = '';                                                                
+                                                            } else {
+                                                                meta['tdCls'] = 'x-item-disabled';
+                                                            }
+                                                            return new Ext.ux.CheckColumn().renderer(value);
+                                                        }
+                                            }
                                         ]
                                     }
                                 },
@@ -206,7 +225,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
             },
             items: [
                 {
-                    text: 'Update',hidden:true,
+                    text: 'Update', //hidden: true,
                     id: prototype.id + '-btn-msi-update',
                     iconCls: 'prx-icon-update',
                     listeners: {
