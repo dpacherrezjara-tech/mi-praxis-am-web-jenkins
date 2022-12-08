@@ -6,6 +6,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataGridMsiTrackin
     bean: {},
     beanMsi: {},
     paramsMsiTracking: {},
+    AREFNBR_1: '',
+    TDOC_1: '',
+    AREFNBR_2: '',
+    TDOC_2: '',
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
@@ -41,8 +45,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataGridMsiTrackin
     },
     onMsiUpdateClick: function (btn) {
         var beanMsiTemp = {};
-
-        Ext.Msg.show(
+        
+        if( (this.TDOC_1 + this.TDOC_2) === 'SR' || (this.TDOC_1 + this.TDOC_2) === 'RS'){
+            Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to update?',
@@ -57,16 +62,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataGridMsiTrackin
                         }
                     }
                 });
+        } else {
+            global.Msg({msg: 'Error'});
+        }        
     },
     llenarData: function (beanMsiTemp) {
-        beanMsiTemp.lstSendManual = [];
-        var store_gridMsi = Ext.getCmp(prototype.id + '-gridMsiTracking').getStore();
+//        beanMsiTemp.lstSendManual = [];
+//        var store_gridMsi = Ext.getCmp(prototype.id + '-gridMsiTracking').getStore();
+//
+//        for (var i = 0; i < store_gridMsi.data.length; i++) {
+//            beanMsiTemp.lstSendManual.push(store_gridMsi.data.items[i].data);
+//        }
+//        
+//        console.log(beanMsiTemp);
+//        this.MaintenanceMsi(beanMsiTemp);
+        beanMsiTemp.AREFNBR_1 = this.AREFNBR_1;
+        beanMsiTemp.AREFNBR_2 = this.AREFNBR_2;
 
-        for (var i = 0; i < store_gridMsi.data.length; i++) {
-            beanMsiTemp.lstSendManual.push(store_gridMsi.data.items[i].data);
-        }
-        
-        console.log(beanMsiTemp);
         this.MaintenanceMsi(beanMsiTemp);
     },
     MaintenanceMsi: function (beanMsiTemp) {
@@ -97,7 +109,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataGridMsiTrackin
             }
         });
     },
-    onMsiCancelClick: function(){
+    onMsiCancelClick: function () {
         Ext.getCmp(prototype.id + '-msiTrackingGrid').close();
-    }
+    },
+    checkPP: function (rowIndex, metaData, value, record, colIndex, store, view) {
+        if (value) {
+            if (this.AREFNBR_1 === '') {
+                this.AREFNBR_1 = record.data.AREFNBR;
+                this.TDOC_1 = record.data.TDOC;
+            } else if (this.AREFNBR_2 === '') {
+                this.AREFNBR_2 = record.data.AREFNBR;
+                this.TDOC_2 = record.data.TDOC;
+            }
+        } else {
+            if (this.AREFNBR_1 === record.data.AREFNBR) {
+                this.AREFNBR_1 = '';
+                this.TDOC_1 = '';
+            } else if (this.AREFNBR_2 === record.data.AREFNBR) {
+                this.AREFNBR_2 = '';
+                this.TDOC_2 = '';
+            }
+        }
+
+
+    },
 });

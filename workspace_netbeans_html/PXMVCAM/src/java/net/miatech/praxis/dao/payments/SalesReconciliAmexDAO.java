@@ -3774,19 +3774,19 @@ public class SalesReconciliAmexDAO {
                 }
                 objRtn.descVOID = rs01.getString("VOID").trim();
                 objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
-                if(rs01.getString("FREVERSA").equals("0")){
+                if (rs01.getString("FREVERSA").equals("0")) {
                     objRtn.descFREVERSA = "Processed Reverse";
-                }else if(rs01.getString("FREVERSA").equals("1")){
+                } else if (rs01.getString("FREVERSA").equals("1")) {
                     objRtn.descFREVERSA = "Pending reverse";
                 }
                 objRtn.FREVADM = rs01.getString("FREVADM").trim();
-                if(rs01.getString("FREVADM").equals("0")){
+                if (rs01.getString("FREVADM").equals("0")) {
                     objRtn.descFREVADM = "Processed Reverse";
-                }else if(rs01.getString("FREVADM").equals("1")){
+                } else if (rs01.getString("FREVADM").equals("1")) {
                     objRtn.descFREVADM = "Pending reverse";
                 }
                 objRtn.FADM = rs01.getString("FADM").trim();
-                if(rs01.getString("FADM").equals("1")){
+                if (rs01.getString("FADM").equals("1")) {
                     objRtn.descFADM = "ADM generado";
                 }
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
@@ -3827,7 +3827,7 @@ public class SalesReconciliAmexDAO {
                 if ("".equals(objRtn.CERROIN.trim())) {
                     objRtn.DES_CERROIN = "";
                 }
-                
+
                 objRtn.CODADJU = rs01.getString("CODADJU");
                 objRtn.DES_CODADJU = rs01.getString("DES_CODADJU");
                 if ("".equals(objRtn.CODADJU.trim())) {
@@ -4048,7 +4048,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         //lstSendManual
-        
+
         String msj = "";
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04636(?,?,?,?,?,?,?,?,?,?)}";
 
@@ -4059,16 +4059,16 @@ public class SalesReconciliAmexDAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.PRDA.trim());
-            cstmt01.setString(3, filter.PAYDATE.trim());            
+            cstmt01.setString(3, filter.PAYDATE.trim());
             cstmt01.setString(4, filter.BSUMDATE.trim());
             cstmt01.setString(5, filter.IDITEMS.trim());
-            cstmt01.setString(6, filter.IDITEMT.trim());            
+            cstmt01.setString(6, filter.IDITEMT.trim());
             cstmt01.setString(7, filter.CERROR.trim());
             cstmt01.setString(8, session.getUserView().getUserInfo().USR);
             cstmt01.setString(9, Functions.getFechaActual());
             cstmt01.setString(10, Functions.getHoraActual());
 
-            cstmt01.execute();            
+            cstmt01.execute();
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -4110,44 +4110,20 @@ public class SalesReconciliAmexDAO {
         Connection cnx = null;
         try {
             //Cambiar Status a las transacciones
-            if (lstSendManual != null && lstSendManual.size() > 0) {
-                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?,?)}";
-                cstmt01 = cnx.prepareCall(SQLCLL02);
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?)}";
+            cstmt01 = cnx.prepareCall(SQLCLL02);
 
-                for (int i = 0; i < lstSendManual.size(); i++) {
-                    beanDet = lstSendManual.get(i);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR_1.trim());
+            cstmt01.setString(3, filter.TDOC_1.trim());
+            cstmt01.setString(4, filter.AREFNBR_2.trim());
+            cstmt01.setString(5, filter.TDOC_2.trim());
+            cstmt01.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(7, Functions.getFechaActual());
+            cstmt01.setString(8, Functions.getHoraActual());
 
-                    if (beanDet.STVAL.equals("1")) {
-                        if (beanDet.NBRINSTA == 0) {
-                            NEW_CERROR = "87";
-                        } else {
-                            NEW_CERROR = "86";
-                        }
-                        break;
-                    }
-
-                }
-
-                for (int i = 0; i < lstSendManual.size(); i++) {
-                    beanDet = lstSendManual.get(i);
-
-                    cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-                    cstmt01.setString(2, beanDet.PRDA.trim());
-                    cstmt01.setString(3, beanDet.PAYDATE.trim());
-                    cstmt01.setString(4, beanDet.BSUMDATE.trim());
-                    cstmt01.setString(5, beanDet.SMERCHID.trim());
-                    cstmt01.setString(6, beanDet.IDITEMS.trim());
-                    cstmt01.setString(7, beanDet.IDITEMT.trim());
-                    cstmt01.setString(8, beanDet.NEWSTVAL.trim());
-                    cstmt01.setString(9, NEW_CERROR);
-                    cstmt01.setString(10, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(11, Functions.getFechaActual());
-                    cstmt01.setString(12, Functions.getHoraActual());
-
-                    cstmt01.execute();
-                }
-            }
+            cstmt01.execute();
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -4782,6 +4758,7 @@ public class SalesReconciliAmexDAO {
                 beanTkt.TRANSDATE = rst.getString("TRANSDATE").trim();
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
                 beanTkt.SPNR = rst.getString("SPNR").trim();
                 beanTkt.TDOC = rst.getString("TDOC").trim();
                 if (hmDescTDOC.containsKey(rst.getString("TDOC").trim())) {

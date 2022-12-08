@@ -242,6 +242,12 @@ public class A4116Filter extends A4116 {
     public double QTY_TRANSACTIONS = 0;
     public double totQTY_TRANSACTIONS = 0;
     
+    //MSI
+    public String AREFNBR_1 = "";
+    public String AREFNBR_2 = "";
+    public String TDOC_1 = "";
+    public String TDOC_2 = "";
+    
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
