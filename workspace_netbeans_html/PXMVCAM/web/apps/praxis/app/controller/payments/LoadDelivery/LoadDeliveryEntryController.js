@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryEntryControl
         return obj;
     },
     searchDelivery: async function () {
-        let window = Ext.getCmp(prototype.id + '-regionCenterGrid01');
+        let window = Ext.getCmp(prototype.id + '-LoadDeliveryEntry');
         let txa = Ext.getCmp(prototype.id + '-txaDelivery');
         window.mask('Loading...');
         let url = this.url + '/getDelivery';
