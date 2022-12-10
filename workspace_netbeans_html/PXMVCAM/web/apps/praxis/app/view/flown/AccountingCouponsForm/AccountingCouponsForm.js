@@ -1,20 +1,22 @@
+prototype.widthContenedor = 1750;
+prototype.widthGrid = 1200;
+prototype.widthGridDetailFTE = 1140;
+prototype.widthGridDetTKT = 1740;
 
-prototype.id = 'SalesReconciliBoomerForm';
-prototype.url = CONTEXTPATH + '/SalesReconciliBoomer';
-
-Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoomerForm', {
+Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.AccountingCouponsForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.SalesReconciliBoomerForm',
+    alias: 'widget.AccountingCouponsForm',
     requires: [
-        'Ext.Praxis.view.payments.SalesReconciliBoomerForm.Options',
-        'Ext.Praxis.view.payments.SalesReconciliBoomerForm.Filters',
-        'Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info',
-        'Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBoomerController'
+        'Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsController',
+        'Ext.Praxis.view.flown.AccountingCouponsForm.Options',
+        'Ext.Praxis.view.flown.AccountingCouponsForm.Filters',
+        'Ext.Praxis.view.flown.AccountingCouponsForm.Info'
     ],
-    controller: 'SalesReconciliBoomerController',
+    controller: 'AccountingCouponsController',
     layout: {
         type: 'fit'
     },
+    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -31,17 +33,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
-//                    defaults: {
-//                        border: false,
-//                        autoScroll: true
-//                    },
+                    defaults: {
+                        border: false,
+                        autoScroll: true
+                    },
                     items: [
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 910,
+//                          width: 900,
                             layout: 'border',
-                            
                             items: [
                                 {
                                     region: 'center',
@@ -53,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 910,
+                                        width: prototype.widthContenedor,
                                         align: 'center'
                                     },
                                     items: [
@@ -68,17 +69,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 700,
-                                            width: 910,
+                                            height: 630,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 910,
                                                     layout: 'border',
                                                     align: 'center',
-                                                    border: true,
+                                                    border: false,
                                                     defaults: {
                                                         border: false
                                                     },
@@ -93,10 +92,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
                                                 }
                                             ]
                                         }
-                                   ]
+                                    ]
                                 }
                             ]
-                            
                         }
                     ]
                 }
@@ -104,7 +102,3 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.SalesReconciliBoom
         }
     ]
 });
-
-
-
-
