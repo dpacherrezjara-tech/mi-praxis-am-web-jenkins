@@ -398,10 +398,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQueryRefundForm.RFNDQueryRefund
         var grid = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-gridCabe');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        me.bean2.IN_PREME = rec.data.A3647PREME;
-        me.bean2.IN_ANIO = rec.data.A3647ANIO;
-        me.bean2.IN_DATEFROM = rec.data.A3647FREGI;
-        me.bean2.IN_USER = rec.data.A3647REGAS;
+        me.bean2.IN_PREME = rec.data.A4361PREME;
+        me.bean2.IN_ANIO = rec.data.A4361ANIO;
+        me.bean2.IN_DATEFROM = rec.data.A4361FREGI;
+        me.bean2.IN_USER = rec.data.A4361REGAS;
         if (Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').getValue() !== '') {
             me.bean2.IN_TICKET = Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtCia').getValue() + "" + Ext.getCmp(prototype.idRFNDQueryRefundForm + '-txtFrmaSerie').getValue();
         } else {
