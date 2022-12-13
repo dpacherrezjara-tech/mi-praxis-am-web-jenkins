@@ -109,6 +109,7 @@ public class A3648 {
     public String A3648ARCD;
     public String A3648CODE;
     public String A3648ERROR;
+    public String A3648ARCHI;
     public int A3648RN;
     public String A3648MDAD;
     public String A3648MDAQD;

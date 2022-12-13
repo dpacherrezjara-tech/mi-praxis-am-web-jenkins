@@ -295,6 +295,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648ARCD = rs01.getString("A3647ARCD");
                 objRtn.A3648CODE = rs01.getString("A3649CODE");
                 objRtn.A3648ERROR = rs01.getString("A3649ERROR");
+                objRtn.A3648ARCHI = rs01.getString("A3649ARCHI");
                 objRtn.A3648ESTADO = rs01.getString("A3648ESTADO");
                 objRtn.A3648FOLIO = rs01.getString("A3647FOLIO");
                 objRtn.A3648RAAG = rs01.getString("A3647RAAG");

@@ -13,6 +13,7 @@ import com.google.gson.JsonParser;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
@@ -45,6 +46,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.json.JSONException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -1294,6 +1296,47 @@ public class RFNDQueryController extends BaseController {
         map.put("success", true);
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("lst_Error", lst);
+
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
+    String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
+        System.out.println("Conexión AWS...");
+
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+
+        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String IN_OPTION = request.getParameter("IN_OPTION").trim();
+        String IN_PATH = path_config + "\\IMGTMPRFND\\";
+        String IN_ANIO = request.getParameter("IN_ANIO").trim();
+        String IN_PREME = request.getParameter("IN_PREME").trim();
+
+        /*
+         Se establece tiempo límite de conexión por 60 min
+         */
+        Unirest.setTimeouts(3600000, 3600000);
+
+        /*
+         Preparando parámetros para enviar por body
+         */
+        HashMap bodyData = new HashMap<>();
+        bodyData.put("IN_OPTION", IN_OPTION);
+        bodyData.put("IN_PATH", IN_PATH);
+        bodyData.put("IN_ANIO", IN_ANIO);
+        bodyData.put("IN_PREME", IN_PREME);
+//bsplink/download/rfnd/rfndirect/
+        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/rfndirect/")
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(bodyData))
+                .asJson();
+
+        String body = response.getBody().getObject().get("data").toString();
+
+        map.put("success", true);
+        map.put("data", body);
 
         return new Gson().toJson(map);
     }
