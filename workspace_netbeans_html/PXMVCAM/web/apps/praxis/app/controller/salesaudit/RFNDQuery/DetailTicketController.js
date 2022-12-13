@@ -432,12 +432,28 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(rec.get('A3648MDAD'));
             //Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(VL_A3648XMDAQ);
             //Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(VL_A3648XMDA);
-
         }
 
+        if (Ext.String.trim(rec.get('A3648ARCHI')) !== '') {
+            Ext.getCmp(prototype.idDetailTicket + '-txtImageView').show();
+        } else {
+            Ext.getCmp(prototype.idDetailTicket + '-txtImageView').hide();
+        }
+        //
 
 
 
+    },
+    onImageViewClick: function () {
+        // 139 - 0370663898
+        // console.log(rec.get('A3389FREGI') + '-' + rec.get('A3389PAIS') + '-' + rec.get('A3389NUMER'));
+        var me = this;
+        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.RFNDDIRFileViewer({
+            params: {
+                rec: me.view.params.rec
+            }
+        });
+        win.show();
     },
     setStores: function () {
         var grid01 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');

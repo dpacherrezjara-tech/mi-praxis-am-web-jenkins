@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDPending.RFNDPendingController',
         //prototype.id01 = 'DetailRefundQueryRFND';
         prototype.idDetailTicket = 'DetailTicket';
         prototype.idRFNDFormRazones = 'FNDFormRazones';
-        prototype.id05 = 'RFNDFileViewer';
+       prototype.idRFNDDIRFileViewer = 'RFNDDIRFileViewer';
         prototype.idDetailTicketHistory = 'DetailTicketHistory';
         prototype.url02 = CONTEXTPATH + '/RFNDPending';
         prototype.url01 = CONTEXTPATH + '/RFNDQuery';
