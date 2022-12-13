@@ -4047,14 +4047,14 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04636(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04728(A4116Filter filter) throws SQLException, Exception {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         //lstSendManual
         
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04636(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04728(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4065,12 +4065,11 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(2, filter.PRDA.trim());
             cstmt01.setString(3, filter.PAYDATE.trim());            
             cstmt01.setString(4, filter.BSUMDATE.trim());
-            cstmt01.setString(5, filter.IDITEMS.trim());
-            cstmt01.setString(6, filter.IDITEMT.trim());            
-            cstmt01.setString(7, filter.CERROR.trim());
-            cstmt01.setString(8, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(9, Functions.getFechaActual());
-            cstmt01.setString(10, Functions.getHoraActual());
+            cstmt01.setString(5, filter.ISREFNBR.trim());           
+            cstmt01.setString(6, filter.CERROR.trim());
+            cstmt01.setString(7, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(8, Functions.getFechaActual());
+            cstmt01.setString(9, Functions.getHoraActual());
 
             cstmt01.execute();            
 

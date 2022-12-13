@@ -123,8 +123,8 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04723(filter);
     }
     
-    public String loadPX606SQP04636(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04636(filter);
+    public String loadPX606SQP04728(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04728(filter);
     }
 
     public String loadPX606SQP04469(A4116Filter filter) throws SQLException, Exception {
