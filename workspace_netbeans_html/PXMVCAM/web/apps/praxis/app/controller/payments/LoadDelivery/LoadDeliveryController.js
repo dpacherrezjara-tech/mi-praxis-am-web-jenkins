@@ -170,8 +170,8 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                             expanded: false,
                             children: child,
                             a4298TLIN:child.reduce((a, b) => a + b.a4298TLIN, 0),
-                            a4298QLIN:child.reduce((a, b) => a + b.a4298QTRN, 0),
-                            a4298QTRN:child.reduce((a, b) => a + b.a4298QLIN, 0)
+                            a4298QTRN:child.reduce((a, b) => a + b.a4298QTRN, 0),
+                            a4298QLIN:child.reduce((a, b) => a + b.a4298QLIN, 0)
                         };
                     });
                     console.log(result2);
