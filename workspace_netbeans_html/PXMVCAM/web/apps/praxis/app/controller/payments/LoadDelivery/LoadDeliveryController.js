@@ -168,9 +168,13 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                             TYPE: element[0].trim().replace('00', ''),
                             STYLE: 'H',
                             expanded: false,
-                            children: child
+                            children: child,
+                            a4298TLIN:child.reduce((a, b) => a + b.a4298TLIN, 0),
+                            a4298QLIN:child.reduce((a, b) => a + b.a4298QTRN, 0),
+                            a4298QTRN:child.reduce((a, b) => a + b.a4298QLIN, 0)
                         };
                     });
+                    console.log(result2);
                     //<editor-fold defaultstate="collapsed" desc="tree">
                     let tree = Ext.create({
                         xtype: 'treepanel',
@@ -221,6 +225,14 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                                         return Ext.util.Format.number(value, '0');
                                     },
                                     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        switch (record.data.STYLE) {
+                                            case 'H':
+                                                metaData.style = "text-align:right;font-weight:bold;color:#6018B5;";
+                                                break;
+                                            case 'D':
+                                                metaData.style = "text-align:right;font-style: italic;";
+                                                break;
+                                        }
                                         return Ext.util.Format.number(value, '0');
                                     }
                                 },
@@ -230,6 +242,14 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                                         return Ext.util.Format.number(value, '0');
                                     },
                                     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        switch (record.data.STYLE) {
+                                            case 'H':
+                                                metaData.style = "text-align:right;font-weight:bold;color:#6018B5;";
+                                                break;
+                                            case 'D':
+                                                metaData.style = "text-align:right;font-style: italic;";
+                                                break;
+                                        }
                                         return Ext.util.Format.number(value, '0');
                                     }
                                 },
@@ -239,6 +259,14 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                                         return Ext.util.Format.number(value, '0');
                                     },
                                     renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                        switch (record.data.STYLE) {
+                                            case 'H':
+                                                metaData.style = "text-align:right;font-weight:bold;color:#6018B5;";
+                                                break;
+                                            case 'D':
+                                                metaData.style = "text-align:right;font-style: italic;";
+                                                break;
+                                        }
                                         return Ext.util.Format.number(value, '0');
                                     }
                                 },
