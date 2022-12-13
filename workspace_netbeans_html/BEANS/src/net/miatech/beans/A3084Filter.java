@@ -268,6 +268,7 @@ public class A3084Filter extends A3084 {
     //Accounting Coupons
     public String FCONT = "";
     public String CARRYER = "";
+    public String CIAF = "";
     public int QTY_CPN = 0;
     public double VALOR = 0;
     public double VALOR_YQ = 0;
@@ -284,7 +285,7 @@ public class A3084Filter extends A3084 {
     public double TOTtotVALOR_MXN = 0;
 
     public Pagination page = new Pagination();
-  
+    
     public String bufferToString(String ccust, String strTicket, String strPag, String tabla, String strTipo) {
 
         String strValue = "";
