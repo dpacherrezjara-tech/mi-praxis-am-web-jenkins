@@ -190,10 +190,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                                                 },
                                                         renderer: function (value, meta, record, row, col) {
                                                             var status_match = ['1', '5', '6', '7'];
-                                                            if (status_match.indexOf(record.data.STVAL)) {
-                                                                meta['tdCls'] = '';                                                                
+                                                            if (status_match.indexOf(record.data.STVAL) >= 0) {
+                                                                meta['tdCls'] = 'x-item-disabled';                                         
                                                             } else {
-                                                                meta['tdCls'] = 'x-item-disabled';
+                                                                meta['tdCls'] = '';  
                                                             }
                                                             return new Ext.ux.CheckColumn().renderer(value);
                                                         }
