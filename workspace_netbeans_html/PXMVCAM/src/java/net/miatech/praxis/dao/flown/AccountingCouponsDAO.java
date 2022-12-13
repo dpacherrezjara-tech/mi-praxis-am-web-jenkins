@@ -131,7 +131,7 @@ public class AccountingCouponsDAO {
         double TOTVALOR = 0, TOTVALOR_YQ = 0;
         double TOTVALOR_MXN = 0, TOTVALOR__YQ_MXN = 0;
 
-        strSQL = "{CALL " + session.getMainLibrary() + ".SQP01807_1(?,?,?)}";
+        strSQL = "{CALL " + session.getMainLibrary() + ".SQP01807(?,?,?,?)}";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -139,6 +139,7 @@ public class AccountingCouponsDAO {
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.IN_FECHA_FROM);
             cs.setString(3, filter.CARRYER);
+            cs.setString(4, filter.CIAF);
 
             cs.execute();
 
