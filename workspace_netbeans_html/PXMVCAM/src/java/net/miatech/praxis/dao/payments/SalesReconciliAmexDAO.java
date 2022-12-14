@@ -3725,6 +3725,7 @@ public class SalesReconciliAmexDAO {
                 objRtn.ZONA = rs01.getString("ZONA").trim();
                 objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
 
+                objRtn.AREFNBR = rs01.getString("AREFNBR").trim();
                 objRtn.SMERCHID = rs01.getString("SMERCHID").trim();
                 objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
                 objRtn.AXPRODAT = rs01.getString("AXPRODAT").trim();
@@ -4731,7 +4732,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04463(?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04463_1(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4741,6 +4742,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.SCARDN);
             cstmt.setDouble(3, filter.TGROSAMOUN);
+            cstmt.setString(4, filter.AREFNBR.trim());
 
             cstmt.execute();
 
