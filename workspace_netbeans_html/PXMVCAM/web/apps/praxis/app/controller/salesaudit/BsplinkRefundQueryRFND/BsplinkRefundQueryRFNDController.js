@@ -347,7 +347,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
         store.loadPage(1, {
             params: me.beanTMP,
             callback: function (records, operation, success) {
-                var Objtemp = records[0].data;
+              //  var Objtemp = records[0].data;
 
                 Ext.getCmp(prototype.id + '-pagination').enable();
             }
