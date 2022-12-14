@@ -14,6 +14,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     paramsDetailCpn: {},
     paramsDetailCabin: {},
     paramsDetail: {},
+    beanWK: {},
+    paramsWK: {},
     meFlown: '',
     _path: '',
     dw_excel: false,
@@ -143,14 +145,15 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                         } else {
                             global.Msg({msg: 'Data not found'});
                         }
-                    } else
+                    } else {
                         global.Msg({msg: res.sesion});
-                    global.clear();
+                    }
                 }
             }
         });
+        global.clear();
         Ext.getCmp(prototype.id + '-gridSearchWK').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-displayChart01').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-ChtExchangeMB_REvsCO').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridSearchWK').setStore(storeGridDatas);
     },
     btnSwap_FA_click: function () {
@@ -483,7 +486,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
 
     },
     ChangueFlown_clickHandler: function (a, value, c, d, e, f) {
-        
+
         switch (value.rbgpDetail) {
             case 'Z':
 
@@ -642,6 +645,61 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
 //        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
 
     },
+    searchByWK: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        win.lblUser_toolTip("Estructura: A1971");
+        //this.hidePagination_clickHandler();
+        console.log(rowData.data.strFormatDate);
+        me.panelActual = '-panelWKperMonth';
+        this.showGrid('-panelWKperMonth');
+        Ext.getCmp(prototype.id + '-panelGridSearchWK').setVisible(false);
+        Ext.getCmp(prototype.id + '-panelWKperMonth').setVisible(true);
+
+        this.beanWK.DFLIGHT = rowData.data.DFLIGHT;
+        this.paramsWK.beanString = JSON.stringify(this.beanWK);
+
+        this.searchByWK1(this.paramsWK);
+    },
+    searchByWK1: function (paramsWK) {
+        me.panelActual = '-panelWKperMonth';
+        win.lblUser_toolTip("Estructura: A1972");
+        this.showGrid('-panelWKperMonth');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchWKperMonth'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-panelWKperMonth').mask('Loading...');
+                    obj.proxy.extraParams = meFA.paramsWK;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-panelWKperMonth').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin_searchByFlightProfitability');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                        //Ext.getCmp(prototype.id + '-gridWKperMonth').setTitle('<center style="font-size:12px;">' + ' Total by Month : ' + data.strFormatDate + '</center>');
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridWKperMonth').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridWKperMonth').setStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-gridWKperMonth').bindStore(storeGridDatas);
+    },
     searchByFlightProfitability: function (byBean) {
         me.panelActual = '-boxByFlightProfitability';
         win.lblUser_toolTip("Estructura: A1971");
@@ -688,7 +746,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         Ext.getCmp(prototype.id + meFlown.boxActual).hide();
         meFlown.boxActual = nameGrid;
 
-        if (meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK') {
+        if (meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK' || meFlown.boxActual === '-boxMainDataREvsCO') {
             Ext.getCmp(prototype.id + '-filterMain').show();
         } else {
             Ext.getCmp(prototype.id + '-filterMain').hide();
@@ -730,11 +788,17 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 Ext.getCmp(prototype.id + meFlown.boxActual).show();
             }
 
-            if (meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK') {
+            if (meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK' || meFlown.boxActual === '-boxMainDataREvsCO'|| meFlown.boxActual === '-panelWKperMonth') {
                 Ext.getCmp(prototype.id + '-filterMain').show();
             } else {
                 Ext.getCmp(prototype.id + '-filterMain').hide();
             }
+            
+            if (meFlown.boxActual === '-panelWKperMonth') {
+                Ext.getCmp(prototype.id + '-panelWKperMonth').hide();
+                meFlown.boxActual === '-boxMainDataFA'
+                Ext.getCmp(prototype.id + '-boxMainDataFA').show();
+            } 
 
             if (meFlown.boxActual === '-boxMainDataFA') {
                 Ext.getCmp(prototype.id + '-panelRadio').hide();
