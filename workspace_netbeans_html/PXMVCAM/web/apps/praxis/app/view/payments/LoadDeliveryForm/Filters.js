@@ -154,7 +154,7 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Filters', {
                                                     maxLength: 10,
                                                     //padding:'2 2 2 2 ',                                            
                                                     listeners: {
-                                                        //change: 'onUpperValue',
+                                                        change: 'validateDatefield',
                                                         keypress: function (obj, e) {
                                                             if (e.getKey() === e.ENTER) {
                                                                 Ext.getCmp(prototype.id + '-fecha2').focus();
@@ -177,6 +177,7 @@ Ext.define('Ext.Praxis.view.payments.LoadDeliveryForm.Filters', {
                                                     maxLength: 10,
                                                     //padding: '2 0 0 10 ',
                                                     listeners: {
+                                                        change: 'validateDatefield2',
                                                         keypress: function (obj, e) {
                                                             if (e.getKey() === e.ENTER) {
 

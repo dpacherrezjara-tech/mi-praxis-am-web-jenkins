@@ -121,13 +121,13 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
 //
 //
 //    },
- //</editor-fold>
+    //</editor-fold>
     onShowDelivery: function (obj, rec) {
         let grid = Ext.getCmp(prototype.id + '-gridMpTree');
         let row = grid.store.getAt(rec).data;
         let params = {IN_TABLE: row.a4298NTAB.trim(), IN_IDFILE: row.a4298IDFIL};
-        let nameObj = row.a4298TYPE.trim().replace('00','') + '_' + row.TYPE.trim() + '_' + row.a4298PRDA;
-        params = {name:nameObj,params:{...params}};
+        let nameObj = row.a4298TYPE.trim().replace('00', '') + '_' + row.TYPE.trim() + '_' + row.a4298PRDA;
+        params = {name: nameObj, params: {...params}};
         Ext.create('Ext.Praxis.view.payments.LoadDeliveryForm.LoadDeliveryEntry', {
             id: prototype.id + '-LoadDeliveryEntry',
             params: params
@@ -143,8 +143,8 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
         let fecha2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
         let opcion = Ext.getCmp(prototype.id + '-cmbfiltro').getValue();
         let procesador = Ext.getCmp(prototype.id + '-cmbfiltro-procesador').getValue();
-        console.log(procesador);
-        console.log(opcion);
+        //console.log(procesador);
+        //console.log(opcion);
         let body = {IN_CCUST: '139', IN_PROCESADOR: procesador, IN_OPCION: opcion, IN_FROMDATE: fecha1, IN_TODATE: fecha2};
         let root = [];
         await fetch(url, {
@@ -169,20 +169,22 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                             STYLE: 'H',
                             expanded: false,
                             children: child,
-                            a4298TLIN:child.reduce((a, b) => a + b.a4298TLIN, 0),
-                            a4298QTRN:child.reduce((a, b) => a + b.a4298QTRN, 0),
-                            a4298QLIN:child.reduce((a, b) => a + b.a4298QLIN, 0)
+                            a4298TLIN: child.reduce((a, b) => a + b.a4298TLIN, 0),
+                            a4298QTRN: child.reduce((a, b) => a + b.a4298QTRN, 0),
+                            a4298QLIN: child.reduce((a, b) => a + b.a4298QLIN, 0)
                         };
                     });
-                    console.log(result2);
+                    //console.log(result2.length>0?result2.length:0);
                     //<editor-fold defaultstate="collapsed" desc="tree">
                     let tree = Ext.create({
                         xtype: 'treepanel',
                         id: prototype.id + '-gridMpTree',
                         width: '98%',
-                        height: '100%',
+                        height: 535,
                         border: true,
+                        padding: '4 4 4 4',
                         reserveScrollbar: false,
+                        scrollable: true,
                         useArrows: true,
                         rootVisible: false,
                         multiSelect: false,
@@ -306,7 +308,7 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                                                     return  '';
                                                 return 'prx-icon-detail';
                                             },
-                                            isDisabled:function(view,rowIndex,colIndex,item,record){
+                                            isDisabled: function (view, rowIndex, colIndex, item, record) {
                                                 if (record.data.STYLE === 'H')
                                                     return  true;
                                                 return false;
@@ -318,34 +320,75 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                                 }
                             ]
                         },
-                        dockedItems: {
-                            xtype: 'toolbar',
-                            dock: 'left',
-                            border: false,
-                            items: [
-                                {
-                                    xtype: 'button',
-                                    icon: 'resources/img/botones/expanded.png',
-                                    tooltip: 'Expand the tree',
-                                    enableToggle: true,
-                                    toggleHandler: function (button, pressed, eOpts) {
-                                        Ext.getCmp(prototype.id + '-gridMpTree').expandAll();
+                        dockedItems: [
+                            {
+                                xtype: 'toolbar',
+                                dock: 'left',
+                                border: false,
+                                items: [
+                                    {
+                                        xtype: 'button',
+                                        icon: 'resources/img/botones/expanded.png',
+                                        tooltip: 'Expand the tree',
+                                        enableToggle: true,
+                                        toggleHandler: function (button, pressed, eOpts) {
+                                            Ext.getCmp(prototype.id + '-gridMpTree').expandAll();
+                                        }
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        icon: 'resources/img/botones/collaped.png',
+                                        tooltip: 'Collapse the tree',
+                                        enableToggle: true,
+                                        toggleHandler: function (button, pressed, eOpts) {
+                                            Ext.getCmp(prototype.id + '-gridMpTree').collapseAll();
+                                        }
                                     }
+                                ]
+                            },
+                            {
+                                dock: 'bottom',
+                                xtype: 'container',
+                                border: false,
+                                padding: '4 4 4 4',
+                                flex:1,
+                                layout: {
+                                    type: 'hbox',
+                                    align: 'border',
+                                    pack:'center'
                                 },
-                                {
-                                    xtype: 'button',
-                                    icon: 'resources/img/botones/collaped.png',
-                                    tooltip: 'Collapse the tree',
-                                    enableToggle: true,
-                                    toggleHandler: function (button, pressed, eOpts) {
-                                        Ext.getCmp(prototype.id + '-gridMpTree').collapseAll();
+                                items:[
+                                    {
+                                        xtype:'label',
+                                        text:'Total Procesadores: ',
+                                        style: 'display:inline-block;text-align:center;font-weight:bold;'
+                                    },
+                                    {xtype: 'tbspacer', width: 20},
+                                    {
+                                        xtype:'label',
+                                        text:result2.length>0?result2.length:'0',
+                                        style: 'display:inline-block;text-align:center'
+                                    },
+                                    {xtype: 'tbspacer', width: 40},
+                                    {
+                                        xtype:'label',
+                                        text:'Total Archivos: ',
+                                        style: 'display:inline-block;text-align:center;font-weight:bold;'
+                                    },
+                                    {xtype: 'tbspacer', width: 20},
+                                    {
+                                        xtype:'label',
+                                        text:data.length>0?data.length:'0',
+                                        style: 'display:inline-block;text-align:center'
                                     }
-                                }
-                            ]
-                        },
+                                ]
+                            }
+                        ],
                         viewConfig: {
                             stripeRows: true,
                             enableTextSelection: true,
+                            deferEmptyText: false,
+                            emptyText: 'No Records',
                             markDirty: false,
                             getRowClass: function (record, rowIndex, rowParams, store) {
                                 if (rowIndex % 2 === 0)
@@ -364,6 +407,24 @@ Ext.define('Ext.Praxis.controller.payments.LoadDelivery.LoadDeliveryController',
                     box.unmask();
                 });
     },
+    //<editor-fold defaultstate="collapsed" desc="DateValidate">
+    validateDatefield:function(obj,e){
+        let fecha = Ext.util.Format.date(e, 'Ymd');
+        let df2 = Ext.getCmp(prototype.id + '-fecha2');
+        let fecha2 = Ext.util.Format.date(df2.getValue(), 'Ymd');
+        if(fecha>fecha2){
+            df2.setValue(obj.getValue());
+        }
+    },
+    validateDatefield2:function(obj,e){
+        let fecha2 = Ext.util.Format.date(e, 'Ymd');
+        let df1 = Ext.getCmp(prototype.id + '-fecha1');
+        let fecha1 = Ext.util.Format.date(df1.getValue(), 'Ymd');
+        if(fecha2<fecha1){
+            obj.setValue(df1.getValue());
+        }
+    },
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="groupBy">
     groupByType: function (list) {
         let result = list.reduce((x, y) => {
