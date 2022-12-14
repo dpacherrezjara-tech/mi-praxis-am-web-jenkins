@@ -139,6 +139,36 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Filters', {
                                 change: 'cmbTranType_changeHandler' 
                             }
                         },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            html: '<strong style="color:#000;">CIA:</strong>',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '8px 7px 8px 0px'
+                        },
+                        {
+                            xtype:'combo',
+                            id: prototype.id+'-cmbCIAFFiltro',
+                            queryMode: 'local',
+                            allowBlank: false,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: true,
+                            width: 60,
+//                            value: "ADATE",
+                            typeAhead: true,
+                            valueField: 'code', 
+                            displayField: 'name',
+                            listConfig: {minWidth: 60},
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            listeners:{
+                                change: 'cmbTranType_changeHandler' 
+                            }
+                        }
                     ]
                 }
                 // </editor-fold>

@@ -54,6 +54,18 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         }));
         cmbUNIFiltro.setValue("");
         
+        var cmbCIAFFiltro = Ext.getCmp(prototype.id + '-cmbCIAFFiltro');
+        cmbCIAFFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["02", "02"],
+                ["03", "03"]
+            ]
+        }));
+        cmbCIAFFiltro.setValue("");
+        
     },
     // </editor-fold>
 
@@ -104,13 +116,14 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
     },
     // </editor-fold>
     cmbTranType_changeHandler: function (e, eOpts) {
-        var a = Ext.getCmp(prototype.id + '-cmbUNIFiltro').getValue();
+        var a = Ext.getCmp(prototype.id + '-cmbCIAFFiltro').getValue();
+        
         if(a === '' ){
             Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe GAM");
-        }else if(a === '1' ){
-            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe AM");
-        }else if(a === '2' ){
-            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe 5D");
+        }else if(a === '02' ){
+            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe 02");
+        }else if(a === '03' ){
+            Ext.getCmp(prototype.id + '-lblTitMein').setText("Total Universe 03");
         }
         this.btnSearch_click();
     },
@@ -183,11 +196,21 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         }else if(a === '2' ){
             CARRYER = '5D';
         }
+        var b = Ext.getCmp(prototype.id + '-cmbCIAFFiltro').getValue();
+        var CIAF;
+        if(b === '' ){
+            CIAF = '';
+        }else if(b === '02' ){
+            CIAF = '02';
+        }else if(b === '03' ){
+            CIAF = '03';
+        }
         // </editor-fold>
         // <editor-fold defaultstate="collapsed" desc="asignación">
         searchParams = {
             IN_FECHA_FROM: fyear,
-            CARRYER: CARRYER
+            CARRYER: CARRYER,
+            CIAF: CIAF
         };
 
         _path = prototype.url + '/getXLSX?' +
