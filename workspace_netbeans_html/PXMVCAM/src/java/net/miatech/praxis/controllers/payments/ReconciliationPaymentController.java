@@ -1230,7 +1230,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX606SQP04636(filter);
+            msj = logic.loadPX606SQP04728(filter);
             map.put("result", result);
 
             if (msj.equals("")) {

@@ -959,9 +959,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
          }
          }*/
     },
-    removeTKT: function (record) {
+    removeTKT: function (grid, rowIndex, colIndex) {
         var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
-        var rowIndex = store_gridInfoScan.indexOf(record);
+        //var rowIndex = store_gridInfoScan.indexOf(record);
         store_gridInfoScan.removeAt(rowIndex);
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
         this.calcularMontos();

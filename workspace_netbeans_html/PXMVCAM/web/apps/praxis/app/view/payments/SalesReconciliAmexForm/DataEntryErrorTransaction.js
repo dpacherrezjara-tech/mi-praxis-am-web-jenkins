@@ -1450,27 +1450,42 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     },
                                                 ]
                                             },
+//                                            {
+//                                                header: 'Del.',
+//                                                id: prototype.id + '-gridColumnDelete',
+//                                                dataIndex: '',
+//                                                xtype: 'widgetcolumn',
+//                                                align: 'center',
+//                                                width: 40,
+//                                                widget: {
+//                                                    xtype: 'button',
+//                                                    icon: 'resources/img/botones/16x16/delete.png',
+//                                                    listeners: {
+//                                                        click: function (button, e, eOpts) {
+//                                                            var record = button.getWidgetRecord();
+//                                                            if (record.data.FDESGLOSE !== '1') {
+//                                                                meDE.removeTKT(record);
+//                                                            }
+//
+//                                                        }
+//                                                    }
+//                                                }
+//
+//                                            },
                                             {
-                                                header: 'Del.',
-                                                id: prototype.id + '-gridColumnDelete',
-                                                dataIndex: '',
-                                                xtype: 'widgetcolumn',
-                                                align: 'center',
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
                                                 width: 40,
-                                                widget: {
-                                                    xtype: 'button',
-                                                    icon: 'resources/img/botones/16x16/delete.png',
-                                                    listeners: {
-                                                        click: function (button, e, eOpts) {
-                                                            var record = button.getWidgetRecord();
-                                                            if (record.data.FDESGLOSE !== '1') {
-                                                                meDE.removeTKT(record);
-                                                            }
-
-                                                        }
+                                                text: 'Del.',
+                                                id: prototype.id + '-gridColumnDelete',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-image-trash',
+                                                        tooltip: 'Delete',
+                                                        handler: 'removeTKT'
                                                     }
-                                                }
-
+                                                ]
                                             },
 //                                            {
 //                                                sortable: false,
