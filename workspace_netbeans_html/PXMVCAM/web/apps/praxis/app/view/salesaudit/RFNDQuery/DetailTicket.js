@@ -382,6 +382,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 120,
                             width: 900
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idDetailTicket + '-txtCase',
+                            fieldLabel: 'SF Case:',
+                            labelWidth: 50,
+                            width: 150,
+                            readOnly: true
                         }
 
                     ]

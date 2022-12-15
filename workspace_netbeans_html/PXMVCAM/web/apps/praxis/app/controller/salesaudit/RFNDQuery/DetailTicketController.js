@@ -294,6 +294,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648COCD'));
         Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setValue(Ext.String.trim(rec.get('A3648CONJT')));
         Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setValue(Ext.String.trim(rec.get('A3648TRFND')));
+        Ext.getCmp(prototype.idDetailTicket + '-txtCase').setValue(Ext.String.trim(rec.get('A3648SFW')));
         Ext.getCmp(prototype.idDetailTicket + '-txtEndorse').setValue(rec.get('A3648XENDR'));
         var tip = Ext.create('Ext.tip.ToolTip', {
             target: prototype.idDetailTicket + '-txtEndorse',
