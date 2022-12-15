@@ -261,6 +261,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
                 objRtn.A4363STATO = rs01.getString("A4363STATO");
                 objRtn.A4363ESTADO = rs01.getString("A4363ESTADO");
                 objRtn.A4361IATA = rs01.getString("A4361IATA");
+                objRtn.A4363PENAD = rs01.getDouble("A4363PENAD");
                 objRtn.A4363AGENCYREQUE = rs01.getString("A4363AGENCYREQUE");
                 objRtn.A4363SIATA = rs01.getString("A4363SIATA");
                 objRtn.A4363AGENCYISSUE = rs01.getString("A4363AGENCYISSUE");
@@ -667,7 +668,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
         String STR_RESULT = "";
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXRFNDESP.SQP04738(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXRFNDESP.SQP04738(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             String SQLCLL02 = "{CALL PXRFNDESP.SQP04739(?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
@@ -700,6 +701,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
             cs.setString("IN_CPN7", filter.IN_CPN7);
             cs.setString("IN_CPN8", filter.IN_CPN8);
             cs.setString("IN_TRFND", filter.IN_TRFND);
+            cs.setDouble("IN_PENALTY", filter.IN_PENALTY);
             cs.setString("IN_LSTATaxes", lstaTaxes);
             cs.setString("IN_LSTARazones", lstaRazones);
             cs.setString("IN_LSTAfop", lstafop);
