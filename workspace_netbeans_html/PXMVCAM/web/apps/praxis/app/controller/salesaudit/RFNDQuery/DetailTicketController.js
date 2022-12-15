@@ -291,7 +291,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         Ext.getCmp(prototype.idDetailTicket + '-txttrnc').setValue(rec.get('A3648STRCU'));
         Ext.getCmp(prototype.idDetailTicket + '-txtIssdate').setValue(rec.get('A3648XFSAL'));
         Ext.getCmp(prototype.idDetailTicket + '-txtpnr').setValue(rec.get('A3648XPNR'));
-        Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648COCD'));
+        Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648ARCD'));
         Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setValue(Ext.String.trim(rec.get('A3648CONJT')));
         Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setValue(Ext.String.trim(rec.get('A3648TRFND')));
         Ext.getCmp(prototype.idDetailTicket + '-txtCase').setValue(Ext.String.trim(rec.get('A3648SFW')));
