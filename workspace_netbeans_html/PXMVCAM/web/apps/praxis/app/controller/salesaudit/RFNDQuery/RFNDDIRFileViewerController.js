@@ -170,6 +170,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
 
     OnDownloadActionDisabled: function (view, rowIndex, colIndex, item, record) {
         return !record.get('flag') ? true : false;
+    },
+    onCloseClick: function (btn) {
+        this.view.close();
     }
 
 });
