@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
                     width: 1500,
-                    height: 720,
+                    height: 820,//820
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,

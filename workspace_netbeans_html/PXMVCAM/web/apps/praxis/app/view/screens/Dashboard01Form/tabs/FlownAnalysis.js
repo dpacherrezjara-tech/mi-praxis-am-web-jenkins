@@ -953,26 +953,30 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                         {
                             xtype: 'cartesian',
                             id: prototype.id + '-displayDetWKChart01',
-                            width: 700,
+                            width: 900,
                             border: true,
-                            height: 240,
+                            height: 280,
                             background: '#E0F8F7',
                             captions: {
                                 title: {
-                                    text: 'Revenue',
+                                    text: 'Total by Month Tickets',
                                     //alignTo: 'chart'
                                 }
                             },
                             animation: {
                                 duration: 200
                             },
-                            interactions: ['itemhighlight'],                            
+                            interactions: ['itemhighlight'], 
+                            legend: {
+                                        docked: 'bottom',
+                                        background: '#E0F8F7'
+                                    },
                             axes: [{
                                     type: 'numeric3d',
                                     position: 'left',
-                                    fields: ['QTYFlight'],
+                                    fields: ['QTYFlight','QTYPAX_F'],
                                     grid: true,
-                                    title: 'Millions of USD',
+                                    title: '',
                                     renderer: function (obj, value) {
                                         if (value > 1) {
                                             if ((value / 1000).toString().length > 3) {
@@ -989,6 +993,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     position: 'bottom',
                                     grid: true,
                                     title: {
+                                        text: 'State',
                                         translationX: -30
                                     }
                                 },
@@ -996,9 +1001,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                             series: [{
                                     type: 'bar3d',
                                     stacked: false,
+                                    title: ['Received', 'Accounted'],
                                     xField: 'strFormatDate',
-                                    yField: ['QTYFlight'],
-                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                    yField: ['QTYFlight','QTYPAX_F'],
+                                    colors: ['#3366CC', '#1e540e'],
                                     highlight: true,
                                     style: {
                                         inGroupGapWidth: -7,
@@ -1011,6 +1017,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         renderer: function (toolTip, record, ctx) {
                                             //toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
                                             toolTip.setHtml(record.get('QTYFlight') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                            toolTip.setHtml(record.get('QTYPAX_F') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
                                         }
                                     },
                                 },
