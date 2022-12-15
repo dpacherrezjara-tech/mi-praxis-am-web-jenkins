@@ -269,6 +269,7 @@ public class A3084Filter extends A3084 {
     public String FCONT = "";
     public String CARRYER = "";
     public String CIAF = "";
+    public String FTYPE = "";
     public int QTY_CPN = 0;
     public double VALOR = 0;
     public double VALOR_YQ = 0;

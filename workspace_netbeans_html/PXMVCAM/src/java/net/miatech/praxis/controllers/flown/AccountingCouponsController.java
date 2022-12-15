@@ -74,6 +74,7 @@ public class AccountingCouponsController extends BaseController {
             filter.IN_FECHA_FROM = request.getParameter("IN_FECHA_FROM");
             filter.CARRYER = request.getParameter("CARRYER");
             filter.CIAF = request.getParameter("CIAF");
+            filter.FTYPE = request.getParameter("FTYPE");
 
             logic = new AccountingCouponsLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());

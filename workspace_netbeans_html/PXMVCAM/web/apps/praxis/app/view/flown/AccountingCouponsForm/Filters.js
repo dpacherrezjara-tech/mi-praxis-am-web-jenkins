@@ -168,6 +168,36 @@ Ext.define('Ext.Praxis.view.flown.AccountingCouponsForm.Filters', {
                             listeners:{
                                 change: 'cmbTranType_changeHandler' 
                             }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            html: '<strong style="color:#000;">Type:</strong>',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '8px 7px 8px 0px'
+                        },
+                        {
+                            xtype:'combo',
+                            id: prototype.id+'-cmbFTYPEFiltro',
+                            queryMode: 'local',
+                            allowBlank: false,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: true,
+                            width: 70,
+//                            value: "ADATE",
+                            typeAhead: true,
+                            valueField: 'code', 
+                            displayField: 'name',
+                            listConfig: {minWidth: 70},
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            listeners:{
+                                change: 'cmbTranType_changeHandler' 
+                            }
                         }
                     ]
                 }
