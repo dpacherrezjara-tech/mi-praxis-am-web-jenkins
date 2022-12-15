@@ -29,7 +29,7 @@ import net.miatech.beans.SaleAudit.A4362Filter;
 import net.miatech.beans.SaleAudit.A4363Filter;
 import net.miatech.beans.SaleAudit.A4364Filter;
 import net.miatech.beans.SaleAudit.A4365Filter;
-import net.miatech.praxis.SaleAudit.A4363;
+import net.miatech.beans.SaleAudit.A4367Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.RFNDAssociatedARCRFNDFormLogic;
@@ -791,7 +791,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "SearchRFNDRazon")
     public @ResponseBody
     String SearchRFNDRazon(ModelMap map, HttpServletRequest request) {
@@ -811,6 +811,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
         map.put("data", lst);
         return new Gson().toJson(map);
     }
+
     @RequestMapping(value = "ProcesaManualRFNDARCTCKT")
     public @ResponseBody
     String ProcesaManualRFNDARCTCKT(ModelMap map, HttpServletRequest request) {
@@ -836,15 +837,15 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                 //LISTA DE TAXES
                 for (JsonElement obj : gsonTaxes) {
                     JsonObject gsonObj = obj.getAsJsonObject();
-                    taxes = taxes + "|" + gsonObj.get("A4364PREME").getAsString() + "$" + gsonObj.get("A4364ANIO").getAsString() + "$" + gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble()+ "$" + gsonObj.get("A4364TXAGE").getAsDouble();
+                    taxes = taxes + "|" + gsonObj.get("A4364PREME").getAsString() + "$" + gsonObj.get("A4364ANIO").getAsString() + "$" + gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble() + "$" + gsonObj.get("A4364TXAGE").getAsDouble();
                 }
 
                 //LISTA DE FOP 
-                for (JsonElement obj : gsonFop) { 
+                for (JsonElement obj : gsonFop) {
                     JsonObject gsonObj = obj.getAsJsonObject();
-                    if(gsonObj.get("A4365TYPE").getAsString().equals("AE")){
-                         fop += fop + "|" + gsonObj.get("A4365PREME").getAsString() + "$" + gsonObj.get("A4365ANIO").getAsString() + "$" + gsonObj.get("A4365CORRL").getAsString() + "$" + gsonObj.get("A4365CFOP").getAsString() + "$" + gsonObj.get("A4365TYCAR").getAsString() + "$" + gsonObj.get("A4365NTARJ").getAsString() + "$" + gsonObj.get("A4365FEXP").getAsString() + "$" + gsonObj.get("A4365CAPL").getAsString() + "$" + gsonObj.get("A4365TYPE").getAsString() + "$" + gsonObj.get("A4365TOTAL").getAsDouble();
-                    }                   
+                    if (gsonObj.get("A4365TYPE").getAsString().equals("AE")) {
+                        fop += fop + "|" + gsonObj.get("A4365PREME").getAsString() + "$" + gsonObj.get("A4365ANIO").getAsString() + "$" + gsonObj.get("A4365CORRL").getAsString() + "$" + gsonObj.get("A4365CFOP").getAsString() + "$" + gsonObj.get("A4365TYCAR").getAsString() + "$" + gsonObj.get("A4365NTARJ").getAsString() + "$" + gsonObj.get("A4365FEXP").getAsString() + "$" + gsonObj.get("A4365CAPL").getAsString() + "$" + gsonObj.get("A4365TYPE").getAsString() + "$" + gsonObj.get("A4365TOTAL").getAsDouble();
+                    }
                 }
             }
             // Obtain Array
@@ -858,9 +859,9 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
 
             logic = new RFNDAssociatedARCRFNDFormLogic();
             logic.setSession(this.serverSession.getServerSession());
-           result = logic.ProcesaManualRFNDARCTCKT(filter, taxes, razones, fop);
-           if (result.equals("Proceso Culminado")) {
-               // result2 = this.rfndnotifipagina(filter);
+            result = logic.ProcesaManualRFNDARCTCKT(filter, taxes, razones, fop);
+            if (result.equals("Proceso Culminado")) {
+                result2 = this.rfndnotifipagina(filter);
             }
 
         } catch (Exception e) {
@@ -870,6 +871,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
+
     public String rfndnotifipagina(A4363Filter beanGene) {
         String mensaje = "";
         String flag = "";
@@ -889,6 +891,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
             
              */
             HashMap bodyData = new HashMap<>();
+            bodyData.put("option", "1");
             bodyData.put("preme", beanGene.IN_PREME);
             bodyData.put("anio", beanGene.IN_ANIO);
             HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/manual-response")
@@ -907,6 +910,110 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
         }
 
         return mensaje;
+    }
+
+    @RequestMapping(value = "ProcesaUpdateUsosCPN")
+    public @ResponseBody
+    String ProcesaUpdateUsosCPN(ModelMap map, HttpServletRequest request) {
+        A4367Filter lst;
+        A4367Filter filter = new A4367Filter();
+        boolean success = true;
+        HashMap map03;
+        ArrayList<HashMap<String, String>> lsta_usos = new ArrayList<>();
+
+        try {
+            logic = new RFNDAssociatedARCRFNDFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_PREME = request.getParameter("IN_PREME").trim();
+            filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
+            filter.IN_CIA = request.getParameter("IN_CIA").trim();
+            filter.IN_FORMA = request.getParameter("IN_FORMA").trim();
+            filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
+            filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
+            filter.IN_CORRL = request.getParameter("IN_CORRL").trim();
+
+            success = this.rfndnotifiUpdateCPN(filter);
+            if (success) {
+                lst = logic.ProcesaUpdateUsosCPN(filter);
+                // <editor-fold defaultstate="collapsed" desc="ArrayList -> LIS_COUPNS">
+                for (int vi = 0; vi < lst.lst_USOS.size(); ++vi) {
+                    map03 = new HashMap<>();
+
+                    map03.put("A4367CCUST", lst.lst_USOS.get(vi).A4367CCUST);
+                    map03.put("A4367PREME", lst.lst_USOS.get(vi).A4367PREME);
+                    map03.put("A4367ANIO", lst.lst_USOS.get(vi).A4367ANIO);
+                    map03.put("A4367CIA", lst.lst_USOS.get(vi).A4367CIA);
+                    map03.put("A4367FORMA", lst.lst_USOS.get(vi).A4367FORMA);
+                    map03.put("A4367SERIE", lst.lst_USOS.get(vi).A4367SERIE);
+                    map03.put("A4367SEQ", lst.lst_USOS.get(vi).A4367SEQ);
+                    map03.put("A4367CORRL", lst.lst_USOS.get(vi).A4367CORRL);
+                    map03.put("A4367TICKT", lst.lst_USOS.get(vi).A4367TICKT);
+                    map03.put("A4367CPN", lst.lst_USOS.get(vi).A4367CPN);
+                    map03.put("A4367FCAMB", lst.lst_USOS.get(vi).A4367FCAMB);
+                    map03.put("A4367HCAMB", lst.lst_USOS.get(vi).A4367HCAMB);
+                    map03.put("A4367CODE", lst.lst_USOS.get(vi).A4367CODE);
+                    map03.put("A4367STINI", lst.lst_USOS.get(vi).A4367STINI);
+                    map03.put("A4367STFIN", lst.lst_USOS.get(vi).A4367STFIN);
+                    map03.put("A4367FLAG", lst.lst_USOS.get(vi).A4367FLAG);
+                    map03.put("A4367REGIS", lst.lst_USOS.get(vi).A4367REGIS);
+                    map03.put("A4367FREGI", lst.lst_USOS.get(vi).A4367FREGI);
+                    map03.put("A4367HREGI", lst.lst_USOS.get(vi).A4367HREGI);
+
+                    lsta_usos.add(map03);
+                }
+                // </editor-fold>
+            }
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("lsta_USOS", lsta_usos);
+
+        return new Gson().toJson(map);
+    }
+
+    public boolean rfndnotifiUpdateCPN(A4367Filter beanGene) {
+        String mensaje = "";
+        String token = "";
+        boolean success = true;
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO_RFNDARC").toString();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            /*
+             Se establece tiempo límite de conexión por 60 min
+             */
+            Unirest.setTimeouts(3600000, 3600000);
+
+            /*
+             Preparando parámetros para enviar por body
+            
+             */
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("ticket", beanGene.IN_CIA + "" + beanGene.IN_FORMA + "" + beanGene.IN_SERIE);
+            bodyData.put("correlativo", beanGene.IN_CORRL);
+            bodyData.put("prememo", beanGene.IN_PREME);
+            bodyData.put("anio", beanGene.IN_ANIO);
+            bodyData.put("secuencia", beanGene.IN_SEQ);
+            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/usos-sabre")
+                    .header("content-type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Authorization", "Token " + token)
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+
+            success = Boolean.parseBoolean(response.getBody().getObject().get("success").toString());
+
+        } catch (SQLException e) {
+            mensaje = e.getMessage();
+        } catch (Exception e) {
+            mensaje = e.getMessage();
+        }
+
+        return success;
     }
 
 }

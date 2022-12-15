@@ -15,6 +15,7 @@ import java.util.List;
 import net.miatech.beans.SaleAudit.A4360Filter;
 import net.miatech.beans.SaleAudit.A4361Filter;
 import net.miatech.beans.SaleAudit.A4363Filter;
+import net.miatech.beans.SaleAudit.A4367Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.SaleAudit.A4362;
 import net.miatech.praxis.SaleAudit.A4363;
@@ -738,6 +739,90 @@ public class RFNDAssociatedARCRFNDFormDAO {
         }
 
         return STR_RESULT;
+    }
+
+    public A4367Filter ProcesaUpdateUsosCPN(A4367Filter filter) throws SQLException, Exception {
+        A4367Filter lstGeneral = null;
+        List<A4367> lst_USOS = new ArrayList<A4367>(0);
+
+        A4367Filter objRtnGeneral = null;
+        A4367 objlst_USOS = null;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL PXRFNDESP.SQP04742(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_PREME);
+            cstmt01.setString(3, filter.IN_ANIO);
+            cstmt01.setString(4, filter.IN_CIA);
+            cstmt01.setString(5, filter.IN_FORMA);
+            cstmt01.setString(6, filter.IN_SERIE);
+            cstmt01.setString(7, filter.IN_SEQ);
+            cstmt01.setString(8, filter.IN_CORRL);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            ///LIST DOCUMENTS
+            while (rs01.next()) {
+                objlst_USOS = new A4367();
+                objlst_USOS.A4367CCUST = rs01.getString("A4367CCUST");
+                objlst_USOS.A4367PREME = rs01.getString("A4367PREME");
+                objlst_USOS.A4367ANIO = rs01.getString("A4367ANIO");
+                objlst_USOS.A4367CIA = rs01.getString("A4367CIA");
+                objlst_USOS.A4367FORMA = rs01.getString("A4367FORMA");
+                objlst_USOS.A4367SERIE = rs01.getString("A4367SERIE");
+                objlst_USOS.A4367SEQ = rs01.getString("A4367SEQ");
+                objlst_USOS.A4367CORRL = rs01.getString("A4367CORRL");
+                objlst_USOS.A4367TICKT = rs01.getString("A4367TICKT");
+                objlst_USOS.A4367CPN = rs01.getString("A4367CPN");
+                objlst_USOS.A4367FCAMB = rs01.getString("A4367FCAMB");
+
+                objlst_USOS.A4367HCAMB = rs01.getString("A4367HCAMB");
+                objlst_USOS.A4367CODE = rs01.getString("A4367CODE");
+                objlst_USOS.A4367STINI = rs01.getString("A4367STINI");
+                objlst_USOS.A4367STFIN = rs01.getString("A4367STFIN");
+                objlst_USOS.A4367FLAG = rs01.getString("A4367FLAG");
+                objlst_USOS.A4367REGIS = rs01.getString("A4367REGIS");
+                objlst_USOS.A4367FREGI = rs01.getString("A4367FREGI");
+                objlst_USOS.A4367HREGI = rs01.getString("A4367HREGI");
+
+                lst_USOS.add(objlst_USOS);
+            }
+            // FIN DE LA AGENCIA
+            objRtnGeneral = new A4367Filter();
+            objRtnGeneral.lst_USOS = lst_USOS;
+
+            lstGeneral = objRtnGeneral;
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstGeneral;
+
     }
 
 }
