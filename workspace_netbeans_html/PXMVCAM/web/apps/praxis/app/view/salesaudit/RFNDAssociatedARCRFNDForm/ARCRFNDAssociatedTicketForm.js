@@ -1019,7 +1019,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                     ]
                 },
                 {
-                    xtype: 'panel',
+                    xtype: 'panel', hidden: true,
                     layout: 'hbox',
                     //hidden: true,
                     defaults: {
@@ -1057,6 +1057,41 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                          fieldLabel: 'Total RFND',
                          labelStyle: 'font-weight: bold;'
                          },*/
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    //hidden: true,
+                    defaults: {
+                        border: false,
+                        labelSeparator: '',
+                        style: 'margin:1px !important'
+
+                    },
+                    items: [
+                        {
+                            xtype: 'displayfield',
+                            fieldLabel: 'Penalty:'
+                        },
+                        {xtype: 'tbspacer', width: 270},
+                        {
+                            xtype: 'numberfield',
+                            id: prototype.idARCDetailTicket + '-txtPenalty',
+                            fieldLabel: '',
+                            labelWidth: 70,
+                            value: 0,
+                            hideTrigger: true,
+                            keyNavEnabled: false,
+                            mouseWheelEnabled: false,
+                            //maskRe: /[0-9.-]/,
+                            enableKeyEvents: true,
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                blur: 'onTotaFare'
+                            }
+                        }
+
                     ]
                 },
                 {

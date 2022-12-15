@@ -41,6 +41,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                 Ext.getCmp(prototype.idARCDetailTicket + '-checkApplyBPO').setReadOnly(true);
                 Ext.getCmp(prototype.idARCDetailTicket + '-checkApplyrobot').setReadOnly(true);
                 Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').setReadOnly(true);
+                 Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setReadOnly(true);
                 //Ext.getCmp( prototype.idARCDetailTicket + '-win').setHeight(Ext.getCmp( prototype.idARCDetailTicket + '-win').getHeight() - 200);
                 break;
             case 'FORMPENDIRFND':
@@ -376,6 +377,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         //comi
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommission').setValue(Ext.util.Format.number(rec.get('A4363SCOMI'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommissionXml').setValue(Ext.util.Format.number(rec.get('A4363XCOMI'), '0,000.00'));
+        //penalidad
+         Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setValue(Ext.util.Format.number(rec.get('A4363PENAD'), '0,000.00'));
         // total
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotal').setValue(Ext.util.Format.number(rec.get('A4363STOTL'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalXml').setValue(Ext.util.Format.number(rec.get('A4363XTOTL'), '0,000.00'));
@@ -1008,18 +1011,25 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalXml').setValue('0');
         }
 
-        var txtTotal = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotal').getValue().replace(',', '');
-        var txtTotalXml = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalXml').getValue().replace(',', '');
-        var txtTotalram = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').getValue().replace(',', '');
+        var txtTotal = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotal').getValue().replace(new RegExp(',', 'g'), '');
+        var txtTotalXml = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalXml').getValue().replace(new RegExp(',', 'g'), '');
+        var txtTotalram = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').getValue().replace(new RegExp(',', 'g'), '');
         // diferencia de total a rfnd
-        //TARIFA CON LA VENTA CUANDO NO TEINE EQUIVA
-        if (parseFloat(txtTotal) !== 0 && parseFloat(txtTotalram) !== 0) {
-            totaldif = (txtTotalram - txtTotal);
+        if (parseFloat(txtTotal) !== 0) {
+            if (parseFloat(txtTotal) !== 0 && parseFloat(txtTotalram) !== 0) {
+                totaldif = (txtTotalram - txtTotal);
+            }
+            if (totaldif !== 0) {
+                if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
+                    totaldif = (txtTotalram - txtTotalXml);
+                }
+            }
+        } else {
+            if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
+                totaldif = (txtTotalram - txtTotalXml);
+            }
         }
-        //TARIFA CON LA XML CUANDO NO TEINE EQUIVA
-        if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
-            totaldif = (txtTotalram - txtTotalXml);
-        }
+
         if (vl_STATUS === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'You must select the status');
             bvalida = false;
@@ -1327,7 +1337,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                 bvalida = false;
                 return;
             }
-            
+
         }
 
         return bvalida;
@@ -1369,9 +1379,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         me.beanTMP.IN_MDA = Ext.getCmp(prototype.idARCDetailTicket + '-txtmda').getValue();
                         me.beanTMP.IN_TARIFEQUI = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue();
                         me.beanTMP.IN_MDAEQUI = Ext.getCmp(prototype.idARCDetailTicket + '-txtEqmda').getValue();
-                        me.beanTMP.IN_TTAX = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
-                        me.beanTMP.IN_COMMI = Ext.getCmp(prototype.idARCDetailTicket + '-txtCommissionAm').getValue().replace(',', '');
-                        me.beanTMP.IN_TOTALRFND = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').getValue().replace(',', '');
+                        me.beanTMP.IN_TTAX = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
+                        me.beanTMP.IN_COMMI = Ext.getCmp(prototype.idARCDetailTicket + '-txtCommissionAm').getValue().replace(new RegExp(',', 'g'), '');
+                        me.beanTMP.IN_TOTALRFND = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').getValue().replace(new RegExp(',', 'g'), '');
+                        me.beanTMP.IN_PENALTY = Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue();
                         me.beanTMP.IN_STATUS = Ext.getCmp(prototype.idARCDetailTicket + '-ComboStatus').getValue();
                         me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idARCDetailTicket + '-CmbConto').getValue();
                         me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').getValue();
@@ -1556,14 +1567,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             if (Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue() === '') {
                 Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue('0');
             }
-            var tarifaAm = 0;//.replace(',', '');
+            var tarifaAm = 0;
+            var penal = 0;
             if (Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue() !== 0) {
                 tarifaAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue();
             } else {
                 tarifaAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalFareAm').getValue();
             }
-            var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
-            var total = (tarifaAm + parseFloat(TotalTaxAm));
+            if (Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue() !== 0) {
+                penal = Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue();
+            }
+
+            var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
+            var total = ((tarifaAm + parseFloat(TotalTaxAm)) - penal);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));
             //Ext.getCmp( prototype.idARCDetailTicket + '-txtTotalFareAm').setValue(Ext.util.Format.number(tarifaAm, '0,000.00'));
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue(Ext.util.Format.number(TotalTaxAm, '0,000.00'));
@@ -1590,13 +1606,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                     Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue('0');
                 }
                 var tarifaAm = 0;
+                var penal = 0;
                 if (Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue() !== 0) {
                     tarifaAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue();
                 } else {
                     tarifaAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalFareAm').getValue();
                 }
-                var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
-                var total = (parseFloat(tarifaAm) + parseFloat(TotalTaxAm));
+                if (Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue() !== 0) {
+                    penal = Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue();
+                }
+                var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
+                var total = (parseFloat(tarifaAm) + parseFloat(TotalTaxAm) - parseFloat(penal));
                 Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));
                 //Ext.getCmp( prototype.idARCDetailTicket + '-txtTotalFareAm').setValue(Ext.util.Format.number(tarifaAm, '0,000.00'));
                 Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue(Ext.util.Format.number(TotalTaxAm, '0,000.00'));
@@ -1633,14 +1653,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue('0');
         }
         var tarifaAm = 0;
+        var penal = 0;
         if (Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue() !== 0) {
             tarifaAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').getValue();
         } else {
             tarifaAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalFareAm').getValue();
         }
+        if (Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue() !== 0) {
+            penal = Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue();
+        }
 
-        var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
-        var total = (parseFloat(tarifaAm) + parseFloat(TotalTaxAm));
+        var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
+        var total = ((parseFloat(tarifaAm) + parseFloat(TotalTaxAm))-parseFloat(penal));
 
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));
         //Ext.getCmp( prototype.idARCDetailTicket + '-txtTotalFareAm').setValue(tarifaAm);
