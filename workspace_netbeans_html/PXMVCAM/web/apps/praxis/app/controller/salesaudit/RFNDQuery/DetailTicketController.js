@@ -294,6 +294,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648COCD'));
         Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setValue(Ext.String.trim(rec.get('A3648CONJT')));
         Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setValue(Ext.String.trim(rec.get('A3648TRFND')));
+        Ext.getCmp(prototype.idDetailTicket + '-txtCase').setValue(Ext.String.trim(rec.get('A3648SFW')));
         Ext.getCmp(prototype.idDetailTicket + '-txtEndorse').setValue(rec.get('A3648XENDR'));
         var tip = Ext.create('Ext.tip.ToolTip', {
             target: prototype.idDetailTicket + '-txtEndorse',
@@ -432,12 +433,28 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(rec.get('A3648MDAD'));
             //Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(VL_A3648XMDAQ);
             //Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(VL_A3648XMDA);
-
         }
 
+        if (Ext.String.trim(rec.get('A3648ARCHI')) !== '') {
+            Ext.getCmp(prototype.idDetailTicket + '-txtImageView').show();
+        } else {
+            Ext.getCmp(prototype.idDetailTicket + '-txtImageView').hide();
+        }
+        //
 
 
 
+    },
+    onImageViewClick: function () {
+        // 139 - 0370663898
+        // console.log(rec.get('A3389FREGI') + '-' + rec.get('A3389PAIS') + '-' + rec.get('A3389NUMER'));
+        var me = this;
+        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.RFNDDIRFileViewer({
+            params: {
+                rec: me.view.params.rec
+            }
+        });
+        win.show();
     },
     setStores: function () {
         var grid01 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
@@ -1009,18 +1026,32 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalXml').setValue('0');
         }
 
-        var txtTotal = Ext.getCmp(prototype.idDetailTicket + '-txtTotal').getValue().replace(',', '');
-        var txtTotalXml = Ext.getCmp(prototype.idDetailTicket + '-txtTotalXml').getValue().replace(',', '');
-        var txtTotalram = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(',', '');
+        var txtTotal = Ext.getCmp(prototype.idDetailTicket + '-txtTotal').getValue().replace(new RegExp(',', 'g'), '');
+        var txtTotalXml = Ext.getCmp(prototype.idDetailTicket + '-txtTotalXml').getValue().replace(new RegExp(',', 'g'), '');
+        var txtTotalram = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(new RegExp(',', 'g'), '');
+
         // diferencia de total a rfnd
-        //TARIFA CON LA VENTA CUANDO NO TEINE EQUIVA
-        if (parseFloat(txtTotal) !== 0 && parseFloat(txtTotalram) !== 0) {
+        if (parseFloat(txtTotal) !== 0) {
             totaldif = (txtTotalram - txtTotal);
-        }
-        //TARIFA CON LA XML CUANDO NO TEINE EQUIVA
-        if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
+            if (totaldif !== 0) {
+                if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
+                    totaldif = (txtTotalram - txtTotalXml);
+                }
+            }
+        } else {
             totaldif = (txtTotalram - txtTotalXml);
         }
+
+        /*if (parseFloat(txtTotal) !== 0 && parseFloat(txtTotalram) !== 0) {
+         totaldif = (txtTotalram - txtTotal);
+         }
+         if (totaldif !== 0) {
+         if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
+         totaldif = (txtTotalram - txtTotalXml);
+         }
+         }*/
+
+
         if (vl_STATUS === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'You must select the status');
             bvalida = false;
@@ -1059,6 +1090,64 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     return;
                 }
             }
+            if (txtConto === 'I') {
+                if (cbox1 || cbox2 || cbox3 || cbox4) {
+
+                    var grid08 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
+                    var regscpn = grid08.getStore().getCount();
+                    for (var x = 0; x < regscpn; x++) {
+                        if (CmbTRFND === 'T') {
+                            if (!cbox1 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '1') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox2 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '2') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox3 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '3') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox4 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '4') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                        } else {
+                            if (!cbox1 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '1') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox2 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '2') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox3 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '3') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox4 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '4') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                        }
+
+                    }
+
+
+
+                }
+
+            }
+            //
             if (!vl_Showcoupons) {
                 if (!cbox1 && !cbox2 && !cbox3 && !cbox4 && !cbox5 && !cbox6 && !cbox7 && !cbox8) {
                     Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one coupon');
@@ -1369,9 +1458,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         me.beanTMP.IN_MDA = Ext.getCmp(prototype.idDetailTicket + '-txtmda').getValue();
                         me.beanTMP.IN_TARIFEQUI = Ext.getCmp(prototype.idDetailTicket + '-txtTotalEqFareAm').getValue();
                         me.beanTMP.IN_MDAEQUI = Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').getValue();
-                        me.beanTMP.IN_TTAX = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
-                        me.beanTMP.IN_COMMI = Ext.getCmp(prototype.idDetailTicket + '-txtCommissionAm').getValue().replace(',', '');
-                        me.beanTMP.IN_TOTALRFND = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(',', '');
+                        me.beanTMP.IN_TTAX = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
+                        me.beanTMP.IN_COMMI = Ext.getCmp(prototype.idDetailTicket + '-txtCommissionAm').getValue().replace(new RegExp(',', 'g'), '');
+                        me.beanTMP.IN_TOTALRFND = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(new RegExp(',', 'g'), '');
                         me.beanTMP.IN_STATUS = Ext.getCmp(prototype.idDetailTicket + '-ComboStatus').getValue();
                         me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
                         me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
@@ -1562,7 +1651,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             } else {
                 tarifaAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue();
             }
-            var TotalTaxAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
+            var TotalTaxAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
             var total = (tarifaAm + parseFloat(TotalTaxAm));
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));
             //Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(Ext.util.Format.number(tarifaAm, '0,000.00'));
@@ -1595,7 +1684,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 } else {
                     tarifaAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue();
                 }
-                var TotalTaxAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
+                var TotalTaxAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
                 var total = (parseFloat(tarifaAm) + parseFloat(TotalTaxAm));
                 Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));
                 //Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(Ext.util.Format.number(tarifaAm, '0,000.00'));
@@ -1639,7 +1728,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             tarifaAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue();
         }
 
-        var TotalTaxAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(',', '');
+        var TotalTaxAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
         var total = (parseFloat(tarifaAm) + parseFloat(TotalTaxAm));
 
         Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));

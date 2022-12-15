@@ -85,9 +85,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDUserMaintenance.DataEntryRFNDUs
         cmbArea.bindStore(Ext.create('Ext.data.Store',{
             data: [
                 { "code": "", "name": "SELECT"},
-                { "code": "0001", "name": "CENTRE AND SOUTH AMERICA"},
+                { "code": "0002", "name": "CENTRE AND SOUTH AMERICA"},
                 { "code": "0003", "name": "EUROPE AND ASIA"},
-                { "code": "0002", "name": "MEXICO"},
+                { "code": "0001", "name": "MEXICO"},
                 { "code": "0004", "name": "USA AND CANADA"}
             ]
         }));

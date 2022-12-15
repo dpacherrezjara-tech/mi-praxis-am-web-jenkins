@@ -1,6 +1,6 @@
 
 prototype.idRFNDPending = 'RFNDPending';
-//prototype.id01 = 'DetailRefundQueryRFND';
+prototype.idRFNDDIRFileViewer = 'RFNDDIRFileViewer';
 prototype.idDetailTicket = 'DetailTicket';
 prototype.idRFNDFormRazones = 'FNDFormRazones';
 prototype.id05 = 'RFNDFileViewer';
@@ -22,7 +22,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
         'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDAddTax',
         'Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory',
         'Ext.Praxis.view.salesaudit.RFNDPending.RFNDFormRazones',
-        'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDFormErrorBPO'
+        'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDFormErrorBPO',
+        'Ext.Praxis.view.salesaudit.RFNDQuery.RFNDDIRFileViewer'
     ],
 
     controller: 'RFNDPendingController',

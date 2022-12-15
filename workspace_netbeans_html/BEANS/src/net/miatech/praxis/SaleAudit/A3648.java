@@ -72,6 +72,7 @@ public class A3648 {
     public String A3648XFEE;
     public String A3648XERES;
     public String A3648XLKTS;
+    public String A3648SFW;
     //Datos de masivos
     public String A3648TRNCM;
     public String A3648MMDA;
@@ -109,6 +110,7 @@ public class A3648 {
     public String A3648ARCD;
     public String A3648CODE;
     public String A3648ERROR;
+    public String A3648ARCHI;
     public int A3648RN;
     public String A3648MDAD;
     public String A3648MDAQD;
@@ -126,6 +128,21 @@ public class A3648 {
     public String A3648CPN7D;
     public String A3648CPN8D;
 
+    public String getA3648SFW() {
+        return A3648SFW;
+    }
+
+    public void setA3648SFW(String A3648SFW) {
+        this.A3648SFW = A3648SFW;
+    }
+
+    public String getA3648ARCHI() {
+        return A3648ARCHI;
+    }
+
+    public void setA3648ARCHI(String A3648ARCHI) {
+        this.A3648ARCHI = A3648ARCHI;
+    }
     public double getA3648STAQD() {
         return A3648STAQD;
     }

@@ -255,6 +255,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648XFEE = rs01.getString("A3648XFEE");
                 objRtn.A3648XERES = rs01.getString("A3648XERES");
                 objRtn.A3648XLKTS = rs01.getString("A3648XLKTS");
+                 objRtn.A3648SFW = rs01.getString("A3648SFW");
                 //masivos
                 objRtn.A3648TRNCM = rs01.getString("A3648TRNCM");
                 objRtn.A3648MMDA = rs01.getString("A3648MMDA");
@@ -295,6 +296,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648ARCD = rs01.getString("A3647ARCD");
                 objRtn.A3648CODE = rs01.getString("A3649CODE");
                 objRtn.A3648ERROR = rs01.getString("A3649ERROR");
+                objRtn.A3648ARCHI = rs01.getString("A3649ARCHI");
                 objRtn.A3648ESTADO = rs01.getString("A3648ESTADO");
                 objRtn.A3648FOLIO = rs01.getString("A3647FOLIO");
                 objRtn.A3648RAAG = rs01.getString("A3647RAAG");
