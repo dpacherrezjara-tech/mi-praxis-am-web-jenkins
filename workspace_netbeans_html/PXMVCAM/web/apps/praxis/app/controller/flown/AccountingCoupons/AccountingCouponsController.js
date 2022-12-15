@@ -48,8 +48,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
             fields: ['code', 'name'],
             data: [
                 ["", "All"],
-                ["1", "AM"],
-                ["2", "5D"]
+                ["AM", "AM"],
+                ["5D", "5D"]
             ]
         }));
         cmbUNIFiltro.setValue("");
@@ -65,6 +65,18 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
             ]
         }));
         cmbCIAFFiltro.setValue("");
+        
+        var cmbFTYPEFiltro = Ext.getCmp(prototype.id + '-cmbFTYPEFiltro');
+        cmbFTYPEFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["F", "FLOWN"],
+                ["E", "EMD"]
+            ]
+        }));
+        cmbFTYPEFiltro.setValue("");
         
     },
     // </editor-fold>
@@ -187,30 +199,32 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.AccountingCouponsContr
         searchParams = {};
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
         var fyear = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
-        var a = Ext.getCmp(prototype.id + '-cmbUNIFiltro').getValue();
-        var CARRYER;
-        if(a === '' ){
-            CARRYER = '';
-        }else if(a === '1' ){
-            CARRYER = 'AM';
-        }else if(a === '2' ){
-            CARRYER = '5D';
-        }
-        var b = Ext.getCmp(prototype.id + '-cmbCIAFFiltro').getValue();
-        var CIAF;
-        if(b === '' ){
-            CIAF = '';
-        }else if(b === '02' ){
-            CIAF = '02';
-        }else if(b === '03' ){
-            CIAF = '03';
-        }
+        var CARRYER = Ext.getCmp(prototype.id + '-cmbUNIFiltro').getValue();
+//        var CARRYER;
+//        if(a === '' ){
+//            CARRYER = '';
+//        }else if(a === '1' ){
+//            CARRYER = 'AM';
+//        }else if(a === '2' ){
+//            CARRYER = '5D';
+//        }
+        var CIAF = Ext.getCmp(prototype.id + '-cmbCIAFFiltro').getValue();
+//        var CIAF;
+//        if(b === '' ){
+//            CIAF = '';
+//        }else if(b === '02' ){
+//            CIAF = '02';
+//        }else if(b === '03' ){
+//            CIAF = '03';
+//        }
+        var FTYPE = Ext.getCmp(prototype.id + '-cmbFTYPEFiltro').getValue();
         // </editor-fold>
         // <editor-fold defaultstate="collapsed" desc="asignación">
         searchParams = {
             IN_FECHA_FROM: fyear,
             CARRYER: CARRYER,
-            CIAF: CIAF
+            CIAF: CIAF,
+            FTYPE: FTYPE,
         };
 
         _path = prototype.url + '/getXLSX?' +
