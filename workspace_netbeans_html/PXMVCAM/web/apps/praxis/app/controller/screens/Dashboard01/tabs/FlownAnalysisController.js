@@ -153,7 +153,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         });
         global.clear();
         Ext.getCmp(prototype.id + '-gridSearchWK').bindStore(storeGridDatas);
-        //Ext.getCmp(prototype.id + '-ChtExchangeMB_REvsCO').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayDetWKChart01').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridSearchWK').setStore(storeGridDatas);
     },
     btnSwap_FA_click: function () {

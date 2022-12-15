@@ -664,8 +664,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     {
                                         text: 'Date', dataIndex: 'strFormatDate', width: 90,
                                         listeners: {
-                                         click: 'searchByWK'
-                                         },
+                                            click: 'searchByWK'
+                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "color:#057ECB;";
                                             value = '<b>' + value + '</b>';
@@ -941,112 +941,81 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                 },
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-panelGridDataAmountByZones',
                     bodyStyle: 'background-color: #E3EAEF;',
+                    padding: '5 0 0 5',
+                    width: 1200,
                     border: true,
-                    hidden:true,
-                    width: 1600,
-                    height: 'auto',
-                    margin: '5 0 0 0 ',
                     layout: {
                         type: 'vbox',
-                        align: 'center'
+                        align: 'center',
                     },
                     items: [
                         {
-                            xtype: 'panel',
-                            //id: prototype.id + '-panelGridDataAmountByZones',
-                            bodyStyle: 'background-color: #E3EAEF;',
+                            xtype: 'cartesian',
+                            id: prototype.id + '-displayDetWKChart01',
+                            width: 700,
                             border: true,
-                            width: 1600,
-                            margin: '0 0 0 0 ',
-                            layout: {
-                                type: 'hbox',
-                                align: 'center'
-                            },
-                            items: [
-                                {
-                                    xtype: 'cartesian',
-                                    id: prototype.id + '-ChtExchangeMB_REvsCO',
-                                    width: 641,
-                                    border: false,
-                                    height: 300,
-                                    background: '#E0F8F7',
-                                    captions: {
-                                        title: {
-                                            text: 'Revenue',
-                                            alignTo: 'chart'
-                                        }
-                                    },
-                                    animation: {
-                                        duration: 200
-                                    },
-                                    interactions: ['itemhighlight'],
-                                    axes: [{
-                                            type: 'numeric3d',
-                                            position: 'left',
-                                            fields: ['QTYFlight'],
-                                            grid: true,
-                                            title: 'Millions',
-                                            renderer: function (obj, value) {
-                                                /*if (value > 1) {
-                                                 if ((value / 1000).toString().length > 3) {
-                                                 return ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
-                                                 } else {
-                                                 return ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
-                                                 }
-                                                 } else {
-                                                 return '';
-                                                 }*/
-                                                return ' ' + Ext.util.Format.number((value), '0.00') + 'M';
-                                            }
-                                        }, {
-                                            type: 'category3d',
-                                            position: 'bottom',
-                                            grid: true,
-                                            title: {
-                                                translationX: -30
-                                            }
-                                        }],
-                                    series: [{
-                                            type: 'bar3d',
-                                            stacked: false,
-                                            xField: 'strFormatDate',
-                                            yField: ['QTYFlight'],
-                                            colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
-                                            highlight: true,
-                                            style: {
-                                                inGroupGapWidth: -7,
-                                                minGapWidth: 2,
-                                                maxBarWidth: 1200
-                                            },
-                                            label: {
-                                                field: ['QTYFlight'],
-//                                                            display: 'insideEnd',
-                                                display: 'outside',
-                                                calloutLine: {
-                                                    length: 10,
-                                                    width: 0,
-//                                                                color: '#FFFFFF',
-                                                },
-                                                renderer: function (value, b, callout) {
-                                                    callout.calloutVertical = false;
-                                                    return Ext.util.Format.number(value, '0.00') + 'M'
-                                                }
-                                            },
-                                            tooltip: {
-                                                trackMouse: true,
-                                                height: 28,
-                                                renderer: function (toolTip, record, ctx) {
-                                                    toolTip.setHtml(record.get('QTYFlight') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
-                                                }
-                                            },
-                                            renderer: 'onColumnRender'
-                                        }
-                                    ]
+                            height: 240,
+                            background: '#E0F8F7',
+                            captions: {
+                                title: {
+                                    text: 'Revenue',
+                                    //alignTo: 'chart'
                                 }
+                            },
+                            animation: {
+                                duration: 200
+                            },
+                            interactions: ['itemhighlight'],                            
+                            axes: [{
+                                    type: 'numeric3d',
+                                    position: 'left',
+                                    fields: ['QTYFlight'],
+                                    grid: true,
+                                    title: 'Millions of USD',
+                                    renderer: function (obj, value) {
+                                        if (value > 1) {
+                                            if ((value / 1000).toString().length > 3) {
+                                                return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                            } else {
+                                                return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                            }
+                                        } else {
+                                            return '';
+                                        }
+                                    }
+                                }, {
+                                    type: 'category3d',
+                                    position: 'bottom',
+                                    grid: true,
+                                    title: {
+                                        translationX: -30
+                                    }
+                                },
+                            ],
+                            series: [{
+                                    type: 'bar3d',
+                                    stacked: false,
+                                    xField: 'strFormatDate',
+                                    yField: ['QTYFlight'],
+                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                    highlight: true,
+                                    style: {
+                                        inGroupGapWidth: -7,
+                                        minGapWidth: 2,
+                                        maxBarWidth: 1200
+                                    },                                   
+                                    tooltip: {
+                                        trackMouse: true,
+                                        height: 28,
+                                        renderer: function (toolTip, record, ctx) {
+                                            //toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                            toolTip.setHtml(record.get('QTYFlight') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                        }
+                                    },
+                                },
                             ]
-                        }
+                        },
                     ]
                 }
             ]
@@ -1101,7 +1070,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "color:#057ECB;";
                                             value = '<b>' + value + '</b>';
-                                            return  value ;
+                                            return  value;
                                         }
                                     }
                                 ]
@@ -1373,7 +1342,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                 }
             ]
         },
-
         // -------------------------- FLOWN --------------------------
         {
             xtype: 'panel',
