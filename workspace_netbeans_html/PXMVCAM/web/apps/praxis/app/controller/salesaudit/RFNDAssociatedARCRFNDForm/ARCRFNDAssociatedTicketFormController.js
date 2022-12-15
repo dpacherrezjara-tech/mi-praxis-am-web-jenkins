@@ -794,7 +794,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                     });
                     mask.show();
                     Ext.Ajax.request({
-                        url: me.urlWin02 + '/ProcesaUpdateUsosCPN/',
+                        url: me.urlWin01 + '/ProcesaUpdateUsosCPN/',
                         timeout: 60000000,
                         method: 'POST',
                         params: {
