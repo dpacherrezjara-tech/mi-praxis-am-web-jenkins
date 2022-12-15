@@ -310,8 +310,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             {text: 'Amount <br> USD', dataIndex: 'AMOUNT', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "background:#d5f4d5;text-align:right";
-                                                                    value = '<b>' + value + '</b>';
-                                                                    return value;
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_boxChart6').getStore().getData().items[0].data;

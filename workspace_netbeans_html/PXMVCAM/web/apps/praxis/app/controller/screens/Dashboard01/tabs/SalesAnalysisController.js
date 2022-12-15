@@ -233,7 +233,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
             me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         }
-
+         me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+         me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         me.bean.strYearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + '';
         me.bean.strMonthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + '';
         me.bean.strYearTo = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + '';
@@ -251,6 +252,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
     },
     search: function () {
+        console.log('searchParams');
+        console.log('searchParams');
+        console.log('searchParams');
+        this.setFormatParameter();
+        console.log(searchParams);
+        console.log('searchParams');
+        console.log('searchParams');
+        console.log('searchParams');
         win.lblUser_toolTip("Estructura: IMF080");
         this.showGrid('-boxMainData');
 //        me.panelActual = '-boxMainData';

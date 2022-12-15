@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
                     width: 1500,
-                    height: 720,
+                    height: 780,//820
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,
@@ -75,15 +75,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-FlownAnalysis_tab',
-                            title: 'Flown Analysis',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
-                            },
-                            margin: '10 0 10 0',
-                            defaults: {
-                                labelAlign: 'left'
-                            },
+                            title: 'Flown Analysis',                            
                             items: [
                                 {                                    
                                     id: prototype.id+ '-FlownAnalysis_screen',
