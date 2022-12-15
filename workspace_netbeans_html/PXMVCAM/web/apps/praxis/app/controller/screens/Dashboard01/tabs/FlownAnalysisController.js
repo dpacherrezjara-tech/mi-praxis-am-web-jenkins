@@ -123,7 +123,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         Ext.getCmp(prototype.id + '-gridFAmonth2').setStore(storeGridDatas);
     },
     searchWK: function () {
-
+        this.showGrid('-panelGridSearchWK');
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchWK'
@@ -650,6 +650,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         //this.hidePagination_clickHandler();
         console.log(rowData.data.strFormatDate);
         me.panelActual = '-panelWKperMonth';
+        meFlown.boxActual === '-panelWKperMonth'
         this.showGrid('-panelWKperMonth');
         Ext.getCmp(prototype.id + '-panelGridSearchWK').setVisible(false);
         Ext.getCmp(prototype.id + '-panelWKperMonth').setVisible(true);
@@ -661,6 +662,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     searchByWK1: function (paramsWK) {
         me.panelActual = '-panelWKperMonth';
+        meFlown.boxActual === '-panelWKperMonth'
         win.lblUser_toolTip("Estructura: A1972");
         this.showGrid('-panelWKperMonth');
 
@@ -788,17 +790,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 Ext.getCmp(prototype.id + meFlown.boxActual).show();
             }
 
-            if (meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK' || meFlown.boxActual === '-boxMainDataREvsCO'|| meFlown.boxActual === '-panelWKperMonth') {
+            if (meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK' || meFlown.boxActual === '-boxMainDataREvsCO') {
                 Ext.getCmp(prototype.id + '-filterMain').show();
             } else {
                 Ext.getCmp(prototype.id + '-filterMain').hide();
             }
-            
-            if (meFlown.boxActual === '-panelWKperMonth') {
-                Ext.getCmp(prototype.id + '-panelWKperMonth').hide();
-                meFlown.boxActual === '-boxMainDataFA'
-                Ext.getCmp(prototype.id + '-boxMainDataFA').show();
-            } 
 
             if (meFlown.boxActual === '-boxMainDataFA') {
                 Ext.getCmp(prototype.id + '-panelRadio').hide();
@@ -835,7 +831,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         }
 //        console.log('imgBack_clickHandler == ' + me.drillDown);
-
+        
     },
     showPagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').show();

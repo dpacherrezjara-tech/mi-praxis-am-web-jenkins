@@ -1075,7 +1075,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     {
                                         text: 'Date', dataIndex: 'strFormatDate', width: 90,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "color:#057ECB;";
+                                            metaData.style = "text-align:center";
                                             value = '<b>' + value + '</b>';
                                             return  value;
                                         }
