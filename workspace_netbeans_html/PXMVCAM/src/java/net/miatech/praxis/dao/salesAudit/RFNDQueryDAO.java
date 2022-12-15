@@ -255,6 +255,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648XFEE = rs01.getString("A3648XFEE");
                 objRtn.A3648XERES = rs01.getString("A3648XERES");
                 objRtn.A3648XLKTS = rs01.getString("A3648XLKTS");
+                 objRtn.A3648SFW = rs01.getString("A3648SFW");
                 //masivos
                 objRtn.A3648TRNCM = rs01.getString("A3648TRNCM");
                 objRtn.A3648MMDA = rs01.getString("A3648MMDA");
