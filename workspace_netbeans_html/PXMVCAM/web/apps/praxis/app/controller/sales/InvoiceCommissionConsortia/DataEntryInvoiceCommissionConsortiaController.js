@@ -183,6 +183,16 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         };
     },
     onSaveClick: function(btn) {
+        let invc_Charge= Ext.getCmp(prototype.id + '-txtA1757COMBA').getValue();
+        let invc_IvaComBa =  Ext.getCmp(prototype.id + '-txtA1757IVACB').getValue();
+        let preInv_Charge = Ext.getCmp(prototype.id + '-txtA1757COMBA_P').getValue();
+        let preInv_IvaComBa = Ext.getCmp(prototype.id + '-txtA1757IVACB_P').getValue();
+        if (invc_Charge!==preInv_Charge && invc_IvaComBa!== preInv_IvaComBa){
+            global.Msg({
+                msg: "Values don't match."
+            });
+            return;
+        }
         var p = this.view.params;
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
@@ -612,8 +622,17 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         Ext.getCmp(prototype.id + '-txtA1757COMM_P').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757IVA_P').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757TCASH_P').setValue('0.00');
-        Ext.getCmp(prototype.id + '-txtA1757COMBA_P').setValue('0.00');
-        Ext.getCmp(prototype.id + '-txtA1757IVACB_P').setValue('0.00');
+        
+        let preInv_Charge = Ext.getCmp(prototype.id + '-txtA1757COMBA_P');
+        let preInv_IvaComBa = Ext.getCmp(prototype.id + '-txtA1757IVACB_P');
+        if (preInv_Charge.getValue()==0){
+            preInv_Charge.setValue('0.00');
+        }
+        if (preInv_IvaComBa.getValue()==0){
+            preInv_IvaComBa.setValue('0.00');
+        }
+//        Ext.getCmp(prototype.id + '-txtA1757COMBA_P').setValue('0.00');
+//        Ext.getCmp(prototype.id + '-txtA1757IVACB_P').setValue('0.00');
         // Invoice Summary				
         Ext.getCmp(prototype.id + '-txtA1757CAMCO_IN').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757COMIV_IN').setValue('0.00');
@@ -646,10 +665,50 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         }
     },
     habilitar_cargos:function(){
-        if(Ext.getCmp(prototype.id + '-txtA1757COD').getValue()!==''){
+        let tf_lote = Ext.getCmp(prototype.id+'-de-txtA1757LOTE').getValue();
+        let tf_iata = Ext.getCmp(prototype.id+'-txtA1757IATA').getValue();
+        let tf_rfis = Ext.getCmp(prototype.id + '-txtA1757COD').getValue(); 
+        if(tf_rfis!==''){
             this.handlerEvent_EditInputCargos(true,false);
+            if(tf_lote!=='' && tf_iata!==''){
+                this.obtenerCargosEMD(tf_lote,tf_iata,tf_rfis);
+            }
         }else{
             this.handlerEvent_EditInputCargos(false,true);
+        }
+    },
+    obtenerCargosEMD: async function(lote,iata,code){
+        let args = {
+            CCUST:'139',
+            LOTE: lote,
+            AGENT:iata,
+            RFIS:code
+        };
+        const data = await fetch(this.url +'/getValidateEmd',{
+            method: 'POST',
+            body: JSON.stringify(args),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res=>{
+            let resLst;
+            switch (res.status){
+                case 200:
+                    resLst = res.json();
+                    break;
+                case 204:
+                    console.log("Sin contenido");
+                    resLst = [];
+                    break;
+                default :
+                    resLst = null;
+                    break;
+            }
+            return resLst;
+        });
+        if (data!==null && data.length>0){
+            Ext.getCmp(prototype.id+'-txtA1757COMBA_P').setValue(Ext.util.Format.number(data[0].a2445CARGO, '0.00'));
+            Ext.getCmp(prototype.id+'-txtA1757IVACB_P').setValue(Ext.util.Format.number(data[0].ivacargo,'0.00'));
         }
     },
     handlerEvent_EditInputCargos: function(flagcab,flagcargos){
