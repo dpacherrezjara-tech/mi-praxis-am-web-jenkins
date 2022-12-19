@@ -221,18 +221,20 @@ public class AccountingCouponsController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-
+    
     @RequestMapping(value = "getIDECZip")
     public @ResponseBody
     void getIDECZip(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         SFI040Filter filter = new SFI040Filter();
         String strFecha = request.getParameter("FECHA");
+        String strNOMBRE = request.getParameter("NOMBRE");
         InputStream is = null;
         try {
             System.out.println("PassengerInvoices : getIDECZip");
             String rutaFile = "\\\\10.0.0.87\\am\\ACC\\" + strFecha.substring(0, 4) + "\\";
-            String fileName = "ACC_" + strFecha + ".zip";
+//            String fileName = "ACC_" + strFecha + ".zip";
+            String fileName = strNOMBRE;
 
             response.setContentType("application/zip");
             response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
