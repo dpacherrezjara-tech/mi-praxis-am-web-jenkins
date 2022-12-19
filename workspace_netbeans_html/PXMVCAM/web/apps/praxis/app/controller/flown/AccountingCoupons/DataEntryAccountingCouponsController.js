@@ -4,6 +4,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     meDta: '',
     strFormatDate: '',
+    nombreFile: '',
     str: '',
     tempLink: '',
     // </editor-fold>
@@ -14,8 +15,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
         meDta = this;
         this.mostrarData(this.p.FECHA);
     },
-    onBtnExport_Click: function() {
+    onBtnExport_Click: function(column, e, row, column, x, rowData) {
         Ext.getCmp(prototype.id + '-btnDownload').show();
+        var data = x.record.data;
+        meDta.nombreFile = data.strFormatDate; 
+        console.log(meDta.nombreFile);
     },
     mostrarData: function(FECHA) {
         this.setValue('txtDate', FECHA.substring(0,4));
@@ -24,7 +28,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingCoupons.DataEntryAccountingCou
     },
     // <editor-fold defaultstate="collapsed" desc="Botones">
     onDownloadClick: function() {
-        global.getFile(prototype.url + '/getIDECZip?FECHA=' + this.p.FECHA);
+        global.getFile(prototype.url + '/getIDECZip?FECHA=' + this.p.FECHA + '&NOMBRE=' + meDta.nombreFile);
     },
     onCancelClick: function(btn){
         this.view.close();
