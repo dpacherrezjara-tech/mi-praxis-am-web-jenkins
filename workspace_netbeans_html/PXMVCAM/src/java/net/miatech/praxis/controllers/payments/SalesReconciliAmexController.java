@@ -843,7 +843,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetTktChargeback")
     public @ResponseBody
     String searchDetTktChargeback(ModelMap map, HttpServletRequest request) {
@@ -1213,8 +1213,8 @@ public class SalesReconciliAmexController extends BaseController {
         map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
-    
-        @RequestMapping(value = "ReverseTransaction")
+
+    @RequestMapping(value = "ReverseTransaction")
     public @ResponseBody
     String ReverseTransaction(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- Sales Reconciliation by AMEX : ReverseTransaction-------------");
@@ -1231,6 +1231,43 @@ public class SalesReconciliAmexController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             msj = logic.loadPX570SQP04636(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "BpoRevTransaction")
+    public @ResponseBody
+    String BpoRevTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : BpoRevTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4116Filter filter = new A4116Filter();
+            A4116Filter result = new A4116Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX570SQP04729(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -7880,13 +7917,12 @@ public class SalesReconciliAmexController extends BaseController {
 
         List<String> receptores = new ArrayList<>();
 
-        for (int i = 0; i < lstEmails.size(); i++){
+        for (int i = 0; i < lstEmails.size(); i++) {
             receptores.add(lstEmails.get(i).EMAIL);
         }
-        
+
         //receptores.add("rtoledo@aeromexico.com");
         //receptores.add("rpichardor@aeromexico.com");
-
         List<String> Ccpy = new ArrayList<>();
         //Ccpy.add("ctarazona@miatech.net");
 
@@ -7926,7 +7962,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "<span style=\"color:#0C343D;font-size:11.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
         //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
         //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
-        
+
         String correoMask = "amaclaracionescontracargos@miatech.net";
 
         List<String> archivos = new ArrayList<>();
@@ -8468,7 +8504,7 @@ public class SalesReconciliAmexController extends BaseController {
         boolean iboolean;
         //Data.DATE, Data.AXPAYNBR, Data.PMERCHID, Data.PCURRENCY, Data.DIFF_PNETAMOU_STRING
         ProMail proMail = new ProMail();
-        
+
         int sizeList = 0;
 
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
@@ -8481,13 +8517,12 @@ public class SalesReconciliAmexController extends BaseController {
 
         List<String> receptores = new ArrayList<>();
 
-        for (int i = 0; i < lstEmails.size(); i++){
+        for (int i = 0; i < lstEmails.size(); i++) {
             receptores.add(lstEmails.get(i).EMAIL);
         }
-        
+
         //receptores.add("rtoledo@aeromexico.com");
         //receptores.add("rpichardor@aeromexico.com");
-
         List<String> Ccpy = new ArrayList<>();
         //Ccpy.add("ctarazona@miatech.net");
         String asunto = "Debit Memo";
@@ -8528,7 +8563,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
         mensaje = mensaje + "\n" + "<table style=\"width:100%\">";
         mensaje = mensaje + "\n" + "<tr>    <th>Payment Date</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Zone</th>    <th>Country</th>    <th>Currency</th>    <th>Amount</th>    </tr>";
-                
+
         DecimalFormat df = new DecimalFormat("#,###,##0");
         DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
@@ -8536,7 +8571,7 @@ public class SalesReconciliAmexController extends BaseController {
         otherSymbols.setGroupingSeparator(',');
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
-        
+
         if (listaData.size() > 20) {
             sizeList = 20;
         } else {

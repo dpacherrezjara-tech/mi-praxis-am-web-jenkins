@@ -126,6 +126,10 @@ public class SalesReconciliAmexLogic {
     public String loadPX570SQP04636(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04636(filter);
     }
+    
+    public String loadPX570SQP04729(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04729(filter);
+    }
 
     public String loadPX570SQP04469(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04469(filter);

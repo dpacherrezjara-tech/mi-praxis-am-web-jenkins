@@ -3726,6 +3726,7 @@ public class SalesReconciliAmexDAO {
                 objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
 
                 objRtn.AREFNBR = rs01.getString("AREFNBR").trim();
+                objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
                 objRtn.SMERCHID = rs01.getString("SMERCHID").trim();
                 objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
                 objRtn.AXPRODAT = rs01.getString("AXPRODAT").trim();
@@ -4068,6 +4069,57 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(8, session.getUserView().getUserInfo().USR);
             cstmt01.setString(9, Functions.getFechaActual());
             cstmt01.setString(10, Functions.getHoraActual());
+
+            cstmt01.execute();
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX570SQP04729(A4116Filter filter) throws SQLException, Exception {
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04729(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR.trim());
+            cstmt01.setString(3, filter.PRDA.trim());
+            cstmt01.setString(4, filter.TDOC.trim());
+            cstmt01.setString(5, filter.OBSERV_BPO.trim());
+            cstmt01.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(7, Functions.getFechaActual());
+            cstmt01.setString(8, Functions.getHoraActual());
 
             cstmt01.execute();
 
