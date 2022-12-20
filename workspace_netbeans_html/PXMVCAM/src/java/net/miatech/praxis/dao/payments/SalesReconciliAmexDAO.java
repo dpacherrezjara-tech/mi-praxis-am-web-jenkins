@@ -2280,8 +2280,8 @@ public class SalesReconciliAmexDAO {
         A4116Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -2604,8 +2604,8 @@ public class SalesReconciliAmexDAO {
         A4116Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -2904,8 +2904,8 @@ public class SalesReconciliAmexDAO {
         A4116Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -3091,8 +3091,8 @@ public class SalesReconciliAmexDAO {
         ResultSet rs01 = null;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -3239,8 +3239,8 @@ public class SalesReconciliAmexDAO {
         hmDescFCOMPL.put("4", "Match"); //BPO
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -3652,8 +3652,8 @@ public class SalesReconciliAmexDAO {
         ResultSet rs01 = null;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -4696,8 +4696,8 @@ public class SalesReconciliAmexDAO {
         A4116Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -4819,8 +4819,8 @@ public class SalesReconciliAmexDAO {
         A4116Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
