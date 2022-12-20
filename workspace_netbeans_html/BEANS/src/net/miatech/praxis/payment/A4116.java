@@ -113,6 +113,7 @@ public class A4116 {
     public String FDESGLOSE = "";
     public String NEWSTVAL = "";
     public String COLOR = "";
+    public String OBSERV_BPO = "";
     
     //Variables del Sistema
     public String USCR = "";
