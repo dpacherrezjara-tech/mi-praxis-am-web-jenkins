@@ -16,6 +16,7 @@ public class PX038S02A714Filter extends A714 {
     public String IN_GRUPO = "";
     public String IN_TKT = "";
     public String IN_TRANSACTION = "";
+    public String IN_IATA = "";
     
     public String DOCUMENTO = "";
     public String CNJ = "";
