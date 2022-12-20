@@ -21,7 +21,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
         'Ext.Praxis.view.screens.Dashboard01Form.Filters',
         'Ext.Praxis.view.screens.Dashboard01Form.Info',
         'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline',
-        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales'
+        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales',
+        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown'
     ],
     controller: 'Dashboard01Controller',
     layout: {
@@ -142,6 +143,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                                 {   xtype: prototype.id + '-chartSales',
                                                     id: prototype.id + '-panelChartSales'
                                                 },
+                                                {   xtype: prototype.id + '-chartFlown',
+                                                    id: prototype.id + '-panelChartFlown'
+                                                }
                                             ]
                                         },
                                         // <editor-fold defaultstate="collapsed" desc="pie">
