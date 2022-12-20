@@ -281,7 +281,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     background: '#E0F8F7',
                                     captions: {
                                         title: {
-                                            text: 'Sales per Cabin - Coupons',
+                                            text: 'Flown by Cabin - Coupons',
                                             alignTo: 'chart'
                                         }
                                     },
@@ -298,7 +298,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                         {
                                             type: 'numeric3d',
                                             position: 'left',
-                                            fields: ['QTYPAX_J', 'QTYPAX_Y'],
+                                            fields: ['QTYPAX_J', 'QTYPAX_Y','QTYPAX'],
                                             minimum: 0,
                                             grid: true,
                                             title: '',
@@ -316,7 +316,117 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                         },
                                         {
                                             type: 'numeric3d',
-                                            position: 'right',
+                                            position: 'left',
+                                            fields: 'strFormatDate',
+                                            minimum: 0,
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        },
+                                        , {
+                                            type: 'category3d',
+                                            //position: 'bottom',
+                                            grid: true,
+                                            title: {
+                                                translationX: -30
+                                            }
+                                        },
+                                    ],
+                                    series: [
+                                        {
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            xField: 'strFormatDate',
+                                            yField: ['QTYPAX_J', 'QTYPAX_Y','QTYPAX'],
+                                            title: ['Business', 'Economy','Total'],
+                                            colors: ['#d6d9d4', '#209938','#1c50c9'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            label: {
+                                                field: ['QTYPAX_J', 'QTYPAX_Y','QTYPAX'],
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutVertical = false;
+                                                    return ''
+                                                }
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'QTYPAX_J') {
+                                                        label = 'Business';
+                                                    } else if (ctx.field === 'QTYPAX_Y') {
+                                                        label = 'Economy';
+                                                    } else if (ctx.field === 'QTYPAX') {
+                                                        label = 'Total';
+                                                    }
+                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            },
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displayFOChartA',
+                                    border: false,
+                                    width: 1400,
+                                    hidden:true,
+                                    height: 350,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Flown by Cabin - Amount USD',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    legend: {
+                                        text: 'Cabins',
+//                                        docked: 'bottom',
+                                     background: '#E3EAEF'
+                                    },
+                                    axes: [
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['VCPN_J', 'VCPN_Y','VCPN'],
+                                            minimum: 0,
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        },
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'left',
                                             fields: 'strFormatDate',
                                             minimum: 0,
                                             grid: true,
@@ -347,9 +457,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             type: 'bar3d',
                                             stacked: false,
                                             xField: 'strFormatDate',
-                                            yField: ['QTYPAX_J', 'QTYPAX_Y'],
-                                            title: ['Business', 'Economy'],
-                                            colors: ['#d6d9d4', '#209938'],
+                                            yField: ['VCPN_J', 'VCPN_Y','VCPN'],
+                                            title: ['Business', 'Economy','Total'],
+                                            colors: ['#d6d9d4', '#209938','#1c50c9'],
                                             highlight: true,
                                             style: {
                                                 inGroupGapWidth: -7,
@@ -357,162 +467,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 maxBarWidth: 1200
                                             },
                                             label: {
-                                                field: ['QTYPAX_J', 'QTYPAX_Y'],
+                                                field: ['VCPN_J', 'VCPN_Y','VCPN'],
                                                 renderer: function (value, b, callout) {
                                                     callout.calloutVertical = false;
-                                                    return ''
-                                                }
-                                            },
-                                            tooltip: {
-                                                trackMouse: true,
-                                                height: 28,
-                                                renderer: function (toolTip, record, ctx) {
-                                                    var label = '';
-                                                    if (ctx.field === 'QTYPAX_J') {
-                                                        label = 'Business';
-                                                    } else if (ctx.field === 'QTYPAX_Y') {
-                                                        label = 'Economy';
-                                                    }
-                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
-                                                }
-                                            },
-                                        },
-                                        {
-                                            type: 'line',
-                                            stacked: true,
-                                            xField: 'strFormatDate',
-                                            yField: 'QTYPAX',
-                                            colors: ['#1c50c9'],
-                                            title: ['Total Pax'],
-                                            style: {
-                                                fill: '#fff',
-                                                stroke: '#1c50c9',
-                                                lineWidth: 2
-                                            },
-                                            marker: {
-                                                radius: 4,
-                                                lineWidth: 2
-                                            },
-                                            label: {
-                                                field: 'QTYPAX',
-//                                                display: 'over',
-                                                renderer: function (value, b, callout) {
-//                                                    callout.calloutVertical = false;
-                                                    return ''
-                                                }
-                                            },
-                                            markerConfig: {
-                                                radius: 20
-                                            },
-                                            highlight: {
-                                                fill: '#1c50c9',
-                                                radius: 8,
-                                                'stroke-width': 2,
-                                                stroke: '#fff'
-                                            },
-                                            tooltip: {
-                                                trackMouse: true,
-                                                style: 'background: #FFF',
-                                                height: 28,
-                                                showDelay: 0,
-                                                dismissDelay: 0,
-                                                hideDelay: 0,
-                                                renderer: function (toolTip, record, ctx) {
-                                                    toolTip.setHtml('Total Pax : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
-                                                }
-                                            }
-                                        }
-                                        
-                                    ]
-                                },
-                                {
-                                    xtype: 'cartesian',
-                                    id: prototype.id + '-displayFOChartA',
-                                    border: false,
-                                    width: 1300,
-                                    height: 350,
-                                    hidden: true,
-                                    background: '#E0F8F7',
-                                    captions: {
-                                        title: {
-                                            text: 'Sales per Cabin - Amount USD',
-                                            alignTo: 'chart'
-                                        }
-                                    },
-                                    animation: {
-                                        duration: 200
-                                    },
-                                    interactions: ['itemhighlight'],
-                                    legend: {
-                                        text:'Cabins',
-                                        docked: 'bottom',
-                                        background: '#E3EAEF'
-                                    },
-                                    axes: [
-                                        {
-                                            type: 'numeric3d',
-                                            position: 'left',
-                                            fields: ['VCPN_J', 'VCPN_Y'],
-                                            minimum: 0,
-                                            grid: true,
-                                            title: '',
-                                            renderer: function (obj, value) {
-                                                if (value > 1) {
-                                                    if ((value / 1000).toString().length > 3) {
-                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
-                                                    } else {
-                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
-                                                    }
-                                                } else {
-                                                    return '';
-                                                }
-                                            }
-                                        },
-                                        {
-                                            type: 'numeric3d',
-                                            position: 'right',
-                                            fields: 'strFormatDate',
-                                            minimum: 0,
-                                            grid: true,
-                                            title: '',
-                                            renderer: function (obj, value) {
-                                                if (value > 1) {
-                                                    if ((value / 1000).toString().length > 3) {
-                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
-                                                    } else {
-                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
-                                                    }
-                                                } else {
-                                                    return '';
-                                                }
-                                            }
-                                        },
-                                        , {
-                                            type: 'category3d',
-                                            position: 'bottom',
-                                            grid: true,
-                                            title: {
-                                                translationX: -30
-                                            }
-                                        },
-                                    ],
-                                    series: [
-                                        {
-                                            type: 'bar3d',
-                                            stacked: false,
-                                            xField: 'strFormatDate',
-                                            yField: ['VCPN_J', 'VCPN_Y'],
-                                            title: ['Business', 'Economy'],
-                                            colors: ['#d6d9d4', '#209938'],
-                                            highlight: true,
-                                            style: {
-                                                inGroupGapWidth: -7,
-                                                minGapWidth: 2,
-                                                maxBarWidth: 1200
-                                            },
-                                            label: {
-                                                field: ['VCPN_J', 'VCPN_Y'],
-                                                renderer: function (value, b, callout) {
                                                     return ''
                                                 }
                                             },
@@ -525,57 +482,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                         label = 'Business';
                                                     } else if (ctx.field === 'VCPN_Y') {
                                                         label = 'Economy';
+                                                    } else if (ctx.field === 'VCPN') {
+                                                        label = 'Total';
                                                     }
                                                     toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                 }
-                                            }
-                                        },
-                                        {
-                                            type: 'line',
-                                            stacked: true,
-                                            xField: 'strFormatDate',
-                                            yField: 'VCPN',
-                                            colors: ['#1c50c9'],
-                                            title: ['Total Value'],
-                                            style: {
-                                                fill: '#fff',
-                                                stroke: '#1c50c9',
-                                                lineWidth: 2
                                             },
-                                            marker: {
-                                                radius: 4,
-                                                lineWidth: 2
-                                            },
-                                            label: {
-                                                field: 'VCPN',
-                                                display: 'over',
-                                                renderer: function (value, b, callout) {
-                                                    callout.calloutVertical = false;
-                                                    //return Ext.util.Format.number(value, '0')
-                                                    return ''
-                                                }
-                                            },
-                                            markerConfig: {
-                                                radius: 4
-                                            },
-                                            highlight: {
-                                                fill: '#1c50c9',
-                                                radius: 8,
-                                                'stroke-width': 2,
-                                                stroke: '#fff'
-                                            },
-                                            tooltip: {
-                                                trackMouse: true,
-                                                style: 'background: #FFF',
-                                                height: 28,
-                                                showDelay: 0,
-                                                dismissDelay: 0,
-                                                hideDelay: 0,
-                                                renderer: function (toolTip, record, ctx) {
-                                                    toolTip.setHtml('Total Value : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
-                                                }
-                                            },
-                                            //renderer: 'onColumnRender'
                                         }
                                     ]
                                 }
