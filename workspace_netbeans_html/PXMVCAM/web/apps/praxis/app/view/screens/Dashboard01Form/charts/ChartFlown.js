@@ -144,7 +144,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridData_boxChartFlown',
                                             width: 630,
-                                            height: 373,//403
+                                            height: 373, //403
                                             columnLines: true,
                                             margin: "5 0 0 0",
                                             border: false,
@@ -248,7 +248,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                 }
                             ]
                         },
-                        // Grafic - Hori
+                        // Grafic - Hori-gami
                         {
                             xtype: 'panel',
 //                            id: prototype.id + '-boxChart1_2',
@@ -263,7 +263,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                 {
                                     xtype: 'radiogroup',
                                     id: prototype.id + '-radiogroupType_Fo',
-                                    width: 180,                                   
+                                    width: 180,
                                     items: [
                                         {boxLabel: '<b style="color:#148D28;">Coupons</b>', inputValue: 'C', name: 'rbgType_Fo', checked: true},
                                         {boxLabel: '<b style="color:#148D28;">Amount</b>', inputValue: 'A', name: 'rbgType_Fo'},
@@ -290,10 +290,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     },
                                     interactions: ['itemhighlight'],
                                     legend: {
-                                     text:'Cabins',
-                                     docked: 'bottom',
+                                        text: 'Cabins',
+//                                        docked: 'bottom',
                                      background: '#E3EAEF'
-                                     },
+                                    },
                                     axes: [
                                         {
                                             type: 'numeric3d',
@@ -358,16 +358,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             },
                                             label: {
                                                 field: ['QTYPAX_J', 'QTYPAX_Y'],
-//                                                            display: 'insideEnd',
-                                                /*display: 'outside',
-                                                 calloutLine: {
-                                                 length: 10,
-                                                 width: 0,
-                                                 //                                                                color: '#FFFFFF',
-                                                 },*/
                                                 renderer: function (value, b, callout) {
                                                     callout.calloutVertical = false;
-                                                    //return Ext.util.Format.number(value, '0')
                                                     return ''
                                                 }
                                             },
@@ -384,19 +376,17 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                 }
                                             },
-                                            //renderer: 'onColumnRender'
                                         },
                                         {
                                             type: 'line',
                                             stacked: true,
                                             xField: 'strFormatDate',
                                             yField: 'QTYPAX',
-//                                            colors: ['#1c50c9'],
+                                            colors: ['#1c50c9'],
                                             title: ['Total Pax'],
                                             style: {
-                                                fill: '#1c50c9',
-                                                stroke: '#d4d396',
-                                                colors: ['#1c50c9'],
+                                                fill: '#fff',
+                                                stroke: '#1c50c9',
                                                 lineWidth: 2
                                             },
                                             marker: {
@@ -405,19 +395,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             },
                                             label: {
                                                 field: 'QTYPAX',
-                                                display: 'over',
+//                                                display: 'over',
                                                 renderer: function (value, b, callout) {
-                                                    callout.calloutVertical = false;
-                                                    //return Ext.util.Format.number(value, '0')
+//                                                    callout.calloutVertical = false;
                                                     return ''
                                                 }
                                             },
                                             markerConfig: {
-                                                radius: 4
+                                                radius: 20
                                             },
                                             highlight: {
                                                 fill: '#1c50c9',
-                                                radius: 5,
+                                                radius: 8,
                                                 'stroke-width': 2,
                                                 stroke: '#fff'
                                             },
@@ -431,9 +420,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 renderer: function (toolTip, record, ctx) {
                                                     toolTip.setHtml('Total Pax : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                 }
-                                            },
-                                            //renderer: 'onColumnRender'
+                                            }
                                         }
+                                        
                                     ]
                                 },
                                 {
@@ -442,7 +431,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     border: false,
                                     width: 1300,
                                     height: 350,
-                                    hidden:true,
+                                    hidden: true,
                                     background: '#E0F8F7',
                                     captions: {
                                         title: {
@@ -455,10 +444,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     },
                                     interactions: ['itemhighlight'],
                                     legend: {
-                                     text:'Cabins',
-                                     docked: 'bottom',
-                                     background: '#E3EAEF'
-                                     },
+                                        text:'Cabins',
+                                        docked: 'bottom',
+                                        background: '#E3EAEF'
+                                    },
                                     axes: [
                                         {
                                             type: 'numeric3d',
@@ -523,16 +512,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             },
                                             label: {
                                                 field: ['VCPN_J', 'VCPN_Y'],
-//                                                            display: 'insideEnd',
-                                                /*display: 'outside',
-                                                 calloutLine: {
-                                                 length: 10,
-                                                 width: 0,
-                                                 //                                                                color: '#FFFFFF',
-                                                 },*/
                                                 renderer: function (value, b, callout) {
-                                                    //callout.calloutVertical = false;
-                                                    //return Ext.util.Format.number(value, '0')
                                                     return ''
                                                 }
                                             },
@@ -548,19 +528,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     }
                                                     toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                 }
-                                            },
-                                            //renderer: 'onColumnRender'
+                                            }
                                         },
                                         {
                                             type: 'line',
                                             stacked: true,
                                             xField: 'strFormatDate',
                                             yField: 'VCPN',
-//                                            colors: ['#1c50c9'],
+                                            colors: ['#1c50c9'],
                                             title: ['Total Value'],
                                             style: {
-                                                fill: '#1c50c9',
-                                                stroke: '#d4d396',
+                                                fill: '#fff',
+                                                stroke: '#1c50c9',
                                                 lineWidth: 2
                                             },
                                             marker: {
@@ -581,7 +560,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             },
                                             highlight: {
                                                 fill: '#1c50c9',
-                                                radius: 5,
+                                                radius: 8,
                                                 'stroke-width': 2,
                                                 stroke: '#fff'
                                             },
