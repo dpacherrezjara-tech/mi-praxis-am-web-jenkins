@@ -12,11 +12,20 @@ import net.miatech.praxis.SaleAudit.A4364;
  *
  * @author zperez
  */
-public class A4364Filter extends A4364{
-    
+public class A4364Filter extends A4364 {
+
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
     public String IN_OPTION = "";
+
+    public String IN_PREME = "";
+    public String IN_ANIO = "";
+    public String IN_CIA = "";
+    public String IN_FORMA = "";
+    public String IN_SERIE = "";
+    public String IN_SEQ = "";
+    public String IN_CORRL = "";
+
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
 }

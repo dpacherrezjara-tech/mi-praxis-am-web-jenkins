@@ -51,6 +51,7 @@ public class A4363Filter extends A4363 {
 
     public double IN_TARIF = 0d;
     public double IN_TARIFEQUI = 0d;
+    public double IN_PENALTY = 0d;
 
     public double IN_TTAX = 0d;
     public double IN_COMMI = 0d;

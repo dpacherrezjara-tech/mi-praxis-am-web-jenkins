@@ -10,6 +10,7 @@ import java.util.List;
 import net.miatech.beans.SaleAudit.A4360Filter;
 import net.miatech.beans.SaleAudit.A4361Filter;
 import net.miatech.beans.SaleAudit.A4363Filter;
+import net.miatech.beans.SaleAudit.A4367Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.salesAudit.RFNDAssociatedARCRFNDFormDAO;
 
@@ -32,18 +33,25 @@ public class RFNDAssociatedARCRFNDFormLogic {
     public List<A4363Filter> searchDetail(A4363Filter filter) throws SQLException, Exception {
         return objDAO.searchDetail(filter);
     }
-    
+
     public A4361Filter SearchRFNDetailTCKT(A4361Filter filter) throws SQLException, Exception {
         return objDAO.SearchRFNDetailTCKT(filter);
     }
+
     public String ProcesaDeleteManual(A4363Filter filter) throws SQLException, Exception {
         return objDAO.ProcesaDeleteManual(filter);
     }
+
     public List<A4360Filter> SearchRFNDRazon(A4360Filter filter) throws SQLException, Exception {
         return objDAO.SearchRFNDRazon(filter);
     }
-    public String ProcesaManualRFNDARCTCKT(A4363Filter filter,String lstaTaxes,String lstarazones,String fop) throws SQLException, Exception {
-        return objDAO.ProcesaManualRFNDARCTCKT(filter, lstaTaxes,lstarazones,fop);
+
+    public String ProcesaManualRFNDARCTCKT(A4363Filter filter, String lstaTaxes, String lstarazones, String fop) throws SQLException, Exception {
+        return objDAO.ProcesaManualRFNDARCTCKT(filter, lstaTaxes, lstarazones, fop);
+    }
+
+    public A4367Filter ProcesaUpdateUsosCPN(A4367Filter filter) throws SQLException, Exception {
+        return objDAO.ProcesaUpdateUsosCPN(filter);
     }
 
 }

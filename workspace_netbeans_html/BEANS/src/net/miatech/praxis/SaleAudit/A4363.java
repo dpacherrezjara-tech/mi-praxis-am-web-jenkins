@@ -127,9 +127,17 @@ public class A4363 {
     public double A4363COMID = 0d;
     public double A4363SCOMD = 0d;
     public double A4363TOTAD = 0d;
+    public double A4363PENAD= 0d;
     //int
     public int A4363RN;     
 
+    public double getA4363PENAD() {
+        return A4363PENAD;
+    }
+
+    public void setA4363PENAD(double A4363PENAD) {
+        this.A4363PENAD = A4363PENAD;
+    }
     public String getA4363TRNCO() {
         return A4363TRNCO;
     }

@@ -48,6 +48,7 @@ public class A4361Filter extends A4361 {
     public List<A4365> lst_Card = new ArrayList<A4365>(0);
     public List<A4366> LIS_COUPNS = new ArrayList<A4366>(0);
     public List<A4364> lst_TAXES = new ArrayList<A4364>(0);
+    public List<A4364> lst_TAXAUDI = new ArrayList<A4364>(0);
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
