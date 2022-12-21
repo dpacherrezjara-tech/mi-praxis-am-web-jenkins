@@ -2,6 +2,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
     extend: 'Ext.app.ViewController',
     alias: 'controller.ChartFlownController',
     searchParams: {},
+    searchParamsB: {},
     columns2: {},
     beanChart: {},
     beanChart_F: {},
@@ -54,26 +55,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
     },
     inicio: function () {
         this.setFormatParameter();
-//        var valueRadio = Ext.getCmp(prototype.id + '-Box_Chart_Flown').getValue().rb;
-//        switch (valueRadio) {
-//            case 'MO':
-//                this.loadFAMonthChart();
-//                break;
-//        }
     },
     inicio2: function () {
-        //Ext.getCmp(prototype.id + '-Box_Chart_Flown').items.items[0].setValue(true);
         this.setFormatParameter();
         this.loadFAMonthChart();
-//        var valueRadio = Ext.getCmp(prototype.id + '-Box_Chart_Flown').getValue().rb;
-//        switch (valueRadio) {
-//            case 'MO':
-//                var rbgType_Fo = Ext.getCmp(prototype.id + '-radiogroupType_Fo').getValue().rbgType_Fo;
-//                console.log(rbgType_Fo);
-//                this.rbChangeType_Fo();
-//                break;
-//        }
-        console.log('INICIO2');
     },
     setFormatParameter: function () {
 
@@ -81,7 +66,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
 
         meFChart.beanChartFM.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbFADateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbFADateFromMonth').getValue();
         meFChart.beanChartFM.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbFADateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbFADateToMonth').getValue();
-
+        meFChart.beanChartFM.IN_FECHA_FROMB = (Ext.getCmp(prototype.id + '-cmbFADateFromYear').getValue() - 1) + Ext.getCmp(prototype.id + '-cmbFADateFromMonth').getValue();
+        meFChart.beanChartFM.IN_FECHA_TOB = (Ext.getCmp(prototype.id + '-cmbFADateToYear').getValue() - 1) + Ext.getCmp(prototype.id + '-cmbFADateToMonth').getValue();
         meFChart.searchParams = JSON.stringify(meFChart.beanChartFM);
         console.log(meFChart.beanChartFM);
     },
@@ -113,7 +99,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                     if (res.success) {
                         if (obj.data.length > 0) {
                             var obj = obj.data.items[0].data;
-
+                            Ext.getCmp(prototype.id + '-displayFOChartP').setTitle('<center style="font-size:18px;"> Flown by Cabin - Amount USD - ' + obj.strYear + '</center>');
+                            Ext.getCmp(prototype.id + '-displayFOChartPB').setTitle('<center style="font-size:18px;"> Flown by Cabin - Amount USD - ' + obj.strYearB + '</center>');
                         } else {
                             global.Msg({msg: 'Data not found'});
                         }
@@ -126,6 +113,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         Ext.getCmp(prototype.id + '-gridData_boxChartFlown').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartC').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartA').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFOChartP').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFOChartPB').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
     },
     rbChangeType_Fo: function () {
@@ -143,20 +132,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         }
         this.loadFAMonthChart();
     },
-
-//    chooseChart_clickHandler: function (obj, rb_new, rb_old, func) {
-//        
-//        var valueRadio = rb_new.rb;
-//        this.hidePanelGraficos();
-//        this.setFormatParameter();
-//
-//        switch (valueRadio) {
-//            case 'MO':    //Total
-//                Ext.getCmp(prototype.id + '-boxSal_TotalF').show();
-//                this.rbChangeType_Fo();
-//                break;
-//        }
-//    },
     //To render
     getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
