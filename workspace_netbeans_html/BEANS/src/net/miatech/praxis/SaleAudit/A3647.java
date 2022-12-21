@@ -118,6 +118,33 @@ public class A3647 {
     public int STORET;
     public int TOTALSTO;
     public int CANTPRO;
+    public int RFNDSABRE;
+    public int RFNDSABRET;
+    public int TOTALSABRET;
+
+    public int getTOTALSABRET() {
+        return TOTALSABRET;
+    }
+
+    public void setTOTALSABRET(int TOTALSABRET) {
+        this.TOTALSABRET = TOTALSABRET;
+    }
+    
+    public int getRFNDSABRE() {
+        return RFNDSABRE;
+    }
+
+    public void setRFNDSABRE(int RFNDSABRE) {
+        this.RFNDSABRE = RFNDSABRE;
+    }
+
+    public int getRFNDSABRET() {
+        return RFNDSABRET;
+    }
+
+    public void setRFNDSABRET(int RFNDSABRET) {
+        this.RFNDSABRET = RFNDSABRET;
+    }
 
     public int getCANTPRO() {
         return CANTPRO;
@@ -126,7 +153,7 @@ public class A3647 {
     public void setCANTPRO(int CANTPRO) {
         this.CANTPRO = CANTPRO;
     }
-    
+
     public int getA3647RN() {
         return A3647RN;
     }
@@ -223,7 +250,6 @@ public class A3647 {
         this.TOTALSTO = TOTALSTO;
     }
 
-    
     public String getA3647SFW() {
         return A3647SFW;
     }
