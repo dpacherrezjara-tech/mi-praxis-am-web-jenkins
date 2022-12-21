@@ -1154,7 +1154,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     if (CmbTRFND !== 'T') {
                         vl_total = (vl_cant - vl_cantcpn);
                         if (vl_total === 0) {
-                            Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                            Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of total refund');
                             bvalida = false;
                             return;
                         }                        
