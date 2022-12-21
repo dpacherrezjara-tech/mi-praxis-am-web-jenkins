@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 880,
-    width: 1160,
+    width: 1180,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -377,8 +377,44 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                     items: [
                         {
                             xtype: 'grid',
+                            id: prototype.idARCDetailTicket + '-gridListTaxesXML',
+                            title: 'TAXES XML', //hidden: true,
+                            columnLines: true,
+                            autoScroll: true,
+                            features: [
+                                {
+                                    dock: 'bottom',
+                                    ftype: 'summary'
+                                }
+                            ],
+                            columns: {
+                                items: [
+                                    {text: 'Tax</br>Code', dataIndex: 'A4364CDTAX', width: 60},
+                                    {text: 'Airport<br>PFC', width: 60, dataIndex: 'A4364APFC'},
+                                    {text: 'Amount',
+                                        columns: [
+                                            {text: 'XML', dataIndex: 'A4364TXAGE', width: 100, align: 'right',
+                                                renderer: 'onColumnAirlineRenderer', summaryType: 'sum',
+                                                summaryRenderer: 'OnAirlineSummary'
+                                            }
+                                        ]
+
+
+                                    }
+                                ],
+                                defaults: {
+                                    sortable: true,
+                                    menuDisabled: true,
+                                    align: 'center'
+                                }
+                            },
+                            height: 200,
+                            width: 245
+                        },
+                        {
+                            xtype: 'grid',
                             id: prototype.idARCDetailTicket + '-gridListTaxes',
-                            title: 'TAXES', hidden: true,
+                            title: 'TAXES AUDITOR', hidden: true,
                             //collapsible: true,
                             //collapseDirection: "right",
                             //collapsed: true,
@@ -400,10 +436,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                                             {text: 'AUDITOR', dataIndex: 'A4364TXMIA', width: 100, align: 'right',
                                                 renderer: 'onColumnAirlineRenderer', summaryType: 'sum',
                                                 summaryRenderer: 'OnAirlineSummary'
-                                            },
-                                            {text: 'XML', dataIndex: 'A4364TXAGE', width: 100, align: 'right',
-                                                renderer: 'onColumnAirlineRenderer', summaryType: 'sum',
-                                                summaryRenderer: 'OnAirlineSummary'
                                             }
                                         ]
 
@@ -417,7 +449,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                                 }
                             },
                             height: 200,
-                            width: 450
+                            width: 350
                         },
                         {
                             xtype: 'grid',
@@ -425,7 +457,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                             //collapsible: true,
                             //collapseDirection: Ext.Component.DIRECTION_LEFT,
                             //columnLines: true,
-                            title: 'TAXES',
+                            title: 'TAXES AUDITOR',
                             autoScroll: true,
                             selModel: 'cellmodel',
                             dockedItems: [{
@@ -449,8 +481,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Cur', dataIndex: 'A4364MONED', flex: 1},
-                                    {text: 'Tax', dataIndex: 'A4364CDTAX', align: 'center', flex: 1, editor: {
+                                    //{text: 'Cur', dataIndex: 'A4364MONED', flex: 1},
+                                    {text: 'Tax', dataIndex: 'A4364CDTAX', align: 'center', width: 60, editor: {
                                             completeOnEnter: false,
                                             field: {
                                                 xtype: 'textfield',
@@ -488,10 +520,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                                                     return total.toFixed(2);
                                                     //console.log(records);
                                                 }
-                                            },
-                                            {text: 'XML', dataIndex: 'A4364TXAGE', width: 100, align: 'right',
-                                                renderer: 'onColumnAirlineRenderer', summaryType: 'sum',
-                                                summaryRenderer: 'OnAirlineSummary'
                                             }
                                         ]
 
@@ -517,7 +545,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                                 }
                             },
                             height: 200,
-                            width: 400
+                            width: 270
                         }, {
                             xtype: 'grid',
                             id: prototype.idARCDetailTicket + '-gridPAYMENT',

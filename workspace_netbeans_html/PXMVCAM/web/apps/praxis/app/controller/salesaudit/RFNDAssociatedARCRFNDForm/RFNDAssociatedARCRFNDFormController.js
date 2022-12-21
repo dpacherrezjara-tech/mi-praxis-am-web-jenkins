@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
         prototype.idRFNDAssociatedARCR = 'RFNDAssociatedARCRFNDForm';
         prototype.idARCDetailTicket = 'ARCRFNDAssociatedTicketForm';
         prototype.idRFNDARCFormRazones = 'FNDARCFormRazones',
-        prototype.url = CONTEXTPATH + '/RFNDAssociatedARCRFNDForm';
+                prototype.url = CONTEXTPATH + '/RFNDAssociatedARCRFNDForm';
         prototype.widthWindow = 1366;
         prototype.heightWindow = 768;
 
@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
                 if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'SAP26') {
                     Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').setReadOnly(false);
                 }
-                //me.onSearchClickInitial();
+                me.onSearchClickInitial();
 
             }
         });
@@ -224,6 +224,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
                 setTimeout("Ext.getCmp(prototype.idRFNDAssociatedARCR + '-de-txtIata').focus();", 100);
                 break;
         }
+    },
+    onSearchClickInitial: function (btn) {
+        var me = this;
+        me.bean.IN_OPTION = '';
+        me.bean.IN_DATEFROM = '';
+        me.bean.IN_DATETO = '';
+        me.bean.IN_TICKET = '';
+        me.bean.IN_IATA = '';
+        me.bean.IN_FLAG = '';
+        me.bean.IN_STATUSBPO = '';
+        me.bean.IN_USER = Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').getValue();
+        me.bean.IN_FOLIO = '';
+        if (me.bean.IN_USER === 'ALL') {
+            me.bean.IN_USER = '';
+        }
+        me.bean.pexcel = 0;
+        me.SearchReport(me.bean, false);
     },
     onSearchClick: function (obj, e) {
         var me = this;
@@ -438,9 +455,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
     onRendererColumnOnCab: function (value, metaData, record, rowIndex, colIndex, store, view) {
         if (record.get('A4361DIAS') <= 3) {
             value = 'green';
-        } else if (record.get('A4361DIAS') > 3 || record.get('A4361DIAS') <= 5){
-             value = 'orange';
-        }else {
+        } else if (record.get('A4361DIAS') > 3 || record.get('A4361DIAS') <= 5) {
+            value = 'orange';
+        } else {
             value = 'red';
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';

@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                 Ext.getCmp(prototype.idARCDetailTicket + '-checkApplyBPO').setReadOnly(true);
                 Ext.getCmp(prototype.idARCDetailTicket + '-checkApplyrobot').setReadOnly(true);
                 Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').setReadOnly(true);
-                 Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setReadOnly(true);
+                Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setReadOnly(true);
                 //Ext.getCmp( prototype.idARCDetailTicket + '-win').setHeight(Ext.getCmp( prototype.idARCDetailTicket + '-win').getHeight() - 200);
                 break;
             case 'FORMPENDIRFND':
@@ -109,7 +109,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes').hide();
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxes').show();
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxes').getStore().removeAll();
-                    Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxes').getStore().loadData(res.lsta_TAXES);
+                    Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxes').getStore().loadData(res.lsta_TAXAUDI);
+                    Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxesXML').getStore().removeAll();
+                    Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxesXML').getStore().loadData(res.lsta_TAXES);
                 } else {
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridPAYMENTQUERY').hide();
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridPAYMENT').show();
@@ -118,7 +120,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxes').hide();
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes').show();
                     Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes').getStore().removeAll();
-                    Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes').getStore().loadData(res.lsta_TAXES);
+                    Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes').getStore().loadData(res.lsta_TAXAUDI);
+                    Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxesXML').getStore().removeAll();
+                    Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxesXML').getStore().loadData(res.lsta_TAXES);
 
                 }
                 me.lsta_Documents = res.lsta_DOCUMENTS.length;
@@ -378,7 +382,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommission').setValue(Ext.util.Format.number(rec.get('A4363SCOMI'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommissionXml').setValue(Ext.util.Format.number(rec.get('A4363XCOMI'), '0,000.00'));
         //penalidad
-         Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setValue(Ext.util.Format.number(rec.get('A4363PENAD'), '0,000.00'));
+        Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setValue(Ext.util.Format.number(rec.get('A4363PENAD'), '0,000.00'));
         // total
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotal').setValue(Ext.util.Format.number(rec.get('A4363STOTL'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalXml').setValue(Ext.util.Format.number(rec.get('A4363XTOTL'), '0,000.00'));
@@ -447,6 +451,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         var grid05 = Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes');
         var grid06 = Ext.getCmp(prototype.idARCDetailTicket + '-gridPAYMENTQUERY');
         var grid07 = Ext.getCmp(prototype.idARCDetailTicket + '-gridDataStatus');
+        var grid08 = Ext.getCmp(prototype.idARCDetailTicket + '-gridListTaxesXML');
 
         var store01 = Ext.create('Ext.data.Store', {
             storeId: prototype.idARCDetailTicket + '-store-grid01'
@@ -469,6 +474,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         var store07 = Ext.create('Ext.data.Store', {
             storeId: prototype.idARCDetailTicket + '-store-grid07'
         });
+        var store08 = Ext.create('Ext.data.Store', {
+            storeId: prototype.idARCDetailTicket + '-store-grid08'
+        });
 
         grid01.setStore(store01);
         grid02.setStore(store02);
@@ -477,6 +485,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         grid05.setStore(store05);
         grid06.setStore(store06);
         grid07.setStore(store07);
+        grid08.setStore(store08);
 
     },
     onAddFopClick: function (rec) {
@@ -1664,7 +1673,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         }
 
         var TotalTaxAm = Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').getValue().replace(new RegExp(',', 'g'), '');
-        var total = ((parseFloat(tarifaAm) + parseFloat(TotalTaxAm))-parseFloat(penal));
+        var total = ((parseFloat(tarifaAm) + parseFloat(TotalTaxAm)) - parseFloat(penal));
 
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalram').setValue(Ext.util.Format.number((total), '0,000.00'));
         //Ext.getCmp( prototype.idARCDetailTicket + '-txtTotalFareAm').setValue(tarifaAm);
