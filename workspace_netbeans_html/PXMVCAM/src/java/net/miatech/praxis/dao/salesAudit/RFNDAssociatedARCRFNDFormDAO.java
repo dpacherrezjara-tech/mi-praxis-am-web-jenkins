@@ -329,6 +329,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
         List<A4362> lst_RAZON = new ArrayList<A4362>(0);
 
         List<A4364> TEM_TAXES = new ArrayList<A4364>(0);
+        List<A4364> TEM_TAXAUDI = new ArrayList<A4364>(0);
         List<A4365> TEM_CARD = new ArrayList<A4365>(0);
         List<A4366> TEM_COUPNS = new ArrayList<A4366>(0);
         List<A4367> lst_USOS = new ArrayList<A4367>(0);
@@ -339,6 +340,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
         A4367 objlst_USOS = null;
 
         A4364 objlst_TAXES = null;
+        A4364 objlst_TAXUDI = null;
         A4365 objlst_CARD = null;
         A4366 objlst_COUPNS = null;
 
@@ -350,6 +352,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
         ResultSet rs05 = null;
         ResultSet rs06 = null;
         ResultSet rs07 = null;
+        ResultSet rs08 = null;
 
         String SQLCLL01 = "{CALL PXRFNDESP.SQP04735(?,?,?,?,?,?,?,?)}";
 
@@ -369,7 +372,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
 
             cstmt01.execute();
             rs01 = cstmt01.getResultSet();
-            ////LIST TAXES 
+            ////LIST TAXES XML
             while (rs01.next()) {
                 objlst_TAXES = new A4364();
                 objlst_TAXES.A4364CCUST = rs01.getString("A4364CCUST");
@@ -395,134 +398,162 @@ public class RFNDAssociatedARCRFNDFormDAO {
 
                 TEM_TAXES.add(objlst_TAXES);
             }
-            ////LIST Card Type
+            // LISTA DE TAXES AUDITOR
             if (cstmt01.getMoreResults()) {
                 rs02 = cstmt01.getResultSet();
                 while (rs02.next()) {
+                    objlst_TAXUDI = new A4364();
+                    objlst_TAXUDI.A4364CCUST = rs02.getString("A4364CCUST");
+                    objlst_TAXUDI.A4364CIA = rs02.getString("A4364CIA");
+                    objlst_TAXUDI.A4364FORMA = rs02.getString("A4364FORMA");
+                    objlst_TAXUDI.A4364SERIE = rs02.getString("A4364SERIE");
+                    objlst_TAXUDI.A4364SEQ = rs02.getString("A4364SEQ");
+                    objlst_TAXUDI.A4364CORRL = rs02.getString("A4364CORRL");
+                    objlst_TAXUDI.A4364CDTAX = rs02.getString("A4364CDTAX");
+                    objlst_TAXUDI.A4364MONED = rs02.getString("A4364MONED");
+                    objlst_TAXUDI.A4364PAIS = rs02.getString("A4364PAIS");
+                    objlst_TAXUDI.A4364TPTAX = rs02.getString("A4364TPTAX");
+                    objlst_TAXUDI.A4364CTRL = rs02.getString("A4364CTRL");
+                    objlst_TAXUDI.A4364APFC = rs02.getString("A4364APFC");
+                    objlst_TAXUDI.A4364STAT = rs02.getString("A4364STAT");
+                    objlst_TAXUDI.A4364ERROR = rs02.getString("A4364ERROR");
+                    objlst_TAXUDI.A4364PREME = rs02.getString("A4364PREME");
+                    objlst_TAXUDI.A4364ANIO = rs02.getString("A4364ANIO");
+                    objlst_TAXUDI.A4364TYPE = rs02.getString("A4364TYPE");
+                    objlst_TAXUDI.A4364TXAGE = rs02.getDouble("A4364TXAGE");
+                    objlst_TAXUDI.A4364TXMIA = rs02.getDouble("A4364TXMIA");
+                    objlst_TAXUDI.A4364TXDIF = rs02.getDouble("A4364TXDIF");
+                    TEM_TAXAUDI.add(objlst_TAXUDI);
+                }
+            }
+            ////LIST Card Type
+            if (cstmt01.getMoreResults()) {
+                rs03 = cstmt01.getResultSet();
+                while (rs03.next()) {
                     objlst_CARD = new A4365();
-                    objlst_CARD.A4365CCUST = rs02.getString("A4365CCUST");
-                    objlst_CARD.A4365CIA = rs02.getString("A4365CIA");
-                    objlst_CARD.A4365FORMA = rs02.getString("A4365FORMA");
-                    objlst_CARD.A4365SERIE = rs02.getString("A4365SERIE");
-                    objlst_CARD.A4365SEQ = rs02.getString("A4365SEQ");
-                    objlst_CARD.A4365CFOP = rs02.getString("A4365CFOP");
-                    objlst_CARD.A4365TYCAR = rs02.getString("A4365TYCAR");
-                    objlst_CARD.A4365CUR = rs02.getString("A4365CUR");
-                    objlst_CARD.A4365NTARJ = rs02.getString("A4365NTARJ");
-                    objlst_CARD.A4365FEXP = rs02.getString("A4365FEXP");
-                    objlst_CARD.A4365CAPL = rs02.getString("A4365CAPL");
-                    objlst_CARD.A4365PREME = rs02.getString("A4365PREME");
-                    objlst_CARD.A4365ANIO = rs02.getString("A4365ANIO");
-                    objlst_CARD.A4365CORRL = rs02.getString("A4365CORRL");
-                    objlst_CARD.A4365TYPE = rs02.getString("A4365TYPE");
-                    objlst_CARD.A4365MONTO = rs02.getDouble("A4365MONTO");
-                    objlst_CARD.A4365MONTE = rs02.getDouble("A4365MONTE");
-                    objlst_CARD.A4365TOTAL = rs02.getDouble("A4365TOTAL");
+                    objlst_CARD.A4365CCUST = rs03.getString("A4365CCUST");
+                    objlst_CARD.A4365CIA = rs03.getString("A4365CIA");
+                    objlst_CARD.A4365FORMA = rs03.getString("A4365FORMA");
+                    objlst_CARD.A4365SERIE = rs03.getString("A4365SERIE");
+                    objlst_CARD.A4365SEQ = rs03.getString("A4365SEQ");
+                    objlst_CARD.A4365CFOP = rs03.getString("A4365CFOP");
+                    objlst_CARD.A4365TYCAR = rs03.getString("A4365TYCAR");
+                    objlst_CARD.A4365CUR = rs03.getString("A4365CUR");
+                    objlst_CARD.A4365NTARJ = rs03.getString("A4365NTARJ");
+                    objlst_CARD.A4365FEXP = rs03.getString("A4365FEXP");
+                    objlst_CARD.A4365CAPL = rs03.getString("A4365CAPL");
+                    objlst_CARD.A4365PREME = rs03.getString("A4365PREME");
+                    objlst_CARD.A4365ANIO = rs03.getString("A4365ANIO");
+                    objlst_CARD.A4365CORRL = rs03.getString("A4365CORRL");
+                    objlst_CARD.A4365TYPE = rs03.getString("A4365TYPE");
+                    objlst_CARD.A4365MONTO = rs03.getDouble("A4365MONTO");
+                    objlst_CARD.A4365MONTE = rs03.getDouble("A4365MONTE");
+                    objlst_CARD.A4365TOTAL = rs03.getDouble("A4365TOTAL");
                     TEM_CARD.add(objlst_CARD);
                 }
             }
             ////LISTA DE CUPONES IN_XMLLISCOUPNS 
             if (cstmt01.getMoreResults()) {
-                rs03 = cstmt01.getResultSet();
-                while (rs03.next()) {
+                rs04 = cstmt01.getResultSet();
+                while (rs04.next()) {
                     objlst_COUPNS = new A4366();
-                    objlst_COUPNS.A4366CCUST = rs03.getString("A4366CCUST");
-                    objlst_COUPNS.A4366CIA = rs03.getString("A4366CIA");
-                    objlst_COUPNS.A4366FORMA = rs03.getString("A4366FORMA");
-                    objlst_COUPNS.A4366SERIE = rs03.getString("A4366SERIE");
-                    objlst_COUPNS.A4366SEQ = rs03.getString("A4366SEQ");
-                    objlst_COUPNS.A4366CPN = rs03.getString("A4366CPN");
-                    objlst_COUPNS.A4366MARKE = rs03.getString("A4366MARKE");
-                    objlst_COUPNS.A4366NFLGH = rs03.getString("A4366NFLGH");
-                    objlst_COUPNS.A4366CLAS = rs03.getString("A4366CLAS");
-                    objlst_COUPNS.A4366FBASI = rs03.getString("A4366FBASI");
-                    objlst_COUPNS.A4366ORIGE = rs03.getString("A4366ORIGE");
-                    objlst_COUPNS.A4366FORIG = rs03.getString("A4366FORIG");
-                    objlst_COUPNS.A4366HORIG = rs03.getString("A4366HORIG");
-                    objlst_COUPNS.A4366DESTI = rs03.getString("A4366DESTI");
-                    objlst_COUPNS.A4366FDEST = rs03.getString("A4366FDEST");
-                    objlst_COUPNS.A4366HDEST = rs03.getString("A4366HDEST");
-                    objlst_COUPNS.A4366BOOKI = rs03.getString("A4366BOOKI");
-                    objlst_COUPNS.A4366CURS1 = rs03.getString("A4366CURS1");
-                    objlst_COUPNS.A4366CURS2 = rs03.getString("A4366CURS2");
-                    objlst_COUPNS.A4366CURS3 = rs03.getString("A4366CURS3");
-                    objlst_COUPNS.A4366CURS4 = rs03.getString("A4366CURS4");
-                    objlst_COUPNS.A4366PROVI = rs03.getString("A4366PROVI");
-                    objlst_COUPNS.A4366BAGAL = rs03.getString("A4366BAGAL");
-                    objlst_COUPNS.A4366STOP = rs03.getString("A4366STOP");
-                    objlst_COUPNS.A4366USE1 = rs03.getString("A4366USE1");
-                    objlst_COUPNS.A4366USE2 = rs03.getString("A4366USE2");
-                    objlst_COUPNS.A4366USE3 = rs03.getString("A4366USE3");
-                    objlst_COUPNS.A4366MONTO = rs03.getDouble("A4366MONTO");
-                    objlst_COUPNS.A4366FAREC = rs03.getString("A4366FAREC");
-                    objlst_COUPNS.A4366DESIG = rs03.getString("A4366DESIG");
-                    objlst_COUPNS.A4366PREME = rs03.getString("A4366PREME");
-                    objlst_COUPNS.A4366ANIO = rs03.getString("A4366ANIO");
-                    objlst_COUPNS.A4366CORRL = rs03.getString("A4366CORRL");
-                    objlst_COUPNS.A4366TYPE = rs03.getString("A4366TYPE");
-                    objlst_COUPNS.A4366FLAG = rs03.getString("A4366FLAG");
+                    objlst_COUPNS.A4366CCUST = rs04.getString("A4366CCUST");
+                    objlst_COUPNS.A4366CIA = rs04.getString("A4366CIA");
+                    objlst_COUPNS.A4366FORMA = rs04.getString("A4366FORMA");
+                    objlst_COUPNS.A4366SERIE = rs04.getString("A4366SERIE");
+                    objlst_COUPNS.A4366SEQ = rs04.getString("A4366SEQ");
+                    objlst_COUPNS.A4366CPN = rs04.getString("A4366CPN");
+                    objlst_COUPNS.A4366MARKE = rs04.getString("A4366MARKE");
+                    objlst_COUPNS.A4366NFLGH = rs04.getString("A4366NFLGH");
+                    objlst_COUPNS.A4366CLAS = rs04.getString("A4366CLAS");
+                    objlst_COUPNS.A4366FBASI = rs04.getString("A4366FBASI");
+                    objlst_COUPNS.A4366ORIGE = rs04.getString("A4366ORIGE");
+                    objlst_COUPNS.A4366FORIG = rs04.getString("A4366FORIG");
+                    objlst_COUPNS.A4366HORIG = rs04.getString("A4366HORIG");
+                    objlst_COUPNS.A4366DESTI = rs04.getString("A4366DESTI");
+                    objlst_COUPNS.A4366FDEST = rs04.getString("A4366FDEST");
+                    objlst_COUPNS.A4366HDEST = rs04.getString("A4366HDEST");
+                    objlst_COUPNS.A4366BOOKI = rs04.getString("A4366BOOKI");
+                    objlst_COUPNS.A4366CURS1 = rs04.getString("A4366CURS1");
+                    objlst_COUPNS.A4366CURS2 = rs04.getString("A4366CURS2");
+                    objlst_COUPNS.A4366CURS3 = rs04.getString("A4366CURS3");
+                    objlst_COUPNS.A4366CURS4 = rs04.getString("A4366CURS4");
+                    objlst_COUPNS.A4366PROVI = rs04.getString("A4366PROVI");
+                    objlst_COUPNS.A4366BAGAL = rs04.getString("A4366BAGAL");
+                    objlst_COUPNS.A4366STOP = rs04.getString("A4366STOP");
+                    objlst_COUPNS.A4366USE1 = rs04.getString("A4366USE1");
+                    objlst_COUPNS.A4366USE2 = rs04.getString("A4366USE2");
+                    objlst_COUPNS.A4366USE3 = rs04.getString("A4366USE3");
+                    objlst_COUPNS.A4366MONTO = rs04.getDouble("A4366MONTO");
+                    objlst_COUPNS.A4366FAREC = rs04.getString("A4366FAREC");
+                    objlst_COUPNS.A4366DESIG = rs04.getString("A4366DESIG");
+                    objlst_COUPNS.A4366PREME = rs04.getString("A4366PREME");
+                    objlst_COUPNS.A4366ANIO = rs04.getString("A4366ANIO");
+                    objlst_COUPNS.A4366CORRL = rs04.getString("A4366CORRL");
+                    objlst_COUPNS.A4366TYPE = rs04.getString("A4366TYPE");
+                    objlst_COUPNS.A4366FLAG = rs04.getString("A4366FLAG");
                     TEM_COUPNS.add(objlst_COUPNS);
                 }
             }
             ////LISTA DE RAZONES TICKTES
             if (cstmt01.getMoreResults()) {
-                rs05 = cstmt01.getResultSet();
-                while (rs05.next()) {
+                rs06 = cstmt01.getResultSet();
+                while (rs06.next()) {
                     objlst_RAZON = new A4362();
-                    objlst_RAZON.A4362CCUST = rs05.getString("A4368CCUST");
-                    objlst_RAZON.A4362PREME = rs05.getString("A4368PREME");
-                    objlst_RAZON.A4362ANIO = rs05.getString("A4368ANIO");
-                    objlst_RAZON.A3659CIA = rs05.getString("A4368CIA");
-                    objlst_RAZON.A3659FORMA = rs05.getString("A4368FORMA");
-                    objlst_RAZON.A3659SERIE = rs05.getString("A4368SERIE");
-                    objlst_RAZON.A3659SEQ = rs05.getString("A4368SEQ");
-                    objlst_RAZON.A4362CORRL = rs05.getString("A4368CORRL");
-                    objlst_RAZON.A4362TYPE = rs05.getString("A4368TYPE");
-                    objlst_RAZON.A4362BASE = rs05.getString("A4368BASE");
-                    objlst_RAZON.A4362CODE = rs05.getString("A4368CODE");
-                    objlst_RAZON.A4362FAMIL = rs05.getString("A4368FAMIL");
-                    objlst_RAZON.A4362ERROR = rs05.getString("A4368ERROR");
-                    objlst_RAZON.A4362REGIS = rs05.getString("A4368REGIS");
-                    objlst_RAZON.A4362FREGI = rs05.getString("A4368FREGI");
-                    objlst_RAZON.A4362HREGI = rs05.getString("A4368HREGI");
+                    objlst_RAZON.A4362CCUST = rs06.getString("A4368CCUST");
+                    objlst_RAZON.A4362PREME = rs06.getString("A4368PREME");
+                    objlst_RAZON.A4362ANIO = rs06.getString("A4368ANIO");
+                    objlst_RAZON.A3659CIA = rs06.getString("A4368CIA");
+                    objlst_RAZON.A3659FORMA = rs06.getString("A4368FORMA");
+                    objlst_RAZON.A3659SERIE = rs06.getString("A4368SERIE");
+                    objlst_RAZON.A3659SEQ = rs06.getString("A4368SEQ");
+                    objlst_RAZON.A4362CORRL = rs06.getString("A4368CORRL");
+                    objlst_RAZON.A4362TYPE = rs06.getString("A4368TYPE");
+                    objlst_RAZON.A4362BASE = rs06.getString("A4368BASE");
+                    objlst_RAZON.A4362CODE = rs06.getString("A4368CODE");
+                    objlst_RAZON.A4362FAMIL = rs06.getString("A4368FAMIL");
+                    objlst_RAZON.A4362ERROR = rs06.getString("A4368ERROR");
+                    objlst_RAZON.A4362REGIS = rs06.getString("A4368REGIS");
+                    objlst_RAZON.A4362FREGI = rs06.getString("A4368FREGI");
+                    objlst_RAZON.A4362HREGI = rs06.getString("A4368HREGI");
                     lst_RAZON.add(objlst_RAZON);
                 }
             }
             ////LISTA USOS SABRE
             if (cstmt01.getMoreResults()) {
-                rs06 = cstmt01.getResultSet();
-                while (rs06.next()) {
+                rs07 = cstmt01.getResultSet();
+                while (rs07.next()) {
                     objlst_USOS = new A4367();
-                    objlst_USOS.A4367CCUST = rs06.getString("A4367CCUST");
-                    objlst_USOS.A4367PREME = rs06.getString("A4367PREME");
-                    objlst_USOS.A4367ANIO = rs06.getString("A4367ANIO");
-                    objlst_USOS.A4367CIA = rs06.getString("A4367CIA");
-                    objlst_USOS.A4367FORMA = rs06.getString("A4367FORMA");
-                    objlst_USOS.A4367SERIE = rs06.getString("A4367SERIE");
-                    objlst_USOS.A4367SEQ = rs06.getString("A4367SEQ");
-                    objlst_USOS.A4367CORRL = rs06.getString("A4367CORRL");
-                    objlst_USOS.A4367TICKT = rs06.getString("A4367TICKT");
-                    objlst_USOS.A4367CPN = rs06.getString("A4367CPN");
-                    objlst_USOS.A4367FCAMB = rs06.getString("A4367FCAMB");
+                    objlst_USOS.A4367CCUST = rs07.getString("A4367CCUST");
+                    objlst_USOS.A4367PREME = rs07.getString("A4367PREME");
+                    objlst_USOS.A4367ANIO = rs07.getString("A4367ANIO");
+                    objlst_USOS.A4367CIA = rs07.getString("A4367CIA");
+                    objlst_USOS.A4367FORMA = rs07.getString("A4367FORMA");
+                    objlst_USOS.A4367SERIE = rs07.getString("A4367SERIE");
+                    objlst_USOS.A4367SEQ = rs07.getString("A4367SEQ");
+                    objlst_USOS.A4367CORRL = rs07.getString("A4367CORRL");
+                    objlst_USOS.A4367TICKT = rs07.getString("A4367TICKT");
+                    objlst_USOS.A4367CPN = rs07.getString("A4367CPN");
+                    objlst_USOS.A4367FCAMB = rs07.getString("A4367FCAMB");
 
-                    objlst_USOS.A4367HCAMB = rs06.getString("A4367HCAMB");
-                    objlst_USOS.A4367CODE = rs06.getString("A4367CODE");
-                    objlst_USOS.A4367STINI = rs06.getString("A4367STINI");
-                    objlst_USOS.A4367STFIN = rs06.getString("A4367STFIN");
-                    objlst_USOS.A4367FLAG = rs06.getString("A4367FLAG");
-                    objlst_USOS.A4367REGIS = rs06.getString("A4367REGIS");
-                    objlst_USOS.A4367FREGI = rs06.getString("A4367FREGI");
-                    objlst_USOS.A4367HREGI = rs06.getString("A4367HREGI");
+                    objlst_USOS.A4367HCAMB = rs07.getString("A4367HCAMB");
+                    objlst_USOS.A4367CODE = rs07.getString("A4367CODE");
+                    objlst_USOS.A4367STINI = rs07.getString("A4367STINI");
+                    objlst_USOS.A4367STFIN = rs07.getString("A4367STFIN");
+                    objlst_USOS.A4367FLAG = rs07.getString("A4367FLAG");
+                    objlst_USOS.A4367REGIS = rs07.getString("A4367REGIS");
+                    objlst_USOS.A4367FREGI = rs07.getString("A4367FREGI");
+                    objlst_USOS.A4367HREGI = rs07.getString("A4367HREGI");
 
                     lst_USOS.add(objlst_USOS);
                 }
             }
             ////LISTA DE BOLETOS REPETIDOS 
             if (cstmt01.getMoreResults()) {
-                rs07 = cstmt01.getResultSet();
-                while (rs07.next()) {
+                rs08 = cstmt01.getResultSet();
+                while (rs08.next()) {
                     objlst_DOCUMENTS = new A4363();
-                    objlst_DOCUMENTS.A4363CCUST = rs07.getString("A4363CCUST");
+                    objlst_DOCUMENTS.A4363CCUST = rs08.getString("A4363CCUST");
 
                     lst_DOCUMENTS.add(objlst_DOCUMENTS);
                 }
@@ -531,6 +562,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
             // FIN DE LA AGENCIA
             objRtnGeneral = new A4361Filter();
             objRtnGeneral.lst_TAXES = TEM_TAXES;
+            objRtnGeneral.lst_TAXAUDI = TEM_TAXAUDI;
             objRtnGeneral.lst_Card = TEM_CARD;
             objRtnGeneral.LIS_COUPNS = TEM_COUPNS;
             objRtnGeneral.lst_RAZON = lst_RAZON;

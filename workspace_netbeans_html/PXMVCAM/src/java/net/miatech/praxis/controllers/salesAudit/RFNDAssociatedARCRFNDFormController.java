@@ -585,6 +585,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
         ArrayList<HashMap<String, String>> lsta_COUPNS = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_USOS = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_DOCUMENTS = new ArrayList<>();
+         ArrayList<HashMap<String, String>> lsta_TAXAUDI = new ArrayList<>();
 
         try {
             logic = new RFNDAssociatedARCRFNDFormLogic();
@@ -626,6 +627,33 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                 lsta_TAXES.add(map01);
             }
             // </editor-fold>
+            // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_TAXES AUDITOR">
+            for (int vi = 0; vi < lst.lst_TAXAUDI.size(); ++vi) {
+                map04 = new HashMap<>();
+
+                map04.put("A4364CCUST", lst.lst_TAXAUDI.get(vi).A4364CCUST);
+                map04.put("A4364CIA", lst.lst_TAXAUDI.get(vi).A4364CIA);
+                map04.put("A4364FORMA", lst.lst_TAXAUDI.get(vi).A4364FORMA);
+                map04.put("A4364SERIE", lst.lst_TAXAUDI.get(vi).A4364SERIE);
+                map04.put("A4364SEQ", lst.lst_TAXAUDI.get(vi).A4364SEQ);
+                map04.put("A4364CORRL", lst.lst_TAXAUDI.get(vi).A4364CORRL);
+                map04.put("A4364CDTAX", lst.lst_TAXAUDI.get(vi).A4364CDTAX);
+                map04.put("A4364MONED", lst.lst_TAXAUDI.get(vi).A4364MONED);
+                map04.put("A4364PAIS", lst.lst_TAXAUDI.get(vi).A4364PAIS);
+                map04.put("A4364TPTAX", lst.lst_TAXAUDI.get(vi).A4364TPTAX);
+                map04.put("A4364CTRL", lst.lst_TAXAUDI.get(vi).A4364CTRL);
+                map04.put("A4364APFC", lst.lst_TAXAUDI.get(vi).A4364APFC);
+                map04.put("A4364STAT", lst.lst_TAXAUDI.get(vi).A4364STAT);
+                map04.put("A4364ERROR", lst.lst_TAXAUDI.get(vi).A4364ERROR);
+                map04.put("A4364PREME", lst.lst_TAXAUDI.get(vi).A4364PREME);
+                map04.put("A4364ANIO", lst.lst_TAXAUDI.get(vi).A4364ANIO);
+                map04.put("A4364TYPE", lst.lst_TAXAUDI.get(vi).A4364TYPE);
+                map04.put("A4364TXAGE", lst.lst_TAXAUDI.get(vi).A4364TXAGE);
+                map04.put("A4364TXMIA", lst.lst_TAXAUDI.get(vi).A4364TXMIA);
+                map04.put("A4364TXDIF", lst.lst_TAXAUDI.get(vi).A4364TXDIF);
+                lsta_TAXAUDI.add(map04);
+            }
+            // </editor-fold>            
             // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_Card">
             for (int vi = 0; vi < lst.lst_Card.size(); ++vi) {
                 map02 = new HashMap<>();
@@ -766,6 +794,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
         map.put("lsta_Card", lsta_Card);
         map.put("lsta_COUPNS", lsta_COUPNS);
         map.put("lsta_DOCUMENTS", lsta_DOCUMENTS);
+        map.put("lsta_TAXAUDI", lsta_TAXAUDI);
 
         return new Gson().toJson(map);
     }
