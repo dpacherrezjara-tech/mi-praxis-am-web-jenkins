@@ -57,7 +57,7 @@ public class SalesCompensationDAO {
 
         double totTGROSAMOUN = 0;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04425(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04425(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -172,7 +172,7 @@ public class SalesCompensationDAO {
         double totTGROSAMOUN = 0;
         double totQTY_TRANSACTIONS = 0;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04620(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04620(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -246,7 +246,7 @@ public class SalesCompensationDAO {
 
         double totTGROSAMOUN = 0;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04633(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04633(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
