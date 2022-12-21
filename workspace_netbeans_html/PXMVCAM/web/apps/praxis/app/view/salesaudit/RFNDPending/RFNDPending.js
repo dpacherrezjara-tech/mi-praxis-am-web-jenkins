@@ -8,7 +8,7 @@ prototype.idDetailTicketHistory = 'DetailTicketHistory';
 prototype.url02 = CONTEXTPATH + '/RFNDPending';
 prototype.url01 = CONTEXTPATH + '/RFNDQuery';
 prototype.url3 = CONTEXTPATH + '/RFNDUserMaintenance';
-prototype.widthWindow = 1400;
+prototype.widthWindow = 1550;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
@@ -420,6 +420,30 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                                         summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
                                                     }
                                                 ]
+                                            },
+                                            {text: 'RFND sabre',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'RFNDSABRE',
+                                                        width: 50,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Ret.',
+                                                        dataIndex: 'RFNDSABRET',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALSABRET',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    }]
                                             },
                                             {text: 'Change of status',
                                                 columns: [
