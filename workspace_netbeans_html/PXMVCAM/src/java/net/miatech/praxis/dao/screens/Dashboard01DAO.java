@@ -5015,20 +5015,25 @@ public class Dashboard01DAO {
 
         return listado;
     }
-    
+
     public List<A1971Filter> loadPX109SQP00556M(A1971Filter filter) throws SQLException, Exception {
 
         List<A1971Filter> listado = new ArrayList();
+        
+        double[] listado1 = new double[12];
         A1971Filter objRtn;
-
+        A1971Filter objRtn0;
+        int i=0,j=0;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         long QTYPAX = 0, QTYPAX_F = 0, QTYPAX_J = 0, QTYPAX_Y = 0;
         long QTYVNR = 0, QTYNRE = 0, QTYFLI = 0, QBNPAX = 0;
         double VCPN = 0, VCPN_F = 0, VCPN_J = 0, VCPN_Y = 0, AMTBN = 0, VCPNRE = 0;
+        double VCPNB = 0;
+        String strYearB = "",strValueB = "",strMonthB = "";
         String fecha = Functions.getFechaActual();
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP00556M(?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP00556M(?,?,?,?,?)}";
 
         session.getCNXIBMDB2().open();
         try {
@@ -5037,28 +5042,26 @@ public class Dashboard01DAO {
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_FECHA_FROM);
             cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_FECHA_FROMB);
+            cstmt01.setString(5, filter.IN_FECHA_TOB);
 
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-
-                QTYPAX_F = rs01.getLong("QTYPAXF");
-                QTYPAX_J = rs01.getLong("QTYPAXJ");
-                QTYPAX_Y = rs01.getLong("QTYPAXY");
-                VCPN_F = rs01.getDouble("VCPNF");
-                VCPN_J = rs01.getDouble("VCPNJ");
-                VCPN_Y = rs01.getDouble("VCPNY");
-                //Total
-                VCPN = rs01.getDouble("VCPN");
-                QTYPAX = rs01.getLong("QTYPAX");
-                QTYVNR = rs01.getLong("QTYVNR");
-                QTYNRE = rs01.getLong("QTYNRE");
-                QTYFLI = rs01.getLong("QTYFLI");
-                QBNPAX = rs01.getLong("QPAXBN");
-                AMTBN = rs01.getDouble("VCPBN");
-                VCPNRE = rs01.getDouble("VCPNRE");
-
+                objRtn0 = new A1971Filter();
+                objRtn0.IN_FECHA_FROMB = filter.IN_FECHA_FROMB;
+                objRtn0.IN_FECHA_TOB = filter.IN_FECHA_TOB;
+                objRtn0.DFLIGHT = rs01.getString("DFLIGHTB");
+                objRtn0.VCPNB = rs01.getDouble("VCPNB");
+                objRtn0.strFormatDate = Functions.getMonthConvert6(objRtn0.DFLIGHT);
+                //pie acutal - anterior
+                //pie acutal - anterior
+                    strMonthB = objRtn0.strFormatDate.substring(0,3);
+                    strYearB = objRtn0.IN_FECHA_FROMB.substring(0,4);
+                    strValueB = objRtn0.strMonthB +":"+objRtn0.VCPNB;
+                 listado1[i] = objRtn0.VCPNB;  
+                 i++;
             }
             rs01.close();
             if (cstmt01.getMoreResults()) {
@@ -5077,6 +5080,9 @@ public class Dashboard01DAO {
                     }
 
                     objRtn.strFormatDate = Functions.getMonthConvert6(objRtn.DFLIGHT);
+                    //pie acutal - anterior
+                    objRtn.strMonth = objRtn.strFormatDate.substring(0, 4);
+                    objRtn.strYear = objRtn.IN_FECHA_FROM.substring(0, 4);
                     objRtn.strDescripcion4 = rs01.getString("MDACP");
                     objRtn.QTYFlight = rs01.getLong("QTYFLI");
 
@@ -5104,35 +5110,18 @@ public class Dashboard01DAO {
 
                     objRtn.PerCAP = objRtn.AVG_Y * objRtn.QTYVNR;//Amunt Unreported 
                     objRtn.Per1 = (objRtn.VCPN > 0) ? (objRtn.PerCAP * 100.0) / objRtn.VCPN : 0.00;
-                    //Totales
-                    objRtn.totVCPN = VCPN;
-                    objRtn.totQTYPAX = QTYPAX;
-                    objRtn.totVCPN_F = VCPN_F;
-                    objRtn.totVCPN_J = VCPN_J;
-                    objRtn.totVCPN_Y = VCPN_Y;
-                    objRtn.totQTYPAX_F = QTYPAX_F;
-                    objRtn.totQTYPAX_J = QTYPAX_J;
-                    objRtn.totQTYPAX_Y = QTYPAX_Y;
-                    objRtn.totQTYVNR = QTYVNR;
-                    objRtn.totPer1 = (objRtn.totQTYPAX > 0) ? (objRtn.totQTYVNR * 100.0) / objRtn.totQTYPAX : 0.00;
-                    objRtn.totQTYNRE = QTYNRE;
-                    objRtn.totPer2 = (objRtn.totQTYPAX > 0) ? (objRtn.totQTYNRE * 100.0) / objRtn.totQTYPAX : 0.00;
-                    objRtn.totQEXCEP = QTYVNR + QTYNRE;
-                    objRtn.totQTYFlight = QTYFLI;
-                    objRtn.totAMTBN = AMTBN;
-                    objRtn.totQBNPAX = QBNPAX;
-                    objRtn.totVCPNRE = VCPNRE;
-
-                    objRtn.totAVG_F = (objRtn.totQTYPAX_F > 0) ? objRtn.totVCPN_F / objRtn.totQTYPAX_F : 0;
-                    objRtn.totAVG_J = (objRtn.totQTYPAX_J > 0) ? objRtn.totVCPN_J / objRtn.totQTYPAX_J : 0;
-                    objRtn.totAVG_Y = (objRtn.totQTYPAX_Y > 0) ? objRtn.totVCPN_Y / objRtn.totQTYPAX_Y : 0;
-                    objRtn.PerJ = (objRtn.VCPN > 0) ? (objRtn.VCPN_J * 100.0) / objRtn.VCPN : 0.00;
-                    objRtn.PerY = (objRtn.VCPN > 0) ? (objRtn.VCPN_Y * 100.0) / objRtn.VCPN : 0.00;
-                    objRtn.PerF = (objRtn.VCPN > 0) ? (objRtn.VCPN_F * 100.0) / objRtn.VCPN : 0.00;
-
-                    objRtn.totPer3 = (VCPN > 0) ? (VCPN_J * 100.0) / VCPN : 0.00;
-                    objRtn.totPer4 = (VCPN > 0) ? (VCPN_Y * 100.0) / VCPN : 0.00;
-                    objRtn.totYIELD = 100;
+                    
+                    //pie acutal - anterior
+                    objRtn.strMonth = objRtn.strFormatDate.substring(0,3);
+                    objRtn.strYear = objRtn.IN_FECHA_FROM.substring(0,4);
+                    objRtn.strValue = objRtn.strMonth +":"+objRtn.VCPN;
+                    
+                    objRtn.VCPNB = listado1[j];
+                    j++;
+                    
+                    objRtn.strYearB = strYearB;
+                    objRtn.strValueB = objRtn.strMonth +":"+objRtn.VCPNB;
+                    
                     listado.add(objRtn);
                 }
             }
@@ -5255,7 +5244,7 @@ public class Dashboard01DAO {
 
         return listado;
     }
-    
+
     public List<A1971Filter> loadPX109SQP01927M(A1971Filter filter) throws SQLException, Exception {
 
         List<A1971Filter> listado = new ArrayList();
@@ -5275,7 +5264,7 @@ public class Dashboard01DAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.DFLIGHT);
-           // cstmt01.setString(3, filter.IN_FECHA_TO);
+            // cstmt01.setString(3, filter.IN_FECHA_TO);
 
             cstmt01.execute();
 

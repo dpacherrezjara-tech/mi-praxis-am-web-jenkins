@@ -116,6 +116,14 @@ public class A1971Filter extends A1971 {
     public double totTBASICM = 0;
     public long totBASICM = 0;
     public long totQCPNVAL= 0;
-    
+    public String strMonth = "";
+    public String strYear = "";
+    public String strValue = "";
+    public String IN_FECHA_FROMB = "";
+    public String IN_FECHA_TOB = "";
+    public String strMonthB = "";
+    public String strYearB = "";
+    public String strValueB = "";
+    public double VCPNB = 0;
     public Pagination page = new Pagination();
 }

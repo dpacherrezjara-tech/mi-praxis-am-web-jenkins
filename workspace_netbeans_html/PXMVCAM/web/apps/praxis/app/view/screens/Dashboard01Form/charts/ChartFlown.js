@@ -80,6 +80,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                 {
                                     xtype: 'toolbar',
                                     padding: '4px 7px 4px 20px',
+                                    bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                                     width: 80,
                                     items: [
 //                                        {
@@ -123,7 +124,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                             xtype: 'panel',
                             id: prototype.id + '-boxChartFlown',
                             border: false,
-                            margin: '5 0 5 400',
+                            margin: '5 0 5 0',
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -136,10 +137,67 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     border: false,
                                     layout: {
                                         type: 'hbox',
-                                        pack: 'center'
+                                        pack: 'left'
                                     },
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
+                                        {
+                                            xtype: 'polar',
+                                            id: prototype.id + '-displayFOChartPB',
+                                            width: 485, //531
+                                            height: 355,
+                                            border: true,
+                                            margin: '5 10 0 0',
+                                            innerPadding: 70,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: '',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+//                                            legend: {
+//                                                docked: 'bottom',
+//                                                background: '#E3EAEF',
+//                                            },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'VCPNB',
+                                                    colors: ['#0eeeee', '#0071c1', '#412e4e',
+                                                        '#06f985', '#0aac52', '#93d250',
+                                                        '#ffff00', '#ffc102', '#fe0000',
+                                                        '#ff0167', '#9b66fe', '#6600cd'],
+                                                    label: {
+                                                        field: 'strValueB',
+                                                        renderer: function (value, metaData, b, callout) {
+                                                            var value0 = value.substr(0, 4);
+                                                            var value1 = value.substr(4, 15);
+                                                            var value2 = Ext.util.Format.number((value1 / 1000000), '0.0') + 'M';
+                                                            return value0 + value2;
+                                                        },
+
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            if (ctx.field === 'strFormatDate') {
+                                                                label = 'Total';
+                                                            } else {
+                                                                label = '';
+                                                            }
+                                                            toolTip.setHtml(record.get('TOOLTIP'));
+                                                            toolTip.setHtml(label + 'Total Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + ' USD' + '</b>');
+                                                        }
+                                                    }
+                                                }]
+                                        },
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridData_boxChartFlown',
@@ -243,17 +301,73 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            xtype: 'polar',
+                                            id: prototype.id + '-displayFOChartP',
+                                            width: 485, //531
+                                            height: 355,
+                                            border: true,
+                                            margin: '5 0 0 10',
+                                            innerPadding: 60,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: '',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+//                                            legend: {
+//                                                docked: 'bottom',
+//                                                background: '#E3EAEF',
+//                                            },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'VCPN',
+                                                    colors: ['#0eeeee', '#0071c1', '#412e4e',
+                                                        '#06f985', '#0aac52', '#93d250',
+                                                        '#ffff00', '#ffc102', '#fe0000',
+                                                        '#ff0167', '#9b66fe', '#6600cd'],
+                                                    label: {
+                                                        field: 'strValue',
+                                                        renderer: function (value, metaData, b, callout) {
+                                                            var value0 = value.substr(0, 4);
+                                                            var value1 = value.substr(4, 15);
+                                                            var value2 = Ext.util.Format.number((value1 / 1000000), '0.0') + 'M';
+                                                            return value0 + value2;
+                                                        },
+
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            if (ctx.field === 'strFormatDate') {
+                                                                label = 'Total';
+                                                            } else {
+                                                                label = '';
+                                                            }
+                                                            toolTip.setHtml(record.get('TOOLTIP'));
+                                                            toolTip.setHtml(label + 'Total Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + ' USD' + '</b>');
+                                                        }
+                                                    }
+                                                }]
                                         }
                                     ]
-                                }
+                                },
                             ]
                         },
                         // Grafic - Hori-gami
                         {
                             xtype: 'panel',
-//                            id: prototype.id + '-boxChart1_2',
                             border: false,
-                            margin: '5 0 5 20',
+                            margin: '5 0 5 90',
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -262,6 +376,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                             items: [
                                 {
                                     xtype: 'radiogroup',
+                                    hidden: true,
                                     id: prototype.id + '-radiogroupType_Fo',
                                     width: 180,
                                     items: [
@@ -292,13 +407,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     legend: {
                                         text: 'Cabins',
 //                                        docked: 'bottom',
-                                     background: '#E3EAEF'
+                                        background: '#E3EAEF'
                                     },
                                     axes: [
                                         {
                                             type: 'numeric3d',
                                             position: 'left',
-                                            fields: ['QTYPAX_J', 'QTYPAX_Y','QTYPAX'],
+                                            fields: ['QTYPAX_J', 'QTYPAX_Y', 'QTYPAX'],
                                             minimum: 0,
                                             grid: true,
                                             title: '',
@@ -347,9 +462,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             type: 'bar3d',
                                             stacked: false,
                                             xField: 'strFormatDate',
-                                            yField: ['QTYPAX_J', 'QTYPAX_Y','QTYPAX'],
-                                            title: ['Business', 'Economy','Total'],
-                                            colors: ['#d6d9d4', '#209938','#1c50c9'],
+                                            yField: ['QTYPAX_J', 'QTYPAX_Y', 'QTYPAX'],
+                                            title: ['Business', 'Economy', 'Total'],
+                                            colors: ['#d6d9d4', '#209938', '#1c50c9'],
                                             highlight: true,
                                             style: {
                                                 inGroupGapWidth: -7,
@@ -357,7 +472,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 maxBarWidth: 1200
                                             },
                                             label: {
-                                                field: ['QTYPAX_J', 'QTYPAX_Y','QTYPAX'],
+                                                field: ['QTYPAX_J', 'QTYPAX_Y', 'QTYPAX'],
                                                 renderer: function (value, b, callout) {
                                                     callout.calloutVertical = false;
                                                     return ''
@@ -386,7 +501,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     id: prototype.id + '-displayFOChartA',
                                     border: false,
                                     width: 1400,
-                                    hidden:true,
+                                    hidden: true,
                                     height: 350,
                                     background: '#E0F8F7',
                                     captions: {
@@ -402,13 +517,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     legend: {
                                         text: 'Cabins',
 //                                        docked: 'bottom',
-                                     background: '#E3EAEF'
+                                        background: '#E3EAEF'
                                     },
                                     axes: [
                                         {
                                             type: 'numeric3d',
                                             position: 'left',
-                                            fields: ['VCPN_J', 'VCPN_Y','VCPN'],
+                                            fields: ['VCPN_J', 'VCPN_Y', 'VCPN'],
                                             minimum: 0,
                                             grid: true,
                                             title: '',
@@ -457,9 +572,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             type: 'bar3d',
                                             stacked: false,
                                             xField: 'strFormatDate',
-                                            yField: ['VCPN_J', 'VCPN_Y','VCPN'],
-                                            title: ['Business', 'Economy','Total'],
-                                            colors: ['#d6d9d4', '#209938','#1c50c9'],
+                                            yField: ['VCPN_J', 'VCPN_Y', 'VCPN'],
+                                            title: ['Business', 'Economy', 'Total'],
+                                            colors: ['#d6d9d4', '#209938', '#1c50c9'],
                                             highlight: true,
                                             style: {
                                                 inGroupGapWidth: -7,
@@ -467,7 +582,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 maxBarWidth: 1200
                                             },
                                             label: {
-                                                field: ['VCPN_J', 'VCPN_Y','VCPN'],
+                                                field: ['VCPN_J', 'VCPN_Y', 'VCPN'],
                                                 renderer: function (value, b, callout) {
                                                     callout.calloutVertical = false;
                                                     return ''
