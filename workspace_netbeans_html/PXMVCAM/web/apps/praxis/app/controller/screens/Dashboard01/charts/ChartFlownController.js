@@ -99,8 +99,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                     if (res.success) {
                         if (obj.data.length > 0) {
                             var obj = obj.data.items[0].data;
-                            Ext.getCmp(prototype.id + '-displayFOChartP').setTitle('<center style="font-size:18px;"> Flown by Cabin - Amount USD - ' + obj.strYear + '</center>');
-                            Ext.getCmp(prototype.id + '-displayFOChartPB').setTitle('<center style="font-size:18px;"> Flown by Cabin - Amount USD - ' + obj.strYearB + '</center>');
+                            Ext.getCmp(prototype.id + '-displayFOChartP').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + obj.strYear + '</center>');
+                            Ext.getCmp(prototype.id + '-displayFOChartPB').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + obj.strYearB + '</center>');
+                            var vsy = '<a style="color:#209938;">' + obj.strYear + '</a>'
+                            var vsyb = '<a style="color:#1c50c9;">' + obj.strYearB + '</a>'
+                            var vs =  vsyb + ' vs ' + vsy ;
+                            Ext.getCmp(prototype.id + '-displayFOChartP2').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + vs + '</center>');
                         } else {
                             global.Msg({msg: 'Data not found'});
                         }
@@ -111,9 +115,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
             }
         });
         Ext.getCmp(prototype.id + '-gridData_boxChartFlown').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData_boxChartFlownB').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartC').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartA').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartP').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFOChartP2').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartPB').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
     },

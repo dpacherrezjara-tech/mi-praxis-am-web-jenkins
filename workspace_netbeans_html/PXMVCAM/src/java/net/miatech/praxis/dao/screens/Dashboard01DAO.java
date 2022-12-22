@@ -5019,18 +5019,24 @@ public class Dashboard01DAO {
     public List<A1971Filter> loadPX109SQP00556M(A1971Filter filter) throws SQLException, Exception {
 
         List<A1971Filter> listado = new ArrayList();
-        
-        double[] listado1 = new double[12];
+
+        String[] listado1FD = new String[12];
+        int[] listado1BP = new int[12];
+        double[] listado1BV = new double[12];
+        int[] listado1EP = new int[12];
+        double[] listado1EV = new double[12];
+        int[] listado1TP = new int[12];
+        double[] listado1TV = new double[12];
         A1971Filter objRtn;
         A1971Filter objRtn0;
-        int i=0,j=0;
+        int i = 0, j = 0;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         long QTYPAX = 0, QTYPAX_F = 0, QTYPAX_J = 0, QTYPAX_Y = 0;
         long QTYVNR = 0, QTYNRE = 0, QTYFLI = 0, QBNPAX = 0;
         double VCPN = 0, VCPN_F = 0, VCPN_J = 0, VCPN_Y = 0, AMTBN = 0, VCPNRE = 0;
         double VCPNB = 0;
-        String strYearB = "",strValueB = "",strMonthB = "";
+        String strYearB = "", strValueB = "", strMonthB = "";
         String fecha = Functions.getFechaActual();
 
         String SQLCLL01 = "{CALL PRAXIS.SQP00556M(?,?,?,?,?)}";
@@ -5052,16 +5058,31 @@ public class Dashboard01DAO {
                 objRtn0 = new A1971Filter();
                 objRtn0.IN_FECHA_FROMB = filter.IN_FECHA_FROMB;
                 objRtn0.IN_FECHA_TOB = filter.IN_FECHA_TOB;
-                objRtn0.DFLIGHT = rs01.getString("DFLIGHTB");
+                objRtn0.DFLIGHTB = rs01.getString("DFLIGHTB");
+                objRtn0.strFormatDate = Functions.getMonthConvert6(objRtn0.DFLIGHTB);
+                objRtn0.strFormatDateB = Functions.getMonthConvert6(objRtn0.DFLIGHTB);
+                //Bussines
+                objRtn0.VCPN_JB = rs01.getDouble("VCPNJB");
+                objRtn0.QTYPAX_JB = rs01.getLong("QTYPAXJB");
+                //Economy
+                objRtn0.VCPN_YB = rs01.getDouble("VCPNYB");
+                objRtn0.QTYPAX_YB = rs01.getLong("QTYPAXYB");
+                //Total
                 objRtn0.VCPNB = rs01.getDouble("VCPNB");
-                objRtn0.strFormatDate = Functions.getMonthConvert6(objRtn0.DFLIGHT);
-                //pie acutal - anterior
-                //pie acutal - anterior
-                    strMonthB = objRtn0.strFormatDate.substring(0,3);
-                    strYearB = objRtn0.IN_FECHA_FROMB.substring(0,4);
-                    strValueB = objRtn0.strMonthB +":"+objRtn0.VCPNB;
-                 listado1[i] = objRtn0.VCPNB;  
-                 i++;
+                objRtn0.QTYPAXB = rs01.getLong("QTYPAXB");
+
+                strMonthB = objRtn0.strFormatDate.substring(0, 3);
+                strYearB = objRtn0.IN_FECHA_FROMB.substring(0, 4);
+                strValueB = objRtn0.strMonthB + ":" + objRtn0.VCPNB;
+
+                listado1FD[i] = objRtn0.strFormatDateB;
+                listado1BP[i] = (int) objRtn0.QTYPAX_JB;
+                listado1BV[i] = objRtn0.VCPN_JB;
+                listado1EP[i] = (int) objRtn0.QTYPAX_YB;
+                listado1EV[i] = objRtn0.VCPN_YB;
+                listado1TP[i] = (int) objRtn0.QTYPAXB;
+                listado1TV[i] = objRtn0.VCPNB;
+                i++;
             }
             rs01.close();
             if (cstmt01.getMoreResults()) {
@@ -5110,18 +5131,23 @@ public class Dashboard01DAO {
 
                     objRtn.PerCAP = objRtn.AVG_Y * objRtn.QTYVNR;//Amunt Unreported 
                     objRtn.Per1 = (objRtn.VCPN > 0) ? (objRtn.PerCAP * 100.0) / objRtn.VCPN : 0.00;
-                    
+
                     //pie acutal - anterior
-                    objRtn.strMonth = objRtn.strFormatDate.substring(0,3);
-                    objRtn.strYear = objRtn.IN_FECHA_FROM.substring(0,4);
-                    objRtn.strValue = objRtn.strMonth +":"+objRtn.VCPN;
-                    
-                    objRtn.VCPNB = listado1[j];
-                    j++;
-                    
+                    objRtn.strMonth = objRtn.strFormatDate.substring(0, 3);
+                    objRtn.strYear = objRtn.IN_FECHA_FROM.substring(0, 4);
+                    objRtn.strValue = objRtn.strMonth + ":" + objRtn.VCPN;
+
+                    objRtn.strFormatDateB = listado1FD[j];
+                    objRtn.QTYPAX_JB = listado1BP[j];
+                    objRtn.VCPN_JB = listado1BV[j];
+                    objRtn.QTYPAX_YB = listado1EP[j];
+                    objRtn.VCPN_YB = listado1EV[j];
+                    objRtn.QTYPAXB = listado1TP[j];
+                    objRtn.VCPNB = listado1TV[j];
                     objRtn.strYearB = strYearB;
-                    objRtn.strValueB = objRtn.strMonth +":"+objRtn.VCPNB;
-                    
+                    objRtn.strValueB = objRtn.strMonth + ":" + objRtn.VCPNB;
+                    j++;
+
                     listado.add(objRtn);
                 }
             }
