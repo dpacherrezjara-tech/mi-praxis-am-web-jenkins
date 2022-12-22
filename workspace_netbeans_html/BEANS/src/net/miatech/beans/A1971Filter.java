@@ -124,6 +124,13 @@ public class A1971Filter extends A1971 {
     public String strMonthB = "";
     public String strYearB = "";
     public String strValueB = "";
+    public String DFLIGHTB = "";
+    public double VCPN_JB = 0;
+    public long QTYPAX_JB = 0;
+    public double VCPN_YB = 0;
+    public long QTYPAX_YB = 0;
     public double VCPNB = 0;
+    public long QTYPAXB = 0;
+    public String strFormatDateB = "";
     public Pagination page = new Pagination();
 }
