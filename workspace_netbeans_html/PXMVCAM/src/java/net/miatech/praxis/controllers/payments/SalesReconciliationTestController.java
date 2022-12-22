@@ -102,7 +102,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaDataSales = logic.loadPX584SQP04338Copy(filter);
+            List<A4164Filter> listaDataSales = logic.loadPX584SQP04730(filter);
 
             map.put("success", true);
             if (dw_excel) {
@@ -195,7 +195,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP04340Copy(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04731(filter);
 
             map.put("success", true);
             if (dw_excel) {
@@ -287,7 +287,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP04344Copy(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04732(filter);
 
             map.put("success", true);
             if (dw_excel) {

@@ -74,7 +74,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04378(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04378(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -250,7 +250,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04257(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04257(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -444,7 +444,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04329(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04329(?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -618,7 +618,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04330(?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04330(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -785,7 +785,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04269(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04269(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -985,7 +985,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04270(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04270(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1198,7 +1198,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04471(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04471(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1395,7 +1395,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04278(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04278(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1555,7 +1555,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04279(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04279(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1716,7 +1716,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04376(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04376(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1880,7 +1880,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04571(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04571(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2008,7 +2008,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04328(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04328(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2125,7 +2125,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04275(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04275(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
 
@@ -2339,7 +2339,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04284(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04284(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2649,7 +2649,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt_usos = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04377(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04377(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SPRUT01556(?)}";
 
         Connection cnx = null;
@@ -2925,7 +2925,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04619(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04619(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3129,7 +3129,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04466(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04466(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3268,7 +3268,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04357(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3516,7 +3516,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04468(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04468(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3690,7 +3690,7 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3883,9 +3883,9 @@ public class SalesReconciliAmexDAO {
         String SQLCLL01 = "";
 
         if (filter.TDOC.trim().equals("R")) {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04462(?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04462(?,?,?,?,?,?,?,?)}";
         } else {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04360(?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04360(?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -3949,7 +3949,7 @@ public class SalesReconciliAmexDAO {
         A4116Filter beanDet;
         A4116Filter beanObser;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3982,7 +3982,7 @@ public class SalesReconciliAmexDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -4052,7 +4052,7 @@ public class SalesReconciliAmexDAO {
         //lstSendManual
 
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04636(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04636(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4105,7 +4105,7 @@ public class SalesReconciliAmexDAO {
         //lstSendManual
 
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04729(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04729(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4164,7 +4164,7 @@ public class SalesReconciliAmexDAO {
         try {
             //Cambiar Status a las transacciones
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?)}";
+            String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04469(?,?,?,?,?,?,?,?)}";
             cstmt01 = cnx.prepareCall(SQLCLL02);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
@@ -4218,7 +4218,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04414(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04414(?,?)}";
 
         Connection cnx = null;
         try {
@@ -4279,7 +4279,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04465(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04465(?,?)}";
 
         Connection cnx = null;
         try {
@@ -4340,7 +4340,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04569(?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04569(?)}";
 
         Connection cnx = null;
         try {
@@ -4400,7 +4400,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04570(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04570(?,?)}";
 
         Connection cnx = null;
         try {
@@ -4455,7 +4455,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04617(?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04617(?)}";
 
         Connection cnx = null;
         try {
@@ -4541,11 +4541,11 @@ public class SalesReconciliAmexDAO {
         if (filter.TDOC.trim().equals("R")) {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04456(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04456(?,?,?,?,?,?,?,?,?)}";
         } else {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04395(?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -4661,9 +4661,9 @@ public class SalesReconciliAmexDAO {
             IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
 
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04457(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04457(?,?,?,?,?,?,?,?,?)}";
         } else {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04455(?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -4784,7 +4784,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04463_1(?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04463(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4912,7 +4912,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04420(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04420(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -5043,7 +5043,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04470(?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04470(?)}";
 
         Connection cnx = null;
         try {

@@ -58,7 +58,7 @@ public class SalesComplementAmexDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04354(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04354(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -197,7 +197,7 @@ public class SalesComplementAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04433(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04433(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -301,7 +301,7 @@ public class SalesComplementAmexDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04355(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04355(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -424,7 +424,7 @@ public class SalesComplementAmexDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04356(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04356(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
