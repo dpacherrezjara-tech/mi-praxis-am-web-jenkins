@@ -291,7 +291,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         Ext.getCmp(prototype.idDetailTicket + '-txttrnc').setValue(rec.get('A3648STRCU'));
         Ext.getCmp(prototype.idDetailTicket + '-txtIssdate').setValue(rec.get('A3648XFSAL'));
         Ext.getCmp(prototype.idDetailTicket + '-txtpnr').setValue(rec.get('A3648XPNR'));
-        Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648COCD'));
+        Ext.getCmp(prototype.idDetailTicket + '-txtzone').setValue(rec.get('A3648ARCD'));
         Ext.getCmp(prototype.idDetailTicket + '-CmbConto').setValue(Ext.String.trim(rec.get('A3648CONJT')));
         Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setValue(Ext.String.trim(rec.get('A3648TRFND')));
         Ext.getCmp(prototype.idDetailTicket + '-txtCase').setValue(Ext.String.trim(rec.get('A3648SFW')));
@@ -1092,7 +1092,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             }
             if (txtConto === 'I') {
                 if (cbox1 || cbox2 || cbox3 || cbox4) {
-
+                    var vl_cant = 0;
+                    var vl_cantcpn = 0;
+                    var vl_total = 0;
                     var grid08 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
                     var regscpn = grid08.getStore().getCount();
                     for (var x = 0; x < regscpn; x++) {
@@ -1118,30 +1120,45 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                                 return;
                             }
                         } else {
-                            if (!cbox1 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '1') {
-                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
-                                bvalida = false;
-                                return;
+
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '1') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox1) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
                             }
-                            if (!cbox2 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '2') {
-                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
-                                bvalida = false;
-                                return;
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '2') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox2) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
                             }
-                            if (!cbox3 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '3') {
-                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
-                                bvalida = false;
-                                return;
+
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '3') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox3) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
                             }
-                            if (!cbox4 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '4') {
-                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
-                                bvalida = false;
-                                return;
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '4') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox4) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
                             }
+
+
                         }
 
                     }
-
+                    if (CmbTRFND !== 'T') {
+                        vl_total = (vl_cant - vl_cantcpn);
+                        if (vl_total === 0) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of total refund');
+                            bvalida = false;
+                            return;
+                        }                        
+                    }
 
 
                 }

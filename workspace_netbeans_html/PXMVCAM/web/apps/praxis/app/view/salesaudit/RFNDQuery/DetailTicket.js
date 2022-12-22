@@ -386,10 +386,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                         {
                             xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txtCase',
-                            fieldLabel: 'SF Case:',
+                            fieldLabel: 'SF Case',
                             labelWidth: 50,
                             width: 150,
-                            readOnly: true
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            labelAlign: 'right'
                         }
 
                     ]

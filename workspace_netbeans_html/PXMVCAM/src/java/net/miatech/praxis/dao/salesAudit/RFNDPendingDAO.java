@@ -51,7 +51,7 @@ public class RFNDPendingDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A3647Filter> SearchPendiRefund(A3647Filter filter) throws SQLException, Exception {
         List<A3647Filter> lstRtn = new ArrayList<A3647Filter>(0);
         A3647Filter objRtn;
@@ -117,11 +117,15 @@ public class RFNDPendingDAO {
                 objRtn.BPOOK = rs01.getInt("BPOOK");
                 objRtn.BPOKO = rs01.getInt("BPOKO");
                 objRtn.TOTALBPO = rs01.getInt("BPOOK") + rs01.getInt("BPOKO");
+                //RFND FINANCIERO EN SABRE 
+                objRtn.RFNDSABRE = rs01.getInt("RFNDSABRE");
+                objRtn.RFNDSABRET = rs01.getInt("RFNDSABRET");
+                objRtn.TOTALSABRET = rs01.getInt("RFNDSABRE") + rs01.getInt("RFNDSABRET");
                 // CAMBIO DE ESTATUS
                 objRtn.STOEN = rs01.getInt("STOEN");
                 objRtn.STORET = rs01.getInt("STORET");
                 objRtn.TOTALSTO = rs01.getInt("STOEN") + rs01.getInt("STORET");
-                objRtn.A3647DIAS= rs01.getString("DIAS");
+                objRtn.A3647DIAS = rs01.getString("DIAS");
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -156,8 +160,8 @@ public class RFNDPendingDAO {
         }
         return lstRtn;
     }
-    
-     public List<A3651Filter> SearchRFNDRazon(A3651Filter filter) throws SQLException, Exception {
+
+    public List<A3651Filter> SearchRFNDRazon(A3651Filter filter) throws SQLException, Exception {
         List<A3651Filter> lstRtn = new ArrayList<A3651Filter>(0);
         A3651Filter objRtn;
 
@@ -211,8 +215,8 @@ public class RFNDPendingDAO {
         }
         return lstRtn;
     }
-     
-     public String ProcesaManualRFND(A3647Filter beanGuardarA3389, ArrayList<A3649Filter> gridDataRazones) throws SQLException, Exception {
+
+    public String ProcesaManualRFND(A3647Filter beanGuardarA3389, ArrayList<A3649Filter> gridDataRazones) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
         String strSQL;
@@ -225,25 +229,25 @@ public class RFNDPendingDAO {
             String SQLCLL01 = "{CALL LIBSAP26.SQP03101(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             //if (beanGuardarA3389.IN_STATUS.equals("R")) {
-                for (A3649Filter obj : gridDataRazones) {
+            for (A3649Filter obj : gridDataRazones) {
 
-                    cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
-                    cs.setString("IN_PREME", beanGuardarA3389.IN_PREME);
-                    cs.setString("IN_ANIO", beanGuardarA3389.IN_ANIO);
-                    cs.setString("IN_STATUS", beanGuardarA3389.IN_STATUS);
-                    cs.setString("IN_CODRZ", obj.A3649CODE);
-                    cs.setString("IN_ERROR", obj.A3649ERROR);
-                    cs.setString("IN_FAMIL", obj.A3649FAMIL);
-                    cs.setString("IN_ARCHV1", "");
-                    cs.setString("IN_ARCHV2", "");
-                    cs.setString("IN_ARCHV3", "");
-                    cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
-                    cs.setString("IN_FREGI", Functions.getFechaActual());
-                    cs.setString("IN_HREGI", Functions.getHoraActual());
-                    cs.setString("IN_VALIDA", valida);
-                    cs.execute();
-                    valida = "N";
-                }
+                cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+                cs.setString("IN_PREME", beanGuardarA3389.IN_PREME);
+                cs.setString("IN_ANIO", beanGuardarA3389.IN_ANIO);
+                cs.setString("IN_STATUS", beanGuardarA3389.IN_STATUS);
+                cs.setString("IN_CODRZ", obj.A3649CODE);
+                cs.setString("IN_ERROR", obj.A3649ERROR);
+                cs.setString("IN_FAMIL", obj.A3649FAMIL);
+                cs.setString("IN_ARCHV1", "");
+                cs.setString("IN_ARCHV2", "");
+                cs.setString("IN_ARCHV3", "");
+                cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
+                cs.setString("IN_FREGI", Functions.getFechaActual());
+                cs.setString("IN_HREGI", Functions.getHoraActual());
+                cs.setString("IN_VALIDA", valida);
+                cs.execute();
+                valida = "N";
+            }
 
             rst = cs.getResultSet();
 
@@ -262,8 +266,8 @@ public class RFNDPendingDAO {
 
         return STR_RESULT;
     }
-     
-     public List<A3647Filter> SearchTICKETRFND(A3647Filter filter) throws SQLException, Exception {
+
+    public List<A3647Filter> SearchTICKETRFND(A3647Filter filter) throws SQLException, Exception {
         List<A3647Filter> lstRtn = new ArrayList<A3647Filter>(0);
         A3647Filter objRtn;
 
@@ -281,17 +285,16 @@ public class RFNDPendingDAO {
             cstmt01.setString(3, filter.IN_PREME);
             cstmt01.setString(4, filter.IN_ANIO);
 
-            
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn = new A3647Filter();
                 objRtn.A3647CCUST = rs01.getString("A3648CCUST");
-                objRtn.A3647TKTDUPLI = rs01.getString("A3648CIA") +""+ rs01.getString("A3648FORMA") +""+rs01.getString("A3648SERIE");
+                objRtn.A3647TKTDUPLI = rs01.getString("A3648CIA") + "" + rs01.getString("A3648FORMA") + "" + rs01.getString("A3648SERIE");
                 objRtn.A3647FLAG = rs01.getString("A3648FLAG");
-                objRtn.A3647PGNA1 = rs01.getString("A3648ERROR"); 
-                objRtn.A3647TOTAD = rs01.getDouble("A3648TOTAD"); 
+                objRtn.A3647PGNA1 = rs01.getString("A3648ERROR");
+                objRtn.A3647TOTAD = rs01.getDouble("A3648TOTAD");
                 lstRtn.add(objRtn);
 
                 //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
