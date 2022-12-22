@@ -842,7 +842,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             layout: 'hbox',
                             hidden: false,
                             border: false,
-                            margin: '0 2 0 300',
+                            margin: '0 2 0 100',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
@@ -913,6 +913,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                 },
                                 {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelBpo',
+                                    layout: 'hbox',
+                                    hidden: true,
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'Bpo Rev.',
+                                            textAlign: 'center',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            margin: '4 4 4 4',
+                                            width: 70
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            id: prototype.id + '-openBpoObserv',
+                                            //margin: '4 4 4 4',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/facsimil.png',
+                                            tooltip: 'BPO Rev.',
+                                            listeners: {
+                                                click: 'bpoRev_keyDownHandler'
+                                            }
+
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-closeBpoObserv',
+                                            hidden: true,
+                                            width: 25,
+                                            //margin: '4 4 4 4',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/cancel.png',
+                                            tooltip: 'Close BPO Rev.',
+                                            listeners: {
+                                                click: 'closeBpoRev_keyDownHandler'
+                                            }
+
+                                        }
+                                    ]
+                                },
                                 //150                                                              
                             ]
                         },
@@ -1054,6 +1101,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                         click: 'clear_keyDownHandler'
                                     }
 
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelBpoObserv',
+                            layout: 'hbox',
+                            hidden: true,
+                            border: false,
+                            margin: '0 2 0 100',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'BPO Observation',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtBpoOBSERV-RO',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    enforceMaxLength: true,
+                                    readOnly: false,
+                                    maxLength: 50,
+                                    width: 320,
                                 },
                             ]
                         },
