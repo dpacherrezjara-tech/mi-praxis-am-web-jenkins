@@ -24,8 +24,16 @@ public class A2358 {
     public String STAT = "" ;
     public String TABLA = "" ;
     public String FASE = "" ;
+    public String SEQNUM = "";
+    public String DENV = "";
+    public String INPTYPE = "";
+    public String descINPTYPE = "";
+    public String descFASE = "";
+    public String descSTAT = "";
+    public String descINPEXTE = "";      
+    public double totQTYREG = 0;
     public double QTYREG = 0 ;
-    
+   
     public String USCR = "" ;
     public String FECR = "" ;
     public String HOCR = "" ;
