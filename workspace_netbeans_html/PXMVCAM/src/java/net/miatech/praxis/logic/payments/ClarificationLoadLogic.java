@@ -30,8 +30,8 @@ public class ClarificationLoadLogic {
         return ClarificationLoadDAO.loadPX413SQP02535(strBanco,ruta);
     }
     
-    public String loadPX413PRO10570(String strBanco, String strHora) throws SQLException, Exception {
-        return ClarificationLoadDAO.loadPX413PRO10570(strBanco, strHora);
+    public String loadPX413PRO10570(String strBanco, String strHora, String type_file) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX413PRO10570(strBanco, strHora,type_file);
     }
     
     public String loadPX413SQP03598(List<A1686Filter> lstExcel) throws SQLException, IOException, Exception {

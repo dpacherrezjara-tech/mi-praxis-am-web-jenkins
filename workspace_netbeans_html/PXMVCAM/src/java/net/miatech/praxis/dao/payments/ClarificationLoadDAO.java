@@ -129,7 +129,7 @@ public class ClarificationLoadDAO {
         return msj;
     }
     
-    public String loadPX413PRO10570(String strBanco, String strHora) throws SQLException, Exception {
+    public String loadPX413PRO10570(String strBanco, String strHora, String type_file) throws SQLException, Exception {
 
         String msj = "SUCCESS";
 
@@ -143,7 +143,11 @@ public class ClarificationLoadDAO {
             strPRO = "SPPRO10571";
         } else if (strBanco.trim().equals("ST")) {
             //SANTANDER
-            strPRO = "SPPRO10572";
+            if(type_file.equals("csv")){
+                strPRO = "SPPRO11790";
+            }else{
+                strPRO = "SPPRO10572";
+            }
         } else if (strBanco.trim().equals("PP")) {
             //PAYPAL
             strPRO = "SPPRO10573";
