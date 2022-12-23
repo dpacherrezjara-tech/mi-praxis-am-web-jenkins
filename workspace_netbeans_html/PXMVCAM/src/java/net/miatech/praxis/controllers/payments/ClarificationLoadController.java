@@ -13,36 +13,25 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
-import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1686Filter;
-import net.miatech.beans.A1691Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
-import net.miatech.praxis.logic.payments.ClarificationDashboardLogic;
 import net.miatech.praxis.logic.payments.ClarificationLoadLogic;
-import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -108,11 +97,17 @@ public class ClarificationLoadController extends BaseController {
                         byte[] fileDataBX = excelfile.getBytes();
                         msjUpload = uploadBanamexCSV(fileDataBX, banco, input);
                     }else{
-                        
-                        // ------------------------------------------------------------------------
-                        // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
-                        // ------------------------------------------------------------------------
-                        msjUpload = uploadPrev(excelfile, banco, input);
+                        //Si Santander Aclaraciones entra como csv (Nuevo insumo)
+                        if(banco.equals("ST") && input.equals("C") && filename.toLowerCase().contains(".csv")){
+                            byte[] fileDataST = excelfile.getBytes();
+                            msjUpload = uploadSantanderAclaracionesCSV(fileDataST, banco, input);
+                        }else{
+                            
+                            // ------------------------------------------------------------------------
+                            // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
+                            // ------------------------------------------------------------------------
+                            msjUpload = uploadPrev(excelfile, banco, input);
+                        }
                     }
                 
                 map.put("successUp", true);
@@ -206,7 +201,7 @@ public class ClarificationLoadController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             
             if(msj.equals("")){
-                msj = upload(listaExcelString, banco, input);
+                msj = upload(listaExcelString, banco, input,"");
             }
             
             //Eliminar temporal           
@@ -241,6 +236,216 @@ public class ClarificationLoadController extends BaseController {
         return msjError;
     }
     
+    
+    private String uploadSantanderAclaracionesCSV (byte[] bytes, String banco,String input) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        boolean inicio = false;
+        String filaCompleta="",msj="";
+        String fecha_tran="",claim_code="",afiliacion="",comercio="",marca="",tarjeta_nro="",arn="",cod_aut="",monto="";
+        String moneda="",estatus="",motivo="",fecha_venc="",emisor="",procesador="";
+        String fechaActual = Functions.getFechaActual();
+        
+        BufferedReader br = null;
+        List<String> listaExcelString = new ArrayList<String>(0);
+        
+        int i = 0;
+        boolean comma_in_amt = false;
+        
+        try {
+            
+            
+                DecimalFormat df = new DecimalFormat("######0.00");
+
+                DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+                otherSymbols.setDecimalSeparator('.');
+
+                df.setDecimalFormatSymbols(otherSymbols);
+            
+            
+            String strSesion = UUID.randomUUID().toString();
+            String strNomExcel = "SantanderAclaCsv." + strSesion + ".csv";
+            
+            String strArchivo = "C:\\Windows\\Temp\\" + strNomExcel;
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            
+            fs.write(bytes);
+            fs.flush();
+            fs.close();
+         
+            
+            br = new BufferedReader(new FileReader(strArchivo));
+                String line = br.readLine();
+
+            int cont = 0;
+            while (null != line) {
+                comma_in_amt = false;
+                i=0;
+                    
+                cont +=1 ;
+
+                String [] fields = line.split(",");
+
+                fecha_tran = fields[0].trim();//A
+                claim_code = fields[1].trim();
+                afiliacion = fields[2].trim();//C
+                comercio = fields[3].trim();
+                marca = fields[4].trim();//E
+                tarjeta_nro = fields[5].trim();//F
+                arn = fields[6].trim();
+                cod_aut = fields[7].trim();
+                
+                monto = fields[8].trim();//I
+                if(monto.contains("\"")){
+                    comma_in_amt = true;
+                    monto = fields[8].trim()+fields[9].trim(); 
+                    monto = monto.replaceAll("\"", "");
+                    i=1;
+                }
+                
+                moneda = fields[9+i].trim();
+                estatus = fields[10+i].trim();
+                motivo = fields[11+i].trim();
+                fecha_venc = fields[12+i].trim();
+                emisor = fields[13+i].trim();
+                procesador = fields[14+i].trim();
+
+    //            tmp = new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(colAB).getDateCellValue());
+
+                if(inicio){
+
+                    //Columna A
+                    fecha_tran = fecha_tran.substring(0, 10);
+                    if(fecha_tran.contains("/")){
+//                        try{
+//                            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fecha_tran); 
+//                            fecha_tran = new SimpleDateFormat("yyyyMMdd").format(date1);
+//                        }catch (Exception e){
+//                            msj = " fecha_tran (A) FORMATO FECHA" + e.getMessage();
+//                        }
+                        fecha_tran = convertirFecha(fecha_tran);
+                    }else{
+                        msj = " fecha_tran (A) FORMATO FECHA";
+                    }
+
+                    //Columna B
+                    if(claim_code.length()>20){
+                        msj = " claim_code (B) FOLIO tamaño 20";
+                    }
+
+                    //Columna C
+                    try{
+                        Integer.parseInt(afiliacion);
+                        if(afiliacion.length()>15){
+                            msj = " afiliacion (C) MERCHNC tamaño 15";
+                        }
+                    }catch(Exception e){
+                        msj = " afiliacion (C) MERCHNC No es númerico";
+                    }
+
+                    //Columna F
+                    tarjeta_nro = tarjeta_nro.replaceAll("-","");
+                    if(tarjeta_nro.length()<16){
+                        msj = " tarjeta_nro (F) tamaño 16";
+                    }
+
+                    //Col G (NUMREFER 23 varchar)
+                    arn = arn.replaceAll("\"","").trim();
+                    if(arn.length()!=23){
+                        msj = " arn (F) NUMREFER tamaño 23";
+                    }
+
+                    //Col H (AUTHNBR 6 varchar)
+                    if(cod_aut.length() > 6){
+                        msj = " cod_aut (F) AUTHNBR tamaño 6";
+                    }
+
+                    //Col I
+                    monto = monto.replace(",","");
+                    try{
+                        double mt = Double.parseDouble(monto);
+                        monto = df.format(mt);
+                    }catch(Exception e){
+                        msj = " monto (I) monto No es númerico";
+                    }
+
+                    //Col J (MONEDA)
+                    if(moneda.length() !=3){
+                        msj = " moneda (J) TAMAÑO 3";
+                    }
+
+                    //Columna M
+                    fecha_venc = fecha_venc.substring(0, 10);
+                    if(fecha_venc.contains("/")){
+//                        try{
+//                            Date date2=new SimpleDateFormat("dd/MM/yyyy").parse(fecha_venc); 
+//                            fecha_venc = new SimpleDateFormat("yyyyMMdd").format(date2);
+//                        }catch (Exception e){
+//                            msj = " fecha_venc (A) FORMATO FECHA" + e.getMessage();
+//                        }
+                        fecha_venc = convertirFecha(fecha_venc);
+                    }else{
+                        msj = " fecha_venc (A) FORMATO FECHA";
+                    }
+
+                    if(msj.equals("")){
+                        filaCompleta=claim_code+","+afiliacion+","+tarjeta_nro+","+cod_aut+","+fecha_tran+","+fecha_venc;
+                        filaCompleta=filaCompleta+","+monto+","+arn+","+fechaActual+","+fechaActual;
+                        filaCompleta=filaCompleta+","+comercio+","+marca+","+moneda+","+estatus+","+motivo+","+emisor+","+procesador;
+                        listaExcelString.add(filaCompleta);
+                        System.out.println(cont+" : " + filaCompleta);
+                    }else{
+                        break;
+                    }
+                }
+
+                if(fields[0].contains("Fecha transacci")){
+                    listaExcelString.add(line);
+                    System.out.println(cont+" : " + line);
+                    inicio = true;
+                }
+                /*1049484887,007646056,483030XXXXXX8324,031506,30/09/2022,09/12/2022,2031.00,74524222273122738524986,20221128,29/11/2022,,,,*/
+
+                line = br.readLine();
+            }
+            
+            
+            ClarificationLoadLogic logic = new ClarificationLoadLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            if(msj.equals("")){
+                msj = upload(listaExcelString, banco, input,"csv");
+            }
+            
+            //Eliminar temporal           
+            archivo.delete();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = "Se produjo un error al intentar subir el archivo." ;
+        }
+
+        return msj;
+        
+    }
+    
+    public String convertirFecha(String fecha){
+        
+        String v_fecha =fecha;
+        String [] fecha_part = fecha.split("/");
+        
+        String dia = fecha_part[0];
+        String mes = fecha_part[1];
+        String anio = fecha_part[2];
+        
+        
+        v_fecha = anio + Functions.fillZeros(2, mes) + Functions.fillZeros(2, dia);
+        
+        return v_fecha;
+    }
+    
     private String uploadCSV(byte[] bytes, String strBanco) throws Exception {
         
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -266,7 +471,7 @@ public class ClarificationLoadController extends BaseController {
             
             if(mensaje.contains("Successful")){
                 //Llamando al PRO10574(ELavon)
-                mensaje = logic.loadPX413PRO10570(strBanco,strHora);
+                mensaje = logic.loadPX413PRO10570(strBanco,strHora,"");
             }
             
             //Eliminar temporal           
@@ -809,7 +1014,7 @@ public class ClarificationLoadController extends BaseController {
             if(!msjError.equals("")){
                 msj = msjError;
             }else{
-                msj = upload(listaExcelString, banco, input);
+                msj = upload(listaExcelString, banco, input,"");
             }
         
         } catch (Exception e) {
@@ -824,7 +1029,7 @@ public class ClarificationLoadController extends BaseController {
         return msj;
     }
     
-    private String upload(List lstExcel, String strBanco, String strInput) throws Exception {
+    private String upload(List lstExcel, String strBanco, String strInput,String type_file) throws Exception {
         
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         String msj = "";
@@ -855,7 +1060,7 @@ public class ClarificationLoadController extends BaseController {
 
                     if (msj.trim().equals("SUCCESS")) {
                         //Llamando al PRO10570/71/72/73
-                        msj = logic.loadPX413PRO10570(strBanco, strHora);
+                        msj = logic.loadPX413PRO10570(strBanco, strHora , type_file);
                     }
                 }
                 
