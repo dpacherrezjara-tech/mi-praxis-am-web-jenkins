@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -251,6 +252,7 @@ public class ClarificationLoadController extends BaseController {
         List<String> listaExcelString = new ArrayList<String>(0);
         
         int i = 0;
+        String cad = "";
         boolean comma_in_amt = false;
         
         try {
@@ -276,8 +278,9 @@ public class ClarificationLoadController extends BaseController {
             fs.close();
          
             
-            br = new BufferedReader(new FileReader(strArchivo));
-                String line = br.readLine();
+//            br = new BufferedReader(new FileReader(strArchivo));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "ISO-8859-1"));
+            String line = br.readLine();
 
             int cont = 0;
             while (null != line) {
@@ -287,6 +290,17 @@ public class ClarificationLoadController extends BaseController {
                 cont +=1 ;
 
                 String [] fields = line.split(",");
+                
+                /*validacion de fin de archivo en caso vengan filas de mas*/
+                if(fields.length>7){
+                    cad = fields[0].trim()+fields[1].trim()+fields[2].trim()+fields[3].trim();
+                    if(cad.trim().equals("")){
+                        break;
+                    }
+                }else{
+                     break;
+                }
+
 
                 fecha_tran = fields[0].trim();//A
                 claim_code = fields[1].trim();
@@ -300,14 +314,23 @@ public class ClarificationLoadController extends BaseController {
                 monto = fields[8].trim();//I
                 if(monto.contains("\"")){
                     comma_in_amt = true;
-                    monto = fields[8].trim()+fields[9].trim(); 
-                    monto = monto.replaceAll("\"", "");
-                    i=1;
+                    if(fields[9].trim().contains("\"")){
+                        monto = fields[8].trim()+fields[9].trim();
+                        i=1;
+                    }else{
+                        if(fields[10].trim().contains("\"")){
+                            monto = fields[8].trim()+fields[9].trim()+fields[10].trim(); 
+                            i=2;
+                        }
+                    }
+                    if(i > 0){
+                        monto = monto.replaceAll("\"", "");
+                    }
                 }
                 
                 moneda = fields[9+i].trim();
-                estatus = fields[10+i].trim();
-                motivo = fields[11+i].trim();
+                estatus = reemplazarCaracteresRaros(fields[10+i].trim());
+                motivo = reemplazarCaracteresRaros(fields[11+i].trim());
                 fecha_venc = fields[12+i].trim();
                 emisor = fields[13+i].trim();
                 procesador = fields[14+i].trim();
@@ -326,6 +349,9 @@ public class ClarificationLoadController extends BaseController {
 //                            msj = " fecha_tran (A) FORMATO FECHA" + e.getMessage();
 //                        }
                         fecha_tran = convertirFecha(fecha_tran);
+                        if(fecha_tran.equals("error formato fecha")){
+                            msj = " fecha_tran (A) FORMATO FECHA";
+                        }
                     }else{
                         msj = " fecha_tran (A) FORMATO FECHA";
                     }
@@ -386,6 +412,9 @@ public class ClarificationLoadController extends BaseController {
 //                            msj = " fecha_venc (A) FORMATO FECHA" + e.getMessage();
 //                        }
                         fecha_venc = convertirFecha(fecha_venc);
+                        if(fecha_venc.equals("error formato fecha")){
+                            msj = " fecha_venc (M) FORMATO FECHA";
+                        }
                     }else{
                         msj = " fecha_venc (A) FORMATO FECHA";
                     }
@@ -431,17 +460,33 @@ public class ClarificationLoadController extends BaseController {
         
     }
     
+    public String reemplazarCaracteresRaros(String input) {
+        // Cadena de caracteres original a sustituir.
+        String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+        // Cadena de caracteres ASCII que reemplazarán los originales.
+        String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+        String output = input;
+        for (int i=0; i<original.length(); i++) {
+            // Reemplazamos los caracteres especiales.
+            output = output.replace(original.charAt(i), ascii.charAt(i));
+        }//for i
+        
+        return output;
+    }
     public String convertirFecha(String fecha){
         
         String v_fecha =fecha;
-        String [] fecha_part = fecha.split("/");
+        String [] fecha_part = fecha.replaceAll(" ","").split("/");
         
-        String dia = fecha_part[0];
-        String mes = fecha_part[1];
-        String anio = fecha_part[2];
+        String dia = fecha_part[0].trim();
+        String mes = fecha_part[1].trim();
+        String anio = fecha_part[2].trim();
         
-        
-        v_fecha = anio + Functions.fillZeros(2, mes) + Functions.fillZeros(2, dia);
+        if(dia.length() !=2 ||mes.length() !=2 ||anio.length() !=4  ){
+            v_fecha="error formato fecha";
+        }else{
+            v_fecha = anio + Functions.fillZeros(2, mes) + Functions.fillZeros(2, dia);
+        }
         
         return v_fecha;
     }
