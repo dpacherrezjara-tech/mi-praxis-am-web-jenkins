@@ -135,6 +135,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
     },
     onChangeTab: function(obj, current, before) {
         meDE.paramsDE.IN_OPCION = '1';
+        console.log(current.id);
         var tabActual = current.id;
         meDE.tabName = tabActual;
         switch (tabActual) {
@@ -149,6 +150,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 break;
             case prototype.idGr+ '-tabTotal':
                 meDE.tabId = '3';
+                break;
+            case prototype.idGr+ '-tabTRFTX':
+                meDE.tabId = '4';
                 break;
         }
         this.btnSearch_click();
@@ -699,6 +703,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         var grilla = prototype.idGr+ '';
         var pag = prototype.idGr+ '';
         meDE.paramsDE.IN_GRUPO = Ext.getCmp(prototype.idGr+ '-de-lblGroup').getValue();
+        console.log(meDE.id);
         switch (meDE.tabId) {
             case '0':
                 url1 += this.url + '/loadTicket';
@@ -729,6 +734,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 grilla += '-de-gridDataTotal';
                 pag += '-de-paggin4';
                 title += 'TOTALS';
+                break;
+            case '4':
+                url1 += this.url + '/loadRftx';
+                grilla += '-de-gridDataRftx';
+                pag += '-de-paggin5';
+                title += 'RFTX';
                 break;
         }
         Ext.getCmp(meDE.tabName).setTitle(title);
@@ -787,6 +798,15 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                     }
                 });
                 dataEntryAdm.show();
+                break;
+            case prototype.idGr+ '-de-gridDataRftx':
+                var dataEntryRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
+                    id: prototype.idAdm + '-dataEntryRftx',
+                    params: {
+                        rec: rec
+                    }
+                });
+                dataEntryRftx.show();
                 break;
         }
     },

@@ -6,8 +6,8 @@
 
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
     extend: 'Ext.window.Window',
-    alias: 'widget.' + prototype.idGr+ '-dataEntryGrupo',
-    controller: prototype.idGr+ '-dataEntryGroupController',
+    alias: 'widget.' + prototype.idGr + '-dataEntryGrupo',
+    controller: prototype.idGr + '-dataEntryGroupController',
     requires: [
         'Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController'
     ],
@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
         {
             region: 'center',
             xtype: 'form',
-            id: prototype.idGr+ '-DataEntry-center',
+            id: prototype.idGr + '-DataEntry-center',
             border: false,
             layout: {
                 type: 'vbox'
@@ -83,31 +83,31 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             },
                                             items: [
                                                 {
-                                                    id: prototype.idGr+ '-de-lblGroup',
+                                                    id: prototype.idGr + '-de-lblGroup',
                                                     fieldLabel: 'Group:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblSource',
+                                                    id: prototype.idGr + '-de-lblSource',
                                                     fieldLabel: 'Source:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblIATA',
+                                                    id: prototype.idGr + '-de-lblIATA',
                                                     fieldLabel: 'IATA/Code:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblCity_Bank',
+                                                    id: prototype.idGr + '-de-lblCity_Bank',
                                                     fieldLabel: 'City/Bank:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblEndingFrom',
+                                                    id: prototype.idGr + '-de-lblEndingFrom',
                                                     fieldLabel: 'Period Ending Date:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblProcessing',
+                                                    id: prototype.idGr + '-de-lblProcessing',
                                                     fieldLabel: 'Processing Date:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblCurrency',
+                                                    id: prototype.idGr + '-de-lblCurrency',
                                                     fieldLabel: 'Currency:'
                                                 }
 
@@ -136,15 +136,15 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             },
                                             items: [
                                                 {
-                                                    id: prototype.idGr+ '-de-lblAccountDate',
+                                                    id: prototype.idGr + '-de-lblAccountDate',
                                                     fieldLabel: 'Accounting Date:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblChannel',
+                                                    id: prototype.idGr + '-de-lblChannel',
                                                     fieldLabel: 'Channel:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblNameIATA',
+                                                    id: prototype.idGr + '-de-lblNameIATA',
                                                     fieldLabel: '',
                                                     labelWidth: 0
                                                 },
@@ -170,13 +170,13 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     },
                                                     items: [
                                                         {
-                                                            id: prototype.idGr+ '-de-lblCity_Bank_Code',
+                                                            id: prototype.idGr + '-de-lblCity_Bank_Code',
                                                             fieldLabel: '',
                                                             labelWidth: 0,
                                                             width: 50
                                                         },
                                                         {
-                                                            id: prototype.idGr+ '-de-lblCountry',
+                                                            id: prototype.idGr + '-de-lblCountry',
                                                             fieldLabel: 'Country:',
                                                             labelWidth: 70,
                                                             width: 170
@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     ]
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblEndingTo',
+                                                    id: prototype.idGr + '-de-lblEndingTo',
                                                     fieldLabel: 'To:'
                                                 },
                                                 {
@@ -204,18 +204,18 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         labelStyle: 'font-weight:bold;font-size:11px;',
                                                         labelSeparator: '',
                                                         height: 25,
-                                                         readOnly: true
+                                                        readOnly: true
 
                                                     },
                                                     items: [
                                                         {
-                                                            id: prototype.idGr+ '-de-lblWeek',
+                                                            id: prototype.idGr + '-de-lblWeek',
                                                             fieldLabel: 'Week:',
                                                             labelWidth: 50,
                                                             width: 110
                                                         },
                                                         {
-                                                            id: prototype.idGr+ '-de-lblCycle',
+                                                            id: prototype.idGr + '-de-lblCycle',
                                                             fieldLabel: 'Cycle:',
                                                             labelWidth: 50,
                                                             width: 110
@@ -223,7 +223,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     ]
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblExchangeRate',
+                                                    id: prototype.idGr + '-de-lblExchangeRate',
                                                     fieldLabel: 'Exchange Rate:'
                                                 }
                                             ]
@@ -251,20 +251,20 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             },
                                             items: [
                                                 {
-                                                    id: prototype.idGr+ '-de-lblAccount',
+                                                    id: prototype.idGr + '-de-lblAccount',
                                                     fieldLabel: 'Accounting ID:',
                                                     width: 270
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblStatus',
+                                                    id: prototype.idGr + '-de-lblStatus',
                                                     fieldLabel: 'Status:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblSabreCity',
+                                                    id: prototype.idGr + '-de-lblSabreCity',
                                                     fieldLabel: 'Sabre City:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblSaleType',
+                                                    id: prototype.idGr + '-de-lblSaleType',
                                                     fieldLabel: 'Sales Type:'
                                                 },
                                                 {
@@ -284,18 +284,18 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         labelStyle: 'font-weight:bold;font-size:11px;',
                                                         labelSeparator: '',
                                                         height: 25,
-                                                         readOnly: true
+                                                        readOnly: true
 
                                                     },
                                                     items: [
                                                         {
-                                                            id: prototype.idGr+ '-de-lblCreated',
+                                                            id: prototype.idGr + '-de-lblCreated',
                                                             fieldLabel: 'Created By:',
                                                             labelWidth: 120,
                                                             width: 200
                                                         },
                                                         {
-                                                            id: prototype.idGr+ '-de-lblCreatedHour',
+                                                            id: prototype.idGr + '-de-lblCreatedHour',
                                                             fieldLabel: '',
                                                             labelWidth: 0,
                                                             width: 70
@@ -319,18 +319,18 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         labelStyle: 'font-weight:bold;font-size:11px;',
                                                         labelSeparator: '',
                                                         height: 25,
-                                                         readOnly: true
+                                                        readOnly: true
 
                                                     },
                                                     items: [
                                                         {
-                                                            id: prototype.idGr+ '-de-lblUpdated',
+                                                            id: prototype.idGr + '-de-lblUpdated',
                                                             fieldLabel: 'Updated By:',
                                                             labelWidth: 120,
                                                             width: 200
                                                         },
                                                         {
-                                                            id: prototype.idGr+ '-de-lblUpdatedHour',
+                                                            id: prototype.idGr + '-de-lblUpdatedHour',
                                                             fieldLabel: '',
                                                             labelWidth: 0,
                                                             width: 70
@@ -355,18 +355,18 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         labelStyle: 'font-weight:bold;font-size:11px;',
                                                         labelSeparator: '',
                                                         height: 25,
-                                                         readOnly: true
+                                                        readOnly: true
 
                                                     },
                                                     items: [
                                                         {
-                                                            id: prototype.idGr+ '-de-lblAssigned',
+                                                            id: prototype.idGr + '-de-lblAssigned',
                                                             fieldLabel: '',
                                                             labelWidth: 120,
                                                             width: 200
                                                         },
                                                         {
-                                                            id: prototype.idGr+ '-de-lblAssignedHour',
+                                                            id: prototype.idGr + '-de-lblAssignedHour',
                                                             fieldLabel: '',
                                                             labelWidth: 0,
                                                             width: 70
@@ -392,24 +392,24 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                 width: 190,
                                                 labelWidth: 80,
                                                 labelSeparator: '',
-                                                 readOnly: true
+                                                readOnly: true
                                                         //height: 25
                                             },
                                             items: [
                                                 {
-                                                    id: prototype.idGr+ '-de-lblPoliza',
+                                                    id: prototype.idGr + '-de-lblPoliza',
                                                     fieldLabel: 'Policy:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblCapture',
+                                                    id: prototype.idGr + '-de-lblCapture',
                                                     fieldLabel: 'Capture:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblIdFile',
+                                                    id: prototype.idGr + '-de-lblIdFile',
                                                     fieldLabel: 'File/ID:'
                                                 },
                                                 {
-                                                    id: prototype.idGr+ '-de-lblVoidReport',
+                                                    id: prototype.idGr + '-de-lblVoidReport',
                                                     fieldLabel: 'Void Report:',
                                                     width: 160
                                                 },
@@ -433,7 +433,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     items: [
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.idGr+ '-btnClose',
+                                                            id: prototype.idGr + '-btnClose',
                                                             text: '<strong style="color:white;">Close Group<strong>',
                                                             // hidden: true,
                                                             tooltip: 'Close Group',
@@ -449,7 +449,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.idGr+ '-btnError',
+                                                            id: prototype.idGr + '-btnError',
                                                             text: '<strong style="color:white;">View Error<strong>',
                                                             tooltip: 'View Error',
                                                             cls: 'x-btn-sent',
@@ -475,7 +475,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                         },
                         {
                             xtype: 'tabpanel',
-                            id: prototype.idGr+ '-tabMain',
+                            id: prototype.idGr + '-tabMain',
                             width: 1080,
                             height: 580,
                             anchor: '100%',
@@ -490,7 +490,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                 {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
-                                    id: prototype.idGr+ '-tabTkt',
+                                    id: prototype.idGr + '-tabTkt',
                                     title: 'TKT',
                                     layout: {
                                         type: 'vbox',
@@ -503,7 +503,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            id: prototype.idGr+ '-de-panelOptions1',
+                                            id: prototype.idGr + '-de-panelOptions1',
                                             border: false,
                                             width: 1050,
                                             layout: {
@@ -513,14 +513,14 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.idGr+ '-panelFilter1',
+                                                    id: prototype.idGr + '-panelFilter1',
                                                     hidden: true,
                                                     width: 600, border: false,
                                                     layout: 'column',
                                                     items: [
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.idGr+ '-de-cmbOptionTKT',
+                                                            id: prototype.idGr + '-de-cmbOptionTKT',
                                                             margin: '5 0 5 0',
                                                             fieldLabel: 'Search By',
                                                             width: 210,
@@ -537,7 +537,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         {
                                                             xtype: 'combo',
                                                             margin: '5 0 5 5',
-                                                            id: prototype.idGr+ '-de-cmbTransactionTKT',
+                                                            id: prototype.idGr + '-de-cmbTransactionTKT',
                                                             hidden: true,
                                                             fieldLabel: '',
                                                             width: 50,
@@ -551,7 +551,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         {
                                                             xtype: 'textfield',
                                                             margin: '5 0 5 5',
-                                                            id: prototype.idGr+ '-de-txtTKTNumber',
+                                                            id: prototype.idGr + '-de-txtTKTNumber',
                                                             hidden: true,
                                                             fieldLabel: '',
                                                             width: 50,
@@ -569,7 +569,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         {
                                                             xtype: 'textfield',
                                                             margin: '5 0 5 5',
-                                                            id: prototype.idGr+ '-de-txtIata',
+                                                            id: prototype.idGr + '-de-txtIata',
                                                             hidden: true,
                                                             fieldLabel: '',
                                                             width: 40,
@@ -598,7 +598,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-first1',
+                                                                    id: prototype.idGr + '-btn-pag-first1',
                                                                     iconCls: 'prx-icon-pagination-first',
                                                                     tooltip: 'First Page',
                                                                     listeners: {
@@ -608,7 +608,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-previous1',
+                                                                    id: prototype.idGr + '-btn-pag-previous1',
                                                                     iconCls: 'prx-icon-pagination-previous',
                                                                     tooltip: 'Previous Page',
                                                                     listeners: {
@@ -618,7 +618,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-next1',
+                                                                    id: prototype.idGr + '-btn-pag-next1',
                                                                     iconCls: 'prx-icon-pagination-next',
                                                                     tooltip: 'Next Page',
                                                                     listeners: {
@@ -628,7 +628,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-last1',
+                                                                    id: prototype.idGr + '-btn-pag-last1',
                                                                     iconCls: 'prx-icon-pagination-last',
                                                                     tooltip: 'Last Page',
                                                                     listeners: {
@@ -638,7 +638,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 }
                                                                 , {
                                                                     xtype: 'pagingtoolbar',
-                                                                    id: prototype.idGr+ '-de-paggin1',
+                                                                    id: prototype.idGr + '-de-paggin1',
                                                                     pageSize: 10,
                                                                     border: false, displayInfo: false,
                                                                     hidden: true
@@ -657,7 +657,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnSearch1',
+                                                                    id: prototype.idGr + '-btnSearch1',
                                                                     iconCls: 'prx-icon-search',
                                                                     tooltip: 'Search',
                                                                     listeners: {
@@ -667,7 +667,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnFilter1',
+                                                                    id: prototype.idGr + '-btnFilter1',
                                                                     iconCls: 'prx-icon-filter',
                                                                     tooltip: 'Display filter',
                                                                     listeners: {
@@ -676,7 +676,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnExcel1',
+                                                                    id: prototype.idGr + '-btnExcel1',
                                                                     iconCls: 'prx-icon-excel',
                                                                     tooltip: 'Export to Excel',
                                                                     listeners: {
@@ -685,7 +685,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnTxt1',
+                                                                    id: prototype.idGr + '-btnTxt1',
                                                                     icon: 'resources/img/botones/txt.png',
                                                                     tooltip: 'Export TXT',
                                                                     listeners: {
@@ -694,7 +694,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnClear1',
+                                                                    id: prototype.idGr + '-btnClear1',
                                                                     iconCls: 'prx-icon-clear',
                                                                     tooltip: 'Clear Options',
                                                                     listeners: {
@@ -702,7 +702,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                     }
                                                                 },
                                                                 {xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnBack1',
+                                                                    id: prototype.idGr + '-btnBack1',
                                                                     iconCls: 'prx-icon-back',
                                                                     tooltip: 'Back',
                                                                     listeners: {
@@ -718,7 +718,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                         {
                                             xtype: 'grid',
                                             padding: '5 0 0 0',
-                                            id: prototype.idGr+ '-de-gridDataTkt',
+                                            id: prototype.idGr + '-de-gridDataTkt',
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1060,
@@ -789,7 +789,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                 {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
-                                    id: prototype.idGr+ '-tabTRfnd',
+                                    id: prototype.idGr + '-tabTRfnd',
                                     title: 'RFND',
                                     layout: 'vbox',
 //                                            {
@@ -803,7 +803,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            id: prototype.idGr+ '-de-panelOptions2',
+                                            id: prototype.idGr + '-de-panelOptions2',
                                             border: false,
                                             width: 1050,
                                             layout: //'hbox',
@@ -814,7 +814,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.idGr+ '-panelFilter2',
+                                                    id: prototype.idGr + '-panelFilter2',
                                                     width: 250,
                                                     border: false,
                                                     hidden: true,
@@ -824,7 +824,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             xtype: 'textfield',
                                                             margin: '5 0 5 0',
                                                             padding: '0 0 0 0',
-                                                            id: prototype.idGr+ '-de-txtRFNNumber',
+                                                            id: prototype.idGr + '-de-txtRFNNumber',
                                                             fieldLabel: 'Search By Ticket',
                                                             labelWidth: 95,
                                                             width: 250,
@@ -849,7 +849,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             xtype: 'toolbar', cls: 'x-toolbar-pag',
                                                             items: [
                                                                 {
-                                                                    xtype: 'button', id: prototype.idGr+ '-btn-pag-first2',
+                                                                    xtype: 'button', id: prototype.idGr + '-btn-pag-first2',
                                                                     iconCls: 'prx-icon-pagination-first',
                                                                     tooltip: 'First Page',
                                                                     listeners: {
@@ -858,7 +858,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-previous2',
+                                                                    id: prototype.idGr + '-btn-pag-previous2',
                                                                     iconCls: 'prx-icon-pagination-previous',
                                                                     tooltip: 'Previous Page',
                                                                     listeners: {
@@ -867,7 +867,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-next2',
+                                                                    id: prototype.idGr + '-btn-pag-next2',
                                                                     iconCls: 'prx-icon-pagination-next',
                                                                     tooltip: 'Next Page',
                                                                     listeners: {
@@ -876,7 +876,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-last2',
+                                                                    id: prototype.idGr + '-btn-pag-last2',
                                                                     iconCls: 'prx-icon-pagination-last',
                                                                     tooltip: 'Last Page',
                                                                     listeners: {
@@ -885,7 +885,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 }
                                                                 , {
                                                                     xtype: 'pagingtoolbar',
-                                                                    id: prototype.idGr+ '-de-paggin2',
+                                                                    id: prototype.idGr + '-de-paggin2',
                                                                     pageSize: 10,
                                                                     border: false,
                                                                     displayInfo: false,
@@ -904,7 +904,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnSearch2',
+                                                                    id: prototype.idGr + '-btnSearch2',
                                                                     iconCls: 'prx-icon-search',
                                                                     tooltip: 'Search',
                                                                     listeners: {
@@ -913,7 +913,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnFilter2',
+                                                                    id: prototype.idGr + '-btnFilter2',
                                                                     iconCls: 'prx-icon-filter',
                                                                     tooltip: 'Display filter',
                                                                     listeners: {
@@ -922,7 +922,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnAdd2',
+                                                                    id: prototype.idGr + '-btnAdd2',
                                                                     iconCls: 'prx-icon-add',
                                                                     //hidden: true,
                                                                     tooltip: 'New',
@@ -931,7 +931,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                     }
                                                                 },
                                                                 {xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnClear2',
+                                                                    id: prototype.idGr + '-btnClear2',
                                                                     iconCls: 'prx-icon-clear',
                                                                     tooltip: 'Clear Options',
                                                                     listeners: {
@@ -940,7 +940,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnBack2',
+                                                                    id: prototype.idGr + '-btnBack2',
                                                                     iconCls: 'prx-icon-back',
                                                                     tooltip: 'Back',
                                                                     listeners: {
@@ -956,7 +956,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                         {
                                             xtype: 'grid',
                                             padding: '5 0 0 0',
-                                            id: prototype.idGr+ '-de-gridDataRfnd',
+                                            id: prototype.idGr + '-de-gridDataRfnd',
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1060,
@@ -1026,12 +1026,252 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                 },
                                 // </editor-fold>
 
+                                //<editor-fold defaultstate="collapsed" desc="Tab RFTX">
+
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background: transparent',
+                                    id: prototype.idGr + '-tabTRFTX',
+                                    title: 'RFTX',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    margin: '5 5 5 5',
+                                    defaults: {
+                                        labelAlign: 'left'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.idGr + '-de-panelOptions5',
+                                            border: false,
+                                            width: 1050,
+                                            layout: {
+                                                type: 'hbox',
+                                                pack: 'end'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'panel',
+                                                    id: prototype.idGr + '-panelFilter5',
+                                                    hidden: true,
+                                                    width: 600, border: false,
+                                                    layout: 'column',
+                                                    items: [
+                                                        {
+                                                            xtype: 'textfield',
+                                                            margin: '5 0 5 0',
+                                                            padding: '0 0 0 0',
+                                                            id: prototype.idGr + '-de-txtRFNNumber',
+                                                            fieldLabel: 'Search By Ticket',
+                                                            labelWidth: 95,
+                                                            width: 250,
+                                                            labelAlign: 'left',
+                                                            enableKeyEvents: true,
+                                                            enforceMaxLength: true,
+                                                            maxLength: 10,
+                                                            maskRe: /[0-9]/,
+                                                            listeners: {
+                                                                keypress: 'onTextKeypress'
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {xtype: 'tbspacer', width: 170},
+                                                {
+                                                    xtype: 'panel',
+                                                    width: 100,
+                                                    border: false,
+                                                    items: [
+                                                        {
+                                                            xtype: 'toolbar',
+                                                            cls: 'x-toolbar-pag',
+                                                            items: [
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btn-pag-first5',
+                                                                    iconCls: 'prx-icon-pagination-first',
+                                                                    tooltip: 'First Page',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnPagFirst'
+                                                                    }
+
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btn-pag-previous5',
+                                                                    iconCls: 'prx-icon-pagination-previous',
+                                                                    tooltip: 'Previous Page',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnPagPrevious'
+                                                                    }
+
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btn-pag-next5',
+                                                                    iconCls: 'prx-icon-pagination-next',
+                                                                    tooltip: 'Next Page',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnPagNext'
+                                                                    }
+
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btn-pag-last5',
+                                                                    iconCls: 'prx-icon-pagination-last',
+                                                                    tooltip: 'Last Page',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnPagLast'
+                                                                    }
+
+                                                                }
+                                                                , {
+                                                                    xtype: 'pagingtoolbar',
+                                                                    id: prototype.idGr + '-de-paggin5',
+                                                                    pageSize: 10,
+                                                                    border: false, displayInfo: false,
+                                                                    hidden: true
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {xtype: 'tbspacer', width: 20},
+                                                {
+                                                    xtype: 'panel',
+                                                    border: true,
+                                                    items: [
+                                                        {
+                                                            xtype: 'toolbar',
+                                                            items: [
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btnSearch5',
+                                                                    iconCls: 'prx-icon-search',
+                                                                    tooltip: 'Search',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnSearch'
+                                                                    }
+
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btnFilter5',
+                                                                    iconCls: 'prx-icon-filter',
+                                                                    tooltip: 'Display filter',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnFilter'
+                                                                    }
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btnExcel5',
+                                                                    iconCls: 'prx-icon-excel',
+                                                                    tooltip: 'Export to Excel',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnExcel'
+                                                                    }
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btnTxt5',
+                                                                    icon: 'resources/img/botones/txt.png',
+                                                                    tooltip: 'Export TXT',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnTxt'
+                                                                    }
+                                                                },
+                                                                {
+                                                                    xtype: 'button',
+                                                                    id: prototype.idGr + '-btnClear5',
+                                                                    iconCls: 'prx-icon-clear',
+                                                                    tooltip: 'Clear Options',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnClear'
+                                                                    }
+                                                                },
+                                                                {xtype: 'button',
+                                                                    id: prototype.idGr + '-btnBack5',
+                                                                    iconCls: 'prx-icon-back',
+                                                                    tooltip: 'Back',
+                                                                    listeners: {
+                                                                        click: 'onClickBtnBack'
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'grid',
+                                            padding: '5 0 0 0',
+                                            id: prototype.idGr + '-de-gridDataRftx',
+                                            bodyStyle: 'background: #E5ECEF',
+                                            height: 550,
+                                            width: 1060,
+                                            columnLines: true,
+                                            resizable: false,
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    resizable: true,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Air', width: 50, dataIndex: 'A4373CIA'},
+                                                    {text: 'Document', width: 80, dataIndex: 'DOCUMENTO'},
+                                                    {text: 'Coupons', width: 80,
+                                                        renderer: function (value, metaData,record) {
+                                                            let coupons = record.data.A4373CUPN1 +  record.data.A4373CUPN2 + record.data.A4373CUPN3+ record.data.A4373CUPN4;
+                                                            return coupons;
+                                                        }
+                                                    },
+                                                    {text: 'Issue<br> Date', width: 70, dataIndex: 'A4373FECVT'},
+                                                    {text: 'CNJ', width: 60, dataIndex: 'CNJ'},
+                                                    {text: 'Transaction', width: 80, dataIndex: 'A4373TRNCU'},
+                                                    {text: 'Document<br> Type', dataIndex: 'A7373TDOC', width: 70},
+                                                    {text: 'Type', dataIndex: 'A4373UFORM', width: 50},
+                                                    {text: 'TAX<br> Currency', width: 80, dataIndex: 'A4373MDTX'},
+                                                    {text: 'TAX Amount', width: 90, dataIndex: 'A4373TTAX'},
+                                                    {text: 'Error', dataIndex: 'A4373MIAER', width: 75},
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        text: '',
+                                                        width: 40,
+                                                        align: 'center',
+                                                        items: [
+                                                            {iconCls: 'prx-icon-edit',
+                                                                tooltip: 'Edit',
+                                                                handler: 'onEditClick'
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }, viewConfig: {
+                                                //trackOver: false,
+                                                stripeRows: true,
+                                                enableTextSelection: true
+                                            }
+                                        }
+                                    ]
+                                },
+
+                                //</editor-fold>
+
+
                                 // <editor-fold defaultstate="collapsed" desc="Tab ADM/ACM">
 
                                 {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
-                                    id: prototype.idGr+ '-tabAdm',
+                                    id: prototype.idGr + '-tabAdm',
                                     title: 'ADM/ACM',
                                     layout: {
                                         type: 'vbox',
@@ -1044,7 +1284,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            id: prototype.idGr+ '-de-panelOptions3',
+                                            id: prototype.idGr + '-de-panelOptions3',
                                             border: false,
                                             width: 1050,
                                             layout: {
@@ -1054,7 +1294,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.idGr+ '-panelFilter3',
+                                                    id: prototype.idGr + '-panelFilter3',
                                                     hidden: true,
                                                     width: 600,
                                                     border: false,
@@ -1062,7 +1302,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     items: [
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.idGr+ '-de-cmbOptionADM',
+                                                            id: prototype.idGr + '-de-cmbOptionADM',
                                                             margin: '5 0 5 0',
                                                             //                                                            disabled: true,
                                                             fieldLabel: 'Search By',
@@ -1079,7 +1319,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         {
                                                             xtype: 'combo',
                                                             margin: '5 0 5 5',
-                                                            id: prototype.idGr+ '-de-cmbTransactionADM',
+                                                            id: prototype.idGr + '-de-cmbTransactionADM',
                                                             hidden: true,
                                                             fieldLabel: '',
                                                             width: 100,
@@ -1092,7 +1332,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                         {
                                                             xtype: 'textfield',
                                                             margin: '5 0 5 5',
-                                                            id: prototype.idGr+ '-de-txtADMNumber',
+                                                            id: prototype.idGr + '-de-txtADMNumber',
                                                             hidden: true,
                                                             fieldLabel: '',
                                                             width: 100,
@@ -1121,7 +1361,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-first3',
+                                                                    id: prototype.idGr + '-btn-pag-first3',
                                                                     iconCls: 'prx-icon-pagination-first',
                                                                     tooltip: 'First Page',
                                                                     listeners: {
@@ -1131,7 +1371,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-previous3',
+                                                                    id: prototype.idGr + '-btn-pag-previous3',
                                                                     iconCls: 'prx-icon-pagination-previous',
                                                                     tooltip: 'Previous Page',
                                                                     listeners: {
@@ -1141,7 +1381,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-next3',
+                                                                    id: prototype.idGr + '-btn-pag-next3',
                                                                     iconCls: 'prx-icon-pagination-next',
                                                                     tooltip: 'Next Page',
                                                                     listeners: {
@@ -1151,7 +1391,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btn-pag-last3',
+                                                                    id: prototype.idGr + '-btn-pag-last3',
                                                                     iconCls: 'prx-icon-pagination-last',
                                                                     tooltip: 'Last Page',
                                                                     listeners: {
@@ -1161,7 +1401,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 }
                                                                 , {
                                                                     xtype: 'pagingtoolbar',
-                                                                    id: prototype.idGr+ '-de-paggin3',
+                                                                    id: prototype.idGr + '-de-paggin3',
                                                                     pageSize: 10,
                                                                     border: false,
                                                                     displayInfo: false,
@@ -1181,7 +1421,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnSearch3',
+                                                                    id: prototype.idGr + '-btnSearch3',
                                                                     iconCls: 'prx-icon-search',
                                                                     tooltip: 'Search',
                                                                     listeners: {
@@ -1190,7 +1430,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnFilter3', iconCls: 'prx-icon-filter',
+                                                                    id: prototype.idGr + '-btnFilter3', iconCls: 'prx-icon-filter',
                                                                     tooltip: 'Display filter',
                                                                     listeners: {
                                                                         click: 'onClickBtnFilter'
@@ -1198,7 +1438,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnClear3',
+                                                                    id: prototype.idGr + '-btnClear3',
                                                                     iconCls: 'prx-icon-clear',
                                                                     tooltip: 'Clear Options',
                                                                     listeners: {
@@ -1207,7 +1447,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr+ '-btnBack3',
+                                                                    id: prototype.idGr + '-btnBack3',
                                                                     iconCls: 'prx-icon-back',
                                                                     tooltip: 'Back',
                                                                     listeners: {
@@ -1223,7 +1463,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                         {
                                             xtype: 'grid',
                                             padding: '5 0 0 0',
-                                            id: prototype.idGr+ '-de-gridDataAdm',
+                                            id: prototype.idGr + '-de-gridDataAdm',
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 960,
@@ -1287,7 +1527,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     //title: '<label style="color:#0B333C;font-size:12px;">TOTALS</label>',
                                     title: 'TOTALS',
-                                    id: prototype.idGr+ '-tabTotal',
+                                    id: prototype.idGr + '-tabTotal',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'
