@@ -272,7 +272,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     margin: '0 0 0 10',
                                     padding: '4 0',
                                     width: 100,
-
                                 },
                                 {xtype: 'tbspacer', width: 3},
                                 {
@@ -678,7 +677,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     margin: '0 0 0 10',
                                     padding: '4 0',
                                     width: 100,
-
                                 },
                                 {xtype: 'tbspacer', width: 3},
                                 {
@@ -1233,12 +1231,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                 }
                                             },
                                             /*{text: 'Sales<br>Amount', dataIndex: 'SVFOP', width: 70, hidden: true,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },*/
+                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:right;";
+                                             value = Ext.util.Format.number(value, '0,000.00');
+                                             return value;
+                                             }
+                                             },*/
                                             {text: 'Sales<br>Date', dataIndex: 'SDATE', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
@@ -1268,65 +1266,141 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                                 }
                                             },
                                             /*
-                                            {
-                                                header: 'Del.',
-                                                dataIndex: '',
-                                                xtype: 'widgetcolumn',
-                                                align: 'center',
-                                                width: 40,
-                                                widget: {
-                                                    xtype: 'button',
-                                                    icon: 'resources/img/icon/delete.png',
-                                                    tooltip: 'remove',
-                                                    listeners: {
-                                                        click: function (button, e, eOpts) {
-                                                            var record = button.getWidgetRecord();
-                                                            if (record.data.FDESGLOSE !== '1') {
-                                                                meDE.removeTKT(record);
-                                                            }
-
-                                                        }
-                                                    }
-                                                }
-
-                                            },
-                                            {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                width: 30,
-                                                text: 'Fill',
-                                                align: 'center',
-                                                items: [
-                                                    {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Fill TKT & PNR',
-                                                        handler: 'onTktPnr'
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                width: 40,
-                                                text: 'Adj.',
-                                                align: 'center',
-                                                items: [
-                                                    {
-                                                        iconCls: 'prx-icon-add',
-                                                        tooltip: 'Create adjustment',
-                                                        handler: 'onAdjust'
-                                                    }
-                                                ]
-                                            }
-                                            */
+                                             {
+                                             header: 'Del.',
+                                             dataIndex: '',
+                                             xtype: 'widgetcolumn',
+                                             align: 'center',
+                                             width: 40,
+                                             widget: {
+                                             xtype: 'button',
+                                             icon: 'resources/img/icon/delete.png',
+                                             tooltip: 'remove',
+                                             listeners: {
+                                             click: function (button, e, eOpts) {
+                                             var record = button.getWidgetRecord();
+                                             if (record.data.FDESGLOSE !== '1') {
+                                             meDE.removeTKT(record);
+                                             }
+                                             
+                                             }
+                                             }
+                                             }
+                                             
+                                             },
+                                             {
+                                             sortable: false,
+                                             xtype: 'actioncolumn',
+                                             width: 30,
+                                             text: 'Fill',
+                                             align: 'center',
+                                             items: [
+                                             {
+                                             iconCls: 'prx-icon-edit',
+                                             tooltip: 'Fill TKT & PNR',
+                                             handler: 'onTktPnr'
+                                             }
+                                             ]
+                                             },
+                                             {
+                                             sortable: false,
+                                             xtype: 'actioncolumn',
+                                             width: 40,
+                                             text: 'Adj.',
+                                             align: 'center',
+                                             items: [
+                                             {
+                                             iconCls: 'prx-icon-add',
+                                             tooltip: 'Create adjustment',
+                                             handler: 'onAdjust'
+                                             }
+                                             ]
+                                             }
+                                             */
                                         ]
                                     }
-                                },                                
+                                },
                             ]
                         }
                     ]
                 },
                 //</editor-fold>
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-panelBpo',
+                    layout: 'hbox',
+                    hidden: true,
+                    border: false,
+                    bodyStyle: 'background:#E5ECEF;',
+                    items: [
+                        {
+                            xtype: 'label',
+                            text: 'Bpo Rev.',
+                            textAlign: 'center',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            margin: '4 4 4 4',
+                            width: 70
+                        },
+                        {xtype: 'tbspacer', width: 2},
+                        {
+                            xtype: 'button',
+                            width: 25,
+                            id: prototype.id + '-openBpoObserv',
+                            //margin: '4 4 4 4',
+                            //iconCls: 'prx-icon-add',
+                            icon: 'resources/img/botones/facsimil.png',
+                            tooltip: 'BPO Rev.',
+                            listeners: {
+                                click: 'bpoRev_keyDownHandler'
+                            }
+
+                        },
+                        {xtype: 'tbspacer', width: 2},
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-closeBpoObserv',
+                            hidden: true,
+                            width: 25,
+                            //margin: '4 4 4 4',
+                            //iconCls: 'prx-icon-add',
+                            icon: 'resources/img/botones/cancel.png',
+                            tooltip: 'Close BPO Rev.',
+                            listeners: {
+                                click: 'closeBpoRev_keyDownHandler'
+                            }
+
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-panelBpoObserv',
+                    layout: 'hbox',
+                    hidden: true,
+                    border: false,
+                    //margin: '0 2 0 2',
+                    bodyStyle: 'background:#E5ECEF;',
+                    items: [
+                        {
+                            xtype: 'label',
+                            text: 'BPO Observation',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            margin: '4 4 4 4',
+                            width: 120
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-de-txtBpoOBSERV-RO',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            fieldStyle: 'text-align:left;',
+                            enforceMaxLength: true,
+                            readOnly: false,
+                            maxLength: 50,
+                            width: 320,
+                        },
+                    ]
+                },
                 //<editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'fieldset',
@@ -1497,6 +1571,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onUpdateClick'
+                    }
+                }, 
+                {xtype: 'tbspacer', width: 15},
+                {
+                    text: 'Update',
+                    id: prototype.id + '-2-btnUpdateBpoRev',
+                    hidden: true,
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateClickBpoRev'
                     }
                 },
                 {xtype: 'tbspacer', width: 15},

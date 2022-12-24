@@ -38,6 +38,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
                 if (this.bean.STVAL === '5') { //Match Manual
                     this.configurarAjuste();
                 }
+                if (this.bean.STVAL === '2') { //Sales w/o Reconciliation
+                    this.configurarBpoRev();
+                }
         }
     },
     limpiarData: function () {
@@ -110,8 +113,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue('2-txtADATEXP', this.bean.ADATEXP.trim());
         win.setValue("2-txtAAUTHOC", this.bean.AAUTHOC.trim());
         win.setValue("2-txtAPNR", this.bean.APNR.trim());
-        win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());                       
+        win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());
         win.setValue("de-txtOBSERV", this.bean.OBSERV);
+        win.setValue("de-txtBpoOBSERV-RO", this.bean.OBSERV_BPO);
+        
+        if (this.bean.OBSERV_BPO !== ''){
+            Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
+        }
 
         if (this.bean.strDescMerchn.trim() !== '') {
             win.setValue('2-txtMERCHN', this.bean.MERCHN.trim() + ' - ' + this.bean.strDescMerchn.trim());
@@ -188,14 +196,68 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
                 Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 //                console.log(res);
-                if (res.success) {                    
-                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();      
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();
                 } else {
                     global.Msg({msg: res.msjOption});
-                    
+
                 }
 
             }
         });
     },
+    configurarBpoRev: function () {
+        Ext.getCmp(prototype.id + '-panelBpo').setVisible(true);        
+    },
+    bpoRev_keyDownHandler: function () {
+        Ext.getCmp(prototype.id + '-panelBpoObserv').setVisible(true);
+        Ext.getCmp(prototype.id + '-closeBpoObserv').setVisible(true);
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(true);
+    },
+    closeBpoRev_keyDownHandler: function () {
+        Ext.getCmp(prototype.id + '-panelBpoObserv').setVisible(false);
+        Ext.getCmp(prototype.id + '-closeBpoObserv').setVisible(false);
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(false);
+    },
+    onUpdateClickBpoRev: function (btn) {
+        this.bean.OBSERV_BPO = win.getValue('de-txtBpoOBSERV-RO');
+
+        var beanString = JSON.stringify(this.bean);
+
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            meDE.BpoRevA4164(beanString);
+                        }
+                    }
+                });
+    },
+    BpoRevA4164: function (beanString) {
+        console.log(this.bean);
+        Ext.Ajax.request({
+            url: prototype.url + '/MaintenanceBpoRevA4164',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();
+                } else {
+                    global.Msg({msg: res.msjOption});
+                }
+            }
+        });
+    }
 });

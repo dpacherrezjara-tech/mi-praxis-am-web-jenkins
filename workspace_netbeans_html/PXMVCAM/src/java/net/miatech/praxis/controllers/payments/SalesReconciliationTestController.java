@@ -76,7 +76,7 @@ public class SalesReconciliationTestController extends BaseController {
         }
         return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "/searchCopy")
     public @ResponseBody
     String searchCopy(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -150,7 +150,6 @@ public class SalesReconciliationTestController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04340(filter);
 
-            
             map.put("success", true);
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
@@ -169,7 +168,7 @@ public class SalesReconciliationTestController extends BaseController {
         }
         return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "/searchDetCountryCopy")
     public @ResponseBody
     String searchDetCountryCopy(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -261,7 +260,7 @@ public class SalesReconciliationTestController extends BaseController {
         }
         return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "/searchDetCardCodeCopy")
     public @ResponseBody
     String searchDetCardCodeCopy(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -330,7 +329,7 @@ public class SalesReconciliationTestController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A4164Filter> listaData = logic.loadPX584SQP04345(filter);
@@ -582,7 +581,7 @@ public class SalesReconciliationTestController extends BaseController {
         }
         return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     //Drill Down por Estado ****************************************************
     @RequestMapping(value = "/searchDetCountryByStval_1")
     public @ResponseBody
@@ -915,7 +914,7 @@ public class SalesReconciliationTestController extends BaseController {
         }
         return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "getMoneda")
     public @ResponseBody
     String getMoneda(ModelMap map, HttpServletRequest request) {
@@ -965,6 +964,43 @@ public class SalesReconciliationTestController extends BaseController {
         }
         return lst;
 
+    }
+
+    @RequestMapping(value = "MaintenanceBpoRevA4164")
+    public @ResponseBody
+    String MaintenanceBpoRevA4164(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by Ticket : MaintenanceBpoRevA4164-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4164Filter filter = new A4164Filter();
+            A4164Filter result = new A4164Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4164Filter.class);
+
+            LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX584SQP04752(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
     }
 
 //    @RequestMapping(value = "getXLSX")
