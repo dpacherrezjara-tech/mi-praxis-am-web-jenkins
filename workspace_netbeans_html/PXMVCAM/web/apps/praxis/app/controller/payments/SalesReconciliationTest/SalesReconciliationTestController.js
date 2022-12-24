@@ -1765,7 +1765,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
 
                     if (beanCons !== undefined && beanCons.strTicket !== '') {
                         var DataEntryTicket = Ext.create('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket', {
-                            id: 'DataEntryTicketSalesReconciliationTestForm'
+                            id: prototype.id + '-DataEntryTicketSalesReconciliationTestForm'
                         });
                         var controller = DataEntryTicket.getController();
                         controller.bean = beanCons;

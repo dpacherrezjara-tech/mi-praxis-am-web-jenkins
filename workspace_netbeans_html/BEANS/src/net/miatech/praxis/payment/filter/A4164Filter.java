@@ -110,6 +110,7 @@ public class A4164Filter extends A4164 {
     public String DATET = "";
     public String TVENTA = "";
     public int NAID = 0;
+    public String OBSERV_BPO = "";
     public String strTVENTA = "";
     public String strTitulo = "";
     public String strMoneda = "";
