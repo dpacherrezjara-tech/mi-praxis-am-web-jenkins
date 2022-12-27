@@ -4,6 +4,7 @@
  */
 package net.miatech.beans;
 
+import java.sql.Array;
 import net.miatech.praxis.flown.A1971;
 
 /**
@@ -124,6 +125,8 @@ public class A1971Filter extends A1971 {
     public String strMonthB = "";
     public String strYearB = "";
     public String strValueB = "";
+    public double Angle = 0;
+    public double AngleB = 0;
     public String DFLIGHTB = "";
     public double VCPN_JB = 0;
     public long QTYPAX_JB = 0;
@@ -131,6 +134,21 @@ public class A1971Filter extends A1971 {
     public long QTYPAX_YB = 0;
     public double VCPNB = 0;
     public long QTYPAXB = 0;
+    public long QFLIGHTB = 0;
+    public double VCPNONB = 0;
+    public long QCPNONB = 0;
+    public double VCPNOALB = 0;
+    public long QCPNOALB = 0;
+    public double VCPNNFB = 0;
+    public long QCPNNFB = 0;
+    public double VCPNNF = 0;
+    public long QCPNNF = 0;
+    public long QFLIGHT = 0;
+    public int MESES = 0;
     public String strFormatDateB = "";
+    public double TOVCPNONB = 0;
+    public double TOVCPNON = 0;
+    public double TOVCPNOALB = 0;
+    public double TOVCPNOAL = 0;
     public Pagination page = new Pagination();
 }
