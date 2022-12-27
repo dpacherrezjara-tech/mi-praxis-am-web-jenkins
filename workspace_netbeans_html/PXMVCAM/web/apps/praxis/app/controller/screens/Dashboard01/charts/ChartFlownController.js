@@ -132,6 +132,38 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                     if (res.success) {
                         if (obj.data.length > 0) {
                             var obj = obj.data.items[0].data;
+                            console.log(res.data.length);
+                            
+                            var lstTot_piePB = [];
+                            var item_pie1PB = {};
+                            for (var k = 0; k < res.data.length; k++){
+                                item_pie1PB.VCPNB = res.data[k].VCPNB;
+                                item_pie1PB.strValueB = res.data[k].strValueB;
+                                lstTot_piePB.push(item_pie1PB);
+                                item_pie1PB = {};
+                            }
+                            console.log(lstTot_piePB);
+                             var storeDataTotales_piePB = Ext.create('Ext.data.Store', {
+                                data: lstTot_piePB,
+                                autoLoad: true
+                            });
+                            Ext.getCmp(prototype.id + '-displayFOChartPB').bindStore(storeDataTotales_piePB);
+                           
+                           var lstTot_pieP = [];
+                            var item_pie1P = {};
+                            for (var k = 0; k < res.data.length; k++){
+                                item_pie1P.VCPN = res.data[k].VCPN;
+                                item_pie1P.strValue = res.data[k].strValue;
+                                lstTot_pieP.push(item_pie1P);
+                                item_pie1P = {};
+                            }
+                            console.log(lstTot_pieP);
+                             var storeDataTotales_pieP = Ext.create('Ext.data.Store', {
+                                data: lstTot_pieP,
+                                autoLoad: true
+                            });
+                            Ext.getCmp(prototype.id + '-displayFOChartP').bindStore(storeDataTotales_pieP);
+                           
                             Ext.getCmp(prototype.id + '-displayFOChartP').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + obj.strYear + '</center>');
                             Ext.getCmp(prototype.id + '-displayFOChartPB').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + obj.strYearB + '</center>');
                             var vsy = '<a style="color:#209938;">' + obj.strYear + '</a>'
@@ -151,9 +183,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         Ext.getCmp(prototype.id + '-gridData_boxChartFlownB').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartC').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartA').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-displayFOChartP').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFOChartP2').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-displayFOChartPB').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
 
     },
@@ -214,7 +244,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                             lstTot_pieNF.push(item_pie1NF);
                             item_pie2NF.AngleNF = lstTotalesPieNF.TOVCPNOAL; 
                             lstTot_pieNF.push(item_pie2NF);
-                            
+                        
                             var storeDataTotales_pie = Ext.create('Ext.data.Store', {
                                 data: lstTot_pie,
                                 autoLoad: true
