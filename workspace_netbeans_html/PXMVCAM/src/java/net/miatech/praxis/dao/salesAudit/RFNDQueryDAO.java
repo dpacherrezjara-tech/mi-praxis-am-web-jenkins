@@ -126,6 +126,11 @@ public class RFNDQueryDAO {
                 objRtn.STOEN = rs01.getInt("STOEN");
                 objRtn.STORET = rs01.getInt("STORET");
                 objRtn.TOTALSTO = rs01.getInt("STOEN") + rs01.getInt("STORET");
+                //RFND FINANCIERO EN SABRE
+                objRtn.RFNDSABRE = rs01.getInt("RFNDSABRE");
+                objRtn.RFNDSABRET = rs01.getInt("RFNDSABRET");
+                objRtn.TOTALSABRET = rs01.getInt("RFNDSABRE") + rs01.getInt("RFNDSABRET");
+                //
                 objRtn.A3647DIAS = rs01.getString("DIAS");
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -255,7 +260,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648XFEE = rs01.getString("A3648XFEE");
                 objRtn.A3648XERES = rs01.getString("A3648XERES");
                 objRtn.A3648XLKTS = rs01.getString("A3648XLKTS");
-                 objRtn.A3648SFW = rs01.getString("A3648SFW");
+                objRtn.A3648SFW = rs01.getString("A3648SFW");
                 //masivos
                 objRtn.A3648TRNCM = rs01.getString("A3648TRNCM");
                 objRtn.A3648MMDA = rs01.getString("A3648MMDA");
@@ -1011,7 +1016,7 @@ public class RFNDQueryDAO {
 
         return STR_RESULT;
     }
-    
+
     public List<A3669Filter> SearchDetailError(A3669Filter filter) throws SQLException, Exception {
         List<A3669Filter> lstRtn = new ArrayList<A3669Filter>(0);
         A3669Filter objRtn;

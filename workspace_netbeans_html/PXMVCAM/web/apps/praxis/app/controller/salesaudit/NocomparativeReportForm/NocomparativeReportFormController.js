@@ -410,7 +410,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.NocomparativeReportForm.Nocomparati
         var rec = store.getAt(rowIndex);
 
         me.bean2.IN_DATEFROM = rec.data.A3951FREGI;
-        me.bean2.IN_DATETO = rec.data.A3951FREGI;
+        me.bean2.IN_DATETO = rec.data.A3951PERIO;
         me.bean2.IN_OPTION = '3';
         me.bean2.IN_TYPE = '0';
         me.bean2.IN_IATA = Ext.getCmp(prototype.idnocompara + '-txtiata').getValue();
