@@ -519,6 +519,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -1090,6 +1091,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -1612,6 +1614,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
@@ -3127,6 +3130,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -3973,6 +3977,8 @@ public class LoadConciliationTestDAO {
                 filter.STVAL = "4";
             } else if (filter.STVAL.trim().equals("Match Manual")) {
                 filter.STVAL = "5";
+            } else if (filter.STVAL.trim().equals("Stand By")) {
+                filter.STVAL = "6";
             }
         }
 
@@ -4173,6 +4179,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         if (!filter.IN_STVAL.equals("2")) {
             filter.APAYMENT = filter.SPAYMENT;
@@ -4452,6 +4459,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -4714,6 +4722,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04341(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -4882,6 +4891,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04342(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -5043,6 +5053,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -5157,6 +5168,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
