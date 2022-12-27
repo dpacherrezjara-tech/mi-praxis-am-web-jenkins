@@ -476,17 +476,28 @@ public class ClarificationLoadController extends BaseController {
     public String convertirFecha(String fecha){
         
         String v_fecha =fecha;
-        String [] fecha_part = fecha.replaceAll(" ","").split("/");
-        
-        String dia = fecha_part[0].trim();
-        String mes = fecha_part[1].trim();
-        String anio = fecha_part[2].trim();
-        
-        if(dia.length() !=2 ||mes.length() !=2 ||anio.length() !=4  ){
-            v_fecha="error formato fecha";
-        }else{
-            v_fecha = anio + Functions.fillZeros(2, mes) + Functions.fillZeros(2, dia);
+        try {
+            String [] fecha_part = fecha.replaceAll(" ","").split("/");
+
+            String dia = fecha_part[0].trim();
+            String mes = fecha_part[1].trim();
+            String anio = fecha_part[2].trim();
+
+            String anio_actual = Functions.getFechaActual();
+
+            if(anio.length()!=4){//Si es diferente a 4 vino formato YY
+                anio = anio_actual.substring(0, 2) + anio.substring(0, 2);
+            }
+
+            if(dia.length() !=2 ||mes.length() !=2 ||anio.length() !=4 || Integer.parseInt(mes)>12 ){
+                v_fecha="error formato fecha";
+            }else{
+                v_fecha = anio + Functions.fillZeros(2, mes) + Functions.fillZeros(2, dia);
+            }
+        }catch (Exception e) {
+                v_fecha="error formato fecha";
         }
+        
         
         return v_fecha;
     }
