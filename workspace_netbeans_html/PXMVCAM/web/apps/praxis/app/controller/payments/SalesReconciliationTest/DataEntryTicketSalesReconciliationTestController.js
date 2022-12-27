@@ -254,6 +254,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
 //                console.log(res);
                 if (res.success) {
                     Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').close();
                 } else {
                     global.Msg({msg: res.msjOption});
                 }

@@ -174,7 +174,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     ["2", "Sales without Reconciliation"],
                                     ["3", "Reconciliation without Sales"],
                                     ["4", "Match with Differences"],
-                                    ["5", "Match Manual"]
+                                    ["5", "Match Manual"],
+                                    ["6", "Stand By"]
                                 ]
                             }),
                             fieldStyle: 'color:#074066;',
