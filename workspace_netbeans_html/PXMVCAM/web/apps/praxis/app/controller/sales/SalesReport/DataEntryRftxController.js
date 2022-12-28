@@ -15,7 +15,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     objTax: [],
     objFop: [],
     objTot: {},
-    objFC:[],
     //</editor-fold>
     /**
      * Constructor
@@ -345,35 +344,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     onFareCalc: async function (obj) {
         let lblDocumento = Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
         if (lblDocumento !== '') {
-            this.objFC = await fetch(this.url + '/getRftxFc', {
-                method: 'POST',
-                body: this.getRequestParams(),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-                let resObj;
-                switch (res.status) {
-                    case 200:
-                        resObj = res.json();
-                        break;
-                    case 204:
-                        console.log("Sin contenido");
-                        resObj = [];
-                        break;
-                    default :
-                        resObj = [];
-                        break;
-                }
-                return resObj;
-            }).catch(err => {
-                console.error('Error en fetch', err);
-                return null;
-            });
-            console.log(this.objFC);
             let win = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx', {
                 params: {
-                    fareCalc: this.objFC
+                    body:this.getRequestParams()
                 }
             });
             win.show();

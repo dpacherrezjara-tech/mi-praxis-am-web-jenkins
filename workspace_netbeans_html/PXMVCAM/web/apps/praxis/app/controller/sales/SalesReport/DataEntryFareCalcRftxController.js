@@ -18,32 +18,32 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryFareCalcRftxControl
         Ext.getCmp(prototype.idRftxFareCalc + '-winDataEntryFareCalcRftx').unmask();
     },
     getFareCalc: async function () {
-        this.objFC = this.view.params.fareCalc;
-//        this.objFC =  await fetch(this.urlWin + '/getRftxFc', {
-//            method: 'POST',
-//            body: body,
-//            headers: {
-//                'Content-Type': 'application/json'
-//            }
-//        }).then(res => {
-//            let resObj;
-//            switch (res.status) {
-//                case 200:
-//                    resObj = res.json();
-//                    break;
-//                case 204:
-//                    console.log("Sin contenido");
-//                    resObj = [];
-//                    break;
-//                default :
-//                    resObj = [];
-//                    break;
-//            }
-//            return resObj;
-//        }).catch(err => {
-//            console.error('Error en fetch', err);
-//            return null;
-//        });
+        let body = this.view.params.body;
+        this.objFC =  await fetch(this.urlWin + '/getRftxFc', {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            let resObj;
+            switch (res.status) {
+                case 200:
+                    resObj = res.json();
+                    break;
+                case 204:
+                    console.log("Sin contenido");
+                    resObj = [];
+                    break;
+                default :
+                    resObj = [];
+                    break;
+            }
+            return resObj;
+        }).catch(err => {
+            console.error('Error en fetch', err);
+            return null;
+        });
     },
     showFareCalc:function(){
         let fareCalc = '';

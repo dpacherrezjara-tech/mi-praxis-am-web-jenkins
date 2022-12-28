@@ -6,8 +6,6 @@
 package net.miatech.praxis.controllers.sales;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.ByteArrayInputStream;
@@ -25,7 +23,6 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import jdk.nashorn.internal.parser.JSONParser;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -75,7 +72,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONArray;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
