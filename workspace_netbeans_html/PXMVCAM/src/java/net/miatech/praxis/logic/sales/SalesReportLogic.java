@@ -21,6 +21,7 @@ import net.miatech.beans.PX036S01A1734Filter;
 import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
+import net.miatech.beans.PX036S01A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -255,5 +256,9 @@ public class SalesReportLogic {
     
     public S0001A4373TOTFilter loadS0001A4373TOT(S0001A4373TOTFilter filter) throws Exception {
         return salesReportDAO.loadS0001A4373TOT(filter);
+    }
+    
+    public List<PX036S01A4376Filter> loadPX036S01A4376Filter(PX036S01A4376Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4376Filter(filter);
     }
 }

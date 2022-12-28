@@ -801,9 +801,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 break;
             case prototype.idGr+ '-de-gridDataRftx':
                 var dataEntryRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
-                    id: prototype.idAdm + '-dataEntryRftx',
+                    id: prototype.idRftx + '-dataEntryRftx',
                     params: {
-                        rec: rec
+                        rec: rec,
+                        groupData:{...this.view.params.rec.data},
+                        exchRate: Ext.getCmp(prototype.idGr + '-de-lblExchangeRate').getValue(),
+                        locCurr: Ext.getCmp(prototype.idGr + '-de-lblCurrency').getValue()
                     }
                 });
                 dataEntryRftx.show();

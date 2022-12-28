@@ -39,6 +39,7 @@ import net.miatech.beans.PX036S01A1734Filter;
 import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
+import net.miatech.beans.PX036S01A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -2197,6 +2198,32 @@ public class SalesReportControoller extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadS0001A4373TOT(filter);
             if (res!=null) {
+                return new ResponseEntity(res,HttpStatus.OK);
+            } else {
+                throw new NullPointerException("No existen Elementos");
+            }
+        }
+        catch(NullPointerException nex){
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
+        }catch(Exception ex){
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "getRftxFc",method = RequestMethod.POST)
+    public ResponseEntity<?> getRftxFareCalc(@RequestBody Map<String,String> body){
+        logic = new SalesReportLogic();
+        List<PX036S01A4376Filter> res = new ArrayList<>();
+        PX036S01A4376Filter filter = new PX036S01A4376Filter();
+        try{
+            filter.setAIRLINE(body.get("AIRLINE"));
+            filter.setCIA(body.get("CIA"));
+            filter.setFORMA(body.get("FORMA"));
+            filter.setSERIE(body.get("SERIE"));
+            filter.setSEQ(body.get("SEQ"));
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadPX036S01A4376Filter(filter);
+            if (!res.isEmpty()) {
                 return new ResponseEntity(res,HttpStatus.OK);
             } else {
                 throw new NullPointerException("No existen Elementos");

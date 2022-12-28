@@ -27,6 +27,7 @@ import net.miatech.beans.PX036S01A1734Filter;
 import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
+import net.miatech.beans.PX036S01A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -3825,8 +3826,6 @@ public class SalesReportDAO {
                 obj.setA4374USRAC(rs.getString("A4374USRAC"));
                 obj.setA4374FECAC(rs.getString("A4374FECAC"));
                 obj.setA4374HORAC(rs.getString("A4374HORAC"));
-                obj.setA4374STMP(rs.getString("A4374STMP"));
-                obj.setA4374FECMP(rs.getString("A4374FECMP"));
 
                 lst.add(obj);
             }
@@ -3976,5 +3975,64 @@ public class SalesReportDAO {
             pasarGarbageCollector();
         }
         return obj;
+    }
+
+    //get RFTX Fare Calc
+    public List<PX036S01A4376Filter> loadPX036S01A4376Filter(PX036S01A4376Filter filter) throws Exception {
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        List<PX036S01A4376Filter> lst = new ArrayList<>();
+        String sql = "{CALL PRAXIS.PX036S01A4376(?,?,?,?,?)}";
+
+        Connection con = null;
+        try {
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = con.prepareCall(sql);
+            cs.setString(1, filter.getAIRLINE());
+            cs.setString(2, filter.getCIA());
+            cs.setString(3, filter.getFORMA());
+            cs.setString(4, filter.getSERIE());
+            cs.setString(5, filter.getSEQ());
+            cs.execute();
+            rs = cs.getResultSet();
+            while (rs.next()) {
+                PX036S01A4376Filter obj = new PX036S01A4376Filter();
+                obj.setA4376CCUST(rs.getString("A4376CCUST"));
+                obj.setA4376CIA(rs.getString("A4376CIA"));
+                obj.setA4376FORMA(rs.getString("A4376FORMA"));
+                obj.setA4376SERIE(rs.getString("A4376SERIE"));
+                obj.setA4376SEQ(rs.getString("A4376SEQ"));
+                obj.setA4376TIPO(rs.getString("A4376TIPO"));
+                obj.setA4376CORRL(rs.getString("A4376CORRL"));
+                obj.setA4376FRCA(rs.getString("A4376FRCA"));
+                obj.setA4376GRUPO(rs.getString("A4376GRUPO"));
+                obj.setA4376IDFIL(rs.getString("A4376IDFIL"));
+                obj.setA4376USRIN(rs.getString("A4376USRIN"));
+                obj.setA4376FECIN(rs.getString("A4376FECIN"));
+                obj.setA4376HORIN(rs.getString("A4376HORIN"));
+                obj.setA4376USRAC(rs.getString("A4376USRAC"));
+                obj.setA4376FECAC(rs.getString("A4376FECAC"));
+                obj.setA4376HORAC(rs.getString("A4376HORAC"));
+                lst.add(obj);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+            lst = null;
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                //try { cstmt01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+            }
+            //session.getCNXIBMDB2().close();
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lst;
     }
 }

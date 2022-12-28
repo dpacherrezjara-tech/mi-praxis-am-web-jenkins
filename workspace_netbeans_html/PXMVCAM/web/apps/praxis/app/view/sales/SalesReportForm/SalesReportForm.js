@@ -5,6 +5,7 @@ prototype.widthContenedor = 1366;
 prototype.heightContenedor = 768;
 prototype.idRfnd = 'SalesReportFormRfnd';
 prototype.idSale = 'SalesReportFormSale';
+prototype.idRftx = 'SalesReportFormRftx';
 prototype.idRfndFOP = 'SalesReportFormRfndFOP';
 prototype.idRfndTAX = 'SalesReportFormRfndTAX';
 prototype.idRfndTAXCOMM = 'SalesReportFormRfndTAXCOMM';
