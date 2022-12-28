@@ -938,7 +938,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     } else if (ctx.field === 'VCPNB') {
                                                         year = record.get('strYearB');
                                                     }
-                                                    toolTip.setHtml('Total ' + year + '-' + month + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + ' USD' + '</b>');
+                                                    toolTip.setHtml('Total ' + year + '-' + month + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + ' USD' + '</b>');
                                                 }
                                             }
                                         }]
@@ -1018,7 +1018,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleBNF',
-                                                            colors: ['#0071c1', '#93d250'],
+                                                            colors: ['#0aac52', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleBNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -1055,27 +1055,33 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            {
-                                                                text: 'Flight',
-                                                                defaults: {
-                                                                    menuDisabled: true, sortable: false, align: 'center'
-                                                                },
-                                                                columns: [
-                                                                    {text: 'Date', dataIndex: 'strFormatDateB', width: 80,
+//                                                            {
+//                                                                text: 'Flight',
+//                                                                defaults: {
+//                                                                    menuDisabled: true, sortable: false, align: 'center'
+//                                                                },
+//                                                                columns: [
+//                                                                    {text: 'Date', dataIndex: 'strFormatDateB', width: 80,
+//                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                                            metaData.style = "text-align:center";
+//                                                                            return value;
+//                                                                        }
+//                                                                    }
+//                                                                ]
+//                                                            },
+                                                            {text: 'Date', dataIndex: 'strFormatDateB', width: 80,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
                                                                         }
-                                                                    }
-                                                                ]
-                                                            },
+                                                                    },
                                                             {
-                                                                text: 'Flight',
+                                                                text: 'Total',
                                                                 defaults: {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'Q', dataIndex: 'QFLIGHTB', width: 60,
+                                                                    {text: 'Flights', dataIndex: 'QFLIGHTB', width: 60,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
@@ -1205,7 +1211,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleNF',
-                                                            colors: ['#0071c1', '#93d250'],
+                                                            colors: ['#0aac52', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -1242,27 +1248,33 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            {
-                                                                text: 'Flight',
-                                                                defaults: {
-                                                                    menuDisabled: true, sortable: false, align: 'center'
-                                                                },
-                                                                columns: [
-                                                                    {text: 'Date', dataIndex: 'strFormatDate', width: 80,
+//                                                            {
+//                                                                text: 'Flight',
+//                                                                defaults: {
+//                                                                    menuDisabled: true, sortable: false, align: 'center'
+//                                                                },
+//                                                                columns: [
+//                                                                    {text: 'Date', dataIndex: 'strFormatDate', width: 80,
+//                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                                            metaData.style = "text-align:center";
+//                                                                            return value;
+//                                                                        }
+//                                                                    }
+//                                                                ]
+//                                                            },
+                                                            {text: 'Date', dataIndex: 'strFormatDate', width: 80,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
                                                                         }
-                                                                    }
-                                                                ]
-                                                            },
+                                                                    },
                                                             {
-                                                                text: 'Flight',
+                                                                text: 'Total',
                                                                 defaults: {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'Q', dataIndex: 'QFLIGHT', width: 60,
+                                                                    {text: 'Flights', dataIndex: 'QFLIGHT', width: 60,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
@@ -1684,7 +1696,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     } else if (ctx.field === 'VCPNB') {
                                                         year = record.get('strYearB');
                                                     }
-                                                    toolTip.setHtml('Total ' + year + '-' + month + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + ' USD' + '</b>');
+                                                    toolTip.setHtml('Total ' + year + '-' + month + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + ' USD' + '</b>');
                                                 }
                                             }
                                         }]
