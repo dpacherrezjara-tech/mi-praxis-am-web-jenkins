@@ -330,7 +330,20 @@ public class ClarificationLoadController extends BaseController {
                 
                 moneda = fields[9+i].trim();
                 estatus = reemplazarCaracteresRaros(fields[10+i].trim());
-                motivo = reemplazarCaracteresRaros(fields[11+i].trim());
+                motivo = fields[11+i].trim();//reemplazarCaracteresRaros(fields[11+i].trim());//L
+                if(motivo.contains("\"")){
+                    if(fields[12+i].trim().contains("\"")){
+                        motivo = fields[11+i].trim()+ " " +fields[12+i].trim();
+                        i=i +1;
+                    }else{
+                        if(fields[13+i].trim().contains("\"")){
+                            motivo = fields[11+i].trim()+ " " +fields[12+i].trim()+ " " +fields[13+i].trim(); 
+                            i=i + 2;
+                        }
+                    }
+                    motivo = motivo.replaceAll("\"", "");
+                }
+                motivo=reemplazarCaracteresRaros(motivo);
                 fecha_venc = fields[12+i].trim();
                 emisor = fields[13+i].trim();
                 procesador = fields[14+i].trim();
@@ -353,7 +366,7 @@ public class ClarificationLoadController extends BaseController {
                             msj = " fecha_tran (A) FORMATO FECHA";
                         }
                     }else{
-                        msj = " fecha_tran (A) FORMATO FECHA";
+                        msj = " fecha_tran /(A) FORMATO FECHA";
                     }
 
                     //Columna B
@@ -416,7 +429,7 @@ public class ClarificationLoadController extends BaseController {
                             msj = " fecha_venc (M) FORMATO FECHA";
                         }
                     }else{
-                        msj = " fecha_venc (A) FORMATO FECHA";
+                        msj = " fecha_venc / (M) FORMATO FECHA";
                     }
 
                     if(msj.equals("")){
