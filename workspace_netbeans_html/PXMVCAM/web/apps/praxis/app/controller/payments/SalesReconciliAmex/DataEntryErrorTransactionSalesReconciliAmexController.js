@@ -888,7 +888,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 flag_blocked = true;
                             } else {
                                 for (var j = 0; j < meDE.lstSendManual.length; j++) {
-                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT) {
+                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT && meDE.lstSendManual[j].A1531VFOP === res.lstInfo[i].A1531VFOP) {
                                         flag_dupli = true;
                                     }
                                 }
