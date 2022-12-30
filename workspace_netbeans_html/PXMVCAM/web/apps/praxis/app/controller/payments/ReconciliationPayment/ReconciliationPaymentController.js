@@ -316,6 +316,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          fields: ['code', 'name'],
          data: [
          ["", "All"],
+         ["WP", "WorldPay"],
+         ["FIRST", "First Data"],
          ]
          }));
          cmbProT.setValue("");
@@ -326,6 +328,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          fields: ['code', 'name'],
          data: [
          ["", "All"],
+         ["CLP", "CLP"],
+         ["USD", "USD"],
          ]
          }));
          cmbCurr.setValue("");
@@ -1246,7 +1250,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
 
         this.beanSettlement.DATE = rowData.data.DATE;
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
-        this.beanSettlement.IN_MERCHID = rowData.data.MERCHID;
+        this.beanSettlement.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanSettlement.IN_SCOUNTRY_SETT = rowData.data.SCOUNTRY;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
@@ -1310,7 +1314,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
 
         this.beanSettlementTktsDetail.DATE = rowData.data.DATE;
         this.beanSettlementTktsDetail.IN_DATE = rowData.data.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = rowData.data.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = rowData.data.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = rowData.data.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = rowData.data.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = rowData.data.IN_PCURRENCY;
@@ -1690,7 +1694,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanTransaction.IN_DATE = rowData.data.IN_DATE;
 
         this.beanTransaction.strDATE = rowData.data.strDATE;
-        this.beanTransaction.IN_MERCHID = rowData.data.MERCHID;
+        this.beanTransaction.IN_MERCHID = rowData.data.PMERCHID;
         this.beanTransaction.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanTransaction.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanTransaction.SCOUNTRY = rowData.data.SCOUNTRY;
@@ -1841,7 +1845,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanPricing.IN_DATE = rowData.data.IN_DATE;
 
         this.beanPricing.strDATE = rowData.data.strDATE;
-        this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
+        this.beanPricing.IN_MERCHID = rowData.data.PMERCHID;
         this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
 
@@ -1865,7 +1869,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanPricing.IN_DATE = rowData.data.IN_DATE;
 
         this.beanPricing.strDATE = rowData.data.strDATE;
-        this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
+        this.beanPricing.IN_MERCHID = rowData.data.PMERCHID;
         this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanPricing.SCOUNTRY = rowData.data.SCOUNTRY;

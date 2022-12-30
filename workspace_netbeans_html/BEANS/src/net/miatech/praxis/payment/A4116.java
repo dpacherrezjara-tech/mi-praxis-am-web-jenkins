@@ -20,6 +20,7 @@ public class A4116 {
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
+    public String PMERCHID = "";
     public String FREGLA = "";
     public String FCOMPL = "";
     

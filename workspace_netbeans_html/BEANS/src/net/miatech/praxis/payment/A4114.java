@@ -21,6 +21,7 @@ public class A4114 {
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
+    public String PMERCHID = "";
     public String TAXTCODE = "";
     public String TAXDESCRI = "";
     public String FSELEC = "";

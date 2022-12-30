@@ -3150,7 +3150,7 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell15 = row1.createCell(15);
                 Cell rcell16 = row1.createCell(16);
 
-                rcell0.setCellValue(listaData.get(vi).MERCHID);
+                rcell0.setCellValue(listaData.get(vi).PMERCHID);
                 rcell1.setCellValue(listaData.get(vi).desCERROR);
                 rcell2.setCellValue(listaData.get(vi).SMERCHID);
                 rcell3.setCellValue(listaData.get(vi).IDITEMS);
@@ -3677,7 +3677,7 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell27 = row1.createCell(27);
                 Cell rcell28 = row1.createCell(28);
 
-                rcell0.setCellValue(listaData.get(vi).MERCHID);
+                rcell0.setCellValue(listaData.get(vi).PMERCHID);
                 rcell1.setCellValue(listaData.get(vi).desCERROR);
                 rcell2.setCellValue(listaData.get(vi).TDOC);
                 if (listaData.get(vi).TDOC.equals("S")) {
@@ -4168,7 +4168,7 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell19 = row1.createCell(19);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
-                rcell1.setCellValue(listaData.get(vi).MERCHID);
+                rcell1.setCellValue(listaData.get(vi).PMERCHID);
                 rcell2.setCellValue(listaData.get(vi).desCERROR);
                 rcell3.setCellValue(listaData.get(vi).SMERCHID);
                 rcell4.setCellValue(listaData.get(vi).INVORNBR);
@@ -4789,7 +4789,7 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell20 = row1.createCell(20);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
-                rcell1.setCellValue(listaData.get(vi).MERCHID);
+                rcell1.setCellValue(listaData.get(vi).PMERCHID);
                 rcell2.setCellValue(listaData.get(vi).desCERROR);
                 rcell3.setCellValue(listaData.get(vi).ZONA);
                 rcell4.setCellValue(listaData.get(vi).SCOUNTRY);
@@ -6918,7 +6918,7 @@ public class ReconciliationPaymentController extends BaseController {
                 rcell1.setCellValue(listaData.get(vi).DATE);
                 rcell2.setCellValue(listaData.get(vi).ZONA);
                 rcell3.setCellValue(listaData.get(vi).SCOUNTRY);
-                rcell4.setCellValue(listaData.get(vi).MERCHID);
+                rcell4.setCellValue(listaData.get(vi).PMERCHID);
                 rcell5.setCellValue(listaData.get(vi).descSTVAL);
                 rcell6.setCellValue(listaData.get(vi).descTDOC);
                 rcell7.setCellValue(listaData.get(vi).SMERCHID);
@@ -7358,7 +7358,7 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell18 = row1.createCell(18);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
-                rcell1.setCellValue(listaData.get(vi).MERCHID);
+                rcell1.setCellValue(listaData.get(vi).PMERCHID);
                 rcell2.setCellValue(listaData.get(vi).desCERROR);
                 rcell3.setCellValue(listaData.get(vi).SMERCHID);
                 rcell4.setCellValue(listaData.get(vi).BSUMDATE);

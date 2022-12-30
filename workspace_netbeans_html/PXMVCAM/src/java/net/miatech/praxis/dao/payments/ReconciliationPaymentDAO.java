@@ -781,7 +781,7 @@ public class ReconciliationPaymentDAO {
         double totSGROSAMOS = 0, totGROSAMOUN = 0, totDISCAMOUN = 0, totTAXAMOUN = 0, totNETAMOUN = 0, totSDGROSSA = 0, totSCGROSSA = 0;
         double totGROSAMOUNC = 0, totDISCAMOUNC = 0, totTAXAMOUNC = 0, totNETAMOUNC = 0, totTRANCOUNTC = 0, totTRANCOUNT = 0, totINSTANBR = 0;
         double totalParcial = 0;
-        String merchID = "";
+        String pmerchID = "";
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -859,8 +859,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
-                    merchID = beanTkt.MERCHID;
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
+                    pmerchID = beanTkt.PMERCHID;
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -929,13 +929,13 @@ public class ReconciliationPaymentDAO {
             }
             if (filter.IN_PADJAMOUN != 0) {
                 filaTotal = new A4115Filter();
-                filaTotal.MERCHID = merchID;
+                filaTotal.PMERCHID = pmerchID;
                 filaTotal.desCERROR = "Sub Total";
                 filaTotal.NETAMOUN = totalParcial;
                 lstTkts.add(filaTotal);
 
                 filaAdjustment = new A4115Filter();
-                filaAdjustment.MERCHID = merchID;
+                filaAdjustment.PMERCHID = pmerchID;
                 filaAdjustment.desCERROR = "Adjustment";
                 filaAdjustment.NETAMOUN = filter.IN_PADJAMOUN;
                 lstTkts.add(filaAdjustment);
@@ -1055,7 +1055,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -1261,7 +1261,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -1461,7 +1461,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -1622,7 +1622,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -1778,7 +1778,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -1933,7 +1933,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
@@ -2050,7 +2050,7 @@ public class ReconciliationPaymentDAO {
                 beanTkt.RN = rst.getString("RN").trim();
                 beanTkt.DATE = rst.getString(filter.IN_DATE.trim()).trim();
                 //beanTkt.PRDA = rst.getString("PRDA").trim();
-                //beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                //beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                 //beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
                 //beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
                 //beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
@@ -2190,7 +2190,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.RN = rst.getString("RN").trim();
                     beanTkt.DATE = rst.getString(filter.IN_DATE.trim()).trim();
                     //beanTkt.PRDA = rst.getString("PRDA").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
                     //beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
                     //beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
@@ -2522,7 +2522,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.IVACOM12 = rst.getDouble("IVACOM12");
 
                     beanTkt.PRDA = rst.getString("PRDA").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
@@ -2665,7 +2665,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.DATE.trim());
             cstmt.setString(3, filter.IN_DATE.trim());
-            cstmt.setString(4, filter.MERCHID.trim());
+            cstmt.setString(4, filter.PMERCHID.trim());
             cstmt.setString(5, filter.SPNR.trim());
             cstmt.setString(6, filter.ISREFNBR.trim());
             cstmt.setString(7, filter.IN_TRANSDATE.trim());
@@ -2935,7 +2935,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.CHADJNBR);
             cstmt.setString(3, filter.CHAADJCOD);
-            cstmt.setString(4, filter.MERCHID);
+            cstmt.setString(4, filter.PMERCHID);
             cstmt.setString(5, filter.SMERCHID);
             cstmt.setString(6, filter.AXPAYNBR);
             cstmt.setString(7, filter.PRDA);
@@ -2950,7 +2950,7 @@ public class ReconciliationPaymentDAO {
 
                 beanTkt = new A4116Filter();
 
-                beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                 beanTkt.ZONA = rst.getString("ZONA").trim();
                 beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
@@ -3139,7 +3139,7 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.CHADJNBR.trim());
             cstmt01.setString(3, filter.CHAADJCOD.trim());
-            cstmt01.setString(4, filter.MERCHID.trim());
+            cstmt01.setString(4, filter.PMERCHID.trim());
             cstmt01.setString(5, filter.SMERCHID.trim());
             cstmt01.setString(6, filter.AXPAYNBR.trim());
             cstmt01.setString(7, filter.PRDA.trim());
@@ -3153,7 +3153,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.CCUST = rs01.getString("CCUST");
                 objRtn.PRDA = rs01.getString("PRDA").trim();
                 objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
-                objRtn.MERCHID = rs01.getString("MERCHID").trim();
+                objRtn.PMERCHID = rs01.getString("PMERCHID").trim();
                 objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
                 objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
                 objRtn.AXPAYNBR = rs01.getString("AXPAYNBR").trim();
@@ -3345,7 +3345,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -3538,9 +3538,9 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(8, filter.IN_ZONA_ERR);
             cstmt.setString(9, filter.IN_SCOUNTRY_ERR);
             cstmt.setString(10, filter.IN_VOID);
-            cstmt.setString(11, filter.IN_PROCTYPE);
-            cstmt.setString(12, filter.IN_SCURENCY);
-            cstmt.setString(13, filter.IN_TKT);
+            cstmt.setString(11, filter.IN_PROCTYPE.trim());
+            cstmt.setString(12, filter.IN_SCURRENCY.trim());
+            cstmt.setString(13, filter.IN_TKT.trim());
             cstmt.setInt(14, filter.page.PAGNUM);   
             cstmt.setInt(15, filter.page.PAGROW);
             cstmt.setInt(16, filter.page.TOTPAG);
@@ -3704,7 +3704,7 @@ public class ReconciliationPaymentDAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.PRDA.trim());
-            cstmt01.setString(3, filter.MERCHID.trim());
+            cstmt01.setString(3, filter.PMERCHID.trim());
             cstmt01.setString(4, filter.PAYDATE.trim());
             cstmt01.setString(5, filter.PCURRENCY.trim());
             cstmt01.setString(6, filter.AXPAYNBR.trim());
@@ -3723,7 +3723,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.CCUST = rs01.getString("CCUST");
                 objRtn.PRDA = rs01.getString("PRDA").trim();
                 objRtn.RECTYPE = rs01.getString("RECTYPE").trim();
-                objRtn.MERCHID = rs01.getString("MERCHID").trim();
+                objRtn.PMERCHID = rs01.getString("PMERCHID").trim();
                 objRtn.STYPECD = rs01.getString("STYPECD").trim();
                 objRtn.AXPAYNBR = rs01.getString("AXPAYNBR").trim();
                 objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
@@ -3962,7 +3962,7 @@ public class ReconciliationPaymentDAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.PRDA.trim());
-            cstmt01.setString(3, filter.MERCHID.trim());
+            cstmt01.setString(3, filter.PMERCHID.trim());
             cstmt01.setString(4, filter.PAYDATE.trim());
             cstmt01.setString(5, filter.PCURRENCY.trim());
             cstmt01.setString(6, filter.AXPAYNBR.trim());
@@ -3995,7 +3995,7 @@ public class ReconciliationPaymentDAO {
                     cstmt01.setString(2, filter.PRDA.trim());
                     cstmt01.setString(3, filter.IDITEMS.trim());
                     cstmt01.setString(4, filter.IDITEMT.trim());
-                    cstmt01.setString(5, filter.MERCHID.trim());
+                    cstmt01.setString(5, filter.PMERCHID.trim());
                     cstmt01.setString(6, filter.PAYDATE.trim());
                     cstmt01.setString(7, filter.AXPAYNBR.trim());
                     cstmt01.setString(8, filter.BSUMDATE.trim());
