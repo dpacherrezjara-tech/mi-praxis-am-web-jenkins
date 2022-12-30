@@ -281,8 +281,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                         fieldStyle: 'text-align:left;',
                                                                         labelSeparator: ''
                                                                     },
-                                                                    items:[
-                                                                         {
+                                                                    items: [
+                                                                        {
                                                                             id: prototype.idRftx + '-det-lblMdtx',
                                                                             width: 30,
                                                                             fieldLabel: ''
@@ -802,7 +802,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             },
                                                             items: [
                                                                 {
-                                                                    xtype:'tbspacer',
+                                                                    xtype: 'tbspacer',
                                                                     width: 130
                                                                 },
                                                                 {
@@ -891,7 +891,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                 }
                                             ]
                                         },
-                                         //</editor-fold>
+                                        //</editor-fold>
                                         // PANEL 3_2 Tax / Fee
                                         {
                                             xtype: 'fieldset',
@@ -1345,6 +1345,57 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                             listeners: {
                                                 click: 'onDelivery'
                                             }
+                                        },
+                                        //{xtype: 'tbspacer', width: 150},
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background: #E5ECEF',
+                                            margin: '1',
+                                            border:true,
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'rigth',
+                                                pack: 'end'
+                                            },
+                                            flex: 1,
+                                            defaults: {
+                                                xtype: 'displayfield',
+                                                margin: '0 0 0 0',
+                                                labelWidth: 48,
+                                                labelPad: 10,
+                                                labelAlign: 'right',
+                                                labelSeparator: ':',
+                                                width: 135,
+                                                labelStyle: 'font-weight:bold;',
+                                                fieldStyle:'font-style: italic;',
+                                                border:true
+                                            },
+                                            items: [
+                                                {
+                                                    id: prototype.idRftx + '-usr-userCreated',
+                                                    value: '',
+                                                    margin: 1,
+                                                    fieldLabel: 'Crt by'
+                                                },
+                                                {
+                                                    id: prototype.idRftx + '-usr-dateCreated',
+                                                    value: '',
+                                                    margin: 1,
+                                                    fieldLabel: 'Crt Date'
+                                                },
+                                                {
+                                                    id: prototype.idRftx + '-usr-userUpdated',
+                                                    value: '',
+                                                    margin: 1,
+                                                    fieldLabel: 'Upd by'
+                                                },
+                                                {
+                                                    id: prototype.idRftx + '-usr-dateUpdated',
+                                                    value: '',
+                                                    margin: 1,
+                                                    fieldLabel: 'Upd Date'
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

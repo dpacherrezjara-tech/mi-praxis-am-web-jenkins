@@ -113,7 +113,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             console.error('Error en fetch', err);
             return null;
         });
-        console.log(this.objFop);
     },
     getRftxTax: async function () {
         let body = this.getRequestParams();
@@ -170,7 +169,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             console.error('Error en fetch', err);
             return null;
         });
-        console.log(this.objTot);
     },
     setInfoValues: function () {
         let obj = this.objInfo;
@@ -198,6 +196,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(objGrupo.A1530FUENT);
             Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(objGrupo.A1530IDFIL);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueDate').setValue(obj.a4373FECVT);
+            
+            //datos de auditoria
+            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS||'SAP51');
+            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI|| '20221229');
+            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS|| 'SAP51');
+            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI|| '20221229');
+            
         }
 
     },

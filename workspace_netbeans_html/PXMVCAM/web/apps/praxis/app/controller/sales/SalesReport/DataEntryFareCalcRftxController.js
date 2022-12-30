@@ -54,7 +54,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryFareCalcRftxControl
             });
             Ext.getCmp(prototype.idRftxFareCalc + '-det-TktFareCalc').setValue(fareCalc);
         }
-        
+    },
+    onClickCancel:function(btn){
+        this.view.close();
     }
 });
 
