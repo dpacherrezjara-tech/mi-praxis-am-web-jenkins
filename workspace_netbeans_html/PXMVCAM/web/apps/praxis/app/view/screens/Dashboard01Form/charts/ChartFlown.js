@@ -1018,7 +1018,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleBNF',
-                                                            colors: ['#0071c1', '#93d250'],
+                                                            colors: ['#0aac52', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleBNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -1211,7 +1211,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleNF',
-                                                            colors: ['#0071c1', '#93d250'],
+                                                            colors: ['#0aac52', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleNF',
                                                                 renderer: function (value, metaData, b, callout) {
