@@ -19,17 +19,23 @@ import net.miatech.beans.PX036S01A1732Filter;
 import net.miatech.beans.PX036S01A1733Filter;
 import net.miatech.beans.PX036S01A1734Filter;
 import net.miatech.beans.PX036S01A1735Filter;
+import net.miatech.beans.PX036S01A4374Filter;
+import net.miatech.beans.PX036S01A4375Filter;
+import net.miatech.beans.PX036S01A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
 import net.miatech.beans.PX038S02A720Filter;
 import net.miatech.beans.S0001A1530Filter;
 import net.miatech.beans.S0001A1730Filter;
+import net.miatech.beans.S0001A4373Filter;
+import net.miatech.beans.S0001A4373TOTFilter;
 import net.miatech.beans.S0001A713Filter;
 import net.miatech.beans.S0001A714Filter;
 import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
+import net.miatech.beans.SQP04747Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
@@ -230,5 +236,29 @@ public class SalesReportLogic {
     }
     public String ProcesaInsertFareCalcRfnd(PX036S01A1735Filter filter) throws SQLException, Exception {
         return salesReportDAO.ProcesaInsertFareCalcRfnd(filter);
+    }
+    
+    public List<SQP04747Filter> loadSQP04747(SQP04747Filter filter) throws SQLException, Exception{
+        return salesReportDAO.loadSQP04747(filter);
+    }
+    
+    public S0001A4373Filter loadS0001A4373(S0001A4373Filter filter) throws Exception{
+        return salesReportDAO.loadS0001A4373(filter);
+    }
+    
+    public List<PX036S01A4374Filter> loadPX036S01A4374(PX036S01A4374Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4374(filter);
+    }
+    
+    public List<PX036S01A4375Filter> loadPX036S01A4375(PX036S01A4375Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4375(filter);
+    }
+    
+    public S0001A4373TOTFilter loadS0001A4373TOT(S0001A4373TOTFilter filter) throws Exception {
+        return salesReportDAO.loadS0001A4373TOT(filter);
+    }
+    
+    public List<PX036S01A4376Filter> loadPX036S01A4376Filter(PX036S01A4376Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4376Filter(filter);
     }
 }

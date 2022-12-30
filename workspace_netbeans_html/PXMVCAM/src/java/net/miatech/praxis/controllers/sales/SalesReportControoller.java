@@ -6,8 +6,6 @@
 package net.miatech.praxis.controllers.sales;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.ByteArrayInputStream;
@@ -18,12 +16,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import jdk.nashorn.internal.parser.JSONParser;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -35,17 +34,23 @@ import net.miatech.beans.PX036S01A1732Filter;
 import net.miatech.beans.PX036S01A1733Filter;
 import net.miatech.beans.PX036S01A1734Filter;
 import net.miatech.beans.PX036S01A1735Filter;
+import net.miatech.beans.PX036S01A4374Filter;
+import net.miatech.beans.PX036S01A4375Filter;
+import net.miatech.beans.PX036S01A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
 import net.miatech.beans.PX038S02A720Filter;
 import net.miatech.beans.S0001A1530Filter;
 import net.miatech.beans.S0001A1730Filter;
+import net.miatech.beans.S0001A4373Filter;
+import net.miatech.beans.S0001A4373TOTFilter;
 import net.miatech.beans.S0001A713Filter;
 import net.miatech.beans.S0001A714Filter;
 import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
+import net.miatech.beans.SQP04747Filter;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
@@ -67,10 +72,12 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONArray;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -174,7 +181,6 @@ public class SalesReportControoller extends BaseController {
             filter.IN_AIRLIN = request.getParameter("IN_AIRLIN");
             filter.IN_GRUPO = request.getParameter("IN_GRUPO");
             filter.IN_TKT = request.getParameter("IN_TKT");
-            filter.IN_IATA = request.getParameter("IN_IATA");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -225,7 +231,6 @@ public class SalesReportControoller extends BaseController {
             filter.IN_GRUPO = request.getParameter("IN_GRUPO");
             filter.IN_TKT = request.getParameter("IN_TKT");
             filter.IN_TRANSACTION = request.getParameter("IN_TRANSACTION");
-            filter.IN_IATA = request.getParameter("IN_IATA");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -276,7 +281,6 @@ public class SalesReportControoller extends BaseController {
             filter.IN_GRUPO = request.getParameter("IN_GRUPO");
             filter.IN_TKT = request.getParameter("IN_TKT");
             filter.IN_TRANSACTION = request.getParameter("IN_TRANSACTION");
-            filter.IN_IATA = request.getParameter("IN_IATA");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -1264,7 +1268,6 @@ public class SalesReportControoller extends BaseController {
                 + "Document" + delim
                 + "Issue date" + delim
                 + "CNJ" + delim
-                + "Iata" + delim
                 + "Transaction" + delim
                 + "Document Type" + delim
                 + "Type" + delim
@@ -1288,7 +1291,6 @@ public class SalesReportControoller extends BaseController {
                         + item.DOCUMENTO + delim
                         + item.A720FECVTA + delim
                         + item.CNJ + delim
-                        + item.A720AGENTE + delim
                         + item.A720TRNCU + delim
                         + item.A720TDOC + delim
                         + item.A720UFORMA + delim
@@ -1632,23 +1634,21 @@ public class SalesReportControoller extends BaseController {
             Cell CH1_11 = row.createCell(11);
             Cell CH1_12 = row.createCell(12);
             Cell CH1_13 = row.createCell(13);
-            Cell CH1_14 = row.createCell(14);
 
             CH1_00.setCellValue("Air");
             CH1_01.setCellValue("Document");
             CH1_02.setCellValue("Issue date");
             CH1_03.setCellValue("CNJ");
-            CH1_04.setCellValue("Iata");
-            CH1_05.setCellValue("Transaction");
-            CH1_06.setCellValue("Document Type");
-            CH1_07.setCellValue("Type");
-            CH1_08.setCellValue("Fare Currency");
-            CH1_09.setCellValue("Fare Amount");
-            CH1_10.setCellValue("Equivalent Fare Curr");
-            CH1_11.setCellValue("Equivalent Fare Aount");
-            CH1_12.setCellValue("Add Curr");
-            CH1_13.setCellValue("Add Aount");
-            CH1_14.setCellValue("Error");
+            CH1_04.setCellValue("Transaction");
+            CH1_05.setCellValue("Document Type");
+            CH1_06.setCellValue("Type");
+            CH1_07.setCellValue("Fare Currency");
+            CH1_08.setCellValue("Fare Amount");
+            CH1_09.setCellValue("Equivalent Fare Curr");
+            CH1_10.setCellValue("Equivalent Fare Aount");
+            CH1_11.setCellValue("Add Curr");
+            CH1_12.setCellValue("Add Aount");
+            CH1_13.setCellValue("Error");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -1664,7 +1664,6 @@ public class SalesReportControoller extends BaseController {
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
-            CH1_14.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -1685,23 +1684,21 @@ public class SalesReportControoller extends BaseController {
                 Cell rcell11 = row.createCell(11);
                 Cell rcell12 = row.createCell(12);
                 Cell rcell13 = row.createCell(13);
-                Cell rcell14 = row.createCell(14);
 
                 rcell0.setCellValue(listaData.get(vi).A720CIA);
                 rcell1.setCellValue(listaData.get(vi).DOCUMENTO);
                 rcell2.setCellValue(listaData.get(vi).A720FECVTA);
                 rcell3.setCellValue(listaData.get(vi).CNJ);
-                rcell4.setCellValue(listaData.get(vi).A720AGENTE);
-                rcell5.setCellValue(listaData.get(vi).A720TRNCU);
-                rcell6.setCellValue(listaData.get(vi).A720TDOC);
-                rcell7.setCellValue(listaData.get(vi).A720UFORMA);
-                rcell8.setCellValue(listaData.get(vi).A720MONEDA);
-                rcell9.setCellValue(listaData.get(vi).A720TARIFA);
-                rcell10.setCellValue(listaData.get(vi).A720MDAPAG);
-                rcell11.setCellValue(listaData.get(vi).A720TRFPAG);
-                rcell12.setCellValue(listaData.get(vi).A720MDAAD);
-                rcell13.setCellValue(listaData.get(vi).A720ADC);
-                rcell14.setCellValue(listaData.get(vi).A720MIAERR);
+                rcell4.setCellValue(listaData.get(vi).A720TRNCU);
+                rcell5.setCellValue(listaData.get(vi).A720TDOC);
+                rcell6.setCellValue(listaData.get(vi).A720UFORMA);
+                rcell7.setCellValue(listaData.get(vi).A720MONEDA);
+                rcell8.setCellValue(listaData.get(vi).A720TARIFA);
+                rcell9.setCellValue(listaData.get(vi).A720MDAPAG);
+                rcell10.setCellValue(listaData.get(vi).A720TRFPAG);
+                rcell11.setCellValue(listaData.get(vi).A720MDAAD);
+                rcell12.setCellValue(listaData.get(vi).A720ADC);
+                rcell13.setCellValue(listaData.get(vi).A720MIAERR);
 
                 iter.next();
                 ++vi;
@@ -2055,4 +2052,183 @@ public class SalesReportControoller extends BaseController {
 
         return lst;
     }*/
+    
+    @RequestMapping(value = "loadRftx")
+    public @ResponseBody
+    String loadRftx(ModelMap map, HttpServletRequest request) {
+        map.put("success", true);
+        List<SQP04747Filter> lst = this.getListRftx(request, false);
+        map.put("total", lst.size() > 0 ? lst.get(0).getPag().TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<SQP04747Filter> getListRftx(HttpServletRequest request, Boolean bExcel) {
+
+        logic = new SalesReportLogic();
+
+        List<SQP04747Filter> lst = new ArrayList<>();
+        SQP04747Filter filter = new SQP04747Filter();
+
+        filter.getPag().TOTROW = -1;
+        filter.getPag().START = 0;
+        filter.getPag().LIMIT = 0;
+
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            filter.setIN_OPCION(Integer.parseInt(request.getParameter("IN_OPCION")));
+            filter.setIN_AIRLIN(request.getParameter("IN_AIRLIN")) ;
+            filter.setIN_GRUPO(request.getParameter("IN_GRUPO"));
+            filter.setIN_TKT(request.getParameter("IN_TKT"));
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.getPag().PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.getPag().PAGNUM = (start / filter.getPag().PAGROW) + 1;
+            } else {
+                filter.getPag().PAGROW = -1;
+                filter.getPag().PAGNUM = 1;
+            }
+
+            lst = logic.loadSQP04747(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        return lst;
+    }
+    
+    @RequestMapping(value = "getRftxInfo",method = RequestMethod.POST)
+    public ResponseEntity<?> getRftxInfo(@RequestBody Map<String,String> body){
+        logic = new SalesReportLogic();
+        S0001A4373Filter filter = new S0001A4373Filter();
+        S0001A4373Filter res;
+        try{
+            filter.setAIRLINE(body.get("AIRLINE"));
+            filter.setCIA(body.get("CIA"));
+            filter.setFORMA(body.get("FORMA"));
+            filter.setSERIE(body.get("SERIE"));
+            filter.setSEQ(body.get("SEQ"));
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadS0001A4373(filter);
+            if (res!=null) {
+                return new ResponseEntity(res,HttpStatus.OK);
+            } else {
+                throw new NullPointerException("Objecto no encontrado");
+            }
+        }
+        catch(NullPointerException nex){
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
+        }catch(Exception ex){
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "getRftxFop",method = RequestMethod.POST)
+    public ResponseEntity<?> getRftxFop(@RequestBody Map<String,String> body){
+        logic = new SalesReportLogic();
+        PX036S01A4374Filter filter = new PX036S01A4374Filter();
+        List<PX036S01A4374Filter> res;
+        try{
+            filter.setAIRLINE(body.get("AIRLINE"));
+            filter.setCIA(body.get("CIA"));
+            filter.setFORMA(body.get("FORMA"));
+            filter.setSERIE(body.get("SERIE"));
+            filter.setSEQ(body.get("SEQ"));
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadPX036S01A4374(filter);
+            if (!res.isEmpty()) {
+                return new ResponseEntity(res,HttpStatus.OK);
+            } else {
+                throw new NullPointerException("No existen Elementos");
+            }
+        }
+        catch(NullPointerException nex){
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
+        }catch(Exception ex){
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "getRftxTax",method = RequestMethod.POST)
+    public ResponseEntity<?> getRftxTax(@RequestBody Map<String,String> body){
+        logic = new SalesReportLogic();
+        PX036S01A4375Filter filter = new PX036S01A4375Filter();
+        List<PX036S01A4375Filter> res;
+        try{
+            filter.setAIRLINE(body.get("AIRLINE"));
+            filter.setCIA(body.get("CIA"));
+            filter.setFORMA(body.get("FORMA"));
+            filter.setSERIE(body.get("SERIE"));
+            filter.setSEQ(body.get("SEQ"));
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadPX036S01A4375(filter);
+            if (!res.isEmpty()) {
+                return new ResponseEntity(res,HttpStatus.OK);
+            } else {
+                throw new NullPointerException("No existen Elementos");
+            }
+        }
+        catch(NullPointerException nex){
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
+        }catch(Exception ex){
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "getRftxTot",method = RequestMethod.POST)
+    public ResponseEntity<?> getRftxTot(@RequestBody Map<String,String> body){
+        logic = new SalesReportLogic();
+        S0001A4373TOTFilter filter = new S0001A4373TOTFilter();
+        S0001A4373TOTFilter res;
+        try{
+            filter.setAIRLINE(body.get("AIRLINE"));
+            filter.setCIA(body.get("CIA"));
+            filter.setFORMA(body.get("FORMA"));
+            filter.setSERIE(body.get("SERIE"));
+            filter.setSEQ(body.get("SEQ"));
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadS0001A4373TOT(filter);
+            if (res!=null) {
+                return new ResponseEntity(res,HttpStatus.OK);
+            } else {
+                throw new NullPointerException("No existen Elementos");
+            }
+        }
+        catch(NullPointerException nex){
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
+        }catch(Exception ex){
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "getRftxFc",method = RequestMethod.POST)
+    public ResponseEntity<?> getRftxFareCalc(@RequestBody Map<String,String> body){
+        logic = new SalesReportLogic();
+        List<PX036S01A4376Filter> res = new ArrayList<>();
+        PX036S01A4376Filter filter = new PX036S01A4376Filter();
+        try{
+            filter.setAIRLINE(body.get("AIRLINE"));
+            filter.setCIA(body.get("CIA"));
+            filter.setFORMA(body.get("FORMA"));
+            filter.setSERIE(body.get("SERIE"));
+            filter.setSEQ(body.get("SEQ"));
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadPX036S01A4376Filter(filter);
+            if (!res.isEmpty()) {
+                return new ResponseEntity(res,HttpStatus.OK);
+            } else {
+                throw new NullPointerException("No existen Elementos");
+            }
+        }
+        catch(NullPointerException nex){
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
+        }catch(Exception ex){
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
 }
