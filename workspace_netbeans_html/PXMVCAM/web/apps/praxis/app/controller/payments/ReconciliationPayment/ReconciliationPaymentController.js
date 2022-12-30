@@ -313,7 +313,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
          cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
          autoLoad: false,
-         fields: ['CODE', 'NAME'],
+         fields: ['code', 'name'],
          data: [
          ["", "All"],
          ]
@@ -323,7 +323,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
          cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
          autoLoad: false,
-         fields: ['CODE', 'NAME'],
+         fields: ['code', 'name'],
          data: [
          ["", "All"],
          ]
