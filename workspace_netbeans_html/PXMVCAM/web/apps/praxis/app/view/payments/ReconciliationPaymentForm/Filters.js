@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbProT',
-                            fieldLabel: '<strong style="color:#000;">Proc Type:</strong>',
+                            fieldLabel: '<strong style="color:#000;">Proc Type</strong>',
                             triggerAction: 'all',
                             enableKeyEvents: true,
                             readOnly: false,
@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbCurr',
-                            fieldLabel: '<strong style="color:#000;">Currency:</strong>',
+                            fieldLabel: '<strong style="color:#000;">Currency</strong>',
                             triggerAction: 'all',
                             enableKeyEvents: true,
                             readOnly: false,
