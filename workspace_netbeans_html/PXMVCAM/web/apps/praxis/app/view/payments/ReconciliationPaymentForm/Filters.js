@@ -35,6 +35,36 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                     },
                     items: [
                         {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbProT',
+                            fieldLabel: '<strong style="color:#000;">Proc Type:</strong>',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 70,
+                            width: 200,
+                            hidden: false
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCurr',
+                            fieldLabel: '<strong style="color:#000;">Currency:</strong>',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 70,
+                            width: 200,
+                            hidden: false
+                        },
+                        {
                             xtype: 'label',
                             html: '<strong style="color:#000;">Search By:</strong>',
                             align: 'left',
@@ -552,63 +582,24 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                                 change: 'chkWarning_Click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbErrorCode',
-                            fieldLabel: 'Error Code',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'CODE',
-                            displayField: 'NAME',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 350,
-                            hidden: false,
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 5},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbComplement',
-                            fieldLabel: 'Complements',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'code',
-                            displayField: 'name',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 250,
-                            hidden: false,
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
-                            text: 'PNR:',
+                            text: 'TKT:',
                             padding: '8px 1px 2px 1px',
-                            width: 50
+                            width: 30
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtPNRError',
+                            id: prototype.id + '-txtTKT',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-                            maskRe: /[0-9a-zA-Z]/,
-                            maxLength: 6,
+                            maskRe: /[0-9]/,
+//                            maxLength: 6,
                             width: 100,
                             enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
-                            }
+//                            listeners: {
+//                                keypress: 'txtPNR_keyDownHandler'
+//                            }
                         },
                         {xtype: 'tbspacer', width: 5},
                         {
@@ -649,12 +640,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'label',
                             text: 'Auth:',
                             padding: '8px 1px 2px 1px',
-                            width: 50,
+                            width: 40,
                         },
                         {
                             xtype: 'textfield',
@@ -662,6 +653,26 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPNRError',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9a-zA-Z]/,
                             maxLength: 6,
                             width: 100,
                             enableKeyEvents: true,
@@ -681,7 +692,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 100,
+                            labelWidth: 70,
                             width: 200,
                             hiddenLabel: false,
                             value: '',
@@ -715,7 +726,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 60,
+                            labelWidth: 50,
                             width: 120,
                             hiddenLabel: false,
                             value: '',
@@ -735,14 +746,50 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 80,
+                            labelWidth: 70,
                             width: 140,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
                                 //change: 'rbChangeType'
                             }
-                        }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbErrorCode',
+                            fieldLabel: 'Error Code',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 100,
+                            width: 350,
+                            hidden: false,
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbComplement',
+                            fieldLabel: 'Complements',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 100,
+                            width: 250,
+                            hidden: false,
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
+                        },
                     ]
                 },
                 {
