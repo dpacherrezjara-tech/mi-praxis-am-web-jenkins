@@ -247,6 +247,9 @@ public class A4116Filter extends A4116 {
     public String AREFNBR_2 = "";
     public String TDOC_1 = "";
     public String TDOC_2 = "";
+    public String IN_PROCTYPE = "";
+    public String IN_SCURRENCY = "";
+    public String IN_TKT = "";
     
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 

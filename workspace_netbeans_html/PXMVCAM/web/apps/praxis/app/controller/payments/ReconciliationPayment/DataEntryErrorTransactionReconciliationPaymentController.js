@@ -142,7 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
-        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
         this.setValue('de-CODADJU', this.beanResult.DES_CODADJU);
         /*var sMerch = this.beanResult.SMERCHID.trim();
@@ -235,7 +235,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
         beanTemp.PRDA = this.getValue("de-txtPRDA");
         beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
-        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.PMERCHID = this.getValue("de-txtMERCHID");
         beanTemp.SMERCHID = this.beanResult.SMERCHID;
         beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
@@ -308,7 +308,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail = {};
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
@@ -345,7 +345,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail = {};
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;

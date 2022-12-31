@@ -309,6 +309,31 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          ]
          }));
          cmbErrorCode.setValue("");*/
+        
+        var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
+         cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
+         autoLoad: false,
+         fields: ['code', 'name'],
+         data: [
+         ["", "All"],
+         ["WP", "WorldPay"],
+         ["FIRST", "First Data"],
+         ]
+         }));
+         cmbProT.setValue("");
+         
+         var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
+         cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
+         autoLoad: false,
+         fields: ['code', 'name'],
+         data: [
+         ["", "All"],
+         ["CLP", "CLP"],
+         ["USD", "USD"],
+         ]
+         }));
+         cmbCurr.setValue("");
+         
         me.bean_warning = {};
         if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked')) {
             me.bean_warning.IN_WARNING = 'Y';
@@ -510,6 +535,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         me.bean.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
         me.bean.IN_ZONA_SUMM = Ext.getCmp(prototype.id + '-cmbZONASumm').getValue();
         me.bean.IN_SCOUNTRY_SUMM = Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').getValue();
+        me.bean.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
+        me.bean.IN_SCURENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
+        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
 
 
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
@@ -577,8 +605,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.setFormatParameter();
         if (selectedValue === 'ER') {
             Ext.getCmp(prototype.id + '-frmQueueError').setVisible(true);
+            Ext.getCmp(prototype.id + '-cmbProT').setVisible(true);
+            Ext.getCmp(prototype.id + '-cmbCurr').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-frmQueueError').setVisible(false);
+            Ext.getCmp(prototype.id + '-cmbProT').setVisible(false);
+            Ext.getCmp(prototype.id + '-cmbCurr').setVisible(false);
         }
         if (selectedValue === 'SE') {
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(true);
@@ -627,6 +659,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                     this.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
                     this.bean.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
                     this.bean.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
+                    this.bean.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
+                    this.bean.IN_SCURENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
+                    this.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
 
                     if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
                         this.bean.IN_VOID = "V";
@@ -1215,7 +1250,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
 
         this.beanSettlement.DATE = rowData.data.DATE;
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
-        this.beanSettlement.IN_MERCHID = rowData.data.MERCHID;
+        this.beanSettlement.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanSettlement.IN_SCOUNTRY_SETT = rowData.data.SCOUNTRY;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
@@ -1279,7 +1314,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
 
         this.beanSettlementTktsDetail.DATE = rowData.data.DATE;
         this.beanSettlementTktsDetail.IN_DATE = rowData.data.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = rowData.data.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = rowData.data.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = rowData.data.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = rowData.data.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = rowData.data.IN_PCURRENCY;
@@ -1659,7 +1694,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanTransaction.IN_DATE = rowData.data.IN_DATE;
 
         this.beanTransaction.strDATE = rowData.data.strDATE;
-        this.beanTransaction.IN_MERCHID = rowData.data.MERCHID;
+        this.beanTransaction.IN_MERCHID = rowData.data.PMERCHID;
         this.beanTransaction.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanTransaction.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanTransaction.SCOUNTRY = rowData.data.SCOUNTRY;
@@ -1810,7 +1845,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanPricing.IN_DATE = rowData.data.IN_DATE;
 
         this.beanPricing.strDATE = rowData.data.strDATE;
-        this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
+        this.beanPricing.IN_MERCHID = rowData.data.PMERCHID;
         this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
 
@@ -1834,7 +1869,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanPricing.IN_DATE = rowData.data.IN_DATE;
 
         this.beanPricing.strDATE = rowData.data.strDATE;
-        this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
+        this.beanPricing.IN_MERCHID = rowData.data.PMERCHID;
         this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanPricing.SCOUNTRY = rowData.data.SCOUNTRY;

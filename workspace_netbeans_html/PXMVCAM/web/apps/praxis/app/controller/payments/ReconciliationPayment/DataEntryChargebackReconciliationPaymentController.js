@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryCharge
         }
     },
     mostrarData: function () {
-        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtZone', this.beanResult.ZONA);
         this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryCharge
     },
     llenarData: function (beanTemp) {
 
-        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.PMERCHID = this.getValue("de-txtMERCHID");
         beanTemp.ZONA = this.getValue("de-txtZone");
         beanTemp.SCOUNTRY = this.getValue("de-txtCountry");
         beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
@@ -129,7 +129,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryCharge
         this.beanChargebackTktsDetail = {},
         this.beanChargebackTktsDetail.CHADJNBR = this.bean.CHADJNBR;
         this.beanChargebackTktsDetail.CHAADJCOD = this.bean.CHAADJCOD;
-        this.beanChargebackTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanChargebackTktsDetail.PMERCHID = this.bean.PMERCHID;
         this.beanChargebackTktsDetail.SMERCHID = this.bean.SMERCHID;
         this.beanChargebackTktsDetail.AXPAYNBR = this.bean.AXPAYNBR;
         this.beanChargebackTktsDetail.PRDA = this.bean.PRDA;
