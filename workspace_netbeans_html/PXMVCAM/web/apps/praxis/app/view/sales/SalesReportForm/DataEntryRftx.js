@@ -11,7 +11,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
     requires: [
         'Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController',
         'Ext.Praxis.view.widgets.facsimil',
-        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx'
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx',
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx'
     ],
     title: 'Transaction Information',
     header: true,

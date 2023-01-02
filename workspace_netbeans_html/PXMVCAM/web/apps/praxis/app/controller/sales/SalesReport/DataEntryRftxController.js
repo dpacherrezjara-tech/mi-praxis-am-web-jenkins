@@ -10,11 +10,11 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     url: CONTEXTPATH + '/SalesReport',
     meDET: '',
     //<editor-fold defaultstate="collapsed" desc="View Vars">
-    groupInfo: {},
-    objInfo: {},
-    objTax: [],
-    objFop: [],
-    objTot: {},
+    groupInfo: '',
+    objInfo: '',
+    objTax: '',
+    objFop: '',
+    objTot: '',
     //</editor-fold>
     /**
      * Constructor
@@ -32,11 +32,16 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     afterRender: async function () {
         //dvt
         Ext.getCmp(prototype.idRftx + '-dataEntryRftx').mask('Loading...');
-        await this.getRftxInfo();
-        await this.getRftxFop();
-        await this.getRftxTax();
-        await this.getRftxTot();
-        this.setValues();
+        let dataStatus = false;
+        dataStatus = await this.getRftxInfo();
+        dataStatus = await this.getRftxFop();
+        dataStatus = await this.getRftxTax();
+        dataStatus = await this.getRftxTot();
+        if (dataStatus) {
+            this.setValues();
+        }else{
+            global.Msg({msg: 'Not found'});
+        }
         Ext.getCmp(prototype.idRftx + '-dataEntryRftx').unmask();
     },
     getRequestParams: function () {
@@ -58,118 +63,41 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         this.setTaxValues();
         this.setTotalValues();
     },
+    //<editor-fold defaultstate="collapsed" desc="Obteniendo Valores">
     getRftxInfo: async function () {
         let body = this.getRequestParams();
-        this.objInfo = await fetch(this.url + '/getRftxInfo', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            let resObj;
-            switch (res.status) {
-                case 200:
-                    resObj = res.json();
-                    break;
-                case 204:
-                    console.log("Sin contenido");
-                    resObj = null;
-                    break;
-                default :
-                    resObj = undefined;
-                    break;
-            }
-            return resObj;
-        }).catch(err => {
-            console.error('Error en fetch', err);
-            return null;
-        });
+        let response = await this.getFetchAsync(this.url + '/getRftxInfo', body);
+        if (response.success) {
+            this.objInfo = response.data;
+        }
+        return response.success ;
     },
     getRftxFop: async function () {
         let body = this.getRequestParams();
-        this.objFop = await fetch(this.url + '/getRftxFop', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            let resObj;
-            switch (res.status) {
-                case 200:
-                    resObj = res.json();
-                    break;
-                case 204:
-                    console.log("Sin contenido");
-                    resObj = [];
-                    break;
-                default :
-                    resObj = [];
-                    break;
-            }
-            return resObj;
-        }).catch(err => {
-            console.error('Error en fetch', err);
-            return null;
-        });
+        let response = await this.getFetchAsync(this.url + '/getRftxFop', body);
+        if (response.success) {
+            this.objFop = response.data;
+        }
+        return response.success;
     },
     getRftxTax: async function () {
         let body = this.getRequestParams();
-        this.objTax = await fetch(this.url + '/getRftxTax', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            let resObj;
-            switch (res.status) {
-                case 200:
-                    resObj = res.json();
-                    break;
-                case 204:
-                    console.log("Sin contenido");
-                    resObj = [];
-                    break;
-                default :
-                    resObj = [];
-                    break;
-            }
-            return resObj;
-        }).catch(err => {
-            console.error('Error en fetch', err);
-            return null;
-        });
+        let response = await this.getFetchAsync(this.url + '/getRftxTax', body);
+        if (response.success) {
+            this.objTax = response.data;
+        }
+        return response.success;
     },
     getRftxTot: async function () {
         let body = this.getRequestParams();
-        this.objTot = await fetch(this.url + '/getRftxTot', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            let resObj;
-            switch (res.status) {
-                case 200:
-                    resObj = res.json();
-                    break;
-                case 204:
-                    console.log("Sin contenido");
-                    resObj = [];
-                    break;
-                default :
-                    resObj = [];
-                    break;
-            }
-            return resObj;
-        }).catch(err => {
-            console.error('Error en fetch', err);
-            return null;
-        });
+        let response = await this.getFetchAsync(this.url + '/getRftxTot', body);
+        if (response.success) {
+            this.objTot = response.data;
+        }
+        return response.success;
     },
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Seteando Valores">
     setInfoValues: function () {
         let obj = this.objInfo;
         let objGrupo = this.groupInfo;
@@ -196,13 +124,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(objGrupo.A1530FUENT);
             Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(objGrupo.A1530IDFIL);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueDate').setValue(obj.a4373FECVT);
-            
+
             //datos de auditoria
-            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS||'SAP51');
-            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI|| '20221229');
-            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS|| 'SAP51');
-            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI|| '20221229');
-            
+            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS || 'SAP51');
+            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI || '20221229');
+            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS || 'SAP51');
+            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI || '20221229');
+
         }
 
     },
@@ -271,6 +199,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblTAXCur').setValue(obj.taxcur);
         }
     },
+    //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="delivery">
     onDelivery: function () {
         let bean = {};
@@ -351,12 +281,112 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         if (lblDocumento !== '') {
             let win = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx', {
                 params: {
-                    body:this.getRequestParams()
+                    body: this.getRequestParams()
                 }
             });
             win.show();
         }
+    },
+    onFocus: function (id) {
+        Ext.getCmp(prototype.idRftx + id).focus();
+    },
+    onClickSearchTAX: function (obj) {
+        let lblTAX = Ext.getCmp(prototype.idRftx + '-det-lblTAX').getValue().trim();
+        let lblDocumento = Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
+        if (Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().length !== 3) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Cia', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblCia');
+                }
+            });
+            return;
+        }
+        if (Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().length !== 10) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Document', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblDocumento');
+                }
+            });
+            return;
+        }
+        let statusGrupo = (this.groupInfo.A1530STPRO || 'CLOSED').trim();
+        if (lblTAX !== '' && lblTAX.text !== '0.00' && lblDocumento !== '') {
+            var win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx({
+                params: {
+                    stGroup: statusGrupo,
+                    requestParams: this.getRequestParams()
+                }
+            });
+            win.show();
+        }
+    },
+    //<editor-fold defaultstate="collapsed" desc="FETCH">
+    getFetchAsync: async function (url, params, method = 'GET') {
+        let reqUrl = '';
+        let options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        let ready = true;
+        switch (method) {
+            case 'GET':
+                reqUrl = url;
+                if (params !== null && params !== undefined) {
+                    reqUrl = reqUrl + '?' + new URLSearchParams(params);
+                }
+                break;
+            case 'DELETE':
+                reqUrl = url;
+                if (params !== null && params !== undefined) {
+                    reqUrl = reqUrl + '?' + new URLSearchParams(params);
+                }else{
+                    ready = false;
+                }
+                break;
+            case 'POST':
+            case 'PUT':
+                reqUrl = url;
+                if (params === null && params === undefined) {
+                    console.log('Method POST or PUT without Body');
+                    ready = false;
+                }
+                options = {
+                    body: JSON.stringify(params),
+                    ...options
+                };
+                break;
+            default :
+                ready = false;
+        }
+
+        if (url !== '' && ready) {
+            return await fetch(reqUrl, options).then(async res => {
+                let resObj;
+                switch (res.status) {
+                    case 200:
+                        resObj = await res.json();
+                        return {success: true, data: resObj};
+                        break;
+                    case 204:
+                        console.log(await res.json().msg);
+                        return {success: false};
+                        break;
+                    default:
+                        console.error('Error en endpoint =>' + url);
+                        return {success: false};
+                }
+            }).catch(err => {
+                console.log('Error en request. ', err);
+                return {success: false};
+            });
+        }
+        return {success: false};
     }
+    //</editor-fold>
+
+    
 });
 
 
