@@ -320,6 +320,36 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             win.show();
         }
     },
+    onClickSearchFOP:function(obj){
+        let lblFOP = Ext.getCmp(prototype.idRftx + '-det-lblFOP').getValue().trim();
+        let lblDocumento = Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
+        if (Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().length !== 3) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Cia', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblCia');
+                }
+            });
+            return;
+        }
+        if (Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().length !== 10) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Document', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblDocumento');
+                }
+            });
+            return;
+        }
+        let statusGrupo = (this.groupInfo.A1530STPRO || 'CLOSED').trim();
+        if (lblFOP !== '' && lblFOP.text !== '0.00' && lblDocumento !== '') {
+            var win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPRftx({
+                params: {
+                    stGroup: statusGrupo,
+                    requestParams: this.getRequestParams()
+                }
+            });
+            win.show();
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="FETCH">
     getFetchAsync: async function (url, params, method = 'GET') {
         let reqUrl = '';

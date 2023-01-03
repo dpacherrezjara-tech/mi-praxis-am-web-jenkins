@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTAXRftxController',
         switch (action) {
             case 'l':
                 urlReq.url = this.urlWin01 + '/getRftxTax';
-                urlReq.method = 'POST';
+                urlReq.method = 'GET';
                 break;
             case 'i':
                 urlReq.url = this.urlWin01 + '/addEntryRftxTax';
@@ -64,15 +64,19 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTAXRftxController',
                 gridDataTktTAX.columns[7].setVisible(false);
                 break;
             case 'OPEN':
-                gridTAXSave.show();
-                gridTAXADD.show();
-                gridDataTktTAX.columns[7].setVisible(true);
+                //mantenimiento en stnnd by
+//                gridTAXSave.show();
+//                gridTAXADD.show();
+//                gridDataTktTAX.columns[7].setVisible(true);
+                gridTAXSave.hide();
+                gridTAXADD.hide();
+                gridDataTktTAX.columns[7].setVisible(false);
                 break;
 
         }
         Ext.getCmp(prototype.idRftxTAX + '-winDataEntryTAXRftx').mask('Loading...');
         let action = this.getUrlAction('l')||'l';
-        let response = await this.getFetchAsync(this.urlWin01 + '/getRftxTax', this.objReq);
+        let response = await this.getFetchAsync(action.url, this.objReq);
         if (response.success) {
             Ext.getCmp(prototype.idRftxTAX + '-det-gridDataTktTAX').getStore().loadData(response.data);
             Ext.getCmp(prototype.idRftxTAX + '-winDataEntryTAXRftx').unmask();
@@ -82,6 +86,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTAXRftxController',
         let me=this;
         let rec = grid.getStore().getAt(rowIndex).data;
         let params = me.objReq;
+        let action = this.getUrlAction('d');
         global.Msg({
             msg:'DELETE TAX?',
             icon:3,
@@ -90,7 +95,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTAXRftxController',
                 if (btn === 'yes'){
                     params.CTAX = rec.a4375CTAX;
                     params.CORRL = rec.a4375CORRL;
-                    await me.getFetchAsync(me.urlWin01 + '/editRftxTax',params,'PUT');
+                    await me.getFetchAsync(action.url,params,action.method);
                 }
             }
         });

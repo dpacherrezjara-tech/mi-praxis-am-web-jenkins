@@ -12,7 +12,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
         'Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController',
         'Ext.Praxis.view.widgets.facsimil',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx',
-        'Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx'
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx',
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPRftx'
     ],
     title: 'Transaction Information',
     header: true,
@@ -1352,7 +1353,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                             xtype: 'panel',
                                             bodyStyle: 'background: #E5ECEF',
                                             margin: '1',
-                                            border:true,
+                                            border: true,
                                             layout: {
                                                 type: 'hbox',
                                                 align: 'rigth',
@@ -1368,8 +1369,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                 labelSeparator: ':',
                                                 width: 135,
                                                 labelStyle: 'font-weight:bold;',
-                                                fieldStyle:'font-style: italic;',
-                                                border:true
+                                                fieldStyle: 'font-style: italic;',
+                                                border: true
                                             },
                                             items: [
                                                 {

@@ -80,6 +80,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -507,7 +508,7 @@ public class SalesReportControoller extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadA005")
     public @ResponseBody
     String loadA005(ModelMap map, HttpServletRequest request) {
@@ -1970,7 +1971,7 @@ public class SalesReportControoller extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "ProcesaInsertFareCalcRfnd")
     public @ResponseBody
     String ProcesaInsertFareCalcRfnd(ModelMap map, HttpServletRequest request) {
@@ -1980,7 +1981,7 @@ public class SalesReportControoller extends BaseController {
 
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            
+
             logic = new SalesReportLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.ProcesaInsertFareCalcRfnd(filter);
@@ -2052,7 +2053,6 @@ public class SalesReportControoller extends BaseController {
 
         return lst;
     }*/
-    
     @RequestMapping(value = "loadRftx")
     public @ResponseBody
     String loadRftx(ModelMap map, HttpServletRequest request) {
@@ -2077,7 +2077,7 @@ public class SalesReportControoller extends BaseController {
         try {
             logic.setSession(this.serverSession.getServerSession());
             filter.setIN_OPCION(Integer.parseInt(request.getParameter("IN_OPCION")));
-            filter.setIN_AIRLIN(request.getParameter("IN_AIRLIN")) ;
+            filter.setIN_AIRLIN(request.getParameter("IN_AIRLIN"));
             filter.setIN_GRUPO(request.getParameter("IN_GRUPO"));
             filter.setIN_TKT(request.getParameter("IN_TKT"));
 
@@ -2101,13 +2101,13 @@ public class SalesReportControoller extends BaseController {
 
         return lst;
     }
-    
-    @RequestMapping(value = "getRftxInfo",method = RequestMethod.POST)
-    public ResponseEntity<?> getRftxInfo(@RequestBody Map<String,String> body){
+
+    @RequestMapping(value = "getRftxInfo", method = RequestMethod.GET)
+    public ResponseEntity<?> getRftxInfo(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         S0001A4373Filter filter = new S0001A4373Filter();
         S0001A4373Filter res;
-        try{
+        try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
             filter.setFORMA(body.get("FORMA"));
@@ -2115,25 +2115,24 @@ public class SalesReportControoller extends BaseController {
             filter.setSEQ(body.get("SEQ"));
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadS0001A4373(filter);
-            if (res!=null) {
-                return new ResponseEntity(res,HttpStatus.OK);
+            if (res != null) {
+                return new ResponseEntity(res, HttpStatus.OK);
             } else {
                 throw new NullPointerException("Objecto no encontrado");
             }
-        }
-        catch(NullPointerException nex){
-            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
-        }catch(Exception ex){
-            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        } catch (NullPointerException nex) {
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @RequestMapping(value = "getRftxFop",method = RequestMethod.POST)
-    public ResponseEntity<?> getRftxFop(@RequestBody Map<String,String> body){
+
+    @RequestMapping(value = "getRftxFop", method = RequestMethod.GET)
+    public ResponseEntity<?> getRftxFop(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         PX036S01A4374Filter filter = new PX036S01A4374Filter();
         List<PX036S01A4374Filter> res;
-        try{
+        try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
             filter.setFORMA(body.get("FORMA"));
@@ -2142,24 +2141,23 @@ public class SalesReportControoller extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadPX036S01A4374(filter);
             if (!res.isEmpty()) {
-                return new ResponseEntity(res,HttpStatus.OK);
+                return new ResponseEntity(res, HttpStatus.OK);
             } else {
                 throw new NullPointerException("No existen Elementos");
             }
-        }
-        catch(NullPointerException nex){
-            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
-        }catch(Exception ex){
-            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        } catch (NullPointerException nex) {
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @RequestMapping(value = "getRftxTax",method = RequestMethod.POST)
-    public ResponseEntity<?> getRftxTax(@RequestBody Map<String,String> body){
+
+    @RequestMapping(value = "getRftxTax", method = RequestMethod.GET)
+    public ResponseEntity<?> getRftxTax(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         PX036S01A4375Filter filter = new PX036S01A4375Filter();
         List<PX036S01A4375Filter> res;
-        try{
+        try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
             filter.setFORMA(body.get("FORMA"));
@@ -2168,24 +2166,23 @@ public class SalesReportControoller extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadPX036S01A4375(filter);
             if (!res.isEmpty()) {
-                return new ResponseEntity(res,HttpStatus.OK);
+                return new ResponseEntity(res, HttpStatus.OK);
             } else {
                 throw new NullPointerException("No existen Elementos");
             }
-        }
-        catch(NullPointerException nex){
-            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
-        }catch(Exception ex){
-            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        } catch (NullPointerException nex) {
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @RequestMapping(value = "getRftxTot",method = RequestMethod.POST)
-    public ResponseEntity<?> getRftxTot(@RequestBody Map<String,String> body){
+
+    @RequestMapping(value = "getRftxTot", method = RequestMethod.GET)
+    public ResponseEntity<?> getRftxTot(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         S0001A4373TOTFilter filter = new S0001A4373TOTFilter();
         S0001A4373TOTFilter res;
-        try{
+        try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
             filter.setFORMA(body.get("FORMA"));
@@ -2193,25 +2190,24 @@ public class SalesReportControoller extends BaseController {
             filter.setSEQ(body.get("SEQ"));
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadS0001A4373TOT(filter);
-            if (res!=null) {
-                return new ResponseEntity(res,HttpStatus.OK);
+            if (res != null) {
+                return new ResponseEntity(res, HttpStatus.OK);
             } else {
                 throw new NullPointerException("No existen Elementos");
             }
-        }
-        catch(NullPointerException nex){
-            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
-        }catch(Exception ex){
-            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+        } catch (NullPointerException nex) {
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @RequestMapping(value = "getRftxFc",method = RequestMethod.POST)
-    public ResponseEntity<?> getRftxFareCalc(@RequestBody Map<String,String> body){
+
+    @RequestMapping(value = "getRftxFc", method = RequestMethod.GET)
+    public ResponseEntity<?> getRftxFareCalc(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         List<PX036S01A4376Filter> res = new ArrayList<>();
         PX036S01A4376Filter filter = new PX036S01A4376Filter();
-        try{
+        try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
             filter.setFORMA(body.get("FORMA"));
@@ -2220,15 +2216,64 @@ public class SalesReportControoller extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadPX036S01A4376Filter(filter);
             if (!res.isEmpty()) {
-                return new ResponseEntity(res,HttpStatus.OK);
+                return new ResponseEntity(res, HttpStatus.OK);
             } else {
                 throw new NullPointerException("No existen Elementos");
             }
+        } catch (NullPointerException nex) {
+            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()), HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
-        catch(NullPointerException nex){
-            return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()),HttpStatus.NO_CONTENT);
-        }catch(Exception ex){
-            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()),HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "manRftxFop", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+    public ResponseEntity<?> mantenimientoRftxFop(@RequestParam(required = false) Map<String, String> params, @RequestBody(required = false) Map<String, String> body,
+            HttpServletRequest req) {
+        logic = new SalesReportLogic();
+        try {
+            ResponseEntity re;
+            switch (req.getMethod()) {
+                case "POST":
+                    re = new ResponseEntity<>("objeto agregado", HttpStatus.OK);
+                    break;
+                case "PUT":
+                    re = new ResponseEntity<>("objeto modificado", HttpStatus.OK);
+                    break;
+                case "DELETE":
+                    re = new ResponseEntity<>("objeto eliminado", HttpStatus.OK);
+                    break;
+                default:
+                    throw new AssertionError("No existe metodo");
+            }
+            return re;
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "manRftxtax", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+    public ResponseEntity<?> mantenimientoRftxTax(@RequestParam(required = false) Map<String, String> params, @RequestBody(required = false) Map<String, String> body,
+            HttpServletRequest req) {
+        logic = new SalesReportLogic();
+        try {
+            ResponseEntity re;
+            switch (req.getMethod()) {
+                case "POST":
+                    re = new ResponseEntity<>("objeto agregado", HttpStatus.OK);
+                    break;
+                case "PUT":
+                    re = new ResponseEntity<>("objeto modificado", HttpStatus.OK);
+                    break;
+                case "DELETE":
+                    re = new ResponseEntity<>("objeto eliminado", HttpStatus.OK);
+                    break;
+                default:
+                    throw new AssertionError("No existe metodo");
+            }
+            return re;
+        } catch (Exception ex) {
+            return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 }
