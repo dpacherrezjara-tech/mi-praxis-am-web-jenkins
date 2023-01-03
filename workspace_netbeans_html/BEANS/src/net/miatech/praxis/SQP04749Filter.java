@@ -19,6 +19,24 @@ public class SQP04749Filter {
     private String A2445CCST;
     private String A2445RFIC;
     private String A2445RFIS;
+    private String A2445MDARV;
+    private String A2445MDALC;
+
+    public String getA2445MDALC() {
+        return A2445MDALC;
+    }
+
+    public void setA2445MDALC(String A2445MDALC) {
+        this.A2445MDALC = A2445MDALC;
+    }
+
+    public String getA2445MDARV() {
+        return A2445MDARV;
+    }
+
+    public void setA2445MDARV(String A2445MDARV) {
+        this.A2445MDARV = A2445MDARV;
+    }
     private Double A2445CARGO;
     private Double IVACARGO;
     

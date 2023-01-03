@@ -371,6 +371,8 @@ public class InvoiceCommissionConsortiaDAO {
                 obj.setA2445CCST(rs.getString("A2445CCST"));
                 obj.setA2445RFIC(rs.getString("A2445RFIC"));
                 obj.setA2445RFIS(rs.getString("A2445RFIS"));
+                obj.setA2445MDARV(rs.getString("A2445MDARV"));
+                obj.setA2445MDALC(rs.getString("A2445MDALC"));
                 obj.setA2445CARGO(rs.getDouble("A2445CARGO"));
                 obj.setIVACARGO(rs.getDouble("IVACARGO"));
                 lstObj.add(obj);
