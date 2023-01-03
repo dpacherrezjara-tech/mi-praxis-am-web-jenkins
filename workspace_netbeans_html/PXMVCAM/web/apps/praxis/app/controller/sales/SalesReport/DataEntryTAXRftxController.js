@@ -343,7 +343,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTAXRftxController',
                 switch (res.status) {
                     case 200:
                         resObj = await res.json();
-                        console.log(resObj);
+                        //console.log(resObj);
                         return {success: true, data: resObj};
                         break;
                     case 204:
