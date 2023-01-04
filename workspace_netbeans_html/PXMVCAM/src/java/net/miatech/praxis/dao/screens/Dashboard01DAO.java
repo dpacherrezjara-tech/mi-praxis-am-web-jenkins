@@ -18,6 +18,7 @@ import java.util.Map;
 import net.miatech.beans.A050Filter;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A1971Filter;
+import net.miatech.beans.A2826Filter;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
@@ -5016,7 +5017,7 @@ public class Dashboard01DAO {
         return listado;
     }
 
-    public List<A1971Filter> loadPX109SQP00556M(A1971Filter filter) throws SQLException, Exception {
+    public List<A1971Filter> loadPX109SQP00556MT(A1971Filter filter) throws SQLException, Exception {
 
         List<A1971Filter> listado = new ArrayList();
 
@@ -5039,7 +5040,7 @@ public class Dashboard01DAO {
         int[] listado1TP = new int[filter.MESES];
         double[] listado1TV = new double[filter.MESES];
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP00556M(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP00556MT(?,?,?,?,?)}";
 
         session.getCNXIBMDB2().open();
         try {
@@ -5167,7 +5168,7 @@ public class Dashboard01DAO {
         return listado;
     }
 
-    public List<A1971Filter> loadPX109SQP00556MNF(A1971Filter filter) throws SQLException, Exception {
+    public List<A1971Filter> loadPX109SQP00556NF(A1971Filter filter) throws SQLException, Exception {
 
         List<A1971Filter> listado = new ArrayList();
         String[] listado1FD = new String[filter.MESES];
@@ -5187,12 +5188,12 @@ public class Dashboard01DAO {
         long QTYPAX = 0, QTYPAX_F = 0, QTYPAX_J = 0, QTYPAX_Y = 0;
         long QTYVNR = 0, QTYNRE = 0, QTYFLI = 0, QBNPAX = 0;
         double VCPN = 0, VCPN_F = 0, VCPN_J = 0, VCPN_Y = 0, AMTBN = 0, VCPNRE = 0;
-        double VCPNB = 0, totVCPNNF = 0, totVCPNNFB = 0, UNI = 0, UNIB=0;
+        double VCPNB = 0, totVCPNNF = 0, totVCPNNFB = 0, UNI = 0, UNIB = 0;
         double TOVCPNONB = 0, TOVCPNOALB = 0, TOVCPNON = 0, TOVCPNOAL = 0;
         String strYearB = "", strValueB = "", strMonthB = "";
         String fecha = Functions.getFechaActual();
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP00556MNF(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP00556NF(?,?,?,?,?)}";
 
         session.getCNXIBMDB2().open();
         try {
@@ -5324,26 +5325,114 @@ public class Dashboard01DAO {
                     objRtn.strYearB = strYearB;
                     objRtn.strValueB = "Total Of:" + objRtn.VCPNNFB;
 
-                    UNIB =  TOVCPNONB + TOVCPNOALB;
-                    UNI =  TOVCPNON + TOVCPNOAL;
-                    TOVCPNONB = ( TOVCPNONB * 100 ) / UNIB;
-                    TOVCPNOALB = ( TOVCPNOALB * 100 ) / UNIB;
-                    TOVCPNON = ( TOVCPNON * 100 ) / UNI;
-                    TOVCPNOAL = ( TOVCPNOAL * 100 ) / UNI;
+                    UNIB = TOVCPNONB + TOVCPNOALB;
+                    UNI = TOVCPNON + TOVCPNOAL;
+                    TOVCPNONB = (TOVCPNONB * 100) / UNIB;
+                    TOVCPNOALB = (TOVCPNOALB * 100) / UNIB;
+                    TOVCPNON = (TOVCPNON * 100) / UNI;
+                    TOVCPNOAL = (TOVCPNOAL * 100) / UNI;
                     objRtn.TOVCPNONB = TOVCPNONB;
                     objRtn.TOVCPNON = TOVCPNON;
                     objRtn.TOVCPNOALB = TOVCPNOALB;
                     objRtn.TOVCPNOAL = TOVCPNOAL;
-//                    //carga
-//                    if (j == 0) {
-//                        objRtn.AngleB = TOVCPNONB;
-//                        objRtn.Angle = TOVCPNON;
-//                    }
-//                    if (j == 1) {
-//                        objRtn.AngleB = TOVCPNOALB;
-//                        objRtn.Angle = TOVCPNOAL;
-//                    }
+                    j++;
+                    listado.add(objRtn);
+                }
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return listado;
+    }
+
+    public List<A1971Filter> loadPX109SQP00556ZN(A1971Filter filter) throws SQLException, Exception {
+
+        List<A1971Filter> listado = new ArrayList();
+        String[] Zones = new String[filter.MESES];
+        double[] listado1 = new double[filter.MESES];
+        double[] listado2 = new double[filter.MESES];
+
+        HashMap hm = new HashMap();
+        hm.put("ASI", "ASIA");
+        hm.put("CAN", "CANADA");
+        hm.put("CAR", "CARIBE");
+        hm.put("CAM", "CENTROAMERICA");
+        hm.put("USA", "ESTADOS UNIDOS");
+        hm.put("EUR", "EUROPA");
+        hm.put("FRO", "FRONTERA");
+        hm.put("LOC", "LOCAL");
+        hm.put("PLA", "PLAYA");
+        hm.put("SUD", "SUDAMERICA");
+        hm.put("OCE", "OCEANIA");
+        hm.put("AFR", "AFRICA");
+//        
+        A1971Filter objRtn;
+        A1971Filter objRtn0;
+        int i = 0, j = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        
+        String fecha = Functions.getFechaActual();
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP00556ZN(?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+        try {
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_FECHA_FROMB);
+            cstmt01.setString(5, filter.IN_FECHA_TOB);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                objRtn0 = new A1971Filter();
+                objRtn0.QCFLOW = rs01.getLong("QCFLOW");
+                objRtn0.QCPAX = rs01.getLong("QCPAX");
+                Zones[i] = objRtn0.ZONA;
+                listado1[i] = (int) objRtn0.QCFLOW;
+                listado2[i] = (int) objRtn0.QCPAX;
+                i++;
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1971Filter();
+                    objRtn.QCFLOW = rs01.getLong("QCFLOW");
+                    objRtn.QCPAX = rs01.getLong("QCPAX");
+                    objRtn.ZONA = rs01.getString("ZONA");
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.strYear = objRtn.IN_FECHA_FROM.substring(0, 4);
+                    objRtn.IN_FECHA_FROMB = filter.IN_FECHA_FROMB;
+                    objRtn.strYearB = objRtn.IN_FECHA_FROMB.substring(0, 4);
+                    if (hm.containsKey(objRtn.ZONA.trim().toUpperCase())) {
+                        objRtn.strDescripcion = hm.get(objRtn.ZONA.trim()).toString();
+                    }
+                    objRtn.AVG = (objRtn.QCFLOW > 0) ? (objRtn.QCPAX) / objRtn.QCFLOW : 0.00;
+                    objRtn.ZONAB = Zones[j];
+                    if (hm.containsKey(objRtn.ZONAB.trim().toUpperCase())) {
+                        objRtn.strDescripcionB = hm.get(objRtn.ZONAB.trim()).toString();
+                    }
+                    objRtn.QCFLOWB = listado1[j];
+                    objRtn.QCPAXB = listado2[j];
+                    objRtn.AVGB = (objRtn.QCFLOWB > 0) ? (objRtn.QCPAXB) / objRtn.QCFLOWB : 0.00;
                     j++;
                     listado.add(objRtn);
                 }

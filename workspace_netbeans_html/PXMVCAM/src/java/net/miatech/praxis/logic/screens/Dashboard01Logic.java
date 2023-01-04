@@ -215,14 +215,17 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX109SQP00556(filter);
     }
     
-    public List<A1971Filter> loadPX109SQP00556M(A1971Filter filter) throws SQLException, Exception {
-        return Dashboard01DAO.loadPX109SQP00556M(filter);
+    public List<A1971Filter> loadPX109SQP00556MT(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556MT(filter);
     }
     
-    public List<A1971Filter> loadPX109SQP00556MNF(A1971Filter filter) throws SQLException, Exception {
-        return Dashboard01DAO.loadPX109SQP00556MNF(filter);
+    public List<A1971Filter> loadPX109SQP00556NF(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556NF(filter);
     }
 
+    public List<A1971Filter> loadPX109SQP00556ZN(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556ZN(filter);
+    }
 
     public List<A1971Filter> loadPX109SQP01927(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01927(filter);

@@ -150,5 +150,14 @@ public class A1971Filter extends A1971 {
     public double TOVCPNON = 0;
     public double TOVCPNOALB = 0;
     public double TOVCPNOAL = 0;
+    
+    public String ZONAB = "";
+    public double QCFLOW = 0;
+    public double QCPAX = 0;
+    public double QCFLOWB = 0;
+    public double QCPAXB = 0;
+    public double AVGB = 0;
+    public String strDescripcionB = "";
+    
     public Pagination page = new Pagination();
 }
