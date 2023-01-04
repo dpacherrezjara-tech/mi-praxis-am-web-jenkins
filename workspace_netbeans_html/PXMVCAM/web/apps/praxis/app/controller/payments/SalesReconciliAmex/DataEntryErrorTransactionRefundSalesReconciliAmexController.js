@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.TDOC = this.beanResult.TDOC;
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             beanTemp.TGROSAMOUN = 0;
         }
@@ -536,7 +536,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             monto_venta = 0;
         }

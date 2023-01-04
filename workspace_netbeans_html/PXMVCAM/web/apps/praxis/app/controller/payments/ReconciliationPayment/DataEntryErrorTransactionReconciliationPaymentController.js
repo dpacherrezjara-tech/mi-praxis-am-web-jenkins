@@ -248,7 +248,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             beanTemp.TGROSAMOUN = 0;
         }
@@ -632,7 +632,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             monto_venta = 0;
         }
