@@ -1209,15 +1209,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                      '#ff0167'],
                                                  rotation: 75,
                                             label: {
-                                                field: 'ZONA',
-//                                                renderer: function (value, metaData, b, callout) {
-//                                                    if(value<25000){
-//                                                        return 'K';
-//                                                    }else{
-//                                                        value = Ext.util.Format.number(value, '0,0' + 'K');
-//                                                        return value;
-//                                                    }
-//                                                },
+                                                field: 'QCPAXB',
+                                                renderer: function (value, metaData, b, callout) {
+                                                    if(value<25000){
+                                                        return 'K';
+                                                    }else{
+                                                        value = Ext.util.Format.number(value, '0,0' + 'K');
+                                                        return value;
+                                                    }
+                                                },
                                             },
                                             highlight: true,
                                             tooltip: {
@@ -1460,7 +1460,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     width: 1560,
                                     border: false,
                                     height: 300,
-                                    title:'cuarenta y venite',
+                                    title:'cuarenta y veinte',
                                     background: '#E3EAEF',
                                     interactions: ['itemhighlight'],
 //                                    legend: {
