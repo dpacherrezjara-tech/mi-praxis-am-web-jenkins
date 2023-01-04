@@ -20,7 +20,18 @@ public class A1955Filter extends A1955 {
     public String IN_ENVIO = "";
     public String IN_MODULO = "";
     public String IN_FECHA_PROCESO = "";
+    public String IN_PERIOD = "";
     public String IN_ACCION = "";
+    
+    public String LCODE = "";
+    public String LGROSS = "";
+    public String LISC = "";
+    public String LTAX = "";
+    
+    public String ECODE = "";
+    public String EGROSS = "";
+    public String EISC = "";
+    public String ETAX = "";
     
     public String IN_SEQ = "";
     public String IN_SEQREG = "";
