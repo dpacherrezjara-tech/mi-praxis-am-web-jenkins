@@ -859,6 +859,9 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         return valid;
     },
     onBlurEmdVal:function(obj){
+        if (Ext.getCmp(prototype.id + '-txtA1757COD').getValue() === '') {
+            return;
+        }
         let tf = obj.id.split('-')[1];
         switch (tf){
             case 'txtA1757IVACB':
