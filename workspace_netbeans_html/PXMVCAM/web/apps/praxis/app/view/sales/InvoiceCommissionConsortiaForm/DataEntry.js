@@ -681,7 +681,8 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                     if ( e.getKey() === e.ENTER ){
                                                         Ext.getCmp(prototype.id+'-txtA1757IVACB').focus();
                                                     }
-                                                }
+                                                },
+                                                blur:'onBlurEmdVal'
                                             }
                                         },
                                         {
@@ -783,7 +784,8 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                     if ( e.getKey() === e.ENTER ){
                                                         Ext.getCmp(prototype.id+'-txtA1757STATU').focus();
                                                     }
-                                                }
+                                                },
+                                                blur: 'onBlurEmdVal'
                                             }
                                         },
                                         {

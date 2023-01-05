@@ -118,6 +118,7 @@ public class InvoiceCommissionConsortiaDAO {
                 objRtn.A2444IVA16 = rs01.getDouble("A2444IVA16");
                 //New
                 objRtn.A2447COD = rs01.getString("A2447COD");
+                objRtn.A2447CHARG = rs01.getDouble("A2447CHARG");
                 objRtn.A2447COMBA = rs01.getDouble("A2447COMBA");
                 objRtn.A2447IVACB = rs01.getDouble("A2447IVACB");
                 /*objRtn.A2447COD2 = rs01.getString("A2447COD2");
