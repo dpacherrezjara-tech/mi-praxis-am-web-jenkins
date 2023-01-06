@@ -107,5 +107,9 @@ public class SalesAuditAcceptedLogic {
     public String Group() throws SQLException, Exception {
         return objDAO.Group();
     }
+    
+    public String searchIDFILE(A1672Filter filter) throws SQLException, Exception {
+        return objDAO.searchIDFILE(filter);
+    }
 
 }

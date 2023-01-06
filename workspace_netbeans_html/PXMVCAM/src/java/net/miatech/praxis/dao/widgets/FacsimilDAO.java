@@ -2787,7 +2787,9 @@ public class FacsimilDAO {
                                         // String strFPTP = rst.getString("ARC").substring(8723, 8725).trim();
                                         String strFPTP = rst.getString("ARC").substring(8723 + (i * x84), 8725 + (i * x84)).trim();
                                         if ((strFPTP.trim().equals("EX") || strFPTP.trim().equals("ET")) /*&& i == 0*/) {
-                                            beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8746 + (i * x84), 8765 + (i * x84));
+                                            //beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8746 + (i * x84), 8765 + (i * x84)); modificado por zpp 20230106 IND00576 
+                                            beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8744 + (i * x84), 8761 + (i * x84)); 
+                                            
                                         }
                                         if (Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) > 0) {
                                             String monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8744 + (i * x84));
