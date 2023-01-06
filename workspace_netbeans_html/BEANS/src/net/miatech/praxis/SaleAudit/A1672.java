@@ -74,6 +74,7 @@ public class A1672 {
     public String A1672NREASON = "";
     public String A1672CURRENCY = "";
     public String A1672PNR = "";
+    public String A1672IDFIL = "";
     public int A1672CORREO = 0;
     public String A1672MEMO = "";
     public String A1672FLADM = "";
