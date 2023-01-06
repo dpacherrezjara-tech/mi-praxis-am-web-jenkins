@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id + '-dataEntryController',
     url: CONTEXTPATH + '/AccountingMasterProcess',
-    PERMC: 'N',
+    PERML: 'N',
     p: {},
     dataentryParams: {},
     aux: false,
@@ -42,13 +42,13 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 break;
         }
         global.AccessControlMaganer();
-        console.log('PERMC');
+        console.log('PERML');
         console.log(userAccess);
         console.log(optionSelect);
         $.each(userAccess, function(x, y) {
             if (y.NPROG === optionSelect.nprog) {                
-                PERMC = y.PERMC;
-                console.log('Access:'+PERMC);
+                PERML = y.PERML;
+                console.log('Access:'+PERML);
             }
         });
         this.controlConsistency();
@@ -211,8 +211,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     //<editor-fold defaultstate="collapsed" desc="controlLight">
     controlConsistency: function () {
         
-        if(PERMC === 'Y'){
-            console.log('opcion PERMC: ' + PERMC);
+        if(PERML === 'Y'){
+            console.log('opcion PERML: ' + PERML);
             console.log(Ext.getCmp(prototype.id + '-de-chkConsistencia'));
             Ext.getCmp(prototype.id + '-de-chkConsistencia').setValue(true);            
             Ext.getCmp(prototype.id + '-de-chkConsistencia').disable();            
