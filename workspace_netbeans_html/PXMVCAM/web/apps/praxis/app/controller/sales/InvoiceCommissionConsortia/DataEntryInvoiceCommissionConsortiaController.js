@@ -849,10 +849,10 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             return true;
         }
         let valid = false;
-        let invc_Charge = Ext.getCmp(prototype.id + '-txtA1757COMBA').getValue();
-        let invc_IvaComBa = Ext.getCmp(prototype.id + '-txtA1757IVACB').getValue();
-        let preInv_Charge = Ext.getCmp(prototype.id + '-txtA1757COMBA_P').getValue();
-        let preInv_IvaComBa = Ext.getCmp(prototype.id + '-txtA1757IVACB_P').getValue();
+        let invc_Charge = parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMBA').getValue().replace(',',''));
+        let invc_IvaComBa = parseFloat(Ext.getCmp(prototype.id + '-txtA1757IVACB').getValue().replace(',',''));
+        let preInv_Charge = parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMBA_P').getValue().replace(',',''));
+        let preInv_IvaComBa = parseFloat(Ext.getCmp(prototype.id + '-txtA1757IVACB_P').getValue().replace(',',''));
         let monedaFac = Ext.getCmp(prototype.id + '-txtA1757MONED').getValue();
 //        console.log(invc_Charge);
 //        console.log(invc_IvaComBa);
