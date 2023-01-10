@@ -193,6 +193,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
             case prototype.idGr+ '-tabTotal':
                 meDE.tabId = '3';
                 break;
+            case prototype.idGr+ '-tabTRFTX':
+                meDE.tabId = '4';
+                break;
         }
         this.btnSearch_click();
     },
@@ -789,6 +792,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 pag += '-de-paggin4';
                 title += 'TOTALS';
                 break;
+            case '4':
+                url1 += this.url + '/loadRftx';
+                grilla += '-de-gridDataRftx';
+                pag += '-de-paggin5';
+                title += 'RFTX';
+                break;
         }
         Ext.getCmp(meDE.tabName).setTitle(title);
         this.setGridData(url1, grilla, pag, title);
@@ -846,6 +855,18 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                     }
                 });
                 dataEntryAdm.show();
+                break;
+            case prototype.idGr+ '-de-gridDataRftx':
+                var dataEntryRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
+                    id: prototype.idRftx + '-dataEntryRftx',
+                    params: {
+                        rec: rec,
+                        groupData:{...this.view.params.rec.data},
+                        exchRate: Ext.getCmp(prototype.idGr + '-de-lblExchangeRate').getValue(),
+                        locCurr: Ext.getCmp(prototype.idGr + '-de-lblCurrency').getValue()
+                    }
+                });
+                dataEntryRftx.show();
                 break;
         }
     },
