@@ -631,7 +631,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
 
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050TUA2, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA050NETO2, '0,000') + '<b>';
                                                                 }
                                                             },
                                                             {text: '%', dataIndex: 'Perc2', width: 50,
