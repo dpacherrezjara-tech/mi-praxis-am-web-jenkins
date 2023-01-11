@@ -178,7 +178,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
     },
     onChangeTab: function(obj, current, before) {
         meDE.paramsDE.IN_OPCION = '1';
-        console.log(current.id);
+								
         var tabActual = current.id;
         meDE.tabName = tabActual;
         switch (tabActual) {
@@ -760,7 +760,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         var grilla = prototype.idGr+ '';
         var pag = prototype.idGr+ '';
         meDE.paramsDE.IN_GRUPO = Ext.getCmp(prototype.idGr+ '-de-lblGroup').getValue();
-        console.log(meDE.id);
+							 
         switch (meDE.tabId) {
             case '0':
                 url1 += this.url + '/loadTicket';
