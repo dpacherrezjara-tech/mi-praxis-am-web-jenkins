@@ -623,7 +623,7 @@ public class LoadConciliationTestDAO {
                         } else if (rst.getString("FTE").trim().equals("M")) {
                             beanTkt.strSORIG = "Manual";
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             beanTkt.SDATEL = rst.getString("SDATEL").trim();
                             beanTkt.SFLOAD = rst.getString("SFLOAD").trim();
@@ -636,6 +636,7 @@ public class LoadConciliationTestDAO {
                             beanTkt.STCNTR = rst.getString("STCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
                             beanTkt.SCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
                             beanTkt.strDescCard = rst.getString("NAMECARS").trim();
@@ -664,7 +665,8 @@ public class LoadConciliationTestDAO {
                             beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
                             beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
                             beanTkt.SCARDN = rst.getString("ACARDN").trim();
                             beanTkt.strSCARDN = rst.getString("ACARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARA").trim();
@@ -807,6 +809,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.STCNTR = rst.getString("STCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
                         beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
@@ -953,7 +956,8 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                         beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("ACARDN").trim();
                         beanTkt.strSCARDN = rst.getString("ACARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
@@ -3256,7 +3260,7 @@ public class LoadConciliationTestDAO {
                         } else if (rst.getString("FTE").trim().equals("M")) {
                             beanTkt.strSORIG = "Manual";
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             //COMENTADO A PEDIDO DE ENS 20160119
                             /*beanTkt.FTE = rst.getString("FTE").trim();
@@ -3282,13 +3286,9 @@ public class LoadConciliationTestDAO {
                                 beanTkt.strMoneda = rst.getString("MONEDAS").trim();
                             }
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
-                            if (!rst.getString("STVAL").trim().equals("2")) {
-                                beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                                beanTkt.strSCARDN = rst.getString("ACARDN").trim();
-                            } else {
-                                beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                                beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
-                            }
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                             beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -3318,7 +3318,8 @@ public class LoadConciliationTestDAO {
                             } else {
                                 beanTkt.strMoneda = rst.getString("MONEDAA").trim();
                             }
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
                             beanTkt.SCARDN = rst.getString("ACARDN").trim();
                             beanTkt.strSCARDN = rst.getString("ACARDN").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
@@ -3479,6 +3480,7 @@ public class LoadConciliationTestDAO {
                             beanTkt.strMoneda = rst.getString("MONEDAS").trim();
                         }
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
                         beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
@@ -3636,7 +3638,8 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.strMoneda = rst.getString("MONEDAA").trim();
                         }
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("ACARDN").trim();
                         beanTkt.strSCARDN = rst.getString("ACARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
@@ -5678,7 +5681,8 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                         beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("ACARDN").trim();
                         beanTkt.strSCARDN = rst.getString("ACARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
