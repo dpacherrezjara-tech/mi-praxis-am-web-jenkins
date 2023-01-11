@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblTransactionNbr').setValue(obj.a4373TRNN);
             Ext.getCmp(prototype.idRftx + '-det-lblIata').setValue(obj.a4373AGENT);
             Ext.getCmp(prototype.idRftx + '-det-lblMdtx').setValue(obj.a4373MDTX.trim());
-            Ext.getCmp(prototype.idRftx + '-det-lblCurr').setValue(obj.a4373TTAX);
+            Ext.getCmp(prototype.idRftx + '-det-lblCurr').setValue(Ext.util.Format.number(obj.a4373TTAX, '0,000.00'));
             Ext.getCmp(prototype.idRftx + '-det-lblExchangeRate').setValue(objGrupo.A1530TCAMB);
             Ext.getCmp(prototype.idRftx + '-det-lblLocalCur').setValue(objGrupo.A1530MDA);
             //panel 2

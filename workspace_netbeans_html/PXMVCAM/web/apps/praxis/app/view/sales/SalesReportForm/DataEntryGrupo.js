@@ -1275,7 +1275,12 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     {text: 'Document<br> Type', dataIndex: 'A7373TDOC', width: 70},
                                                     {text: 'Type', dataIndex: 'A4373UFORM', width: 50},
                                                     {text: 'TAX<br> Currency', width: 80, dataIndex: 'A4373MDTX'},
-                                                    {text: 'TAX Amount', width: 90, dataIndex: 'A4373TTAX'},
+                                                    {text: 'TAX Amount', width: 90, dataIndex: 'A4373TTAX',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = 'text-align :right; background:#D5F4D5 !important;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
                                                     {text: 'Error', dataIndex: 'A4373MIAER', width: 75},
                                                     {
                                                         sortable: false,
