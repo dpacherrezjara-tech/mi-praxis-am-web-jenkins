@@ -975,7 +975,4 @@ public class A4373 {
     public void setA4373YQMT4(String A4373YQMT4) {
         this.A4373YQMT4 = A4373YQMT4;
     }
-    
-    
-
 }
