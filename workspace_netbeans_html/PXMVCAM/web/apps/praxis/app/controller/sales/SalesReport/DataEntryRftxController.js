@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     alias: 'controller.' + prototype.idRftx + '-dataEntryRftxController',
     url: CONTEXTPATH + '/SalesReport',
     meDET: '',
+    paramsProrrate: {},
     //<editor-fold defaultstate="collapsed" desc="View Vars">
     groupInfo: '',
     objInfo: '',
@@ -62,6 +63,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         this.setFopValues();
         this.setTaxValues();
         this.setTotalValues();
+        this.setFacsimil();
     },
     //<editor-fold defaultstate="collapsed" desc="Obteniendo Valores">
     getRftxInfo: async function () {
@@ -206,7 +208,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         let bean = {};
         bean.TDNR = Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = Ext.getCmp(prototype.idRftx + '-det-lblSource').getValue().trim().substr(0, 3);
-        bean.SEQTKT =Ext.getCmp(prototype.idRftx + '-det-lblSeq').getValue().trim();
+        bean.SEQTKT =this.view.params.rec.data.A4373SEQ;
         bean.IDFILE = Ext.getCmp(prototype.idRftx + '-det-lblFileId').getValue().trim();
         console.log(bean);
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
@@ -353,6 +355,37 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             win.show();
         }
     },
+    setFacsimil: function () {
+        var p = this.view.params;
+        var bean = p.rec.data;
+        console.log(bean);
+        paramsProrrate = {
+            IN_TIPOCAP: 'A',
+            IN_AIRLIN: bean.A4373AIRLI,
+            IN_GRUPO: bean.A4373GRUPO,
+            IN_CIA: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue()),//bean.A4373CIAI,
+            IN_FORMA: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue()).substr(0, 4),//bean.A4373FORMI,
+            IN_SERIE: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue()).substr(4, 6),//bean.A4373SERII,
+            IN_SEQ: bean.A4373SEQ,
+            IN_FTE: Ext.getCmp(prototype.idRftx + '-det-lblSource').getValue().substr(0, 3),//bean.A4373ORIG,
+            IN_TRX: 'RFND',//bean.A4373TRNCU,
+            IN_EDITABLE: false,
+            IN_TCAMB: p.exchrate,
+            IN_REVENUE: '',
+            IN_STATUS: 'CLOSED',
+            IN_ERROR: '',
+            IN_TDOC: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblDocType').getValue()),
+            IN_ISSUEDATE: bean.A4373FECVT,
+            IN_CUPON1: '',
+            IN_CUPON2: '',
+            IN_CUPON3: '',
+            IN_CUPON4: '',
+            IN_FORCE: '',
+            IN_IDFIL: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblFileId').getValue())//bean.A4373IDFIL
+        };
+        console.log(paramsProrrate);
+        Ext.getCmp(prototype.idRftx + '-widget-facsimil').setParam(paramsProrrate);
+    },
     //<editor-fold defaultstate="collapsed" desc="FETCH">
     getFetchAsync: async function (url, params, method = 'GET') {
         let reqUrl = '';

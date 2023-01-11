@@ -1304,7 +1304,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
         var bean = {};
         bean.TDNR = Ext.getCmp(prototype.idRfnd + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = Ext.getCmp(prototype.idRfnd + '-det-lblSource').getValue().trim().substr(0, 3);
-        bean.SEQTKT = Ext.getCmp(prototype.idRfnd + '-det-lblSeq').getValue().trim();
+        bean.SEQTKT = this.view.params.rec.data.A713SEQ;
         bean.IDFILE = Ext.getCmp(prototype.idRfnd + '-det-lblFileId').getValue().trim();
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
             bean.A720TKVOID = '';//this.gloA720TKVOID;
