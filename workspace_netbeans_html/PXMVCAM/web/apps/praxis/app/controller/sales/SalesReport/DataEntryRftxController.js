@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         let bean = {};
         bean.TDNR = Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = Ext.getCmp(prototype.idRftx + '-det-lblSource').getValue().trim().substr(0, 3);
-        bean.SEQTKT = '00';
+        bean.SEQTKT =Ext.getCmp(prototype.idRftx + '-det-lblSeq').getValue().trim();
         bean.IDFILE = Ext.getCmp(prototype.idRftx + '-det-lblFileId').getValue().trim();
         console.log(bean);
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
