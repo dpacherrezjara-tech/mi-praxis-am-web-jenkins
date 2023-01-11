@@ -33,7 +33,8 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
                 click: this.btnClear_click
             },
             '#ViewTicketAccountingForm-btnExcel': {
-                click: this.btnExcel_click
+                //click: this.btnExcel_click
+                click: this.exportExcel
             },
             '#ViewTicketAccountingForm-btnFilter': {
                 click: this.btnFilter_click
@@ -594,37 +595,55 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
         });
     },
     exportExcel: function() {
-
+        //me.setFormatParameter;
         switch (me.gridActual) {
             case  '-gridData':
-                global.getFile(prototype.url + '/getXLSX?IN_A1879CCUST=' + searchParams.IN_A1879CCUST
-                        + '&IN_A1879FECHA=' + searchParams.IN_A1879FECHA
-                        + '&IN_A1879PERIO=' + searchParams.IN_A1879PERIO);
+                 me.exportExcel2(prototype.url + '/getDetailXLSX?beanString=' + encodeURI(JSON.stringify(searchParams)));
+               /* global.getFile(prototype.url + '/getXLSX?IN_A1879CCUST=' + me.searchParams.IN_A1879CCUST
+                        + '&IN_A1879FECHA=' + me.searchParams.IN_A1879FECHA
+                        + '&IN_A1879PERIO=' + me.searchParams.IN_A1879PERIO);*/
+            
                 break;
             case '-gridDataDetail':
-                global.getFile(prototype.url + '/getDetailXLSX?IN_A1879CCUST=' + me.paramsDetail.IN_A1879CCUST
+                me.exportExcel2(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(searchParams)));
+                /*global.getFile(prototype.url + '/getDetailXLSX?IN_A1879CCUST=' + me.paramsDetail.IN_A1879CCUST
                         + '&IN_A1879FECHA=' + me.paramsDetail.IN_A1879FECHA
                         + '&IN_A1879PERIO=' + me.paramsDetail.IN_A1879PERIO
                         + '&IN_A1879LOTE=' + me.paramsDetail.IN_A1879LOTE
                         + '&IN_A1879MONED=' + me.paramsDetail.IN_A1879MONED
-                        );
+                        );*/
                 break;
-            case '-gridDataDetail2':
-                global.getFile(prototype.url + '/getDetail2XLSX?IN_A1878CCUST=' + me.paramsDetail.IN_A1878CCUST
-                        + '&IN_A1878MONED=' + me.paramsDetail.IN_A1878MONED
-                        + '&IN_A1878TITU=' + me.paramsDetail.IN_A1878TITU
-                        + '&IN_A1878FPRO=' + me.paramsDetail.IN_A1878FPRO
-                        + '&IN_A1878CIAF=' + me.paramsDetail.IN_A1878CIAF
-                        + '&IN_A1878UNID=' + me.paramsDetail.IN_A1878UNID
-                        + '&IN_A1878CECO=' + me.paramsDetail.IN_A1878CECO
-                        + '&IN_A1878UBICA=' + me.paramsDetail.IN_A1878UBICA
-                        + '&IN_A1878CUENT=' + me.paramsDetail.IN_A1878CUENT
-                        + '&IN_A1878SUBCU=' + me.paramsDetail.IN_A1878SUBCU
-                        + '&IN_A1878EQUI=' + me.paramsDetail.IN_A1878EQUI
-                        + '&IN_A1878ICIA=' + me.paramsDetail.IN_A1878ICIA
-                        );
-                break;
+//            case '-gridDataDetail2':
+//                global.getFile(prototype.url + '/getDetail2XLSX?IN_A1878CCUST=' + me.paramsDetail.IN_A1878CCUST
+//                        + '&IN_A1878MONED=' + me.paramsDetail.IN_A1878MONED
+//                        + '&IN_A1878TITU=' + me.paramsDetail.IN_A1878TITU
+//                        + '&IN_A1878FPRO=' + me.paramsDetail.IN_A1878FPRO
+//                        + '&IN_A1878CIAF=' + me.paramsDetail.IN_A1878CIAF
+//                        + '&IN_A1878UNID=' + me.paramsDetail.IN_A1878UNID
+//                        + '&IN_A1878CECO=' + me.paramsDetail.IN_A1878CECO
+//                        + '&IN_A1878UBICA=' + me.paramsDetail.IN_A1878UBICA
+//                        + '&IN_A1878CUENT=' + me.paramsDetail.IN_A1878CUENT
+//                        + '&IN_A1878SUBCU=' + me.paramsDetail.IN_A1878SUBCU
+//                        + '&IN_A1878EQUI=' + me.paramsDetail.IN_A1878EQUI
+//                        + '&IN_A1878ICIA=' + me.paramsDetail.IN_A1878ICIA
+//                        );
+//                break;
         }
+    },
+    exportExcel2: function (_path) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    global.getFile(_path);
+                }
+            }
+        });
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
