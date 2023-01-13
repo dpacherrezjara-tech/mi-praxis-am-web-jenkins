@@ -142,7 +142,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                 ["1", "Found"], 
                 ["2", "Found but not matching coupon"],
                 ["4", "No Revenue(Employes/Oth)"],
-                ["5", "Manual"]
+                ["5", "Manual"],
+                ["6", "BPO Found"],
             ]
         }));
 //        cmbFSABRE.setValue('0');
