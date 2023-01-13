@@ -103,7 +103,10 @@ public class A4363 {
     public String A3401RAAG;
     public String A4363FCOTI;
     public String A4363HCOTI;
-     public String A4363TRNCO;
+    public String A4363TRNCO;
+    public String A4363FOLIO;
+    public String A4363CUPON;
+    public String A4363RAAG;
     
 // datos de montos 
     public double A4363STARF = 0d;
@@ -130,6 +133,30 @@ public class A4363 {
     public double A4363PENAD= 0d;
     //int
     public int A4363RN;     
+
+    public String getA4363RAAG() {
+        return A4363RAAG;
+    }
+
+    public void setA4363RAAG(String A4363RAAG) {
+        this.A4363RAAG = A4363RAAG;
+    }
+
+    
+    public String getA4363CUPON() {
+        return A4363CUPON;
+    }
+
+    public void setA4363CUPON(String A4363CUPON) {
+        this.A4363CUPON = A4363CUPON;
+    }
+    public String getA4363FOLIO() {
+        return A4363FOLIO;
+    }
+
+    public void setA4363FOLIO(String A4363FOLIO) {
+        this.A4363FOLIO = A4363FOLIO;
+    }
 
     public double getA4363PENAD() {
         return A4363PENAD;
