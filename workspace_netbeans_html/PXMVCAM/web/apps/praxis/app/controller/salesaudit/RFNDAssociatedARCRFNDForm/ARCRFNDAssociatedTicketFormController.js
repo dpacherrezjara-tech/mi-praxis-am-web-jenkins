@@ -283,7 +283,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').setReadOnly(false);
         }
 
-
         Ext.getCmp(prototype.idARCDetailTicket + '-txtiata').setValue(rec.get('A4361IATA'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtiataIss').setValue(rec.get('A4363SIATA'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtfolio').setValue(rec.get('A4363FOLIO'));
@@ -1482,10 +1481,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                                 var res = Ext.JSON.decode(response.responseText);
                                 //console.log(res.data);
                                 var vp_icon = 0;
+                                 var vpmjse = '';
                                 if (res.data === 'RECORD INSERTED' || res.data === 'Proceso Culminado') {
                                     vp_icon = 1;
+                                    vpmjse='RECORD INSERTED';
+                                }else{
+                                    vpmjse=res.data;
                                 }
-                                global.Msg({msg: res.data, icon: vp_icon, fn: function () {
+                                global.Msg({msg: vpmjse, icon: vp_icon, fn: function () {
                                         if (vp_icon === 1) {
                                             Ext.getCmp(prototype.idARCDetailTicket + '-win').close();
                                             Ext.getCmp(prototype.idRFNDAssociatedARCR + '-Contenedor').getController().onSearchClick();
