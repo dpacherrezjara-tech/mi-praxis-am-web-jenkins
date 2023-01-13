@@ -147,9 +147,11 @@ public class FlightConciliationDAO {
                     //Cerrado (En grilla 'Cerrado') 
                     QCLO += rst.getLong("QREC");
                 } else //Procesado (En grilla 'Pendiente') Sólo si ha llegado ODS o VCR y no es StandBy(STVAL!=1)
-                if (rst.getInt("STVAL") != 3 && rst.getInt("STVAL") != 4 && rst.getString("FMULTI").equals("L") && rst.getInt("STVAL") != 1) {
-                    if (rst.getString("FSTAOD").trim().equals("1") || rst.getString("FSTAVC").trim().equals("1")) {
-                        QPEND += rst.getLong("QREC");
+                {
+                    if (rst.getInt("STVAL") != 3 && rst.getInt("STVAL") != 4 && rst.getString("FMULTI").equals("L") && rst.getInt("STVAL") != 1) {
+                        if (rst.getString("FSTAOD").trim().equals("1") || rst.getString("FSTAVC").trim().equals("1")) {
+                            QPEND += rst.getLong("QREC");
+                        }
                     }
                 }
                 //Status SSIM
@@ -489,7 +491,7 @@ public class FlightConciliationDAO {
 
                     beanCons.FOPERZUL = rst.getString("FOPERZUL");
                     beanCons.strFormatDate2 = Functions.getMonthConvert(beanCons.FOPERZUL);
-                    beanCons.FMULTI= rst.getString("FMULTI").trim();
+                    beanCons.FMULTI = rst.getString("FMULTI").trim();
                     beanCons.QCPNOD = rst.getLong("QCPNOD");
                     beanCons.QCPNFI = rst.getInt("QCPNFI");
                     beanCons.QCPNFRE = rst.getInt("QCPNFRE");
@@ -773,6 +775,8 @@ public class FlightConciliationDAO {
                     beanCons.descFSABRE = "No Revenue(Employes/Oth)";
                 } else if (rst.getString("FSABRE").trim().equals("5")) {
                     beanCons.descFSABRE = "Manual";
+                } else if (rst.getString("FSABRE").trim().equals("6")) {
+                    beanCons.descFSABRE = "BPO Found";
                 }
 
                 beanCons.STASABR = rst.getString("STASABR").trim();
@@ -1273,6 +1277,34 @@ public class FlightConciliationDAO {
 
             cs.setString(44, filter.strDescripcion);
             cs.setString(45, filter.FMULTI.trim());
+            cs.execute();
+
+        } catch (Exception e) {
+            strMsj = e.getMessage();
+            e.printStackTrace();
+        } finally {
+            setClose();
+        }
+
+        return strMsj;
+    }
+
+    public String loadPX095SQP04753(A3729Filter filter) throws SQLException {
+
+        //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1691.
+        String strMsj = "Operation was successful.";
+
+        try {
+            //PX09500006
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04753(?,?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+
+            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cs.setString(2, filter.DFLIGHT);
+            cs.setString(3, filter.NFLIGHT);
+            
             cs.execute();
 
         } catch (Exception e) {
@@ -2123,6 +2155,8 @@ public class FlightConciliationDAO {
                     beanCons.descFSABRE = "No Revenue(Employes/Oth)";
                 } else if (rst.getString("FSABRE").trim().equals("5")) {
                     beanCons.descFSABRE = "Manual";
+                } else if (rst.getString("FSABRE").trim().equals("6")) {
+                    beanCons.descFSABRE = "BPO Found";
                 }
 
                 beanCons.STASABR = rst.getString("STASABR").trim();
@@ -2354,7 +2388,7 @@ public class FlightConciliationDAO {
 
         return result;
     }
-    
+
     public String SQP04320(A3729Filter filter) throws SQLException, Exception {
         //REALIZA UPDATE  DE UN REGISTRO EN LA TABLA A3729.
 
@@ -2528,8 +2562,7 @@ public class FlightConciliationDAO {
         return strMsj;
 
     }
-    
-    
+
     public String SQP04550(A3729Filter filter) throws SQLException, Exception {
         //REALIZA DELETE DE DULPICADOS EN LA TABLA A3729.
 
@@ -2544,7 +2577,7 @@ public class FlightConciliationDAO {
             cstmt = cnx.prepareCall(SQLCLL01);
 
             cstmt.registerOutParameter(9, Types.INTEGER);
-            
+
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
             cstmt.setString(2, filter.DFLIGHT.trim());
             cstmt.setString(3, filter.NFLIGHT.trim());
@@ -2556,15 +2589,12 @@ public class FlightConciliationDAO {
             cstmt.setString(8, Functions.getHoraActual());
             cstmt.setInt(9, 0);
             cstmt.execute();
-            
-            
-            if(cstmt.getInt(9) > 0){
+
+            if (cstmt.getInt(9) > 0) {
                 strMsj = "Upgrade was successful.";
-            }else{
+            } else {
                 strMsj = "No records found.";
             }
-            
-            
 
         } catch (Exception e) {
             e.printStackTrace();
