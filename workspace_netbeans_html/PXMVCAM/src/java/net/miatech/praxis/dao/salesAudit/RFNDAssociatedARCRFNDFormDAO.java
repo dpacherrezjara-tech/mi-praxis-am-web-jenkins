@@ -187,12 +187,15 @@ public class RFNDAssociatedARCRFNDFormDAO {
                 objRtn.A4363CIA = rs01.getString("A4363CIA");
                 objRtn.A4363FORMA = rs01.getString("A4363FORMA");
                 objRtn.A4363SERIE = rs01.getString("A4363SERIE");
+                objRtn.A4363FOLIO = rs01.getString("A4361FOLIO");
+                objRtn.A4363CUPON = rs01.getString("A4363XCPN");
                 objRtn.A4363SEQ = rs01.getString("A4363SEQ");
                 objRtn.A4363CORRL = rs01.getString("A4363CORRL");
                 objRtn.A4363MARCA = rs01.getString("A4363MARCA");
                 objRtn.A4363SMDA = rs01.getString("A4363SMDA");
                 objRtn.A4363SMDAQ = rs01.getString("A4363SMDAQ");
                 objRtn.A4363SPAX = rs01.getString("A4363SPAX");
+                objRtn.A4363RAAG = rs01.getString("A4361RAAG");
                 objRtn.A4363STPAX = rs01.getString("A4363STPAX");
                 objRtn.A4363STRCU = rs01.getString("A4363STRCU");
                 objRtn.A4363STDOC = rs01.getString("A4363STDOC");
