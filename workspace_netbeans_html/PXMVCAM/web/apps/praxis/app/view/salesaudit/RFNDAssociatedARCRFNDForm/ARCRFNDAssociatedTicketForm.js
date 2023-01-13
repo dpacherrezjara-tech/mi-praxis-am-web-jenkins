@@ -686,8 +686,22 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                                     {text: 'Code', width: 50, dataIndex: 'A4365CFOP'},
                                     {text: 'Code', dataIndex: 'A4365TYCAR', width: 45},
                                     {text: 'Credit Card Number', dataIndex: 'A4365NTARJ', width: 150},
-                                    {text: 'Amount', dataIndex: 'A4365TOTAL', width: 90, align: 'right', editor: 'numberfield',
-                                        summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Net', dataIndex: 'A4365TOTAL', width: 120, align: 'right', editor: 'numberfield',
+                                        renderer: 'onColumnAirlineRenderer', summaryRenderer: 'OnAirlineSummary',
+                                        summaryType: function (records) {
+                                            // do your logic and return a value.
+                                            var total = 0;
+                                            var lenn = records.length;
+                                            for (var j = 0; j < lenn; ++j) {
+                                                if (records[j].get('A4365TYPE') === 'AE') {
+                                                    total = total + parseFloat(records[j].get('A4365TOTAL'));
+                                                }
+
+                                            }
+                                            return total.toFixed(2);
+                                            //console.log(records);
+                                        }
+                                    },
                                     {text: 'Expired<br>Card Date', width: 80, dataIndex: 'A4365FEXP'}
                                 ],
                                 defaults: {
