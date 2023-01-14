@@ -472,7 +472,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 click: 'btnScanTicket_clickHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 750 },
+                        { xtype: 'tbspacer', width: 650 },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
