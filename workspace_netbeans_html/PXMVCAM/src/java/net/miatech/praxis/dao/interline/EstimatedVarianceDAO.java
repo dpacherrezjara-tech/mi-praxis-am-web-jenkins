@@ -104,18 +104,11 @@ public class EstimatedVarianceDAO {
                 objRtn.LGROSS = rst.getString("LGROSS").trim();
                 objRtn.LISC = rst.getString("LISC").trim();
                 objRtn.LTAX = rst.getString("LTAX").trim();
-                objRtn.LOTHER = rst.getString("LOTHER").trim();
                 
                 objRtn.ECODE = rst.getString("ECODE").trim();
                 objRtn.EGROSS = rst.getString("EGROSS").trim();
                 objRtn.EISC = rst.getString("EISC").trim();
                 objRtn.ETAX = rst.getString("ETAX").trim();
-                objRtn.EOTHER = rst.getString("EOTHER").trim();
-                
-                objRtn.VGROSS = rst.getString("VGROSS").trim();
-                //objRtn.VISC = rst.getString("VISC").trim();
-                objRtn.VTAX = rst.getString("VTAX").trim();
-                //objRtn.VOTHER = rst.getString("VOTHER").trim();
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM/filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;

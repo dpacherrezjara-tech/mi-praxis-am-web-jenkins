@@ -27,19 +27,11 @@ public class A1955Filter extends A1955 {
     public String LGROSS = "";
     public String LISC = "";
     public String LTAX = "";
-    public String LOTHER = "";
     
     public String ECODE = "";
     public String EGROSS = "";
     public String EISC = "";
     public String ETAX = "";
-    public String ETOHER = "";
-    public String EOTHER = "";
-    
-    public String VGROSS = "";
-    public String VISC = "";
-    public String VTAX = "";
-    public String VOTHER = "";
     
     public String IN_SEQ = "";
     public String IN_SEQREG = "";
