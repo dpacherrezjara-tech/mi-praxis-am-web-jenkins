@@ -914,7 +914,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         });
 
     },*/
-    configurarGridData: function() {
+    configurarGrid: function() {
 //        this.hideColumns();
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var numColumns = me.searchParams.RN;
@@ -942,6 +942,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             bodyStyle: 'background: transparent;',
             columnLines: true,
             enableColumnMove: true,
+            features: [{
+                    ftype: 'summary',
+                    dock: 'bottom'
+                }],
             store: {
                 fields: ['data']
             }
@@ -984,79 +988,146 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
 //        var gridView2 = Ext.getCmp(prototype.id + '-gridDanamic');
 
+        v_panelResult.insert(0, myGrid);
+    },
+    configurarGridData: function() {
+        console.log ('configurarGridDataaaaaa');
+        
+        var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
+        var numColumns = me.searchParams.RN;
+        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
+        
         var column1 = Ext.create('Ext.grid.column.Column', {text: 'RN', width: 50, align: 'center', dataIndex: 'RN'});
         vgridData.headerCt.insert(0, column1);
         vgridData.getView().refresh();
 
+        
 
         for (var i = 0; i < numColumns; i++) {
 //            var gridView = Ext.getCmp(prototype.id + '-gridDanamic');
+            var v_nroColumna = (i+1);
             var v_align = 'center';
             if (arr2[i].data["DATATYPE"] === 'N') {
                 v_align = 'right';
             } else if (arr2[i].data["size"] > 50) {
                 v_align = 'left';
             }
+            var v_cabecera =arr2[i].data["DCOLHDG"];
+            var v_fields = Ext.getCmp(prototype.id + '-panelListColumns').getStore().getData().items[i].data;
+            var v_columnaGrid = me.retornaColumna(v_cabecera,v_nroColumna,v_align,v_fields);
 
-            var column = Ext.create('Ext.grid.column.Column', {text: arr2[i].data["DCOLHDG"], dataIndex: 'column' + (i + 1), align: v_align});
-            vgridData.headerCt.insert(i + 1, column);
+//            var column = Ext.create('Ext.grid.column.Column', {text: arr2[i].data["DCOLHDG"], dataIndex: 'column' + (v_nroColumna), align: v_align
+//                        ,summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+//                                        var data_store = Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data;
+//                                        var v_valor = 'tot'+(v_nroColumna);
+//                                        console.log ('-----abc>');
+//                                        console.log (v_valor);
+//                                        console.log (data_store[v_valor]);
+//                                      return v_nroColumna;
+////                                    var data = Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data;
+////                                    //metaData.style = 'text-align:right; margin-right:3px ';
+////                                    var fields = Ext.getCmp(prototype.id + '-panelListColumns').getStore().getData().items[i].data;
+////                                    var total_campos = Ext.getCmp(prototype.id + '-panelListColumns').getStore().getData().length;
+////                                    if (total_campos >= i+1) {
+////                                        if (fields.DATATYPE === 'N') {
+////                                            return '<b>' + Ext.util.Format.number(data.tot41, '0,000') + '<b>';
+////                                        } else {
+////                                            return value;
+////                                        }
+////                                    }
+//                        }
+//            });
+            
+            
+            vgridData.headerCt.insert(v_nroColumna, v_columnaGrid);            
             vgridData.getView().refresh();
+
 //            console.log(i+'-->'+Ext.getCmp(prototype.id+'-gridDanamic').columns.length);
         }
-
-
         
         var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
-        if(tabla === 'A1692' && tabla2 === 'A720'){
+        if(tabla === 'A1692' && tabla2 === 'A720' && Ext.getCmp(prototype.id + '-cmbFunctions').getValue()==='1'){
             
 //            var gridView_d = Ext.getCmp(prototype.id + '-gridDanamic');
             
-            var column_1ast = Ext.create('Ext.grid.column.Column', {text: 'Sale Date', width: 100, align: 'center', dataIndex: 'A720FECVTA'});
+            var column_1ast = Ext.create('Ext.grid.column.Column', {text: 'Sale Date', width: 100, align: 'center', dataIndex: 'A720FECVTA'
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
+            });
             vgridData.headerCt.insert(numColumns+1, column_1ast);
             vgridData.getView().refresh();
 
-            var column_1ast2 = Ext.create('Ext.grid.column.Column', {text: 'FVLO Sale', width: 100, align: 'center', dataIndex: 'A720FVLO'});
+            var column_1ast2 = Ext.create('Ext.grid.column.Column', {text: 'FVLO Sale', width: 100, align: 'center', dataIndex: 'A720FVLO'
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
+            });
             vgridData.headerCt.insert(numColumns+2, column_1ast2);
             vgridData.getView().refresh();
             
-            var column_1ast3 = Ext.create('Ext.grid.column.Column', {text: 'NVLO Sale', width: 100, align: 'center', dataIndex: 'A720NVLO'});
+            var column_1ast3 = Ext.create('Ext.grid.column.Column', {text: 'NVLO Sale', width: 100, align: 'center', dataIndex: 'A720NVLO'
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
+            });
             vgridData.headerCt.insert(numColumns+3, column_1ast3);
             vgridData.getView().refresh();
             
-            var column_1ast4 = Ext.create('Ext.grid.column.Column', {text: 'Orig Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_0'});
+            var column_1ast4 = Ext.create('Ext.grid.column.Column', {text: 'Orig Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_0'
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
+            });
             vgridData.headerCt.insert(numColumns+4, column_1ast4);
             vgridData.getView().refresh();
             
-            var column_1ast5 = Ext.create('Ext.grid.column.Column', {text: 'Dest Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_1'});
+            var column_1ast5 = Ext.create('Ext.grid.column.Column', {text: 'Dest Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_1'
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
+            });
             vgridData.headerCt.insert(numColumns+5, column_1ast5);
             vgridData.getView().refresh();
             
-            var column_1ast6 = Ext.create('Ext.grid.column.Column', {text: 'VALUE', width: 100, align: 'center', dataIndex: 'A720VALOR'});
+            var column_1ast6 = Ext.create('Ext.grid.column.Column', {text: 'VALUE', width: 100, align: 'center', dataIndex: 'A720VALOR'
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:right;background:#d5f4d5;';
+                            return value;
+                        }
+            });
             vgridData.headerCt.insert(numColumns+6, column_1ast6);
             vgridData.getView().refresh();
         }
         
-        v_panelResult.insert(0, myGrid);
         
-//        Ext.getCmp(prototype.id + '-gridData').setWidth(anchoGrilla);
-//        for (var i = 0; i < numColumns; i++) {
-//            Ext.getCmp(prototype.id + '-campo' + (i + 1)).show();
-//            Ext.getCmp(prototype.id + '-campo' + (i + 1)).setText(arr2[i].data["DCOLHDG"]);
-//        }
-//        if (check && (numColumns>0)) {
-//            Ext.getCmp(prototype.id + '-QTY').show();
-//            Ext.getCmp(prototype.id + '-QTY').setText('Qty Record');
-//        } else {
-//            Ext.getCmp(prototype.id + '-QTY').hide();
-//        }
-//        
-//        console.log(me.searchParams.IN_FLAG_CPN_SALE + '<<<<<<<<<<<<<<<<<(2)');
-//        if(me.searchParams.IN_FLAG_CPN_SALE === ''){
-//            Ext.getCmp(prototype.id + '-campo' + (numColumns + 1)).show();
-//            Ext.getCmp(prototype.id + '-campo' + (numColumns + 1)).setText("Sale Date");
-//            Ext.getCmp(prototype.id + '-campo' + (numColumns + 1)).setdataIndex("A720FECVTA");
-//        }
+    },
+    retornaColumna: function(v_cabecera,v_columna,v_align,v_fields) {
+        
+            var column = Ext.create('Ext.grid.column.Column', {text: v_cabecera, dataIndex: 'column' + (v_columna), align: v_align
+                        ,summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                            var data_store = Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data;
+                            var v_valor = 'tot'+(v_columna);
+                            
+                            
+                            if (v_fields.DATATYPE === 'N') {
+                                return '<b>' + Ext.util.Format.number(data_store[v_valor], '0,000') + '<b>';
+                            } else {
+                                return '';
+                            }
+                            
+                            
+//                          return data_store[v_valor];
+                        }
+            });
+        
+        return column;
     },
     hideColumns: function() {
         for (var i = 1; i < 63; i++) {
@@ -1065,7 +1136,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     },
     setGridData: function(obj, val) {
 
-        this.configurarGridData();
+        this.configurarGrid();
         var storeGridDatas = Ext.create('Ext.Praxis.store.gerencial.GridData', {
             proxy: {
                 url: prototype.url + '/searchFields'
@@ -1085,7 +1156,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                             msg: 'Data not found.'
                         });
                     } else {
-
+                          me.configurarGridData();
 //                        var element = obj.data.items[0].data;
 //                        Ext.getCmp(prototype.id + '-columnMonth1').setText(element.labelMes1);
 //                        Ext.getCmp(prototype.id + '-columnMonth2').setText(element.labelMes2);
@@ -1101,18 +1172,38 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         global.clear();
         
         Ext.getCmp(prototype.id + '-gridDanamic').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
         
-//        var objitems = Ext.getCmp(prototype.id + '-gridData').getStore().data.items;
-//        lg('-ttt');
-//        lg(objitems);    
-//        var objColumns = Ext.getCmp(prototype.id + '-gridData').config.columns.items;
-//        lg('-columns');
-//        lg(objColumns); 
         
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+//        console.log('=========');
+//        
+////        console.log('-->'+ print_t);
+//        var completo_carga = false;
+//        var cont = 0;
+//        while (!completo_carga) {
+//            var print_t = Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData();
+//             console.log('-->'+ print_t);
+////            setTimeout(function() {
+////                me.imprimeTime();
+////            },2000);
+//            cont +=1;
+//            console.log('???'+cont);
+//            //|| print_t.valueOf() !== 'undefined'
+//            if(cont === 50000 ){
+//                completo_carga=true;
+//            }
+//            console.log('fin');
+//        }
+//        setTimeout(function() {
+//            me.configurarGridData(storeGridDatas);
+//          
+//        },2000);
+        
 //        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeGridDatas);
+    },
+    imprimeTime: function() {
+        console.log('1 seg');
+        console.log(Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data);
     },
     changecmbCampo: function(nbr) {
         var idtxt ='-txtCampo' + nbr;
