@@ -179,6 +179,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.SCOUNTRY = this.getValue("de-txtCountry");
         beanTemp.TDOC = this.beanResult.TDOC;
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {

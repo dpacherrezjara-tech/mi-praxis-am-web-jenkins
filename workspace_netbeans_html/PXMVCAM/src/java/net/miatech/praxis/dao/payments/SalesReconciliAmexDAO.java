@@ -3960,7 +3960,7 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(2, filter.PRDA.trim());
             cstmt01.setString(3, filter.MERCHID.trim());
             cstmt01.setString(4, filter.PAYDATE.trim());
-            cstmt01.setString(5, filter.PCURRENCY.trim());
+            cstmt01.setString(5, filter.SCOUNTRY.trim());
             cstmt01.setString(6, filter.AXPAYNBR.trim());
             cstmt01.setString(7, filter.SMERCHID.trim());
             cstmt01.setString(8, filter.BSUMDATE.trim());
