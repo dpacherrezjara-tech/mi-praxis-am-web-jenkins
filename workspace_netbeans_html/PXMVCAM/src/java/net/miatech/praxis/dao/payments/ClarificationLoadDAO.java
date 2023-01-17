@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author 
+ * @author
  */
 public class ClarificationLoadDAO {
 
@@ -51,15 +51,101 @@ public class ClarificationLoadDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
-    public String loadPX413SQP02535(String strBanco, String ruta) throws SQLException, IOException, Exception {
+//    
+//    public String loadPX413SQP02535(String strBanco, String ruta) throws SQLException, IOException, Exception {
+//
+//        BufferedReader br = null;
+//        CallableStatement cs = null;
+//        String strSQL = "", SEPARATOR = ",", QUOTE = "\"";
+//        String msj = "Operation Successful ", strTrama = "";
+//        int cantReg = 0;
+//        int cantReg1 = 0;
+//
+//        strSQL = "{CALL PRAXIS.SQP02535(?,?,?,?,?)}";
+//        Connection cnx = null;
+//
+//        cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+//        cs = cnx.prepareCall(strSQL);
+//        cs.setString(1, strBanco.trim());
+//        //  cs.setInt(2, 0);
+//        cs.setString(2, session.getUserView().getUserInfo().USR);
+//        try {
+//
+//            br = new BufferedReader(new FileReader(ruta));
+//            String line = br.readLine();
+//
+////            for (int i = 0; i < line.length(); i++) {
+////                if (strBanco.equals("EL")) {
+////                    cantReg1++;
+////                } else {
+////                    if (!line.toUpperCase().contains("TOTAL")) {
+////                        cantReg1++;
+////                    }
+////                }
+////            }
+//
+//            while (null != line) {
+//                cantReg1++;
+//                line = br.readLine();
+//            }
+//            
+//            br = new BufferedReader(new FileReader(ruta));
+//            line = br.readLine();
+//            
+//            
+//            while (null != line) {
+//
+//                cantReg++;
+//                String[] fields = line.split(SEPARATOR);
+//                fields = removeTrailingQuotes(fields, QUOTE);
+////                System.out.println(Arrays.toString(fields));
+//                if(cantReg > 6){
+//                    String a = Arrays.toString(fields);
+//                    String[] fields1 = a.split(",");
+//                    String Numb = fields1[6].toString();
+//                    if(Numb.trim().length() < 13){
+//                        System.out.println(Numb);
+//                        msj = "Error : Invalid Ticket";
+//                        break;
+//                    }
+//                }
+//                cs.setString(3, Arrays.toString(fields));
+//                cs.setString(4, (cantReg == 1) ? "Y" : "");
+//                cs.setInt(5, cantReg1);
+//                cs.execute();
+//
+//                line = br.readLine();
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            msj = "Error : " + e.getMessage();
+//        } finally {
+//            if (null != br) {
+//                br.close();
+//            }
+//            if (cs != null) {
+//                try {
+//                    cs.close();
+//                } catch (SQLException e) {
+//                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+//                }
+//            }
+//            // =================
+//            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+//            pasarGarbageCollector();
+//        }
+//
+//        return msj;
+//    }
+
+    public String loadPX413SQP02535(List<String> listaExcelString, String strBanco, int fil) throws SQLException, IOException, Exception {
 
         BufferedReader br = null;
         CallableStatement cs = null;
         String strSQL = "", SEPARATOR = ",", QUOTE = "\"";
         String msj = "Operation Successful ", strTrama = "";
         int cantReg = 0;
-        int cantReg1 = 0;
 
         strSQL = "{CALL PRAXIS.SQP02535(?,?,?,?,?)}";
         Connection cnx = null;
@@ -67,53 +153,20 @@ public class ClarificationLoadDAO {
         cnx = session.getCNXIBMDB2().getIBMDB2Connection();
         cs = cnx.prepareCall(strSQL);
         cs.setString(1, strBanco.trim());
-        //  cs.setInt(2, 0);
         cs.setString(2, session.getUserView().getUserInfo().USR);
         try {
-
-            br = new BufferedReader(new FileReader(ruta));
-            String line = br.readLine();
-
-//            for (int i = 0; i < line.length(); i++) {
-//                if (strBanco.equals("EL")) {
-//                    cantReg1++;
-//                } else {
-//                    if (!line.toUpperCase().contains("TOTAL")) {
-//                        cantReg1++;
-//                    }
-//                }
-//            }
-
-            while (null != line) {
-                cantReg1++;
-                line = br.readLine();
-            }
-            
-            br = new BufferedReader(new FileReader(ruta));
-            line = br.readLine();
-            
-            
-            while (null != line) {
-
-                cantReg++;
-                String[] fields = line.split(SEPARATOR);
-                fields = removeTrailingQuotes(fields, QUOTE);
-                // System.out.println(Arrays.toString(fields));
-                cs.setString(3, Arrays.toString(fields));
-                cs.setString(4, (cantReg == 1) ? "Y" : "");
-                cs.setInt(5, cantReg1);
+            for (int i = 0; i < listaExcelString.size(); i++){ 
+                String a = listaExcelString.get(i);
+//                System.out.println(a);
+                cs.setString(3, a);
+                cs.setString(4, (i == 0) ? "Y" : "");
+                cs.setInt(5, listaExcelString.size());
                 cs.execute();
-
-                line = br.readLine();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             msj = "Error : " + e.getMessage();
         } finally {
-            if (null != br) {
-                br.close();
-            }
             if (cs != null) {
                 try {
                     cs.close();
@@ -128,7 +181,7 @@ public class ClarificationLoadDAO {
 
         return msj;
     }
-    
+
     public String loadPX413PRO10570(String strBanco, String strHora, String type_file) throws SQLException, Exception {
 
         String msj = "SUCCESS";
@@ -143,9 +196,9 @@ public class ClarificationLoadDAO {
             strPRO = "SPPRO10571";
         } else if (strBanco.trim().equals("ST")) {
             //SANTANDER
-            if(type_file.equals("csv")){
+            if (type_file.equals("csv")) {
                 strPRO = "SPPRO11790";
-            }else{
+            } else {
                 strPRO = "SPPRO10572";
             }
         } else if (strBanco.trim().equals("PP")) {
@@ -199,14 +252,14 @@ public class ClarificationLoadDAO {
         }
         return msj;
     }
-    
+
     public String loadPX413SQP03598(List<A1686Filter> lstExcel) throws SQLException, Exception {
 
         String strMsj = "An Unexpected Error Ocurred.";
         CallableStatement cs = null;
         Connection cnx = null;
         String strSQL;
-        
+
         try {
 
             strSQL = "{CALL PRAXIS.SQP03598(?,?,?,?,?)}";
@@ -215,27 +268,27 @@ public class ClarificationLoadDAO {
             cs = cnx.prepareCall(strSQL);
 
             for (int i = 0; i < lstExcel.size(); i++) {
-                    
-                    String Trama = lstExcel.get(i).strDescripcion;
-                
-                    cs.registerOutParameter(5, Types.VARCHAR);
-                    //Para no incluir las ultimas lineas
-                    cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
-                    cs.setString(2, session.getUserView().getUserInfo().USR);
-                    cs.setString(3, Trama);
-                    if (i == 0) {
-                        //Borra delivery
-                        cs.setString(4, "D");
-                    }else if (i == lstExcel.size() - 1 ) {
-                        //Ejecuta PRO11440
-                        cs.setString(4, "E");
-                    } else {
-                        cs.setString(4, "");
-                    }
-                    cs.setString(5, "");
-                    cs.execute();
-                    
-                    strMsj = cs.getString(5);
+
+                String Trama = lstExcel.get(i).strDescripcion;
+
+                cs.registerOutParameter(5, Types.VARCHAR);
+                //Para no incluir las ultimas lineas
+                cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                cs.setString(2, session.getUserView().getUserInfo().USR);
+                cs.setString(3, Trama);
+                if (i == 0) {
+                    //Borra delivery
+                    cs.setString(4, "D");
+                } else if (i == lstExcel.size() - 1) {
+                    //Ejecuta PRO11440
+                    cs.setString(4, "E");
+                } else {
+                    cs.setString(4, "");
+                }
+                cs.setString(5, "");
+                cs.execute();
+
+                strMsj = cs.getString(5);
             }
 
         } catch (Exception e) {
@@ -256,12 +309,10 @@ public class ClarificationLoadDAO {
 
         return strMsj;
     }
-    
+
     // ------------------------------------------------------ 
     // ----------------------- Upload ----------------------- 
     // ------------------------------------------------------ 
-    
-    
     //**************************************************************************
     //***************** PX413  AVISOS PREVIOS / CONTRACARGOS *******************
     //**************************************************************************
@@ -338,7 +389,7 @@ public class ClarificationLoadDAO {
 
         return msj;
     }
-    
+
     public String loadPX413PRO10577(String strBanco, String strHora) throws SQLException, Exception {
 
         String msj = "SUCCESS";
@@ -397,7 +448,6 @@ public class ClarificationLoadDAO {
         return msj;
     }
 
-    
     //**************************************************************************
     //************************ PX413 ACLARACIONES ******************************
     //**************************************************************************
@@ -565,7 +615,6 @@ public class ClarificationLoadDAO {
         return lstRtn;
     }
 
-    
     private static String[] removeTrailingQuotes(String[] fields, String QUOTE) {
 
         String result[] = new String[fields.length];
@@ -575,5 +624,5 @@ public class ClarificationLoadDAO {
         }
         return result;
     }
-    
+
 }
