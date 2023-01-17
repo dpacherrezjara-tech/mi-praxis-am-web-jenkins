@@ -146,7 +146,6 @@ public class ClarificationLoadDAO {
         String strSQL = "", SEPARATOR = ",", QUOTE = "\"";
         String msj = "Operation Successful ", strTrama = "";
         int cantReg = 0;
-        int cantReg1 = 0;
 
         strSQL = "{CALL PRAXIS.SQP02535(?,?,?,?,?)}";
         Connection cnx = null;
@@ -156,12 +155,12 @@ public class ClarificationLoadDAO {
         cs.setString(1, strBanco.trim());
         cs.setString(2, session.getUserView().getUserInfo().USR);
         try {
-            for (int i = 0; i < fil; i++){ 
+            for (int i = 0; i < listaExcelString.size(); i++){ 
                 String a = listaExcelString.get(i);
 //                System.out.println(a);
                 cs.setString(3, a);
-                cs.setString(4, (cantReg == 1) ? "Y" : "");
-                cs.setInt(5, cantReg1);
+                cs.setString(4, (i == 0) ? "Y" : "");
+                cs.setInt(5, listaExcelString.size());
                 cs.execute();
             }
         } catch (Exception e) {
