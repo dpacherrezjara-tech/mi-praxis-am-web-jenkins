@@ -256,6 +256,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.SCOUNTRY = this.getValue("de-txtCountry");
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
@@ -294,7 +295,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data)
         }
 
-        //console.log(beanTemp);
+        console.log(beanTemp);
 
     },
     getData: function () {

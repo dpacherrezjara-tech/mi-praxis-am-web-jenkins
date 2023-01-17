@@ -76,6 +76,7 @@ public class A4164Filter extends A4164 {
     public String strDescTTRAN = "";
     public String PS_TICKET = "";
     public String strSCARDN = "";
+    public String strACARDN = "";
     public String strTicket = "";
     public String strFormatDate = "";
     public String strFormatDate1 = "";
