@@ -949,6 +949,7 @@ public class ElectronicMiscellaneousController extends BaseController {
         filter.FORMA = request.getParameter("FORMA");
         filter.SERIE = request.getParameter("SERIE");
         filter.CUPON = request.getParameter("CUPON");
+        filter.SEQ = request.getParameter("SEQ");
         A1692Filter bean;
         bean = logic.loadPX135S06A1818(filter);
 
