@@ -583,11 +583,11 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             target: prototype.id + '-t' + '-txtPSVVTA',
             html: rec.strDescPSVVTA.trim()
         });
-        if (rec.SEQ.trim() === '') {
-            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue('00');
-        } else {
-            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.SEQ.trim());
-        }
+//        if (rec.SEQ.trim() === '') {
+//            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue('00');
+//        } else {
+//            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.SEQ.trim());
+//        }
 
         //Sólo son editables si la información que viene es vacía (A pedido de Javier Toledo)
         if (rec.CDOC.trim() === '' && rec.TDOC.trim() === '' && rec.PSVVTA.trim() === '' && rec.AGTIA.trim() === '' && rec.FVTA.trim() === ''
