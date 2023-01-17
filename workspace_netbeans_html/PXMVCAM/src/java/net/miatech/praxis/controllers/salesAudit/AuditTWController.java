@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SQP00768;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.controllers.BaseController;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import net.miatech.praxis.classes.ExportSchema;
+import net.miatech.praxis.classes.ExportUtil;
 
 /**
  *
@@ -187,24 +190,47 @@ public class AuditTWController  extends BaseController{
 
         return new Gson().toJson(map);
     }
-
     @RequestMapping(value = "searchFields")
     public @ResponseBody
     String searchFields(ModelMap map, HttpServletRequest request) {
         System.out.println("AuditTWController ---- searchFields");
-        AuditTWLogic logic = new AuditTWLogic();
-        SQP00768 filter = new SQP00768(); 
-        Gson gson = new Gson();
-        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+        map.put("success", true);
         try {
-            logic.setSession(this.serverSession.getServerSession());
+            List<SQP00768> lst = this.getList(request, false);
+            System.out.println("Total : " + lst.size());
+            map.put("success", true);   
+            map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+            map.put("data", lst);
+        
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
 
-            String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, SQP00768.class);
-            
+        return new Gson().toJson(map);
+    }
+
+
+    public List<SQP00768> getList(HttpServletRequest request, Boolean bExcel) {
+
+        AuditTWLogic logic = new AuditTWLogic();
+
+        List<SQP00768> lst = new ArrayList<>(0);
+        SQP00768 filter = new SQP00768();
+
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-            if (!dw_excel) {
+            if (!bExcel) {
                 filter.page.PAGROW = 20;
                 start = (start != 0 ? start : 0);
                 filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
@@ -213,26 +239,15 @@ public class AuditTWController  extends BaseController{
                 filter.page.PAGNUM = 1;
             }
 
-            /*if (!filter.strSelect.equals("")) {
-                listaData = logic.loadPXPRUEBA2(filter);
-            } else {*/
-                List<SQP00768> listaData = logic.loadPX282SQP02561(filter);
-            //}
-          
-            map.put("success", true);
-            map.put("data", listaData);
-            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
-        } catch (SQLException e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
-            throw new SpringException(e);
+            
+            lst = logic.loadPX282SQP02561(filter);
+//
+
         } catch (Exception e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
+            System.out.println("--" + e.getMessage());
             throw new SpringException(e);
         }
-
-        return new Gson().toJson(map);
+        return lst;
     }
 
     @RequestMapping(value = "SaveQuery")
@@ -696,5 +711,21 @@ public class AuditTWController  extends BaseController{
         }
 
         return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "getFieldsXLSX")
+    public @ResponseBody
+    void exportFields(HttpServletRequest request, HttpServletResponse response) {
+        List<SQP00768> lst = this.getList(request, true);
+        String downloadName = String.format("AuditTw_%1$s.xlsx", UUID.randomUUID().toString().toLowerCase());
+
+        try {
+            String schema = request.getParameter("schema");
+            ExportSchema exportSchema = new Gson().fromJson(schema, ExportSchema.class);
+            
+            ExportUtil.exportToXLSX(response, downloadName, SQP00768.class, lst, exportSchema);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
     }
 }
