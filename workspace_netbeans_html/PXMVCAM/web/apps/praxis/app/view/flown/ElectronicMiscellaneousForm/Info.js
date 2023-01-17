@@ -312,7 +312,7 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.Info', {
                             xtype: 'grid',
                             padding: '20 0 0 0',
                             id: prototype.id + '-gridDataDetailCoupon',
-                            height: 550,
+                            height: 555,
                             width: 1530,
                             // hidden: true,
                             columnLines: true,
