@@ -124,7 +124,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.DataEntrySaveController', {
         var order = '@';
         var AscDesc = 0;
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
-        var txtNameQuery = Ext.getCmp(prototype.id + '-txtNameQuery').getValue();
+        var txtNameQuery = Ext.getCmp(prototype.id + '-txtNameQuery1').getValue()+Ext.getCmp(prototype.id + '-txtNameQuery').getValue();
         var txtDescQuery = Ext.getCmp(prototype.id + '-txtDescQuery').getValue();
 //        var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
         var params = this.view.params;
