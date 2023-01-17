@@ -243,7 +243,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                         });
                     }
                 } else {
-                    this.setGridDataDetailCoupon(obj, e);
+//                    this.setGridDataDetailCoupon(obj, e);
+                    this.setFormatParameter();
+                    me.gridActual = '-gridData';
+                    this.showGridActual();
                 }
                 break;
         }
@@ -435,7 +438,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
             IN_FECHA_FROM: data.IN_FECHA_FROM,
             IN_FECHA_TO: data.IN_FECHA_TO
         };
-        this.setGridDataDetail(true); //El parametro es para identificar si se llama a la funcion desde la grilla usando el drillDown, o mediante el boton search
+        console.log(me.paramsDetail);
+        this.setGridDataDetail(false); //El parametro es para identificar si se llama a la funcion desde la grilla usando el drillDown, o mediante el boton search
     },
     onSetGridDataDetailCoupon: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.gridActual);
