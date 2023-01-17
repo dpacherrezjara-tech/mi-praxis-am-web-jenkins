@@ -503,7 +503,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             CCIA: rec.CCIA,
             FORMA: rec.FORMA,
             SERIE: rec.SERIE,
-            CUPON: rec.CUPON
+            CUPON: rec.CUPON,
+            SEQ: rec.SEQ
         };
         Ext.Ajax.request({
             url: prototype.url + '/searcheEntyTKT',
@@ -525,6 +526,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         Ext.getCmp(prototype.id + '-t' + '-txtRoll').setValue(rec.SEQRO.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCupon').setValue(rec.CUPON.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.DCHEQ.trim());
+        Ext.getCmp(prototype.id + '-t' + '-txtSEQ').setValue(rec.SEQ.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtFCONT').setValue(rec.FCONT.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCDEPART').setValue(rec.CDEPART.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCARRIVA').setValue(rec.CARRIVA.trim());
