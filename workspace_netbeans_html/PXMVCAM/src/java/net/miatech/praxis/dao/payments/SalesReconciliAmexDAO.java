@@ -4052,7 +4052,7 @@ public class SalesReconciliAmexDAO {
         //lstSendManual
 
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04636(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04636(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4066,9 +4066,10 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(5, filter.IDITEMS.trim());
             cstmt01.setString(6, filter.IDITEMT.trim());
             cstmt01.setString(7, filter.CERROR.trim());
-            cstmt01.setString(8, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(9, Functions.getFechaActual());
-            cstmt01.setString(10, Functions.getHoraActual());
+            cstmt01.setString(8, filter.SCOUNTRY.trim());
+            cstmt01.setString(9, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(10, Functions.getFechaActual());
+            cstmt01.setString(11, Functions.getHoraActual());
 
             cstmt01.execute();
 
