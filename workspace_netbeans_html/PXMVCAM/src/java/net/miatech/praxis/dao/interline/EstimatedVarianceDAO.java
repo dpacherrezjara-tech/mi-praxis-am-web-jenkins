@@ -112,10 +112,29 @@ public class EstimatedVarianceDAO {
                 objRtn.ETAX = rst.getString("ETAX").trim();
                 objRtn.EOTHER = rst.getString("EOTHER").trim();
                 
-                objRtn.VGROSS = rst.getString("VGROSS").trim();
-                //objRtn.VISC = rst.getString("VISC").trim();
-                objRtn.VTAX = rst.getString("VTAX").trim();
-                //objRtn.VOTHER = rst.getString("VOTHER").trim();
+                if(rst.getObject("VGROSS") != null){
+                    objRtn.VGROSS = rst.getString("VGROSS").trim();
+                }else {
+                    objRtn.VGROSS = "0.00";
+                }
+                
+                if(rst.getObject("VISC") != null){
+                    objRtn.VISC = rst.getString("VISC").trim();
+                }else {
+                    objRtn.VISC = "0.00";
+                }
+                
+                if(rst.getObject("VTAX") != null){
+                    objRtn.VTAX = rst.getString("VTAX").trim();
+                }else {
+                    objRtn.VTAX = "0.00";
+                }
+
+                if(rst.getObject("VOTHER") != null){
+                    objRtn.VOTHER = rst.getString("VOTHER").trim();
+                }else {
+                    objRtn.VOTHER = "0.00";
+                }
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM/filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;
