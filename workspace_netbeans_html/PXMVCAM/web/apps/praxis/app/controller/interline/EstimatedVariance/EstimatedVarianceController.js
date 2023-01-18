@@ -194,7 +194,7 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
                 beforeload: function(obj) {
                     obj.proxy.extraParams = searchParams;
                 },
-                load: function(obj, obj2, success, obj4, obj5) {
+                load: function(obj, obj2, success, response, obj5) {
                     win.lblUser_toolTip("Estructura: A1955");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
                     var pag = Ext.getCmp(prototype.id+'-paggin');
@@ -212,6 +212,18 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
                         global.Msg({
                             msg: 'Data not found'
                         });
+                    } else {
+                        console.log("---- Data -----");
+                        console.log(obj.data.items[0].data.LGROSS);
+                        //console.log(obj4._response.responseText);
+                        var res = Ext.JSON.decode(response._response.responseText);
+                        console.log(res.data);
+                        var storeDataPivot = Ext.create('Ext.data.Store', {
+                                data: res.data,
+                                autoLoad: true
+                        });
+                        Ext.getCmp(prototype.id + '-displaySAChart32').bindStore(storeDataPivot);
+                        
                     }
                 }
             }

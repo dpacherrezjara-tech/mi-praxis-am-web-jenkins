@@ -198,6 +198,105 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                     ]
                                 }
                             ]
+                        },
+                        // </editor-fold>
+                        // <editor-fold defaultstate="collapsed" desc="Chart">
+                        {
+                            xtype: 'panel',
+//                            id: prototype.id + '-byMonth_02',
+                            hidden: false,
+                            margin: '5 0 5 0',
+                            border: false,
+                            layout: {
+                                type: 'vbox',
+                                aling: 'center'
+                            },
+                            bodyStyle: 'background-color: transparent;',
+                            items: [
+                                {
+                                    xtype: 'panel',
+//                                    id: prototype.id + '-panelGraficos',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '5 0 0 5',
+                                    border: true,
+                                    layout: {
+                                        type: 'vbox'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                            id: prototype.id + '-displaySAChart32',
+                                            width: 1200,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Total Variance',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['VGROSS', 'VISC', 'VTAX', 'VOTHER'],
+                                                    grid: true,
+                                                    title: '',
+                                                    //title: 'Millions of USD',
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                                    grid: true,
+                                                    title: {
+                                                        text: 'Code',
+                                                        translationX: -30
+                                                    }
+                                                }],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    title: ['GROSS', 'ISC', 'TAX', 'OTHER'],
+                                                    xField: 'LCODE',
+                                                    yField: ['VGROSS', 'VISC', 'VTAX', 'VOTHER'],
+                                                    colors: ['#ff9900', '#0066ff', '#CC0000', '#ffff99'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            if (ctx.field === 'VGROSS') {
+                                                                label = 'GROSS';
+                                                            } else if (ctx.field === 'VISC') {
+                                                                label = 'ISC';
+                                                            } else if (ctx.field === 'VTAX') {
+                                                                label = 'TAX';
+                                                            } else if (ctx.field === 'VOTHER') {
+                                                                label = 'OTHER';
+                                                            }
+                                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                        }
+                                                    }
+                                                }]
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                         // </editor-fold>
                     ]
