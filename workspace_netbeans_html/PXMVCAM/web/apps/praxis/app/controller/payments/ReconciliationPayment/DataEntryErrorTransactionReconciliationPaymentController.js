@@ -878,8 +878,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
-                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
-                        global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
                         for (var i = 0; i < res.lstInfo.length; i++) {
                             if (res.lstInfo[i].FDUPLIB > 0) {
