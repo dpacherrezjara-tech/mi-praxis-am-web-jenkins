@@ -40,7 +40,7 @@ public class EstimatedVarianceDAO {
         A1955Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
-        strSQL = "{CALL PRAXIS.SQP04751(?,?,?,?,?,?,?)}";
+        strSQL = "{CALL PRAXIS.SQP04751(?,?,?,?,?,?,?,?)}";
         try {
             
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -58,6 +58,7 @@ public class EstimatedVarianceDAO {
             cs.setString("IN_A1964CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_FINI", filter.IN_FECHA_PROCESO);
             cs.setString("IN_PERIOD", filter.IN_PERIOD);
+            cs.setString("IN_MODULE", filter.IN_MODULE);
             //cs.setString("IN_A1955STATU", filter.A1955STATU);            
             
             cs.setInt("IO_PAGNUM", PAGINIT);

@@ -55,6 +55,8 @@ public class A1955Filter extends A1955 {
     public String MODULE = "";
     public String IN_ACC_ORIGEN = "";
     
+    public String IN_MODULE = "";
+    
     //Paginado
     public Pagination page = new Pagination();
 }

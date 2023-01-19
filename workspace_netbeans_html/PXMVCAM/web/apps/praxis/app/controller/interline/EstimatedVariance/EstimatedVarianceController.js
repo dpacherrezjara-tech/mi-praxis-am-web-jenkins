@@ -169,6 +169,7 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
         var fperiod = Ext.getCmp(prototype.id+'-cmbDatePeriodFrom').getValue();
         searchParams.IN_FECHA_PROCESO = fyear + fmonth;
         searchParams.IN_PERIOD = fperiod;
+        searchParams.IN_MODULE = Ext.getCmp(prototype.id+'-cmbModuleVariance').getValue();
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="asignación">
@@ -214,8 +215,6 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
                         });
                     } else {
                         console.log("---- Data -----");
-                        console.log(obj.data.items[0].data.LGROSS);
-                        //console.log(obj4._response.responseText);
                         var res = Ext.JSON.decode(response._response.responseText);
                         console.log(res.data);
                         var storeDataPivot = Ext.create('Ext.data.Store', {

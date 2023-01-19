@@ -112,11 +112,58 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                                 metaData.style = "background-color: #fdb5b5;";
                                                 return value;
                                             }
-                                              
                                           }},
-                                          {text: 'ISC', dataIndex: 'VISC', width: 90},
-                                          {text: 'Tax', dataIndex: 'VTAX', width: 90},
-                                          {text: 'Other', dataIndex: 'VOTHER', width: 90},
+                                          {text: 'ISC', dataIndex: 'VISC', width: 90,
+                                          renderer: function(value, metaData, record, rowIndex, colIndex, store, view)
+                                          {
+                                            var value_abs = Math.abs(value);
+                                            if (value_abs <= 5){
+                                                metaData.style = "background-color: #61d361;";
+                                                return value;
+                                            }
+                                            else if (value_abs >= 6 && value <= 15){
+                                                metaData.style = "background-color: #ffff88;";
+                                                return value;
+                                            }
+                                            else if (value_abs >= 16){
+                                                metaData.style = "background-color: #fdb5b5;";
+                                                return value;
+                                            } 
+                                          }},
+                                          {text: 'Tax', dataIndex: 'VTAX', width: 90,
+                                          renderer: function(value, metaData, record, rowIndex, colIndex, store, view)
+                                          {
+                                            var value_abs = Math.abs(value);
+                                            if (value_abs <= 5){
+                                                metaData.style = "background-color: #61d361;";
+                                                return value;
+                                            }
+                                            else if (value_abs >= 6 && value <= 15){
+                                                metaData.style = "background-color: #ffff88;";
+                                                return value;
+                                            }
+                                            else if (value_abs >= 16){
+                                                metaData.style = "background-color: #fdb5b5;";
+                                                return value;
+                                            }  
+                                          }},
+                                          {text: 'Other', dataIndex: 'VOTHER', width: 90,
+                                          renderer: function(value, metaData, record, rowIndex, colIndex, store, view)
+                                          {
+                                            var value_abs = Math.abs(value);
+                                            if (value_abs <= 5){
+                                                metaData.style = "background-color: #61d361;";
+                                                return value;
+                                            }
+                                            else if (value_abs >= 6 && value <= 15){
+                                                metaData.style = "background-color: #ffff88;";
+                                                return value;
+                                            }
+                                            else if (value_abs >= 16){
+                                                metaData.style = "background-color: #fdb5b5;";
+                                                return value;
+                                            }
+                                          }}
                                       ]
                                     }                                    
                                     

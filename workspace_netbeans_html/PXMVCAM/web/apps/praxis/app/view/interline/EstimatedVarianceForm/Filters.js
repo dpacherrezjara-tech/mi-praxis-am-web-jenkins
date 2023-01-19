@@ -137,6 +137,45 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Filters', {
                             },
                             items: [
                                 {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    html: 'Module',
+                                    id: prototype.id + '-lblModule',
+                                    align: 'center',
+                                    fieldStyle: 'text-align: center;',
+                                    padding: '8px 7px 8px 0px'
+                                },
+                                {xtype: 'tbspacer', width: 8},
+                                {
+                                    xtype:'combo',
+                                    id: prototype.id + '-cmbModuleVariance',
+                                    store: new Ext.data.SimpleStore({
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ["", "Select Module"],
+                                            ["IXC", "IXC"],
+                                            ["IXP", "IXP"]
+                                        ]
+                                    }),
+                                    queryMode: 'local',
+                                    hiddenLabel: false,
+                                    forceSelection: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    editable: false,
+                                    width: 98,
+                                    typeAhead: true,
+                                    valueField: 'code', displayField: 'name',
+                                    listConfig: {maxHeight: 111},
+                                    listeners:{
+                                        afterrender: function (combo) {
+                                            combo.setValue("");
+                                        }
+                                    },                                  
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all'
+                                },
+                                {xtype: 'tbspacer', width: 7},
                                 // <editor-fold defaultstate="collapsed" desc="Combo Date">
                                 {
                                     xtype: 'label',
@@ -231,7 +270,7 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Filters', {
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
-                                    width: 80,
+                                    width: 85,
                                     typeAhead: true,
                                     valueField: 'code', displayField: 'name',
                                     listConfig: {maxHeight: 111},
