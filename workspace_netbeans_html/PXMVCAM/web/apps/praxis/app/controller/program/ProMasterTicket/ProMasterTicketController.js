@@ -644,47 +644,56 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             case prototype.id+'-imgSearchTKT4': p = 'TKT4'; break;
         }
         var strTKT = '';
+        var strCIA = '';
         var strSEQ = '';
 	switch(p){
             case 'TKT1':
-                if(win.getValue('lblRelatedTickets1').trim().length > 0 && win.getValue('lblRelatedTickets1').substr(0, 3) === '139'){
+                if(win.getValue('lblRelatedTickets1').trim().length > 0){
+                    strCIA = win.getValue('lblRelatedTickets1').substr(0, 3);
                     strTKT = win.getValue('lblRelatedTickets1').trim();
                     strSEQ = win.getValue('lblRelatedTickets1SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
+                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
                 }
                 break;
             case 'TKT2':
-                if(win.getValue('lblRelatedTickets2').trim().length > 0 && win.getValue('lblRelatedTickets2').substr(0, 3) === '139'){
+                if(win.getValue('lblRelatedTickets2').trim().length > 0){
+                    strCIA = win.getValue('lblRelatedTickets2').substr(0, 3);
                     strTKT = win.getValue('lblRelatedTickets2').trim();
                     strSEQ = win.getValue('lblRelatedTickets2SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
+                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
                 }
                 break;
             case 'TKT3':
-                if(win.getValue('lblRelatedTickets3').trim().length > 0 && win.getValue('lblRelatedTickets3').substr(0, 3) === '139'){
+                if(win.getValue('lblRelatedTickets3').trim().length > 0){
+                    strCIA = win.getValue('lblRelatedTickets3').substr(0, 3);
                     strTKT = win.getValue('lblRelatedTickets3').trim();
                     strSEQ = win.getValue('lblRelatedTickets3SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
+                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
                 }
                 break;
             case 'TKT4':
-                if(win.getValue('lblRelatedTickets4').trim().length > 0 && win.getValue('lblRelatedTickets4').substr(0, 3) === '139'){
+                if(win.getValue('lblRelatedTickets4').trim().length > 0){
+                    strCIA = win.getValue('lblRelatedTickets4').substr(0, 3);
                     strTKT = win.getValue('lblRelatedTickets4').trim();
                     strSEQ = win.getValue('lblRelatedTickets4SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
+                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
