@@ -40,7 +40,7 @@ public class EstimatedVarianceDAO {
         A1955Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
-        strSQL = "{CALL PRAXIS.SQP04751(?,?,?,?,?,?,?)}";
+        strSQL = "{CALL PRAXIS.SQP04751(?,?,?,?,?,?,?,?)}";
         try {
             
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -58,6 +58,7 @@ public class EstimatedVarianceDAO {
             cs.setString("IN_A1964CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_FINI", filter.IN_FECHA_PROCESO);
             cs.setString("IN_PERIOD", filter.IN_PERIOD);
+            cs.setString("IN_MODULE", filter.IN_MODULE);
             //cs.setString("IN_A1955STATU", filter.A1955STATU);            
             
             cs.setInt("IO_PAGNUM", PAGINIT);
@@ -104,11 +105,37 @@ public class EstimatedVarianceDAO {
                 objRtn.LGROSS = rst.getString("LGROSS").trim();
                 objRtn.LISC = rst.getString("LISC").trim();
                 objRtn.LTAX = rst.getString("LTAX").trim();
+                objRtn.LOTHER = rst.getString("LOTHER").trim();
                 
                 objRtn.ECODE = rst.getString("ECODE").trim();
                 objRtn.EGROSS = rst.getString("EGROSS").trim();
                 objRtn.EISC = rst.getString("EISC").trim();
                 objRtn.ETAX = rst.getString("ETAX").trim();
+                objRtn.EOTHER = rst.getString("EOTHER").trim();
+                
+                if(rst.getObject("VGROSS") != null){
+                    objRtn.VGROSS = rst.getString("VGROSS").trim();
+                }else {
+                    objRtn.VGROSS = "0.00";
+                }
+                
+                if(rst.getObject("VISC") != null){
+                    objRtn.VISC = rst.getString("VISC").trim();
+                }else {
+                    objRtn.VISC = "0.00";
+                }
+                
+                if(rst.getObject("VTAX") != null){
+                    objRtn.VTAX = rst.getString("VTAX").trim();
+                }else {
+                    objRtn.VTAX = "0.00";
+                }
+
+                if(rst.getObject("VOTHER") != null){
+                    objRtn.VOTHER = rst.getString("VOTHER").trim();
+                }else {
+                    objRtn.VOTHER = "0.00";
+                }
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM/filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;

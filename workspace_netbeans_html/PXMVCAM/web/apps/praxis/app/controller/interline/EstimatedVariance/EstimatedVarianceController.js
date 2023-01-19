@@ -169,6 +169,7 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
         var fperiod = Ext.getCmp(prototype.id+'-cmbDatePeriodFrom').getValue();
         searchParams.IN_FECHA_PROCESO = fyear + fmonth;
         searchParams.IN_PERIOD = fperiod;
+        searchParams.IN_MODULE = Ext.getCmp(prototype.id+'-cmbModuleVariance').getValue();
         // </editor-fold>
         
         // <editor-fold defaultstate="collapsed" desc="asignación">
@@ -194,7 +195,7 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
                 beforeload: function(obj) {
                     obj.proxy.extraParams = searchParams;
                 },
-                load: function(obj, obj2, success, obj4, obj5) {
+                load: function(obj, obj2, success, response, obj5) {
                     win.lblUser_toolTip("Estructura: A1955");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
                     var pag = Ext.getCmp(prototype.id+'-paggin');
@@ -212,6 +213,16 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
                         global.Msg({
                             msg: 'Data not found'
                         });
+                    } else {
+                        console.log("---- Data -----");
+                        var res = Ext.JSON.decode(response._response.responseText);
+                        console.log(res.data);
+                        var storeDataPivot = Ext.create('Ext.data.Store', {
+                                data: res.data,
+                                autoLoad: true
+                        });
+                        Ext.getCmp(prototype.id + '-displaySAChart32').bindStore(storeDataPivot);
+                        
                     }
                 }
             }

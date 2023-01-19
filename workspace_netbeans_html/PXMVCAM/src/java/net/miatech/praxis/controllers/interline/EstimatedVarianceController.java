@@ -71,6 +71,7 @@ public class EstimatedVarianceController extends BaseController {
         try {
             filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO").trim();
             filter.IN_PERIOD = request.getParameter("IN_PERIOD").trim();
+            filter.IN_MODULE = request.getParameter("IN_MODULE").trim();
             //filter.A1955STATU = request.getParameter("A1955STATU").trim();
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));

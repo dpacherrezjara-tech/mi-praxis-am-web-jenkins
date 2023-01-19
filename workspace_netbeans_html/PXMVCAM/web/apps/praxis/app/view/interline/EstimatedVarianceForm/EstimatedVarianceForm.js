@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.EstimatedVarianceFor
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 610,
+                                            height: 1000,
                                             layout: 'fit',
                                             items: [
                                                 {
