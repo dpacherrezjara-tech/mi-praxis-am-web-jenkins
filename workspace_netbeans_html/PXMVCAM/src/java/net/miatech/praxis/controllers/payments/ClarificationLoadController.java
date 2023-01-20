@@ -509,9 +509,15 @@ public class ClarificationLoadController extends BaseController {
 
         String mensaje = "", strHora = Functions.getHoraActual();
         int fil = 0;
+        String NROCASO = "", TARJETA = "", MONTO = "", FECTRX = "", MONTODISPUTA = "", RESPONDEEL = "", NROBOLAER = "", NROAFILICACION = "",
+                RESPONDEMAS = "", MOTIVO = "", CODIGOMOTIVO = "", ESTATUS = "", MONTOTRXS = "", DIASREST = "", NROREFADQUI = "", ROC = "";
         List<String> listaExcelString = new ArrayList<String>(0);
         BufferedReader br = null;
         try {
+            DecimalFormat df = new DecimalFormat("######0.00");
+            DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+            otherSymbols.setDecimalSeparator('.');
+            df.setDecimalFormatSymbols(otherSymbols);
             String strSesion = UUID.randomUUID().toString();
             String strNomExcel = "ClarificationCsv." + strSesion + ".csv";
 
@@ -528,31 +534,70 @@ public class ClarificationLoadController extends BaseController {
 
             br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "ISO-8859-1"));
             String line = br.readLine();
-
             int cont = 0;
             while (null != line) {
-                System.out.println(line + " : " + fil);
+                line = limpiaLinea(line);
                 mensaje = "";
-                listaExcelString.add(line);
                 String ga = line;
-                if(fil>5){
+                if (fil >= 5) {
                     String[] fields = ga.split(",");
-                    String Numb = fields[6].toString();
-                    if(Numb.trim().length() < 13){
+                    NROCASO = fields[0].toString();
+                    TARJETA = fields[5].toString();
+                    MONTO = fields[1].toString();
+                    FECTRX = fields[11].toString();
+                    MONTODISPUTA = fields[7].toString();
+                    RESPONDEEL = fields[13].toString();
+                    NROBOLAER = fields[4].toString();
+                    NROAFILICACION = fields[10].toString();
+                    RESPONDEMAS = fields[12].toString();
+                    MOTIVO = fields[3].toString();
+                    CODIGOMOTIVO = fields[8].toString();
+                    ESTATUS = fields[2].toString();
+                    MONTOTRXS = fields[6].toString();
+                    DIASREST = fields[49].toString();
+                    NROREFADQUI = fields[42].toString();
+                    ROC = fields[9].toString();
+                    
+                    MONTO = MONTO.replace(",", "");
+                    try {
+                        double mt = Double.parseDouble(MONTO);
+                        MONTO = df.format(mt);
+                    } catch (Exception e) {
+//                        msj = " monto (I) monto No es númerico";
+                    }
+                    MONTOTRXS = MONTOTRXS.replace(",", "");
+                    try {
+                        double mtr = Double.parseDouble(MONTOTRXS);
+                        MONTOTRXS = df.format(mtr);
+                    } catch (Exception e) {
+//                        msj = " monto (I) monto No es númerico";
+                    }
+
+                    String RealTrama = NROCASO + "," + TARJETA + "," + MONTO + "," + FECTRX + "," + MONTODISPUTA + "," + RESPONDEEL + ","
+                            + NROBOLAER + "," + NROAFILICACION + "," + RESPONDEMAS + "," + MOTIVO + "," + CODIGOMOTIVO + ","
+                            + ESTATUS + "," + MONTOTRXS + "," + DIASREST + "," + NROREFADQUI + "," + ROC;
+
+                    System.out.println(RealTrama);
+                    String Numb = fields[4].toString();
+                    if ((Numb.trim().length() < 13) && !(Numb.trim().equals(""))) {
 //                        System.out.println(Numb);
                         mensaje = "Error : Invalid Ticket";
                         break;
                     }
+                    listaExcelString.add(RealTrama);
+                } else {
+                    System.out.println(line + ":" + fil);
+                    listaExcelString.add(line);
                 }
                 line = br.readLine();
                 fil++;
             }
             if (mensaje.equals("")) {
-                mensaje = logic.loadPX413SQP02535(listaExcelString,strBanco,fil);
-                if (mensaje.contains("Successful")) {
-                    //Llamando al PRO10574(ELavon)
-                    mensaje = logic.loadPX413PRO10570(strBanco, strHora, "");
-                }
+                mensaje = logic.loadPX413SQP02535(listaExcelString, strBanco, fil);
+//                if (mensaje.contains("Successful")) {
+//                    //Llamando al PRO10574(ELavon)
+//                    mensaje = logic.loadPX413PRO10570(strBanco, strHora, "");
+//                }
             }
 
             //Eliminar temporal           
@@ -565,6 +610,39 @@ public class ClarificationLoadController extends BaseController {
 
         return mensaje;
 
+    }
+
+    public String limpiaLinea(String linea) {
+        String linea_nueva = linea;
+        boolean continua = true;
+
+        int pos_ini = 0;
+        int pos_final = 0;
+
+        String trama_ini = "";
+        String trama_modifcar = "";
+        String trama_restante = "";
+        trama_modifcar = "";
+
+        while (continua) {
+
+            pos_ini = linea_nueva.indexOf(",\"");
+            pos_final = linea_nueva.indexOf("\",");
+
+            if (pos_ini == -1) {
+                continua = false;
+                break;
+            }
+
+            trama_ini = linea_nueva.substring(0, pos_ini);
+            trama_modifcar = linea_nueva.substring(pos_ini, pos_final);
+            trama_restante = linea_nueva.substring(pos_final + 1);
+            trama_modifcar = trama_modifcar.replaceAll(",", "").replaceAll("\"", "");
+
+            linea_nueva = trama_ini + "," + trama_modifcar + trama_restante;
+        }
+//        System.out.println(linea_nueva);
+        return linea_nueva;
     }
 
     private String uploadFile(byte[] bytes, String strBanco) throws Exception {
