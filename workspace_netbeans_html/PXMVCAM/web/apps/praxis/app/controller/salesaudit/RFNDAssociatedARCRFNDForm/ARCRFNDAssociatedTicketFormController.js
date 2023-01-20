@@ -159,19 +159,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                             Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn4').hide();
 
                             for (var i = 0; i < res.lsta_COUPNS.length; i++) {
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '1') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '1') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn1').show();
                                     me.totalcpn += 1;
                                 }
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '2') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '2') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn2').show();
                                     me.totalcpn += 1;
                                 }
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '3') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '3') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn3').show();
                                     me.totalcpn += 1;
                                 }
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '4') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '4') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn4').show();
                                     me.totalcpn += 1;
                                 }
@@ -184,26 +184,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         }
                         //
                         for (var i = 0; i < res.lsta_COUPNS.length; i++) {
-                            if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '1') {
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'USED') {
+                            if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '1') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'USED') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn1').hide();
                                     me.totalcpn = (me.totalcpn - 1);
                                 }
                             }
-                            if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '2') {
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'USED') {
+                            if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '2') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'USED') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn2').hide();
                                     me.totalcpn = (me.totalcpn - 1);
                                 }
                             }
-                            if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '3') {
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'USED') {
+                            if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '3') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'USED') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn3').hide();
                                     me.totalcpn = (me.totalcpn - 1);
                                 }
                             }
-                            if (Ext.String.trim(res.lsta_COUPNS[i].A3654CPN) === '4') {
-                                if (Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A3654CURS1) === 'USED') {
+                            if (Ext.String.trim(res.lsta_COUPNS[i].A4366CPN) === '4') {
+                                if (Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'RFND' || Ext.String.trim(res.lsta_COUPNS[i].A4366CURS1) === 'USED') {
                                     Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn4').hide();
                                     me.totalcpn = (me.totalcpn - 1);
                                 }
@@ -661,7 +661,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         });
                         mask.show();
                         Ext.Ajax.request({
-                            url: me.urlWin02 + '/ProcesaDeleteManual/',
+                            url: me.urlWin01 + '/ProcesaDeleteManual/',
                             timeout: 60000000,
                             method: 'POST',
                             params: {beanString: JSON.stringify(paramsGuardarTAX)},
@@ -711,7 +711,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         });
                         mask.show();
                         Ext.Ajax.request({
-                            url: me.urlWin02 + '/ProcesaDeleteManual/',
+                            url: me.urlWin01 + '/ProcesaDeleteManual/',
                             timeout: 60000000,
                             method: 'POST',
                             params: {beanString: JSON.stringify(paramsGuardarTAX)},
@@ -762,7 +762,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         });
                         mask.show();
                         Ext.Ajax.request({
-                            url: me.urlWin02 + '/ProcesaDeleteTAXManual/',
+                            url: me.urlWin01 + '/ProcesaDeleteTAXManual/',
                             timeout: 60000000,
                             method: 'POST',
                             params: {beanString: JSON.stringify(paramsGuardarRazon)},
@@ -1076,6 +1076,80 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                     return;
                 }
             }
+            if (txtConto === 'I') {
+                if (cbox1 || cbox2 || cbox3 || cbox4) {
+                    var vl_cant = 0;
+                    var vl_cantcpn = 0;
+                    var vl_total = 0;
+                    var grid08 = Ext.getCmp(prototype.idARCDetailTicket + '-gridCPN');
+                    var regscpn = grid08.getStore().getCount();
+                    for (var x = 0; x < regscpn; x++) {
+                        if (CmbTRFND === 'T') {
+                            if (!cbox1 && Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '1') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox2 && Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '2') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox3 && Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '3') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                            if (!cbox4 && Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '4') {
+                                Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                                bvalida = false;
+                                return;
+                            }
+                        } else {
+
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '1') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox1) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
+                            }
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '2') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox2) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
+                            }
+
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '3') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox3) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
+                            }
+                            if (Ext.String.trim(grid08.getStore().getAt(x).get('A4366CPN')) === '4') {
+                                vl_cant = (vl_cant + 1);
+                                if (cbox4) {
+                                    vl_cantcpn = (vl_cantcpn + 1);
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    if (CmbTRFND !== 'T') {
+                        vl_total = (vl_cant - vl_cantcpn);
+                        if (vl_total === 0) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of total refund');
+                            bvalida = false;
+                            return;
+                        }
+                    }
+
+
+                }
+
+            }
             if (!vl_Showcoupons) {
                 if (!cbox1 && !cbox2 && !cbox3 && !cbox4 && !cbox5 && !cbox6 && !cbox7 && !cbox8) {
                     Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one coupon');
@@ -1328,6 +1402,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                     bvalida = false;
                     return;
                 }
+                if (vl_STATUS === 'F') {
+                    if (grid03.getStore().getAt(t).get('A4362CODE') === '00019' || grid03.getStore().getAt(t).get('A4362CODE') === '00019' || grid03.getStore().getAt(t).get('A4362CODE') === '00020' || grid03.getStore().getAt(t).get('A4362CODE') === '00022') {
+                        var txtPenalty = Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').getValue();
+                        if (txtPenalty === 0) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'You must enter the penalty to be able to authorize since you chose a reason with a penalty');
+                            bvalida = false;
+                        }
+
+                    }
+                    if (grid03.getStore().getAt(t).get('A4362CODE') === '00018' || grid03.getStore().getAt(t).get('A4362CODE') === '00020') {
+                        if (CmbTRFND !== 'P') {
+                            Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
+                            bvalida = false;
+                        }
+                    }
+                }
+
             }
             if (vl_razon.length > 1000) {
                 Ext.Msg.alert('.: PRAXIS :.', 'The description total must not exceed 1000 characters');
@@ -1481,12 +1572,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                                 var res = Ext.JSON.decode(response.responseText);
                                 //console.log(res.data);
                                 var vp_icon = 0;
-                                 var vpmjse = '';
+                                var vpmjse = '';
                                 if (res.data === 'RECORD INSERTED' || res.data === 'Proceso Culminado') {
                                     vp_icon = 1;
-                                    vpmjse='RECORD INSERTED';
-                                }else{
-                                    vpmjse=res.data;
+                                    vpmjse = 'RECORD INSERTED';
+                                } else {
+                                    vpmjse = res.data;
                                 }
                                 global.Msg({msg: vpmjse, icon: vp_icon, fn: function () {
                                         if (vp_icon === 1) {
