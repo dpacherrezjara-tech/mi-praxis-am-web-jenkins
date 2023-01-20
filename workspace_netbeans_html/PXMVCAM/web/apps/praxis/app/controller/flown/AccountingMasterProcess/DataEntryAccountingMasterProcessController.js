@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id + '-dataEntryController',
     url: CONTEXTPATH + '/AccountingMasterProcess',
+    PERML: 'N',
     p: {},
     dataentryParams: {},
     aux: false,
@@ -41,6 +42,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 break;
         }
         global.AccessControlMaganer();
+        console.log('PERML');
+        console.log(userAccess);
+        console.log(optionSelect);
+        $.each(userAccess, function(x, y) {
+            if (y.NPROG === optionSelect.nprog) {                
+                PERML = y.PERML;
+                console.log('Access:'+PERML);
+            }
+        });
+        this.controlConsistency();
     }
     ,
     setStoreData: function() {
@@ -197,6 +208,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         });
     }
     ,
+    //<editor-fold defaultstate="collapsed" desc="controlLight">
+    controlConsistency: function () {
+        
+        if(PERML === 'Y'){
+            console.log('opcion PERML: ' + PERML);
+            console.log(Ext.getCmp(prototype.id + '-de-chkConsistencia'));
+            Ext.getCmp(prototype.id + '-de-chkConsistencia').setValue(true);            
+            Ext.getCmp(prototype.id + '-de-chkConsistencia').disable();            
+        }
+    },
+    // </editor-fold>
     getDataEntryValues: function(strOption) {
 
         var A1955MODUL = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
