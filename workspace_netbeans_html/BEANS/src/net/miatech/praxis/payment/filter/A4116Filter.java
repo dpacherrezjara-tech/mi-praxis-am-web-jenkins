@@ -92,6 +92,7 @@ public class A4116Filter extends A4116 {
     public double totGROSAMOUN = 0;
     public double totTGROSAMOUN = 0;
     public double totTGROSAMOUN_ACCOUNTED = 0;
+    public double totTGROSAMOUN_PENDING = 0;
     public double totTGROSAMOUN_TO_DEBUG = 0;
     public double totDISCAMOUN_IMPORT = 0;
     public double totDISCAMOUN_IVA = 0;
@@ -175,11 +176,14 @@ public class A4116Filter extends A4116 {
     
     //Flag contabilizado
     public double TGROSAMOUN_ACCOUNTED = 0;
+    public double TGROSAMOUN_PENDING = 0;
     public double TGROSAMOUN_TO_DEBUG = 0;
     public int QTY_ACCOUNTED = 0;
+    public int QTY_PENDING = 0;
     public int QTY_TO_DEBUG = 0;
     public int QTY_TOTAL = 0;
     public int totQTY_ACCOUNTED = 0;
+    public int totQTY_PENDING = 0;
     public int totQTY_TO_DEBUG = 0;
     public int totQTY_TOTAL = 0;
     public double totSVFOPS = 0;

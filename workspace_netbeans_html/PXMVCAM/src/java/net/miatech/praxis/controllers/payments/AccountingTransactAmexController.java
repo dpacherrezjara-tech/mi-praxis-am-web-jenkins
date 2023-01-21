@@ -197,7 +197,7 @@ public class AccountingTransactAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchByDay")
     public @ResponseBody
     String searchByDay(ModelMap map, HttpServletRequest request) {
@@ -230,14 +230,17 @@ public class AccountingTransactAmexController extends BaseController {
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
 
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
+//            if (!bExcel) {
+//                filter.page.PAGROW = 20;
+//                start = (start != 0 ? start : 0);
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+//                filter.page.PAGROW = -1;
+//                filter.page.PAGNUM = 1;
+//            }
+
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
 
             lst = logic.loadPX590SQP04454(filter);
         } catch (Exception e) {
@@ -245,7 +248,7 @@ public class AccountingTransactAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchByAccounting")
     public @ResponseBody
     String searchByAccounting(ModelMap map, HttpServletRequest request) {
@@ -293,7 +296,7 @@ public class AccountingTransactAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -1078,7 +1081,7 @@ public class AccountingTransactAmexController extends BaseController {
                 ++vi;
                 ++vj;
             }
-            
+
             Row rowTotal = sheet.createRow(vj);
             Cell CH1_0_T = rowTotal.createCell(0);
             Cell CH1_1_T = rowTotal.createCell(1);
@@ -1109,7 +1112,7 @@ public class AccountingTransactAmexController extends BaseController {
             CH1_11_T.setCellValue("");
             CH1_12_T.setCellValue("");
             CH1_13_T.setCellValue("");
-            
+
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
             CH1_2_T.setCellStyle(totalStyle);
@@ -1124,7 +1127,7 @@ public class AccountingTransactAmexController extends BaseController {
             CH1_11_T.setCellStyle(totalStyle);
             CH1_12_T.setCellStyle(totalStyle);
             CH1_13_T.setCellStyle(totalStyle);
-            
+
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
@@ -1152,7 +1155,7 @@ public class AccountingTransactAmexController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "getXLSXByDay")
     public @ResponseBody
     void getXLSXByDay(HttpServletRequest request, HttpServletResponse response) {
@@ -1412,5 +1415,5 @@ public class AccountingTransactAmexController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
 }

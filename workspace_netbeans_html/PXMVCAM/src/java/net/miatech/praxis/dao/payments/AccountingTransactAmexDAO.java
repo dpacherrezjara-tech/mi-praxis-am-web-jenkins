@@ -47,9 +47,9 @@ public class AccountingTransactAmexDAO {
 
         double totTGROSAMOUN = 0;
         double totTGROSAMOUN_ACCOUNTED = 0;
-        double totTGROSAMOUN_TO_DEBUG = 0;
+        double totTGROSAMOUN_PENDING = 0;
         int totQTY_ACCOUNTED = 0;
-        int totQTY_TO_DEBUG = 0;
+        int totQTY_PENDING = 0;
         int totQTY_TOTAL = 0;
         int totQTY_ALL = 0;
         double totTGROSAMOUN_ALL = 0;
@@ -59,17 +59,17 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04416(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04416(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
             cstmt.registerOutParameter(11, Types.INTEGER);
+            cstmt.registerOutParameter(12, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -78,25 +78,26 @@ public class AccountingTransactAmexDAO {
             cstmt.setString(5, filter.IN_STCONL);
             cstmt.setString(6, filter.IN_TDOC);
             cstmt.setString(7, filter.IN_COMPLEMENT);
-            cstmt.setInt(8, filter.page.PAGNUM);
-            cstmt.setInt(9, filter.page.PAGROW);
-            cstmt.setInt(10, filter.page.TOTPAG);
-            cstmt.setInt(11, filter.page.TOTROW);
+            cstmt.setString(8, filter.IN_SCURRENCY);
+            cstmt.setInt(9, filter.page.PAGNUM);
+            cstmt.setInt(10, filter.page.PAGROW);
+            cstmt.setInt(11, filter.page.TOTPAG);
+            cstmt.setInt(12, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(8);
-            filter.page.PAGROW = cstmt.getInt(9);
-            filter.page.TOTPAG = cstmt.getInt(10);
-            filter.page.TOTROW = cstmt.getInt(11);
+            filter.page.PAGNUM = cstmt.getInt(9);
+            filter.page.PAGROW = cstmt.getInt(10);
+            filter.page.TOTPAG = cstmt.getInt(11);
+            filter.page.TOTROW = cstmt.getInt(12);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
                 totTGROSAMOUN_ACCOUNTED = rst.getDouble("TGROSAMOUN_ACCOUNTED");
-                totTGROSAMOUN_TO_DEBUG = rst.getDouble("TGROSAMOUN_TO_DEBUG");
+                totTGROSAMOUN_PENDING = rst.getDouble("TGROSAMOUN_PENDING");
                 totQTY_ACCOUNTED = rst.getInt("QTY_ACCOUNTED");
-                totQTY_TO_DEBUG = rst.getInt("QTY_TO_DEBUG");
+                totQTY_PENDING = rst.getInt("QTY_PENDING");
                 totQTY_TOTAL = rst.getInt("QTY_TOTAL");
                 totQTY_ALL = rst.getInt("QTY_ALL");
                 totTGROSAMOUN_ALL = rst.getDouble("TGROSAMOUN_ALL");
@@ -119,10 +120,10 @@ public class AccountingTransactAmexDAO {
                     beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.PAYDATE);
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.TGROSAMOUN_ACCOUNTED = rst.getDouble("TGROSAMOUN_ACCOUNTED");
-                    beanTkt.TGROSAMOUN_TO_DEBUG = rst.getDouble("TGROSAMOUN_TO_DEBUG");
-                    beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.TGROSAMOUN_PENDING = rst.getDouble("TGROSAMOUN_PENDING");
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                     beanTkt.QTY_ACCOUNTED = rst.getInt("QTY_ACCOUNTED");
-                    beanTkt.QTY_TO_DEBUG = rst.getInt("QTY_TO_DEBUG");
+                    beanTkt.QTY_PENDING = rst.getInt("QTY_PENDING");
                     beanTkt.QTY_TOTAL = rst.getInt("QTY_TOTAL");
                     beanTkt.QTY_ALL = rst.getInt("QTY_ALL");
                     beanTkt.TGROSAMOUN_ALL = rst.getDouble("TGROSAMOUN_ALL");
@@ -130,9 +131,9 @@ public class AccountingTransactAmexDAO {
                     //TOTALEs
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
                     beanTkt.totTGROSAMOUN_ACCOUNTED = totTGROSAMOUN_ACCOUNTED;
-                    beanTkt.totTGROSAMOUN_TO_DEBUG = totTGROSAMOUN_TO_DEBUG;
+                    beanTkt.totTGROSAMOUN_PENDING = totTGROSAMOUN_PENDING;
                     beanTkt.totQTY_ACCOUNTED = totQTY_ACCOUNTED;
-                    beanTkt.totQTY_TO_DEBUG = totQTY_TO_DEBUG;
+                    beanTkt.totQTY_PENDING = totQTY_PENDING;
                     beanTkt.totQTY_TOTAL = totQTY_TOTAL;
                     beanTkt.totQTY_ALL = totQTY_ALL;
                     beanTkt.totTGROSAMOUN_ALL = totTGROSAMOUN_ALL;
@@ -183,9 +184,9 @@ public class AccountingTransactAmexDAO {
 
         double totTGROSAMOUN = 0;
         double totTGROSAMOUN_ACCOUNTED = 0;
-        double totTGROSAMOUN_TO_DEBUG = 0;
+        double totTGROSAMOUN_PENDING = 0;
         int totQTY_ACCOUNTED = 0;
-        int totQTY_TO_DEBUG = 0;
+        int totQTY_PENDING = 0;
         int totQTY_TOTAL = 0;
         int totQTY_ALL = 0;
         double totTGROSAMOUN_ALL = 0;
@@ -193,8 +194,8 @@ public class AccountingTransactAmexDAO {
         double totTGROSAMOUN_DIFF = 0;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -208,51 +209,53 @@ public class AccountingTransactAmexDAO {
         hmDescReglas.put("1", "Tkt");
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
+        hmDescReglas.put("4", "Manual");
 
         HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
-        hmDescSTCONL.put("", "");
+        hmDescSTCONL.put("", "Pending");
         hmDescSTCONL.put("1", "Accounted");
         hmDescSTCONL.put("2", "Accounted to Debug");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04454(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04454(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
             cstmt.setString(3, filter.IN_DATE_VALUE);
             cstmt.setString(4, filter.IN_TDOC);
             cstmt.setString(5, filter.IN_COMPLEMENT);
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setString(6, filter.IN_SCURRENCY);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
                 totTGROSAMOUN_ACCOUNTED = rst.getDouble("TGROSAMOUN_ACCOUNTED");
-                totTGROSAMOUN_TO_DEBUG = rst.getDouble("TGROSAMOUN_TO_DEBUG");
+                totTGROSAMOUN_PENDING = rst.getDouble("TGROSAMOUN_PENDING");
                 totQTY_ACCOUNTED = rst.getInt("QTY_ACCOUNTED");
-                totQTY_TO_DEBUG = rst.getInt("QTY_TO_DEBUG");
+                totQTY_PENDING = rst.getInt("QTY_PENDING");
                 totQTY_TOTAL = rst.getInt("QTY_TOTAL");
                 totQTY_ALL = rst.getInt("QTY_ALL");
                 totTGROSAMOUN_ALL = rst.getDouble("TGROSAMOUN_ALL");
@@ -273,12 +276,13 @@ public class AccountingTransactAmexDAO {
                     beanTkt.IN_COMPLEMENT = filter.IN_COMPLEMENT.trim();
 
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                    beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.TGROSAMOUN_ACCOUNTED = rst.getDouble("TGROSAMOUN_ACCOUNTED");
-                    beanTkt.TGROSAMOUN_TO_DEBUG = rst.getDouble("TGROSAMOUN_TO_DEBUG");
-                    beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.TGROSAMOUN_PENDING = rst.getDouble("TGROSAMOUN_PENDING");
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                     beanTkt.QTY_ACCOUNTED = rst.getInt("QTY_ACCOUNTED");
-                    beanTkt.QTY_TO_DEBUG = rst.getInt("QTY_TO_DEBUG");
+                    beanTkt.QTY_PENDING = rst.getInt("QTY_PENDING");
                     beanTkt.QTY_TOTAL = rst.getInt("QTY_TOTAL");
                     beanTkt.QTY_ALL = rst.getInt("QTY_ALL");
                     beanTkt.TGROSAMOUN_ALL = rst.getDouble("TGROSAMOUN_ALL");
@@ -286,9 +290,9 @@ public class AccountingTransactAmexDAO {
                     //TOTALEs
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
                     beanTkt.totTGROSAMOUN_ACCOUNTED = totTGROSAMOUN_ACCOUNTED;
-                    beanTkt.totTGROSAMOUN_TO_DEBUG = totTGROSAMOUN_TO_DEBUG;
+                    beanTkt.totTGROSAMOUN_PENDING = totTGROSAMOUN_PENDING;
                     beanTkt.totQTY_ACCOUNTED = totQTY_ACCOUNTED;
-                    beanTkt.totQTY_TO_DEBUG = totQTY_TO_DEBUG;
+                    beanTkt.totQTY_PENDING = totQTY_PENDING;
                     beanTkt.totQTY_TOTAL = totQTY_TOTAL;
                     beanTkt.totQTY_ALL = totQTY_ALL;
                     beanTkt.totTGROSAMOUN_ALL = totTGROSAMOUN_ALL;
@@ -342,8 +346,8 @@ public class AccountingTransactAmexDAO {
         double SVFOPS = 0;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -357,26 +361,27 @@ public class AccountingTransactAmexDAO {
         hmDescReglas.put("1", "Tkt");
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
+        hmDescReglas.put("4", "Manual");
 
         HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
-        hmDescSTCONL.put("", "");
+        hmDescSTCONL.put("", "Pending");
         hmDescSTCONL.put("1", "Accounted");
         hmDescSTCONL.put("2", "Accounted to Debug");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04417(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04417(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(8, Types.INTEGER);
-            cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
             cstmt.registerOutParameter(11, Types.INTEGER);
+            cstmt.registerOutParameter(12, Types.INTEGER);
+            cstmt.registerOutParameter(13, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
@@ -385,17 +390,19 @@ public class AccountingTransactAmexDAO {
             cstmt.setString(5, filter.IN_TDOC);
             cstmt.setString(6, filter.IN_PNR);
             cstmt.setString(7, filter.IN_COMPLEMENT);
-            cstmt.setInt(8, filter.page.PAGNUM);
-            cstmt.setInt(9, filter.page.PAGROW);
-            cstmt.setInt(10, filter.page.TOTPAG);
-            cstmt.setInt(11, filter.page.TOTROW);
+            cstmt.setString(8, filter.BSUMDATE);
+            cstmt.setString(9, filter.SCURRENCY);
+            cstmt.setInt(10, filter.page.PAGNUM);
+            cstmt.setInt(11, filter.page.PAGROW);
+            cstmt.setInt(12, filter.page.TOTPAG);
+            cstmt.setInt(13, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(8);
-            filter.page.PAGROW = cstmt.getInt(9);
-            filter.page.TOTPAG = cstmt.getInt(10);
-            filter.page.TOTROW = cstmt.getInt(11);
+            filter.page.PAGNUM = cstmt.getInt(10);
+            filter.page.PAGROW = cstmt.getInt(11);
+            filter.page.TOTPAG = cstmt.getInt(12);
+            filter.page.TOTROW = cstmt.getInt(13);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -445,7 +452,7 @@ public class AccountingTransactAmexDAO {
                     beanTkt.QTYTKT = rst.getInt("QTYTKT");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
-                    beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                     beanTkt.STCONL = rst.getString("STCONL").trim();
                     if (hmDescSTCONL.containsKey(rst.getString("STCONL").trim())) {
                         beanTkt.descSTCONL = hmDescSTCONL.get(rst.getString("STCONL").trim()).toString();
@@ -503,8 +510,8 @@ public class AccountingTransactAmexDAO {
         double totSVFOPS = 0;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "");
-        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("0", "Stand By");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
@@ -518,6 +525,7 @@ public class AccountingTransactAmexDAO {
         hmDescReglas.put("1", "Tkt");
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
+        hmDescReglas.put("4", "Manual");
 
         HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
         hmDescSTCONL.put("", "");
@@ -527,7 +535,7 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04418(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04418(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -652,7 +660,7 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04464(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04464(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
