@@ -164,6 +164,26 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                         },
                         {
                             xtype: 'combo',
+                            fieldLabel: 'Currency:',
+                            id: prototype.id + '-cmbSCURRENCY',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            readOnly: false,
+                            editable: false,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 100,
+                            width: 200,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                change: 'cmbSCURRENCY_keyDownHandler',
+                            }
+                        },
+                        {
+                            xtype: 'combo',
                             id: prototype.id + '-cmbComplements',
                             fieldLabel: 'Complements',
                             triggerAction: 'all',
