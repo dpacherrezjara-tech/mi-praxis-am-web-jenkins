@@ -139,7 +139,7 @@ public class ClarificationLoadDAO {
 //        return msj;
 //    }
 
-    public String loadPX413SQP02535(List<String> listaExcelString, String strBanco, int fil) throws SQLException, IOException, Exception {
+    public String loadPX413SQP02535(List<String> listaExcelString, String strBanco, int fil,String horaActual) throws SQLException, IOException, Exception {
 
         BufferedReader br = null;
         CallableStatement cs = null;
@@ -147,7 +147,7 @@ public class ClarificationLoadDAO {
         String msj = "Operation Successful ", strTrama = "";
         int cantReg = 0;
 
-        strSQL = "{CALL PRAXIS.SQP02535(?,?,?,?,?)}";
+        strSQL = "{CALL PRAXIS.SQP02535(?,?,?,?,?,?)}";
         Connection cnx = null;
 
         cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -161,6 +161,7 @@ public class ClarificationLoadDAO {
                 cs.setString(3, a);
                 cs.setString(4, (i == 0) ? "Y" : "");
                 cs.setInt(5, listaExcelString.size());
+                cs.setString(6, horaActual);
                 cs.execute();
             }
         } catch (Exception e) {
