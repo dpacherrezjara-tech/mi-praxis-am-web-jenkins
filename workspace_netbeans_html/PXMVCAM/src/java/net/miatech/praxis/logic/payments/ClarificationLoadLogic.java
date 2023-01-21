@@ -26,8 +26,8 @@ public class ClarificationLoadLogic {
 
     }
     
-    public String loadPX413SQP02535(List<String> listaExcelString , String strBanco, int fil) throws SQLException, IOException, Exception {
-        return ClarificationLoadDAO.loadPX413SQP02535(listaExcelString,strBanco,fil);
+    public String loadPX413SQP02535(List<String> listaExcelString , String strBanco, int fil, String horaActual) throws SQLException, IOException, Exception {
+        return ClarificationLoadDAO.loadPX413SQP02535(listaExcelString,strBanco,fil,horaActual);
     }
     
     public String loadPX413PRO10570(String strBanco, String strHora, String type_file) throws SQLException, Exception {

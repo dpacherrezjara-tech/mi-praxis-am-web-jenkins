@@ -593,7 +593,7 @@ public class ClarificationLoadController extends BaseController {
                 fil++;
             }
             if (mensaje.equals("")) {
-                mensaje = logic.loadPX413SQP02535(listaExcelString, strBanco, fil);
+                mensaje = logic.loadPX413SQP02535(listaExcelString, strBanco, fil,strHora);
                 if (mensaje.contains("Successful")) {
                     //Llamando al PRO10574(ELavon)
                     mensaje = logic.loadPX413PRO10570(strBanco, strHora, "");
