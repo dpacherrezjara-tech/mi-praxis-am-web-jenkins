@@ -463,6 +463,7 @@ public class AccountingTransactAmexDAO {
                     beanTkt.IDCONL = rst.getString("IDCONL").trim();
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
+                    beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
 
                     //TOTALEs
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
