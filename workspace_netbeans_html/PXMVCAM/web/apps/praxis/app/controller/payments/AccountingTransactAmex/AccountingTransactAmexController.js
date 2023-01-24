@@ -144,6 +144,12 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
 
         this.btnSearch_click();
     },
+    setDataTo: function () {
+        var copYear = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(copYear);
+        var copMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(copMonth);
+    },
     setFormatParameter: function () {
 
         me.bean = {};
@@ -411,7 +417,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                     var a = [];
                     var dataRoot = {text: '.', expanded: false, children: []};
                     console.log(lstData)
-                    Ext.Object.each(lstData, function (index, value) {                        
+                    Ext.Object.each(lstData, function (index, value) {
                         if (a.indexOf(value.PAYDATE) < 0) {
                             var TOT_ACCOUNTED = 0;
                             var TOT_PENDING = 0;
@@ -482,6 +488,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.panelActual = '-panelGridDataByAccounting';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanDetByAccounting.IN_TKT = rowData.data.ISREFNBR;
+        this.beanDetByAccounting.IN_AREFNBR = rowData.data.AREFNBR;
         this.beanDetByAccounting.IDCON = rowData.data.IDCONL;
         console.log(this.beanDetByAccounting);
         me.paramsDetailByAccounting.beanString = JSON.stringify(this.beanDetByAccounting);
@@ -513,7 +520,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         });
                     } else {
                         var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + '</center>');
+                        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">AREFNBR: ' + data.AREFNBR + '</center>');
                         //Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
                     }
                 }
@@ -662,7 +669,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
-        var strTkt = rowData.data.ISREFNBR;
+        var strTkt = rowData.data.A4183TICKET;
 
         prototypeProgram.view = 'payments-accounting-transact-amex-form';
         prototypeProgram.nprog = 'PX00000590';
@@ -697,6 +704,30 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    viewTKTconSEQ: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        var strTkt = rowData.data.A4183TICKET;
+        var valida = rowData.data.A4183SEQ;
+        if (valida === '001') {
+            prototypeProgram.view = 'payments-accounting-transact-amex-form';
+            prototypeProgram.nprog = 'PX00000590';
+            prototypeProgram.title = 'Accounting Transaction AMEX';
+            prototypeProgram.modulo = '';
+
+            var beanProMasterTicket = {};
+
+            beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+            beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+            beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+
+            console.log(beanProMasterTicket);
+
+            win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+        }
+        else{
+            console.log('No es indice');
+        }
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');

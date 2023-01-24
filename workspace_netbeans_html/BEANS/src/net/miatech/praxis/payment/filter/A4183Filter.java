@@ -20,10 +20,13 @@ public class A4183Filter extends A4183 {
     
     //Campos A4116
     public String TKT = "";
+    public String AREFNBR = "";
+    public String IN_AREFNBR = "";
+    public String A4183TICKET = "";
     public String IDCON = "";    
 
     public Pagination page = new Pagination();
-    
 
-   
+
+    
 }
