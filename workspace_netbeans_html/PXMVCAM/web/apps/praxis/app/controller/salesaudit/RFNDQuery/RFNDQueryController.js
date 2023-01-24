@@ -63,6 +63,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
 
         //return Ext.util.Format.number(value, '0,000');
     },
+    onColumnNotIntegerRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        if (value !== 0) {
+            metaData.style = "background-color: #f1c97d !important";
+            //Ext.util.Format.number(value, '0,000.00');
+        }
+        return value;
+
+        //return Ext.util.Format.number(value, '0,000');
+    },
     onColumnAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "background:#D5F4D5 !important";
         return Ext.util.Format.number(value, '0,000.00');
