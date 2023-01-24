@@ -71,7 +71,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 60,
                             width: 140,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                change: 'setDataTo'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -88,7 +91,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             width: 70,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                change: 'setDataTo'
+                            }
                         },
                         {
                             xtype: 'combo',

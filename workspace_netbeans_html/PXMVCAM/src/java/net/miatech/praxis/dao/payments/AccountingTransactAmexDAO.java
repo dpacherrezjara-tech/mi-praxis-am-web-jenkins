@@ -661,31 +661,32 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04464(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04464(?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(3, Types.INTEGER);
             cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_TKT.trim());
-            cstmt.setInt(3, filter.page.PAGNUM);
-            cstmt.setInt(4, filter.page.PAGROW);
-            cstmt.setInt(5, filter.page.TOTPAG);
-            cstmt.setInt(6, filter.page.TOTROW);
+            cstmt.setString(3, filter.IN_AREFNBR.trim());
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(3);
-            filter.page.PAGROW = cstmt.getInt(4);
-            filter.page.TOTPAG = cstmt.getInt(5);
-            filter.page.TOTROW = cstmt.getInt(6);
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -704,7 +705,8 @@ public class AccountingTransactAmexDAO {
                    
                     beanTkt.TKT = filter.IN_TKT.trim();
                     beanTkt.IDCON = filter.IDCON.trim();
-                    
+                    beanTkt.AREFNBR = filter.IN_AREFNBR.trim();
+                    beanTkt.A4183TICKET = rst.getString("A4183CIA").trim()+rst.getString("A4183FORMA").trim()+rst.getString("A4183SERIE").trim();        
                     beanTkt.A4183MODO = rst.getString("A4183MODO").trim();        
                     beanTkt.A4183FUENT = rst.getString("A4183FUENT").trim();        
                     beanTkt.A4183SUBFU = rst.getString("A4183SUBFU").trim();        
