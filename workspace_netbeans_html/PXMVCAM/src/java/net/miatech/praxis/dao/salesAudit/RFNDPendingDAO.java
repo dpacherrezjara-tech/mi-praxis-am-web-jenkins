@@ -109,6 +109,7 @@ public class RFNDPendingDAO {
                 objRtn.A3647RN = rs01.getInt("RN");
                 objRtn.CANTPRO = rs01.getInt("CANTPRO");
                 objRtn.CANTOK = rs01.getInt("CANTOK");
+                objRtn.CANTNK = rs01.getInt("CANTNK");
                 objRtn.CANTKO = rs01.getInt("CANTKO");
                 objRtn.CANTPE = rs01.getInt("CANTPE");
                 objRtn.TOTALCANT = rs01.getInt("CANTKO") + rs01.getInt("CANTOK") + rs01.getInt("CANTPE");

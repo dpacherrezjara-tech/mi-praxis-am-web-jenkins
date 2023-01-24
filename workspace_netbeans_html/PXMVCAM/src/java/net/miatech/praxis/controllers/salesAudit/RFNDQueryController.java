@@ -166,7 +166,7 @@ public class RFNDQueryController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -186,23 +186,25 @@ public class RFNDQueryController extends BaseController {
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
+            CH_16 = row.createCell(16);
 
             CH_00.setCellValue("Folio");
             CH_01.setCellValue("System date");
             CH_02.setCellValue("Auditor");
             CH_03.setCellValue("Zone");
             CH_04.setCellValue("Ticket Qty Pend");
-            CH_05.setCellValue("Ticket Qty Auto");
-            CH_06.setCellValue("Ticket Qty Reje");
-            CH_07.setCellValue("Total");
-            CH_08.setCellValue("Change of status Send");
-            CH_09.setCellValue("Change of status Retu.");
-            CH_10.setCellValue("Total");
-            CH_11.setCellValue("Ticket BPO Qty OK");
-            CH_12.setCellValue("Ticket BPO Qty Error");
-            CH_13.setCellValue("total BPO");
-            CH_14.setCellValue("Ticket Amount");
-            CH_15.setCellValue("Days");
+            CH_05.setCellValue("Ticket Qty Auto Yes");
+            CH_06.setCellValue("Ticket Qty Auto Not");
+            CH_07.setCellValue("Ticket Qty Reje");
+            CH_08.setCellValue("Total");
+            CH_09.setCellValue("Change of status Send");
+            CH_10.setCellValue("Change of status Retu.");
+            CH_11.setCellValue("Total");
+            CH_12.setCellValue("Ticket BPO Qty OK");
+            CH_13.setCellValue("Ticket BPO Qty Error");
+            CH_14.setCellValue("total BPO");
+            CH_15.setCellValue("Ticket Amount");
+            CH_16.setCellValue("Days");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -220,6 +222,7 @@ public class RFNDQueryController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -237,6 +240,7 @@ public class RFNDQueryController extends BaseController {
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
+            CH_16.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -260,6 +264,7 @@ public class RFNDQueryController extends BaseController {
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
 
                 CH_00.setCellValue(listaData.get(vi).A3647FOLIO);
                 CH_01.setCellValue(listaData.get(vi).A3647FREGI);
@@ -267,18 +272,19 @@ public class RFNDQueryController extends BaseController {
                 CH_03.setCellValue(listaData.get(vi).A3647COCD);
                 CH_04.setCellValue(listaData.get(vi).CANTPE);
                 CH_05.setCellValue(listaData.get(vi).CANTOK);
-                CH_06.setCellValue(listaData.get(vi).CANTKO);
-                CH_07.setCellValue(listaData.get(vi).TOTALCANT);
+                CH_06.setCellValue(listaData.get(vi).CANTNK);
+                CH_07.setCellValue(listaData.get(vi).CANTKO);
+                CH_08.setCellValue(listaData.get(vi).TOTALCANT);
 
-                CH_08.setCellValue(listaData.get(vi).STOEN);
-                CH_09.setCellValue(listaData.get(vi).STORET);
-                CH_10.setCellValue(listaData.get(vi).TOTALSTO);
+                CH_09.setCellValue(listaData.get(vi).STOEN);
+                CH_10.setCellValue(listaData.get(vi).STORET);
+                CH_11.setCellValue(listaData.get(vi).TOTALSTO);
 
-                CH_11.setCellValue(listaData.get(vi).BPOOK);
-                CH_12.setCellValue(listaData.get(vi).BPOKO);
-                CH_13.setCellValue(listaData.get(vi).TOTALBPO);
-                CH_14.setCellValue(listaData.get(vi).SUMAOK);
-                CH_15.setCellValue(listaData.get(vi).A3647DIAS);
+                CH_12.setCellValue(listaData.get(vi).BPOOK);
+                CH_13.setCellValue(listaData.get(vi).BPOKO);
+                CH_14.setCellValue(listaData.get(vi).TOTALBPO);
+                CH_15.setCellValue(listaData.get(vi).SUMAOK);
+                CH_16.setCellValue(listaData.get(vi).A3647DIAS);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -296,6 +302,7 @@ public class RFNDQueryController extends BaseController {
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
 
                 // </editor-fold>
                 iter.next();
