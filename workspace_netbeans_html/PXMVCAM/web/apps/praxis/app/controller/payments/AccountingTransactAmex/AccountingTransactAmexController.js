@@ -490,6 +490,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByAccounting.IN_TKT = rowData.data.ISREFNBR;
         this.beanDetByAccounting.IN_AREFNBR = rowData.data.AREFNBR;
         this.beanDetByAccounting.IDCON = rowData.data.IDCONL;
+        this.beanDetByAccounting.PAYDATE = rowData.data.PAYDATE;
+        this.beanDetByAccounting.BSUMDATE = rowData.data.BSUMDATE;
         console.log(this.beanDetByAccounting);
         me.paramsDetailByAccounting.beanString = JSON.stringify(this.beanDetByAccounting);
         this.setGridDataDetByAccounting();
@@ -520,7 +522,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         });
                     } else {
                         var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">AREFNBR: ' + data.AREFNBR + '</center>');
+                        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">PAYMENT DATE: ' + data.PAYDATE + '   -     SALES DATE: ' + data.BSUMDATE  + '</center>');
                         //Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
                     }
                 }

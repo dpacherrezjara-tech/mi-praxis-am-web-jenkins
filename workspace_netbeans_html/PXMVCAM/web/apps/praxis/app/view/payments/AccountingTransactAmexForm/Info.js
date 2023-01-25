@@ -1217,6 +1217,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Revenue Amount',
+                                                hidden:true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1265,7 +1266,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Jornal <br> Entry', dataIndex: 'A4183IDCON', width: 80,
+                                            {text: 'Jornal <br> Entry', dataIndex: 'A4183IDCON', width: 240,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;

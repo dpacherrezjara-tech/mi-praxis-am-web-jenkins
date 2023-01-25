@@ -24,9 +24,11 @@ public class A4183Filter extends A4183 {
     public String IN_AREFNBR = "";
     public String A4183TICKET = "";
     public String IDCON = "";    
+    public String PAYDATE = "";    
+    public String BSUMDATE = "";    
 
     public Pagination page = new Pagination();
 
+   
 
-    
 }
