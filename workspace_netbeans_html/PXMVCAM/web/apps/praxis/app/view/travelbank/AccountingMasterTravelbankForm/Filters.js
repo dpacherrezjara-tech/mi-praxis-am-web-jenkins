@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.Filters', {
+Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
     border: false,

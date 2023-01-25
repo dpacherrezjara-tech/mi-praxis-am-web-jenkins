@@ -1,11 +1,11 @@
-Ext.define('Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.DataEntry',{
+Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntry',{
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryAccountingMasterProcess2Form',
+    alias: 'widget.DataEntryAccountingMasterTravelbankForm',
 
-    controller: 'DataEntryAccountingMasterProcess2Controller',
+    controller: 'DataEntryAccountingMasterTravelbankController',
 
     requires:[
-        'Ext.Praxis.controller.travelbank.AccountingMasterProcess2.DataEntryAccountingMasterProcess2Controller'
+        'Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntryAccountingMasterTravelbankController'
     ],
 
     title:'Accounting Master Process- Data Entry Form',

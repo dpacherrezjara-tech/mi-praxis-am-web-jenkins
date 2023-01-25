@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.Options', {
+Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,

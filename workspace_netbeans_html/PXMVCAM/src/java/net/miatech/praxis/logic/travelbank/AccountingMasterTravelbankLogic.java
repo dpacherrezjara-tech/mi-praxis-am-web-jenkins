@@ -1,11 +1,11 @@
 package net.miatech.praxis.logic.travelbank;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import net.miatech.praxis.logic.sales.*;
+import net.miatech.praxis.logic.travelbank.*;
 import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.dao.sales.AccountingMasterProcess2DAO;
+import net.miatech.praxis.dao.travelbank.AccountingMasterTravelbankDAO;
 import net.miatech.praxisbi.A1955Filter;
 
 // </editor-fold>
@@ -13,9 +13,9 @@ import net.miatech.praxisbi.A1955Filter;
  *
  * @author gsanchez
  */
-public class AccountingMasterProcess2Logic {
+public class AccountingMasterTravelbankLogic {
 
-    private AccountingMasterProcess2DAO objDAO = new AccountingMasterProcess2DAO();
+    private AccountingMasterTravelbankDAO objDAO = new AccountingMasterTravelbankDAO();
 
     public void setSession(IServerSession ss) {
         objDAO.setSession(ss);

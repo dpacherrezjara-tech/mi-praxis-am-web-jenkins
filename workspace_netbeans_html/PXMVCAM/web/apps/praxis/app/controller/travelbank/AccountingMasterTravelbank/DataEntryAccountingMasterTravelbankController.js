@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccountingMasterProcess2Controller',{
+Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntryAccountingMasterTravelbankController',{
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryAccountingMasterProcess2Controller',
+    alias: 'controller.DataEntryAccountingMasterTravelbankController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     msjAlert: '',
     beanOption: '',
@@ -262,7 +262,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
             timeout: 60000000,
             params: this.beanOption,
             
-            beforerequest: Ext.getCmp('DataEntryAccountingMasterProcess2Form').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryAccountingMasterTravelbankForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -294,7 +294,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         icon: icon,
                         fn: function() {
                             if (msg==='RECORD INSERTED') {
-                                Ext.getCmp('DataEntryAccountingMasterProcess2Form').close(),
+                                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
@@ -304,11 +304,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
+                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
+                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
             }
         });
     },
@@ -319,7 +319,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
-            beforerequest: Ext.getCmp('DataEntryAccountingMasterProcess2Form').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryAccountingMasterTravelbankForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -333,7 +333,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         icon: icon,
                         fn: function() {
                             if (msg==='RECORD INSERTED') {
-                                Ext.getCmp('DataEntryAccountingMasterProcess2Form').close(),
+                                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
@@ -343,11 +343,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
+                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
+                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
             }
         });
     },
@@ -408,12 +408,12 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
             method: 'POST',
             timeout: 60000000,
             params: dataentryParams,
-            //beforerequest: Ext.getCmp('DataEntryAccountingMasterProcess2Form').mask('Loading...'),
+            //beforerequest: Ext.getCmp('DataEntryAccountingMasterTravelbankForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {                    
-                    Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryReverse', {
-                        id: 'DataEntryReverseAccountingMasterProcess2Form',
+                    Ext.create('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntryReverse', {
+                        id: 'DataEntryReverseAccountingMasterTravelbankForm',
                         params: {
                             rec: res.data,
                             obj: objDT.data
@@ -424,11 +424,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         msg: res.sesion
                     });
                 }
-                //Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
+                //Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                //Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
+                //Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
             }
         });
     }

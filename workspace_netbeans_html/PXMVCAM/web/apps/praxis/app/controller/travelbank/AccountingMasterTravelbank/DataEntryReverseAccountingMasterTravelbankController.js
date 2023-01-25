@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryReverseAccountingMasterProcess2Controller',{
+Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntryReverseAccountingMasterTravelbankController',{
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryReverseAccountingMasterProcess2Controller',
+    alias: 'controller.DataEntryReverseAccountingMasterTravelbankController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     msjAlert: '',
     beanParam: '',
@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryRevers
             method: 'POST',
             timeout: 60000000,
             params: this.beanParam,
-            beforerequest: Ext.getCmp('DataEntryReverseAccountingMasterProcess2Form').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryReverseAccountingMasterTravelbankForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -69,8 +69,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryRevers
                         icon: icon,
                         fn: function() {
                             if (msg==='RECORD REMOVED') {
-                                Ext.getCmp('DataEntryReverseAccountingMasterProcess2Form').close();
-                                Ext.getCmp('DataEntryAccountingMasterProcess2Form').close();
+                                Ext.getCmp('DataEntryReverseAccountingMasterTravelbankForm').close();
+                                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').close();
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
@@ -80,11 +80,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryRevers
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryReverseAccountingMasterProcess2Form').unmask();
+                Ext.getCmp('DataEntryReverseAccountingMasterTravelbankForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryReverseAccountingMasterProcess2Form').unmask();
+                Ext.getCmp('DataEntryReverseAccountingMasterTravelbankForm').unmask();
             }
         });
     }

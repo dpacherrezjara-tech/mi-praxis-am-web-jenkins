@@ -1,7 +1,7 @@
 package net.miatech.praxis.controllers.travelbank;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import net.miatech.praxis.controllers.sales.*;
+import net.miatech.praxis.controllers.travelbank.*;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +27,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
-import net.miatech.praxis.logic.sales.AccountingMasterProcess2Logic;
+import net.miatech.praxis.logic.travelbank.AccountingMasterTravelbankLogic;
 import net.miatech.praxisbi.A1955Filter;
 import net.miatech.utils.Functions;
 import org.apache.poi.ss.usermodel.Cell;
@@ -54,10 +54,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Scope("request")
-@RequestMapping("/AccountingMasterProcess2")
-public class AccountingMasterProcess2Controller extends BaseController {
+@RequestMapping("/AccountingMasterTravelbank")
+public class AccountingMasterTravelbankController extends BaseController {
 
-    private AccountingMasterProcess2Logic logic;
+    private AccountingMasterTravelbankLogic logic;
     private A1955Filter filter;
     private MasterDAO masterDAO;
 
@@ -81,7 +81,7 @@ public class AccountingMasterProcess2Controller extends BaseController {
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             
-            logic = new AccountingMasterProcess2Logic();
+            logic = new AccountingMasterTravelbankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.search(filter);
             
@@ -117,7 +117,7 @@ public class AccountingMasterProcess2Controller extends BaseController {
             reversa.IN_FECHA_CONTABLE = request.getParameter("IN_FECHA_CONTABLE") == null ? "" : request.getParameter("IN_FECHA_CONTABLE");
             reversa.IN_ENVIO = request.getParameter("IN_ENVIO") == null ? "" : request.getParameter("IN_ENVIO"); 
             
-            logic = new AccountingMasterProcess2Logic();
+            logic = new AccountingMasterTravelbankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());            
             if(strOption.equals("I") && filter.IN_ENVIO.equals("true")){
                 String dato = logic.consistenciaFlown(filter);
@@ -203,7 +203,7 @@ public class AccountingMasterProcess2Controller extends BaseController {
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
             
-            logic = new AccountingMasterProcess2Logic();
+            logic = new AccountingMasterTravelbankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.search(filter);
             
@@ -346,7 +346,7 @@ public class AccountingMasterProcess2Controller extends BaseController {
             filter.IN_MODULO = request.getParameter("IN_MODULO").trim();
             filter.A1955FPROC = request.getParameter("IN_FECHA_PROCESO").trim();
             
-            logic = new AccountingMasterProcess2Logic();
+            logic = new AccountingMasterTravelbankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.searchReversa(filter);
             
@@ -374,7 +374,7 @@ public class AccountingMasterProcess2Controller extends BaseController {
             filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO");
             strOption = request.getParameter("strOption");            
             
-            logic = new AccountingMasterProcess2Logic();
+            logic = new AccountingMasterTravelbankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());                       
             
             String result = logic.accountMaintancePending(filter,strOption);

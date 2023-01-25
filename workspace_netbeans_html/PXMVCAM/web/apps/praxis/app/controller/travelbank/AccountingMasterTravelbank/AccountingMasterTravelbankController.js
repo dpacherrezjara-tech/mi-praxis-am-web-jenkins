@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMasterProcess2Controller', {
+Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.AccountingMasterTravelbankController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.AccountingMasterProcess2Controller',
+    alias: 'controller.AccountingMasterTravelbankController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},    
@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMaste
     // </editor-fold>
     init: function(view) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
-        prototype.id = 'AccountingMasterProcess2Form';
-        prototype.url = CONTEXTPATH+'/AccountingMasterProcess2';
+        prototype.id = 'AccountingMasterTravelbankForm';
+        prototype.url = CONTEXTPATH+'/AccountingMasterTravelbank';
         prototype.widthContenedor = 1300;
         prototype.widthGrid = 863;
         // </editor-fold>
@@ -76,8 +76,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMaste
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry', {
-            id: 'DataEntryAccountingMasterProcess2Form',
+        Ext.create('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntry', {
+            id: 'DataEntryAccountingMasterTravelbankForm',
             params: {
                 action: action,
                 rec: rec
@@ -191,7 +191,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMaste
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.AccountingMasterProcess2.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.travelbank.AccountingMasterTravelbank.GridData', {
             proxy: {
                 url: prototype.url+'/search'
             },

@@ -1,11 +1,11 @@
-Ext.define('Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.DataEntryReverse',{
+Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntryReverse',{
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryReverseAccountingMasterProcess2Form',
+    alias: 'widget.DataEntryReverseAccountingMasterTravelbankForm',
 
-    controller: 'DataEntryReverseAccountingMasterProcess2Controller',
+    controller: 'DataEntryReverseAccountingMasterTravelbankController',
 
     requires:[
-        'Ext.Praxis.controller.travelbank.AccountingMasterProcess2.DataEntryReverseAccountingMasterProcess2Controller'
+        'Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntryReverseAccountingMasterTravelbankController'
     ],
 
     title:'Reverse Detail - Data Entry Form ',

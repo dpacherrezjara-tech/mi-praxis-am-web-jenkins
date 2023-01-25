@@ -1,7 +1,7 @@
 package net.miatech.praxis.dao.travelbank;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import net.miatech.praxis.dao.sales.*;
+import net.miatech.praxis.dao.travelbank.*;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import net.miatech.utils.Functions;
  *
  * @author gsanchez
  */
-public class AccountingMasterProcess2DAO {
+public class AccountingMasterTravelbankDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Variables locales">
     private IServerSession session;
@@ -29,7 +29,7 @@ public class AccountingMasterProcess2DAO {
     private String strSQL;
     // </editor-fold>
 
-    public AccountingMasterProcess2DAO() {
+    public AccountingMasterTravelbankDAO() {
     }
 
     public void setSession(IServerSession ss) {

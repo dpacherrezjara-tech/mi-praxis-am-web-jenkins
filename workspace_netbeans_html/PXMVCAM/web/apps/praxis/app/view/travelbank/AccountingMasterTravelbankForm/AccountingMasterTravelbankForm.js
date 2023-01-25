@@ -1,20 +1,20 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
-prototype.id = 'AccountingMasterProcess2Form';
-prototype.url = CONTEXTPATH+'/AccountingMasterProcess2';
+prototype.id = 'AccountingMasterTravelbankForm';
+prototype.url = CONTEXTPATH+'/AccountingMasterTravelbank';
 prototype.widthContenedor = 1300;//910
 prototype.widthGrid = 863;
 // </editor-fold>
 
-Ext.define('Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.AccountingMasterProcess2Form', {
+Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.AccountingMasterTravelbankForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.AccountingMasterProcess2Form',
+    alias: 'widget.AccountingMasterTravelbankForm',
     requires: [
-        'Ext.Praxis.controller.travelbank.AccountingMasterProcess2.AccountingMasterProcess2Controller',
-        'Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.Options',
-        'Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.Filters',
-        'Ext.Praxis.view.travelbank.AccountingMasterProcess2Form.Info'
+        'Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.AccountingMasterTravelbankController',
+        'Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.Options',
+        'Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.Filters',
+        'Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.Info'
     ],
-    controller: 'AccountingMasterProcess2Controller',
+    controller: 'AccountingMasterTravelbankController',
     layout: {
         type: 'fit'
     },
