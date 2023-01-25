@@ -14,16 +14,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     groupInfo: '',
     objRftx: {
         info: [],
-        taxes: {},
-        fop: {},
+        taxes: [],
+        fop: [],
         totales: {},
         ref: {},
         obs: {}
     },
-    objInfo: '',
-    objTax: '',
-    objFop: '',
-    objTot: '',
     //</editor-fold>
     /**
      * Constructor
