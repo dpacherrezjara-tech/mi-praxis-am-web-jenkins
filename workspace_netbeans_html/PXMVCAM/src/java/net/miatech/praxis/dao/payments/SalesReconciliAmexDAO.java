@@ -3883,7 +3883,7 @@ public class SalesReconciliAmexDAO {
         String SQLCLL01 = "";
 
         if (filter.TDOC.trim().equals("R")) {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04462(?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04462(?,?,?,?,?,?,?)}";
         } else {
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04360(?,?,?,?,?,?,?)}";
         }
@@ -3960,7 +3960,7 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(2, filter.PRDA.trim());
             cstmt01.setString(3, filter.MERCHID.trim());
             cstmt01.setString(4, filter.PAYDATE.trim());
-            cstmt01.setString(5, filter.PCURRENCY.trim());
+            cstmt01.setString(5, filter.SCOUNTRY.trim());
             cstmt01.setString(6, filter.AXPAYNBR.trim());
             cstmt01.setString(7, filter.SMERCHID.trim());
             cstmt01.setString(8, filter.BSUMDATE.trim());
@@ -4052,7 +4052,7 @@ public class SalesReconciliAmexDAO {
         //lstSendManual
 
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04636(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04636(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4066,9 +4066,10 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(5, filter.IDITEMS.trim());
             cstmt01.setString(6, filter.IDITEMT.trim());
             cstmt01.setString(7, filter.CERROR.trim());
-            cstmt01.setString(8, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(9, Functions.getFechaActual());
-            cstmt01.setString(10, Functions.getHoraActual());
+            cstmt01.setString(8, filter.SCOUNTRY.trim());
+            cstmt01.setString(9, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(10, Functions.getFechaActual());
+            cstmt01.setString(11, Functions.getHoraActual());
 
             cstmt01.execute();
 
@@ -4531,6 +4532,9 @@ public class SalesReconciliAmexDAO {
         String IN_FECVTA = "";
         String IN_FECVTA_FROM = "";
         String IN_FECVTA_TO = "";
+        
+        int dias_antes = -1;
+        int dias_despues = 1;
 
         if (filter.INSTANBR.trim().equals("0")) {
             IN_FECVTA = filter.BSUMDATE.trim();
@@ -4539,12 +4543,12 @@ public class SalesReconciliAmexDAO {
         }
 
         if (filter.TDOC.trim().equals("R")) {
-            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 365);
-            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
+            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 730);
+            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -60);
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04456(?,?,?,?,?,?,?,?,?)}";
         } else {
-            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
-            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
+            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, dias_despues);
+            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, dias_antes);
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04395(?,?,?,?,?,?,?,?,?)}";
         }
 

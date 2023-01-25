@@ -142,7 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
-        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
         this.setValue('de-CODADJU', this.beanResult.DES_CODADJU);
         /*var sMerch = this.beanResult.SMERCHID.trim();
@@ -235,7 +235,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
         beanTemp.PRDA = this.getValue("de-txtPRDA");
         beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
-        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.PMERCHID = this.getValue("de-txtMERCHID");
         beanTemp.SMERCHID = this.beanResult.SMERCHID;
         beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
@@ -248,7 +248,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             beanTemp.TGROSAMOUN = 0;
         }
@@ -308,7 +308,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail = {};
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
@@ -345,7 +345,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail = {};
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
@@ -632,7 +632,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             monto_venta = 0;
         }
@@ -878,8 +878,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
-                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
-                        global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
                         for (var i = 0; i < res.lstInfo.length; i++) {
                             if (res.lstInfo[i].FDUPLIB > 0) {
@@ -1255,9 +1253,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {        
         var strTkt = rowData.data.ISREFNBR;
 
-        prototypeProgram.view = 'payments-sales-reconcili-amex-form';
-        prototypeProgram.nprog = 'PX00000570';
-        prototypeProgram.title = 'Sales Reconciliation By Amex';
+        prototypeProgram.view = 'payments-reconciliation-payment-form';
+        prototypeProgram.nprog = 'PX00000606';
+        prototypeProgram.title = 'Reconciliation Payment';
         prototypeProgram.modulo = '';
 
         var beanProMasterTicket = {};

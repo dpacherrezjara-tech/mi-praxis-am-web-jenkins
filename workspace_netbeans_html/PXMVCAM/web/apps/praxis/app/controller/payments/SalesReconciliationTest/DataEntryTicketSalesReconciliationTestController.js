@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue('2-txtAVFOP', win.formatDblNumber(this.bean.AVFOP));
         win.setValue('txtSVFOP_ADJ', win.formatDblNumber(this.bean.SVFOP_ADJ));
         win.setValue('2-txtACURRENCY', this.bean.ACURRENCY.trim());
-        win.setValue('2-txtACARDN', this.bean.strSCARDN);
+        win.setValue('2-txtACARDN', this.bean.strACARDN);
         win.setValue('2-txtADATEXP', this.bean.ADATEXP.trim());
         win.setValue("2-txtAAUTHOC", this.bean.AAUTHOC.trim());
         win.setValue("2-txtAPNR", this.bean.APNR.trim());
@@ -254,6 +254,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
 //                console.log(res);
                 if (res.success) {
                     Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').close();
                 } else {
                     global.Msg({msg: res.msjOption});
                 }

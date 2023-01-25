@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryAdjust
         this.setValue('de-txtCCUST', this.beanResult.CCUST);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
         this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
-        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
 
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
@@ -89,7 +89,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryAdjust
         beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
         beanTemp.PRDA = this.getValue("de-txtPRDA");
         beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
-        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.PMERCHID = this.getValue("de-txtMERCHID");
         beanTemp.SMERCHID = this.getValue("de-txtSMERCHID");
         beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
@@ -134,7 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryAdjust
         this.beanSettlementTktsDetail = {},
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
+        this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.IN_PCURRENCY;

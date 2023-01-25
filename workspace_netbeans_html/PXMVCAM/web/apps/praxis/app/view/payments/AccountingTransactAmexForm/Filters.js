@@ -71,7 +71,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 60,
                             width: 140,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                change: 'setDataTo'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -88,7 +91,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             width: 70,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                change: 'setDataTo'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -161,6 +167,26 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             width: 70,
                             anchor: '100%',
                             hidden:true,
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Currency:',
+                            id: prototype.id + '-cmbSCURRENCY',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            readOnly: false,
+                            editable: false,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 100,
+                            width: 200,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                change: 'cmbSCURRENCY_keyDownHandler',
+                            }
                         },
                         {
                             xtype: 'combo',

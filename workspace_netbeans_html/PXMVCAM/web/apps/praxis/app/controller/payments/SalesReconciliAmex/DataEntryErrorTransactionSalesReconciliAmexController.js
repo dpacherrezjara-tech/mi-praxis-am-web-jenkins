@@ -256,10 +256,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.SCOUNTRY = this.getValue("de-txtCountry");
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             beanTemp.TGROSAMOUN = 0;
         }
@@ -294,7 +295,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data)
         }
 
-        //console.log(beanTemp);
+        console.log(beanTemp);
 
     },
     getData: function () {
@@ -632,7 +633,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             monto_venta = 0;
         }
@@ -888,7 +889,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 flag_blocked = true;
                             } else {
                                 for (var j = 0; j < meDE.lstSendManual.length; j++) {
-                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT) {
+                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT && meDE.lstSendManual[j].A1531VFOP === res.lstInfo[i].A1531VFOP) {
                                         flag_dupli = true;
                                     }
                                 }
