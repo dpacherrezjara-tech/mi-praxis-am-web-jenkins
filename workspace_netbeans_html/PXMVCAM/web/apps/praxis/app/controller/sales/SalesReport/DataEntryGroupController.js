@@ -751,6 +751,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
             case '3':
                 meDE.paramsDE.IN_OPCION = '2';
                 break;
+            case '4':
+                meDE.paramsDE.IN_OPCION = '2';
+                break;
         }
         this.btnSearch_click();
     },
@@ -799,6 +802,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 grilla += '-de-gridDataRftx';
                 pag += '-de-paggin5';
                 title += 'RFTX';
+                meDE.paramsDE.IN_TKT = Ext.getCmp(prototype.idGr+ '-de-txtRftxNumber').getValue();
                 break;
         }
         Ext.getCmp(meDE.tabName).setTitle(title);
@@ -957,6 +961,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         Ext.getCmp(prototype.idGr+ '-de-cmbOptionADM').setValue('2');
         Ext.getCmp(prototype.idGr+ '-de-cmbTransactionADM').setValue('');
         Ext.getCmp(prototype.idGr+ '-de-txtADMNumber').setValue('');
+        Ext.getCmp(prototype.idGr+ '-de-txtRftxNumber').setValue('');
     },
     onClickBtnBack: function() {
         //Ext.getCmp(prototype.idGr+ '-dataEntryGrupo').close();

@@ -22,6 +22,7 @@ import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
 import net.miatech.beans.PX036S01A4376Filter;
+import net.miatech.beans.PX036S02A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -242,7 +243,7 @@ public class SalesReportLogic {
         return salesReportDAO.loadSQP04747(filter);
     }
     
-    public S0001A4373Filter loadS0001A4373(S0001A4373Filter filter) throws Exception{
+    public List<S0001A4373Filter> loadS0001A4373(S0001A4373Filter filter) throws Exception{
         return salesReportDAO.loadS0001A4373(filter);
     }
     
@@ -261,4 +262,9 @@ public class SalesReportLogic {
     public List<PX036S01A4376Filter> loadPX036S01A4376Filter(PX036S01A4376Filter filter) throws Exception{
         return salesReportDAO.loadPX036S01A4376Filter(filter);
     }
+    
+    public List<PX036S02A4376Filter> loadRftxReferences (PX036S02A4376Filter filter)throws Exception{
+        return salesReportDAO.loadRftxReferences(filter);
+    }
+           
 }
