@@ -127,7 +127,16 @@ public class A3648 {
     public String A3648CPN6D;
     public String A3648CPN7D;
     public String A3648CPN8D;
+    public String A3648TRNCO;
 
+    public String getA3648TRNCO() {
+        return A3648TRNCO;
+    }
+
+    public void setA3648TRNCO(String A3648TRNCO) {
+        this.A3648TRNCO = A3648TRNCO;
+    }
+    
     public String getA3648SFW() {
         return A3648SFW;
     }
