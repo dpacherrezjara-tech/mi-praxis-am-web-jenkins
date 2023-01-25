@@ -706,6 +706,8 @@ public class AccountingTransactAmexDAO {
                     beanTkt.TKT = filter.IN_TKT.trim();
                     beanTkt.IDCON = filter.IDCON.trim();
                     beanTkt.AREFNBR = filter.IN_AREFNBR.trim();
+                    beanTkt.PAYDATE = filter.PAYDATE.trim();
+                    beanTkt.BSUMDATE = filter.BSUMDATE.trim();
                     beanTkt.A4183TICKET = rst.getString("A4183CIA").trim()+rst.getString("A4183FORMA").trim()+rst.getString("A4183SERIE").trim();        
                     beanTkt.A4183MODO = rst.getString("A4183MODO").trim();        
                     beanTkt.A4183FUENT = rst.getString("A4183FUENT").trim();        
