@@ -393,6 +393,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             labelAlign: 'right'
                         }
+                        
 
                     ]
                 },
