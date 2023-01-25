@@ -185,10 +185,11 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                     url: prototype.url + '/search'
                 }, listeners: {
                     beforeload: function (obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                         obj.proxy.extraParams = searchParams
-
                     },
                     load: function (obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask();
 //                        console.log(obj.data);
                         me.setWidthPie();
                         var pag = Ext.getCmp(prototype.id + '-paggin');
