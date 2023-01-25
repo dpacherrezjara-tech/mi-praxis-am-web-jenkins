@@ -299,7 +299,7 @@ public class ClarificationLoadController extends BaseController {
                 marca = fields[4].trim();//E
                 tarjeta_nro = fields[5].trim();//F
                 arn = fields[6].trim();
-                cod_aut = fields[7].trim();
+                cod_aut = Functions.fillZeros(6, fields[7].trim());
 
                 monto = fields[8].trim();//I
                 if (monto.contains("\"")) {
