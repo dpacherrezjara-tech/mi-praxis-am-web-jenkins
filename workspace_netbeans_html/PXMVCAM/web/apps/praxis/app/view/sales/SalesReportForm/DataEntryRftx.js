@@ -442,7 +442,20 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                 },
                                                                                 {
                                                                                     text: 'Unauthorized:'
+                                                                                },
+                                                                                {
+                                                                                    text: 'Reference:'
+                                                                                },
+                                                                                {
+                                                                                    text: 'Observation:'
+                                                                                },
+                                                                                {
+                                                                                    text: 'Coupons:'
+                                                                                },
+                                                                                {
+                                                                                    text: ''
                                                                                 }
+
                                                                             ]
                                                                         },
                                                                         {
@@ -498,6 +511,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     fieldLabel: '',
                                                                                     maxLength: 8,
                                                                                     enforceMaxLength: 8,
+                                                                                    readOnly: true,
                                                                                     maskRe: /[0-9]/,
                                                                                     width: 65,
                                                                                     listeners: {
@@ -511,9 +525,233 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     fieldStyle: 'text-align:left;',
                                                                                     labelSeparator: '',
                                                                                     fieldLabel: '',
+                                                                                    readOnly: true,
                                                                                     maskRe: /[0-9]/,
                                                                                     width: 240
                                                                                 }
+                                                                                ,
+                                                                                {
+                                                                                    id: prototype.idRftx + '-det-lblReference',
+                                                                                    xtype: 'textfield',
+                                                                                    margin: '1',
+                                                                                    fieldStyle: 'text-align:left;',
+                                                                                    labelSeparator: '',
+                                                                                    fieldLabel: '',
+                                                                                    width: 260
+                                                                                },
+                                                                                {
+                                                                                    id: prototype.idRftx + '-det-lblObservation',
+                                                                                    xtype: 'textfield',
+                                                                                    margin: '1',
+                                                                                    fieldStyle: 'text-align:left;',
+                                                                                    labelSeparator: '',
+                                                                                    fieldLabel: '',
+                                                                                    width: 260
+                                                                                },
+                                                                                {
+                                                                                    xtype: 'panel',
+                                                                                    layout: 'hbox',
+                                                                                    margin: '1',
+                                                                                    padding: '1',
+                                                                                    border: false,
+                                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                                    defaults: {
+                                                                                        xtype: 'textfield',
+                                                                                        fieldStyle: 'text-align:left;',
+                                                                                        labelSeparator: '',
+                                                                                        width: 12
+                                                                                    },
+                                                                                    items: [
+                                                                                        {
+                                                                                            xtype: 'label',
+                                                                                            id: prototype.idRftx + '-det-lblTicket1',
+                                                                                            style: {
+                                                                                                marginTop: '4px',
+                                                                                                fontWeight: 'bold',
+                                                                                                fontSize: '10px',
+                                                                                                textAlign: 'center'
+                                                                                            },
+                                                                                            width: 70
+                                                                                        },
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup01-1',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup02-1',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup03-1',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup04-1',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            xtype: 'label',
+                                                                                            id: prototype.idRftx + '-det-lblTicket2',
+                                                                                            style: {
+                                                                                                marginTop: '4px',
+                                                                                                fontWeight: 'bold',
+                                                                                                fontSize: '10px',
+                                                                                                textAlign: 'center'
+                                                                                            },
+                                                                                            width: 70,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup01-2',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup02-2',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup03-2',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup04-2',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5}
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    xtype: 'panel',
+                                                                                    layout: 'hbox',
+                                                                                    margin: '1',
+                                                                                    padding: '1',
+                                                                                    border: false,
+                                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                                    defaults: {
+                                                                                        xtype: 'textfield',
+                                                                                        fieldStyle: 'text-align:left;',
+                                                                                        labelSeparator: '',
+                                                                                        width: 12
+                                                                                    },
+                                                                                    items: [
+                                                                                        {
+                                                                                            xtype: 'label',
+                                                                                            id: prototype.idRftx + '-det-lblTicket3',
+                                                                                            style: {
+                                                                                                marginTop: '4px',
+                                                                                                fontWeight: 'bold',
+                                                                                                fontSize: '10px',
+                                                                                                textAlign: 'center'
+                                                                                            },
+                                                                                            width: 70,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup01-3',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup02-3',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup03-3',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup04-3',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            xtype: 'label',
+                                                                                            id: prototype.idRftx + '-det-lblTicket4',
+                                                                                            style: {
+                                                                                                marginTop: '4px',
+                                                                                                fontWeight: 'bold',
+                                                                                                fontSize: '10px',
+                                                                                                textAlign: 'center'
+                                                                                            },
+                                                                                            width: 70,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup01-4',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup02-4',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup03-4',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblCup04-4',
+                                                                                            margin: '1',
+                                                                                            maxLength: 1,
+                                                                                            enforceMaxLength: 1,
+                                                                                            hidden: true
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5}
+                                                                                    ]
+                                                                                }
+
                                                                             ]
                                                                         }
                                                                     ]

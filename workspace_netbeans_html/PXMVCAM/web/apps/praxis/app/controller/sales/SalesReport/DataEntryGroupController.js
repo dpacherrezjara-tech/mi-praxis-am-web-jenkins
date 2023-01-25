@@ -916,6 +916,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
     onClickBtnFilter: function(component) {
         var id = component.id;
         var idNumber = id.charAt(id.length - 1);
+        console.log('id panel',idNumber);
         var option = Ext.getCmp(prototype.idGr+ '-panelFilter' + idNumber);
         if (option.isVisible()) {
             option.setVisible(false);

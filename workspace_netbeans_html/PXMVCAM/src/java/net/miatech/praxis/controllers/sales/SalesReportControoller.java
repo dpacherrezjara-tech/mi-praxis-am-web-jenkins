@@ -6,8 +6,6 @@
 package net.miatech.praxis.controllers.sales;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.ByteArrayInputStream;
@@ -19,13 +17,13 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import jdk.nashorn.internal.parser.JSONParser;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -40,6 +38,7 @@ import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
 import net.miatech.beans.PX036S01A4376Filter;
+import net.miatech.beans.PX036S02A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -75,7 +74,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONArray;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -2121,7 +2119,7 @@ public class SalesReportControoller extends BaseController {
     public ResponseEntity<?> getRftxInfo(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         S0001A4373Filter filter = new S0001A4373Filter();
-        S0001A4373Filter res;
+        List<S0001A4373Filter> res;
         try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
@@ -2131,7 +2129,8 @@ public class SalesReportControoller extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadS0001A4373(filter);
             if (res != null) {
-                return new ResponseEntity(res, HttpStatus.OK);
+                ResponseEntity re = new ResponseEntity(res, HttpStatus.OK);
+                return re;
             } else {
                 throw new NullPointerException("Objecto no encontrado");
             }
@@ -2289,6 +2288,32 @@ public class SalesReportControoller extends BaseController {
             return re;
         } catch (Exception ex) {
             return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "getRftxRefs")
+    public ResponseEntity<?> loadRftxReferences(@RequestParam Map<String,String> params){
+        logic = new SalesReportLogic();
+        PX036S02A4376Filter filter = new PX036S02A4376Filter();
+        List<PX036S02A4376Filter> ref = new ArrayList<>();
+        List<PX036S02A4376Filter> obs = new ArrayList<>();
+        try{
+            Map<String,Object> response = new HashMap<>();
+            logic.setSession(this.serverSession.getServerSession());
+            filter.setAIRLINE(params.get("AIRLINE"));
+            filter.setCIA(params.get("CIA"));
+            filter.setFORMA(params.get("FORMA"));
+            filter.setSERIE(params.get("SERIE"));
+            filter.setSEQ(params.get("SEQ"));
+            filter.setTIPO("CX");
+            ref = logic.loadRftxReferences(filter);
+            filter.setTIPO("AU");
+            obs = logic.loadRftxReferences(filter);
+            response.put("ref", ref);
+            response.put("obs", obs);
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

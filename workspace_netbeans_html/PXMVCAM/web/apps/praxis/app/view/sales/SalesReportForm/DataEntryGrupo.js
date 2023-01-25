@@ -1100,7 +1100,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             xtype: 'textfield',
                                                             margin: '5 0 5 0',
                                                             padding: '0 0 0 0',
-                                                            id: prototype.idGr + '-de-txtRFNNumber',
+                                                            id: prototype.idGr + '-de-txtRftxNumber',
                                                             fieldLabel: 'Search By Ticket',
                                                             labelWidth: 95,
                                                             width: 250,
@@ -1205,20 +1205,12 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                                 },
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.idGr + '-btnExcel5',
-                                                                    iconCls: 'prx-icon-excel',
-                                                                    tooltip: 'Export to Excel',
+                                                                    id: prototype.idGr + '-btnAdd5',
+                                                                    iconCls: 'prx-icon-add',
+                                                                    //hidden: true,
+                                                                    tooltip: 'New',
                                                                     listeners: {
-                                                                        click: 'onClickBtnExcel'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: prototype.idGr + '-btnTxt5',
-                                                                    icon: 'resources/img/botones/txt.png',
-                                                                    tooltip: 'Export TXT',
-                                                                    listeners: {
-                                                                        click: 'onClickBtnTxt'
+                                                                        click: 'onClickBtnAdd'
                                                                     }
                                                                 },
                                                                 {
@@ -1269,10 +1261,11 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             return coupons;
                                                         }
                                                     },
+                                                    {text: 'Iata', width: 80, dataIndex: 'A4373AGENT'},
                                                     {text: 'Issue<br> Date', width: 70, dataIndex: 'A4373FECVT'},
                                                     {text: 'CNJ', width: 60, dataIndex: 'CNJ'},
                                                     {text: 'Transaction', width: 80, dataIndex: 'A4373TRNCU'},
-                                                    {text: 'Document<br> Type', dataIndex: 'A7373TDOC', width: 70},
+                                                    {text: 'Document<br> Type', dataIndex: 'A4373TDOC', width: 70},
                                                     {text: 'Type', dataIndex: 'A4373UFORM', width: 50},
                                                     {text: 'TAX<br> Currency', width: 80, dataIndex: 'A4373MDTX'},
                                                     {text: 'TAX Amount', width: 90, dataIndex: 'A4373TTAX',

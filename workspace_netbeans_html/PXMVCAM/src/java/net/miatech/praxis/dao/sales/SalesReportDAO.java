@@ -28,6 +28,7 @@ import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
 import net.miatech.beans.PX036S01A4376Filter;
+import net.miatech.beans.PX036S02A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -3650,6 +3651,7 @@ public class SalesReportDAO {
                 objRtn.setA4373MIAER(rs01.getString("A4373MIAER"));
                 objRtn.setA4373STAT(rs01.getString("A4373STAT"));
                 objRtn.setQTY_ERROR(rs01.getInt("QTY_ERROR"));
+                objRtn.setA4373AGENT(rs01.getString("A4373AGENT"));
 
                 objRtn.setPag(page);
                 lstRtn.add(objRtn);
@@ -3674,12 +3676,11 @@ public class SalesReportDAO {
     }
 
     //get RFTX Info
-    public S0001A4373Filter loadS0001A4373(S0001A4373Filter filter) throws Exception {
+    public List<S0001A4373Filter> loadS0001A4373(S0001A4373Filter filter) throws Exception {
         CallableStatement cs = null;
         ResultSet rs = null;
-        S0001A4373Filter obj = null;
         String sql = "{CALL PRAXIS.S0001A4373(?,?,?,?,?)}";
-
+        List<S0001A4373Filter> lst = new ArrayList<>();
         Connection con = null;
         try {
             con = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -3692,7 +3693,7 @@ public class SalesReportDAO {
             cs.execute();
             rs = cs.getResultSet();
             while (rs.next()) {
-                obj = new S0001A4373Filter();
+                S0001A4373Filter obj = new S0001A4373Filter();
                 obj.setA4373AIRLI(rs.getString("A4373AIRLI"));
                 obj.setA4373CIA(rs.getString("A4373CIA"));
                 obj.setA4373FORMA(rs.getString("A4373FORMA"));
@@ -3750,12 +3751,11 @@ public class SalesReportDAO {
                 obj.setA4373LYQ4(rs.getDouble("A4373LYQ4"));
                 obj.setA4373FTURB(rs.getString("A4373FTURB"));
                 obj.setA4373SEQD(rs.getString("A4373SEQD"));
-
+                lst.add(obj);
             }
 
         } catch (Exception ex) {
             System.out.println("Error => " + ex.getMessage());
-            obj = null;
         } finally {
             if (rs != null) {
                 try {
@@ -3771,7 +3771,7 @@ public class SalesReportDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-        return obj;
+        return lst;
     }
 
     //get RFTX Fop
@@ -4035,6 +4035,50 @@ public class SalesReportDAO {
                 //try { cstmt01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
             }
             //session.getCNXIBMDB2().close();
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lst;
+    }
+    
+    //get References by type 
+    public List<PX036S02A4376Filter> loadRftxReferences(PX036S02A4376Filter filter) throws Exception{
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        List<PX036S02A4376Filter> lst = new ArrayList<>();
+        String sql = "{CALL PRAXIS.PX036S02A4376(?,?,?,?,?,?)}";
+
+        Connection con = null;
+        try {
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = con.prepareCall(sql);
+            cs.setString(1, filter.getAIRLINE());
+            cs.setString(2, filter.getCIA());
+            cs.setString(3, filter.getFORMA());
+            cs.setString(4, filter.getSERIE());
+            cs.setString(5, filter.getSEQ());
+            cs.setString(6, filter.getTIPO());
+            cs.execute();
+            rs = cs.getResultSet();
+            while (rs.next()) {
+                PX036S02A4376Filter obj = new PX036S02A4376Filter();
+                obj.setA4376FRCA(rs.getString("A4376FRCA"));
+                lst.add(obj);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+            lst = null;
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                try { cs.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+            }
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
