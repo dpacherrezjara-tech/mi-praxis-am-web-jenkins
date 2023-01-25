@@ -386,8 +386,8 @@ public class ClarificationLoadController extends BaseController {
                     }
 
                     //Col H (AUTHNBR 6 varchar)
-                    if (cod_aut.length() > 6) {
-                        msj = " cod_aut (F) AUTHNBR tamaño 6";
+                    if (cod_aut.length() > 6 || cod_aut.equals("000000")) {
+                        msj = " cod_aut (F) Revisar AUTHNBR tamaño > 6 o 000000";
                     }
 
                     //Col I
