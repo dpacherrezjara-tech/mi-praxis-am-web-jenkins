@@ -315,6 +315,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648CPN6D = rs01.getString("A3648CPN6D");
                 objRtn.A3648CPN7D = rs01.getString("A3648CPN7D");
                 objRtn.A3648CPN8D = rs01.getString("A3648CPN8D");
+                objRtn.A3648TRNCO = rs01.getString("A3648TRNCO");
 
                 lstRtn.add(objRtn);
             }
