@@ -539,7 +539,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 5},
+//                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'checkboxfield',
                             hidden: true,
@@ -552,7 +552,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'chkWarning_Click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+//                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbErrorCode',
@@ -565,7 +565,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
                             labelWidth: 100,
-                            width: 350,
+                            width: 320,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
@@ -583,19 +583,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 250,
+                            labelWidth: 80,
+                            width: 210,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             text: 'PNR:',
                             padding: '8px 1px 2px 1px',
-                            width: 50
+                            width: 30
                         },
                         {
                             xtype: 'textfield',
@@ -610,7 +610,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             text: 'Credit Card:',
@@ -649,12 +649,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             text: 'Auth:',
                             padding: '8px 1px 2px 1px',
-                            width: 50,
+                            width: 35,
                         },
                         {
                             xtype: 'textfield',
@@ -681,7 +681,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 100,
+                            labelWidth: 70,
                             width: 200,
                             hiddenLabel: false,
                             value: '',
@@ -694,7 +694,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             xtype: 'checkboxfield',
                             hidden: false,
                             id: prototype.id + '-chkVoid',
-                            width: 50,
+                            width: 40,
                             boxLabel: 'Void',
                             inputValue: '0',
                             padding: '5px 0px 0px 20px',
@@ -735,8 +735,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 80,
-                            width: 140,
+                            labelWidth: 60,
+                            width: 120,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status:',
+                            id: prototype.id + '-cmbSTVALErr',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 215,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
