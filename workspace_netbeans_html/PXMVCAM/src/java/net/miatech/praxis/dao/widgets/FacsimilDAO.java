@@ -72,6 +72,10 @@ public class FacsimilDAO {
             cs = cnx.prepareCall(strSQL);
 
             //cs.setString(1, filter.TDNR.trim());
+            //artificio para los RFND
+            if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+               filter.IDFILE = "RFND";
+            }
             cs.setString(1, filter.TDNR.trim() + "  " + filter.IDFILE.trim());
             cs.execute();
 
@@ -730,6 +734,11 @@ public class FacsimilDAO {
 
         Connection cnx = null;
         try {
+            //artificio para los RFND
+            if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+               filter.IDFILE = "RFND";
+            }
+            
             //String strSQL = "{CALL " + session.getMainLibrary() + ".PXBSPFACSIMILNEW(?)}";
             String strSQL = "{CALL PXBSPFACSIMILNEW(?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -749,6 +758,10 @@ public class FacsimilDAO {
             OU_SEQ = cs.getString(3);
             if (OU_SEQ.equals("220")) {
                 OU_NROID = cs.getString(4);
+                //artificio para los RFND
+                if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+                    OU_NROID = "RFND     ";
+                }
                 session.getCNXIBMDB2().openSystem();
                 ProgramCall program = new ProgramCall(session.getCNXIBMDB2().getSystem());
                 try {
@@ -1792,7 +1805,8 @@ public class FacsimilDAO {
                             strConj = mapping.getString(N02_RECEIVING_IO_9879[IDX_RECEIVING_IO_9879.LK_CNJPADRE]);
                             long cjn;
                             String cjn_s;
-                            if (!strConj.trim().equals("")){
+                            //if (!strConj.trim().equals("")){
+                            if (!beanFacsimil.strEsCjn.trim().equals("") && !beanFacsimil.strEsCjn.trim().equals("N")){
                                 for (int i = 0; i < 1; i++) {
                                     cjn = Long.parseLong(mapping.getString(N02_RECEIVING_IO_9879[IDX_RECEIVING_IO_9879.LK_CNJPADRE])) + (i + 1);
                                     cjn_s = cjn + "";
@@ -2586,24 +2600,63 @@ public class FacsimilDAO {
                             //beanFacsimil.CUTP1 = rst.getString("ARC").substring(460, 463);
                             if (Long.parseLong(rst.getString("ARC").substring(528, 539)) != 0 && rst.getString("ARC").substring(528, 539).length() != 0) {//INFR
                                 beanFacsimil.CUTP1 = rst.getString("ARC").substring(544, 547);
-                                beanFacsimil.FARE = rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
-                                beanFacsimil.EQFR = rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
+                                //beanFacsimil.FARE = rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(540, 541)).trim().length() > 1) {
+                                    beanFacsimil.FARE = "-" + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541)).substring(2, 2);
+                                } else {
+                                    beanFacsimil.FARE = rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541));
+                                }
+                                //beanFacsimil.EQFR = rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(459, 460)).trim().length() > 1) {
+                                    beanFacsimil.EQFR = "-" + rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460)).substring(2, 2);
+                                } else {
+                                    beanFacsimil.EQFR = rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460));
+                                }
                             } else {
                                 beanFacsimil.CUTP1 = rst.getString("ARC").substring(460, 463);
-                                beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
-                                beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
+                                //beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(459, 460)).trim().length() > 1) {
+                                    beanFacsimil.FARE = "-" + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460)).substring(2, 2);
+                                } else {
+                                    beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460));
+                                }
+                                //beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
+                                beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541));
+                                if (this.cambia_caracter(rst.getString("ARC").substring(540, 541)).trim().length() > 1) {
+                                    beanFacsimil.EQFR = "-" + rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541)).substring(2, 2);
+                                } else {
+                                    beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541));
+                                }
                             }
                             //beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
                             //beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(527, 538) + "." + rst.getString("ARC").substring(538, 540);
-                            beanFacsimil.TOTL = rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 527);
-                            String regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 493 + (i * x30));
+                            //beanFacsimil.TOTL = rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 527);
+                            if (this.cambia_caracter(rst.getString("ARC").substring(526, 527)).trim().length() > 1) {
+                                beanFacsimil.TOTL = "-" + rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 526) + this.cambia_caracter(rst.getString("ARC").substring(526, 527)).substring(2, 2);
+                            } else {
+                                beanFacsimil.TOTL = rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 526) + this.cambia_caracter(rst.getString("ARC").substring(526, 527));
+                            }
+                            //String regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 493 + (i * x30));
+                            String regTax = "";
+                            if (this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
+                                regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + "-" + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).substring(2, 2);
+                            } else {
+                                regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30)));
+                            }
                             lstTaxes.add(regTax);
                             if ((rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30))).trim().length() > 0) {
-                                String regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 514 + (i * x30));
+                                //String regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 514 + (i * x30));
+                                String regTax2 = "";
+                                if (this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
+                                    regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + "-" + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(513 + (i * x30), 514 + (i * x30))).substring(2, 2);
+                                } else {
+                                    regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(513 + (i * x30), 514 + (i * x30)));
+                                }
                                 lstTaxes.add(regTax2);
                             }
                         }
                     }
+                    
                     //RECORD 46 - Endorsements/Restrictions Information
                     int x46 = 136;
                     for (int i = 0; i < 3; i++) {
@@ -3138,6 +3191,51 @@ public class FacsimilDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
         }
         return beanFacsimil;
+    }
+    
+    public String cambia_caracter(String VL_CARACTER) {
+        if (VL_CARACTER.equals("{")) {
+            VL_CARACTER = "0";
+        } else if (VL_CARACTER.equals("A")) {
+            VL_CARACTER = "1";
+        } else if (VL_CARACTER.equals("B")) {
+            VL_CARACTER = "2";
+        } else if (VL_CARACTER.equals("C")) {
+            VL_CARACTER = "3";
+        } else if (VL_CARACTER.equals("D")) {
+            VL_CARACTER = "4";
+        } else if (VL_CARACTER.equals("E")) {
+            VL_CARACTER = "5";
+        } else if (VL_CARACTER.equals("F")) {
+            VL_CARACTER = "6";
+        } else if (VL_CARACTER.equals("G")) {
+            VL_CARACTER = "7";
+        } else if (VL_CARACTER.equals("H")) {
+            VL_CARACTER = "8";
+        } else if (VL_CARACTER.equals("I")) {
+            VL_CARACTER = "9";
+        } else if (VL_CARACTER.equals("}")) {
+            VL_CARACTER = "-0";
+        } else if (VL_CARACTER.equals("J")) {
+            VL_CARACTER = "-1";
+        } else if (VL_CARACTER.equals("K")) {
+            VL_CARACTER = "-2";
+        } else if (VL_CARACTER.equals("L")) {
+            VL_CARACTER = "-3";
+        } else if (VL_CARACTER.equals("M")) {
+            VL_CARACTER = "-4";
+        } else if (VL_CARACTER.equals("N")) {
+            VL_CARACTER = "-5";
+        } else if (VL_CARACTER.equals("O")) {
+            VL_CARACTER = "-6";
+        } else if (VL_CARACTER.equals("P")) {
+            VL_CARACTER = "-7";
+        } else if (VL_CARACTER.equals("Q")) {
+            VL_CARACTER = "-8";
+        } else if (VL_CARACTER.equals("R")) {
+            VL_CARACTER = "-9";
+        }
+        return VL_CARACTER;
     }
     
     public static void pasarGarbageCollector() {
