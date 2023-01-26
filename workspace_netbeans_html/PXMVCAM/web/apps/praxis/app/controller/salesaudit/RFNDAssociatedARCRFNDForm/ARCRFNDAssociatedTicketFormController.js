@@ -762,7 +762,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         });
                         mask.show();
                         Ext.Ajax.request({
-                            url: me.urlWin01 + '/ProcesaDeleteTAXManual/',
+                            url: me.urlWin01 + '/ProcesaDeleteManual/',
                             timeout: 60000000,
                             method: 'POST',
                             params: {beanString: JSON.stringify(paramsGuardarRazon)},
