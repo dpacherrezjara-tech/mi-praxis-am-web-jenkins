@@ -61,6 +61,13 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                         }
                                     },
                                     {
+                                        text: 'Description', dataIndex: 'DESCRIPTION', width: 200,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
                                       text: 'Estimation',
                                       defaults: {
                                           menuDisabled: true,
@@ -68,10 +75,26 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                           align: 'center'
                                       },
                                       columns: [
-                                          {text: 'Gross', dataIndex: 'EGROSS', width: 90},
-                                          {text: 'ISC', dataIndex: 'EISC', width: 90},
-                                          {text: 'Tax', dataIndex: 'ETAX', width: 90},
-                                          {text: 'Other', dataIndex: 'EOTHER', width: 90},
+                                          {text: 'Gross', dataIndex: 'EGROSS', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          },
+                                          {text: 'ISC', dataIndex: 'EISC', width: 90,
+                                            renderer: function(value){
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          },
+                                          {text: 'Tax', dataIndex: 'ETAX', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          },
+                                          {text: 'Other', dataIndex: 'EOTHER', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          }
                                       ]
                                     },
                                     {
@@ -82,14 +105,30 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                           align: 'center'
                                       },
                                       columns: [
-                                          {text: 'Gross', dataIndex: 'LGROSS', width: 90},
-                                          {text: 'ISC', dataIndex: 'LISC', width: 90},
-                                          {text: 'Tax', dataIndex: 'LTAX', width: 90},
-                                          {text: 'Other', dataIndex: 'LOTHER', width: 90},
+                                          {text: 'Gross', dataIndex: 'LGROSS', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          },
+                                          {text: 'ISC', dataIndex: 'LISC', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          },
+                                          {text: 'Tax', dataIndex: 'LTAX', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          },
+                                          {text: 'Other', dataIndex: 'LOTHER', width: 90,
+                                            renderer: function(value){
+                                                return Ext.util.Format.number(value, '0,000.00');
+                                            }
+                                          }
                                       ]
                                     },
                                     {
-                                      text: 'Variation',
+                                      text: 'Percentage Variation',
                                       defaults: {
                                           menuDisabled: true,
                                           sortable: false,
@@ -102,15 +141,15 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                             var value_abs = Math.abs(value);
                                             if (value_abs <= 5){
                                                 metaData.style = "background-color: #61d361;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 6 && value <= 15){
                                                 metaData.style = "background-color: #ffff88;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 16){
                                                 metaData.style = "background-color: #fdb5b5;";
-                                                return value;
+                                                return value + "%";
                                             }
                                           }},
                                           {text: 'ISC', dataIndex: 'VISC', width: 90,
@@ -119,16 +158,16 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                             var value_abs = Math.abs(value);
                                             if (value_abs <= 5){
                                                 metaData.style = "background-color: #61d361;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 6 && value <= 15){
                                                 metaData.style = "background-color: #ffff88;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 16){
                                                 metaData.style = "background-color: #fdb5b5;";
-                                                return value;
-                                            } 
+                                                return value + "%";
+                                            }
                                           }},
                                           {text: 'Tax', dataIndex: 'VTAX', width: 90,
                                           renderer: function(value, metaData, record, rowIndex, colIndex, store, view)
@@ -136,16 +175,16 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                             var value_abs = Math.abs(value);
                                             if (value_abs <= 5){
                                                 metaData.style = "background-color: #61d361;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 6 && value <= 15){
                                                 metaData.style = "background-color: #ffff88;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 16){
                                                 metaData.style = "background-color: #fdb5b5;";
-                                                return value;
-                                            }  
+                                                return value + "%";
+                                            }
                                           }},
                                           {text: 'Other', dataIndex: 'VOTHER', width: 90,
                                           renderer: function(value, metaData, record, rowIndex, colIndex, store, view)
@@ -153,15 +192,15 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                             var value_abs = Math.abs(value);
                                             if (value_abs <= 5){
                                                 metaData.style = "background-color: #61d361;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 6 && value <= 15){
                                                 metaData.style = "background-color: #ffff88;";
-                                                return value;
+                                                return value + "%";
                                             }
                                             else if (value_abs >= 16){
                                                 metaData.style = "background-color: #fdb5b5;";
-                                                return value;
+                                                return value + "%";
                                             }
                                           }}
                                       ]
@@ -274,7 +313,7 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                             xtype: 'cartesian',
                                             // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
                                             id: prototype.id + '-displaySAChart32',
-                                            width: 1200,
+                                            width: 1400,
                                             border: false,
                                             height: 400,
                                             background: '#E0F8F7',
@@ -315,7 +354,7 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                                     title: ['GROSS', 'ISC', 'TAX', 'OTHER'],
                                                     xField: 'LCODE',
                                                     yField: ['VGROSS', 'VISC', 'VTAX', 'VOTHER'],
-                                                    colors: ['#ff9900', '#0066ff', '#CC0000', '#ffff99'],
+                                                    colors: ['#FDB541', '#FD8A8A', '#AAE3E2', '#ffff99'],
                                                     highlight: true,
                                                     style: {
                                                         inGroupGapWidth: -7,
@@ -326,18 +365,31 @@ Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.Info', {
                                                         trackMouse: true,
                                                         height: 28,
                                                         renderer: function (toolTip, record, ctx) {
-                                                            var label = '';
+                                                            var name = '';
                                                             if (ctx.field === 'VGROSS') {
-                                                                label = 'GROSS';
+                                                                name = 'GROSS';
                                                             } else if (ctx.field === 'VISC') {
-                                                                label = 'ISC';
+                                                                name = 'ISC';
                                                             } else if (ctx.field === 'VTAX') {
-                                                                label = 'TAX';
+                                                                name = 'TAX';
                                                             } else if (ctx.field === 'VOTHER') {
-                                                                label = 'OTHER';
+                                                                name = 'OTHER';
                                                             }
-                                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                            toolTip.setHtml(name + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                         }
+                                                    },
+                                                    label: {
+                                                        display: 'insideEnd',
+                                                        field: ['VGROSS', 'VISC', 'VTAX', 'VOTHER'],
+                                                        renderer: function(text) {
+                                                            //Ext.util.Format.numberRenderer('0');
+                                                            var value1 = parseFloat(text);
+                                                            var value = value1.toFixed(0);
+                                                            return value + '%';
+                                                        },
+                                                        orientation: 'horizontal',
+                                                        color: '#000000',
+                                                        'text-anchor': 'middle'
                                                     }
                                                 }]
                                         }
