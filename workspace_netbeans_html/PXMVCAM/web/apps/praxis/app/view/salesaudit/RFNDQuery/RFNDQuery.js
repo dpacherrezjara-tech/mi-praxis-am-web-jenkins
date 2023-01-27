@@ -399,10 +399,22 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                                     },
                                                     {
                                                         text: 'Aut',
-                                                        dataIndex: 'CANTOK',
-                                                        width: 60,
-                                                        align: 'right',
-                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                        columns: [
+                                                            {
+                                                                text: 'Yes',
+                                                                dataIndex: 'CANTOK',
+                                                                width: 55,
+                                                                align: 'right',
+                                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                            },
+                                                            {
+                                                                text: 'Not',
+                                                                dataIndex: 'CANTNK',
+                                                                width: 55,
+                                                                align: 'right',
+                                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnNotIntegerRenderer'
+                                                            }
+                                                        ]
                                                     },
                                                     {
                                                         text: 'Reje',

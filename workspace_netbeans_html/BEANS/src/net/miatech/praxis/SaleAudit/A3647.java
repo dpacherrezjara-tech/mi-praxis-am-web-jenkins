@@ -107,6 +107,7 @@ public class A3647 {
 
     public int A3647RN;
     public int CANTOK;
+    public int CANTNK;
     public int CANTKO;
     public int CANTPE;
     public int TOTALCANT;
@@ -122,7 +123,15 @@ public class A3647 {
     public int RFNDSABRET;
     public int TOTALSABRET;
 
-    public int getTOTALSABRET() {
+    public int getCANTNK() {
+        return CANTNK;
+    }
+
+    public void setCANTNK(int CANTNK) {
+        this.CANTNK = CANTNK;
+    }
+
+   public int getTOTALSABRET() {
         return TOTALSABRET;
     }
 
