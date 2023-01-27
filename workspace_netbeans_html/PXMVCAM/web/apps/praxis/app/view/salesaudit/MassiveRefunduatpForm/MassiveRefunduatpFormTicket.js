@@ -231,12 +231,20 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             listeners: {
                                 click: 'onSeguimietoClick'
                             }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtModule',
+                            fieldLabel: 'Module',
+                            labelWidth: 40,
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            width: 90
                         }
-
-
+                        
 
                     ]
-                },
+                },          
                 {
                     xtype: 'panel',
                     layout: 'hbox',
