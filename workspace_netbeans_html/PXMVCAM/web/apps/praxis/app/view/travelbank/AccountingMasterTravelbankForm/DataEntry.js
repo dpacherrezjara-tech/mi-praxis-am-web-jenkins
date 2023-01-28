@@ -59,10 +59,12 @@ Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntry'
                                 fields: ['code', 'name'],
                                 data: [
                                     ["", "(Select)"],
-                                    ["PSALES", "Sales Accounting"],
-                                    ["PADJMA", "Manual Adjustment"],
-                                    ["PCADUCOS", "Caducos"],
-                                    ["PPSALES", "Sales Accounting Pending"]
+                                    ["PTBCREDITI", "Service Credit Issued Accounting"],
+                                    ["PTBCREDITU", "Service Credit Used Accounting"],
+                                    ["PTBLOSSES", "Liability Losses Accounting"],
+                                    ["PTBEXPIRY", "Cred Expiry Accounting"],
+                                    ["PTBREPORT", "Merged Report Accounting"],
+                                    ["PTBDETAIL", "Liability Detail Accounting"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -71,7 +73,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntry'
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            width: 160,
+                            width: 260,
                             typeAhead: true,
                             valueField: 'code', displayField: 'name',
                             listConfig: {maxHeight: 111},

@@ -128,9 +128,12 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntr
     onSaveClick: function(btn) {
         if (this.validaRequiredFields()) {
             switch (this.getValue('cbxModulo')) {
-                case "PSALES" : 
-                case "PCADUCOS" : 
-                case "PADJMA" : 
+                case "PTBCREDITI" : 
+                case "PTBCREDITU" : 
+                case "PTBLOSSES" : 
+                case "PTBEXPIRY" : 
+                case "PTBREPORT" : 
+                case "PTBDETAIL" : 
                     Ext.Msg.show({
                         title: '.:PRAXIS:.',
                         msg: 'Are you sure to insert ?',
@@ -146,24 +149,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntr
                             }
                         }
                     });
-                    break;            
-                case "PPSALES" :
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function(btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.llenarData();
-                                this.crudPending();
-                            }
-                        }
-                    });
-                    break;            
+                    break;                                  
             }   
         } else {
             var msg = this.msjAlert;
@@ -184,42 +170,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntr
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
                 this.setReverse(this.p.rec);
                 break;
-            case "PCADUCOS" : case "PADJMA" : 
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function(btn) {
-                        if (btn === 'yes') {
-                            this.view.params.action = "D";
-                            this.llenarData();
-                            //console.log(this.beanOption);
-                            this.crud();
-                        }
-                    }
-                });
-                break;            
-            case "PPSALES" :
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function(btn) {
-                        if (btn === 'yes') {
-                            this.view.params.action = "D";
-                            this.llenarData();
-                            //console.log(this.beanOption);
-                            this.crudPending();
-                        }
-                    }
-                });
-                break;            
+                    
         }                  
     },
     // </editor-fold>
@@ -231,7 +182,12 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntr
             return false;
         } else {
             switch (cbxModulo) {
-                case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
+                case "PTBCREDITI" : 
+                case "PTBCREDITU" : 
+                case "PTBLOSSES" : 
+                case "PTBEXPIRY" : 
+                case "PTBREPORT" : 
+                case "PTBDETAIL" :                           
                     if (this.getValue('txtProcessDate')==='' || this.getValue('txtProcessDate') === null) {
                         this.msjAlert='Enter correct data';
                         return false;
@@ -374,7 +330,12 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntr
         var A1955MODUL = this.getValue('cbxModulo');
         
         switch (this.getValue('cbxModulo')) {
-            case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
+            case "PTBCREDITI" : 
+            case "PTBCREDITU" : 
+            case "PTBLOSSES" : 
+            case "PTBEXPIRY" : 
+            case "PTBREPORT" : 
+            case "PTBDETAIL" : 
                 IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtProcessDate').getValue(), 'Ymd');
                 break;
             /*case "PAPINT" : case "PARINT" :
