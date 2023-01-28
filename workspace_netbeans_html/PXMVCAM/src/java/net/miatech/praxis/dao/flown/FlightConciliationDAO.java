@@ -957,6 +957,7 @@ public class FlightConciliationDAO {
                     }
 
                     beanTkt.FVAL = rst.getString("FVAL");
+                    beanTkt.USERK = session.getUserView().getCustomerInfo().USR.trim();
                     /*if (beanTkt.FVAL.equals("1")) {
                      beanTkt.strDescFVAL = "ISR Values";
                      } else if (beanTkt.FVAL.equals("2")) {
@@ -1526,7 +1527,9 @@ public class FlightConciliationDAO {
                     if (beanCons.FDUP.equals("Y")) {
                         beanCons.FDUP = "DUPLICATE";
                     }
-
+                    
+                    beanCons.USERK = session.getUserView().getCustomerInfo().USR.trim();
+                    
                     beanCons.NPLANE = rst.getString("NPLANE").trim();
                     beanCons.ZONA = rst.getString("ZONA").trim();
                     //beanCons.STORG = rst.getString("STORG").trim();
@@ -1664,7 +1667,7 @@ public class FlightConciliationDAO {
     public String loadPX095S07A1692(A1692Filter filter, String strOption) throws SQLException, Exception {
 
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1691.
-        String strMsj = "Operation was successful.";
+        String strMsj = "¡Operation was successful!.";
         if (strOption.trim().equals("I")) {
             filter.STVAL = "1";//Status Pendiente
             if (filter.VCPN > 0) {
@@ -1692,12 +1695,12 @@ public class FlightConciliationDAO {
 
         //PX09500008
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX095S07A1692_2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try {
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(SQLCLL01);
-            cs.registerOutParameter(54, Types.VARCHAR);
+            cs.registerOutParameter(55, Types.VARCHAR);
 
             cs.setString(1, strOption.trim());
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -1752,12 +1755,13 @@ public class FlightConciliationDAO {
             cs.setDouble(51, filter.VCPN16);
             cs.setDouble(52, filter.VYQ0);
             cs.setDouble(53, filter.VYQ16);
-            cs.setString(54, "");//MSJ
+            cs.setString(54, filter.SEQRO);
+            cs.setString(55, "");//MSJ
             cs.execute();
 
             //Obteniendo el mensaje de error ===================================    
-            if (cs.getString(54) != null) {
-                strMsj = cs.getString(54).trim();
+            if (cs.getString(55) != null) {
+                strMsj = cs.getString(55).trim();
                 if (strMsj.trim().equals("")) {
                     strMsj = "Operation was successful.";
                 }
