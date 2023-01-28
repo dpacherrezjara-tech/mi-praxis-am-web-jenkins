@@ -14,6 +14,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -53,6 +54,10 @@ import net.miatech.praxis.A005;
 import net.miatech.praxis.A1772;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  *
@@ -4083,6 +4088,32 @@ public class SalesReportDAO {
             pasarGarbageCollector();
         }
         return lst;
+    }
+    
+    public Map<String,String> loadTicketFinder(Map<String,String> filter)throws Exception{
+        Connection con;
+        Map<String,String> result = new HashMap<>();
+        try{
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(con,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("LIBSAP51")
+                    .withProcedureName("BUSCATKTSR");
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("GRUPO", filter.get("GRUPO"));
+            params.addValue("AIRLINE", filter.get("AIRLINE"));
+            params.addValue("CIA", filter.get("CIA"));
+            params.addValue("FORMA", filter.get("FORMA"));
+            params.addValue("SERIE", filter.get("SERIE"));
+            Map<String,Object> obj = jdbcCall.execute(params);
+            result = ((List<Map<String,String>>) obj.get("#result-set-1")).get(0);
+        }catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+        } finally {
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return result;
     }
 
 }

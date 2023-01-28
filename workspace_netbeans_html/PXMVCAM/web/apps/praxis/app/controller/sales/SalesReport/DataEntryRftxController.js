@@ -20,6 +20,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         ref: {},
         obs: {}
     },
+    objReq: {
+        AIRLINE: '',
+        CIA: '',
+        FORMA: '',
+        SERIE: '',
+        SEQ: ''
+    },
     //</editor-fold>
     /**
      * Constructor
@@ -58,9 +65,17 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             CIA: bean.A4373CIA,
             FORMA: bean.DOCUMENTO.substring(0, 4),
             SERIE: bean.DOCUMENTO.substring(4, 10),
-            SEQ: '00'
+            SEQ: bean.A4373SEQ
         };
         return body;
+    },
+    setRequestObj: function (obj) {
+        let objReq = this.objReq;
+        objReq.AIRLINE = obj.a4373CIAI;
+        objReq.CIA = obj.a4373CIAI;
+        objReq.FORMA = obj.a4373FORMI;
+        objReq.SERIE = obj.a4373SERII;
+        objReq.SEQ = obj.a4373SEQ;
     },
     setValues: function () {
         this.setInfoValues();
@@ -76,6 +91,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         let refs = await this.getFetchAsync(this.url + '/getRftxRefs', body);
         if (response.success) {
             this.objRftx.info = response.data;
+            this.setRequestObj(response.data[0]);
             if (refs.success) {
                 this.objRftx.ref = refs.data.ref;
                 this.objRftx.obs = refs.data.obs;
@@ -84,7 +100,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         return response.success;
     },
     getRftxFop: async function () {
-        let body = this.getRequestParams();
+        let body = this.objReq;
         let response = await this.getFetchAsync(this.url + '/getRftxFop', body);
         if (response.success) {
             this.objRftx.fop = response.data;
@@ -92,7 +108,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         return response.success;
     },
     getRftxTax: async function () {
-        let body = this.getRequestParams();
+        let body = this.objReq;
         let response = await this.getFetchAsync(this.url + '/getRftxTax', body);
         if (response.success) {
             this.objRftx.taxes = response.data;
@@ -100,7 +116,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         return response.success;
     },
     getRftxTot: async function () {
-        let body = this.getRequestParams();
+        let body = this.objReq;
         let response = await this.getFetchAsync(this.url + '/getRftxTot', body);
         if (response.success) {
             this.objRftx.totales = response.data;
@@ -148,15 +164,15 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
                         let indexCmp = index + 1;
                         let lblTkt = Ext.getCmp(prototype.idRftx + `-det-lblTicket${indexCmp}`);
                         let c1 = Ext.getCmp(prototype.idRftx + `-det-lblCup01-${indexCmp}`);
-                        let c2= Ext.getCmp(prototype.idRftx + `-det-lblCup02-${indexCmp}`);
-                        let c3= Ext.getCmp(prototype.idRftx + `-det-lblCup03-${indexCmp}`);
-                        let c4= Ext.getCmp(prototype.idRftx + `-det-lblCup04-${indexCmp}`);
-                        lblTkt.getEl().update(element.a4373FORMI + element.a4373SERII);
+                        let c2 = Ext.getCmp(prototype.idRftx + `-det-lblCup02-${indexCmp}`);
+                        let c3 = Ext.getCmp(prototype.idRftx + `-det-lblCup03-${indexCmp}`);
+                        let c4 = Ext.getCmp(prototype.idRftx + `-det-lblCup04-${indexCmp}`);
+                        lblTkt.getEl().update(element.a4373FORMA + element.a4373SERIE);
                         c1.setValue(element.a4373CUPN1);
                         c2.setValue(element.a4373CUPN2);
                         c3.setValue(element.a4373CUPN3);
                         c4.setValue(element.a4373CUPN4);
-                        if (indexCmp>1) {
+                        if (indexCmp > 1) {
                             lblTkt.show();
                             c1.show();
                             c2.show();
@@ -180,10 +196,10 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             }
 
             //datos de auditoria
-            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS || 'SAP51');
-            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI || '20221229');
-            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS || 'SAP51');
-            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI || '20221229');
+            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS || '');
+            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI || '');
+            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS || '');
+            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI || '');
 
         }
 
@@ -488,7 +504,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
                         return {success: true, data: resObj};
                         break;
                     case 204:
-                        console.log(await res.json().msg);
                         return {success: false};
                         break;
                     default:
