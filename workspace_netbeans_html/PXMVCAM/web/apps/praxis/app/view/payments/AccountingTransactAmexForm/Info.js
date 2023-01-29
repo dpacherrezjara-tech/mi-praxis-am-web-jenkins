@@ -68,7 +68,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Payment <br> Date ', dataIndex: 'strFormatDate', width: 120,
+                                            {text: '', dataIndex: 'strFormatDate', width: 120,
+                                                id: prototype.id + '-strFormatDate',
                                                 listeners: {
                                                     click: 'onGridDetByDay'
                                                 },
@@ -523,15 +524,17 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Payment<br>Date',
+                                            {text: '',
+                                                id: prototype.id + '-strFormatDate0',
                                                 xtype: 'treecolumn',
-                                                dataIndex: 'PAYDATE', width: 120,
+                                                dataIndex: 'strFormatDate', width: 120,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'BSUMDATE', width: 120,
+                                            {text: '', dataIndex: 'strFormatDate1', width: 120,
+                                                id: prototype.id + '-strFormatDate1',
                                                 listeners: {
                                                     click: 'onGridDetByDate'
                                                 },
@@ -671,7 +674,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Payment <br> Date', dataIndex: 'PAYDATE', width: 100,
+                                            {text: '', dataIndex: 'strFormatDate', width: 100,
+                                                id: prototype.id + '-strFormatDate3',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -743,7 +747,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'BSUMDATE', width: 80,
+                                            {text: '', dataIndex: 'strFormatDate1', width: 80,
+                                                id: prototype.id + '-strFormatDate4',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
