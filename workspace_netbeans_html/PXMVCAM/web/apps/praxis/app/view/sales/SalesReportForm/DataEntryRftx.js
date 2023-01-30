@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
     ],
     title: 'Transaction Information',
     header: true,
-    width: 800,
+    width: 810,
     height: 900,
     border: false,
     resizable: false,
@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
             xtype: 'form',
             id: prototype.idRftx + '-DataEntryRftx-center',
             border: false,
-            width: 790,
+            width: 810,
             layout: {
                 type: 'vbox'
             },
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                 {
                     xtype: 'tabpanel',
                     id: prototype.idRftx + '-det-tabMain',
-                    width: 780,
+                    width: 805,
                     heigth: 860,
                     anchor: '100%',
                     margin: '1 1 1 1',
@@ -67,7 +67,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                     xtype: 'panel',
                                     id: prototype.idRftx + '-contenedor-form',
                                     width: 780,
-                                    height: 365,
+                                    height: 357,
                                     items: [
                                         {
                                             xtype: 'facsimil',
@@ -1590,7 +1590,12 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                         {
                                             xtype: 'panel',
                                             bodyStyle: 'background: #E5ECEF',
-                                            margin: '1',
+                                            style: {
+                                                paddingTop: '5px',
+                                                paddingBottom: '5px',
+                                                marginRight:'7px',
+                                                marginLeft:'3px'
+                                            },
                                             border: true,
                                             layout: {
                                                 type: 'hbox',
@@ -1601,13 +1606,11 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                             defaults: {
                                                 xtype: 'displayfield',
                                                 margin: '0 0 0 0',
-                                                labelWidth: 48,
+                                                labelWidth: 55,
                                                 labelPad: 10,
                                                 labelAlign: 'right',
                                                 labelSeparator: ':',
-                                                width: 135,
                                                 labelStyle: 'font-weight:bold;',
-                                                fieldStyle: 'font-style: italic;',
                                                 border: true
                                             },
                                             items: [
@@ -1615,26 +1618,36 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                     id: prototype.idRftx + '-usr-userCreated',
                                                     value: '',
                                                     margin: 1,
-                                                    fieldLabel: 'Crt by'
+                                                    width: 150,
+                                                    fieldLabel: 'Crt by',
+                                                    fieldStyle:'color:#37A25C;font-weight:bold;text-align: center;'
                                                 },
                                                 {
                                                     id: prototype.idRftx + '-usr-dateCreated',
                                                     value: '',
                                                     margin: 1,
-                                                    fieldLabel: 'Crt Date'
+                                                    width: 140,
+                                                    fieldLabel: 'Crt Date',
+                                                    fieldStyle:'color:#37A25C;font-weight:bold;'
                                                 },
                                                 {
                                                     id: prototype.idRftx + '-usr-userUpdated',
                                                     value: '',
                                                     margin: 1,
-                                                    fieldLabel: 'Upd by'
+                                                    width: 150,
+                                                    fieldLabel: 'Upd by',
+                                                    fieldStyle:'color:#2664C4;font-weight:bold;text-align: center;'
                                                 },
                                                 {
                                                     id: prototype.idRftx + '-usr-dateUpdated',
                                                     value: '',
                                                     margin: 1,
-                                                    fieldLabel: 'Upd Date'
-                                                }
+                                                    fieldLabel: 'Upd Date',
+                                                    fieldStyle:'color:#2664C4;font-weight:bold;',
+                                                    width: 140,
+                                                    labelWidth: 63
+                                                },
+                                                {xtype:'tbspacer',width:10}
                                             ]
                                         }
                                     ]

@@ -513,7 +513,7 @@ public class SalesReportControoller extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadA005")
     public @ResponseBody
     String loadA005(ModelMap map, HttpServletRequest request) {
@@ -1983,7 +1983,7 @@ public class SalesReportControoller extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "ProcesaInsertFareCalcRfnd")
     public @ResponseBody
     String ProcesaInsertFareCalcRfnd(ModelMap map, HttpServletRequest request) {
@@ -1993,7 +1993,7 @@ public class SalesReportControoller extends BaseController {
 
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            
+
             logic = new SalesReportLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.ProcesaInsertFareCalcRfnd(filter);
@@ -2065,7 +2065,6 @@ public class SalesReportControoller extends BaseController {
 
         return lst;
     }*/
-    
     @RequestMapping(value = "loadRftx")
     public @ResponseBody
     String loadRftx(ModelMap map, HttpServletRequest request) {
@@ -2093,6 +2092,7 @@ public class SalesReportControoller extends BaseController {
             filter.setIN_AIRLIN(request.getParameter("IN_AIRLIN"));
             filter.setIN_GRUPO(request.getParameter("IN_GRUPO"));
             filter.setIN_TKT(request.getParameter("IN_TKT"));
+            filter.setIN_IATA(request.getParameter("IN_IATA"));
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -2265,7 +2265,7 @@ public class SalesReportControoller extends BaseController {
             return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = "manRftxtax", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
     public ResponseEntity<?> mantenimientoRftxTax(@RequestParam(required = false) Map<String, String> params, @RequestBody(required = false) Map<String, String> body,
             HttpServletRequest req) {
@@ -2290,15 +2290,15 @@ public class SalesReportControoller extends BaseController {
             return new ResponseEntity(Collections.singletonMap("msg", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @RequestMapping(value = "getRftxRefs")
-    public ResponseEntity<?> loadRftxReferences(@RequestParam Map<String,String> params){
+    public ResponseEntity<?> loadRftxReferences(@RequestParam Map<String, String> params) {
         logic = new SalesReportLogic();
         PX036S02A4376Filter filter = new PX036S02A4376Filter();
         List<PX036S02A4376Filter> ref = new ArrayList<>();
         List<PX036S02A4376Filter> obs = new ArrayList<>();
-        try{
-            Map<String,Object> response = new HashMap<>();
+        try {
+            Map<String, Object> response = new HashMap<>();
             logic.setSession(this.serverSession.getServerSession());
             filter.setAIRLINE(params.get("AIRLINE"));
             filter.setCIA(params.get("CIA"));
@@ -2311,8 +2311,24 @@ public class SalesReportControoller extends BaseController {
             obs = logic.loadRftxReferences(filter);
             response.put("ref", ref);
             response.put("obs", obs);
-            return new ResponseEntity<>(response,HttpStatus.OK);
-        }catch(Exception ex){
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "loadTicketFinder")
+    public ResponseEntity<?> loadTicketFinder(@RequestParam Map<String, String> params) {
+        logic = new SalesReportLogic();
+        Map<String, String> res = new HashMap<>();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            res = logic.loadTicketFinder(params);
+            if (!res.isEmpty()) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            throw new IllegalArgumentException("No existe ticket buscado");
+        } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

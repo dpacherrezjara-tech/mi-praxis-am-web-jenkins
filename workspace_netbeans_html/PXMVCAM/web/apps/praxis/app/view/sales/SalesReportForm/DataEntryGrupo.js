@@ -491,6 +491,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabTkt',
+                                    itemId:'tkt',
                                     title: 'TKT',
                                     layout: {
                                         type: 'vbox',
@@ -791,6 +792,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabTRfnd',
+                                    itemId:'rfnd',
                                     title: 'RFND',
                                     layout: 'vbox',
 //                                            {
@@ -1069,6 +1071,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabTRFTX',
+                                    itemId:'rftx',
                                     title: 'RFTX',
                                     layout: {
                                         type: 'vbox',
@@ -1097,17 +1100,46 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     layout: 'column',
                                                     items: [
                                                         {
-                                                            xtype: 'textfield',
+                                                            xtype: 'combo',
+                                                            id: prototype.idGr + '-de-cmbOptionRftx',
                                                             margin: '5 0 5 0',
-                                                            padding: '0 0 0 0',
+                                                            editable: false,
+                                                            fieldLabel: 'Search By',
+                                                            width: 180,
+                                                            labelWidth: 80, labelAlign: 'left',
+                                                            queryMode: 'local',
+                                                            triggerAction: 'all',
+                                                            valueField: 'code',
+                                                            displayField: 'name',
+                                                            listeners: {
+                                                                change: 'onChangeComboRftx'
+                                                            }
+                                                        },
+                                                        {
+                                                            xtype: 'textfield',
+                                                            margin: '5 0 5 5',
                                                             id: prototype.idGr + '-de-txtRftxNumber',
-                                                            fieldLabel: 'Search By Ticket',
-                                                            labelWidth: 95,
-                                                            width: 250,
-                                                            labelAlign: 'left',
+                                                            width: 100,
+                                                            fieldStyle:'background:#B4DEF1;',
+                                                            hidden:true,
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
                                                             maxLength: 10,
+                                                            maskRe: /[0-9]/,
+                                                            listeners: {
+                                                                keypress: 'onTextKeypress'
+                                                            }
+                                                        },
+                                                        {
+                                                            xtype: 'textfield',
+                                                            margin: '5 0 5 5',
+                                                            id: prototype.idGr + '-de-txtRftxIata',
+                                                            hidden: true,
+                                                            fieldStyle:'background:#B4DEF1;',
+                                                            width: 100,
+                                                            enableKeyEvents: true,
+                                                            enforceMaxLength: true,
+                                                            maxLength: 8,
                                                             maskRe: /[0-9]/,
                                                             listeners: {
                                                                 keypress: 'onTextKeypress'
@@ -1306,6 +1338,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabAdm',
+                                    itemId:'admacm',
                                     title: 'ADM/ACM',
                                     layout: {
                                         type: 'vbox',
@@ -1581,6 +1614,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     //title: '<label style="color:#0B333C;font-size:12px;">TOTALS</label>',
                                     title: 'TOTALS',
                                     id: prototype.idGr + '-tabTotal',
+                                    itemId:'totals',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'

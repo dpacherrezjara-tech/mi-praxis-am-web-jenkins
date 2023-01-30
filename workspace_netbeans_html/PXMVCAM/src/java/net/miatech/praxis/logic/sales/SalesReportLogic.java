@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.sales;
 import com.google.gson.JsonArray;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -266,5 +267,8 @@ public class SalesReportLogic {
     public List<PX036S02A4376Filter> loadRftxReferences (PX036S02A4376Filter filter)throws Exception{
         return salesReportDAO.loadRftxReferences(filter);
     }
-           
+    
+     public Map<String,String> loadTicketFinder(Map<String,String> filter)throws Exception{
+         return salesReportDAO.loadTicketFinder(filter);
+     }
 }
