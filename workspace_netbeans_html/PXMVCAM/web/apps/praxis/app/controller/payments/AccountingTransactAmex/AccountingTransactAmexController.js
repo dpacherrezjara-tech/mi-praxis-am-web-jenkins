@@ -137,7 +137,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             fields: ['code', 'name'],
             data: [
                 //   ["PRDA", "Processing Date"],
-                ["PAYDATE", "Payment Date"]
+                ["PAYDATE", "Payment Date"],
+                ["BSUMDATE", "Sales Date"]
             ]
         }));
         cmbDateSel.setValue("PAYDATE");
@@ -197,6 +198,12 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+                        if (a === 'PAYDATE') {
+                            Ext.getCmp(prototype.id + '-strFormatDate').setText('Payment<br>Date');
+                        } else if (a === 'BSUMDATE') {
+                            Ext.getCmp(prototype.id + '-strFormatDate').setText('Sales<br>Date');
+                        }
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -219,13 +226,18 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByDate';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        this.beanDetByDate.IN_DATE = rowData.data.IN_DATE;
-        this.beanDetByDate.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByDate.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanDetByDate.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByDate.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
-        this.beanDetByDate.BSUMDATE = rowData.data.BSUMDATE;
         this.beanDetByDate.SCURRENCY = rowData.data.SCURRENCY;
-
+        var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        if (a === 'PAYDATE') {
+            this.beanDetByDate.IN_DATE_VALUE = rowData.data.strFormatDate;
+            this.beanDetByDate.BSUMDATE = rowData.data.strFormatDate1;
+        } else if (a === 'BSUMDATE') {
+            this.beanDetByDate.IN_DATE_VALUE = rowData.data.strFormatDate1;
+            this.beanDetByDate.BSUMDATE = rowData.data.strFormatDate;
+        }
         console.log(this.beanDetByDate);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDate);
         this.setGridDataDetByDate();
@@ -236,12 +248,18 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.panelActual = '-panelGridDataByDate';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
-        this.beanDetByAcount.IN_DATE = rowData.data.IN_DATE;
-        this.beanDetByAcount.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByAcount.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        if (a === 'PAYDATE') {
+            this.beanDetByAcount.IN_DATE_VALUE = rowData.data.strFormatDate;
+            this.beanDetByAcount.BSUMDATE = rowData.data.strFormatDate1;
+        } else if (a === 'BSUMDATE') {
+            this.beanDetByAcount.IN_DATE_VALUE = rowData.data.strFormatDate1;
+            this.beanDetByAcount.BSUMDATE = rowData.data.strFormatDate;
+        }
         this.beanDetByAcount.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByAcount.IN_STCONL = '1';
         this.beanDetByAcount.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
-        this.beanDetByAcount.BSUMDATE = rowData.data.BSUMDATE;
         this.beanDetByAcount.SCURRENCY = rowData.data.SCURRENCY;
 
         console.log(this.beanDetByAcount);
@@ -254,12 +272,18 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.panelActual = '-panelGridDataByDate';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
-        this.beanDetByDebug.IN_DATE = rowData.data.IN_DATE;
-        this.beanDetByDebug.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByDebug.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        if (a === 'PAYDATE') {
+            this.beanDetByDebug.IN_DATE_VALUE = rowData.data.strFormatDate;
+            this.beanDetByDebug.BSUMDATE = rowData.data.strFormatDate1;
+        } else if (a === 'BSUMDATE') {
+            this.beanDetByDebug.IN_DATE_VALUE = rowData.data.strFormatDate1;
+            this.beanDetByDebug.BSUMDATE = rowData.data.strFormatDate;
+        }
         this.beanDetByDebug.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByDebug.IN_STCONL = '';
         this.beanDetByDebug.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
-        this.beanDetByDebug.BSUMDATE = rowData.data.BSUMDATE;
         this.beanDetByDebug.SCURRENCY = rowData.data.SCURRENCY;
 
         console.log(this.beanDetByDebug);
@@ -272,7 +296,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             me.panelActual = '-panelGridDataByDate';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
         }
-
+        var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        if (a === 'PAYDATE') {
+            this.beanDetByPNR.IN_DATE_VALUE = rowData.data.strFormatDate;
+            this.beanDetByPNR.BSUMDATE = rowData.data.strFormatDate1;
+        } else if (a === 'BSUMDATE') {
+            this.beanDetByPNR.IN_DATE_VALUE = rowData.data.strFormatDate1;
+            this.beanDetByPNR.BSUMDATE = rowData.data.strFormatDate;
+        }
         this.beanDetByPNR.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanDetByPNR.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByPNR.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
@@ -302,6 +333,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
+                    var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+                    if (a === 'PAYDATE') {
+                        Ext.getCmp(prototype.id + '-strFormatDate3').setText('Payment<br>Date');
+                        Ext.getCmp(prototype.id + '-strFormatDate4').setText('Sales<br>Date');
+                    } else if (a === 'BSUMDATE') {
+                        Ext.getCmp(prototype.id + '-strFormatDate4').setText('Payment<br>Date');
+                        Ext.getCmp(prototype.id + '-strFormatDate3').setText('Sales<br>Date');
+                    }
                     me.setWidthPie();
 
                     if (obj.data.length === 0) {
@@ -382,7 +421,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanDetByDay.IN_DATE = rowData.data.IN_DATE;
-        this.beanDetByDay.IN_DATE_VALUE = rowData.data.PAYDATE;
+        var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        if (a === 'PAYDATE') {
+            this.beanDetByDay.IN_DATE_VALUE = rowData.data.PAYDATE;
+            this.beanDetByDay.BSUMDATE = rowData.data.strFormatDate1;
+        } else if (a === 'BSUMDATE') {
+            this.beanDetByDay.IN_DATE_VALUE = rowData.data.BSUMDATE;
+            this.beanDetByDay.BSUMDATE = rowData.data.strFormatDate;
+        }
         this.beanDetByDay.strFormatDate = rowData.data.strFormatDate;
         this.beanDetByDay.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByDay.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
@@ -419,57 +465,117 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                     var dataRoot = {text: '.', expanded: false, children: []};
                     console.log(lstData)
                     Ext.Object.each(lstData, function (index, value) {
-                        if (a.indexOf(value.PAYDATE) < 0) {
-                            var TOT_ACCOUNTED = 0;
-                            var TOT_PENDING = 0;
-                            var TOT_TOTAL = 0;
+                        var b = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+                        if (b === 'PAYDATE') {
+                            if (a.indexOf(value.strFormatDate) < 0) {
+                                var TOT_ACCOUNTED = 0;
+                                var TOT_PENDING = 0;
+                                var TOT_TOTAL = 0;
 
-                            var TOT_QTY_ACCOUNTED = 0;
-                            var TOT_QTY_PENDING = 0;
-                            var TOT_QTY_TOTAL = 0;
+                                var TOT_QTY_ACCOUNTED = 0;
+                                var TOT_QTY_PENDING = 0;
+                                var TOT_QTY_TOTAL = 0;
 
-                            Ext.Object.each(lstData, function (index, valuex) {
-                                if (value.PAYDATE === valuex.PAYDATE) {
-                                    TOT_ACCOUNTED += valuex.TGROSAMOUN_ACCOUNTED;
-                                    TOT_PENDING += valuex.TGROSAMOUN_PENDING;
-                                    TOT_TOTAL += valuex.TGROSAMOUN;
+                                Ext.Object.each(lstData, function (index, valuex) {
+                                    if (value.strFormatDate === valuex.strFormatDate) {
+                                        TOT_ACCOUNTED += valuex.TGROSAMOUN_ACCOUNTED;
+                                        TOT_PENDING += valuex.TGROSAMOUN_PENDING;
+                                        TOT_TOTAL += valuex.TGROSAMOUN;
 
-                                    TOT_QTY_ACCOUNTED += valuex.QTY_ACCOUNTED;
-                                    TOT_QTY_PENDING += valuex.QTY_PENDING;
-                                    TOT_QTY_TOTAL += valuex.QTY_TOTAL;
-                                }
-                            });
+                                        TOT_QTY_ACCOUNTED += valuex.QTY_ACCOUNTED;
+                                        TOT_QTY_PENDING += valuex.QTY_PENDING;
+                                        TOT_QTY_TOTAL += valuex.QTY_TOTAL;
+                                    }
+                                });
 
-                            a.push(value.PAYDATE);
-                            dataRoot.children.push({
-                                PAYDATE: value.PAYDATE,
-                                BSUMDATE: '',
-                                SCURRENCY: value.SCURRENCY,
-                                TGROSAMOUN_ACCOUNTED: TOT_ACCOUNTED,
-                                QTY_ACCOUNTED: TOT_QTY_ACCOUNTED,
-                                TGROSAMOUN_PENDING: TOT_PENDING,
-                                QTY_PENDING: TOT_QTY_PENDING,
-                                TGROSAMOUN: TOT_TOTAL,
-                                QTY_TOTAL: TOT_QTY_TOTAL,
-                                expanded: false, children: []
-                            });
+                                a.push(value.strFormatDate);
+                                dataRoot.children.push({
+                                    strFormatDate: value.strFormatDate,
+                                    strFormatDate1: '',
+                                    SCURRENCY: value.SCURRENCY,
+                                    TGROSAMOUN_ACCOUNTED: TOT_ACCOUNTED,
+                                    QTY_ACCOUNTED: TOT_QTY_ACCOUNTED,
+                                    TGROSAMOUN_PENDING: TOT_PENDING,
+                                    QTY_PENDING: TOT_QTY_PENDING,
+                                    TGROSAMOUN: TOT_TOTAL,
+                                    QTY_TOTAL: TOT_QTY_TOTAL,
+                                    expanded: false, children: []
+                                });
 
-                            Ext.Object.each(lstData, function (index, value01) {
-                                if (value.PAYDATE === value01.PAYDATE) {
-                                    dataRoot.children[a.indexOf(value.PAYDATE)].children.push({
-                                        PAYDATE: value01.PAYDATE,
-                                        BSUMDATE: value01.BSUMDATE,
-                                        SCURRENCY: value01.SCURRENCY,
-                                        TGROSAMOUN_ACCOUNTED: value01.TGROSAMOUN_ACCOUNTED,
-                                        QTY_ACCOUNTED: value01.QTY_ACCOUNTED,
-                                        TGROSAMOUN_PENDING: value01.TGROSAMOUN_PENDING,
-                                        QTY_PENDING: value01.QTY_PENDING,
-                                        TGROSAMOUN: value01.TGROSAMOUN,
-                                        QTY_TOTAL: value01.QTY_TOTAL,
-                                        leaf: true
-                                    });
-                                }
-                            });
+                                Ext.Object.each(lstData, function (index, value01) {
+                                    if (value.strFormatDate === value01.strFormatDate) {
+                                        dataRoot.children[a.indexOf(value.strFormatDate)].children.push({
+                                            strFormatDate: value01.strFormatDate,
+                                            strFormatDate1: value01.strFormatDate1,
+                                            SCURRENCY: value01.SCURRENCY,
+                                            TGROSAMOUN_ACCOUNTED: value01.TGROSAMOUN_ACCOUNTED,
+                                            QTY_ACCOUNTED: value01.QTY_ACCOUNTED,
+                                            TGROSAMOUN_PENDING: value01.TGROSAMOUN_PENDING,
+                                            QTY_PENDING: value01.QTY_PENDING,
+                                            TGROSAMOUN: value01.TGROSAMOUN,
+                                            QTY_TOTAL: value01.QTY_TOTAL,
+                                            leaf: true
+                                        });
+                                    }
+                                });
+                            }
+                            Ext.getCmp(prototype.id + '-strFormatDate0').setText('Payment<br>Date');
+                            Ext.getCmp(prototype.id + '-strFormatDate1').setText('Sales<br>Date');
+                        } else if (b === 'BSUMDATE') {
+                            if (a.indexOf(value.strFormatDate) < 0) {
+                                var TOT_ACCOUNTED = 0;
+                                var TOT_PENDING = 0;
+                                var TOT_TOTAL = 0;
+
+                                var TOT_QTY_ACCOUNTED = 0;
+                                var TOT_QTY_PENDING = 0;
+                                var TOT_QTY_TOTAL = 0;
+
+                                Ext.Object.each(lstData, function (index, valuex) {
+                                    if (value.strFormatDate === valuex.strFormatDate) {
+                                        TOT_ACCOUNTED += valuex.TGROSAMOUN_ACCOUNTED;
+                                        TOT_PENDING += valuex.TGROSAMOUN_PENDING;
+                                        TOT_TOTAL += valuex.TGROSAMOUN;
+
+                                        TOT_QTY_ACCOUNTED += valuex.QTY_ACCOUNTED;
+                                        TOT_QTY_PENDING += valuex.QTY_PENDING;
+                                        TOT_QTY_TOTAL += valuex.QTY_TOTAL;
+                                    }
+                                });
+
+                                a.push(value.strFormatDate);
+                                dataRoot.children.push({
+                                    strFormatDate: value.strFormatDate,
+                                    strFormatDate1: '',
+                                    SCURRENCY: value.SCURRENCY,
+                                    TGROSAMOUN_ACCOUNTED: TOT_ACCOUNTED,
+                                    QTY_ACCOUNTED: TOT_QTY_ACCOUNTED,
+                                    TGROSAMOUN_PENDING: TOT_PENDING,
+                                    QTY_PENDING: TOT_QTY_PENDING,
+                                    TGROSAMOUN: TOT_TOTAL,
+                                    QTY_TOTAL: TOT_QTY_TOTAL,
+                                    expanded: false, children: []
+                                });
+
+                                Ext.Object.each(lstData, function (index, value01) {
+                                    if (value.strFormatDate === value01.strFormatDate) {
+                                        dataRoot.children[a.indexOf(value.strFormatDate)].children.push({
+                                            strFormatDate: value01.strFormatDate,
+                                            strFormatDate1: value01.strFormatDate1,
+                                            SCURRENCY: value01.SCURRENCY,
+                                            TGROSAMOUN_ACCOUNTED: value01.TGROSAMOUN_ACCOUNTED,
+                                            QTY_ACCOUNTED: value01.QTY_ACCOUNTED,
+                                            TGROSAMOUN_PENDING: value01.TGROSAMOUN_PENDING,
+                                            QTY_PENDING: value01.QTY_PENDING,
+                                            TGROSAMOUN: value01.TGROSAMOUN,
+                                            QTY_TOTAL: value01.QTY_TOTAL,
+                                            leaf: true
+                                        });
+                                    }
+                                });
+                            }
+                            Ext.getCmp(prototype.id + '-strFormatDate0').setText('Sales<br>Date');
+                            Ext.getCmp(prototype.id + '-strFormatDate1').setText('Payment<br>Date');
                         }
                     });
                     console.log('seteando Tree Store')
@@ -523,7 +629,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         });
                     } else {
                         var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">PAYMENT DATE: ' + data.PAYDATE + '   -     SALES DATE: ' + data.BSUMDATE  + '</center>');
+                        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">PAYMENT DATE: ' + data.PAYDATE + '   -     SALES DATE: ' + data.BSUMDATE + '</center>');
                         //Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
                     }
                 }
@@ -727,8 +833,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             console.log(beanProMasterTicket);
 
             win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
-        }
-        else{
+        } else {
             console.log('No es indice');
         }
     },

@@ -115,9 +115,13 @@ public class AccountingTransactAmexDAO {
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
                     beanTkt.IN_COMPLEMENT = filter.IN_COMPLEMENT.trim();
-
-                    beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
-                    beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.PAYDATE);
+                    if(filter.IN_DATE.equals("PAYDATE")){
+                        beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                        beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.PAYDATE);
+                    }else if(filter.IN_DATE.equals("BSUMDATE")){
+                        beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                        beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.BSUMDATE);
+                    }
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.TGROSAMOUN_ACCOUNTED = rst.getDouble("TGROSAMOUN_ACCOUNTED");
                     beanTkt.TGROSAMOUN_PENDING = rst.getDouble("TGROSAMOUN_PENDING");
@@ -277,6 +281,13 @@ public class AccountingTransactAmexDAO {
 
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                    if(filter.IN_DATE.equals("PAYDATE")){
+                        beanTkt.strFormatDate = rst.getString("PAYDATE").trim();
+                        beanTkt.strFormatDate1 = rst.getString("BSUMDATE").trim();
+                    }else if(filter.IN_DATE.equals("BSUMDATE")){
+                        beanTkt.strFormatDate1 = rst.getString("PAYDATE").trim();
+                        beanTkt.strFormatDate = rst.getString("BSUMDATE").trim();
+                    }
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.TGROSAMOUN_ACCOUNTED = rst.getDouble("TGROSAMOUN_ACCOUNTED");
                     beanTkt.TGROSAMOUN_PENDING = rst.getDouble("TGROSAMOUN_PENDING");
@@ -431,6 +442,13 @@ public class AccountingTransactAmexDAO {
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.SVFOPS = rst.getDouble("SVFOPS");
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                    if(filter.IN_DATE.equals("PAYDATE")){
+                        beanTkt.strFormatDate = rst.getString("PAYDATE").trim();
+                        beanTkt.strFormatDate1 = rst.getString("BSUMDATE").trim();
+                    }else if(filter.IN_DATE.equals("BSUMDATE")){
+                        beanTkt.strFormatDate1 = rst.getString("PAYDATE").trim();
+                        beanTkt.strFormatDate = rst.getString("BSUMDATE").trim();
+                    }
                     beanTkt.SPNR = rst.getString("SPNR").trim();
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
