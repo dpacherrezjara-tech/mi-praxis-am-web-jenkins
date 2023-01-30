@@ -282,7 +282,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             this.beanDetByDebug.BSUMDATE = rowData.data.strFormatDate;
         }
         this.beanDetByDebug.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
-        this.beanDetByDebug.IN_STCONL = '';
+        this.beanDetByDebug.IN_STCONL = 'V';
         this.beanDetByDebug.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
         this.beanDetByDebug.SCURRENCY = rowData.data.SCURRENCY;
 
