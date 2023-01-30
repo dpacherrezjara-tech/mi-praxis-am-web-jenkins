@@ -24,6 +24,7 @@ public class A1955Filter extends A1955 {
     public String IN_ACCION = "";
     
     public String LCODE = "";
+    public String DESCRIPTION = "";
     public String LGROSS = "";
     public String LISC = "";
     public String LTAX = "";

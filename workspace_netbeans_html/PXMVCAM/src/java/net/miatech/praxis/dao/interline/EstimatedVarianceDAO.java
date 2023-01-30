@@ -102,6 +102,7 @@ public class EstimatedVarianceDAO {
                 objRtn.RN = rst.getLong("RN");
                 
                 objRtn.LCODE = rst.getString("LCODE").trim();
+                objRtn.DESCRIPTION = rst.getString("DESCRIPTION").trim();
                 objRtn.LGROSS = rst.getString("LGROSS").trim();
                 objRtn.LISC = rst.getString("LISC").trim();
                 objRtn.LTAX = rst.getString("LTAX").trim();
