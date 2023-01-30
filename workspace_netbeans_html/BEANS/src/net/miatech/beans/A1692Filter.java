@@ -165,4 +165,5 @@ public class A1692Filter extends A1692 {
     public double AVRG_PLA = 0;
     public double AVRG_SUD = 0;
     public double AVRG_USA = 0;
+    public String USERK = "";
 }

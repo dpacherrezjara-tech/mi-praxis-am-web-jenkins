@@ -82,6 +82,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         Ext.getCmp(prototype.id + '-txtTicket').setValue("");
         Ext.getCmp(prototype.id + '-txtDCHEQ').setValue("");
         Ext.getCmp(prototype.id + '-txtSEQ').setValue("");
+        Ext.getCmp(prototype.id + '-txtSEQRO').setValue("");
         Ext.getCmp(prototype.id + '-txtFCONT').setValue("");
         Ext.getCmp(prototype.id + '-txtID').setValue("");
         Ext.getCmp(prototype.id + '-txtCDEPART').setValue("");
@@ -412,7 +413,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
             Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(true);
-            Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+            if(bean.USERK === 'SAP52'){
+                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
+                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+            }
+            else{
+                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
+                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+            }
             Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);
             Ext.getCmp(prototype.id+'-cmbTPAX').disable(true);
         }
@@ -450,6 +458,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
 	}else{
             beanOption.SEQ = this.getValue("txtSEQ");
 	}
+        beanOption.SEQRO = this.getValue("txtSEQRO");
         beanOption.DCHEQ = this.getValue("txtDCHEQ");
         beanOption.CDEPART = this.getValue("txtCDEPART");
         beanOption.CARRIVA = this.getValue("txtCARRIVA");
