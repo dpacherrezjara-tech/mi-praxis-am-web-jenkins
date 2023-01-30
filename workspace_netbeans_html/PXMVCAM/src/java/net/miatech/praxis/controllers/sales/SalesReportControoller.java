@@ -2324,7 +2324,10 @@ public class SalesReportControoller extends BaseController {
         try {
             logic.setSession(this.serverSession.getServerSession());
             res = logic.loadTicketFinder(params);
-            return new ResponseEntity<>(res, HttpStatus.OK);
+            if (!res.isEmpty()) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            throw new IllegalArgumentException("No existe ticket buscado");
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

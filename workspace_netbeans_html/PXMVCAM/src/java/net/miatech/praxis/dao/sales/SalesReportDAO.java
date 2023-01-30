@@ -4097,8 +4097,8 @@ public class SalesReportDAO {
             con = session.getCNXIBMDB2().getIBMDB2Connection();
             JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(con,false));
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withSchemaName("LIBSAP51")
-                    .withProcedureName("BUSCATKTSR");
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04787");
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("GRUPO", filter.get("GRUPO"));
             params.addValue("AIRLINE", filter.get("AIRLINE"));
@@ -4106,7 +4106,12 @@ public class SalesReportDAO {
             params.addValue("FORMA", filter.get("FORMA"));
             params.addValue("SERIE", filter.get("SERIE"));
             Map<String,Object> obj = jdbcCall.execute(params);
-            result = ((List<Map<String,String>>) obj.get("#result-set-1")).get(0);
+            List<Map<String,String>> lst = ((List<Map<String,String>>) obj.get("#result-set-1"));
+            if (lst!=null) {
+                if (!lst.isEmpty()) {
+                    result = lst.get(0);
+                }
+            }
         }catch (Exception ex) {
             System.out.println("Error => " + ex.getMessage());
         } finally {

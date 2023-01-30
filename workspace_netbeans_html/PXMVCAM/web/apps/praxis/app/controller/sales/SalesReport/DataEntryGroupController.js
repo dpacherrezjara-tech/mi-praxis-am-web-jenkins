@@ -1159,7 +1159,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         }
     },
     findTicketToSearch: async function () {
-        let findTkt = this.view.params.findTkt;
+        let me = this;
+        let findTkt = me.view.params.findTkt;
         if (findTkt.op === '6') {
             let params = {
                 GRUPO: findTkt.grupo,
@@ -1168,43 +1169,53 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 FORMA: findTkt.documento.substring(0, 4),
                 SERIE: findTkt.documento.substring(4, 11)
             };
-            let finder = await fetch(this.url + '/loadTicketFinder?' + new URLSearchParams(params), {
+            await fetch(this.url + '/loadTicketFinder?' + new URLSearchParams(params), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json());
-            meDE.paramsDE.IN_TKT = finder.DOCUMENT;
-            let tabPanel = Ext.getCmp(prototype.idGr + '-tabMain');
-            switch (finder.TABLA) {
-                case 'A720':
-                    Ext.getCmp(prototype.idGr + '-de-txtTKTNumber').setValue(finder.DOCUMENT);
-                    tabPanel.setActiveTab(tabPanel.child('#tkt'));
-                    Ext.getCmp(prototype.idGr + '-panelFilter' + 1).setVisible(true);
-                    Ext.getCmp(prototype.idGr + '-de-cmbOptionTKT').setValue('2');
-                    break;
-                case 'A713':
-                    Ext.getCmp(prototype.idGr + '-de-txtRFNNumber').setValue(finder.DOCUMENT);
-                    tabPanel.setActiveTab(tabPanel.child('#rfnd'));
-                    Ext.getCmp(prototype.idGr + '-panelFilter' + 2).setVisible(true);
-                    Ext.getCmp(prototype.idGr + '-de-cmbOptionRF').setValue('2');
-                    break;
-                case 'A4373':
-                    Ext.getCmp(prototype.idGr + '-de-txtRftxNumber').setValue(finder.DOCUMENT);
-                    tabPanel.setActiveTab(tabPanel.child('#rftx'));
-                    Ext.getCmp(prototype.idGr + '-panelFilter' + 5).setVisible(true);
-                    Ext.getCmp(prototype.idGr + '-de-cmbOptionRftx').setValue('2');
-                    break;
-                case 'A714':
-                    Ext.getCmp(prototype.idGr + '-de-txtADMNumber').setValue(finder.DOCUMENT);
-                    tabPanel.setActiveTab(tabPanel.child('#admacm'));
-                    Ext.getCmp(prototype.idGr + '-panelFilter' + 3).setVisible(true);
-                    Ext.getCmp(prototype.idGr + '-de-cmbOptionADM').setValue('2');
-                    break;
-            }
-            console.log('Ticket Buscado', finder);
-            meDE.paramsDE.IN_OPCION = '2';
-            this.btnSearch_click();
+            }).then(async res => {
+                if (res.ok) {
+                    await res.json().then(finder => {
+                        const tabPanel = Ext.getCmp(prototype.idGr + '-tabMain');
+                        switch (finder.TABLA) {
+                            case 'A720':
+                                Ext.getCmp(prototype.idGr + '-de-txtTKTNumber').setValue(finder.DOCUMENT);
+                                tabPanel.setActiveTab(tabPanel.child('#tkt'));
+                                Ext.getCmp(prototype.idGr + '-panelFilter' + 1).setVisible(true);
+                                Ext.getCmp(prototype.idGr + '-de-cmbOptionTKT').setValue('2');
+                                break;
+                            case 'A713':
+                                Ext.getCmp(prototype.idGr + '-de-txtRFNNumber').setValue(finder.DOCUMENT);
+                                tabPanel.setActiveTab(tabPanel.child('#rfnd'));
+                                Ext.getCmp(prototype.idGr + '-panelFilter' + 2).setVisible(true);
+                                Ext.getCmp(prototype.idGr + '-de-cmbOptionRF').setValue('2');
+                                break;
+                            case 'A4373':
+                                Ext.getCmp(prototype.idGr + '-de-txtRftxNumber').setValue(finder.DOCUMENT);
+                                tabPanel.setActiveTab(tabPanel.child('#rftx'));
+                                Ext.getCmp(prototype.idGr + '-panelFilter' + 5).setVisible(true);
+                                Ext.getCmp(prototype.idGr + '-de-cmbOptionRftx').setValue('2');
+                                break;
+                            case 'A714':
+                                Ext.getCmp(prototype.idGr + '-de-txtADMNumber').setValue(finder.DOCUMENT);
+                                tabPanel.setActiveTab(tabPanel.child('#admacm'));
+                                Ext.getCmp(prototype.idGr + '-panelFilter' + 3).setVisible(true);
+                                Ext.getCmp(prototype.idGr + '-de-cmbOptionADM').setValue('2');
+                                break;
+                        }
+                        console.log('Ticket Buscado', finder);
+                        meDE.paramsDE.IN_TKT = finder.DOCUMENT;
+                        meDE.paramsDE.IN_OPCION = '2';
+                        this.btnSearch_click();
+                    });
+                } else {
+                    global.Msg({
+                        msg:'Ticket not found'
+                    });
+                }
+            }).catch(err => console.error('Error en fetch', err));
+
             //meDE.paramsDE.IN_TKT = findTkt.documento;
         }
     }
