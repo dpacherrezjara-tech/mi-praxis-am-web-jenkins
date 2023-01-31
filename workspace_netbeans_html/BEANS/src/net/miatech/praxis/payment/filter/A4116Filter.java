@@ -257,6 +257,7 @@ public class A4116Filter extends A4116 {
     
     public String IN_STVAL_ERR = "";
     public String strFormatDate1 = "";
+    public String IN_IDAC = "";
     
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
