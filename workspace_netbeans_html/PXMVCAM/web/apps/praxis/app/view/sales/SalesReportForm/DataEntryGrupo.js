@@ -3,6 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+let store = Ext.create('Ext.data.Store', {
+    storeId: 'storeGrupo',
+    page : {
+        start: 0,
+        limit: 20
+    }
+});
 
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
     extend: 'Ext.window.Window',
@@ -14,7 +21,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
     title: 'Group Sales Complete Information',
     header: true,
     width: 1180,
-    height: 815,
+    height: 830,
     border: false,
     resizable: false,
     layout: {
@@ -491,7 +498,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabTkt',
-                                    itemId:'tkt',
+                                    itemId: 'tkt',
                                     title: 'TKT',
                                     layout: {
                                         type: 'vbox',
@@ -723,6 +730,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1140,
+                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -792,7 +800,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabTRfnd',
-                                    itemId:'rfnd',
+                                    itemId: 'rfnd',
                                     title: 'RFND',
                                     layout: 'vbox',
 //                                            {
@@ -998,6 +1006,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1060,
+                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -1071,7 +1080,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabTRFTX',
-                                    itemId:'rftx',
+                                    itemId: 'rftx',
                                     title: 'RFTX',
                                     layout: {
                                         type: 'vbox',
@@ -1120,8 +1129,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             margin: '5 0 5 5',
                                                             id: prototype.idGr + '-de-txtRftxNumber',
                                                             width: 100,
-                                                            fieldStyle:'background:#B4DEF1;',
-                                                            hidden:true,
+                                                            fieldStyle: 'background:#B4DEF1;',
+                                                            hidden: true,
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
                                                             maxLength: 10,
@@ -1135,7 +1144,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                             margin: '5 0 5 5',
                                                             id: prototype.idGr + '-de-txtRftxIata',
                                                             hidden: true,
-                                                            fieldStyle:'background:#B4DEF1;',
+                                                            fieldStyle: 'background:#B4DEF1;',
                                                             width: 100,
                                                             enableKeyEvents: true,
                                                             enforceMaxLength: true,
@@ -1275,6 +1284,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1060,
+                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -1288,8 +1298,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                                     {text: 'Air', width: 50, dataIndex: 'A4373CIA'},
                                                     {text: 'Document', width: 80, dataIndex: 'DOCUMENTO'},
                                                     {text: 'Coupons', width: 80,
-                                                        renderer: function (value, metaData,record) {
-                                                            let coupons = record.data.A4373CUPN1 +  record.data.A4373CUPN2 + record.data.A4373CUPN3+ record.data.A4373CUPN4;
+                                                        renderer: function (value, metaData, record) {
+                                                            let coupons = record.data.A4373CUPN1 + record.data.A4373CUPN2 + record.data.A4373CUPN3 + record.data.A4373CUPN4;
                                                             return coupons;
                                                         }
                                                     },
@@ -1338,7 +1348,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     xtype: 'panel',
                                     bodyStyle: 'background: transparent',
                                     id: prototype.idGr + '-tabAdm',
-                                    itemId:'admacm',
+                                    itemId: 'admacm',
                                     title: 'ADM/ACM',
                                     layout: {
                                         type: 'vbox',
@@ -1552,6 +1562,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1040,
+                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -1614,7 +1625,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                     //title: '<label style="color:#0B333C;font-size:12px;">TOTALS</label>',
                                     title: 'TOTALS',
                                     id: prototype.idGr + '-tabTotal',
-                                    itemId:'totals',
+                                    itemId: 'totals',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'
