@@ -382,12 +382,12 @@ public class ClarificationLoadController extends BaseController {
                     //Col G (NUMREFER 23 varchar)
                     arn = arn.replaceAll("\"", "").trim();
                     if (arn.length() != 23) {
-                        msj = " arn (F) NUMREFER tamaño 23";
+                        msj = " arn (G) NUMREFER tamaño 23";
                     }
 
                     //Col H (AUTHNBR 6 varchar)
-                    if (cod_aut.length() > 6 || cod_aut.equals("000000")) {
-                        msj = " cod_aut (F) Revisar AUTHNBR tamaño > 6 o 000000";
+                    if (cod_aut.length() > 6) {
+                        msj = " cod_aut (H) Revisar AUTHNBR tamaño > 6";
                     }
 
                     //Col I
