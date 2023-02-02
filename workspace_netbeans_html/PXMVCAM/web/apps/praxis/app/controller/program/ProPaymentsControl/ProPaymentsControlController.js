@@ -2575,8 +2575,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                     obj.proxy.extraParams = searchParamsNewAmex;
                 },
                 load: function (obj) {
-                    console.log(obj.data);
-                    console.log(obj.data.items[0].data);
+                    //console.log(obj.data);
+                    //console.log(obj.data.items[0].data);
                     if (obj.data.length === 0) {
 //                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText('');
                         global.Msg({
