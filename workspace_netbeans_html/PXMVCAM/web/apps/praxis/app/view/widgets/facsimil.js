@@ -689,7 +689,7 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
         }
 
         var total = 0;
-        if (this.tiene_numeros(bean.TOTL.substring(0, 3)) === 1) {
+        if (this.tiene_numeros(bean.TOTL.substring(0, 3).replace('.','')) === 1) {
             total = bean.TOTL;
         } else {
             total = bean.TOTL.substring(3, bean.TOTL.length);
