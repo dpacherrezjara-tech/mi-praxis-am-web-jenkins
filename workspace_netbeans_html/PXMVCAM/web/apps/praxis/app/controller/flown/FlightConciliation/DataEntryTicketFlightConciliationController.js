@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     p: {},
     bean: {},
     beanCons: {},
+    oldSEQ:'',
     FUNCION: '',
     NPROG: 'PX00000095',
     recalculoVuelo: '',
@@ -324,6 +325,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         } else {
             this.setValue("txtSEQ", bean.SEQ);
         }
+        this.oldSEQ = bean.SEQ;
+        console.log(this.oldSEQ);
 //        if (bean.SEQRO === '') {
 //            this.setValue("txtSEQRO", '00');
 //        } else {
@@ -413,13 +416,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
             Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(true);
-            if(bean.USERK === 'SAP52'){
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'){
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
             }
             else{
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
                 Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(true);
             }
             Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);
             Ext.getCmp(prototype.id+'-cmbTPAX').disable(true);
@@ -458,6 +463,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
 	}else{
             beanOption.SEQ = this.getValue("txtSEQ");
 	}
+        beanOption.oldSEQ = this.oldSEQ;
         beanOption.SEQRO = this.getValue("txtSEQRO");
         beanOption.DCHEQ = this.getValue("txtDCHEQ");
         beanOption.CDEPART = this.getValue("txtCDEPART");

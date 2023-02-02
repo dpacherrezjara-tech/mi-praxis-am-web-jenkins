@@ -1695,12 +1695,12 @@ public class FlightConciliationDAO {
 
         //PX09500008
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX095S07A1692_2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try {
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(SQLCLL01);
-            cs.registerOutParameter(55, Types.VARCHAR);
+            cs.registerOutParameter(56, Types.VARCHAR);
 
             cs.setString(1, strOption.trim());
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -1709,7 +1709,7 @@ public class FlightConciliationDAO {
             cs.setString(5, filter.SERIE.trim());
             cs.setString(6, filter.CUPON.trim());
             cs.setString(7, filter.DCHEQ.trim());
-            cs.setString(8, filter.SEQ.trim());
+            cs.setString(8, filter.oldSEQ.trim());
             cs.setString(9, filter.STVAL.trim());
             cs.setString(10, filter.FVAL.trim());
             cs.setString(11, filter.STCON.trim());
@@ -1756,12 +1756,13 @@ public class FlightConciliationDAO {
             cs.setDouble(52, filter.VYQ0);
             cs.setDouble(53, filter.VYQ16);
             cs.setString(54, filter.SEQRO);
-            cs.setString(55, "");//MSJ
+            cs.setString(55, filter.SEQ);
+            cs.setString(56, "");//MSJ
             cs.execute();
 
             //Obteniendo el mensaje de error ===================================    
-            if (cs.getString(55) != null) {
-                strMsj = cs.getString(55).trim();
+            if (cs.getString(56) != null) {
+                strMsj = cs.getString(56).trim();
                 if (strMsj.trim().equals("")) {
                     strMsj = "Operation was successful.";
                 }
