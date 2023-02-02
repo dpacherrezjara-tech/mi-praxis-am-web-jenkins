@@ -319,6 +319,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          ["FIRST", "First Data"],
          ["PRISMA", "Prisma"],
          ["WP", "WorldPay"],
+         ["GETMEX00", "GetNetMex"],
          ]
          }));
          cmbProT.setValue("");
