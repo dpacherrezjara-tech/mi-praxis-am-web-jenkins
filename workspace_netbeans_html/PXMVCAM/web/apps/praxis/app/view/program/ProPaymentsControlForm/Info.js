@@ -1390,6 +1390,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 1-30',
+                                                id: prototype.id+'-txtRange1A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1416,6 +1417,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 31 - 60',
+                                                id: prototype.id+'-txtRange2A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1442,6 +1444,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 61 - 90',
+                                                id: prototype.id+'-txtRange3A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1467,6 +1470,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
+                                                id: prototype.id+'-txtRange4A',
                                                 text: 'Over 91',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -1682,6 +1686,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 1-30',
+                                                id: prototype.id+'-txtRange11A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1708,6 +1713,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 31 - 60',
+                                                id: prototype.id+'-txtRange22A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1734,6 +1740,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 61 - 90',
+                                                id: prototype.id+'-txtRange33A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1760,6 +1767,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Over 91',
+                                                id: prototype.id+'-txtRange44A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1974,6 +1982,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 1-30',
+                                                id: prototype.id+'-txtRange111A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2000,6 +2009,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 31 - 60',
+                                                id: prototype.id+'-txtRange222A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2026,6 +2036,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 61 - 90',
+                                                id: prototype.id+'-txtRange333A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2052,6 +2063,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Over 91',
+                                                id: prototype.id+'-txtRange444A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,

@@ -388,6 +388,20 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'label',
+                            text: 'Range:',
+//                            style: 'font-weight:bold;',
+                            padding: '3 0',
+                            width: 45
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id+'-txtRange',
+                            padding: '3 0',
+                            width: 40
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'label',
                             text: 'Show by:',
                             id:prototype.id+'-lblShow',
                             padding: '3 0',
@@ -523,21 +537,6 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             listeners: {
                                 change: 'ChangeCheckTotal' 
                             }
-                        },
-                        {xtype: 'tbspacer', width: 30},
-                        {
-                            xtype: 'label',
-                            text: 'Range of days :',
-                            style: 'font-weight:bold;',
-                            padding: '3 0',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            text: 'Range of days :',
-                            style: 'font-weight:bold;',
-                            padding: '3 0',
-                            width: 80
                         },
                     ]
                 }

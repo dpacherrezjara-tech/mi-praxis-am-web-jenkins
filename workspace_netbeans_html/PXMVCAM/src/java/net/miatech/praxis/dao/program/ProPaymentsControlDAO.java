@@ -644,7 +644,7 @@ public class ProPaymentsControlDAO {
         ResultSet rs01 = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02146(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02146(?,?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -659,6 +659,7 @@ public class ProPaymentsControlDAO {
             cstmt01.setString(6, filter.IN_FTE);
             cstmt01.setString(7, filter.IN_FINSUMO);
             cstmt01.setString(8, filter.IN_BANK);
+            cstmt01.setString(9, filter.IN_RANGE);
 
             cstmt01.execute();
 
@@ -788,7 +789,7 @@ public class ProPaymentsControlDAO {
         ResultSet rs01 = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02147(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02147(?,?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -803,6 +804,7 @@ public class ProPaymentsControlDAO {
             cstmt01.setString(6, filter.IN_FTE);
             cstmt01.setString(7, filter.IN_FINSUMO);
             cstmt01.setString(8, filter.IN_BANK);
+            cstmt01.setString(9, filter.IN_RANGE);
 
             cstmt01.execute();
 
@@ -929,7 +931,7 @@ public class ProPaymentsControlDAO {
         ResultSet rs01 = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02148_1(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02148_1(?,?,?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -945,6 +947,7 @@ public class ProPaymentsControlDAO {
             cstmt01.setString(7, filter.IN_FINSUMO);
             cstmt01.setString(8, filter.IN_BANK);
             cstmt01.setString(9, filter.SCARCOD);
+            cstmt01.setString(10, filter.IN_RANGE);
 
             cstmt01.execute();
 

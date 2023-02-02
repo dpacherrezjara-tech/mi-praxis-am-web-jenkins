@@ -25,6 +25,7 @@ public class A3020Filter extends A3020 {
     public String IN_FLAG = "";
     public String IN_FINSUMO = "";
     public String IN_BANK = "";
+    public String IN_RANGE = "";
 
     public String FECHA = "";
     public String TRNCU = "";

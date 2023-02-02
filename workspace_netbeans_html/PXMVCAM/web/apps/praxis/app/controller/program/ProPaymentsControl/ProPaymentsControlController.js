@@ -330,6 +330,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         me.bean.IN_TOP = 0;
         me.bean.IN_FINSUMO = Ext.getCmp(prototype.id + '-cmbFINSUMO').getValue();
         me.bean.IN_BANK = Ext.getCmp(prototype.id + '-cmbBank').getValue();
+        me.bean.IN_RANGE = Ext.getCmp(prototype.id + '-txtRange').getValue();
 
         var op2 = Ext.getCmp(prototype.id + '-rbgType').getValue();
         me.bean.IN_TDOC = op2.rbgTDOC;
@@ -1061,6 +1062,14 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totQSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totPERC').setText('100');
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if(a===''){
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange1A').setText('Days 1-'+a);
+                            Ext.getCmp(prototype.id + '-txtRange2A').setText('Days '+((a*1)+1)+'-'+(a*2));
+                            Ext.getCmp(prototype.id + '-txtRange3A').setText('Days '+((a*2)+1)+'-'+(a*3));
+                            Ext.getCmp(prototype.id + '-txtRange4A').setText('Over '+((a*3)+1));
 
                             Ext.getCmp(prototype.id + '-totQDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
                             Ext.getCmp(prototype.id + '-totADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
@@ -1146,6 +1155,15 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_QSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_PERC').setText('100');
+                            
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if(a===''){
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange11A').setText('Days 1-'+a);
+                            Ext.getCmp(prototype.id + '-txtRange22A').setText('Days '+((a*1)+1)+'-'+(a*2));
+                            Ext.getCmp(prototype.id + '-txtRange33A').setText('Days '+((a*2)+1)+'-'+(a*3));
+                            Ext.getCmp(prototype.id + '-txtRange44A').setText('Over '+((a*3)+1));
 
                             Ext.getCmp(prototype.id + '-totC_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
@@ -1231,6 +1249,15 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_QSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_PERC').setText('100');
+                            
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if(a===''){
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange111A').setText('Days 1-'+a);
+                            Ext.getCmp(prototype.id + '-txtRange222A').setText('Days '+((a*1)+1)+'-'+(a*2));
+                            Ext.getCmp(prototype.id + '-txtRange333A').setText('Days '+((a*2)+1)+'-'+(a*3));
+                            Ext.getCmp(prototype.id + '-txtRange444A').setText('Over '+((a*3)+1));
 
                             Ext.getCmp(prototype.id + '-totCC_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
