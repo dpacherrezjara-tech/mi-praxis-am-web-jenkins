@@ -2852,7 +2852,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.USOS = cstmt_usos.getString(1);
                     cstmt_usos.close();
 
-                    beanTkt.A1531TTARJ = "AX";
+                    beanTkt.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                     beanTkt.FDESGLOSE = "1";
                     beanTkt.A1531NREF = beanTkt.SCARDN;
                     beanTkt.A1531CAPL = beanTkt.SAUTHOC;
@@ -4545,8 +4545,8 @@ public class SalesReconciliAmexDAO {
         }
 
         if (filter.TDOC.trim().equals("R")) {
-            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 730);
-            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -60);
+            IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 30);
+            IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -7);
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04456(?,?,?,?,?,?,?,?,?)}";
         } else {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, dias_despues);
@@ -4664,8 +4664,8 @@ public class SalesReconciliAmexDAO {
         IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
 
         if (filter.TDOC.trim().equals("R")) {
-            IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
-            IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
+            IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 30);
+            IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -7);
 
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04457(?,?,?,?,?,?,?,?,?)}";
         } else {
