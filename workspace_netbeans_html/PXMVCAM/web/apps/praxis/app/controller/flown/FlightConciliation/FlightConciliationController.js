@@ -297,13 +297,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         var store, boxActual;
         if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
             store = Ext.getCmp(prototype.id + '-gridTkt').getStore();
+            console.log('store0: ');
             boxActual = prototype.id + '-BoxSecundario';
         } else if (Ext.getCmp(prototype.id + '-boxDetTicket').isVisible()) {
             boxActual = prototype.id + '-boxDetTicket';
             if (Ext.getCmp(prototype.id + '-gridDetTkt1').isVisible()) {
                 store = Ext.getCmp(prototype.id + '-gridDetTkt1').getStore();
+                console.log('store1: ');
             } else if (Ext.getCmp(prototype.id + '-gridDetTkt2').isVisible()) {
                 store = Ext.getCmp(prototype.id + '-gridDetTkt2').getStore();
+                console.log('store2: ');
             }
         }
         this.searchBeanTkt(data.strTicket.replace(' ', '').replace(' ', ''), data.SEQ, data.SEQRO, row, store, boxActual, true);
@@ -1378,6 +1381,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     var msj = res.msjOption;
                     var beanCons = res.beanConsTkt;
                     global.Msg({msg: msj});
+                    if ( msj !== 'Error') {
+                        meEntryTick.view.close();
+                        console.log('sale');
+                    }
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     if (res.strOption !== 'U' && msj.substring(0, 5) !== 'Error') {
                         meEntryTick.view.close();
