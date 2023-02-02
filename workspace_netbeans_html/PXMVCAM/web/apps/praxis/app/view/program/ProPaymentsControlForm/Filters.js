@@ -523,9 +523,22 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             listeners: {
                                 change: 'ChangeCheckTotal' 
                             }
-                        }
-                        
-                        
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'label',
+                            text: 'Range of days :',
+                            style: 'font-weight:bold;',
+                            padding: '3 0',
+                            width: 80
+                        },
+                        {
+                            xtype: 'textfield',
+                            text: 'Range of days :',
+                            style: 'font-weight:bold;',
+                            padding: '3 0',
+                            width: 80
+                        },
                     ]
                 }
             ]

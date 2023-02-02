@@ -637,8 +637,8 @@ public class ProPaymentsControlDAO {
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;//SE QUITARON CALCULOS DE 11 A 15 A PEDIDO MPH 20180320
-        int QDAY5 = 0, QDAY10 = 0, QDAY15 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
-        double ADAY5 = 0, ADAY10 = 0, ADAY15 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -668,12 +668,12 @@ public class ProPaymentsControlDAO {
                 QTY1 = rs01.getInt("QTY1");
                 SVFOPUS1 = rs01.getDouble("SVFOPUS1");
 
-                QDAY5 = rs01.getInt("QDAY5");
-                ADAY5 = rs01.getDouble("ADAY5");
-                QDAY10 = rs01.getInt("QDAY10");
-                ADAY10 = rs01.getDouble("ADAY10");
-                QDAY15 = rs01.getInt("QDAY15");
-                ADAY15 = rs01.getDouble("ADAY15");
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
                 //QDAY20 = rs01.getInt("QDAY20");
                 //ADAY20 = rs01.getDouble("ADAY20");
                 QOTHER = rs01.getInt("QOTHER");
@@ -707,15 +707,15 @@ public class ProPaymentsControlDAO {
                     objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
                     objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
 
-                    objRtn.QDAY5 = rs01.getInt("QDAY5");
-                    objRtn.QDAY10 = rs01.getInt("QDAY10");
-                    objRtn.QDAY15 = rs01.getInt("QDAY15");
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
                     //objRtn.QDAY20 = rs01.getInt("QDAY20");
                     objRtn.QOTHER = rs01.getInt("QOTHER");
 
-                    objRtn.ADAY5 = rs01.getDouble("ADAY5");
-                    objRtn.ADAY10 = rs01.getDouble("ADAY10");
-                    objRtn.ADAY15 = rs01.getDouble("ADAY15");
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
                     //objRtn.ADAY20 = rs01.getDouble("ADAY20");
                     objRtn.AOTHER = rs01.getDouble("AOTHER");
 
@@ -726,15 +726,15 @@ public class ProPaymentsControlDAO {
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
 
-                    objRtn.totQDAY5 = QDAY5;
-                    objRtn.totQDAY10 = QDAY10;
-                    objRtn.totQDAY15 = QDAY15;
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
                     //objRtn.totQDAY20 = QDAY20;
                     objRtn.totQOTHER = QOTHER;
                     //objRtn.totQPAY = QPAY;
-                    objRtn.totADAY5 = ADAY5;
-                    objRtn.totADAY10 = ADAY10;
-                    objRtn.totADAY15 = ADAY15;
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
                     //objRtn.totADAY20 = ADAY20;
                     objRtn.totAOTHER = AOTHER;
                     //objRtn.totAPAY = APAY;
@@ -743,9 +743,9 @@ public class ProPaymentsControlDAO {
                     objRtn.totdiff2 = ATOT;
                     objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
 
-                    objRtn.perc_5 = (SVFOPUS1 > 0) ? (ADAY5 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_10 = (SVFOPUS1 > 0) ? (ADAY10 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_15 = (SVFOPUS1 > 0) ? (ADAY15 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
                     //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
                     objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
 
@@ -781,8 +781,8 @@ public class ProPaymentsControlDAO {
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;
-        int QDAY5 = 0, QDAY10 = 0, QDAY15 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
-        double ADAY5 = 0, ADAY10 = 0, ADAY15 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -812,12 +812,12 @@ public class ProPaymentsControlDAO {
                 QTY1 = rs01.getInt("QTY1");
                 SVFOPUS1 = rs01.getDouble("SVFOPUS1");
 
-                QDAY5 = rs01.getInt("QDAY5");
-                ADAY5 = rs01.getDouble("ADAY5");
-                QDAY10 = rs01.getInt("QDAY10");
-                ADAY10 = rs01.getDouble("ADAY10");
-                QDAY15 = rs01.getInt("QDAY15");
-                ADAY15 = rs01.getDouble("ADAY15");
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
                 //QDAY20 = rs01.getInt("QDAY20");
                 //ADAY20 = rs01.getDouble("ADAY20");
                 QOTHER = rs01.getInt("QOTHER");
@@ -849,15 +849,15 @@ public class ProPaymentsControlDAO {
                     objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
                     objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
 
-                    objRtn.QDAY5 = rs01.getInt("QDAY5");
-                    objRtn.QDAY10 = rs01.getInt("QDAY10");
-                    objRtn.QDAY15 = rs01.getInt("QDAY15");
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
                     //objRtn.QDAY20 = rs01.getInt("QDAY20");
                     objRtn.QOTHER = rs01.getInt("QOTHER");
 
-                    objRtn.ADAY5 = rs01.getDouble("ADAY5");
-                    objRtn.ADAY10 = rs01.getDouble("ADAY10");
-                    objRtn.ADAY15 = rs01.getDouble("ADAY15");
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
                     //objRtn.ADAY20 = rs01.getDouble("ADAY20");
                     objRtn.AOTHER = rs01.getDouble("AOTHER");
 
@@ -868,15 +868,15 @@ public class ProPaymentsControlDAO {
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
 
-                    objRtn.totQDAY5 = QDAY5;
-                    objRtn.totQDAY10 = QDAY10;
-                    objRtn.totQDAY15 = QDAY15;
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
                     //objRtn.totQDAY20 = QDAY20;
                     objRtn.totQOTHER = QOTHER;
 
-                    objRtn.totADAY5 = ADAY5;
-                    objRtn.totADAY10 = ADAY10;
-                    objRtn.totADAY15 = ADAY15;
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
                     //objRtn.totADAY20 = ADAY20;
                     objRtn.totAOTHER = AOTHER;
 
@@ -884,9 +884,9 @@ public class ProPaymentsControlDAO {
                     objRtn.totdiff2 = ATOT;
                     objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
 
-                    objRtn.perc_5 = (SVFOPUS1 > 0) ? (ADAY5 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_10 = (SVFOPUS1 > 0) ? (ADAY10 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_15 = (SVFOPUS1 > 0) ? (ADAY15 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
                     //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
                     objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
 
@@ -922,8 +922,8 @@ public class ProPaymentsControlDAO {
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;
-        int QDAY5 = 0, QDAY10 = 0, QDAY15 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
-        double ADAY5 = 0, ADAY10 = 0, ADAY15 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -954,12 +954,12 @@ public class ProPaymentsControlDAO {
                 QTY1 = rs01.getInt("QTY1");
                 SVFOPUS1 = rs01.getDouble("SVFOPUS1");
 
-                QDAY5 = rs01.getInt("QDAY5");
-                ADAY5 = rs01.getDouble("ADAY5");
-                QDAY10 = rs01.getInt("QDAY10");
-                ADAY10 = rs01.getDouble("ADAY10");
-                QDAY15 = rs01.getInt("QDAY15");
-                ADAY15 = rs01.getDouble("ADAY15");
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
                 //QDAY20 = rs01.getInt("QDAY20");
                 //ADAY20 = rs01.getDouble("ADAY20");
                 QOTHER = rs01.getInt("QOTHER");
@@ -991,16 +991,16 @@ public class ProPaymentsControlDAO {
                     objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
                     objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
 
-                    objRtn.QDAY5 = rs01.getInt("QDAY5");
-                    objRtn.QDAY10 = rs01.getInt("QDAY10");
-                    objRtn.QDAY15 = rs01.getInt("QDAY15");
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
                     //objRtn.QDAY20 = rs01.getInt("QDAY20");
                     objRtn.QOTHER = rs01.getInt("QOTHER");
                     //objRtn.QPAY = rs01.getInt("QPAY");
 
-                    objRtn.ADAY5 = rs01.getDouble("ADAY5");
-                    objRtn.ADAY10 = rs01.getDouble("ADAY10");
-                    objRtn.ADAY15 = rs01.getDouble("ADAY15");
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
                     //objRtn.ADAY20 = rs01.getDouble("ADAY20");
                     objRtn.AOTHER = rs01.getDouble("AOTHER");
 
@@ -1011,15 +1011,15 @@ public class ProPaymentsControlDAO {
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
 
-                    objRtn.totQDAY5 = QDAY5;
-                    objRtn.totQDAY10 = QDAY10;
-                    objRtn.totQDAY15 = QDAY15;
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
                     //objRtn.totQDAY20 = QDAY20;
                     objRtn.totQOTHER = QOTHER;
 
-                    objRtn.totADAY5 = ADAY5;
-                    objRtn.totADAY10 = ADAY10;
-                    objRtn.totADAY15 = ADAY15;
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
                     //objRtn.totADAY20 = ADAY20;
                     objRtn.totAOTHER = AOTHER;
 
@@ -1027,9 +1027,9 @@ public class ProPaymentsControlDAO {
                     objRtn.totdiff2 = ATOT;
                     objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
 
-                    objRtn.perc_5 = (SVFOPUS1 > 0) ? (ADAY5 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_10 = (SVFOPUS1 > 0) ? (ADAY10 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_15 = (SVFOPUS1 > 0) ? (ADAY15 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
                     //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
                     objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
 
