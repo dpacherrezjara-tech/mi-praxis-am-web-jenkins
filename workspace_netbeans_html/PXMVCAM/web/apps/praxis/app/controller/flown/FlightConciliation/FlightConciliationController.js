@@ -1381,6 +1381,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     var msj = res.msjOption;
                     var beanCons = res.beanConsTkt;
                     global.Msg({msg: msj});
+                    if ( msj !== 'Error') {
+                        meEntryTick.view.close();
+                        console.log('sale');
+                    }
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     if (res.strOption !== 'U' && msj.substring(0, 5) !== 'Error') {
                         meEntryTick.view.close();
