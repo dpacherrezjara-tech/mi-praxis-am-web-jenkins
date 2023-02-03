@@ -1563,6 +1563,13 @@ public class FlightConciliationDAO {
                     beanCons.QTYPAX = rst.getInt("QTYPAX");
                     beanCons.FCONT = rst.getString("FCONT").trim();
                     beanCons.IDCON = rst.getString("IDCON").trim();
+                    
+                    beanCons.VYQ = rst.getDouble("VYQ");
+                    beanCons.VCPN16 = rst.getDouble("VCPN16");
+                    beanCons.VCPN0 = rst.getDouble("VCPN0");
+                    beanCons.VYQ16 = rst.getDouble("VYQ16");
+                    beanCons.VYQ0 = rst.getDouble("VYQ0");
+                    
                     beanCons.USCR = rst.getString("USCR").trim();
                     beanCons.FECR = rst.getString("FECR").trim();
                     beanCons.HOCR = Functions.ConvertedTime(rst.getString("HOCR").trim());
