@@ -174,10 +174,9 @@ Ext.define('Ext.Praxis.controller.interline.EstimatedVariance.EstimatedVarianceC
         
         // <editor-fold defaultstate="collapsed" desc="asignación">
         _path = prototype.url+'/getXLSX?' +
-                'IN_MODULO='+searchParams.IN_MODULO+'&' +
+                'IN_MODULE='+searchParams.IN_MODULE+'&' +
                 'IN_FECHA_PROCESO='+searchParams.IN_FECHA_PROCESO+'&' +
-                'IN_FECHA_ACUSE='+searchParams.IN_FECHA_ACUSE+'&' +
-                'A1955STATU='+searchParams.A1955STATU;
+                'IN_PERIOD='+searchParams.IN_PERIOD;
         console.log(_path);
         console.log("Params");
         console.log(searchParams);
