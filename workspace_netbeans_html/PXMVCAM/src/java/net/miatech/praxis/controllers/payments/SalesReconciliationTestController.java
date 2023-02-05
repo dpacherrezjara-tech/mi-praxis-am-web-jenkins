@@ -1002,6 +1002,43 @@ public class SalesReconciliationTestController extends BaseController {
         map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "MaintenanceBpoAdjA4164")
+    public @ResponseBody
+    String MaintenanceBpoAdjA4164(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by Ticket : MaintenanceBpoAdjA4164-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4164Filter filter = new A4164Filter();
+            A4164Filter result = new A4164Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4164Filter.class);
+
+            LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX584SQP04755(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
 
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody

@@ -35,11 +35,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
             case 'S':
                 this.limpiarData();
                 this.mostrarData();
-                if (this.bean.STVAL === '5') { //Match Manual
-                    this.configurarAjuste();
-                }
-                if (this.bean.STVAL === '2') { //Sales w/o Reconciliation
+//                if (this.bean.STVAL === '5') { //Match Manual
+//                    this.configurarAjuste();
+//                }
+                if (this.bean.STVAL === '2' || this.bean.STVAL === '6') { //Sales w/o Reconciliation O Stand By
                     this.configurarBpoRev();
+                    this.configurarBpoAdj();
                 }
         }
     },
@@ -116,6 +117,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());
         win.setValue("de-txtOBSERV", this.bean.OBSERV);
         win.setValue("de-txtBpoOBSERV-RO", this.bean.OBSERV_BPO);
+        win.setValue("txtOBSERV_ADJ", this.bean.OBSERV_ADJ);
         
         if (this.bean.OBSERV_BPO !== ''){
             Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
@@ -206,6 +208,83 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
             }
         });
     },
+    configurarBpoAdj: function () {
+        Ext.getCmp(prototype.id + '-panelAdj').setVisible(true);        
+    },
+    bpoAdj_keyDownHandler: function () {
+        Ext.getCmp(prototype.id + '-panelBpoAdj').setVisible(true);
+        Ext.getCmp(prototype.id + '-closeBpoAdj').setVisible(true);
+        this.obtainGetBpoAdjustmentCode();
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoAdj').setVisible(true);
+    },
+    closeBpoAdj_keyDownHandler: function () {
+        Ext.getCmp(prototype.id + '-panelBpoAdj').setVisible(false);
+        Ext.getCmp(prototype.id + '-closeBpoAdj').setVisible(false);
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoAdj').setVisible(false);        
+    },
+    obtainGetBpoAdjustmentCode: function () {
+        Ext.Ajax.request({
+            url: CONTEXTPATH + '/SalesReconciliAmex' + '/getAdjustmentCodes',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            beforerequest: Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').mask('Loading...'),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbBpoADJTYPE').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();
+                    win.setValue("cmbBpoADJTYPE", "01");
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+    },
+    onUpdateClickBpoAdj: function (btn) {
+        this.bean.OBSERV_ADJ = win.getValue('de-txtBpoADJ-RO');
+        this.bean.TYPE_ADJ = win.getValue('cmbBpoADJTYPE');
+
+        var beanString = JSON.stringify(this.bean);
+
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            meDE.BpoAdjA4164(beanString);
+                        }
+                    }
+                });
+    },
+    BpoAdjA4164: function (beanString) {
+        console.log(this.bean);
+        Ext.Ajax.request({
+            url: prototype.url + '/MaintenanceBpoAdjA4164',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').unmask();
+                    Ext.getCmp(prototype.id + '-DataEntryTicketSalesReconciliationTestForm').close();
+                } else {
+                    global.Msg({msg: res.msjOption});
+                }
+            }
+        });
+    },
     configurarBpoRev: function () {
         Ext.getCmp(prototype.id + '-panelBpo').setVisible(true);        
     },
@@ -217,7 +296,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
     closeBpoRev_keyDownHandler: function () {
         Ext.getCmp(prototype.id + '-panelBpoObserv').setVisible(false);
         Ext.getCmp(prototype.id + '-closeBpoObserv').setVisible(false);
-        Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(false);
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(false);        
     },
     onUpdateClickBpoRev: function (btn) {
         this.bean.OBSERV_BPO = win.getValue('de-txtBpoOBSERV-RO');
@@ -260,5 +339,5 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
                 }
             }
         });
-    }
+    },
 });

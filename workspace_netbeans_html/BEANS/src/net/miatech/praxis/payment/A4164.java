@@ -16,6 +16,7 @@ public class A4164 {
     public String SERIE = "";
     public String TDOC = "";
     public String SEQ = "";
+    public String CORRL = "";
     public String STVAL = "";
     public String FCOMPL = "";
     public String FTE = "";

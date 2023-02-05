@@ -117,4 +117,8 @@ public class LoadConciliationTestLogic {
     public String loadPX584SQP04752(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04752(filter);
     }
+    
+    public String loadPX584SQP04755(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04755(filter);
+    }
 }
