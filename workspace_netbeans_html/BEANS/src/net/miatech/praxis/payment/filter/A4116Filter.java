@@ -257,6 +257,32 @@ public class A4116Filter extends A4116 {
     
     public String IN_STVAL_ERR = "";
     public String strFormatDate1 = "";
+    public String IN_IDAC = "";
+    
+    //COMPLEMENT PLUSGRADE
+    public String IN_DATE_PL = "";
+    public String IN_DATEFROM_PL = "";
+    public String IN_DATETO_PL = "";
+    public String IN_TICKET_PL = "";
+    public String IN_SCARDN1_PL = "";
+    public String IN_SCARDN2_PL = "";
+    public String IN_SAUTHOC_PL = "";
+    public String IN_PNR_PL = "";
+    public String IN_BAJADA = "";
+    public String PNR = "";
+    public String EMDNUMBER = "";
+    public String TRVLASTNA = "";
+    public String TRVFIRSNA = "";
+    public String ORIG = "";
+    public String DEST = "";
+    public String DEPDATE = "";
+    public String DEPTIME = "";
+    public String UPGRATYPE = "";
+    public String FARECLASS = "";
+    public String CURRPARTN = "";
+    public String SDATE = "";
+    public String STIME = "";
+    public String SCARCOD = "";
     
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 

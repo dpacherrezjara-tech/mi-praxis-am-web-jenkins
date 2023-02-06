@@ -192,9 +192,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             id: prototype.id + '-radiogroupTypeX',
                             width: 360,
                             items: [
-                                {boxLabel: '<b style="color:#148D28;">Plusgrade</b>', inputValue: 'P', name: 'rbgTypeX', checked: true},
-                                {boxLabel: '<b style="color:#148D28;">Ligas de Pago</b>', inputValue: 'L', name: 'rbgTypeX'},
-                                {boxLabel: '<b style="color:#148D28;">Tablet</b>', inputValue: 'T', name: 'rbgTypeX'},
+                                {boxLabel: '<b style="color:#148D28;">Plusgrade</b>', id: prototype.id + '-radiogroupTypeXPlusgrade', inputValue: 'P', name: 'rbgTypeX', checked: true},
+                                {boxLabel: '<b style="color:#148D28;">Ligas de Pago</b>', id: prototype.id + '-radiogroupTypeXLigas', inputValue: 'L', name: 'rbgTypeX'},
+                                {boxLabel: '<b style="color:#148D28;">Tablet</b>', id: prototype.id + '-radiogroupTypeXTablet', inputValue: 'T', name: 'rbgTypeX'},
                             ],
                             listeners: {
                                 change: 'rbChangeType'
@@ -241,7 +241,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                                 keypress: 'txtField_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'label',
                             text: 'PNR:',
@@ -259,6 +259,30 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[a-zA-Z]/,
                             maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtField_keyDownHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            text: 'Op. Nbr.:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50,
+//                            autoEl: {
+//                                tag: 'label',
+//                                'data-qtip': 'Authorization Number'
+//                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtOPERATNBR',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 10,
                             width: 100,
                             enableKeyEvents: true,
                             listeners: {

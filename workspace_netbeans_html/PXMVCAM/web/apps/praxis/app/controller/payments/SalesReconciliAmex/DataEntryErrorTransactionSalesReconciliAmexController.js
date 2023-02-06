@@ -102,7 +102,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelBpo').show();
                     if (this.bean.STVAL === '0') {
                         Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
-                    }                    
+                    }
                 }
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -550,7 +550,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     meDE.lstBlocked = [];
                     meDE.lstAdjustment = [];
                     meDE.flag_bporev = false;
-                    
+
                     Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
                             Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
                             );
@@ -879,9 +879,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
-                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
-                        global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
+                        if (res.lstInfo[0].A1531TTARJ !== 'AX') {
+                            global.Msg({msg: 'Credit Card Is not AMEX'});
+                        }
                         for (var i = 0; i < res.lstInfo.length; i++) {
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
@@ -923,9 +924,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     insertTKT: function (store_gridInfoScan, objTKT) {
         if (objTKT.A1531CFOP !== 'CC') {
             global.Msg({msg: 'Is not Credit Card'});
-        } else if (objTKT.A1531TTARJ !== 'AX') {
-            global.Msg({msg: 'Credit Card Is not AMEX'});
         } else {
+            if (objTKT.A1531TTARJ !== 'AX') {
+                global.Msg({msg: 'Credit Card Is not AMEX'});
+            }
             for (var i = 0; i < store_gridInfoScan.data.length; i++) {
                 if (store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
                         store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
@@ -1175,9 +1177,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
-                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
-                        global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
+                        if (res.lstInfo[0].A1531TTARJ !== 'AX') {
+                            global.Msg({msg: 'Credit Card Is not AMEX'});
+                        }
                         for (var i = 0; i < res.lstInfo.length; i++) {
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
@@ -1324,7 +1327,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             }
         });
     },
-    closeBpoRev_keyDownHandler: function(){
+    closeBpoRev_keyDownHandler: function () {
         this.flag_bporev = false;
         Ext.getCmp(prototype.id + '-panelScanCard').show();
         Ext.getCmp(prototype.id + '-panelBpoObserv').hide();

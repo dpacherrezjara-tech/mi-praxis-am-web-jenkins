@@ -4042,11 +4042,13 @@ public class LoadConciliationTestDAO {
                 beanTkt.FORMA = rst.getString("FORMA").trim();
                 beanTkt.SERIE = rst.getString("SERIE").trim();
                 
-                beanTkt.OBSERV = rst.getString("OBSERV").trim();
+                beanTkt.OBSERV = rst.getString("OBSERV").trim(); //Viene del A4174 es la obs del ajuste
+                beanTkt.OBSERV_ADJ = rst.getString("OBSERV").trim(); //Viene del A4174 es la obs del ajuste
                 beanTkt.SVFOP_ADJ = rst.getDouble("SVFOP_ADJ");
 
                 beanTkt.TDOC = rst.getString("TDOC").trim();
                 beanTkt.SEQ = rst.getString("SEQ").trim();
+                beanTkt.CORRL = rst.getString("CORRL").trim();
                 beanTkt.STVAL = rst.getString("STVAL").trim();
                 beanTkt.FTE = rst.getString("FTE").trim();
                 beanTkt.DATEC = rst.getString("DATEC").trim();
@@ -5906,6 +5908,62 @@ public class LoadConciliationTestDAO {
             cstmt01.setString(6, session.getUserView().getUserInfo().USR);
             cstmt01.setString(7, Functions.getFechaActual());
             cstmt01.setString(8, Functions.getHoraActual());
+
+            cstmt01.execute();
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+    
+        public String loadPX584SQP04755(A4164Filter filter) throws SQLException, Exception {
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04755(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.CCIA.trim());
+            cstmt01.setString(3, filter.FORMA.trim());
+            cstmt01.setString(4, filter.SERIE.trim());
+            cstmt01.setString(5, filter.SDATE.trim());
+            cstmt01.setString(6, filter.TDOC.trim());
+            cstmt01.setString(7, filter.CORRL.trim());
+            cstmt01.setString(8, filter.SEQ.trim());
+            cstmt01.setString(9, filter.OBSERV_ADJ.trim());
+            cstmt01.setString(10, filter.TYPE_ADJ.trim());
+            cstmt01.setString(11, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(12, Functions.getFechaActual());
+            cstmt01.setString(13, Functions.getHoraActual());
 
             cstmt01.execute();
 

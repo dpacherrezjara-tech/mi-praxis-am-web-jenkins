@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 90
+                                                text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 85
                                             },
                                             {
                                                 text: 'Merchant', dataIndex: 'MERCHID', width: 90
@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 60,
+                                                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 55,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (value > 15) {
                                                                 metaData.style = "color:#de2828";
@@ -294,6 +294,20 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     metaData.style = "text-align:center;";
                                                     return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 50,
+                                                text: 'Copy',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-image-log',
+                                                        tooltip: 'copy SPNR',
+                                                        handler: 'copySPNR'
+                                                    }
+                                                ]
                                             },
                                             {
                                                 text: 'EMD',
@@ -711,6 +725,20 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     metaData.style = "text-align:center;";
                                                     return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 50,
+                                                text: 'Copy',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-image-log',
+                                                        tooltip: 'copy SPNR',
+                                                        handler: 'copySPNR'
+                                                    }
+                                                ]
                                             },
                                             {
                                                 text: 'Accounting',

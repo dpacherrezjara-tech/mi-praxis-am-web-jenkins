@@ -143,6 +143,20 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         }));
         cmbDateSel.setValue("PAYDATE");
 
+    var cmbSCURRENCY = Ext.getCmp(prototype.id + '-cmbSCURRENCY');
+        cmbSCURRENCY.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["ARS", "ARS"],
+                ["CAD", "CAD"],
+                ["MXN", "MXN"],
+                ["USD", "USD"]
+            ]
+        }));
+        cmbSCURRENCY.setValue("");
+        
         this.btnSearch_click();
     },
     setDataTo: function () {
@@ -160,6 +174,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         me.bean.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplements').getValue();
+        me.bean.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbSCURRENCY').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -168,8 +183,15 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         };
     },
     btnSearch_click: function (obj, e) {
-        this.setFormatParameter();
-        this.setGridData();
+         var a = Ext.getCmp(prototype.id + '-txtIDAC').getValue();
+         var b = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+         if(a === '' && b === ''){
+             this.setFormatParameter();
+            this.setGridData();
+         }
+         else{
+             this.onGridDetByPNR();
+         }
     },
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4116");
@@ -297,17 +319,18 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             global.selectedChild(me.childs, prototype.id + me.panelActual);
         }
         var a = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        if (a === 'PAYDATE') {
-            this.beanDetByPNR.IN_DATE_VALUE = rowData.data.strFormatDate;
-            this.beanDetByPNR.BSUMDATE = rowData.data.strFormatDate1;
-        } else if (a === 'BSUMDATE') {
-            this.beanDetByPNR.IN_DATE_VALUE = rowData.data.strFormatDate1;
-            this.beanDetByPNR.BSUMDATE = rowData.data.strFormatDate;
-        }
+//        if (a === 'PAYDATE') {
+//            this.beanDetByPNR.IN_DATE_VALUE = rowData.data.strFormatDate;
+//            this.beanDetByPNR.BSUMDATE = rowData.data.strFormatDate1;
+//        } else if (a === 'BSUMDATE') {
+//            this.beanDetByPNR.IN_DATE_VALUE = rowData.data.strFormatDate1;
+//            this.beanDetByPNR.BSUMDATE = rowData.data.strFormatDate;
+//        }
         this.beanDetByPNR.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanDetByPNR.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByPNR.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
-        this.beanDetByPNR.IN_COMPLEMENT = rowData.data.IN_COMPLEMENT;
+        this.beanDetByPNR.IN_IDAC = Ext.getCmp(prototype.id + '-txtIDAC').getValue();
+        this.beanDetByPNR.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplements').getValue();
 
         console.log(this.beanDetByPNR);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByPNR);
