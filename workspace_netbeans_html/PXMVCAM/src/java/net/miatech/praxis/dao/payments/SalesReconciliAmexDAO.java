@@ -5190,7 +5190,8 @@ public class SalesReconciliAmexDAO {
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.DATEUPUTC = rst.getString("DATEUPUTC");
                 beanTkt.TIMEUPUTC = rst.getString("TIMEUPUTC");
-                beanTkt.DATE_TIME_UTC = rst.getString("TIMEUPUTC");
+                beanTkt.DATE_TIME_UTC = beanTkt.DATEUPUTC.substring(0,2) + "/" + beanTkt.DATEUPUTC.substring(0,2) + "/" + beanTkt.DATEUPUTC.substring(0,2) + " - " +
+                                        beanTkt.TIMEUPUTC;
                 
                 
                 beanTkt.totAMOUNTOFF = totAMOUNTOFF;

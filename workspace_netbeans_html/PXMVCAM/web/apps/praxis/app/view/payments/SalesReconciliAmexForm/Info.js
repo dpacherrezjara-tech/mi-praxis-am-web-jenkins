@@ -7633,7 +7633,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Orig', dataIndex: 'ORIG', width: 60,
+                                                text: 'Orig', dataIndex: 'ORIG', width: 55,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;background-color:" + data.COLOR;
@@ -7641,7 +7641,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Dest', dataIndex: 'DEST', width: 60,
+                                                text: 'Dest', dataIndex: 'DEST', width: 55,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;background-color:" + data.COLOR;
@@ -7681,7 +7681,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Amount Per <br> Pax(Offer)', dataIndex: 'AMOUNTOTP', width: 120,
+                                                text: 'Amount Per <br> Pax(Offer)', dataIndex: 'AMOUNTOTP', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:right;background-color:#9CD2FF";
@@ -7695,7 +7695,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 }
                                             },
                                             {
-                                                text: 'Total Amount <br> (Offer)', dataIndex: 'AMOUNTOFF', width: 120,
+                                                text: 'Total Amount <br> (Offer)', dataIndex: 'AMOUNTOFF', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:right;background-color:#9CD2FF";
@@ -7733,7 +7733,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Date/Timestamp of Upgrade (UTC)', dataIndex: 'STIME', width: 80,
+                                                text: 'Date/Timestamp of <br> Upgrade (UTC)', dataIndex: 'DATE_TIME_UTC', width: 130,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;background-color:" + data.COLOR;
