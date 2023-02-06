@@ -112,6 +112,8 @@ public class A4164Filter extends A4164 {
     public String TVENTA = "";
     public int NAID = 0;
     public String OBSERV_BPO = "";
+    public String OBSERV_ADJ = "";
+    public String TYPE_ADJ = "";
     public String strTVENTA = "";
     public String strTitulo = "";
     public String strMoneda = "";
