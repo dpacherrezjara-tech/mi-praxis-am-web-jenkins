@@ -168,8 +168,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                //["PRDA", "Processing Date"],
-                ["PAYDATE", "Payment Date"]
+                ["PAYDATE", "Payment Date"],
+                ["PRDA", "Processing Date"]
             ]
         }));
         cmbDateSel.setValue("PAYDATE");
@@ -627,11 +627,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         if (selectedValue === 'PL') {
             Ext.getCmp(prototype.id + '-filterComplementPLUS').setVisible(true);
-            Ext.getCmp(prototype.id + '-cmbDateSel').setValue('Processing Date');
+            Ext.getCmp(prototype.id + '-cmbDateSel').setValue('PRDA');
 
         } else {
             Ext.getCmp(prototype.id + '-filterComplementPLUS').setVisible(false);
-            Ext.getCmp(prototype.id + '-cmbDateSel').setValue('Payment Date');
+            Ext.getCmp(prototype.id + '-cmbDateSel').setValue('PAYDATE');
         }
 
         switch (selectedValue) {
