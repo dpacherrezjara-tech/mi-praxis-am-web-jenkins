@@ -36,6 +36,7 @@ public class A4116 {
     public String SERIE = "";
     public String SEQ = "";
     public String PASSED_DAYS = "";
+    public String CUROFFER = "";
     
     public String LMERCHID = "";
     public String INVORNBR = "";
@@ -68,6 +69,13 @@ public class A4116 {
     public double DIFF_AMOUNT = 0;
     public int NBRINSTA = 0;
     public int QTYTKT = 0;
+    public int QTYTKT_P = 0;
+    public int QTYTKT_M = 0;
+    //TOTALES COMPL PLUS
+    public int TOTQTYTKT_P = 0;
+    public int TOTQTYTKT_M = 0;
+    public double TOTAMOUNTOFF_P = 0;
+    public double TOTAMOUNTOFF_M = 0;
 //    public double DISCAMOUN = 0;
     public double SFEEAMOU = 0;
     public double ACCEAMOU = 0;
@@ -100,6 +108,12 @@ public class A4116 {
     public double DISCAMOUNC = 0;
     public double DISCRATEIC = 0;
     public double DISCAMOUIC = 0;
+    public double AMOUNTOFF_P = 0;
+    public double AMOUNTOFF_M = 0;
+    public double AMOUNTOFF = 0;
+    public double AMOUNTOTP = 0;
+    public double totAMOUNTOFF = 0;
+    public double totAMOUNTOTP = 0;
     
     public String CERROR = "";
     public String CERRORHST = "";
