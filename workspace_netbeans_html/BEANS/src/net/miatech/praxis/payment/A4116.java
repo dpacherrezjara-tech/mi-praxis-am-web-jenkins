@@ -129,6 +129,9 @@ public class A4116 {
     public String NEWSTVAL = "";
     public String COLOR = "";
     public String OBSERV_BPO = "";
+    public String DATEUPUTC = "";
+    public String TIMEUPUTC = "";
+    public String DATE_TIME_UTC = "";
     
     //Variables del Sistema
     public String USCR = "";

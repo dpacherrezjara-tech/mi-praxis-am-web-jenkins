@@ -5188,8 +5188,9 @@ public class SalesReconciliAmexDAO {
                 beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
-                beanTkt.SDATE = rst.getString("SDATE");
-                beanTkt.STIME = rst.getString("STIME");
+                beanTkt.DATEUPUTC = rst.getString("DATEUPUTC");
+                beanTkt.TIMEUPUTC = rst.getString("TIMEUPUTC");
+                beanTkt.DATE_TIME_UTC = rst.getString("TIMEUPUTC");
                 
                 
                 beanTkt.totAMOUNTOFF = totAMOUNTOFF;

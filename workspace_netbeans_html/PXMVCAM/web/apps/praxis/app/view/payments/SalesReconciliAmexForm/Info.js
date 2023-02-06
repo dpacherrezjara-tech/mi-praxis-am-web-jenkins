@@ -7492,8 +7492,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridMainComplementPlusgrade').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.TOTQTYTKT_M, '0,000.00') + '<b>';
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTQTYTKT_M, '0,000') + '<b>';
                                                                 }
                                                             },
                                                             {text: 'Currency', dataIndex: 'CUROFFER', width: 70,
@@ -7538,8 +7538,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridMainComplementPlusgrade').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.TOTQTYTKT_P, '0,000.00') + '<b>';
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTQTYTKT_P, '0,000') + '<b>';
                                                                 }
                                                             },
                                                             {text: 'Currency', dataIndex: 'CUROFFER', width: 70,
@@ -7673,7 +7673,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Currency(Offer)', dataIndex: 'CURRPARTN', width: 100,
+                                                text: 'Currency <br> (Offer)', dataIndex: 'CURRPARTN', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;background-color:" + data.COLOR;
@@ -7681,7 +7681,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Amount Per<br>Pax(Offer)', dataIndex: 'AMOUNTOTP', width: 120,
+                                                text: 'Amount Per <br> Pax(Offer)', dataIndex: 'AMOUNTOTP', width: 120,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:right;background-color:#9CD2FF";
@@ -7695,7 +7695,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 }
                                             },
                                             {
-                                                text: 'Total Amount<br>(Offer)', dataIndex: 'AMOUNTOFF', width: 120,
+                                                text: 'Total Amount <br> (Offer)', dataIndex: 'AMOUNTOFF', width: 120,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:right;background-color:#9CD2FF";

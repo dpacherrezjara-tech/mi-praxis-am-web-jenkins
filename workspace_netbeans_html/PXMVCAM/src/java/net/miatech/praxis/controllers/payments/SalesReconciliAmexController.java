@@ -7967,7 +7967,6 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_4 = row1.createCell(4);
             Cell CH1_5 = row1.createCell(5);
             Cell CH1_6 = row1.createCell(6);
-            Cell CH1_7 = row1.createCell(7);
 
             CH1_0.setCellValue("Procesing Date");
             CH1_1.setCellValue("Complement Plusgrade");
@@ -7984,7 +7983,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_4.setCellStyle(headerStyle);
             CH1_5.setCellStyle(headerStyle);
             CH1_6.setCellStyle(headerStyle);
-            CH1_7.setCellStyle(headerStyle);
 
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 6));
@@ -8233,22 +8231,22 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_14.setCellStyle(headerStyle);
             CH1_15.setCellStyle(headerStyle);
 
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 14, 14));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             ++vj;
             //============================================
 

@@ -530,7 +530,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_ZONA_SUMM = Ext.getCmp(prototype.id + '-cmbZONASumm').getValue();
         me.bean.IN_SCOUNTRY_SUMM = Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').getValue();
 
-
+        me.bean.IN_DATEFROM_PL = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+        me.bean.IN_DATETO_PL = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        me.bean.IN_TICKET_PL = Ext.getCmp(prototype.id + '-txtTicket_PL').getValue();
+        me.bean.IN_SCARDN1_PL = Ext.getCmp(prototype.id + '-txtCC1_PL').getValue();
+        me.bean.IN_SCARDN2_PL = Ext.getCmp(prototype.id + '-txtCC2_PL').getValue();
+        me.bean.IN_SAUTHOC_PL = Ext.getCmp(prototype.id + '-txtAuth_PL').getValue();
+        me.bean.IN_PNR_PL = Ext.getCmp(prototype.id + '-txtPNR_PL').getValue();
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
 
 
@@ -546,10 +552,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             bean: me.bean
         };
 
-        searchParamsMainSettlementPL = {
-            beanString: beanString,
-            bean: me.bean
-        };
     },
     btnSearch_click: function (obj, e) {
         /*if (me.panelActual === '-boxDetSettlement' && (Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '')) {
@@ -2773,7 +2775,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 global.getFile(prototype.url + '/getXLSXMainComplementPlusgrade?beanString=' + searchParamsMainSettlement.beanString);
                 break;
             case  '-boxComplementPlusgrade':
-                global.getFile(prototype.url + '/getXLSXComplementPlusgrade?beanString=' + searchParamsMainSettlementPL.beanString);
+                global.getFile(prototype.url + '/getXLSXComplementPlusgrade?beanString=' + me.searchParamsMainSettlementPL.beanString);
                 break;
         }
     },
