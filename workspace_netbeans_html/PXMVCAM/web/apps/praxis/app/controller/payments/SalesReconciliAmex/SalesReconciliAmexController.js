@@ -545,7 +545,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             beanString: beanString,
             bean: me.bean
         };
-        
+
         searchParamsMainSettlementPL = {
             beanString: beanString,
             bean: me.bean
@@ -927,14 +927,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     } else {
                         var data = obj.data.items[0].data;
                         console.log(data);
-                        if(data.IN_BAJADA === ''){
-                            Ext.getCmp(prototype.id + '-gridComplementPlusgrade').setTitle('<center style="font-size:12px;">' + 'PROCESSING DATE: ' + data.PRDA.substring(0,6) + ' - CURRENCY: ' + data.CURRPARTN + '</center>');
+                        if (data.IN_BAJADA === '') {
+                            Ext.getCmp(prototype.id + '-gridComplementPlusgrade').setTitle('<center style="font-size:12px;">' + 'PROCESSING DATE: ' + data.PRDA.substring(0, 6) + ' - CURRENCY: ' + data.CURRPARTN + '</center>');
                         }
-                        if(data.IN_BAJADA === '0'){
-                            Ext.getCmp(prototype.id + '-gridComplementPlusgrade').setTitle('<center style="font-size:12px;">' + 'PROCESSING DATE: ' + data.PRDA.substring(0,6) + ' - CURRENCY: ' + data.CURRPARTN + ' - MATCH' + '</center>');
+                        if (data.IN_BAJADA === '0') {
+                            Ext.getCmp(prototype.id + '-gridComplementPlusgrade').setTitle('<center style="font-size:12px;">' + 'PROCESSING DATE: ' + data.PRDA.substring(0, 6) + ' - CURRENCY: ' + data.CURRPARTN + ' - MATCH' + '</center>');
                         }
-                        if(data.IN_BAJADA === '1'){
-                            Ext.getCmp(prototype.id + '-gridComplementPlusgrade').setTitle('<center style="font-size:12px;">' + 'PROCESSING DATE: ' + data.PRDA.substring(0,6) + ' - CURRENCY: ' + data.CURRPARTN + ' - PENDING' +  '</center>');
+                        if (data.IN_BAJADA === '1') {
+                            Ext.getCmp(prototype.id + '-gridComplementPlusgrade').setTitle('<center style="font-size:12px;">' + 'PROCESSING DATE: ' + data.PRDA.substring(0, 6) + ' - CURRENCY: ' + data.CURRPARTN + ' - PENDING' + '</center>');
                         }
                     }
                 }
@@ -3108,6 +3108,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
+    },
+    onComplementDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        if (rowData.data.DES_SMERCHANT.trim() === 'LIGAS') {
+            var INVORNBR = rowData.data.INVORNBR;
+
+            prototypeProgram.view = 'payments-sales-reconcili-amex-form';
+            prototypeProgram.nprog = 'PX00000570';
+            prototypeProgram.title = 'Sales Reconciliation By Amex';
+            prototypeProgram.modulo = '';
+
+            var beanComplementToAMEX = {};
+
+            beanComplementToAMEX.INVORNBR = INVORNBR;
+
+            console.log(beanComplementToAMEX);
+
+            //win.displayProMasterTicket(this, 'ViewFlightConciliation', beanComplementToAMEX);
+
+            //optionSelect = 'PX00000040';
+            var params = {};
+            params.view = 'payments-sales-complement-amex-form';
+            params.nprog = 'PX00000585';
+            params.title = 'Sales Complement To AMEX';
+            params.modulo = '';
+            params.back = this;
+
+            params.actionCode = 'ViewFlightConciliation';
+            params.bean = beanComplementToAMEX;
+
+            win.showModule(params, new Function("me.startDisplay()"));
+            global.clear();
+        }
     }
 
 }

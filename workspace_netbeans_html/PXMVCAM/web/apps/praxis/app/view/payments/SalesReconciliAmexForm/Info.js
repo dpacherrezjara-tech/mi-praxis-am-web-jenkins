@@ -5485,11 +5485,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Description', dataIndex: 'DES_SMERCHANT', width: 80,
+                                                        listeners: {
+                                                            click: 'onComplementDetail'
+                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
                                                             metaData.style = "text-align:left;background-color:#FCF6DC";
-                                                            return value;
+                                                            if (data.DES_SMERCHANT === "LIGAS"){
+                                                                return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            } else {
+                                                                return value;
+                                                            }                                                            
                                                         }
-                                                    },
+                                                    }, 
                                                     {text: 'Flag<br>Complement', dataIndex: 'descFCOMPL', width: 90, hidden: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#FCF6DC";
