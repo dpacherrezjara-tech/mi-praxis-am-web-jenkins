@@ -5034,7 +5034,202 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
+    
+    public List<A4116Filter> loadPX570SQP04612(A4116Filter filter) throws SQLException, Exception {
 
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+
+        int TOTQTYTKT_P = 0,TOTQTYTKT_M = 0;
+        double TOTAMOUNTOFF_P = 0,TOTAMOUNTOFF_M = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04612(?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM_PL);
+            cstmt.setString(3, filter.IN_DATETO_PL);
+            cstmt.setString(4, filter.IN_TICKET_PL.trim());
+            cstmt.setString(5, filter.IN_SCARDN1_PL.trim() + '%' + filter.IN_SCARDN2_PL.trim() + '%');
+            cstmt.setString(6, filter.IN_SAUTHOC_PL.trim());
+            cstmt.setString(7, filter.IN_PNR_PL.trim());
+
+            cstmt.execute();
+            
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                TOTAMOUNTOFF_P =  rst.getDouble("AMOUNTOFF_P");
+                TOTAMOUNTOFF_M = rst.getDouble("AMOUNTOFF_M");
+                TOTQTYTKT_P = rst.getInt("QTYTKT_P");
+                TOTQTYTKT_M = rst.getInt("QTYTKT_M");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                beanTkt = new A4116Filter();
+                beanTkt.PRDA = rst.getString("PRDA").trim();
+                beanTkt.CUROFFER = rst.getString("CUROFFER").trim();
+                beanTkt.AMOUNTOFF_P = rst.getDouble("AMOUNTOFF_P");
+                beanTkt.AMOUNTOFF_M = rst.getDouble("AMOUNTOFF_M");
+                beanTkt.QTYTKT_P = rst.getInt("QTYTKT_P");
+                beanTkt.QTYTKT_M = rst.getInt("QTYTKT_M");
+                //TOTALES
+                beanTkt.TOTAMOUNTOFF_P = TOTAMOUNTOFF_P;
+                beanTkt.TOTAMOUNTOFF_M = TOTAMOUNTOFF_M;
+                beanTkt.TOTQTYTKT_P = TOTQTYTKT_P;
+                beanTkt.TOTQTYTKT_M = TOTQTYTKT_M;
+
+                lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+
+    public List<A4116Filter> loadPX570SQP04613(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
+        A4116Filter beanTkt;
+
+        double totAMOUNTOFF = 0,totAMOUNTOTP = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04613(?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATE_PL);
+            cstmt.setString(3, filter.IN_TICKET_PL.trim());
+            cstmt.setString(4, filter.IN_SCARDN1_PL.trim() + '%' + filter.IN_SCARDN2_PL.trim() + '%');
+            cstmt.setString(5, filter.IN_SAUTHOC_PL.trim());
+            cstmt.setString(6, filter.IN_PNR_PL.trim());
+            cstmt.setString(7, filter.IN_BAJADA.trim());
+
+            cstmt.setInt(8, filter.page.PAGNUM);
+            cstmt.setInt(9, filter.page.PAGROW);
+            cstmt.setInt(10, filter.page.TOTPAG);
+            cstmt.setInt(11, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(8);
+            filter.page.PAGROW = cstmt.getInt(9);
+            filter.page.TOTPAG = cstmt.getInt(10);
+            filter.page.TOTROW = cstmt.getInt(11);
+            
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                totAMOUNTOFF =  rst.getDouble("AMOUNTOFF");
+                totAMOUNTOTP = rst.getDouble("AMOUNTOTP");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                beanTkt = new A4116Filter();
+                
+                beanTkt.PRDA = rst.getString("PRDA").trim();
+                beanTkt.IN_BAJADA = filter.IN_BAJADA.trim();
+                beanTkt.PNR = rst.getString("PNR").trim();
+                beanTkt.EMDNUMBER = rst.getString("EMDNUMBER").trim();
+                beanTkt.TRVLASTNA = rst.getString("TRVLASTNA").trim();
+                beanTkt.TRVFIRSNA = rst.getString("TRVFIRSNA").trim();
+                beanTkt.ORIG = rst.getString("ORIG").trim();
+                beanTkt.DEST = rst.getString("DEST").trim();
+                beanTkt.DEPDATE = rst.getString("DEPDATE").trim();
+                beanTkt.DEPTIME = rst.getString("DEPTIME").trim();
+                beanTkt.UPGRATYPE = rst.getString("UPGRATYPE").trim();
+                beanTkt.FARECLASS = rst.getString("FARECLASS").trim();
+                beanTkt.CURRPARTN = rst.getString("CURRPARTN").trim();
+                beanTkt.AMOUNTOFF = rst.getDouble("AMOUNTOFF");
+                beanTkt.AMOUNTOTP = rst.getDouble("AMOUNTOTP");
+                beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
+                beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                beanTkt.DATEUPUTC = rst.getString("DATEUPUTC");
+                beanTkt.TIMEUPUTC = rst.getString("TIMEUPUTC");
+                beanTkt.DATE_TIME_UTC = beanTkt.DATEUPUTC.substring(0,2) + "/" + beanTkt.DATEUPUTC.substring(0,2) + "/" + beanTkt.DATEUPUTC.substring(0,2) + " - " +
+                                        beanTkt.TIMEUPUTC;
+                
+                
+                beanTkt.totAMOUNTOFF = totAMOUNTOFF;
+                beanTkt.totAMOUNTOTP = totAMOUNTOTP;
+                
+                beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                beanTkt.page.PAGROW = filter.page.PAGROW;
+                beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                beanTkt.page.TOTROW = filter.page.TOTROW;
+                
+                lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
     public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
