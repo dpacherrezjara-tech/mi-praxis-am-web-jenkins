@@ -385,7 +385,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                     {text: 'Folio', dataIndex: 'A3647FOLIO', width: 150, align: 'center', renderer: 'onRendererColumnOnPreme'},
                                     {text: 'System <br> date', dataIndex: 'A3647FREGI', width: 100, sortable: true, align: 'center'},
                                     {text: 'Auditor', dataIndex: 'A3647REGAS', width: 100},
-                                    {text: 'Zone', dataIndex: 'A3647ARCD', width: 130, renderer: 'onRendererColumnTYPE'},
+                                    {text: 'Zone', dataIndex: 'A3647ARCD', width: 130, sortable: true}, //renderer: 'onRendererColumnTYPE'},
                                     {text: 'Ticket Qty',
                                         columns: [
                                             {text: 'Request',
@@ -747,6 +747,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                     {text: 'Req. Reason', dataIndex: 'A3648ERROR', width: 100, align: 'left', renderer: 'onRendererColumnAttr'},
                                     {text: 'Status', dataIndex: 'A3648FLAG', width: 200, renderer: 'onRendererColumnStatus'},
                                     {text: 'BPO', dataIndex: 'A3648STATO', width: 200},
+                                    {text: 'Process', dataIndex: 'A3648PROCE', width: 90, renderer: 'onRendererColumnProcess'},
                                     {text: 'Group', dataIndex: 'A3648GRUPO', width: 90},
                                     {
                                         text: '',
