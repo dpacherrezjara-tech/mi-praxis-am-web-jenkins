@@ -118,9 +118,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue("de-txtOBSERV", this.bean.OBSERV);
         win.setValue("de-txtBpoOBSERV-RO", this.bean.OBSERV_BPO);
         win.setValue("txtOBSERV_ADJ", this.bean.OBSERV_ADJ);
-        
-        if (this.bean.OBSERV_BPO !== ''){
-            Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
+        win.setValue("txtDESC_TYPE_ADJ", this.bean.DESC_TYPE_ADJ);
+
+        if (this.bean.STVAL === '2' || this.bean.STVAL === '6') {
+            if (this.bean.OBSERV_BPO !== '') {
+                Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
+                //Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(false);
+            }
+
+            if (this.bean.OBSERV_ADJ.trim() !== '') {
+                Ext.getCmp(prototype.id + '-openBpoAdj').fireEvent('click', {});
+                //Ext.getCmp(prototype.id + '-2-btnUpdateBpoAdj').setVisible(false);
+            }
         }
 
         if (this.bean.strDescMerchn.trim() !== '') {
@@ -209,7 +218,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         });
     },
     configurarBpoAdj: function () {
-        Ext.getCmp(prototype.id + '-panelAdj').setVisible(true);        
+        Ext.getCmp(prototype.id + '-panelAdj').setVisible(true);
     },
     bpoAdj_keyDownHandler: function () {
         Ext.getCmp(prototype.id + '-panelBpoAdj').setVisible(true);
@@ -220,7 +229,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
     closeBpoAdj_keyDownHandler: function () {
         Ext.getCmp(prototype.id + '-panelBpoAdj').setVisible(false);
         Ext.getCmp(prototype.id + '-closeBpoAdj').setVisible(false);
-        Ext.getCmp(prototype.id + '-2-btnUpdateBpoAdj').setVisible(false);        
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoAdj').setVisible(false);
     },
     obtainGetBpoAdjustmentCode: function () {
         Ext.Ajax.request({
@@ -286,7 +295,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         });
     },
     configurarBpoRev: function () {
-        Ext.getCmp(prototype.id + '-panelBpo').setVisible(true);        
+        Ext.getCmp(prototype.id + '-panelBpo').setVisible(true);
     },
     bpoRev_keyDownHandler: function () {
         Ext.getCmp(prototype.id + '-panelBpoObserv').setVisible(true);
@@ -296,7 +305,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
     closeBpoRev_keyDownHandler: function () {
         Ext.getCmp(prototype.id + '-panelBpoObserv').setVisible(false);
         Ext.getCmp(prototype.id + '-closeBpoObserv').setVisible(false);
-        Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(false);        
+        Ext.getCmp(prototype.id + '-2-btnUpdateBpoRev').setVisible(false);
     },
     onUpdateClickBpoRev: function (btn) {
         this.bean.OBSERV_BPO = win.getValue('de-txtBpoOBSERV-RO');

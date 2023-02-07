@@ -7457,12 +7457,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                         items: [
                                             {
                                                 text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100,
-                                                listeners: {
-                                                    click: 'OnGridComplementPusgrade'
-                                                },
+//                                                listeners: {
+//                                                    click: 'OnGridComplementPusgrade'
+//                                                },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
-                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return  value;
                                                 }
                                             },
                                             {

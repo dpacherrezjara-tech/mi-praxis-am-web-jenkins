@@ -8284,7 +8284,7 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell12.setCellValue(listaData.get(vi).SCARDN);
                 rcell13.setCellValue(listaData.get(vi).SAUTHOC);
                 rcell14.setCellValue(listaData.get(vi).SCARCOD);
-                rcell15.setCellValue(listaData.get(vi).STIME);
+                rcell15.setCellValue(listaData.get(vi).DATE_TIME_UTC);
                 iter.next();
                 ++vi;
                 ++vj;
