@@ -562,7 +562,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         //beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -1158,7 +1158,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strYearFrom = filter.strYearFrom.trim();
@@ -1666,7 +1666,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         //beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -3215,7 +3215,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") || !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -4045,7 +4045,8 @@ public class LoadConciliationTestDAO {
                 beanTkt.OBSERV = rst.getString("OBSERV").trim(); //Viene del A4174 es la obs del ajuste
                 beanTkt.OBSERV_ADJ = rst.getString("OBSERV").trim(); //Viene del A4174 es la obs del ajuste
                 beanTkt.SVFOP_ADJ = rst.getDouble("SVFOP_ADJ");
-
+                beanTkt.DESC_TYPE_ADJ = rst.getString("desCERROR").trim();//Tipo de ajuste
+                
                 beanTkt.TDOC = rst.getString("TDOC").trim();
                 beanTkt.SEQ = rst.getString("SEQ").trim();
                 beanTkt.CORRL = rst.getString("CORRL").trim();
@@ -5263,7 +5264,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
