@@ -128,6 +128,15 @@ public class A3648 {
     public String A3648CPN7D;
     public String A3648CPN8D;
     public String A3648TRNCO;
+    public String A3648PROCE;
+
+    public String getA3648PROCE() {
+        return A3648PROCE;
+    }
+
+    public void setA3648PROCE(String A3648PROCE) {
+        this.A3648PROCE = A3648PROCE;
+    }
 
     public String getA3648TRNCO() {
         return A3648TRNCO;
@@ -136,7 +145,7 @@ public class A3648 {
     public void setA3648TRNCO(String A3648TRNCO) {
         this.A3648TRNCO = A3648TRNCO;
     }
-    
+
     public String getA3648SFW() {
         return A3648SFW;
     }
@@ -152,6 +161,7 @@ public class A3648 {
     public void setA3648ARCHI(String A3648ARCHI) {
         this.A3648ARCHI = A3648ARCHI;
     }
+
     public double getA3648STAQD() {
         return A3648STAQD;
     }
@@ -191,6 +201,7 @@ public class A3648 {
     public void setA3648CPN8D(String A3648CPN8D) {
         this.A3648CPN8D = A3648CPN8D;
     }
+
     public void setA3648CONJT(String A3648CONJT) {
         this.A3648CONJT = A3648CONJT;
     }
@@ -210,6 +221,7 @@ public class A3648 {
     public void setA3648CARR8(String A3648CARR8) {
         this.A3648CARR8 = A3648CARR8;
     }
+
     public String getA3648RAAG() {
         return A3648RAAG;
     }
@@ -217,6 +229,7 @@ public class A3648 {
     public void setA3648RAAG(String A3648RAAG) {
         this.A3648RAAG = A3648RAAG;
     }
+
     public String getA3648FOLIO() {
         return A3648FOLIO;
     }
