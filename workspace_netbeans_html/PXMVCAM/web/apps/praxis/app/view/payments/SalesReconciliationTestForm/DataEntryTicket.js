@@ -1036,12 +1036,29 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                             margin: '0 0 4 0',
                             border: false,
                             bodyStyle: 'background: #E5ECEF',
-                            items: [                                
+                            items: [
                                 {
                                     xtype: 'label',
-                                    text: 'Obs. Adjustment',
+                                    text: 'Adj. Type',
                                     style: 'font-weight:bold;color:#121E31;',
                                     margin: '0 0 0 10',
+                                    padding: '4 0',
+                                    width: 120,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESC_TYPE_ADJ',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    readOnly: true,
+                                    width: 140
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Adj. Obs.',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 15',
                                     padding: '4 0',
                                     width: 120,
                                 },
@@ -1050,9 +1067,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     id: prototype.id + '-txtOBSERV_ADJ',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 15,
+                                    maxLength: 50,
                                     readOnly: true,
-                                    width: 345
+                                    width: 290
                                 },
                             ]
                         }
