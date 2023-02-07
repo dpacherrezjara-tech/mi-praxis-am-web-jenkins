@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
     dataObtain: {},
     lstSendManual: [],
     beanSettlementTktsDetail: {},
-    paramsDetailDEDetTktSettlement : {},
+    paramsDetailDEDetTktSettlement: {},
     beanStringGrid: {},
     sumAmount: 0,
     init: function (view) {
@@ -44,10 +44,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 if (this.bean.STVAL === '1') {
-                        Ext.getCmp(prototype.id + '-coupons_sales').show();
-                        Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(935);
-                        Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(940);
-                    }
+                    Ext.getCmp(prototype.id + '-coupons_sales').show();
+                    Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(935);
+                    Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(940);
+                }
                 break;
         }
     },
@@ -101,8 +101,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-        
-        if( this.beanResult.TDOC === "R"){
+
+        if (this.beanResult.TDOC === "R") {
             Ext.getCmp(prototype.id + '-dataEntrySettlement').setTitle('Refund Reconciliation by Amex - Settlement Form');
             Ext.getCmp(prototype.id + '-txtSalesMerchantID').setText('Refund MerchantID');
             Ext.getCmp(prototype.id + '-txtSettvsSales').setText('Sett. vs Refund');
@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
             Ext.getCmp(prototype.id + '-txtSalesAmount').setText('Refund Amount');
             Ext.getCmp(prototype.id + '-txtSalesDate2').setText('Refund Date');
         }
-        
+
         this.getDataGrid();
     },
     obtainData: function () {
@@ -161,10 +161,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
             }
         });
     },
-
     getDataGrid: function () {
         this.beanSettlementTktsDetail = {},
-        this.beanSettlementTktsDetail.DATE = this.bean.DATE;
+                this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
         this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
@@ -179,8 +178,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
-        
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktSettlement'
@@ -251,7 +252,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
     onCancelClick: function (btn) {
         this.view.close();
     },
-
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
     MaintenanceA4116: function (beanTemp) {
 //        console.log(beanTemp);
@@ -321,7 +321,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
             }
         });
     },
-
     validacionInsert: function () {
         var msjResult = '';
         if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtISREFNBR") === '') {

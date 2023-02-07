@@ -333,6 +333,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -370,6 +372,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
