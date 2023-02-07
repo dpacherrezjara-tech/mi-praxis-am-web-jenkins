@@ -2539,6 +2539,7 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
@@ -2649,7 +2650,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt_usos = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04377(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04377(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SPRUT01556(?)}";
 
         Connection cnx = null;
@@ -2657,10 +2658,10 @@ public class SalesReconciliAmexDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(14, Types.INTEGER);
-            cstmt.registerOutParameter(15, Types.INTEGER);
             cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(18, Types.INTEGER);
+            cstmt.registerOutParameter(19, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.DATE);
@@ -2675,17 +2676,19 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(11, filter.IN_SAUTHOC);
             cstmt.setString(12, filter.IN_IDITEMT);
             cstmt.setString(13, filter.IN_IDITEMS);
-            cstmt.setInt(14, filter.page.PAGNUM);
-            cstmt.setInt(15, filter.page.PAGROW);
-            cstmt.setInt(16, filter.page.TOTPAG);
-            cstmt.setInt(17, filter.page.TOTROW);
+            cstmt.setString(14, filter.AREFNBR.trim());
+            cstmt.setString(15, filter.TDOC.trim());
+            cstmt.setInt(16, filter.page.PAGNUM);
+            cstmt.setInt(17, filter.page.PAGROW);
+            cstmt.setInt(18, filter.page.TOTPAG);
+            cstmt.setInt(19, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(14);
-            filter.page.PAGROW = cstmt.getInt(15);
-            filter.page.TOTPAG = cstmt.getInt(16);
-            filter.page.TOTROW = cstmt.getInt(17);
+            filter.page.PAGNUM = cstmt.getInt(16);
+            filter.page.PAGROW = cstmt.getInt(17);
+            filter.page.TOTPAG = cstmt.getInt(18);
+            filter.page.TOTROW = cstmt.getInt(19);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -3820,6 +3823,7 @@ public class SalesReconciliAmexDAO {
                 objRtn.SINSAMOUC = rs01.getDouble("SINSAMOUC");
 
                 objRtn.CERRORHST = rs01.getString("CERRORHST");
+                objRtn.AREFNBR = rs01.getString("AREFNBR").trim();
                 objRtn.CERROR = rs01.getString("CERROR");
                 objRtn.DES_CERROR = rs01.getString("DES_CERROR");
                 if ("".equals(objRtn.CERROR.trim())) {

@@ -397,6 +397,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByQty.IN_SAUTHOC = rowData.data.SAUTHOC;
         this.beanDetByQty.IDITEMS = rowData.data.IDITEMS;
         this.beanDetByQty.IDITEMT = rowData.data.IDITEMT;
+        this.beanDetByQty.AREFNBR = rowData.data.AREFNBR;
+        this.beanDetByQty.TDOC = rowData.data.TDOC;
 
         console.log(this.beanDetByQty);
 

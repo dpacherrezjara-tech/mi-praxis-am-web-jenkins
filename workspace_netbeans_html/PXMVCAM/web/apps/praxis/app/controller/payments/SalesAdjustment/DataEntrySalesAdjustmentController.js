@@ -188,6 +188,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -225,6 +227,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -321,7 +325,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
                 if (res.success) {
                     //global.Msg({msg: res.msjOption});
                     /*Ext.getCmp(prototype.id + '-dataEntry').unmask();
-                    Ext.getCmp(prototype.id + '-dataEntry').close();*/
+                     Ext.getCmp(prototype.id + '-dataEntry').close();*/
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     meDE.onNextClick();
                 } else {
@@ -389,5 +393,5 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.DataEntrySalesAdjustm
             this.getData();
             //this.winDataEntry('U', rec, all, rowIndex);
         }
-    },   
+    },
 });
