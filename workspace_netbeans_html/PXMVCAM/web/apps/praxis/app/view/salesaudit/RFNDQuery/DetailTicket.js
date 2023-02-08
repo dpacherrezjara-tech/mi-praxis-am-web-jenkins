@@ -393,6 +393,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             labelAlign: 'right'
                         }
+                        
 
                     ]
                 },
@@ -901,6 +902,25 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             listeners: {
                                 change: 'onchange'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 40},
+                        {
+                            xtype: 'combo',
+                            id: prototype.idDetailTicket + '-ComboProcess',
+                            fieldLabel: 'Process',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 200,
+                            labelWidth: 50,
+                            labelAlign: 'left',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            listeners: {
+                                afterrender: 'onCmbStatusAfterRender'
                             }
                         }
 

@@ -465,13 +465,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
-    onRendererColumnTYPE: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        switch (String(record.get('A4076TYPE'))) {
-            case 'MA':
-                value = 'LAYOUT DETAIL';
+    onRendererColumnProcess: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(record.get('A3648PROCE'))) {
+            case 'D':
+                value = 'DETAIL';
                 break;
-            case 'GP':
-                value = 'LAYOUT TOTAL';
+            case 'T':
+                value = 'TOTAL';
                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
