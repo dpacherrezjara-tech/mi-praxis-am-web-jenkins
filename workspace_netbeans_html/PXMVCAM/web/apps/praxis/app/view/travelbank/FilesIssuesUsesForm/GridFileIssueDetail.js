@@ -1,6 +1,13 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-formFileIssueInfo',    
+    alias: 'widget.' + prototype.id + '-gridFileIssueDetail',
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -10,7 +17,6 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
     items: [
         {
             region: 'center',
-            id: prototype.id + '-boxConsultas',
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -24,7 +30,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                 // <editor-fold defaultstate="collapsed" desc="boxMainData">
                 {
                     region: 'center',
-                    id: prototype.id + '-boxMainData',
+//                    id: prototype.id + '-boxMainData',
                     hidden: false,
                     layout: {
                         type: 'vbox',
@@ -33,7 +39,6 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        //width: prototype.widthGrid,
                         width: '100%',
                         align: 'center'
                     },
@@ -41,10 +46,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
-                            id: prototype.id + '-gridData',
-                            width: prototype.widthGrid,
-                            // width: '100vw',
-                            height: 510,
+                            id: prototype.id + '-gridDataDetail',
+                            width: 900,
+                            height: 250,
                             columnLines: true,
                             margin: 3,
                             columns: {
@@ -55,55 +59,90 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                                 },
                                 items: [
                                     {
-                                        text: 'Trasmission<br>Date', dataIndex: 'A4280PRDA', width: 90,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        text: 'Unique Service<br>Credit ID', dataIndex: 'A4281IDISS', width: 90,
+                                        renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
                                     },
                                     {
-                                        text: 'Service<br>Type', dataIndex: 'A4280TIP', width: 80
+                                        text: 'Transacction', dataIndex: 'A4281TRNCU', width: 80
                                     },
                                     {
-                                        text: 'Transacctions', dataIndex: 'A4280TRX2', width: 80,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        text: 'Account<br>Number', dataIndex: 'A4281NCTA', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:left;";
                                             return value;
                                         }
                                     },
                                     {
-                                        text: 'Amout', dataIndex: 'A4280TOT', width: 90,                                        
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    
-                                    {
-                                        text: 'Currency', dataIndex: 'A4280MDA', width: 80,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        text: 'Service<br> Credit Code', dataIndex: 'A4281SERV', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
                                     },
                                     {
-                                        text: 'Accounting',
-                                        columns: [
-                                            {text: 'Period', dataIndex: 'A4280PCONT', width: 80, align: 'center'},
-                                            {text: 'Date', dataIndex: 'A4280FCONT', width: 80, align: 'center'}
-                                        ]
+                                        text: 'Value', dataIndex: 'A4281VALOR', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;";
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
                                     },
-                                     {
-                                        text: 'Delivery',
-                                        columns: [
-                                            {text: 'Nbr<br>Identifier', dataIndex: 'A4280IDFIL', width: 70, align: 'center'},
-                                            {text: 'File Type', dataIndex: 'A4280TYPE', width: 70, align: 'center'},
-                                            {text: 'Head <br>Whithout Trax.', dataIndex: 'A4280STS2_1', width: 90, align: 'center'}
-                                        ]
+
+                                    {
+                                        text: 'Currency', dataIndex: 'A4281MDA', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
                                     },
                                     {
-                                        text: 'Final<br>State', dataIndex: 'A4280STS_1', width: 80,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        text: 'Reason', dataIndex: 'A4281MOT', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+
+                                    {
+                                        text: 'Service<br>Type', dataIndex: 'A4281TIPD', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Issue Date', dataIndex: 'A4281FEMI', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Expire<br> Date', dataIndex: 'A4281FEXP', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Document<br> number', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return record.get('A4281CIA') + record.get('A4281FORMA') + record.get('A4281SERIE') ;
+                                        }
+                                    },
+                                    {
+                                        text: 'ID <br>Reference Nbr', dataIndex: 'A4281IDISR', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Error <br>Code', dataIndex: 'A4281ERR', width: 80,
+                                        renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
@@ -129,13 +168,13 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-pie',
+                            id: prototype.id + '-pie-1',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center',
-                                padding:2
+                                padding: 2
                             },
-                            border: true,                            
+                            border: true,
                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                             defaults: {
                                 border: true
@@ -191,18 +230,6 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                     ]
                 }
                 // </editor-fold>
-            ]
-        },
-        {
-            region: 'south',
-            layout: 'border',
-            height: 0,
-            defaults: {
-                style: 'margin: 2px;',
-                bodyStyle: 'background: transparent;',
-                border: false
-            },
-            items: [
             ]
         }
     ]

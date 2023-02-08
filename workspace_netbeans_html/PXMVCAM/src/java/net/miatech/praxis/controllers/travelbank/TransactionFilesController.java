@@ -1,13 +1,18 @@
+package net.miatech.praxis.controllers.travelbank;
 
+import com.google.gson.Gson;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.logic.travelbank.TransactionFilesLogic;
+import net.miatech.praxis.travelbank.SQP04806Filter;
+import net.miatech.praxis.travelbank.SQP04807Filter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -16,6 +21,83 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Scope("request")
 @RequestMapping("/TransactionFiles")
-public class TransactionFilesController {
-    
+public class TransactionFilesController extends BaseController {
+
+    private TransactionFilesLogic logic;
+
+    @RequestMapping(value = "/search")
+    public @ResponseBody
+    String search(ModelMap map, HttpServletRequest request) {
+        List<SQP04806Filter> listaData;
+        SQP04806Filter filter;
+        filter = new SQP04806Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_OPCION = request.getParameter("VP_OPCION");
+            filter.VP_IDFIL1 = request.getParameter("VP_IDFIL1");
+            filter.VP_IDFIL2 = request.getParameter("VP_IDFIL2");
+            filter.VP_DESDE = request.getParameter("VP_DESDE");
+            filter.VP_HASTA = request.getParameter("VP_HASTA");
+            filter.VP_IDISS = request.getParameter("VP_IDISS");
+            filter.VP_STS = request.getParameter("VP_STS");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new TransactionFilesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04806Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/searchDetalle")
+    public @ResponseBody
+    String searchDetalle(ModelMap map, HttpServletRequest request) {
+        List<SQP04807Filter> listaData;
+        SQP04807Filter filter;
+        filter = new SQP04807Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_OPCION = request.getParameter("VP_OPCION");
+            filter.VP_PRDA = request.getParameter("VP_PRDA");
+            filter.VP_MDA = request.getParameter("VP_MDA");
+            filter.VP_SQDIA = request.getParameter("VP_SQDIA");
+            filter.VP_IDISS = request.getParameter("VP_IDISS");
+            filter.VP_Document = request.getParameter("VP_Document");
+            filter.VP_IDISR = request.getParameter("VP_IDISR");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new TransactionFilesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04807Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
 }

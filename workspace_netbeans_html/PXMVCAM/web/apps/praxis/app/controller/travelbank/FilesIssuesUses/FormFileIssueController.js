@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormFileIssueContro
     init: function ( ) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
         prototype.id = 'FilesIssuesUsesForm';
-        prototype.url = CONTEXTPATH + '/FilesIssuesUses';
+        prototype.url = CONTEXTPATH + '/TransactionFiles';
         prototype.widthContenedor = 1300;
         prototype.widthGrid = 863;
         // </editor-fold>
@@ -64,18 +64,18 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormFileIssueContro
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Info">
-    onEditClick: function (grid, rowIndex, colIndex) {
+    onEditClick: function (grid, rowIndex) {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         console.log(rec);
-        if (rec.data.A1955MODUL !== 'PADM')
-            this.winDataEntry('U', rec);
+        //if (rec.data.A1955MODUL !== 'PADM')
+        this.winDataEntry('U', rec);
     },
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.travelbank.AccountingMasterTravelbankForm.DataEntry', {
-            id: 'DataEntryAccountingMasterTravelbankForm',
+        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntry', {
+            id: 'FormFileIssueDataEntry',
             params: {
                 action: action,
                 rec: rec
@@ -89,13 +89,13 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormFileIssueContro
 
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
-        var strModulo = this.getValue('cboModulo');
-        if (strModulo !== '') {
+        var strFiltro = this.getValue('cmbfiltro');
+        if (strFiltro !== '') {
             this.setFormatParameter();
             this.setGridData();
         } else {
             global.Msg({
-                msg: 'Please select module.'
+                msg: 'Please select filter type.'
             });
             this.focus('cboModulo');
         }
@@ -152,83 +152,81 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormFileIssueContro
 
     // <editor-fold defaultstate="collapsed" desc="setFormatParameter">
     setFormatParameter: function () {
-        searchParams = {};
-
+        var me = this;
+        me.searchParams = {
+            VP_DESDE: '',
+            VP_HASTA: '',
+            VP_IDFIL1: '',
+            VP_IDFIL2: '',
+            VP_IDISS: ''
+        };
         // <editor-fold defaultstate="collapsed" desc="llenarData">
-        var cboModulo = this.getValue('cboModulo');
-        switch (cboModulo) {
-            case "PTBCREDITI" :
-            case "PTBCREDITU" :
-            case "PTBLOSSES" :
-            case "PTBEXPIRY" :
-            case "PTBREPORT" :
-            case "PTBDETAIL" :
-                searchParams.IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtDateFrom').getValue(), 'Ymd');
-                searchParams.IN_FECHA_ACUSE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtDateTo').getValue(), 'Ymd');
+        var cmbfiltro = this.getValue('cmbfiltro');
+        switch (cmbfiltro) {
+            case "1" :
+            case "3" :
+            case "4" :
+                me.searchParams.VP_DESDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+                me.searchParams.VP_HASTA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
                 break;
-            case 'PAPINT':
-            case 'PARINT':
-                // <editor-fold defaultstate="collapsed" desc="Combo Date">
-                var fyear = Ext.getCmp(prototype.id + '-cmbDateYearFrom').getValue();
-                var fmonth = Ext.getCmp(prototype.id + '-cmbDateMonthFrom').getValue();
-                var fperiod = Ext.getCmp(prototype.id + '-cmbDatePeriodFrom').getValue();
-
-                var tyear = Ext.getCmp(prototype.id + '-cmbDateYearTo').getValue();
-                var tmonth = Ext.getCmp(prototype.id + '-cmbDateMonthTo').getValue();
-                var tperiod = Ext.getCmp(prototype.id + '-cmbDatePeriodTo').getValue();
-                // </editor-fold>
-                searchParams.IN_FECHA_PROCESO = fyear + fmonth + fperiod;
-                searchParams.IN_FECHA_ACUSE = tyear + tmonth + tperiod;
+            case '2':
+                me.searchParams.VP_IDFIL1 = Ext.getCmp(prototype.id + '-A4280IDFILE1').getValue();
+                me.searchParams.VP_IDFIL2 = Ext.getCmp(prototype.id + '-A4280IDFILE2').getValue();
+                break;
+            case '5':
+                me.searchParams.VP_IDISS = Ext.getCmp(prototype.id + '-A4281IDISS').getValue();
                 break;
         }
-        searchParams.IN_MODULO = cboModulo;
-        searchParams.A1955STATU = this.getValue('cboEstado');
+        me.searchParams.VP_OPCION = cmbfiltro;
+        me.searchParams.VP_STS = Ext.getCmp(prototype.id + '-cmbSTS').getValue();
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="asignación">
-        _path = prototype.url + '/getXLSX?' +
-                'IN_MODULO=' + searchParams.IN_MODULO + '&' +
-                'IN_FECHA_PROCESO=' + searchParams.IN_FECHA_PROCESO + '&' +
-                'IN_FECHA_ACUSE=' + searchParams.IN_FECHA_ACUSE + '&' +
-                'A1955STATU=' + searchParams.A1955STATU;
+//        _path = prototype.url + '/getXLSX?' +
+//                'IN_MODULO=' + searchParams.IN_MODULO + '&' +
+//                'IN_FECHA_PROCESO=' + searchParams.IN_FECHA_PROCESO + '&' +
+//                'IN_FECHA_ACUSE=' + searchParams.IN_FECHA_ACUSE + '&' +
+//                'A1955STATU=' + searchParams.A1955STATU;
         // </editor-fold>
     },
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function () {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.travelbank.AccountingMasterTravelbank.GridData', {
-            proxy: {
-                url: prototype.url + '/search'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = searchParams;
-                },
-                load: function (obj, obj2, success, obj4, obj5) {
-                    win.lblUser_toolTip("Estructura: A1955");
-                    // <editor-fold defaultstate="collapsed" desc="paggin">
-                    var pag = Ext.getCmp(prototype.id + '-paggin');
-                    var pagData = pag.getPageData();
-
-                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
-                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
-                    var total = Ext.util.Format.number(pagData.total, '0,000');
-
-                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
-                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
-                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
-                    // </editor-fold>
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found'
-                        });
-                    }
+        var me = this;
+        Ext.Ajax.request({
+            url: prototype.url + '/search',
+            timeout: 60000000,
+            method: 'POST',
+            params: me.searchParams,
+            beforerequest: Ext.getCmp(prototype.id + '-gridMainContem').mask('Cargando...', ''),
+            success: function (response) {
+                win.lblUser_toolTip("Estructura: A4280");
+                var res = Ext.JSON.decode(response.responseText);
+                Ext.getCmp(prototype.id + '-gridMainContem').unmask('Loading...', '');
+                if (res.total === 0) {
+                    global.Msg({
+                        msg: 'Data not found'
+                    });
+                    return;
                 }
+                Ext.getCmp(prototype.id + '-gridData').setStore(res.data);
+                Ext.getCmp(prototype.id + '-gridData').getStore().reload();
+                Ext.getCmp(prototype.id + '-paggin').setStore(res.data);
+
+                // <editor-fold defaultstate="collapsed" desc="paggin">
+                var pag = Ext.getCmp(prototype.id + '-paggin');
+                var pagData = pag.getPageData();
+                var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
+                var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
+                var total = Ext.util.Format.number(pagData.total, '0,000');
+                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+                Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+                // </editor-fold>
+
             }
         });
-        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     // </editor-fold>    
 

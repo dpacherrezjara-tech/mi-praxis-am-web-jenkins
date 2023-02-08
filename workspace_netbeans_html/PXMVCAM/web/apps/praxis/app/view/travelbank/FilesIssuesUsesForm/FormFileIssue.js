@@ -1,15 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-//    alias: 'widget.DataEntryAccountingMasterTravelbankForm',
-//    controller: 'DataEntryAccountingMasterTravelbankController',
-//    requires:[
-//        'Ext.Praxis.controller.travelbank.AccountingMasterTravelbank.DataEntryAccountingMasterTravelbankController'
-//    ],
-            
 Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssue', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-formFileIssue',
@@ -23,6 +12,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssue', {
     border: false,
     layout: {
         type: 'vbox',
+        layout: 'fit',
         padding: 1
     },
     defaults: {
@@ -30,7 +20,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssue', {
     },
     items: [
         {
-            xtype: 'panel',            
+            xtype: 'panel',
             border: false,
             layout: {
                 type: 'hbox',
@@ -44,7 +34,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssue', {
             ]
         },
         {
-            xtype: 'panel',            
+            xtype: 'panel',
             border: false,
             layout: {
                 padding: 1
@@ -56,8 +46,8 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssue', {
             ]
         },
         {
-            xtype: 'panel',
-            margin: '1 1 1 1',
+            xtype: 'panel', id: prototype.id + '-gridMainContem',
+            border: false, margin: '1 1 1 1',
             items: [
                 {
                     xtype: prototype.id + '-formFileIssueInfo'

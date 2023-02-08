@@ -7,7 +7,7 @@
 prototype.id = 'FilesIssuesUsesForm';
 prototype.url = CONTEXTPATH + '/FilesIssuesUses';
 prototype.widthContenedor = 1300;
-prototype.widthGrid = 863;
+prototype.widthGrid = 980;
 // </editor-fold>
   
 Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm', {
@@ -125,21 +125,10 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                 {
                     width: '90%',height: '100%',
                     padding: '2 1 1 1',
-                    id: prototype.id + '-conten-panel',
-                    //layout: 'border',
-                    //align: 'center',
-                    border: true,
-                    defaults: {
-                        border: true
-                    },
+                    id: prototype.id + '-conten-panel',                    
+                    border: false,                    
                     bodyStyle: 'background-color: white;',
-                    items: [
-                        {
-//                            region: 'center',
-//                            xtype: prototype.id + '-info',
-//                            id: prototype.id + '-contentInfo'
-                        }
-                    ]
+                    items: [{}] //carga dinamica
                 }
             ]
         }
@@ -180,8 +169,6 @@ setOnClickBtnActive = (btnId, index) => {
             });
             panel.add(gridPanel);
         }
-        //Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
-        //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     }
 
 };

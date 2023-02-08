@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                             xtype: 'panel',
                             width: '100%',
                             layout: 'hbox',
-                            border: true,
+                            border: false,
                             bodyStyle: 'background-color: #E3EAF9;',
                             items: [
                                 {
@@ -105,6 +105,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                             format: 'Ymd',
                                             //formatText: '',
                                             //invalidText: 'Type the date in the format: YYYY/MM/DD',
+                                            value:'20221001',
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -127,7 +128,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                             fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 30,
                                             width: 130,
                                             height: 26,
-                                            format: 'Ymd',
+                                            format: 'Ymd', value:new Date(),
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -214,7 +215,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4281YIDISS',
+                                            id: prototype.id + '-A4281IDISS',
                                             fieldLabel: 'Nbr. Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
@@ -230,8 +231,51 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                             }
                                         }
                                     ]
-                                }
+                                },
                                 // </editor-fold>
+                                {
+                                    xtype: 'panel',                                    
+                                    border: false,                               
+                                    layout: 'hbox',
+                                    bodyStyle: 'background: transparent;"',
+                                    margin: '3 0',
+                                    defaults: {
+                                        anchor: '100%',
+                                        padding: '4 0'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbSTS',
+                                            fieldLabel: 'Final State', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            //labelWidth: 120,
+                                            store: new Ext.data.SimpleStore({
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ["", "(All)"],
+                                                    ["0", "OPEN"],
+                                                    ["1", "CLOSED"]                                                    
+                                                ]
+                                            }),
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: true,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 200,
+                                            height: 26,
+                                            value: "",                                            
+                                            enableKeyEvents: true,
+                                            padding: '4 0',
+                                            listeners: {
+                                                // change: 'onMostrarFiltrosChange'
+                                            }
+                                        }
+                                    ]
+                                }
                             ]
                         }
                     ]
