@@ -278,8 +278,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         this.beanSettlementTktsDetail.IN_SAUTHOC = rowData.data.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = rowData.data.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = rowData.data.IDITEMS;
-        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
-        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
+        this.beanSettlementTktsDetail.AREFNBR = rowData.data.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = rowData.data.TDOC;
 
         me.paramsDetailDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         this.setGridDataDetTktSettlement();
