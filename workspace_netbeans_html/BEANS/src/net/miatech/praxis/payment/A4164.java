@@ -112,6 +112,11 @@ public class A4164 {
     public String DATEADM = "";
     public double TOTADM = 0;
     public String CURRADM = "";
+    public String USOS = "";
+    public String USOS1 = "";
+    public String USOS2 = "";
+    public String USOS3 = "";
+    public String USOS4 = "";
     //Variables del Sistema
     public String USCR = "";
     public String FECR = "";
