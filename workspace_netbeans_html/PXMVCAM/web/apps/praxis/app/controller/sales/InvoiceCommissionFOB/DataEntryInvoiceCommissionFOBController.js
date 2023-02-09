@@ -135,6 +135,9 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionFOB.DataEntryInvoiceCom
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
         var strMsg = this.validateForm(params);
+        if(!this.validateMaxMinValueDif()){
+            return;
+        }
         if (strMsg.trim() !== '') {
             global.Msg({
                 msg: strMsg
@@ -572,8 +575,24 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionFOB.DataEntryInvoiceCom
                 Ext.getCmp(prototype.id + '-txtA1757STATU').setReadOnly(false);                
         }     
         Ext.getCmp(prototype.id + '-txtA1757STATU').setValue(A1757STATU_00);        
-    }
-    
+    },
+    validateMaxMinValueDif:function(){
+        let valor = parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMIV_D').getValue().replace(',',''));
+        //console.log(valor);
+        let validaValorMaxMin = valor<=0.50 && valor>=-0.50 && valor!==0.00;
+        let estado = Ext.getCmp(prototype.id + '-txtA1757STATU').getValue().trim();
+        if(validaValorMaxMin){
+            if(estado==='F'){
+                return true;
+            }else{
+                global.Msg({
+                    msg:'Difference not valid.'
+                });
+                return false;
+            }
+        }
+        return true;
+    } 
 });
 
 

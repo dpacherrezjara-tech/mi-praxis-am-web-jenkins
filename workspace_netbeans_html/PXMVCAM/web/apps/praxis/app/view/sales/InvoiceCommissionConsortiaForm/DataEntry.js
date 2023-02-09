@@ -1110,7 +1110,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             enforceMaxLength: true,
                                             padding: '2px 5px 2px 3px',
                                             maxLength: 1,
-                                            maskRe: /[aAmMdDpPbB]/,
+                                            maskRe: /[aAmMdDpPbBfF]/,
                                             listeners: {
                                                 change: 'onUpperValue'
                                             }
@@ -1120,7 +1120,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             labelAlign: 'right',
                                             width: 400,
                                             padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;font-size:11px">A=Match M=Manual D=Difference P=Pending B=Balanced </strong>'
+                                            html: '<strong style="color:#000;font-size:11px">A=Match M=Manual D=Difference P=Pending<br>B=Balanced F=Force</strong>'
                                         }
                                     ]
                                 },
