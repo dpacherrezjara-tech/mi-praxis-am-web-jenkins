@@ -516,8 +516,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
     getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
-    }
+    },
+    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
+        var strTkt = rowData.data.ISREFNBR;
+
+        prototypeProgram.view = 'payments-sales-adjustment-form';
+        prototypeProgram.nprog = 'PX00000599';
+        prototypeProgram.title = 'Double Payment';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+
+        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
 
 }
 );

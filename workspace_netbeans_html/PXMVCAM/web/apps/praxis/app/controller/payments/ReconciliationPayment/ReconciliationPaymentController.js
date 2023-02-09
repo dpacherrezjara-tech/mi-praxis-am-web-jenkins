@@ -320,6 +320,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          ["PRISMA", "Prisma"],
          ["WP", "WorldPay"],
          ["GETMEX00", "GetNetMex"],
+         ["ATCAN00", "Atcan"],
          ]
          }));
          cmbProT.setValue("");
