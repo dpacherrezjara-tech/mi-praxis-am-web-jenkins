@@ -465,6 +465,50 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     maxLength: 4,
                                     readOnly: true,
                                     width: 80
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Coupons',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 10',
+                                    padding: '4 0',
+                                    width: 90,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS1',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS3',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS4',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
                                 }
                             ]
                         },

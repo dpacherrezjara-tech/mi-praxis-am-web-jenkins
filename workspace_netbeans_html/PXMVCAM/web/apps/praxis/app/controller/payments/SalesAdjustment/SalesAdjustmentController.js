@@ -6,8 +6,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
     bean: '',
     paginActual: '',
     drillDown: [],
-    lstCountry:[],
-    lstBank:[],
+    lstCountry: [],
+    lstBank: [],
     gridActual: '',
     panelActual: '',
     fileName: '',
@@ -17,18 +17,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
     beanSettlementTktsDetail: {},
     paramsDetailDetTktSettlement: {},
     dataObtain: {},
-    init: function(view) {
+    init: function (view) {
         me = this;
         prototype.id = 'SalesAdjustmentForm';
         prototype.url = CONTEXTPATH + '/SalesAdjustment';
         this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
         me.panelActual = '-boxAdjustment';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        
+
         this.control({
 //            //   -------------------Eventos Genericos --------------------
             '#SalesAdjustmentForm-xpanel': {
-                afterrender: this.xpanel_afterrender            
+                afterrender: this.xpanel_afterrender
             },
             '#SalesAdjustmentForm-btnSearch': {
                 click: this.btnSearch_click
@@ -65,19 +65,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
 //
         });
     },
-    xpanel_afterrender: function(obj, e) {
-         this.obtainData();
-         this.btnSearch_click();
+    xpanel_afterrender: function (obj, e) {
+        this.obtainData();
+        this.btnSearch_click();
     },
-    eventKey: function(e, eOpts) {
+    eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
         }
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onChangeCmbType: function(obj, value) {
+    onChangeCmbType: function (obj, value) {
 
         Ext.getCmp(prototype.id + '-panelFilter1').hide();
         Ext.getCmp(prototype.id + '-panelFilter2').hide();
@@ -85,7 +85,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         Ext.getCmp(prototype.id + '-panelFilter4').hide();
         Ext.getCmp(prototype.id + '-panelFilter5').hide();
         Ext.getCmp(prototype.id + '-panelFilter6').hide();
-        Ext.getCmp(prototype.id + '-panelFilter7').hide(); 
+        Ext.getCmp(prototype.id + '-panelFilter7').hide();
         Ext.getCmp(prototype.id + '-panelFilter8').hide();
 
         if (value !== '') {
@@ -129,7 +129,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-               // ["PRDA", "Processing Date"],
+                // ["PRDA", "Processing Date"],
                 ["PAYDATE", "Payment Date"]
             ]
         }));
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                 ["R", "Refund"]
             ]
         }));
-        
+
         var cmbSTRFND = Ext.getCmp(prototype.id + '-cmbSTRFND');
         cmbSTRFND.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -156,15 +156,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                 ["1", "Processed"]
             ]
         }));
-        
+
         Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
-        
+
         Ext.getCmp(prototype.id + '-cmbSTRFND').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbSTRFND').setValue('');
         Ext.getCmp(prototype.id + '-cmbSTRFND').resumeEvents();
-        
+
         //me.obtainGetAdjustmentCode();
     },
     obtainGetAdjustmentCode: function () {
@@ -185,7 +185,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             }
         });
     },
-    setFormatParameter: function() {
+    setFormatParameter: function () {
 
         me.bean = {};
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
@@ -198,22 +198,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
         me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
         me.bean.IN_STRFND = Ext.getCmp(prototype.id + '-cmbSTRFND').getValue();
-        
+
         var beanString = JSON.stringify(me.bean);
-        
+
         searchParams = {
             bean: me.bean,
             beanString: beanString
         };
-      console.log(searchParams);
+        console.log(searchParams);
     },
-    btnSearch_click: function(obj, e) {
+    btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGridData();
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
-    setGridData: function() {
+    setGridData: function () {
         win.lblUser_toolTip("Estructura: A2281");
         me.panelActual = '-boxAdjustment';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -227,11 +227,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                 proxy: {
                     url: prototype.url + '/searchAdjustment'
                 }, listeners: {
-                    beforeload: function(obj) {
-                        obj.proxy.extraParams =searchParams                                       
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams
                         Ext.getCmp(prototype.id + '-boxAdjustment').mask('Loading...');
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         Ext.getCmp(prototype.id + '-boxAdjustment').unmask();
 //                        console.log(obj.data);
                         var pag = Ext.getCmp(prototype.id + '-paggin');
@@ -247,7 +247,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                     }
                 }
             });
-            
+
 //            console.log(storeGridDatas);
             global.clear();
             Ext.getCmp(prototype.id + '-gridAdjustment').bindStore(storeGridDatas);
@@ -278,6 +278,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         this.beanSettlementTktsDetail.IN_SAUTHOC = rowData.data.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = rowData.data.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = rowData.data.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = rowData.data.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = rowData.data.TDOC;
 
         me.paramsDetailDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         this.setGridDataDetTktSettlement();
@@ -324,25 +326,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
-
-    validateFields: function() {
+    validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
 
         return msj;
     },
-    btnAdd_click: function() {
+    btnAdd_click: function () {
         this.winDataEntry('I');
     },
-    onEditClick: function(grid, rowIndex, colIndex) {
+    onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         this.winDataEntry('U', rec, all, rowIndex);
     },
-    winDataEntry: function(action, rec, all, rowIndex) {
+    winDataEntry: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;       
-        
+        rec = rec === null || rec === undefined ? {} : rec;
+
         Ext.create('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
@@ -353,7 +354,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             }
         }).show();
     },
-    btnBack_click: function(obj, e) {
+    btnBack_click: function (obj, e) {
 
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
@@ -372,13 +373,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             global.showMenu();
         }
     },
-    btnClear_click: function(obj, e) {
+    btnClear_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-cmbCode').setValue('');
         Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
         Ext.getCmp(prototype.id + '-cmbBank').setValue('');
 
     },
-    btnExcel_click: function(obj, e) {
+    btnExcel_click: function (obj, e) {
 
         this.setFormatParameter();
         var msj = this.validateFields();
@@ -393,7 +394,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'ok') {
                         this.exportExcel();
                     }
@@ -401,8 +402,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             });
         }
     },
-    exportExcel: function() {
-        
+    exportExcel: function () {
+
         this.setFormatParameter();
         switch (me.panelActual) {
             case  '-panelGridData':
@@ -415,7 +416,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         }
 
     },
-    onDownloadFile: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.paramsDetail.beanString = JSON.stringify(rowData.data);
         me.fileName = rowData.data.A2536NAMEF;
         Ext.Ajax.request({
@@ -424,7 +425,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
             params: me.paramsDetail,
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 
@@ -440,7 +441,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
         });
 
     },
-    btnFilter_click: function(obj) {
+    btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
             option.setVisible(false);
@@ -448,7 +449,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             option.setVisible(true);
         }
     },
-    setWidthPie: function() {
+    setWidthPie: function () {
         var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
         Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
     },
@@ -462,61 +463,61 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
             Ext.getCmp(prototype.id + '-pie').setVisible(false);
         }
     },
-    getPaggin: function () {
-        me.pagginActual = '';
-        switch (me.panelActual) {
-            case  '-boxAdjustment':
-                me.pagginActual = '-paggin';
-                break;
-        }
-    },
+            getPaggin: function () {
+                me.pagginActual = '';
+                switch (me.panelActual) {
+                    case  '-boxAdjustment':
+                        me.pagginActual = '-paggin';
+                        break;
+                }
+            },
     /*     
      * Funciones para la paginacion     
      */
-    pagFirst: function(obj, e) {
+    pagFirst: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveFirst();
-    }, pagPrevious: function(obj, e) {
+    }, pagPrevious: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.movePrevious();
     },
-    pagNext: function(obj, e) {
+    pagNext: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveNext();
     },
-    pagLast: function(obj, e) {
+    pagLast: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
-    getInt: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getInt: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000');
     },
-    getDouble: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getText: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getText: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:left';
         return value;
     },
-    getDoubleColor1: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor1: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#F2FAFC';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor2: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor2: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#DFF0ED';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor3: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
     }
 
 
-  }
+}
 );
