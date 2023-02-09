@@ -247,7 +247,8 @@ public class SalesAdjustmentDAO {
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC");
                     beanTkt.INSTANBR = rst.getString("INSTANBR");
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
-                    beanTkt.DES_CERROR = rst.getString("DES_CERROR");
+                    beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
+                    beanTkt.FVOID = rst.getString("FVOID");
                     beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
 
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
