@@ -195,11 +195,13 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         if (!validaEmdChr) {
             return;
         }
+        if(!this.validateMaxMinValueDif()){
+            return;
+        }
         var p = this.view.params;
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
         var strMsg = this.validateForm(params);
-
         if (strMsg.trim() !== '') {
             global.Msg({
                 msg: strMsg
@@ -896,5 +898,22 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         } else {
             Ext.getCmp(prototype.id + '-txtA1757STATU').setValue('D');
         }
+    },
+     validateMaxMinValueDif:function(){
+        let valor = parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMIV_D').getValue().replace(',',''));
+        //console.log(valor);
+        let validaValorMaxMin = valor<=0.50 && valor>=-0.50 && valor!==0.00;
+        let estado = Ext.getCmp(prototype.id + '-txtA1757STATU').getValue().trim();
+        if(validaValorMaxMin){
+            if(estado==='F'){
+                return true;
+            }else{
+                global.Msg({
+                    msg:'Difference not valid.'
+                });
+                return false;
+            }
+        }
+        return true;
     }
 });
