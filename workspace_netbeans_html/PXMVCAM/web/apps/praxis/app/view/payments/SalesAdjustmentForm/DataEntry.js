@@ -270,11 +270,11 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                         },
                         {
                             xtype: 'label',
-                            text: 'Refund Bank Information',
+                            text: 'Conciliate',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
-                            width: 234,
+                            width: 280,
                             height: 20,
                             margin: '4 2 4 8'
                         },
@@ -282,24 +282,36 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#efe5e5;',
                             margin: '0 2 0 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
+                            bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Status',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtSTVAL',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Currency',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSTRFND',
+                                    id: prototype.id + '-de-txtPCURRENCY',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -308,86 +320,34 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Date',
+                                    text: 'Qty Tkts',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 106
+                                    width: 120
                                 },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 4 },
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtRFDATE',
+                                    id: prototype.id + '-de-txtQTYTKT',
                                     fieldStyle: 'text-align:center',
-                                    readOnly: false,
-                                    width: 100,
-                                    maskRe: /[0-9]/,                                    
                                     enforceMaxLength: true,
-                                    maxLength: 8
+                                    readOnly: true,
+                                    width: 100,
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Authorization',
+                                    text: 'Transact. Amount',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 106
+                                    width: 120
                                 },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 4 },
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtRFAUTOR',
-                                    fieldStyle: 'text-align:center',
-                                    readOnly: false,
-                                    width: 100,
-                                    maskRe: /[0-9]/,   
-                                    maxLength: 8,
-                                    enforceMaxLength: true,                                    
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'Operation',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 106
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtRFOPERB',
-                                    fieldStyle: 'text-align:center',
+                                    id: prototype.id + '-de-txtTGROSAMOUN',
+                                    fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
-                                    readOnly: false,
+                                    readOnly: true,
                                     width: 100,
-                                    maskRe: /[0-9]/,   
-                                    maxLength: 10,
                                 },
                                 {xtype: 'tbspacer', width: 5}
                             ]
@@ -396,26 +356,74 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#efe5e5;',
                             margin: '0 2 0 20',
+                            bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Agent',
+                                    text: 'Rule',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtRFAUDIT',
+                                    id: prototype.id + '-de-txtdescFREGLA',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 785}
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Doc. Type',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtTDOC',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Flag Compl.',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFCOMPL',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    text: 'Sales Amount',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSVFOPS',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -714,7 +722,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                     fieldStyle: 'text-align:center;',
                                     width: 100,
                                     readOnly: true,
-                                    maskRe: /[0-9]/,                                    
+                                    maskRe: /[0-9]/,
                                     enforceMaxLength: true,
                                     maxLength: 19
                                 },
@@ -760,11 +768,11 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                         },
                         {
                             xtype: 'label',
-                            text: 'Conciliate',
+                            text: 'Refund Bank Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
-                            width: 280,
+                            width: 234,
                             height: 20,
                             margin: '4 2 4 8'
                         },
@@ -772,36 +780,24 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '0 2 0 20',
                             bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
                             items: [
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Status',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-txtSTVAL',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'Currency',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtPCURRENCY',
+                                    id: prototype.id + '-de-txtSTRFND',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -810,34 +806,86 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Qty Tkts',
+                                    text: 'Date',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 106
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 4},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtQTYTKT',
+                                    id: prototype.id + '-de-txtRFDATE',
                                     fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
+                                    readOnly: false,
                                     width: 100,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    maxLength: 8
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'Transact. Amount',
+                                    text: 'Authorization',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 106
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 4},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtTGROSAMOUN',
-                                    fieldStyle: 'text-align:right',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
+                                    id: prototype.id + '-de-txtRFAUTOR',
+                                    fieldStyle: 'text-align:center',
+                                    readOnly: false,
                                     width: 100,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 8,
+                                    enforceMaxLength: true,
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Operation',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 106
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 4},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtRFOPERB',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: false,
+                                    width: 100,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 10,
                                 },
                                 {xtype: 'tbspacer', width: 5}
                             ]
@@ -846,74 +894,26 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntry', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '0 2 0 20',
                             bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
                             items: [
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Rule',
+                                    text: 'Agent',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtdescFREGLA',
+                                    id: prototype.id + '-de-txtRFAUDIT',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'Doc. Type',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtTDOC',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'Flag Compl.',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtFCOMPL',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    text: 'Sales Amount',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSVFOPS',
-                                    fieldStyle: 'text-align:right',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 5}
+                                {xtype: 'tbspacer', width: 785}
                             ]
                         },
                         {
