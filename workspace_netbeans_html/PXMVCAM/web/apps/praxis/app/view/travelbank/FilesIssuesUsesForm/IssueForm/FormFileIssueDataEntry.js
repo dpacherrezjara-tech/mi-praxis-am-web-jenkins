@@ -1,14 +1,14 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntry', {
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssueDataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.FormFileIssueDataEntryForm',
     controller: 'FormFileIssueDataEntryController',
     requires: [
         'Ext.Praxis.controller.travelbank.FilesIssuesUses.FormFileIssueDataEntryController',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail'
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.GridFileIssueDetail'
     ],
     title: 'ISSUES - View detail',
     header: true,
-    height: 580,
+    height: 600,
     width: 950,
     border: false,
     resizable: false,
@@ -16,12 +16,12 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
     modal: true,
     defaults: {
         border: false,
-        bodyStyle: 'background: #FFFFFF;"'
+        bodyStyle: 'background: #FFFFFF;'
     },
     items: [
         {
             xtype: 'form',
-            id: prototype.id + '-formDataEntry',
+            id: prototype.id03 + '-formDataEntry',
             defaults: {
                 style: 'margin: 3px;',
                 border: false
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id + '-A4280PRDA',
+                                            id: prototype.id03 + '-A4280PRDA',
                                             fieldLabel: 'Transmission date', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                                             width: 245,
                                             format: 'Ymd',
@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280MDA',
+                                            id: prototype.id03 + '-A4280MDA',
                                             fieldLabel: 'Currency', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280TIP',
+                                            id: prototype.id03 + '-A4280TIP',
                                             fieldLabel: 'Service type', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280XTRX2',
+                                            id: prototype.id03 + '-A4280TRX2',
                                             fieldLabel: 'Transactions:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -122,9 +122,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280TOT',
+                                            id: prototype.id03 + '-A4280TOT',
                                             fieldLabel: 'Total amount:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            labelWidth: 125, fieldStyle: 'text-align:right',
                                             readOnly: false,
                                             width: 245
                                         }
@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280IDFILE',
+                                            id: prototype.id03 + '-A4280IDFIL',
                                             fieldLabel: 'Nbr. Identifier', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -163,7 +163,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280TYPE',
+                                            id: prototype.id03 + '-A4280TYPE',
                                             fieldLabel: 'File type', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -179,7 +179,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280STS2',
+                                            id: prototype.id03 + '-A4280STS2',
                                             fieldLabel: 'Head Whitout Trx.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280STS',
+                                            id: prototype.id03 + '-A4280STS',
                                             fieldLabel: 'Final state', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -220,7 +220,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280PCONT',
+                                            id: prototype.id03 + '-A4280PCONT',
                                             fieldLabel: 'Period', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -236,7 +236,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280FCONT',
+                                            id: prototype.id03 + '-A4280FCONT',
                                             fieldLabel: 'Date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,
                                             readOnly: false,
@@ -259,7 +259,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280REGIS',
+                                            id: prototype.id03 + '-A4280REGIS',
                                             fieldLabel: 'Created by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 75, padding: 2,
                                             readOnly: false,
@@ -267,7 +267,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280FREGI',
+                                            id: prototype.id03 + '-A4280FREGI',
                                             fieldLabel: 'Date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 40, padding: 2,
                                             readOnly: false,
@@ -275,7 +275,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280HREGI',
+                                            id: prototype.id03 + '-A4280HREGI',
                                             fieldLabel: 'Hr.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 30, padding: 2,
                                             readOnly: false,
@@ -292,7 +292,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280REVIS',
+                                            id: prototype.id03 + '-A4280REVIS',
                                             fieldLabel: 'Modified by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 75, padding: 2,
                                             readOnly: false,
@@ -300,7 +300,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280FREVI',
+                                            id: prototype.id03 + '-A4280FREVI',
                                             fieldLabel: 'Date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 40, padding: 2,
                                             readOnly: false,
@@ -308,7 +308,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280HREVI',
+                                            id: prototype.id03 + '-A4280HREVI',
                                             fieldLabel: 'Hr.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 30, padding: 2,
                                             readOnly: false,
@@ -328,15 +328,23 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
             layout: 'vbox',
             margin: '1 1 1 1',
             width: '100%', border: false,
+            id: prototype.id03 + '-gridFileIssueDetail-Container',
             items: [
                 {
                     xtype: 'panel', width: '100%', border: false,
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
                     items: [
                         {
                             xtype: 'panel', border: false, hidden: false,
-                            bodyStyle: 'background: transparent;"',
+                            bodyStyle: 'background: transparent;',
                             margin: '0 0',
-                            layout: 'hbox',
+                            layout: {
+                                type: 'hbox'
+//                                pack: 'start'
+                            },
                             defaults: {
                                 anchor: '100%',
                                 padding: '0 0'
@@ -344,7 +352,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                             items: [
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbfiltroDataEntry',
+                                    id: prototype.id03 + '-cmbfiltroDataEntry',
                                     fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
@@ -372,9 +380,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                 // <editor-fold defaultstate="collapsed" desc="box:UNIQUE SERVICE CREDIT ID">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-BoxUniqueServiceCreditID',
+                                    id: prototype.id03 + '-BoxUniqueServiceCreditID',
                                     border: false,
-                                    hidden: false,
+                                    hidden: true,
                                     layout: 'hbox',
                                     bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
@@ -385,15 +393,15 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4281IDISS-Filter',
+                                            id: prototype.id03 + '-A4281IDISS-Filter',
                                             fieldLabel: 'Nbr Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 9, width: 250, height: 26,
+                                            maxLength: 10, width: 250, height: 26,
                                             maskRe: /[0-9]/,
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                keypress: 'onTextKeypress'
                                             }
                                         }
                                     ]
@@ -402,7 +410,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                 // <editor-fold defaultstate="collapsed" desc="box:Document number">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-BoxDocumentNumber',
+                                    id: prototype.id03 + '-BoxDocumentNumber',
                                     border: false,
                                     hidden: true,
                                     layout: 'hbox',
@@ -415,7 +423,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-DocumentTKT-Filter',
+                                            id: prototype.id03 + '-DocumentTKT-Filter',
                                             fieldLabel: 'Document number ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 130,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
@@ -423,7 +431,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                             maxLength: 9, width: 250, height: 26,
                                             maskRe: /[0-9]/,
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                keypress: 'onTextKeypress'
                                             }
                                         }
                                     ]
@@ -432,7 +440,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                 // <editor-fold defaultstate="collapsed" desc="box:ID REFERENCE NBR">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-BoxIdReferenceNbr',
+                                    id: prototype.id03 + '-BoxIdReferenceNbr',
                                     border: false,
                                     hidden: true,
                                     layout: 'hbox',
@@ -445,26 +453,60 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4281IDISR-Filter',
+                                            id: prototype.id03 + '-A4281IDISR-Filter',
                                             fieldLabel: 'Id Reference', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 9, width: 250, height: 26,
+                                            maxLength: 10, width: 250, height: 26,
                                             maskRe: /[0-9]/,
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                keypress: 'onTextKeypress'
                                             }
                                         }
                                     ]
                                 }
                                 // </editor-fold>
                             ]
+                        },
+                        {xtype: 'tbspacer', width: '100px'},
+                        {
+                            xtype: 'panel',
+                            padding: 3,
+                            layout: {
+                                type: 'hbox'
+//                                pack: 'end'
+                            },
+                            items: [
+                                {
+                                    xtype: 'toolbar',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id03 + '-btnSearch',
+                                            iconCls: 'prx-icon-search',
+                                            tooltip: 'Search',
+                                            listeners: {
+                                                click: 'btnSearchDetalleClick'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id03 + '-btnAdd',
+                                            iconCls: 'prx-icon-add',
+                                            text: 'Add',
+                                            listeners: {
+                                                click: 'btnAdd_click'
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    xtype: prototype.id + '-gridFileIssueDetail'
+                    xtype: prototype.id03 + '-gridFileIssueDetail'
                 }
             ]
         }
@@ -484,7 +526,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
             items: [
                 {
                     text: 'Save', disabled: true,
-                    id: prototype.id + '-btn-save',
+                    id: prototype.id03 + '-btn-save',
                     iconCls: 'prx-icon-save',
                     listeners: {
                         click: 'onSaveClick'
@@ -492,7 +534,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                 },
                 {
                     text: 'Update', disabled: true,
-                    id: prototype.id + '-btn-update',
+                    id: prototype.id03 + '-btn-update',
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onUpdateClick'
@@ -500,7 +542,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id + '-btn-delete',
+                    id: prototype.id03 + '-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners: {
@@ -509,7 +551,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueDataEntr
                 },
                 {
                     text: 'Close',
-                    id: prototype.id + '-btn-cancel',
+                    id: prototype.id03 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

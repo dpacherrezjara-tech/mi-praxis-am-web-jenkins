@@ -4,19 +4,44 @@
  * and open the template in the editor.
  */
 // <editor-fold defaultstate="collapsed" desc="prototype">
-prototype.id = 'FilesIssuesUsesForm';
+prototype.id01 = 'FilesIssuesUsesForm';
+//ISSUES
+prototype.id02 = 'FormFileIssue';
+prototype.id03 = 'FormFileIssueDataEntry';
+prototype.id04 = 'FormFileIssueDataEntryHeader'; // pendiente
+prototype.id05 = 'FormFileIssueDataEntryDetail';
+//USED
+prototype.id06 = 'FormFileUsed';
+prototype.id07 = 'FormFileUsedDataEntry';
+prototype.id08 = 'FormFileUsedDataEntryHeader';
+prototype.id09 = 'FormFileUsedDataEntryDetail';
+//EXPIERE
+prototype.id10 = 'FormFileExpire';
+prototype.id11 = 'FormFileExpireDataEntry';
+prototype.id12 = 'FormFileExpireDataEntryHeader';
+prototype.id13 = 'FormFileExpireDataEntryDetail';
+//LOSSES
+prototype.id14 = 'FormFileLosses';
+prototype.id15 = 'FormFileLossesDataEntry';
+prototype.id16 = 'FormFileLossesDataEntryHeader';
+prototype.id17 = 'FormFileLossesDataEntryDetail';
+//MERGE
+//
+//LIABILITY
+
 prototype.url = CONTEXTPATH + '/FilesIssuesUses';
 prototype.widthContenedor = 1300;
 prototype.widthGrid = 980;
 // </editor-fold>
-  
+
 Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.FilesIssuesUsesForm',
     requires: [
         'Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesController',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssue',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileUsed'
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssue',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FormFileUsed',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FormFileExpire'
     ],
     controller: 'FilesIssuesUsesController',
     btnActive: 1,
@@ -30,7 +55,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
     },
     items: [
         {
-            id: prototype.id + '-main',
+            id: prototype.id01 + '-main',
             border: false,
             bodyCls: 'colorFondo',
             layout: 'hbox',
@@ -55,7 +80,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                         {
                             xtype: 'button', width: '8rem', height: '2rem',
                             iconCls: 'prx-icon-polizas',
-                            id: prototype.id + '-btn-issues',
+                            id: prototype.id01 + '-btn-issues',
                             style: 'background:#68A0EC',
                             text: 'Issues',
                             listeners: {
@@ -68,7 +93,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                         {
                             xtype: 'button', width: '8rem', height: '2rem',
                             text: 'Used', iconCls: 'prx-icon-image-facsimil',
-                            id: prototype.id + '-btn-used',
+                            id: prototype.id01 + '-btn-used',
                             listeners: {
                                 click: (e) => {
                                     this.btnActive = 2;
@@ -79,7 +104,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                         {
                             xtype: 'button', width: '8rem', height: '2rem',
                             text: 'Expire', iconCls: 'prx-icon-incomplete',
-                            id: prototype.id + '-btn-expire',
+                            id: prototype.id01 + '-btn-expire',
                             listeners: {
                                 click: (e) => {
                                     this.btnActive = 3;
@@ -90,7 +115,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                         {
                             xtype: 'button', width: '8rem', height: '2rem',
                             text: 'Losses', iconCls: 'prx-icon-image-off',
-                            id: prototype.id + '-btn-losses',
+                            id: prototype.id01 + '-btn-losses',
                             listeners: {
                                 click: (e) => {
                                     this.btnActive = 4;
@@ -101,7 +126,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                         {
                             xtype: 'button', width: '8rem', height: '2rem',
                             text: 'Merge', iconCls: 'prx-icon-image-facsimil',
-                            id: prototype.id + '-btn-merge',
+                            id: prototype.id01 + '-btn-merge',
                             listeners: {
                                 click: (e) => {
                                     this.btnActive = 5;
@@ -112,7 +137,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                         {
                             xtype: 'button', width: '8rem', height: '2rem',
                             text: 'Airline Liability', iconCls: 'prx-icon-docum',
-                            id: prototype.id + '-btn-liability',
+                            id: prototype.id01 + '-btn-liability',
                             listeners: {
                                 click: (e) => {
                                     this.btnActive = 6;
@@ -123,10 +148,10 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                     ]
                 },
                 {
-                    width: '90%',height: '100%',
+                    width: '90%', height: '100%',
                     padding: '2 1 1 1',
-                    id: prototype.id + '-conten-panel',                    
-                    border: false,                    
+                    id: prototype.id01 + '-conten-panel',
+                    border: false,
                     bodyStyle: 'background-color: white;',
                     items: [{}] //carga dinamica
                 }
@@ -139,10 +164,13 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
 getTypeForm = () => {
     switch (this.btnActive) {
         case 1:
-            return prototype.id + '-formFileIssue';
+            return prototype.id02 + '-formFileIssue';
             break;
         case 2:
-            return prototype.id + '-formFileUsed';
+            return prototype.id06 + '-formFileUsed';
+            break;
+        case 3:
+            return prototype.id10 + '-formFileExpire';
             break;
         default:
             return '';
@@ -152,16 +180,16 @@ getTypeForm = () => {
 
 setOnClickBtnActive = (btnId, index) => {
 //    console.log(this.btnActive);
-    Ext.getCmp(prototype.id + '-btn-issues').setStyle('background', '');
-    Ext.getCmp(prototype.id + '-btn-used').setStyle('background', '');
-    Ext.getCmp(prototype.id + '-btn-expire').setStyle('background', '');
-    Ext.getCmp(prototype.id + '-btn-losses').setStyle('background', '');
-    Ext.getCmp(prototype.id + '-btn-merge').setStyle('background', '');
-    Ext.getCmp(prototype.id + '-btn-liability').setStyle('background', '');
+    Ext.getCmp(prototype.id01 + '-btn-issues').setStyle('background', '');
+    Ext.getCmp(prototype.id01 + '-btn-used').setStyle('background', '');
+    Ext.getCmp(prototype.id01 + '-btn-expire').setStyle('background', '');
+    Ext.getCmp(prototype.id01 + '-btn-losses').setStyle('background', '');
+    Ext.getCmp(prototype.id01 + '-btn-merge').setStyle('background', '');
+    Ext.getCmp(prototype.id01 + '-btn-liability').setStyle('background', '');
     if (this.btnActive === index) {
         Ext.getCmp(btnId).setStyle('background', '#68A0EC'); //active
         //rednderizar objeto
-        var panel = Ext.getCmp(prototype.id + '-conten-panel');
+        var panel = Ext.getCmp(prototype.id01 + '-conten-panel');
         panel.removeAll();
         if (getTypeForm() !== '') {
             var gridPanel = Ext.create({

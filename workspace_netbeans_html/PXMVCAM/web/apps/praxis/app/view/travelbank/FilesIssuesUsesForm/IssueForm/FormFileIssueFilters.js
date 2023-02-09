@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters', {
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssueFilters', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-formFileIssueFilters',
+    alias: 'widget.' + prototype.id02 + '-formFileIssueFilters',
     border: false,
     bodyStyle: 'background-color: #E3EAF9;',
     margin: '2 0 2 0 ',
@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
             items: [
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-boxSearchFilter',
+                    id: prototype.id02 + '-boxSearchFilter',
                     width: '100%',
                     layout: 'vbox',
                     border: false,
@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id + '-cmbfiltro',
+                                            id: prototype.id02 + '-cmbfiltro',
                                             fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 120,
                                             store: new Ext.data.SimpleStore({
@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                 // <editor-fold defaultstate="collapsed" desc="BoxFilter01">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-BoxFilter01',
+                                    id: prototype.id02 + '-BoxFilter01',
                                     border: false,
                                     hidden: false,
                                     layout: 'hbox',
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                     items: [
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id + '-fecha1',
+                                            id: prototype.id02 + '-fecha1',
                                             fieldLabel: 'Date from', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 125,
                                             width: 200,
@@ -117,14 +117,14 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                                 //change: 'onUpperValue',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        Ext.getCmp(prototype.id + '-fecha2').focus();
+                                                        Ext.getCmp(prototype.id02 + '-fecha2').focus();
                                                     }
                                                 }
                                             }
                                         },
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id + '-fecha2',
+                                            id: prototype.id02 + '-fecha2',
                                             fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 30,
                                             width: 130,
                                             height: 26,
@@ -150,7 +150,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                 // <editor-fold defaultstate="collapsed" desc="BoxFilter02">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-BoxFilter02',
+                                    id: prototype.id02 + '-BoxFilter02',
                                     border: false,
                                     hidden: true,
                                     layout: 'hbox',
@@ -163,7 +163,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280IDFILE1',
+                                            id: prototype.id02 + '-A4280IDFILE1',
                                             fieldLabel: 'From number ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
@@ -180,7 +180,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4280IDFILE2',
+                                            id: prototype.id02 + '-A4280IDFILE2',
                                             fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 30,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
@@ -202,7 +202,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                 // <editor-fold defaultstate="collapsed" desc="BoxFilter03">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-BoxFilter03',
+                                    id: prototype.id02 + '-BoxFilter03',
                                     border: false,
                                     hidden: true,
                                     layout: 'hbox',
@@ -215,7 +215,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-A4281IDISS',
+                                            id: prototype.id02 + '-A4281IDISS',
                                             fieldLabel: 'Nbr. Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
@@ -246,7 +246,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueFilters'
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id + '-cmbSTS',
+                                            id: prototype.id02 + '-cmbSTS',
                                             fieldLabel: 'Final State', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 120,
                                             store: new Ext.data.SimpleStore({

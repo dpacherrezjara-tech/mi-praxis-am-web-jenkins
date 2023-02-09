@@ -5,9 +5,9 @@
  */
 
 
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail', {
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.GridFileIssueDetail', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-gridFileIssueDetail',
+    alias: 'widget.' + prototype.id03 + '-gridFileIssueDetail',
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail',
                 // <editor-fold defaultstate="collapsed" desc="boxMainData">
                 {
                     region: 'center',
-//                    id: prototype.id + '-boxMainData',
+//                    id: prototype.id03 + '-boxMainData',
                     hidden: false,
                     layout: {
                         type: 'vbox',
@@ -46,8 +46,8 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail',
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
-                            id: prototype.id + '-gridDataDetail',
-                            width: 900,
+                            id: prototype.id03 + '-gridDataDetail',
+                            width: 920,
                             height: 250,
                             columnLines: true,
                             margin: 3,
@@ -58,6 +58,20 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail',
                                     align: 'center'
                                 },
                                 items: [
+                                    {
+                                        text: 'Edit',
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 60,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-edit',
+                                                tooltip: 'Edit',
+                                                handler: 'onEditA4281Click'
+                                            }
+                                        ]
+                                    },
                                     {
                                         text: 'Unique Service<br>Credit ID', dataIndex: 'A4281IDISS', width: 90,
                                         renderer: function (value, metaData) {
@@ -130,7 +144,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail',
                                         text: 'Document<br> number', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
-                                            return record.get('A4281CIA') + record.get('A4281FORMA') + record.get('A4281SERIE') ;
+                                            return record.get('A4281CIA') + record.get('A4281FORMA') + record.get('A4281SERIE');
                                         }
                                     },
                                     {
@@ -146,21 +160,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail',
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
-                                    },
-                                    {
-                                        text: 'Edit',
-                                        sortable: false,
-                                        xtype: 'actioncolumn',
-                                        width: 70,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-edit',
-                                                tooltip: 'Edit',
-                                                handler: 'onEditClick'
-                                            }
-                                        ]
-                                    }
+                                    }                                    
                                 ]
                             }
                         },
@@ -168,65 +168,107 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.GridFileIssueDetail',
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-pie-1',
+                            id: prototype.id03 + '-pie-1',
+                            width: '99%',
+                            align: 'center',
                             layout: {
                                 type: 'hbox',
-                                pack: 'center',
-                                padding: 2
+                                pack: 'center'
                             },
                             border: true,
                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                             defaults: {
                                 border: true
                             },
-                            padding: 1,
+                            padding: '1px 1px 1px 1px',
                             items: [
                                 {
                                     xtype: 'panel',
-                                    width: prototype.widthGrid,
-                                    height: 25,
-                                    layout: {
-                                        type: 'hbox',
-                                        pack: 'center'
-                                    },
-                                    defaults: {
-                                        xtype: 'label',
-                                        margin: '3px 0px 0px 5px'
-                                    },
+                                    id: prototype.id03 + '-boxPaginacion',
+                                    width: '100wh',                                    
+                                    border: false,
                                     items: [
                                         {
-                                            text: 'Page',
-                                            width: 50
-                                        },
-                                        {
-                                            id: prototype.id + '-lbl-currentPage',
-                                            text: '1',
-                                            width: 50
-                                        },
-                                        {
-                                            text: 'Of',
-                                            width: 50
-                                        },
-                                        {
-                                            id: prototype.id + '-lbl-pageCount',
-                                            text: '0',
-                                            width: 50
-                                        },
-                                        {xtype: 'tbspacer', width: 100},
-                                        {
-                                            text: 'Total found',
-                                            width: 80
-                                        },
-                                        {
-                                            id: prototype.id + '-lbl-total',
-                                            text: '0',
-                                            width: 50
+                                            xtype: 'toolbar',
+                                            cls: 'x-toolbar-pag',
+                                            items: [
+                                                {
+                                                    xtype: 'pagingtoolbar',
+                                                    id: prototype.id03 + '-paggin',
+                                                    pageSize: 10,
+                                                    border: false,
+                                                    displayInfo: true,
+                                                    hidden: false
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
                             ]
                         }
                         // </editor-fold>
+//                        // <editor-fold defaultstate="collapsed" desc="pie">
+//                        {
+//                            xtype: 'panel',
+//                            id: prototype.id03 + '-pie-1',
+//                            layout: {
+//                                type: 'hbox',
+//                                pack: 'center',
+//                                padding: 2
+//                            },
+//                            border: true,
+//                            bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+//                            defaults: {
+//                                border: true
+//                            },
+//                            padding: 1,
+//                            items: [
+//                                {
+//                                    xtype: 'panel',
+//                                    width: prototype.widthGrid,
+//                                    height: 25,
+//                                    layout: {
+//                                        type: 'hbox',
+//                                        pack: 'center'
+//                                    },
+//                                    defaults: {
+//                                        xtype: 'label',
+//                                        margin: '3px 0px 0px 5px'
+//                                    },
+//                                    items: [
+//                                        {
+//                                            text: 'Page',
+//                                            width: 50
+//                                        },
+//                                        {
+//                                            id: prototype.id03 + '-lbl-currentPage',
+//                                            text: '1',
+//                                            width: 50
+//                                        },
+//                                        {
+//                                            text: 'Of',
+//                                            width: 50
+//                                        },
+//                                        {
+//                                            id: prototype.id03 + '-lbl-pageCount',
+//                                            text: '0',
+//                                            width: 50
+//                                        },
+//                                        {xtype: 'tbspacer', width: 100},
+//                                        {
+//                                            text: 'Total found',
+//                                            width: 80
+//                                        },
+//                                        {
+//                                            id: prototype.id03 + '-lbl-total',
+//                                            text: '0',
+//                                            width: 50
+//                                        }
+//                                    ]
+//                                }
+//                            ]
+//                        }
+//                        // </editor-fold>
                     ]
                 }
                 // </editor-fold>

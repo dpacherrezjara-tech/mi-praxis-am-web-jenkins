@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions', {
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssueOptions', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-formFileIssueOptions',
+    alias: 'widget.' + prototype.id02 + '-formFileIssueOptions',
     border: false,
     layout: {
         type: 'hbox',
@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
     items: [
         {
             xtype: 'panel',
-            id: prototype.id+'-boxPaginacion',
+            id: prototype.id02+'-boxPaginacion',
             hidden: false,
             width: 100,
             border: false,
@@ -21,7 +21,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-first',
+                            id: prototype.id02 + '-btn-pag-first',
                             iconCls: 'prx-icon-pagination-first',
                             tooltip: 'First Page',
                             listeners: {
@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-previous',
+                            id: prototype.id02 + '-btn-pag-previous',
                             iconCls: 'prx-icon-pagination-previous',
                             tooltip: 'Previous Page',
                             listeners: {
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-next',
+                            id: prototype.id02 + '-btn-pag-next',
                             iconCls: 'prx-icon-pagination-next',
                             tooltip: 'Next Page',
                             listeners: {
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-last',
+                            id: prototype.id02 + '-btn-pag-last',
                             iconCls: 'prx-icon-pagination-last',
                             tooltip: 'Last Page',
                             listeners: {
@@ -59,7 +59,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',
+                            id: prototype.id02 + '-paggin',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnSearch',
+                            id: prototype.id02 + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
                             listeners: {
@@ -88,22 +88,16 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnFilter',
+                            id: prototype.id02 + '-btnFilter',
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
                                 click: 'btnFilter_click'
                             }
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnDisplay',
-//                            icon: 'resources/img/botones/FalseChart.png',
-//                            tooltip: 'Display Charts'
-//                        },
                         {
-                            xtype: 'button',
-                            id: prototype.id + '-btnExcel',
+                            xtype: 'button', hidden:true, /* por ahora NO */
+                            id: prototype.id02 + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
                             listeners: {
@@ -112,7 +106,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnClear',
+                            id: prototype.id02 + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
                             listeners: {
@@ -120,8 +114,8 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                             }
                         },
                         {
-                            xtype: 'button',
-                            id: prototype.id + '-btnAdd',
+                            xtype: 'button', disabled:true,
+                            id: prototype.id02 + '-btnAdd',
                             iconCls: 'prx-icon-add',
                             tooltip: 'New',
                             listeners: {
@@ -130,7 +124,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueOptions'
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnBack',
+                            id: prototype.id02 + '-btnBack',
                             iconCls: 'prx-icon-back',
                             tooltip: 'Back',
                             listeners: {

@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssueInfo', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-formFileIssueInfo',    
+    alias: 'widget.' + prototype.id02 + '-formFileIssueInfo',    
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
     items: [
         {
             region: 'center',
-            id: prototype.id + '-boxConsultas',
+            id: prototype.id02 + '-boxConsultas',
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                 // <editor-fold defaultstate="collapsed" desc="boxMainData">
                 {
                     region: 'center',
-                    id: prototype.id + '-boxMainData',
+                    id: prototype.id02 + '-boxMainData',
                     hidden: false,
                     layout: {
                         type: 'vbox',
@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
-                            id: prototype.id + '-gridData',
+                            id: prototype.id02 + '-gridData',
                             width: prototype.widthGrid,
                             // width: '100vw',
                             height: 510,
@@ -129,7 +129,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-pie',
+                            id: prototype.id02 + '-pie',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center',
@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                                             width: 50
                                         },
                                         {
-                                            id: prototype.id + '-lbl-currentPage',
+                                            id: prototype.id02 + '-lbl-currentPage',
                                             text: '1',
                                             width: 50
                                         },
@@ -169,7 +169,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                                             width: 50
                                         },
                                         {
-                                            id: prototype.id + '-lbl-pageCount',
+                                            id: prototype.id02 + '-lbl-pageCount',
                                             text: '0',
                                             width: 50
                                         },
@@ -179,7 +179,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileIssueInfo', {
                                             width: 80
                                         },
                                         {
-                                            id: prototype.id + '-lbl-total',
+                                            id: prototype.id02 + '-lbl-total',
                                             text: '0',
                                             width: 50
                                         }

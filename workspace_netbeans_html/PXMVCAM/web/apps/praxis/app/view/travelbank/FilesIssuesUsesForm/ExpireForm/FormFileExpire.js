@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileUsed', {
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FormFileExpire', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-formFileUsed',
+    alias: 'widget.' + prototype.id10 + '-formFileExpire',
     border: false,
     layout: {
         type: 'hbox',
@@ -17,7 +17,8 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FormFileUsed', {
         {
            xtype:'panel', 
            width:'100%',
-           title:'U S E D'
+           title:'E X P I R E'
         }
     ]
 });
+

@@ -15,7 +15,7 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesCont
     // </editor-fold>
     init: function ( ) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
-        prototype.id = 'FilesIssuesUsesForm';
+        //prototype.id01 = 'FilesIssuesUsesForm';
         prototype.url = CONTEXTPATH + '/FilesIssuesUses';
         prototype.widthContenedor = 1300;
         prototype.widthGrid = 863;
@@ -25,10 +25,10 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesCont
     },
     afterRender: function () {
         //default
-        var panel = Ext.getCmp(prototype.id + '-conten-panel');
+        var panel = Ext.getCmp(prototype.id01 + '-conten-panel');
         panel.removeAll();
         var gridPanel = Ext.create({
-            xtype: prototype.id + '-formFileIssue'
+            xtype: prototype.id02 + '-formFileIssue'
         });
         panel.add(gridPanel);
     }
