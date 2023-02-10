@@ -205,6 +205,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648SEQ = rs01.getString("A3648SEQ");
                 objRtn.A3648TICKET = rs01.getString("A3648CIA") + "" + rs01.getString("A3648FORMA") + "" + rs01.getString("A3648SERIE");
                 objRtn.A3648CORRL = rs01.getString("A3648CORRL");
+                objRtn.A3648FAUTO = rs01.getString("A3648FAUTO");
 
                 objRtn.A3648MARCA = rs01.getString("A3648MARCA");
                 objRtn.A3648SMDA = rs01.getString("A3648SMDA");
