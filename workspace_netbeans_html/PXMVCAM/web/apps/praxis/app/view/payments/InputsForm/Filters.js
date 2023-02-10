@@ -242,27 +242,46 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Filters', {
 //                        change: 'ChangeVista_clickHandler'
                     }
                 },
+//                {
+//                    xtype: 'combo',
+//                    fieldLabel: 'Source',
+//                    id: prototype.id+'-cmbFUENTE',
+//                    enableKeyEvents: true,                    
+//                    readOnly: false,
+//                    editable: false,
+//                    valueField: 'FUENTE',
+//                    displayField: 'FUENTE',
+//                    labelWidth: 50,
+//                    width: 160,
+//                    margin: '0px 0px 0px 20px',
+//                    hidden: false,
+//                    fieldStyle: 'text-align: left;',
+//                    emptyText: 'All',
+//                    queryMode: 'local',
+//                    triggerAction: 'all',
+//                    listeners:{
+//                        select: 'btnSearch_click'
+//                    }
+//                }
                 {
                     xtype: 'combo',
-                    fieldLabel: 'Source',
-                    id: prototype.id+'-cmbFUENTE',
-                    enableKeyEvents: true,                    
-                    readOnly: false,
-                    editable: false,
-                    valueField: 'FUENTE',
-                    displayField: 'FUENTE',
-                    labelWidth: 50,
-                    width: 160,
-                    margin: '0px 0px 0px 20px',
-                    hidden: false,
-                    fieldStyle: 'text-align: left;',
-                    emptyText: 'All',
+                    fieldLabel: '<strong style="color:red;font-size:13px;"></strong>  Source',
+                    id: prototype.id+'-cmbFUENTE',           
                     queryMode: 'local',
                     triggerAction: 'all',
+                    emptyText: 'All',
+                    valueField: 'FUENTE',
+                    displayField: 'FUENTE',
+                    width: 160,
+                    anyMatch: false,
+                    labelWidth: 50,
+                    hidden: false,
+                    hiddenLabel: false,
+                    margin: '0 40 0 0',
                     listeners:{
                         select: 'btnSearch_click'
                     }
-                }           
+                },
             ]
         } 
 
