@@ -20,6 +20,7 @@ public class A3648 {
     public String A3648SEQ;
     public String A3648CORRL;
     public String A3648MARCA;
+    public String A3648FAUTO;
     //datos venta
     public String A3648SMDA;
     public String A3648SMDAQ;
@@ -129,6 +130,14 @@ public class A3648 {
     public String A3648CPN8D;
     public String A3648TRNCO;
     public String A3648PROCE;
+
+    public String getA3648FAUTO() {
+        return A3648FAUTO;
+    }
+
+    public void setA3648FAUTO(String A3648FAUTO) {
+        this.A3648FAUTO = A3648FAUTO;
+    }
 
     public String getA3648PROCE() {
         return A3648PROCE;
