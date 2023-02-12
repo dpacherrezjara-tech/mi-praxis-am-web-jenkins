@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -269,290 +270,29 @@ public class SalesAdjustmentController extends BaseController {
         return new Gson().toJson(map);
     }
 
-//    @RequestMapping(value = "getXLSX")
-//    public @ResponseBody
-//    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-//        System.out.println("banksCatalog : getXLSX");
-//
-//        String fileNameDownload = String.format("banksCatalog - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-//
-//        try {
-//
-//            Workbook workbook;
-//            File file = File.createTempFile(fileNameDownload, ".xlsx");
-//            List<A2281> listaData = this.getList(request, true);
-//
-//            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-//
-//            workbook = new XSSFWorkbook();
-//
-//            Sheet sheet = workbook.createSheet("ReasonCodeReport");
-//
-//            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-//            CellStyle bodyStyle = workbook.createCellStyle();
-//            Font headerFont = workbook.createFont();
-//
-//            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-//            headerFont.setColor(IndexedColors.BLACK.getIndex());
-//
-//            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-//            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-//            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-//            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-//            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-//            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-//            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-//            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-//            headerStyle.setFont(headerFont);
-//
-//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//            Integer vi = 0;
-//            Integer vj = 0; //Almacena el numero de fila
-//            Iterator iter = listaData.iterator();
-//
-//            // ====== CREANDO TITULOS ======================================
-//            Row row = sheet.createRow(vj);
-//
-//            Cell CH1_00 = row.createCell(0);
-//            Cell CH1_01 = row.createCell(1);
-//            Cell CH1_02 = row.createCell(2);
-//            Cell CH1_03 = row.createCell(3);
-//            Cell CH1_04 = row.createCell(4);
-//            Cell CH1_05 = row.createCell(5);
-//            Cell CH1_06 = row.createCell(6);
-//            Cell CH1_07 = row.createCell(7);
-//            Cell CH1_08 = row.createCell(8);
-//            Cell CH1_09 = row.createCell(9);
-//            Cell CH1_10 = row.createCell(10);
-//            Cell CH1_11 = row.createCell(11);
-//
-//            CH1_00.setCellValue("Nbr");
-//            CH1_01.setCellValue("Bank");
-//            CH1_04.setCellValue("Curr.");
-//            CH1_05.setCellValue("Commision Rate");
-//            CH1_08.setCellValue("Rate");
-//            CH1_09.setCellValue("Cliente");
-//            CH1_10.setCellValue("Status");
-//            CH1_11.setCellValue("Bank");
-//
-//            CH1_00.setCellStyle(headerStyle);
-//            CH1_01.setCellStyle(headerStyle);
-//            CH1_02.setCellStyle(headerStyle);
-//            CH1_03.setCellStyle(headerStyle);
-//            CH1_04.setCellStyle(headerStyle);
-//            CH1_05.setCellStyle(headerStyle);
-//            CH1_06.setCellStyle(headerStyle);
-//            CH1_07.setCellStyle(headerStyle);
-//            CH1_08.setCellStyle(headerStyle);
-//            CH1_09.setCellStyle(headerStyle);
-//            CH1_10.setCellStyle(headerStyle);
-//            CH1_11.setCellStyle(headerStyle);
-//
-//            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 7));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
-//
-//            //*******************
-//            ++vj;
-//            Row row2 = sheet.createRow(vj);
-//            Cell CH2_00 = row2.createCell(0);
-//            Cell CH2_01 = row2.createCell(1);
-//            Cell CH2_02 = row2.createCell(2);
-//            Cell CH2_03 = row2.createCell(3);
-//            Cell CH2_04 = row2.createCell(4);
-//            Cell CH2_05 = row2.createCell(5);
-//            Cell CH2_06 = row2.createCell(6);
-//            Cell CH2_07 = row2.createCell(7);
-//            Cell CH2_08 = row2.createCell(8);
-//            Cell CH2_09 = row2.createCell(9);
-//            Cell CH2_10 = row2.createCell(10);
-//            Cell CH2_11 = row2.createCell(11);
-//
-//            CH2_01.setCellValue("Ctry");
-//            CH2_02.setCellValue("Code");
-//            CH2_03.setCellValue("Name");
-//            CH2_05.setCellValue("Normal");
-//            CH2_06.setCellValue("Promotional 1");
-//            CH2_07.setCellValue("Promotional 2");
-//            CH2_08.setCellValue("IVA");
-//            CH2_11.setCellValue("Status");
-//
-//            CH2_00.setCellStyle(headerStyle);
-//            CH2_01.setCellStyle(headerStyle);
-//            CH2_02.setCellStyle(headerStyle);
-//            CH2_03.setCellStyle(headerStyle);
-//            CH2_04.setCellStyle(headerStyle);
-//            CH2_05.setCellStyle(headerStyle);
-//            CH2_06.setCellStyle(headerStyle);
-//            CH2_07.setCellStyle(headerStyle);
-//            CH2_08.setCellStyle(headerStyle);
-//            CH2_09.setCellStyle(headerStyle);
-//            CH2_10.setCellStyle(headerStyle);
-//            CH2_11.setCellStyle(headerStyle);
-//
-//            //          ========================================================
-//            ++vj;
-//            while (iter.hasNext()) {
-//
-//                row = sheet.createRow(vj);
-//                Cell rcell0 = row.createCell(0);
-//                Cell rcell1 = row.createCell(1);
-//                Cell rcell2 = row.createCell(2);
-//                Cell rcell3 = row.createCell(3);
-//                Cell rcell4 = row.createCell(4);
-//                Cell rcell5 = row.createCell(5);
-//
-//                Cell rcell6 = row.createCell(6);
-//                Cell rcell7 = row.createCell(7);
-//                Cell rcell8 = row.createCell(8);
-//                Cell rcell9 = row.createCell(9);
-//                Cell rcel20 = row.createCell(10);
-//                Cell rcel21 = row.createCell(11);
-//
-//                rcell0.setCellValue(listaData.get(vi).RN);
-//                rcell1.setCellValue(listaData.get(vi).COUNTRY);
-//                rcell2.setCellValue(listaData.get(vi).CODEBANK);
-//                rcell3.setCellValue(listaData.get(vi).NAMEBANK);
-//                rcell4.setCellValue(listaData.get(vi).CURRENC);
-//                rcell5.setCellValue(listaData.get(vi).RATECON);
-//                rcell6.setCellValue(listaData.get(vi).RATECOP1);
-//                rcell7.setCellValue(listaData.get(vi).RATECOP2);
-//                rcell8.setCellValue(listaData.get(vi).RATEIVA);
-//                rcell9.setCellValue(listaData.get(vi).CLIENTE);
-//                rcel20.setCellValue(listaData.get(vi).FSTAT);
-//                rcel21.setCellValue(listaData.get(vi).FINSUMO);
-//
-//                iter.next();
-//                ++vi;
-//                ++vj;
-//            }
-//            sheet.autoSizeColumn(0, true);
-//            sheet.autoSizeColumn(1, true);
-//            sheet.autoSizeColumn(2, true);
-//            sheet.autoSizeColumn(3, true);
-//            sheet.autoSizeColumn(4, true);
-//            sheet.autoSizeColumn(5, true);
-//            sheet.autoSizeColumn(6, true);
-//            sheet.autoSizeColumn(7, true);
-//            sheet.autoSizeColumn(8, true);
-//            sheet.autoSizeColumn(9, true);
-//            sheet.autoSizeColumn(10, true);
-//            sheet.autoSizeColumn(11, true);
-//
-//            /**
-//             * fileNameDownload = Nombre de descarga
-//             */
-//            response.setContentType("application/vnd.openxml");
-//            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-//
-//            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-//            workbook.write(response.getOutputStream());
-//            fos.close();
-//
-//        } catch (IOException e) {
-//            throw new SpringException(e);
-//        }
-//    }
-//
-//    @RequestMapping(value = "MaintenanceA2280")
-//    public @ResponseBody
-//    String MaintenanceA2280(ModelMap map, HttpServletRequest request) {
-//
-//        System.out.println("-------------- SalesAdjustment : MaintenanceA2280-------------");
-//        String option;
-//        A2281 filter = new A2281();
-//        Gson gson = new Gson();
-//        String msj = "";
-//        String beanString = "";
-//
-//        try {
-//
-//            option = request.getParameter("option");
-//            beanString = request.getParameter("beanString");
-//            filter = gson.fromJson(beanString, A2281.class);
-//
-//            logic = new SalesAdjustmentLogic();
-//            logic.setSession(this.serverSession.getServerSession());
-//            msj = logic.loadPX267SQP00672(filter, option);
-//
-//            map.put("success", true);
-//            map.put("Mensaje", msj);
-//        } catch (NumberFormatException | SQLException ex) {
-//            map.put("success", false);
-//            map.put("Mensaje", ex.getMessage());
-//        } catch (Exception ex) {
-//            map.put("success", false);
-//            map.put("Mensaje", ex.getMessage());
-//        }
-//        return new Gson().toJson(map);
-//    }
-//
-//    @RequestMapping(value = "searchCompleteDetail")
-//    public @ResponseBody
-//    String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
-//        System.out.println("-------------- SalesAdjustment : searchCompleteDetail-------------");
-//
-//        Gson gson = new Gson();
-//        A2280Filter filter = new A2280Filter();
-//        A2281 result = new A2281();
-//
-//        String beanString = request.getParameter("beanString");
-//        filter = gson.fromJson(beanString, A2280Filter.class);
-//
-//        logic = new SalesAdjustmentLogic();
-//        logic.setSession(this.serverSession.getServerSession());
-//        try {
-//            result = logic.loadPX267SQP00673(filter);
-//            map.put("result", result);
-//            map.put("success", true);
-//        } catch (Exception ex) {
-//            java.util.logging.Logger.getLogger(RejectionsController.class.getName()).log(Level.SEVERE, null, ex);
-//            map.put("success", false);
-//        }
-//        return new Gson().toJson(map);
-//    }
+    @RequestMapping(value = "/searchPNR")
+    public @ResponseBody
+    String searchPNR(ModelMap map, HttpServletRequest request) {
+
+        SQP00697Filter filter = new SQP00697Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            SalesReconciliAmexLogic logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            List<SQP00697Filter> listaData = logic.loadSQP00697(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+        } catch (SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
 }
-
-//        @RequestMapping(value = "search")
-//    public @ResponseBody
-//    String search(ModelMap map, HttpServletRequest request) {
-//        System.out.println("-------------- SalesAdjustment : search-------------");
-//        
-//        Gson gson = new Gson();
-//        A2280Filter filter = new A2280Filter();
-//        A2280Filter result = new A2280Filter();
-//        
-//        String beanString = request.getParameter("beanString");
-//        filter = gson.fromJson(beanString, A2280Filter.class);
-//        
-//        logic = new SalesAdjustmentLogic();
-//        logic.setSession(this.serverSession.getServerSession());
-//        try {
-//            result = logic.loadPX267SQP00671(filter);
-//            map.put("result", result);
-//            map.put("success", true);
-//        } catch (Exception ex) {
-//            java.util.logging.Logger.getLogger(SalesAdjustmentController.class.getName()).log(Level.SEVERE, null, ex);
-//            map.put("success", false);
-//        }
-//
-//        return new Gson().toJson(map);
-//    }
-

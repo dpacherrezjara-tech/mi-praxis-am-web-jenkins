@@ -536,6 +536,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesAdjustment.SalesAdjustmentContro
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
+    onViewPNR: function (a, b, c, d, e, rowData) {
+//        var rec = grid.getStore().getAt(rowIndex);
+        rowData.data.PNR = rowData.data.INVORNBR;
+        this.winDataEntryPNR('', rowData);
+    },
+    onViewPNRbySPNR: function (a, b, c, d, e, rowData) {
 
+//        var rec = grid.getStore().getAt(rowIndex);
+        rowData.data.PNR = rowData.data.SPNR;
+        this.winDataEntryPNR('', rowData);
+    },
+    winDataEntryPNR: function (action, rec, all, rowIndex) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesAdjustmentForm.DataEntryPnr', {
+            id: prototype.id + '-dataEntryPnr',
+            params: {
+                action: action,
+                rec: rec,
+                all: all,
+                rowIndex: rowIndex
+            }
+        }).show();
+    },
 }
 );
