@@ -253,6 +253,29 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             });
             viewRefund.show();
 	}
+        
+        if(data.STAT === 'RFTX' || data.STAT === 'RFTX-VOID'){
+            var rec = {
+                data:{
+                    A4373AIRLI: '139',
+                    A4373CIA:data.CIA,
+                    DOCUMENTO:data.FOR + data.SER,
+                    A4373SEQ:data.SEQ
+                }
+            };
+            
+            prototype.idRftx = 'SalesReportFormRftx';
+            var viewRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
+                id: prototype.idRftx + '-dataEntryRftx',
+               params: {
+                    rec: rec,
+                    modo: 'R',
+                    exchrate: Ext.getCmp(prototype.id+'-lblExchangeLocalRate').value,
+                    locCurr: Ext.getCmp(prototype.id+'-lblCurrency').value
+                }
+            });
+            viewRftx.show();
+	}
 	if(data.STAT === 'FLWN'){
             this.searchBeanTkt(data.CIA + data.FOR + data.SER + data.CPN,data.SEQ, data.SEQRO);
 	}
