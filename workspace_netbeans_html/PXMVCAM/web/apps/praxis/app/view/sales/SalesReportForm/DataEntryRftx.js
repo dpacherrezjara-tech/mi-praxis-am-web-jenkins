@@ -441,6 +441,9 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     text: 'Issue Date:'
                                                                                 },
                                                                                 {
+                                                                                    text:'Issue City:'
+                                                                                },
+                                                                                {
                                                                                     text: 'Unauthorized:'
                                                                                 },
                                                                                 {
@@ -517,6 +520,50 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     listeners: {
                                                                                         blur: 'onBlurValueFecha'
                                                                                     }
+                                                                                },
+                                                                                {
+                                                                                     xtype: 'panel',
+                                                                                    layout: 'hbox',
+                                                                                    margin: '1',
+                                                                                    border: false,
+                                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                                    defaults: {
+                                                                                        xtype: 'textfield',
+                                                                                        margin: '0 0 0 0',
+                                                                                        fieldStyle: 'text-align:left;',
+                                                                                        labelSeparator: ''
+                                                                                    },
+                                                                                    items:[
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblIssueCity',
+                                                                                            width: 37,
+                                                                                            readOnly: true,
+                                                                                            fieldLabel: ''
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblIssueCtry',
+                                                                                            fieldLabel: '',
+                                                                                            readOnly: true,
+                                                                                            width: 25
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 15},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblSaleCity',
+                                                                                            fieldLabel: 'Sale City:',
+                                                                                            labelStyle: 'font-weight:bold;font-size:11px;',
+                                                                                            width: 97,
+                                                                                            readOnly: true,
+                                                                                            labelWidth: 55
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblSaleCtry',
+                                                                                            fieldLabel: '',
+                                                                                            readOnly: true,
+                                                                                            width: 25
+                                                                                        }
+                                                                                    ]
                                                                                 },
                                                                                 {
                                                                                     id: prototype.idRftx + '-det-lblAuthorityNumber',

@@ -156,6 +156,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(objGrupo.A1530IDFIL);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueDate').setValue(obj.a4373FECVT);
             Ext.getCmp(prototype.idRftx + '-det-lblAuthorityNumber').setValue(obj.a4373CIAS + obj.a4373FORMS + obj.a4373SERIS);
+            
+            Ext.getCmp(prototype.idRftx + '-det-lblIssueCity').setValue(obj.a4373CIUEM);
+            Ext.getCmp(prototype.idRftx + '-det-lblIssueCtry').setValue(obj.a4373PAIEM);
+            Ext.getCmp(prototype.idRftx + '-det-lblSaleCity').setValue(obj.a4373CIUVT);
+            Ext.getCmp(prototype.idRftx + '-det-lblSaleCtry').setValue(obj.a4373PAIVT);
+            
 
             //cupones
             if (objLst.length > 0) {

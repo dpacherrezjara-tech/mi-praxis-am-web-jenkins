@@ -3756,6 +3756,10 @@ public class SalesReportDAO {
                 obj.setA4373LYQ4(rs.getDouble("A4373LYQ4"));
                 obj.setA4373FTURB(rs.getString("A4373FTURB"));
                 obj.setA4373SEQD(rs.getString("A4373SEQD"));
+                obj.setA4373CIUEM(rs.getString("A4373CIUEM"));
+                obj.setA4373PAIEM(rs.getString("A4373PAIEM"));
+                obj.setA4373CIUVT(rs.getString("A4373CIUVT"));
+                obj.setA4373PAIVT(rs.getString("A4373PAIVT"));
                 lst.add(obj);
             }
 
