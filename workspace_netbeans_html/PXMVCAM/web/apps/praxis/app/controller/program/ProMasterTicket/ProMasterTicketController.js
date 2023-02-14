@@ -641,6 +641,18 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.searchPNR(FPROC, TRNCU, TKT);
 	}
     },
+    btnRFTX_clickHandler: function () {
+        var beanA2289 = {};
+        beanA2289.IN_CIA = win.getValue('txtFilterTicketCia');
+        beanA2289.IN_FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
+        beanA2289.IN_SERIA = win.getValue('txtFilterTicketFormSer').substring(4, 10);
+        
+        var DataEntryLog = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryLog', { id: 'DataEntryLogProMasterTicketForm' });
+        var controller = DataEntryLog.getController();
+        controller.beanA2289 = beanA2289;
+        controller.actionCode = this.actionCode2;
+        DataEntryLog.show();
+    },
     imgSearchTKT_clickHandler: function (cmp, a, event) {
         var p = '';
         switch (cmp.id) {

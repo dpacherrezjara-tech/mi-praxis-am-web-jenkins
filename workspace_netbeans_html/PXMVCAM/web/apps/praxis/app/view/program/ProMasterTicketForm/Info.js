@@ -1046,6 +1046,18 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                             listeners: {
                                                 click: 'btnPNR_clickHandler'
                                             }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnRFTX',
+                                            margin: '0 0 0 30',
+                                            text: '<strong style="color:white;">Refund Tax<strong>',
+                                            cls: 'x-btn-sent',
+                                            overCls: 'x-btn-sent-over',
+                                            width: 100,
+                                            listeners: {
+                                                click: 'btnRFTX_clickHandler'
+                                            }
                                         }
                                     ]
                                 }
