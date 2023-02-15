@@ -15,16 +15,17 @@ prototype.id06 = 'FormFileUsed';
 prototype.id07 = 'FormFileUsedDataEntry';
 prototype.id08 = 'FormFileUsedDataEntryHeader';
 prototype.id09 = 'FormFileUsedDataEntryDetail';
+prototype.id10 = 'FormFileUsedDataEntryDetailN2';
 //EXPIERE
-prototype.id10 = 'FormFileExpire';
-prototype.id11 = 'FormFileExpireDataEntry';
-prototype.id12 = 'FormFileExpireDataEntryHeader';
-prototype.id13 = 'FormFileExpireDataEntryDetail';
+prototype.id11 = 'FormFileExpire';
+prototype.id12 = 'FormFileExpireDataEntry';
+prototype.id13 = 'FormFileExpireDataEntryHeader';
+prototype.id14 = 'FormFileExpireDataEntryDetail';
 //LOSSES
-prototype.id14 = 'FormFileLosses';
-prototype.id15 = 'FormFileLossesDataEntry';
-prototype.id16 = 'FormFileLossesDataEntryHeader';
-prototype.id17 = 'FormFileLossesDataEntryDetail';
+prototype.id15 = 'FormFileLosses';
+prototype.id16 = 'FormFileLossesDataEntry';
+prototype.id17 = 'FormFileLossesDataEntryHeader';
+prototype.id18 = 'FormFileLossesDataEntryDetail';
 //MERGE
 //
 //LIABILITY
@@ -40,7 +41,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
     requires: [
         'Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesController',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssue',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FormFileUsed',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedForm',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FormFileExpire'
     ],
     controller: 'FilesIssuesUsesController',
@@ -167,7 +168,7 @@ getTypeForm = () => {
             return prototype.id02 + '-formFileIssue';
             break;
         case 2:
-            return prototype.id06 + '-formFileUsed';
+            return prototype.id06 + '-fileUsedForm';
             break;
         case 3:
             return prototype.id10 + '-formFileExpire';
