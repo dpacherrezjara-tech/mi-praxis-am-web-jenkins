@@ -1,0 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.miatech.praxis.logic.travelbank;
+
+import java.sql.SQLException;
+import java.util.List;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.dao.travelbank.TransactionFilesDAO;
+import net.miatech.praxis.travelbank.SQP04806Filter;
+import net.miatech.praxis.travelbank.SQP04807Filter;
+import net.miatech.praxis.travelbank.SQP04808Filter;
+import net.miatech.praxis.travelbank.SQP04809Filter;
+import net.miatech.praxis.travelbank.SQP04810Filter;
+
+/**
+ *
+ * @author vhidalgo
+ */
+public class TransactionFilesLogic {
+
+    private TransactionFilesDAO objDAO = new TransactionFilesDAO();
+
+    public void setSession(IServerSession ss) {
+        objDAO.setSession(ss);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="ISSUES">
+    public List<SQP04806Filter> getSQP04806Filter(SQP04806Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04806Filter(filter);
+    }
+
+    public List<SQP04807Filter> getSQP04807Filter(SQP04807Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04807Filter(filter);
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="USED">
+    public List<SQP04808Filter> getSQP04808Filter(SQP04808Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04808Filter(filter);
+    }
+
+    public List<SQP04809Filter> getSQP04809Filter(SQP04809Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04809Filter(filter);
+    }
+
+    public List<SQP04810Filter> getSQP04810Filter(SQP04810Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04810Filter(filter);
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="EXPIRE">
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="LOSSES">
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="MERGE">
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="LIABILITY">
+    // </editor-fold>
+}
