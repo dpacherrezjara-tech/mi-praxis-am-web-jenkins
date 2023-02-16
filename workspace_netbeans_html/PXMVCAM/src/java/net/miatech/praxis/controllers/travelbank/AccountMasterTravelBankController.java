@@ -155,7 +155,7 @@ public class AccountMasterTravelBankController extends BaseController {
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Account Master Sales");
+            Sheet sheet = workbook.createSheet("Account Master Travel Bank");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
 //            CellStyle headerStyle = workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
@@ -349,7 +349,7 @@ public class AccountMasterTravelBankController extends BaseController {
 
             //String fileNameDownload = String.format("ADM Report - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             String fileNameDownload = String.format(
-                "Account Master Sales " + Functions.getFechaActual() + 
+                "Account Master Travel Bank " + Functions.getFechaActual() + 
                         "_" + Functions.getHoraActualHHMM().replace(":", "") + 
                         " " + Functions.getAbreviaturaMes(Functions.getFechaActual().substring(4, 6)) + 
                         " " + Functions.getFechaActual().substring(0, 4)  + ".xlsx", UUID.randomUUID().toString().toLowerCase()
