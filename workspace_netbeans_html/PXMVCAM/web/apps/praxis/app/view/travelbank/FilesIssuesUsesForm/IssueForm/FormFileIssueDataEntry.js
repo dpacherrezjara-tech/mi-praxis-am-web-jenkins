@@ -428,7 +428,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 9, width: 250, height: 26,
+                                            maxLength:13, width: 250, height: 26,
                                             maskRe: /[0-9]/,
                                             listeners: {
                                                 keypress: 'onTextKeypress'

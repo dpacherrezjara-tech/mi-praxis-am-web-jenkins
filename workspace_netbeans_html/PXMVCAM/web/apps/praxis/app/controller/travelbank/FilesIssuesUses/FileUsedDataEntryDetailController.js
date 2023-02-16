@@ -15,20 +15,20 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
         switch (this.p.action) {
             case 'U':
                 this.mostrarData(this.p.rec);
-//                Ext.getCmp(prototype.id10+'-btn-save').hide();
-//                Ext.getCmp(prototype.id10+'-btn-update').hide();
+//                Ext.getCmp(prototype.id09+'-btn-save').hide();
+//                Ext.getCmp(prototype.id09+'-btn-update').hide();
 //                if(this.p.rec.data.ESTADO === 'Error'){
-//                    Ext.getCmp(prototype.id10+'-btn-delete').show();
+//                    Ext.getCmp(prototype.id09+'-btn-delete').show();
 //                }else{
-//                    Ext.getCmp(prototype.id10+'-btn-delete').hide();
+//                    Ext.getCmp(prototype.id09+'-btn-delete').hide();
 //                }                            
-//                Ext.getCmp(prototype.id10+'-btn-cancel').show();
+//                Ext.getCmp(prototype.id09+'-btn-cancel').show();
                 break;
 //            case 'I':
-//                Ext.getCmp(prototype.id10+'-btn-save').show();
-//                Ext.getCmp(prototype.id10+'-btn-update').hide();
-//                Ext.getCmp(prototype.id10+'-btn-delete').hide();
-//                Ext.getCmp(prototype.id10+'-btn-cancel').show();
+//                Ext.getCmp(prototype.id09+'-btn-save').show();
+//                Ext.getCmp(prototype.id09+'-btn-update').hide();
+//                Ext.getCmp(prototype.id09+'-btn-delete').hide();
+//                Ext.getCmp(prototype.id09+'-btn-cancel').show();
 //                break;
 
         }
@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
         this.setValue('A4283NCTA', rec.get('A4283NCTA'));        
         this.setValue('A4283PRDA', rec.get('A4283PRDA'));
         this.setValue('A4283MDA', rec.get('A4283MDA'));
-        this.setValue('A4283SERV', rec.get('A4283SERV'));       
+        this.setValue('A4283REF', rec.get('A4283REF'));       
         this.setValue('TktNumber', rec.get('A4283CIA') + rec.get('A4283FORMA')+ rec.get('A4283SERIE')  );       
         this.setValue('A4283VALOR', Ext.util.Format.number(rec.get('A4283VALOR'), '0,000.00'));
         
@@ -118,9 +118,9 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
             }
         });
         
-        Ext.getCmp(prototype.id10 + '-gridDataDetail').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id10 + '-gridDataDetail').getStore().reload();
-        Ext.getCmp(prototype.id10 + '-paggin').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id09 + '-gridDataDetail').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id09 + '-gridDataDetail').getStore().reload();
+        Ext.getCmp(prototype.id09 + '-paggin').setStore(storeGridDatas);
         
     },
     // </editor-fold> 
@@ -154,13 +154,13 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
 //        me.detalleSearchParams.VP_OPCION = cmbfiltro;
 //        switch (cmbfiltro) {
 //            case "1" :
-//                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id10 + '-A4281IDISS-Filter').getValue();
+//                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id09 + '-A4281IDISS-Filter').getValue();
 //                break;
 //            case '2':
-//                me.detalleSearchParams.VP_Document = Ext.getCmp(prototype.id10 + '-DocumentTKT-Filter').getValue();
+//                me.detalleSearchParams.VP_Document = Ext.getCmp(prototype.id09 + '-DocumentTKT-Filter').getValue();
 //                break;
 //            case '3':
-//                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id10 + '-A4281IDISR-Filter').getValue();
+//                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id09 + '-A4281IDISR-Filter').getValue();
 //                break;
 //        }
 
@@ -280,7 +280,7 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
 //                        fn: function () {
 //                            if (msg === 'RECORD INSERTED') {
 //                                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').close(),
-//                                        Ext.getCmp(prototype.id10 + '-btnSearch').fireEvent('click', {});
+//                                        Ext.getCmp(prototype.id09 + '-btnSearch').fireEvent('click', {});
 //                            }
 //                        }
 //                    });
@@ -300,13 +300,13 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
 
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
-        return Ext.getCmp(prototype.id10 + '-' + id).getValue();
+        return Ext.getCmp(prototype.id09 + '-' + id).getValue();
     },
     focus: function (id) {
-        Ext.getCmp(prototype.id10 + '-' + id).focus();
+        Ext.getCmp(prototype.id09 + '-' + id).focus();
     },
     setValue: function (id, txt) {
-        Ext.getCmp(prototype.id10 + '-' + id).setValue(txt);
+        Ext.getCmp(prototype.id09 + '-' + id).setValue(txt);
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -326,7 +326,7 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
             case "PTBEXPIRY" :
             case "PTBREPORT" :
             case "PTBDETAIL" :
-                IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id10 + '-txtProcessDate').getValue(), 'Ymd');
+                IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id09 + '-txtProcessDate').getValue(), 'Ymd');
                 break;
                 /*case "PAPINT" : case "PARINT" :
                  IN_FECHA_PROCESO = this.getValue('cbxDateYear')+this.getValue('cbxDateMonth')+this.getValue('cbxDatePeriod');
@@ -345,7 +345,29 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryDe
             A1955KEY4: A1955KEY4,
             strOption: this.view.params.action
         };
+    },
+    // <editor-fold defaultstate="collapsed" desc="Info">
+    btnAdd_click: function () {
+        this.winDataEntry('I');
+    },
+    onEditA4283N2Click: function (grid, rowIndex) {
+        console.log('onEditA4283N2Click...');
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);
+        this.winDataEntry('U', rec);
+    },
+    winDataEntry: function (action, rec) {       
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedDataEntryDetailN2', {
+            id: 'FileUsedDataEntryDetailN2',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
     }
+    // </editor-fold>
 });
 
 

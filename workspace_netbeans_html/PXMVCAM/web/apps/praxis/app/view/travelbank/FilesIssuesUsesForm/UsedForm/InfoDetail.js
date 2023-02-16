@@ -130,14 +130,14 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetail',
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
-                                    },
-                                    {
-                                        text: 'Service', dataIndex: 'A4283SERV', width: 80,
-                                        renderer: function (value, metaData) {
-                                            metaData.style = "text-align:center;";
-                                            return value;
-                                        }
-                                    }                                    
+                                    }
+//                                    {
+//                                        text: 'Service', dataIndex: 'A4283SERV', width: 80,
+//                                        renderer: function (value, metaData) {
+//                                            metaData.style = "text-align:center;";
+//                                            return value;
+//                                        }
+//                                    }                                    
                                     
                                 ]
                             }

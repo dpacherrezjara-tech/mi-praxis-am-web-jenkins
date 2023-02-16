@@ -359,9 +359,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                         data: [
                                             ["", "(Select)"],
                                             ["1", "Transaction ID"],
-                                            ["2", "Document Number"],
-                                            ["3", "Account Number"]
-                                            // ["4", "Unique Service Credit ID"]
+                                            ["2", "Ticket Number"],
+                                            ["3", "Account Number"],
+                                            ["4", "Unique Service Credit ID"]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -381,7 +381,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                 // <editor-fold defaultstate="collapsed" desc="box:Transaction ID ">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id07 + '-BoxUniqueServiceCreditID',
+                                    id: prototype.id07 + '-BoxTransactionID',
                                     border: false,
                                     hidden: true,
                                     layout: 'hbox',
@@ -429,7 +429,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 9, width: 250, height: 26,
+                                            maxLength: 13, width: 250, height: 26,
                                             maskRe: /[0-9]/,
                                             listeners: {
                                                 keypress: 'onTextKeypress'
@@ -438,10 +438,10 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                     ]
                                 },
                                 // </editor-fold>
-                                // <editor-fold defaultstate="collapsed" desc="box:ID REFERENCE NBR">
+                                // <editor-fold defaultstate="collapsed" desc="box:Account Number">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id07 + '-BoxIdReferenceNbr',
+                                    id: prototype.id07 + '-BoxAccountNumber',
                                     border: false,
                                     hidden: true,
                                     layout: 'hbox',
@@ -459,7 +459,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 10, width: 250, height: 26,
+                                            maxLength: 20, width: 250, height: 26,
                                             maskRe: /[0-9]/,
                                             listeners: {
                                                 keypress: 'onTextKeypress'
@@ -468,7 +468,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                     ]
                                 },
                                 // </editor-fold>
-                                // <editor-fold defaultstate="collapsed" desc="box:ID REFERENCE NBR">
+                                // <editor-fold defaultstate="collapsed" desc="box:Unique Service Credit ID">
                                 {
                                     xtype: 'panel',
                                     id: prototype.id07 + '-BoxUniqueServiceCreditID',
@@ -485,7 +485,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedData
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id07 + '-A4283IDISS-Filter',
-                                            fieldLabel: 'Id Reference', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                            fieldLabel: 'Uniq. Service Credit ID', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
