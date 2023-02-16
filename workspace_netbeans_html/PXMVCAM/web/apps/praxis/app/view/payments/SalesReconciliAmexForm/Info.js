@@ -5491,7 +5491,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;background-color:#FCF6DC";
-                                                            if (data.DES_SMERCHANT === "LIGAS"){
+                                                            if (data.DES_SMERCHANT === "LIGAS" || data.DES_SMERCHANT === "TABLET" ){
                                                                 return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             } else {
                                                                 return value;

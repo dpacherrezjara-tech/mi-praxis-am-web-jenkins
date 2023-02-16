@@ -714,17 +714,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
 
         Ext.getCmp(prototype.id + '-txtOPERATNBR').setValue(this.params.bean.INVORNBR);
 
-        Ext.getCmp(prototype.id + '-radiogroupTypeX').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-radiogroupTypeXPlusgrade').setValue(false);
-        Ext.getCmp(prototype.id + '-radiogroupTypeXLigas').setValue(true);
-        Ext.getCmp(prototype.id + '-radiogroupTypeXTablet').setValue(false);
-        Ext.getCmp(prototype.id + '-radiogroupTypeX').resumeEvents();
+        if (this.params.bean.DES_SMERCHANT === 'LIGAS') {
+            Ext.getCmp(prototype.id + '-radiogroupTypeX').suspendEvents(false);
+            Ext.getCmp(prototype.id + '-radiogroupTypeXPlusgrade').setValue(false);
+            Ext.getCmp(prototype.id + '-radiogroupTypeXLigas').setValue(true);
+            Ext.getCmp(prototype.id + '-radiogroupTypeXTablet').setValue(false);
+            Ext.getCmp(prototype.id + '-radiogroupTypeX').resumeEvents();
 
-        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
+            var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
 
-        if (selectedValue === 'L') {
-            this.btnSearch_click();
+            if (selectedValue === 'L') {
+                this.btnSearch_click();
+            }
         }
+
+        if (this.params.bean.DES_SMERCHANT === 'TABLET') {
+            Ext.getCmp(prototype.id + '-radiogroupTypeX').suspendEvents(false);
+            Ext.getCmp(prototype.id + '-radiogroupTypeXPlusgrade').setValue(false);
+            Ext.getCmp(prototype.id + '-radiogroupTypeXLigas').setValue(false);
+            Ext.getCmp(prototype.id + '-radiogroupTypeXTablet').setValue(true);
+            Ext.getCmp(prototype.id + '-radiogroupTypeX').resumeEvents();
+
+            var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
+
+            if (selectedValue === 'T') {
+                this.btnSearch_click();
+            }
+        }
+
+
     },
     copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         navigator.clipboard.writeText(rowData.data.PNR.trim());

@@ -3115,8 +3115,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     onComplementDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
-        if (rowData.data.DES_SMERCHANT.trim() === 'LIGAS') {
+        if (rowData.data.DES_SMERCHANT.trim() === 'LIGAS' || rowData.data.DES_SMERCHANT.trim() === 'TABLET') {
             var INVORNBR = rowData.data.INVORNBR;
+            var DES_SMERCHANT = rowData.data.DES_SMERCHANT;
 
             prototypeProgram.view = 'payments-sales-reconcili-amex-form';
             prototypeProgram.nprog = 'PX00000570';
@@ -3126,6 +3127,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             var beanComplementToAMEX = {};
 
             beanComplementToAMEX.INVORNBR = INVORNBR;
+            beanComplementToAMEX.DES_SMERCHANT = DES_SMERCHANT.trim();
 
             console.log(beanComplementToAMEX);
 
