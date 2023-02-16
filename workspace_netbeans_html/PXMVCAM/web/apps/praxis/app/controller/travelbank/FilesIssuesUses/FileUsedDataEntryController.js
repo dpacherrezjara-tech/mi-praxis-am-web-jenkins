@@ -40,35 +40,35 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryCo
         var strOp = this.getValue('cmbfiltroDataEntry');
         switch (strOp) {
             case '1':
-                //Ext.getCmp(prototype.id07 + '-BoxTransactionID').show();
+                Ext.getCmp(prototype.id07 + '-BoxTransactionID').show();
                 Ext.getCmp(prototype.id07 + '-BoxDocumentNumber').hide();
                 Ext.getCmp(prototype.id07 + '-BoxAccountNumber').hide();
                 Ext.getCmp(prototype.id07 + '-BoxUniqueServiceCreditID').hide();
-                Ext.getCmp(prototype.id07 + '-A4282IDUSE-Filter').focus();
+                Ext.getCmp(prototype.id07 + '-A4283IDUSE-Filter').focus();
                 break;
             case '2':
-                //Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
+                Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
                 Ext.getCmp(prototype.id07 + '-BoxDocumentNumber').show();
                 Ext.getCmp(prototype.id07 + '-BoxAccountNumber').hide();
                 Ext.getCmp(prototype.id07 + '-BoxUniqueServiceCreditID').hide();
                 Ext.getCmp(prototype.id07 + '-DocumentTKT-Filter').focus();
                 break;
             case '3':
-                //Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
+                Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
                 Ext.getCmp(prototype.id07 + '-BoxDocumentNumber').hide();
                 Ext.getCmp(prototype.id07 + '-BoxAccountNumber').show();
                 Ext.getCmp(prototype.id07 + '-BoxUniqueServiceCreditID').hide();
-                Ext.getCmp(prototype.id07 + '-A4282IDISR-Filter').focus();
+                Ext.getCmp(prototype.id07 + '-A4283NCTA-Filter').focus();
                 break;
-//            case '4':
-//                Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
-//                Ext.getCmp(prototype.id07 + '-BoxDocumentNumber').hide();
-//                Ext.getCmp(prototype.id07 + '-BoxAccountNumber').hide();
-//                Ext.getCmp(prototype.id07 + '-BoxUniqueServiceCreditID').show();
-//                Ext.getCmp(prototype.id07 + '-A4283IDISS-Filter').focus();
-//                break;    
+            case '4':
+                Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
+                Ext.getCmp(prototype.id07 + '-BoxDocumentNumber').hide();
+                Ext.getCmp(prototype.id07 + '-BoxAccountNumber').hide();
+                Ext.getCmp(prototype.id07 + '-BoxUniqueServiceCreditID').show();
+                Ext.getCmp(prototype.id07 + '-A4283IDISS-Filter').focus();
+                break;    
             default:
-                //Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
+                Ext.getCmp(prototype.id07 + '-BoxTransactionID').hide();
                 Ext.getCmp(prototype.id07 + '-BoxDocumentNumber').hide();
                 Ext.getCmp(prototype.id07 + '-BoxAccountNumber').hide();
                 Ext.getCmp(prototype.id07 + '-BoxUniqueServiceCreditID').hide();
@@ -124,16 +124,16 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryCo
         me.detalleSearchParams.VP_OPCION = cmbfiltro;
         switch (cmbfiltro) {
             case "1" :
-                me.detalleSearchParams.VP_IDUSE = Ext.getCmp(prototype.id07 + '-A4282IDUSE-Filter').getValue();
+                me.detalleSearchParams.VP_IDUSE = Ext.getCmp(prototype.id07 + '-A4283IDUSE-Filter').getValue();
                 break;
             case '2':
                 me.detalleSearchParams.VP_Document = Ext.getCmp(prototype.id07 + '-DocumentTKT-Filter').getValue();
                 break;
             case '3':
-                me.detalleSearchParams.VP_NCTA = Ext.getCmp(prototype.id07 + '-A4282NCTA-Filter').getValue();
+                me.detalleSearchParams.VP_NCTA = Ext.getCmp(prototype.id07 + '-A4283NCTA-Filter').getValue();
                 break;
             case '4':
-                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id07 + '-A4282IDISS-Filter').getValue();
+                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id07 + '-A4283IDISS-Filter').getValue();
                 break;
         }
         // </editor-fold>
@@ -403,15 +403,12 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileUsedDataEntryCo
     btnAdd_click: function () {
         this.winDataEntry('I');
     },
-    onEditA4283Click: function (grid, rowIndex) {
-        console.log('onEditA4283Click...');
+    onEditA4283Click: function (grid, rowIndex) {        
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         this.winDataEntry('U', rec);
     },
     winDataEntry: function (action, rec) {
-        
-        console.log('winDataEntry...');
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedDataEntryDetail', {

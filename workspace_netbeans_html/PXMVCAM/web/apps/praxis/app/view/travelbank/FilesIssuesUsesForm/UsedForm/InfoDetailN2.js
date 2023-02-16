@@ -7,7 +7,7 @@
 
 Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id10 + '-infoDetailN2',
+    alias: 'widget.' + prototype.id09 + '-infoDetailN2',
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
-                            id: prototype.id10 + '-gridDataDetail',
+                            id: prototype.id09 + '-gridDataDetail',
                             width: 920,
                             height: 250,
                             columnLines: true,
@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                                         ]
                                     },
                                     {
-                                        text: 'Unique Service<br> Credit ID', dataIndex: 'A4283IDISS', width: 90,
+                                        text: 'Unique Service<br> Credit ID', dataIndex: 'A4283IDISS', width: 100,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                                         }
                                     },
                                     {
-                                        text: 'Currency', dataIndex: 'A4283MDA1', width: 80,
+                                        text: 'Curr.', dataIndex: 'A4283MDA1', width: 70,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
@@ -111,18 +111,18 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                                         }
                                     },
                                     {
-                                        text: 'Service Type', dataIndex:'A4283TIPD', width: 120,
+                                        text: 'Service', dataIndex: 'A4283SERV', width: 80,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Service Type', dataIndex: 'A4283TIPD', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                             //return record.get('A4283CIA') + record.get('A4283FORMA') + record.get('A4283SERIE');
-                                        }
-                                    },
-                                    {
-                                        text: 'Error <br>Code', dataIndex: 'A4283ERR', width: 80,
-                                        renderer: function (value, metaData) {
-                                            metaData.style = "text-align:center;";
-                                            return value;
                                         }
                                     },
                                     {
@@ -132,14 +132,15 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                                             return value;
                                         }
                                     },
+
                                     {
-                                        text: 'Type', dataIndex: 'A4283TYPE', width: 80,
+                                        text: 'Error <br>Code', dataIndex: 'A4283ERR', width: 80,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
-                                    }                                    
-                                    
+                                    }
+
                                 ]
                             }
                         },
@@ -147,7 +148,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',
-                            id: prototype.id10 + '-pie',
+                            id: prototype.id09 + '-pie',
                             width: '99%',
                             align: 'center',
                             layout: {
@@ -163,7 +164,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                             items: [
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id10 + '-boxPaginacion',
+                                    id: prototype.id09 + '-boxPaginacion',
                                     width: '100wh',
                                     border: false,
                                     items: [
@@ -173,7 +174,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.InfoDetailN2
                                             items: [
                                                 {
                                                     xtype: 'pagingtoolbar',
-                                                    id: prototype.id10 + '-paggin',
+                                                    id: prototype.id09 + '-paggin',
                                                     pageSize: 10,
                                                     border: false,
                                                     displayInfo: true,

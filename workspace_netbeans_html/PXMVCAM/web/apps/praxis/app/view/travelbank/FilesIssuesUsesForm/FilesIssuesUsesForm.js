@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
         'Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesController',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssue',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedForm',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FormFileExpire'
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FileExpireForm'
     ],
     controller: 'FilesIssuesUsesController',
     btnActive: 1,
@@ -171,8 +171,8 @@ getTypeForm = () => {
             return prototype.id06 + '-fileUsedForm';
             break;
         case 3:
-            return prototype.id10 + '-formFileExpire';
-            break;
+            return prototype.id11 + '-fileExpireForm';
+            break;            
         default:
             return '';
             break;

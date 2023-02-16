@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.controller.travelbank..AccountMasterTravelBank.DataEntryAccountMasterTravelBankController',{
+Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAccountMasterTravelBankController',{
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAccountMasterTravelBankController',
     lblA1740TITRA: '',

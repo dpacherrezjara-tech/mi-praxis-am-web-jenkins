@@ -11,6 +11,8 @@ import net.miatech.praxis.travelbank.SQP04807Filter;
 import net.miatech.praxis.travelbank.SQP04808Filter;
 import net.miatech.praxis.travelbank.SQP04809Filter;
 import net.miatech.praxis.travelbank.SQP04810Filter;
+import net.miatech.praxis.travelbank.SQP04819Filter;
+import net.miatech.praxis.travelbank.SQP04820Filter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -221,5 +223,82 @@ public class TransactionFilesController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="EXPIRE">
+    @RequestMapping(value = "/searchExpire")
+    public @ResponseBody
+    String searchExpire(ModelMap map, HttpServletRequest request) {
+        List<SQP04819Filter> listaData;
+        SQP04819Filter filter;
+        filter = new SQP04819Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_OPCION = request.getParameter("VP_OPCION");
+            filter.VP_IDFIL1 = request.getParameter("VP_IDFIL1");
+            filter.VP_IDFIL2 = request.getParameter("VP_IDFIL2");
+            filter.VP_DESDE = request.getParameter("VP_DESDE");
+            filter.VP_HASTA = request.getParameter("VP_HASTA");
+            filter.VP_IDEXP = request.getParameter("VP_IDEXP");
+            filter.VP_STS = request.getParameter("VP_STS");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new TransactionFilesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04819Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/searchExpireDetalle")
+    public @ResponseBody
+    String searchExpireDetalle(ModelMap map, HttpServletRequest request) {
+        List<SQP04820Filter> listaData;
+        SQP04820Filter filter;
+        filter = new SQP04820Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_OPCION = request.getParameter("VP_OPCION");
+            filter.VP_PRDA = request.getParameter("VP_PRDA");
+            filter.VP_MDA = request.getParameter("VP_MDA");
+            filter.VP_SQDIA = request.getParameter("VP_SQDIA");
+            filter.VP_IDEXP = request.getParameter("VP_IDUSE");
+            filter.VP_Document = request.getParameter("VP_Document");
+            //filter.VP_NCTA = request.getParameter("VP_NCTA");
+            filter.VP_IDISS = request.getParameter("VP_IDISS");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new TransactionFilesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04820Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
     // </editor-fold>
 }

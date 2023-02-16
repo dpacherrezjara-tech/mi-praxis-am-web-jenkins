@@ -157,7 +157,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.AccountMast
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.travelbank..AccountMasterTravelBankForm.DataEntry', {
+        Ext.create('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry', {
             id: 'DataEntryAccountMasterTravelBankForm',
             params: {
                 action: action,
