@@ -974,6 +974,20 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 }
                                             },
                                             {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 50,
+                                                text: 'Copy',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-image-log',
+                                                        tooltip: 'copy SPNR',
+                                                        handler: 'copySPNR'
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Accounting',
                                                 id: prototype.id + '-TabletAccounting',
                                                 hidden: true,
