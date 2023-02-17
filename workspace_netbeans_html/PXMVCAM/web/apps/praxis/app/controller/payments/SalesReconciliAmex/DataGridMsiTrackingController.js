@@ -45,26 +45,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataGridMsiTrackin
     },
     onMsiUpdateClick: function (btn) {
         var beanMsiTemp = {};
-        
-        if( (this.TDOC_1 + this.TDOC_2) === 'SR' || (this.TDOC_1 + this.TDOC_2) === 'RS'){
+
+        if ((this.TDOC_1 + this.TDOC_2) === 'SR' || (this.TDOC_1 + this.TDOC_2) === 'RS') {
             Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to update?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    animateTarget: btn,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            meGrid.llenarData(beanMsiTemp);
+                    {
+                        title: '.:PRAXIS:.',
+                        msg: 'Are you sure to update?',
+                        buttons: Ext.MessageBox.YESNO,
+                        scope: this,
+                        animateTarget: btn,
+                        icon: Ext.MessageBox.QUESTION,
+                        modal: true,
+                        fn: function (btn) {
+                            if (btn === 'yes') {
+                                meGrid.llenarData(beanMsiTemp);
+                            }
                         }
-                    }
-                });
+                    });
         } else {
             global.Msg({msg: 'Error'});
-        }        
+        }
     },
     llenarData: function (beanMsiTemp) {
 //        beanMsiTemp.lstSendManual = [];
@@ -130,7 +130,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataGridMsiTrackin
                 this.TDOC_2 = '';
             }
         }
-
-
+    },
+    onMsiManualUpdateClick: function(){
+        var cond1 = false; //Debe haber un registro "match" del tipo Sales y con cuotas
+        var cond2 = false; //Debe haber un registro pendiente (No match) del tipo Sales y sin cuotas
+        var cond3 = false; //Debe haber un registro pendiente (No match) del tipo Refund y sin cuotas
+        var cond4 = false; //la grilla debe tener 3 registros
+        
+        var gridMsiTracking = Ext.getCmp(prototype.id + '-gridMsiTracking').getStore();   
+        
+        if (gridMsiTracking.data.length == 3){
+            cond4 = true;
+        }
+        
+        if (cond1 && cond2 && cond3 && cond4){
+            
+        } else {
+            global.Msg({msg: "Does not match the MSI condition!"});
+        }
     },
 });
