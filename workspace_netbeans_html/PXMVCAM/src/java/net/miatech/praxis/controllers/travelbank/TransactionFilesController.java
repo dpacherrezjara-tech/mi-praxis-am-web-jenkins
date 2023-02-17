@@ -13,6 +13,7 @@ import net.miatech.praxis.travelbank.SQP04809Filter;
 import net.miatech.praxis.travelbank.SQP04810Filter;
 import net.miatech.praxis.travelbank.SQP04819Filter;
 import net.miatech.praxis.travelbank.SQP04820Filter;
+import net.miatech.praxis.travelbank.SQP04821Filter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -224,7 +225,7 @@ public class TransactionFilesController extends BaseController {
     }
 
     // </editor-fold>
-     // <editor-fold defaultstate="collapsed" desc="EXPIRE">
+    // <editor-fold defaultstate="collapsed" desc="EXPIRE">
     @RequestMapping(value = "/searchExpire")
     public @ResponseBody
     String searchExpire(ModelMap map, HttpServletRequest request) {
@@ -277,7 +278,7 @@ public class TransactionFilesController extends BaseController {
             filter.VP_PRDA = request.getParameter("VP_PRDA");
             filter.VP_MDA = request.getParameter("VP_MDA");
             filter.VP_SQDIA = request.getParameter("VP_SQDIA");
-            filter.VP_IDEXP = request.getParameter("VP_IDUSE");
+            filter.VP_IDEXP = request.getParameter("VP_IDEXP");
             filter.VP_Document = request.getParameter("VP_Document");
             //filter.VP_NCTA = request.getParameter("VP_NCTA");
             filter.VP_IDISS = request.getParameter("VP_IDISS");
@@ -288,6 +289,49 @@ public class TransactionFilesController extends BaseController {
             logic = new TransactionFilesLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.getSQP04820Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="LOSSES">
+    @RequestMapping(value = "/searchLosses")
+    public @ResponseBody
+    String searchLosses(ModelMap map, HttpServletRequest request) {
+        List<SQP04821Filter> listaData;
+        SQP04821Filter filter;
+        filter = new SQP04821Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_OPCION = request.getParameter("VP_OPCION");
+            filter.VP_IDLOS = request.getParameter("VP_IDLOS");
+            filter.VP_TICKET = request.getParameter("VP_TICKET");
+            filter.VP_NCTA = request.getParameter("VP_NCTA");                                
+            filter.VP_IDFIL1 = request.getParameter("VP_IDFIL1");
+            filter.VP_IDFIL2 = request.getParameter("VP_IDFIL2");
+            filter.VP_DESDE = request.getParameter("VP_DESDE");
+            filter.VP_HASTA = request.getParameter("VP_HASTA");
+            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new TransactionFilesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04821Filter(filter);
+
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
             map.put("data", listaData);

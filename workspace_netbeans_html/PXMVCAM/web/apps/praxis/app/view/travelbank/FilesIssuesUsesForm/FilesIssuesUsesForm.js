@@ -24,15 +24,13 @@ prototype.id14 = 'FormFileExpireDataEntryDetail';
 //LOSSES
 prototype.id15 = 'FormFileLosses';
 prototype.id16 = 'FormFileLossesDataEntry';
-prototype.id17 = 'FormFileLossesDataEntryHeader';
-prototype.id18 = 'FormFileLossesDataEntryDetail';
 //MERGE
 //
 //LIABILITY
 
 prototype.url = CONTEXTPATH + '/FilesIssuesUses';
 prototype.widthContenedor = 1300;
-prototype.widthGrid = 980;
+prototype.widthGrid = 990;
 // </editor-fold>
 
 Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm', {
@@ -42,7 +40,8 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
         'Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesController',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssue',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedForm',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FileExpireForm'
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FileExpireForm',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.LossesForm.FileLossesForm'
     ],
     controller: 'FilesIssuesUsesController',
     btnActive: 1,
@@ -172,7 +171,10 @@ getTypeForm = () => {
             break;
         case 3:
             return prototype.id11 + '-fileExpireForm';
-            break;            
+            break;
+        case 4:
+            return prototype.id15 + '-fileLossesForm';
+            break;
         default:
             return '';
             break;
