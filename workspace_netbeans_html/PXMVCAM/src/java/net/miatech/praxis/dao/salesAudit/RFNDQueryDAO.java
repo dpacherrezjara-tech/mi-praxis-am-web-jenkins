@@ -205,6 +205,7 @@ public class RFNDQueryDAO {
                 objRtn.A3648SEQ = rs01.getString("A3648SEQ");
                 objRtn.A3648TICKET = rs01.getString("A3648CIA") + "" + rs01.getString("A3648FORMA") + "" + rs01.getString("A3648SERIE");
                 objRtn.A3648CORRL = rs01.getString("A3648CORRL");
+                objRtn.A3648FAUTO = rs01.getString("A3648FAUTO");
 
                 objRtn.A3648MARCA = rs01.getString("A3648MARCA");
                 objRtn.A3648SMDA = rs01.getString("A3648SMDA");
@@ -315,6 +316,8 @@ public class RFNDQueryDAO {
                 objRtn.A3648CPN6D = rs01.getString("A3648CPN6D");
                 objRtn.A3648CPN7D = rs01.getString("A3648CPN7D");
                 objRtn.A3648CPN8D = rs01.getString("A3648CPN8D");
+                objRtn.A3648TRNCO = rs01.getString("A3648TRNCO");
+                objRtn.A3648PROCE = rs01.getString("A3648PROCE");
 
                 lstRtn.add(objRtn);
             }
@@ -544,7 +547,7 @@ public class RFNDQueryDAO {
         String STR_RESULT = "";
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXRFNDESP.SQP03104(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXRFNDESP.SQP03104(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             String SQLCLL02 = "{CALL PXRFNDESP.SQP04572(?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
@@ -558,6 +561,7 @@ public class RFNDQueryDAO {
             cs.setString("IN_FORMA", filter.IN_FORMA);
             cs.setString("IN_SERIE", filter.IN_SERIE);
             cs.setString("IN_SEQ", filter.IN_SEQ);
+            cs.setString("IN_PROCESS", filter.IN_PROCESS);
             cs.setDouble("IN_TARIF", filter.IN_TARIF);
             cs.setString("IN_MDA", filter.IN_MDA);
             cs.setDouble("IN_TARIFEQUI", filter.IN_TARIFEQUI);

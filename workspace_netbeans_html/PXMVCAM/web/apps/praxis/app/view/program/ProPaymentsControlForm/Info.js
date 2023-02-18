@@ -1389,7 +1389,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 1-5',
+                                                text: 'Days 1-30',
+                                                id: prototype.id+'-txtRange1A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1397,7 +1398,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY5', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY30', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1405,7 +1406,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY5', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY30', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1415,7 +1416,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 6 - 10',
+                                                text: 'Days 31 - 60',
+                                                id: prototype.id+'-txtRange2A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1423,7 +1425,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY10', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY60', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#ffffff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1431,7 +1433,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY10', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY60', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#ffffff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1441,7 +1443,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 11 - 15',
+                                                text: 'Days 61 - 90',
+                                                id: prototype.id+'-txtRange3A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1449,7 +1452,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY15', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY90', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1457,7 +1460,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY15', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY90', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1467,7 +1470,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Over 16',
+                                                id: prototype.id+'-txtRange4A',
+                                                text: 'Over 91',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1552,12 +1556,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-totQSALES'},
                                         {width: 100, id: prototype.id + '-totASALES'},
                                         {width: 60, id: prototype.id + '-totPERC'},
-                                        {width: 80, id: prototype.id + '-totQDAY5'},
-                                        {width: 100, id: prototype.id + '-totADAY5'},
-                                        {width: 80, id: prototype.id + '-totQDAY10'},
-                                        {width: 100, id: prototype.id + '-totADAY10'},
-                                        {width: 80, id: prototype.id + '-totQDAY15'},
-                                        {width: 100, id: prototype.id + '-totADAY15'},
+                                        {width: 80, id: prototype.id + '-totQDAY30'},
+                                        {width: 100, id: prototype.id + '-totADAY30'},
+                                        {width: 80, id: prototype.id + '-totQDAY60'},
+                                        {width: 100, id: prototype.id + '-totADAY60'},
+                                        {width: 80, id: prototype.id + '-totQDAY90'},
+                                        {width: 100, id: prototype.id + '-totADAY90'},
                                         {width: 80, id: prototype.id + '-totQOTHER'},
                                         {width: 100, id: prototype.id + '-totAOTHER'},
                                         {width: 80, id: prototype.id + '-totQTOTAL'},
@@ -1588,9 +1592,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80},
                                         {width: 100},
                                         {text: '100%', width: 60, id: prototype.id + '-100%'},
-                                        {width: 180, id: prototype.id + '-lblTotPERC_5'},
-                                        {width: 180, id: prototype.id + '-lblTotPERC_10'},
-                                        {width: 180, id: prototype.id + '-lblTotPERC_15'},
+                                        {width: 180, id: prototype.id + '-lblTotPERC_30'},
+                                        {width: 180, id: prototype.id + '-lblTotPERC_60'},
+                                        {width: 180, id: prototype.id + '-lblTotPERC_90'},
                                         {width: 180, id: prototype.id + '-lblTotPERC_O20'},
                                         {width: 240, id: prototype.id + '-lblTotPERC_PEND'}
                                     ]
@@ -1681,7 +1685,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 1-5',
+                                                text: 'Days 1-30',
+                                                id: prototype.id+'-txtRange11A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1689,7 +1694,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY5', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY30', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1697,7 +1702,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY5', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY30', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1707,7 +1712,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 6 - 10',
+                                                text: 'Days 31 - 60',
+                                                id: prototype.id+'-txtRange22A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1715,7 +1721,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY10', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY60', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#ffffff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1723,7 +1729,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY10', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY60', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#ffffff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1733,7 +1739,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 11 - 15',
+                                                text: 'Days 61 - 90',
+                                                id: prototype.id+'-txtRange33A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1741,7 +1748,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY15', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY90', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1749,7 +1756,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY15', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY90', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1759,7 +1766,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Over 16',
+                                                text: 'Over 91',
+                                                id: prototype.id+'-txtRange44A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1844,12 +1852,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-totC_QSALES'},
                                         {width: 100, id: prototype.id + '-totC_ASALES'},
                                         {width: 60, id: prototype.id + '-totC_PERC'},
-                                        {width: 80, id: prototype.id + '-totC_QDAY5'},
-                                        {width: 100, id: prototype.id + '-totC_ADAY5'},
-                                        {width: 80, id: prototype.id + '-totC_QDAY10'},
-                                        {width: 100, id: prototype.id + '-totC_ADAY10'},
-                                        {width: 80, id: prototype.id + '-totC_QDAY15'},
-                                        {width: 100, id: prototype.id + '-totC_ADAY15'},
+                                        {width: 80, id: prototype.id + '-totC_QDAY30'},
+                                        {width: 100, id: prototype.id + '-totC_ADAY30'},
+                                        {width: 80, id: prototype.id + '-totC_QDAY60'},
+                                        {width: 100, id: prototype.id + '-totC_ADAY60'},
+                                        {width: 80, id: prototype.id + '-totC_QDAY90'},
+                                        {width: 100, id: prototype.id + '-totC_ADAY90'},
                                         {width: 80, id: prototype.id + '-totC_QOTHER'},
                                         {width: 100, id: prototype.id + '-totC_AOTHER'},
                                         {width: 80, id: prototype.id + '-totC_QTOTAL'},
@@ -1880,9 +1888,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80},
                                         {width: 100},
                                         {text: '100%', width: 60, id: prototype.id + '-100%Country'},
-                                        {width: 180, id: prototype.id + '-lblTotC_PERC_5'},
-                                        {width: 180, id: prototype.id + '-lblTotC_PERC_10'},
-                                        {width: 180, id: prototype.id + '-lblTotC_PERC_15'},
+                                        {width: 180, id: prototype.id + '-lblTotC_PERC_30'},
+                                        {width: 180, id: prototype.id + '-lblTotC_PERC_60'},
+                                        {width: 180, id: prototype.id + '-lblTotC_PERC_90'},
                                         {width: 180, id: prototype.id + '-lblTotC_PERC_O20'},
                                         {width: 240, id: prototype.id + '-lblTotC_PERC_PEND'}
                                     ]
@@ -1890,7 +1898,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             ]
                         },
                         // </editor-fold>
-                        // <editor-fold defaultstate="collapsed" desc="boxPayDelayCountry">
+                        // <editor-fold defaultstate="collapsed" desc="boxPayDelayCard">
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxPayDelayCard',
@@ -1973,7 +1981,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 1-5',
+                                                text: 'Days 1-30',
+                                                id: prototype.id+'-txtRange111A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1981,7 +1990,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY5', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY30', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1989,7 +1998,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY5', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY30', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -1999,7 +2008,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 6 - 10',
+                                                text: 'Days 31 - 60',
+                                                id: prototype.id+'-txtRange222A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2007,7 +2017,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY10', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY60', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#ffffff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -2015,7 +2025,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY10', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY60', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#ffffff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -2025,7 +2035,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Days 11 - 15',
+                                                text: 'Days 61 - 90',
+                                                id: prototype.id+'-txtRange333A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2033,7 +2044,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Qty', dataIndex: 'QDAY15', width: 80,
+                                                        text: 'Qty', dataIndex: 'QDAY90', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -2041,7 +2052,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'ADAY15', width: 100,
+                                                        text: 'USD', dataIndex: 'ADAY90', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#e6f4ff;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -2051,7 +2062,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Over 16',
+                                                text: 'Over 91',
+                                                id: prototype.id+'-txtRange444A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2136,12 +2148,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80, id: prototype.id + '-totCC_QSALES'},
                                         {width: 100, id: prototype.id + '-totCC_ASALES'},
                                         {width: 60, id: prototype.id + '-totCC_PERC'},
-                                        {width: 80, id: prototype.id + '-totCC_QDAY5'},
-                                        {width: 100, id: prototype.id + '-totCC_ADAY5'},
-                                        {width: 80, id: prototype.id + '-totCC_QDAY10'},
-                                        {width: 100, id: prototype.id + '-totCC_ADAY10'},
-                                        {width: 80, id: prototype.id + '-totCC_QDAY15'},
-                                        {width: 100, id: prototype.id + '-totCC_ADAY15'},
+                                        {width: 80, id: prototype.id + '-totCC_QDAY30'},
+                                        {width: 100, id: prototype.id + '-totCC_ADAY30'},
+                                        {width: 80, id: prototype.id + '-totCC_QDAY60'},
+                                        {width: 100, id: prototype.id + '-totCC_ADAY60'},
+                                        {width: 80, id: prototype.id + '-totCC_QDAY90'},
+                                        {width: 100, id: prototype.id + '-totCC_ADAY90'},
                                         {width: 80, id: prototype.id + '-totCC_QOTHER'},
                                         {width: 100, id: prototype.id + '-totCC_AOTHER'},
                                         {width: 80, id: prototype.id + '-totCC_QTOTAL'},
@@ -2172,9 +2184,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         {width: 80},
                                         {width: 100},
                                         {text: '100%', width: 60, id: prototype.id + '-100%Card'},
-                                        {width: 180, id: prototype.id + '-lblTotCC_PERC_5'},
-                                        {width: 180, id: prototype.id + '-lblTotCC_PERC_10'},
-                                        {width: 180, id: prototype.id + '-lblTotCC_PERC_15'},
+                                        {width: 180, id: prototype.id + '-lblTotCC_PERC_30'},
+                                        {width: 180, id: prototype.id + '-lblTotCC_PERC_60'},
+                                        {width: 180, id: prototype.id + '-lblTotCC_PERC_90'},
                                         {width: 180, id: prototype.id + '-lblTotCC_PERC_O20'},
                                         {width: 240, id: prototype.id + '-lblTotCC_PERC_PEND'}
                                     ]

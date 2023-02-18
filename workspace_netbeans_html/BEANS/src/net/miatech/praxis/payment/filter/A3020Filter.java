@@ -25,6 +25,7 @@ public class A3020Filter extends A3020 {
     public String IN_FLAG = "";
     public String IN_FINSUMO = "";
     public String IN_BANK = "";
+    public String IN_RANGE = "";
 
     public String FECHA = "";
     public String TRNCU = "";
@@ -70,6 +71,9 @@ public class A3020Filter extends A3020 {
     public double perc_10 = 0;
     public double perc_15 = 0;
     public double perc_20 = 0;
+    public double perc_30 = 0;
+    public double perc_60 = 0;
+    public double perc_90 = 0;
     public double perc_O20 = 0;
     
     public double DiffConci1 = 0;
@@ -136,6 +140,18 @@ public class A3020Filter extends A3020 {
     public double totADAY10 = 0;
     public double totADAY15 = 0;
     public double totADAY20 = 0;
+    public int QDAY30 = 0;
+    public int QDAY60 = 0;
+    public int QDAY90 = 0;
+    public double ADAY30 = 0;
+    public double ADAY60 = 0;
+    public double ADAY90 = 0;
+    public int totQDAY30 = 0;
+    public int totQDAY60 = 0;
+    public int totQDAY90 = 0;
+    public double totADAY30 = 0;
+    public double totADAY60 = 0;
+    public double totADAY90 = 0;
     public double totAOTHER = 0;
     public double totAPAY = 0;
     
@@ -146,5 +162,5 @@ public class A3020Filter extends A3020 {
     public long RN = 0;
 
     public Pagination page = new Pagination();
-
+    
 }

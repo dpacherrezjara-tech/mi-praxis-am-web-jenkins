@@ -724,6 +724,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDPending', {
                                     {text: 'IATA', dataIndex: 'A3648SIATA', width: 65},
                                     {text: 'Agency', dataIndex: 'A3648AGENCY', width: 275, align: 'left', renderer: 'onRendererColumnAttr'},
                                     {text: 'Transc.', dataIndex: 'A3648STRCU', width: 80},
+                                    {text: 'Module', dataIndex: 'A3648TRNCO', width: 80},
                                     {text: 'Tdoc', dataIndex: 'A3648STDOC', width: 80},
                                     {text: 'Cur.', dataIndex: 'A3648MDA', width: 40},
                                     {text: 'Fare', dataIndex: 'A3648TARID', width: 120, renderer: 'onColumnAmountRenderer'},

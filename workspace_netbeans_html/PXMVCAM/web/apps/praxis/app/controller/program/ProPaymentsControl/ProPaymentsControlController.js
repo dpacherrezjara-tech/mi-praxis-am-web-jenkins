@@ -330,6 +330,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         me.bean.IN_TOP = 0;
         me.bean.IN_FINSUMO = Ext.getCmp(prototype.id + '-cmbFINSUMO').getValue();
         me.bean.IN_BANK = Ext.getCmp(prototype.id + '-cmbBank').getValue();
+        me.bean.IN_RANGE = Ext.getCmp(prototype.id + '-txtRange').getValue();
 
         var op2 = Ext.getCmp(prototype.id + '-rbgType').getValue();
         me.bean.IN_TDOC = op2.rbgTDOC;
@@ -1031,12 +1032,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totASALES').setText('0');
                             Ext.getCmp(prototype.id + '-totPERC').setText('0');
 
-                            Ext.getCmp(prototype.id + '-totQDAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totADAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totQDAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totADAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totQDAY15').setText('0');
-                            Ext.getCmp(prototype.id + '-totADAY15').setText('0');
+                            Ext.getCmp(prototype.id + '-totQDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totQDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totQDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totADAY90').setText('0');
 
                             Ext.getCmp(prototype.id + '-totQOTHER').setText('0');
                             Ext.getCmp(prototype.id + '-totAOTHER').setText('0');
@@ -1047,9 +1048,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                             Ext.getCmp(prototype.id + '-100%').setText('0%');
 
-                            Ext.getCmp(prototype.id + '-lblTotPERC_5').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_10').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_15').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_90').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_O20').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_PEND').setText('0%');
                             global.Msg({
@@ -1061,13 +1062,21 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totQSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totPERC').setText('100');
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if(a===''){
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange1A').setText('Days 1-'+a);
+                            Ext.getCmp(prototype.id + '-txtRange2A').setText('Days '+((a*1)+1)+'-'+(a*2));
+                            Ext.getCmp(prototype.id + '-txtRange3A').setText('Days '+((a*2)+1)+'-'+(a*3));
+                            Ext.getCmp(prototype.id + '-txtRange4A').setText('Over '+((a*3)+1));
 
-                            Ext.getCmp(prototype.id + '-totQDAY5').setText(Ext.util.Format.number(data.totQDAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totADAY5').setText(Ext.util.Format.number(data.totADAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totQDAY10').setText(Ext.util.Format.number(data.totQDAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totADAY10').setText(Ext.util.Format.number(data.totADAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totQDAY15').setText(Ext.util.Format.number(data.totQDAY15, '0,000'));
-                            Ext.getCmp(prototype.id + '-totADAY15').setText(Ext.util.Format.number(data.totADAY15, '0,000'));
+                            Ext.getCmp(prototype.id + '-totQDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totQDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totQDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
 
                             Ext.getCmp(prototype.id + '-totQOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
                             Ext.getCmp(prototype.id + '-totAOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
@@ -1076,9 +1085,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totPERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
 
-                            Ext.getCmp(prototype.id + '-lblTotPERC_5').setText(Ext.util.Format.number(data.perc_5, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_10').setText(Ext.util.Format.number(data.perc_10, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_15').setText(Ext.util.Format.number(data.perc_15, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
                         }
@@ -1116,12 +1125,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_ASALES').setText('0');
                             Ext.getCmp(prototype.id + '-totC_PERC').setText('0');
 
-                            Ext.getCmp(prototype.id + '-totC_QDAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_ADAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_QDAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_ADAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_QDAY15').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_ADAY15').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_QDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_ADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_QDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_ADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_QDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_ADAY90').setText('0');
 
                             Ext.getCmp(prototype.id + '-totC_QOTHER').setText('0');
                             Ext.getCmp(prototype.id + '-totC_AOTHER').setText('0');
@@ -1132,9 +1141,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                             Ext.getCmp(prototype.id + '-100%Country').setText('0%');
 
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_5').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_10').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_15').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_90').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_O20').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_PEND').setText('0%');
                             global.Msg({
@@ -1146,13 +1155,22 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_QSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_PERC').setText('100');
+                            
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if(a===''){
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange11A').setText('Days 1-'+a);
+                            Ext.getCmp(prototype.id + '-txtRange22A').setText('Days '+((a*1)+1)+'-'+(a*2));
+                            Ext.getCmp(prototype.id + '-txtRange33A').setText('Days '+((a*2)+1)+'-'+(a*3));
+                            Ext.getCmp(prototype.id + '-txtRange44A').setText('Over '+((a*3)+1));
 
-                            Ext.getCmp(prototype.id + '-totC_QDAY5').setText(Ext.util.Format.number(data.totQDAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_ADAY5').setText(Ext.util.Format.number(data.totADAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_QDAY10').setText(Ext.util.Format.number(data.totQDAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_ADAY10').setText(Ext.util.Format.number(data.totADAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_QDAY15').setText(Ext.util.Format.number(data.totQDAY15, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_ADAY15').setText(Ext.util.Format.number(data.totADAY15, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_QDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_ADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_QDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_ADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
 
                             Ext.getCmp(prototype.id + '-totC_QOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_AOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
@@ -1161,9 +1179,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_ATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_PERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
 
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_5').setText(Ext.util.Format.number(data.perc_5, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_10').setText(Ext.util.Format.number(data.perc_10, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_15').setText(Ext.util.Format.number(data.perc_15, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
                         }
@@ -1201,12 +1219,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_ASALES').setText('0');
                             Ext.getCmp(prototype.id + '-totCC_PERC').setText('0');
 
-                            Ext.getCmp(prototype.id + '-totCC_QDAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_ADAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_QDAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_ADAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_QDAY15').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_ADAY15').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_QDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_ADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_QDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_ADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_QDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_ADAY90').setText('0');
 
                             Ext.getCmp(prototype.id + '-totCC_QOTHER').setText('0');
                             Ext.getCmp(prototype.id + '-totCC_AOTHER').setText('0');
@@ -1217,9 +1235,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                             Ext.getCmp(prototype.id + '-100%Card').setText('0%');
 
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_5').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_10').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_15').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_90').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_O20').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_PEND').setText('0%');
                             global.Msg({
@@ -1231,13 +1249,22 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_QSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_PERC').setText('100');
+                            
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if(a===''){
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange111A').setText('Days 1-'+a);
+                            Ext.getCmp(prototype.id + '-txtRange222A').setText('Days '+((a*1)+1)+'-'+(a*2));
+                            Ext.getCmp(prototype.id + '-txtRange333A').setText('Days '+((a*2)+1)+'-'+(a*3));
+                            Ext.getCmp(prototype.id + '-txtRange444A').setText('Over '+((a*3)+1));
 
-                            Ext.getCmp(prototype.id + '-totCC_QDAY5').setText(Ext.util.Format.number(data.totQDAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_ADAY5').setText(Ext.util.Format.number(data.totADAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_QDAY10').setText(Ext.util.Format.number(data.totQDAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_ADAY10').setText(Ext.util.Format.number(data.totADAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_QDAY15').setText(Ext.util.Format.number(data.totQDAY15, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_ADAY15').setText(Ext.util.Format.number(data.totADAY15, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_QDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_ADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_QDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_ADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
 
                             Ext.getCmp(prototype.id + '-totCC_QOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_AOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
@@ -1246,9 +1273,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_ATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_PERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
 
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_5').setText(Ext.util.Format.number(data.perc_5, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_10').setText(Ext.util.Format.number(data.perc_10, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_15').setText(Ext.util.Format.number(data.perc_15, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
                         }

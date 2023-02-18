@@ -46,11 +46,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setReadOnly(true);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyrobot').setReadOnly(true);
                 Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setReadOnly(true);
+                var me = this;
+                rec = me.view.params.rec;
+                if (Ext.String.trim(rec.get('A3648FLAG'))=== 'F') {
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').show();
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setValue(rec.get('A3648PROCE'));
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(true);
+
+                } else {
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').hide();
+                }
+
+                //Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(true);
                 //Ext.getCmp(prototype.idDetailTicket + '-win').setHeight(Ext.getCmp(prototype.idDetailTicket + '-win').getHeight() - 200);
                 break;
             case 'FORMPENDIRFND':
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setReadOnly(false);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyrobot').setReadOnly(false);
+                Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(false);
                 if (String(this.view.params.qtytkt) > 1) {
                     //txtadd.show();
                     CbtStatus.show();
@@ -284,6 +297,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalEqFareAm').setReadOnly(false);
         }
 
+
+
+        Ext.getCmp(prototype.idDetailTicket + '-txtAuthorise').setValue(rec.get('A3648FAUTO'));
         Ext.getCmp(prototype.idDetailTicket + '-txtfolio').setValue(rec.get('A3648FOLIO'));
         Ext.getCmp(prototype.idDetailTicket + '-txttkt').setValue(rec.get('A3648TICKET'));
         Ext.getCmp(prototype.idDetailTicket + '-txttidoc').setValue(rec.get('A3648STDOC'));
@@ -322,6 +338,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
         Ext.getCmp(prototype.idDetailTicket + '-txtiata').setValue(rec.get('A3648SIATA'));
         Ext.getCmp(prototype.idDetailTicket + '-txtCOUNTRY').setValue(rec.get('A3648SPVTA'));
+
         var vl_A3648FLAG = '';
         switch (Ext.String.trim(rec.get('A3648FLAG'))) {
             case 'E':
@@ -614,6 +631,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var ComboEstatus = Ext.getCmp(prototype.idDetailTicket + '-ComboStatus');
         var CmbConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto');
         var CmbTRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND');
+        var CmbProcess = Ext.getCmp(prototype.idDetailTicket + '-ComboProcess');
+
         ComboEstatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECT"},
@@ -633,6 +652,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "P", "name": "PARTIAL"},
+                {"code": "T", "name": "TOTAL"}
+            ]
+        }));
+        CmbProcess.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "SELECT"},
+                {"code": "D", "name": "DETAILED"},
                 {"code": "T", "name": "TOTAL"}
             ]
         }));
@@ -1001,7 +1027,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var vl_type = Ext.getCmp(prototype.idDetailTicket + '-txttidoc').getValue();
         var txtConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
         var CmbTRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
+        var txttrnc = Ext.getCmp(prototype.idDetailTicket + '-txttrnc').getValue();
         var vl_Showcoupons = Ext.getCmp(prototype.idDetailTicket + '-txtShowcoupons').getValue();
+        var ComboProcess = Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').getValue();
         var grid04 = Ext.getCmp(prototype.idDetailTicket + '-gridTaxes');
         var reg4 = grid04.getStore().getCount();
         var gridPAYMENT = Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENT');
@@ -1063,7 +1091,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 bvalida = false;
                 return;
             }
-            if (CmbTRFND > 0) {
+            if (Ext.String.trim(CmbTRFND).length === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of RFND');
                 bvalida = false;
                 return;
@@ -1072,6 +1100,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.Msg.alert('.: PRAXIS :.', 'You must enter the amount to RFND');
                 bvalida = false;
                 return;
+            }
+            if (Ext.String.trim(ComboProcess).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'Select the capture process for the Miatech BPO Robot');
+                bvalida = false;
+                return;
+            } else {
+                if (Ext.String.trim(txttrnc).length > 0) {
+                    if (Ext.String.trim(txttrnc) === 'EXCH' && Ext.String.trim(ComboProcess) === 'T') {
+                        Ext.Msg.alert('.: PRAXIS :.', 'For the EXCH transaction you have to select the DETAILED process');
+                        bvalida = false;
+                        return;
+                    }
+                }
+
             }
             if (Ext.String.trim(txtConto).length === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'Enter if the ticket is a C set or is a Start I');
@@ -1157,7 +1199,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                             Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of total refund');
                             bvalida = false;
                             return;
-                        }                        
+                        }
                     }
 
 
@@ -1482,6 +1524,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
                         me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
                         me.beanTMP.IN_MARCA = checkApply;
+                        me.beanTMP.IN_PROCESS = Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').getValue();
+
                         //me.beanTMP.IN_MARCA = Ext.getCmp(prototype.idDetailTicket + '-Combochangestatus').getValue();
                         var cbox1 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn1').getValue();
                         var cbox2 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn2').getValue();

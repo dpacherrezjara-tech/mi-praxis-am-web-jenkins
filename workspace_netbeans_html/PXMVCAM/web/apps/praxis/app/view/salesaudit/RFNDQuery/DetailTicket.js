@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 880,
-    width: 1090,
+    width: 1170,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -127,13 +127,10 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             labelWidth: 40,
                             labelAlign: 'right',
                             emptyText: '',
-                            listConfig: {
-                                minWidth: 100
-                            },
                             listeners: {
                                 afterrender: 'onCmbStatusAfterRender'
                             }
-                        }
+                        },
                     ]
                 },
                 {
@@ -230,6 +227,16 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             }
 
                             //iconCls: 'prx-icon-104-ticket'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idDetailTicket + '-txtCase',
+                            fieldLabel: 'SF Case',
+                            labelWidth: 50,
+                            width: 130,
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            labelAlign: 'right'
                         }
 
                     ]
@@ -385,14 +392,16 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtCase',
-                            fieldLabel: 'SF Case',
-                            labelWidth: 50,
-                            width: 150,
+                            id: prototype.idDetailTicket + '-txtAuthorise',
+                            fieldLabel: 'Autho/Reje date',
+                            labelWidth: 100,
+                            width: 180,
                             value: 'xxxxxx',
                             readOnly: true,
-                            labelAlign: 'right'
+                            fieldStyle: 'font-weight: bold; color: blue;'
                         }
+
+
 
                     ]
                 },
@@ -901,6 +910,25 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             listeners: {
                                 change: 'onchange'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 40},
+                        {
+                            xtype: 'combo',
+                            id: prototype.idDetailTicket + '-ComboProcess',
+                            fieldLabel: 'Process',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 200,
+                            labelWidth: 50,
+                            labelAlign: 'left',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            listeners: {
+                                afterrender: 'onCmbStatusAfterRender'
                             }
                         }
 

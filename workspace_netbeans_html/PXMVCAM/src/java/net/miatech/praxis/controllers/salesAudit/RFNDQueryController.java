@@ -387,7 +387,7 @@ public class RFNDQueryController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -414,6 +414,9 @@ public class RFNDQueryController extends BaseController {
             CH_20 = row.createCell(20);
             CH_21 = row.createCell(21);
             CH_22 = row.createCell(22);
+            CH_23 = row.createCell(23);
+            CH_24 = row.createCell(24);
+            CH_25 = row.createCell(25);
 
             CH_00.setCellValue("System Date");
             CH_01.setCellValue("Issue Date");
@@ -438,6 +441,9 @@ public class RFNDQueryController extends BaseController {
             CH_20.setCellValue("Group");
             CH_21.setCellValue("Req. Reason");
             CH_22.setCellValue("Remarks");
+            CH_23.setCellValue("Module");
+            CH_24.setCellValue("Process");
+            CH_25.setCellValue("Authorise/Reject date");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -462,6 +468,9 @@ public class RFNDQueryController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 20));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 25));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -486,6 +495,9 @@ public class RFNDQueryController extends BaseController {
             CH_20.setCellStyle(headerStyle);
             CH_21.setCellStyle(headerStyle);
             CH_22.setCellStyle(headerStyle);
+            CH_23.setCellStyle(headerStyle);
+            CH_24.setCellStyle(headerStyle);
+            CH_25.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -516,6 +528,9 @@ public class RFNDQueryController extends BaseController {
                 CH_20 = row.createCell(20);
                 CH_21 = row.createCell(21);
                 CH_22 = row.createCell(22);
+                CH_23 = row.createCell(23);
+                CH_24 = row.createCell(24);
+                CH_25 = row.createCell(25);
 
                 CH_00.setCellValue(listaData.get(vi).A3648FREGI);
                 CH_01.setCellValue(listaData.get(vi).A3648XFSAL);
@@ -554,11 +569,23 @@ public class RFNDQueryController extends BaseController {
                         vl_A4076FLAG = "PENDING";
                         break;
                 }
+                String vl_PROCE = "";
+                switch (listaData.get(vi).A3648PROCE) {
+                    case "D":
+                        vl_PROCE = "DETAIL";
+                        break;
+                    case "T":
+                        vl_PROCE = "TOTAL";
+                        break;
+                }
                 CH_18.setCellValue(vl_A4076FLAG);
                 CH_19.setCellValue(listaData.get(vi).A3648STATO);
                 CH_20.setCellValue(listaData.get(vi).A3648GRUPO);
                 CH_21.setCellValue(listaData.get(vi).A3648ERROR);
                 CH_22.setCellValue(listaData.get(vi).A3648RAAG);
+                CH_23.setCellValue(listaData.get(vi).A3648TRNCO);
+                CH_24.setCellValue(vl_PROCE);
+                CH_25.setCellValue(listaData.get(vi).A3648FAUTO);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -582,6 +609,10 @@ public class RFNDQueryController extends BaseController {
                 CH_19.setCellStyle(bodyStyle);
                 CH_20.setCellStyle(bodyStyle);
                 CH_21.setCellStyle(bodyStyle);
+                CH_22.setCellStyle(bodyStyle);
+                CH_23.setCellStyle(bodyStyle);
+                CH_24.setCellStyle(bodyStyle);
+                CH_25.setCellStyle(bodyStyle);
 
                 // </editor-fold>
                 iter.next();
