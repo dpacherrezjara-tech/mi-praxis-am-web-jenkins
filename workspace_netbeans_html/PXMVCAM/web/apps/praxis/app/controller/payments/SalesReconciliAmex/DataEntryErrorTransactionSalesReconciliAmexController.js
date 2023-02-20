@@ -203,7 +203,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
         } else if (this.beanResult.SMERCHID === '8133735688') {
             this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '9592174866') {
+            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
         } else if (this.beanResult.SMERCHID === '9352724851') {
+            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '8264209750') {
             this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
         }
 
