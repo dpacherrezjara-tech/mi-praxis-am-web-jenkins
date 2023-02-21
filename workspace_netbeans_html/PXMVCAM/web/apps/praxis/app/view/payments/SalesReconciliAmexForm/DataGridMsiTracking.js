@@ -233,6 +233,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking'
                     }
                 },
                 {
+                    text: 'Update Manual Msi', //hidden: true,
+                    id: prototype.id + '-btn-msi-manual-update',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onMsiManualUpdateClick'
+                    }
+                },
+                {
                     text: 'Cancel',
                     id: prototype.id + '-btn-msi-cancel',
                     iconCls: 'prx-icon-cancel',

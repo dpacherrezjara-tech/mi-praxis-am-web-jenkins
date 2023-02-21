@@ -137,7 +137,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
         // this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
         // this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
-
+        
+        if (this.beanResult.SMERCHID === '9353227755') {
+            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '8133735688') {
+            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '9592174866') {
+            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '9352724851') {
+            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '8264209750') {
+            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+        }
+        
         this.setValue('de-txtBpoOBSERV-RO', this.beanResult.OBSERV_BPO);
         this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
         this.setValue('de-txtFCONTL', this.beanResult.FCONTL);

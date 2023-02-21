@@ -90,7 +90,7 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04377(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04377(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04619(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04619(filter);
     }
@@ -122,11 +122,11 @@ public class SalesReconciliAmexLogic {
     public String loadPX570SQP04361(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04361(filter);
     }
-    
+
     public String loadPX570SQP04636(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04636(filter);
     }
-    
+
     public String loadPX570SQP04729(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04729(filter);
     }
@@ -135,14 +135,18 @@ public class SalesReconciliAmexLogic {
         return SalesReconciliAmexDAO.loadPX570SQP04469(filter);
     }
 
+    public String loadPX570SQP04827(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04827(filter);
+    }
+
     public List<A4116Filter> loadPX570SQP04420(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04420(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04612(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04612(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04613(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04613(filter);
     }
@@ -158,7 +162,7 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04569(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04569(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04617(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04617(filter);
     }

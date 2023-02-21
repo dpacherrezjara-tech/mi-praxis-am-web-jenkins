@@ -170,6 +170,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.AREFNBR = this.beanResult.AREFNBR;
+        beanTemp.TDOC = this.beanResult.TDOC;
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
@@ -230,6 +232,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
 
         Ext.Ajax.request({
@@ -269,6 +273,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',

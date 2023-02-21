@@ -81,7 +81,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
-                                    text: 'AX Number',
+                                    text: 'Processor',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
