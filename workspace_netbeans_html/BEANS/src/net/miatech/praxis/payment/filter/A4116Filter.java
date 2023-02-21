@@ -255,6 +255,13 @@ public class A4116Filter extends A4116 {
     public String IN_PROCTYPE = "";
     public String IN_SCURRENCY = "";
     public String IN_TKT = "";
+    //Msi Manual
+    public String AREFNBR1 = "";
+    public String AREFNBR2 = "";
+    public String AREFNBR3 = "";
+    public String TDOC1 = "";
+    public String TDOC2 = "";
+    public String TDOC3 = "";
     
     public String IN_STVAL_ERR = "";
     public String strFormatDate1 = "";
