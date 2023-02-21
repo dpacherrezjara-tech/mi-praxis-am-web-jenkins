@@ -253,6 +253,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             beanTemp.TGROSAMOUN = 0;
         }
 
+        beanTemp.AREFNBR = this.beanResult.AREFNBR;
+
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
@@ -321,6 +323,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -358,6 +362,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -486,20 +492,20 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 beanTemp.option = 'U';
                 //this.ValidateTicketPNR(beanTemp, btn);
                 Ext.Msg.show(
-                            {
-                                title: '.:PRAXIS:.',
-                                msg: 'Are you sure to update?',
-                                buttons: Ext.MessageBox.YESNO,
-                                scope: this,
-                                animateTarget: btn,
-                                icon: Ext.MessageBox.QUESTION,
-                                modal: true,
-                                fn: function (btn) {
-                                    if (btn === 'yes') {
-                                        meDE.MaintenanceA4116(beanTemp);
-                                    }
+                        {
+                            title: '.:PRAXIS:.',
+                            msg: 'Are you sure to update?',
+                            buttons: Ext.MessageBox.YESNO,
+                            scope: this,
+                            animateTarget: btn,
+                            icon: Ext.MessageBox.QUESTION,
+                            modal: true,
+                            fn: function (btn) {
+                                if (btn === 'yes') {
+                                    meDE.MaintenanceA4116(beanTemp);
                                 }
-                            });
+                            }
+                        });
             } else {
                 if (txtMsjValidacionTktPNR !== '') {
                     console.log(txtMsjValidacionTktPNR);
@@ -1250,7 +1256,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             }
         });
     },
-    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {        
+    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var strTkt = rowData.data.ISREFNBR;
 
         prototypeProgram.view = 'payments-reconciliation-payment-form';
