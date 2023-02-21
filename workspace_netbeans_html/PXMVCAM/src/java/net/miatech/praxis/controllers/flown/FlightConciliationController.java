@@ -683,7 +683,7 @@ public class FlightConciliationController extends BaseController {
             msj = "Error: " + e.getMessage();
         }
         if (msj.toLowerCase().contains("duplicada")) {
-            msj = "Error: Duplicated record. Ticket were not registered.";
+            msj = "Error: Cupon ya existe.";
         }
         map.put("msjOption", msj);
         map.put("strOption", strOption);
