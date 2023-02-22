@@ -101,13 +101,42 @@ public class EstimatedVarianceDAO {
                 objRtn = new A1955Filter();
                 objRtn.RN = rst.getLong("RN");
                 
-                objRtn.LCODE = rst.getString("LCODE").trim();
-                objRtn.DESCRIPTION = rst.getString("DESCRIPTION").trim();
-                objRtn.LGROSS = rst.getString("LGROSS").trim();
-                objRtn.LISC = rst.getString("LISC").trim();
-                objRtn.LTAX = rst.getString("LTAX").trim();
-                objRtn.LOTHER = rst.getString("LOTHER").trim();
+                if(rst.getObject("LCODE") != null){
+                    objRtn.LCODE = rst.getString("LCODE").trim();
+                } else {
+                    objRtn.LCODE = rst.getString("ECODE").trim();
+                }
                 
+                if(rst.getObject("DESCRIPTION") == null){
+                    objRtn.DESCRIPTION = "";
+                } else {
+                    objRtn.DESCRIPTION = rst.getString("DESCRIPTION").trim();
+                }
+                
+                if(rst.getObject("LGROSS") == null){
+                    objRtn.LGROSS = "0.00";
+                }else{
+                    objRtn.LGROSS = rst.getString("LGROSS").trim();
+                }
+
+                if(rst.getObject("LISC") == null){
+                    objRtn.LISC = "0.00";
+                }else{
+                    objRtn.LISC = rst.getString("LISC").trim();
+                }
+                
+                if(rst.getObject("LTAX") == null){
+                    objRtn.LTAX = "0.00";
+                }else{
+                    objRtn.LTAX = rst.getString("LTAX").trim();
+                } 
+                
+                if(rst.getObject("LOTHER") == null){
+                    objRtn.LOTHER = "0.00";
+                }else{
+                    objRtn.LOTHER = rst.getString("LOTHER").trim();
+                }                 
+
                 objRtn.ECODE = rst.getString("ECODE").trim();
                 objRtn.EGROSS = rst.getString("EGROSS").trim();
                 objRtn.EISC = rst.getString("EISC").trim();
