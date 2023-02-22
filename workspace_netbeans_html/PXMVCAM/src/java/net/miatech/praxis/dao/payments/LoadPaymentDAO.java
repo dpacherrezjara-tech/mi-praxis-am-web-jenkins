@@ -11,6 +11,8 @@ import net.miatech.praxis.exceptions.SpringException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import net.miatech.praxis.Sales.A4373;
+//import net.miatech.praxis.payment.A2289;
 import net.miatech.praxis.payment.filter.A2289Filter;
 import net.miatech.praxis.payment.filter.A4168Filter;
 import org.apache.log4j.Logger;
@@ -207,7 +209,97 @@ public class LoadPaymentDAO {
 
         return list;
     }
+    
+    /*NUEVO RFTX*/
+    public List<A4373> loadSQP04826(A4373 filter) throws SQLException, Exception {
+        List<A4373> list = new ArrayList<A4373>();
+        A4373 objRtn;
+        CallableStatement cstmt = null;
+        ResultSet rs01 = null;
 
+        double dblAmountS = 0, dblAmountA = 0;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04826(?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
+                
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_CIA.trim());
+            cstmt.setString(3, filter.IN_FORMA.trim());
+            cstmt.setString(4, filter.IN_SERIA.trim());
+            
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+            
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+                        
+            rs01 = cstmt.getResultSet();
+                        
+                while (rs01.next()) {
+
+                    objRtn = new A4373();
+                    
+                    objRtn.TICKET = rs01.getString("A4373CIA").trim() + " " + rs01.getString("A4373FORMA").trim() + " " + rs01.getString("A4373SERIE").trim();
+                    objRtn.A4373CIA = rs01.getString("A4373CIA").trim() ;
+                    objRtn.A4373FORMA  = rs01.getString("A4373FORMA").trim() ;
+                    objRtn.A4373SERIE =  rs01.getString("A4373SERIE").trim();
+                    objRtn.A4373SEQ =  rs01.getString("A4373SEQ").trim();                    
+                    objRtn.CPNS = rs01.getString("A4373CUPN1").trim() + " " + rs01.getString("A4373CUPN2").trim() + " " + rs01.getString("A4373CUPN3").trim() + " " + rs01.getString("A4373CUPN4").trim();
+                    objRtn.A4373TDOC =  rs01.getString("A4373TDOC").trim();//DOC_TYPE
+                    objRtn.CONJUNCTION = rs01.getString("A4373FLAG").trim() + " " + rs01.getString("A4373NSEQ").trim() + " " + rs01.getString("A4373CTKTC").trim();
+                    objRtn.A4373FECVT = rs01.getString("A4373FECVT").trim();//DATE
+                    objRtn.A4373AGENT = rs01.getString("A4373AGENT").trim();//IATA                  
+                    objRtn.A4373MDTX = rs01.getString("A4373MDTX").trim();//CUR 
+                    objRtn.A4373TTAX = rs01.getString("A4373TTAX").trim();//AMOUNT 
+                    objRtn.A4373FTURB = rs01.getString("A4373FTURB").trim();//SALE_DATE 
+                    
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    list.add(objRtn);
+                }
+     
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return list;
+    }
+    
     public List<A2289Filter> loadSQP00888(A2289Filter filter) throws SQLException, Exception {
         List<A2289Filter> list = new ArrayList<A2289Filter>();
         A2289Filter objRtn;

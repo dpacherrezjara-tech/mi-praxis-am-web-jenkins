@@ -641,18 +641,24 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.searchPNR(FPROC, TRNCU, TKT);
 	}
     },
+    
     btnRFTX_clickHandler: function () {
-        var beanA2289 = {};
-        beanA2289.IN_CIA = win.getValue('txtFilterTicketCia');
-        beanA2289.IN_FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
-        beanA2289.IN_SERIA = win.getValue('txtFilterTicketFormSer').substring(4, 10);
+                
+        var beanA4373 = {};       
         
-        var DataEntryLog = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryLog', { id: 'DataEntryLogProMasterTicketForm' });
-        var controller = DataEntryLog.getController();
-        controller.beanA2289 = beanA2289;
+        beanA4373.IN_CIA = win.getValue('txtFilterTicketCia');
+        beanA4373.IN_FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
+        beanA4373.IN_SERIA = win.getValue('txtFilterTicketFormSer').substring(4, 10);
+        
+        var DataEntryLogRFTX = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', { id: 'DataEntryRFTXProMasterTicketForm' });
+        var controller = DataEntryLogRFTX.getController();
+        controller.beanA4373 = beanA4373;
+                
         controller.actionCode = this.actionCode2;
-        DataEntryLog.show();
+        DataEntryLogRFTX.show();     
+       
     },
+    
     imgSearchTKT_clickHandler: function (cmp, a, event) {
         var p = '';
         switch (cmp.id) {
