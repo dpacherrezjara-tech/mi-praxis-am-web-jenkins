@@ -608,7 +608,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'AX Number', dataIndex: 'AXPAYNBR', width: 80},
+                                            //{text: 'AX Number', dataIndex: 'AXPAYNBR', width: 80},
                                             {text: 'Status', dataIndex: 'desCERROR', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.CERROR === '') {
@@ -1268,12 +1268,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
 //                                                            return '<a href="#payments-reconciliation-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
-                                            {text: 'AX Number', dataIndex: 'AXPAYNBR', width: 90,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
-                                                }
-                                            },
+//                                            {text: 'AX Number', dataIndex: 'AXPAYNBR', width: 90,
+//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    metaData.style = "text-align:center;";
+//                                                    return value;
+//                                                }
+//                                            },
                                             {text: 'Tax Description', dataIndex: 'TAXDESCRI', width: 180,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left";
