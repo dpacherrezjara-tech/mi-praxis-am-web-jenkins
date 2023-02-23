@@ -133,6 +133,12 @@ public class A4373 {
     public String A4373YQMT3 = ""; //"A4373YQMT3" CHAR(3) CCSID 284 NOT NULL, 
     public String A4373YQMT4 = ""; //"A4373YQMT4" CHAR(3) CCSID 284 NOT NULL
     
+    public double A1530TCAMB = 0; 
+    public String A1530MDA = ""; 
+    public String A1530FUENT = ""; 
+    public String A1530PSVTA = ""; 
+    public String A1530IDFIL = ""; 
+    
     public long RN = 0; 
     public Pagination page = new Pagination();
 }

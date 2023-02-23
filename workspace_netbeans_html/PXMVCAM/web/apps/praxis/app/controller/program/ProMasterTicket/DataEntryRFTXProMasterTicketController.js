@@ -78,12 +78,23 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryRFTXProMaster
                 }
             };
             
+            var recRFTX = {
+                
+                    A1530TCAMB: data.A1530TCAMB,
+                    A1530MDA:data.A1530MDA,
+                    A1530FUENT:data.A1530FUENT,
+                    A1530PSVTA:data.A1530PSVTA,
+                    A1530IDFIL:data.A1530IDFIL,
+                    A1530GRUPO:data.A4373GRUPO
+                
+            };
+            
             prototype.idRftx = 'SalesReportFormRftx';
             var viewRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                 id: prototype.idRftx + '-dataEntryRftx',
                params: {
                     rec: rec,
-                    modo: 'R',
+                    groupData: recRFTX,
                     exchrate: Ext.getCmp(prototype.id+'-lblExchangeLocalRate').value,
                     locCurr: Ext.getCmp(prototype.id+'-lblCurrency').value
                 }

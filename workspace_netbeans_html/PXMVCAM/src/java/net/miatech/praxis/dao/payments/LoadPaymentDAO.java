@@ -265,6 +265,15 @@ public class LoadPaymentDAO {
                     objRtn.A4373MDTX = rs01.getString("A4373MDTX").trim();//CUR 
                     objRtn.A4373TTAX = rs01.getString("A4373TTAX").trim();//AMOUNT 
                     objRtn.A4373FTURB = rs01.getString("A4373FTURB").trim();//SALE_DATE 
+                    objRtn.A4373GRUPO = rs01.getString("A4373GRUPO").trim();//SALE_DATE 
+                    
+                    
+                    objRtn.A1530TCAMB = rs01.getDouble("A1530TCAMB");
+                    objRtn.A1530MDA = rs01.getString("A1530MDA").trim();
+                    objRtn.A1530FUENT = rs01.getString("A1530FUENT").trim();
+                    objRtn.A1530PSVTA = rs01.getString("A1530PSVTA").trim();
+                    objRtn.A1530IDFIL = rs01.getString("A1530IDFIL").trim();
+                    
                     
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;

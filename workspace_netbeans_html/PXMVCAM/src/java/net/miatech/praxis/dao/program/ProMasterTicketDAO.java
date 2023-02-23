@@ -349,6 +349,11 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A1672_MEMORAISED = rs01.getInt("A1672_MEMORAISED");
                     objRtn.fileA720.A1672_PREME = rs01.getString("A1672_PREME");
                     objRtn.fileA720.A2548_NMEMO = (rs01.getObject("A2548_NMEMO")==null ? "": rs01.getString("A2548_NMEMO"));
+                    
+                    objRtn.fileA720.A1530FECCO = rs01.getString("A1530FECCO");
+                    objRtn.fileA720.A4373_TOT = rs01.getInt("A4373_TOT");
+                    
+                    
                     objRtn.fileA720.A2289_ESTADO = rs01.getString("CHG").trim();
                     filter.lstResultSet01.add(objRtn);
                 }
