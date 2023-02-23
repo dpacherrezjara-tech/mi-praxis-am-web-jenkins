@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import net.miatech.praxis.Sales.A4373;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.logic.payments.LoadPaymentLogic;
 import net.miatech.praxis.payment.filter.A2289Filter;
@@ -49,6 +50,44 @@ public class LogController extends BaseController {
             LoadPaymentLogic logic = new LoadPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2289Filter> listaData = logic.loadSQP00885(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+               
+    /*NUEVO RFTX*/
+    @RequestMapping(value = "/searchRFTX")
+    public @ResponseBody
+    String searchRFTX(ModelMap map, HttpServletRequest request) {   
+        
+        //A2289Filter filter = new A2289Filter();
+        A4373 filter = new A4373 ();
+        
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ViewCommController :  searchRFTX");
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.TOTROW = -1;
+            filter.START = 0;
+            filter.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+
+            LoadPaymentLogic logic = new LoadPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4373> listaData = logic.loadSQP04826(filter);
 
             map.put("success", true);
             map.put("data", listaData);

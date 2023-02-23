@@ -253,6 +253,29 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             });
             viewRefund.show();
 	}
+        
+        if(data.STAT === 'RFTX' || data.STAT === 'RFTX-VOID'){
+            var rec = {
+                data:{
+                    A4373AIRLI: '139',
+                    A4373CIA:data.CIA,
+                    DOCUMENTO:data.FOR + data.SER,
+                    A4373SEQ:data.SEQ
+                }
+            };
+            
+            prototype.idRftx = 'SalesReportFormRftx';
+            var viewRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
+                id: prototype.idRftx + '-dataEntryRftx',
+               params: {
+                    rec: rec,
+                    modo: 'R',
+                    exchrate: Ext.getCmp(prototype.id+'-lblExchangeLocalRate').value,
+                    locCurr: Ext.getCmp(prototype.id+'-lblCurrency').value
+                }
+            });
+            viewRftx.show();
+	}
 	if(data.STAT === 'FLWN'){
             this.searchBeanTkt(data.CIA + data.FOR + data.SER + data.CPN,data.SEQ, data.SEQRO);
 	}
@@ -618,6 +641,24 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.searchPNR(FPROC, TRNCU, TKT);
 	}
     },
+    
+    btnRFTX_clickHandler: function () {
+                
+        var beanA4373 = {};       
+        
+        beanA4373.IN_CIA = win.getValue('txtFilterTicketCia');
+        beanA4373.IN_FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
+        beanA4373.IN_SERIA = win.getValue('txtFilterTicketFormSer').substring(4, 10);
+        
+        var DataEntryLogRFTX = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', { id: 'DataEntryRFTXProMasterTicketForm' });
+        var controller = DataEntryLogRFTX.getController();
+        controller.beanA4373 = beanA4373;
+                
+        controller.actionCode = this.actionCode2;
+        DataEntryLogRFTX.show();     
+       
+    },
+    
     imgSearchTKT_clickHandler: function (cmp, a, event) {
         var p = '';
         switch (cmp.id) {
@@ -991,6 +1032,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             Ext.getCmp(prototype.id+'-btnSingleFormat').hide();
             Ext.getCmp(prototype.id+'-btnADM').hide();
             Ext.getCmp(prototype.id+'-btnPNR').hide();
+            Ext.getCmp(prototype.id+'-btnRFTX').hide();
         }
     },
     // </editor-fold>
@@ -1145,6 +1187,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         me01.beanResultSet01.fileA1530.A1530FUENT = "";
                         me01.beanResultSet01.fileA1530.A1530PSVTA = "";
                         
+                        me01.beanResultSet01.fileA720.A1530FECCO = "";
+                        me01.beanResultSet01.fileA720.A4373_TOT = 0;
+                        
                         win.setValue('lblTicketNumber', me01.beanResultSet01.fileA720.A720CIAI+' '+me01.beanResultSet01.fileA720.A720FORMAI+' '+me01.beanResultSet01.fileA720.A720SERIEI);
                         
                         //<editor-fold defaultstate="collapsed" desc="mostrarData">
@@ -1175,6 +1220,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             Ext.getCmp(prototype.id+'-btnDelivery').disable(true);
                             Ext.getCmp(prototype.id+'-btnPayment').disable(true);
                             Ext.getCmp(prototype.id+'-btnPNR').disable(true);
+                            Ext.getCmp(prototype.id+'-btnRFTX').disable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil0').show();
                             Ext.getCmp(prototype.id+'-btnDelivery0').show();
                         }else if(win.getValue('txtFilterTicketCia').trim()==='139'){
@@ -1184,6 +1230,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             Ext.getCmp(prototype.id+'-btnDelivery0').show();
                             Ext.getCmp(prototype.id+'-btnPayment').show();  
                             Ext.getCmp(prototype.id+'-btnPNR').show();
+                            Ext.getCmp(prototype.id+'-btnRFTX').show();
                             
                             Ext.getCmp(prototype.id+'-btnTicket').enable(true);
                             Ext.getCmp(prototype.id+'-btnAccounting').enable(true);
@@ -1202,6 +1249,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             Ext.getCmp(prototype.id+'-btnDelivery0').hide();
                             Ext.getCmp(prototype.id+'-btnPayment').hide();  
                             Ext.getCmp(prototype.id+'-btnPNR').hide();  
+                            Ext.getCmp(prototype.id+'-btnRFTX').hide();
                         }
                         win.setValue('lblTicketNumber', me01.beanResultSet01.fileA720.A720CIAI+' '+me01.beanResultSet01.fileA720.A720FORMAI+' '+me01.beanResultSet01.fileA720.A720SERIEI);
 
@@ -3312,6 +3360,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         Ext.getCmp(prototype.id+'-gridDataTkt').enable(true);
                         Ext.getCmp(prototype.id+'-btnPayment').enable(true);
                         Ext.getCmp(prototype.id+'-btnPNR').enable(true);
+                        Ext.getCmp(prototype.id+'-btnRFTX').enable(true);
 
                         switch(win.getValue('cbxSelectBy')){
                             case 'TKT':
@@ -3323,6 +3372,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         }
                         //</editor-fold>
                     
+                        if(me01.beanResultSet01.fileA720.A4373_TOT==0)
+                            Ext.getCmp(prototype.id+'-btnRFTX').hide();
+                        
                         me01.controlLight();
                     
                     }

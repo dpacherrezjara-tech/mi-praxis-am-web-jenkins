@@ -4,6 +4,7 @@ package net.miatech.praxis.logic.payments;
 import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.Sales.A4373;
 import net.miatech.praxis.dao.payments.LoadPaymentDAO;
 import net.miatech.praxis.payment.filter.A2289Filter;
 import net.miatech.praxis.payment.filter.A4168Filter;
@@ -23,8 +24,13 @@ public class LoadPaymentLogic {
 
     public List<A2289Filter> loadSQP00885(A2289Filter filter) throws SQLException, Exception {
         return objDAO.loadSQP00885(filter);
-    }
-
+    }       
+    
+    /*NUEVO RFTX*/
+    public List<A4373> loadSQP04826(A4373 filter) throws SQLException, Exception {
+        return objDAO.loadSQP04826(filter);
+    }  
+    
     public List<A2289Filter> loadSQP00888(A2289Filter filter) throws Exception {
         return objDAO.loadSQP00888(filter);
     }
