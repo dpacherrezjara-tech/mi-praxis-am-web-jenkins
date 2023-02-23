@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id17 + '-gridData',
-                            width: prototype.widthGrid,
+                            width: 1220,                            
                             // width: '100vw',
                             height: 510,
                             columnLines: true,

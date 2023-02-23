@@ -1,22 +1,22 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireDataEntry', {
+
+Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileMergeDataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.FileMergeDataEntryForm',
     controller: 'FileMergeDataEntryController',
     requires: [
-        'Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryController',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.InfoDetail'
+        'Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryController'
     ],
-    title: 'EXPIRE - View detail',
+    title: 'MERGE Data entry',
     header: true,
-    height: 600,
-    width: 950,
+    height: 450,
+    width: 550,
     border: false,
     resizable: false,
-    layout: 'vbox',
+    layout: 'fit',
     modal: true,
     defaults: {
         border: false,
-        bodyStyle: 'background: #FFFFFF;'
+        bodyStyle: 'background: #FFFFFF;"'
     },
     items: [
         {
@@ -29,14 +29,15 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
             items: [
                 {
                     xtype: 'panel',
-                    layout: 'hbox',
+                    layout: 'vbox',
                     items: [
                         {
-                            xtype: 'fieldset', height: 145,
-                            title: 'HEADER DATA',
+                            xtype: 'fieldset',
                             layout: 'vbox',
                             margin: '2 2 2 2',
+                            width: '100%',
                             border: true,
+                            padding: 2,
                             items: [
                                 {
                                     xtype: 'panel',
@@ -45,23 +46,20 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     border: false,
                                     items: [
                                         {
-                                            xtype: 'datefield',
-                                            id: prototype.id18 + '-A4307PRDA',
-                                            fieldLabel: 'Transmission date', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                            width: 245,
-                                            format: 'Ymd',
-                                            minValue: new Date(1990, 00, 01),
-                                            maskRe: /[0-9/]/,
-                                            editable: true,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 10,
+                                            xtype: 'textfield',
+                                            id: prototype.id18 + '-A4356NCTAF',
+                                            fieldLabel: 'Merge from', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:center;font-size:14px',
+                                            readOnly: false,
+                                            width: 280
+                                        },
+                                        {
+                                            xtype: 'button', margin: '0 0 0 3',
+                                            text: 'Detail',
+                                            id: prototype.id18 + '-btn-detail-from',
+                                            iconCls: 'prx-icon-detail',
                                             listeners: {
-                                                keypress: function (obj, e) {
-                                                    if (e.getKey() === e.ENTER) {
-                                                        //code here
-                                                    }
-                                                }
+                                                click: 'onDetailMergeFromClick'
                                             }
                                         }
                                     ]
@@ -74,9 +72,74 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307MDA',
-                                            fieldLabel: 'Currency', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            id: prototype.id18 + '-A4356NCTAT',
+                                            fieldLabel: 'Merge to', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:center;font-size:14px',
+                                            readOnly: false,
+                                            width: 280
+                                        },
+                                        {
+                                            xtype: 'button',margin: '0 0 0 3',  
+                                            text: 'Detail',
+                                            id: prototype.id18 + '-btn-detail-to',
+                                            iconCls: 'prx-icon-detail',
+                                            listeners: {
+                                                click: 'onDetailMergeToClick'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id18 + '-A4356MDA',
+                                            fieldLabel: 'Curr.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'font-size:13px',
+                                            readOnly: false,
+                                            width: 200
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id18 + '-A4356VBALF',
+                                            fieldLabel: 'Merge from Balance:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:right;font-size:13px',
+                                            readOnly: false,
+                                            width: 245
+                                        }
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id18 + '-A4308MDA',
+//                                            fieldLabel: 'Currency:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+//                                            labelWidth: 80, fieldStyle: 'text-align:center;font-size:13px',
+//                                            readOnly: false,
+//                                            width: 150
+//                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id18 + '-A4356VBALT',
+                                            fieldLabel: 'Merge to Balance:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:right;font-size:13px',
                                             readOnly: false,
                                             width: 245
                                         }
@@ -90,11 +153,11 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307TIP',
-                                            fieldLabel: 'Service type', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            id: prototype.id18 + '-A4356STSM',
+                                            fieldLabel: 'Status:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
                                             readOnly: false,
-                                            width: 245
+                                            width: 280
                                         }
                                     ]
                                 },
@@ -106,11 +169,19 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307TRX2',
-                                            fieldLabel: 'Transactions:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            id: prototype.id18 + '-A4356FCRE',
+                                            fieldLabel: 'Creation Date:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
                                             readOnly: false,
-                                            width: 245
+                                            width: 220
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id18 + '-A4356TYPE',
+                                            fieldLabel: 'File type:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
+                                            readOnly: false,
+                                            width: 220
                                         }
                                     ]
                                 },
@@ -122,37 +193,20 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307TOT',
-                                            fieldLabel: 'Total amount:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125, fieldStyle: 'text-align:right',
+                                            id: prototype.id18 + '-A4356PRDA',
+                                            fieldLabel: 'Transmission date:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
                                             readOnly: false,
-                                            width: 245
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset', height: 145,
-                            title: 'DELIVERY FILE',
-                            layout: 'vbox',
-                            margin: '2 2 2 2',
-                            border: true,
-                            items: [
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    items: [
+                                            width: 220
+                                        },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307IDFIL',
-                                            fieldLabel: 'Nbr. Identifier', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            id: prototype.id18 + '-A4356IDFIL',
+                                            fieldLabel: 'Nbr Identifier:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
                                             readOnly: false,
-                                            width: 245
-                                        }
+                                            width: 220
+                                        }                                        
                                     ]
                                 },
                                 {
@@ -163,111 +217,45 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307TYPE',
-                                            fieldLabel: 'File type', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            id: prototype.id18 + '-A4356PCONT',
+                                            fieldLabel: 'Account period:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
                                             readOnly: false,
-                                            width: 245
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    items: [
+                                            width: 220
+                                        },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307STS2',
-                                            fieldLabel: 'Head Whitout Trx.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
+                                            id: prototype.id18 + '-A4356FCONT',
+                                            fieldLabel: 'Account date:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:left;font-size:13px',
                                             readOnly: false,
-                                            width: 245
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307STS',
-                                            fieldLabel: 'Final state', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
-                                            readOnly: false,
-                                            width: 245
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset', height: 145,
-                            title: 'ACCOUNTING DATA & AUDIT ',
-                            layout: 'vbox',
-                            margin: '2 2 2 2',
-                            border: true,
-                            items: [
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307PCONT',
-                                            fieldLabel: 'Period', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
-                                            readOnly: false,
-                                            width: 245
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307FCONT',
-                                            fieldLabel: 'Date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125,
-                                            readOnly: false,
-                                            width: 245
+                                            width: 220
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'label',
                                     labelAlign: 'center',
-                                    //padding: '2px 5px 2px 3px',
+                                    margin: 3,
                                     html: '<strong style="color:#AC4546;font-size:13px;">Audit data</strong>'
                                 },
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
                                     margin: '1 0 1 0',
-                                    //padding: 3,
                                     border: false,
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307REGIS',
+                                            id: prototype.id18 + '-A4356REGIS',
                                             fieldLabel: 'Created by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 75, padding: 2,
+                                            labelWidth: 80, padding: 2,
                                             readOnly: false,
                                             width: 150
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307FREGI',
+                                            id: prototype.id18 + '-A4356FREGI',
                                             fieldLabel: 'Date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 40, padding: 2,
                                             readOnly: false,
@@ -275,11 +263,11 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307HREGI',
-                                            fieldLabel: 'Hr.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 30, padding: 2,
+                                            id: prototype.id18 + '-A4356HREGI',
+                                            fieldLabel: 'Time', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 40, padding: 2,
                                             readOnly: false,
-                                            width: 80
+                                            width: 100
                                         }
                                     ]
                                 },
@@ -287,20 +275,19 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                     xtype: 'panel',
                                     layout: 'column',
                                     margin: '1 0 1 0',
-                                    //padding: 3,
                                     border: false,
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307REVIS',
+                                            id: prototype.id18 + '-A4356REVIS',
                                             fieldLabel: 'Modified by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 75, padding: 2,
+                                            labelWidth: 80, padding: 2,
                                             readOnly: false,
                                             width: 150
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307FREVI',
+                                            id: prototype.id18 + '-A4356FREVI',
                                             fieldLabel: 'Date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 40, padding: 2,
                                             readOnly: false,
@@ -308,11 +295,11 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id18 + '-A4307HREVI',
-                                            fieldLabel: 'Hr.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 30, padding: 2,
+                                            id: prototype.id18 + '-A4356HREVI',
+                                            fieldLabel: 'Time', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 40, padding: 2,
                                             readOnly: false,
-                                            width: 80
+                                            width: 100
                                         }
                                     ]
                                 }
@@ -321,166 +308,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
                     ]
                 }
             ]
-        },
-        // <editor-fold defaultstate="collapsed" desc="Info grid">
-        {
-            xtype: 'panel',
-            layout: 'vbox',
-            margin: '1 1 1 1',
-            width: '100%', border: false,
-            id: prototype.id18 + '-gridFileIssueDetail-Container',
-            items: [
-                {
-                    xtype: 'panel', width: '100%', border: false,
-                    layout: {
-                        type: 'hbox',
-                        pack: 'end'
-                    },
-                    items: [
-                        {
-                            xtype: 'panel', border: false, hidden: false,
-                            bodyStyle: 'background: transparent;',
-                            margin: '0 0',
-                            layout: {
-                                type: 'hbox'
-//                                pack: 'start'
-                            },
-                            defaults: {
-                                anchor: '100%',
-                                padding: '0 0'
-                            },
-                            items: [
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id18 + '-cmbfiltroDataEntry',
-                                    fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                    store: new Ext.data.SimpleStore({
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ["", "(ALL)"],
-                                            ["1", "UNIQUE SERVICE CREDIT ID"],                                            
-                                            ["2", "ID REFRENCE NUMBER"]
-                                        ]
-                                    }),
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    editable: true,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name', width: 300, height: 26,
-                                    value: "", enableKeyEvents: true,
-                                    padding: '4 0',
-                                    listeners: {
-                                        change: 'onMostrarFiltrosChangeDataEntry'
-                                    }
-                                },
-                                // <editor-fold defaultstate="collapsed" desc="box:UNIQUE SERVICE CREDIT ID">
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id18 + '-BoxUniqueServiceCreditID',
-                                    border: false,
-                                    hidden: true,
-                                    layout: 'hbox',
-                                    bodyStyle: 'background: transparent;"',
-                                    margin: '3 0',
-                                    defaults: {
-                                        anchor: '100%',
-                                        padding: '4 0'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id18 + '-A4308IDEXP-Filter',
-                                            fieldLabel: 'Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 10, width: 250, height: 26,
-                                            maskRe: /[0-9]/,
-                                            listeners: {
-                                                keypress: 'onTextKeypress'
-                                            }
-                                        }
-                                    ]
-                                },
-                                // </editor-fold>
-                                
-                                // <editor-fold defaultstate="collapsed" desc="box:ID REFERENCE NBR">
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id18 + '-BoxIdReferenceNbr',
-                                    border: false,
-                                    hidden: true,
-                                    layout: 'hbox',
-                                    bodyStyle: 'background: transparent;"',
-                                    margin: '3 0',
-                                    defaults: {
-                                        anchor: '100%',
-                                        padding: '4 0'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id18 + '-A4308IDISS-Filter',
-                                            fieldLabel: 'Id Reference', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 10, width: 250, height: 26,
-                                            maskRe: /[0-9]/,
-                                            listeners: {
-                                                keypress: 'onTextKeypress'
-                                            }
-                                        }
-                                    ]
-                                }
-                                // </editor-fold>
-                            ]
-                        },
-                        {xtype: 'tbspacer', width: '100px'},
-                        {
-                            xtype: 'panel',
-                            padding: 3,
-                            layout: {
-                                type: 'hbox'
-//                                pack: 'end'
-                            },
-                            items: [
-                                {
-                                    xtype: 'toolbar',
-                                    items: [
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id18 + '-btnSearch',
-                                            iconCls: 'prx-icon-search',
-                                            tooltip: 'Search',
-                                            listeners: {
-                                                click: 'btnSearchDetalleClick'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button', disabled:true,
-                                            id: prototype.id18 + '-btnAdd',
-                                            iconCls: 'prx-icon-add',
-                                            text: 'Add',
-                                            listeners: {
-                                                click: 'btnAdd_click'
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        },{xtype: 'tbspacer', width: '20px'}
-                    ]
-                },
-                {
-                    xtype: prototype.id18 + '-infoDetail'
-                }
-            ]
         }
-        // </editor-fold>
     ],
     dockedItems: [
         {
@@ -537,5 +365,6 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileExpireD
             ]
         }
     ]
-
 });
+
+

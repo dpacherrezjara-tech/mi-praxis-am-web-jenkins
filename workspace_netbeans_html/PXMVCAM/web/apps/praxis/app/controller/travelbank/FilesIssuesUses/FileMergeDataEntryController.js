@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryDetailController', {
+Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.FileMergeDataEntryDetailController',
+    alias: 'controller.FileMergeDataEntryController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     msjAlert: '',
     beanOption: '',
@@ -15,20 +15,20 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryD
         switch (this.p.action) {
             case 'U':
                 this.mostrarData(this.p.rec);
-//                Ext.getCmp(prototype.id19+'-btn-save').hide();
-//                Ext.getCmp(prototype.id19+'-btn-update').hide();
+//                Ext.getCmp(prototype.id18+'-btn-save').hide();
+//                Ext.getCmp(prototype.id18+'-btn-update').hide();
 //                if(this.p.rec.data.ESTADO === 'Error'){
-//                    Ext.getCmp(prototype.id19+'-btn-delete').show();
+//                    Ext.getCmp(prototype.id18+'-btn-delete').show();
 //                }else{
-//                    Ext.getCmp(prototype.id19+'-btn-delete').hide();
+//                    Ext.getCmp(prototype.id18+'-btn-delete').hide();
 //                }                            
-//                Ext.getCmp(prototype.id19+'-btn-cancel').show();
+//                Ext.getCmp(prototype.id18+'-btn-cancel').show();
                 break;
 //            case 'I':
-//                Ext.getCmp(prototype.id19+'-btn-save').show();
-//                Ext.getCmp(prototype.id19+'-btn-update').hide();
-//                Ext.getCmp(prototype.id19+'-btn-delete').hide();
-//                Ext.getCmp(prototype.id19+'-btn-cancel').show();
+//                Ext.getCmp(prototype.id18+'-btn-save').show();
+//                Ext.getCmp(prototype.id18+'-btn-update').hide();
+//                Ext.getCmp(prototype.id18+'-btn-delete').hide();
+//                Ext.getCmp(prototype.id18+'-btn-cancel').show();
 //                break;
 
         }
@@ -39,87 +39,58 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryD
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function (rec) {
         console.log(rec);
+//        this.setFormatParameter(rec);
         // <editor-fold defaultstate="collapsed" desc="DataHeader">        
-        this.setValue('NCTA', rec.VP_NCTA);
-        this.setValue('MDA', rec.VP_MDA);
-        this.setValue('VBAL', Ext.util.Format.number(rec.VP_VBAL, '0,000.00'));
-        this.setValue('PRDA', rec.VP_PRDA);
-        this.setValue('TRAN', rec.VP_TRAN);
+        this.setValue('A4356NCTAF', rec.get('A4356NCTAF'));
+        this.setValue('A4356NCTAT', rec.get('A4356NCTAT'));
+        this.setValue('A4356MDA', rec.get('A4356MDA'));
+        this.setValue('A4356VBALF', Ext.util.Format.number(rec.get('A4356VBALF'), '0,000.00'));
+        this.setValue('A4356VBALT', Ext.util.Format.number(rec.get('A4356VBALT'), '0,000.00'));
+        this.setValue('A4356STSM', rec.get('A4356STSM'));
+        this.setValue('A4356FCRE', rec.get('A4356FCRE'));
+        this.setValue('A4356PRDA', rec.get('A4356PRDA'));
+        this.setValue('A4356IDFIL', rec.get('A4356IDFIL'));
+        this.setValue('A4356TYPE', rec.get('A4356TYPE'));        
+        this.setValue('A4356PCONT', rec.get('A4356PCONT'));
+        this.setValue('A4356FCONT', rec.get('A4356FCONT'));
+        //Accounting & Audit Data        
+        this.setValue('A4356REGIS', rec.get('A4356REGIS'));
+        this.setValue('A4356FREGI', rec.get('A4356FREGI'));
+        this.setValue('A4356HREGI', rec.get('A4356HREGI'));
+        this.setValue('A4356REVIS', rec.get('A4356REVIS'));
+        this.setValue('A4356FREVI', rec.get('A4356FREVI'));
+        this.setValue('A4356HREVI', rec.get('A4356HREVI'));
         // </editor-fold>         
-        this.setGridDataDetalle(rec);
+//        this.setGridDataDetalle('');
     },
     // </editor-fold>   
-
-    // <editor-fold defaultstate="collapsed" desc="setGridDataDetalle">
-    setGridDataDetalle: function (rec) {
-        var me = this;
-        this.setFormatParameter(rec);
-//        if (vmode === 'S') {
-//            if (me.detalleSearchParams.VP_OPCION !== '') {
-//                if (me.detalleSearchParams.VP_OPCION === '1' && me.detalleSearchParams.VP_IDUSE === '') {
-//                    Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Enter Unique Service Credit ID', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
-//                    return;
-//                }
-//                if (me.detalleSearchParams.VP_OPCION === '2' && me.detalleSearchParams.VP_Document === '') {
-//                    Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Enter Document number', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
-//                    return;
-//                }
-//                if (me.detalleSearchParams.VP_OPCION === '3' && me.detalleSearchParams.VP_NCTA === '') {
-//                    Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Enter Account number', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
-//                    return;
-//                }
-//                if (me.detalleSearchParams.VP_OPCION === '4' && me.detalleSearchParams.VP_IDISS === '') {
-//                    Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Enter Unique Service Credit ID', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
-//                    return;
-//                }
-//            }
-//        }        
-        var storeGridDatas = Ext.create('Ext.Praxis.store.travelbank.AccountingMasterTravelbank.GridData', {
-            proxy: {
-                url: prototype.url + '/searchMergeDetalle'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = me.detalleSearchParams;
-                },
-                load: function (obj) {
-                    if (obj.data.length === 0) {
-                        Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Data not found', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
-                    }
-                }
-            }
-        });
-        Ext.getCmp(prototype.id19 + '-gridDataDetail').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id19 + '-gridDataDetail').getStore().reload();
-        Ext.getCmp(prototype.id19 + '-paggin').setStore(storeGridDatas);
-
-    },
-    // </editor-fold> 
 
     // <editor-fold defaultstate="collapsed" desc="setFormatParameter">
     setFormatParameter: function (rec) {
         var me = this;
         //console.log(rec);        
         me.detalleSearchParams = {
-            VP_OPCION: rec.VP_OPCION,
-            VP_NCTA: rec.VP_NCTA,
-            VP_PRDA: rec.VP_PRDA,
-            VP_TRAN: ''
+            VP_PRDA: rec.get('A4280PRDA'),
+            VP_MDA: rec.get('A4280MDA'),
+            VP_SQDIA: rec.get('A4280SQDIA'),
+            VP_IDISS: '',
+            VP_Document: '',
+            VP_IDISR: ''
         };
-        // <editor-fold defaultstate="collapsed" desc="llenarData Filter">
-//        var cmbfiltro = this.getValue('cmbfiltroDataEntry');
-//        me.detalleSearchParams.VP_OPCION = cmbfiltro;
-//        switch (cmbfiltro) {
-//            case "1" :
-//                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id19 + '-A4308IDISS-Filter').getValue();
-//                break;
-//            case '2':
-//                me.detalleSearchParams.VP_Document = Ext.getCmp(prototype.id19 + '-DocumentTKT-Filter').getValue();
-//                break;
-//            case '3':
-//                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id19 + '-A4308IDISR-Filter').getValue();
-//                break;
-//        }
+        // <editor-fold defaultstate="collapsed" desc="llenarData">
+        var cmbfiltro = this.getValue('cmbfiltroDataEntry');
+        me.detalleSearchParams.VP_OPCION = cmbfiltro;
+        switch (cmbfiltro) {
+            case "1" :
+                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id18 + '-A4308IDISS-Filter').getValue();
+                break;
+            case '2':
+                me.detalleSearchParams.VP_Document = Ext.getCmp(prototype.id18 + '-DocumentTKT-Filter').getValue();
+                break;
+            case '3':
+                me.detalleSearchParams.VP_IDISS = Ext.getCmp(prototype.id18 + '-A4308IDISR-Filter').getValue();
+                break;
+        }
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="asignación">
@@ -236,7 +207,7 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryD
 //                        fn: function () {
 //                            if (msg === 'RECORD INSERTED') {
 //                                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').close(),
-//                                        Ext.getCmp(prototype.id19 + '-btnSearch').fireEvent('click', {});
+//                                        Ext.getCmp(prototype.id18 + '-btnSearch').fireEvent('click', {});
 //                            }
 //                        }
 //                    });
@@ -256,13 +227,13 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryD
 
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
-        return Ext.getCmp(prototype.id19 + '-' + id).getValue();
+        return Ext.getCmp(prototype.id18 + '-' + id).getValue();
     },
     focus: function (id) {
-        Ext.getCmp(prototype.id19 + '-' + id).focus();
+        Ext.getCmp(prototype.id18 + '-' + id).focus();
     },
     setValue: function (id, txt) {
-        Ext.getCmp(prototype.id19 + '-' + id).setValue(txt);
+        Ext.getCmp(prototype.id18 + '-' + id).setValue(txt);
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -270,38 +241,48 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FileMergeDataEntryD
     // </editor-fold>
 
     llenarData: function () {
-        this.beanOption = {};
-
-        var A1955KEY2 = '', A1955KEY4 = '', IN_FECHA_PROCESO = '';
-        var A1955MODUL = this.getValue('cbxModulo');
-
-        switch (this.getValue('cbxModulo')) {
-            case "PTBCREDITI" :
-            case "PTBCREDITU" :
-            case "PTBLOSSES" :
-            case "PTBEXPIRY" :
-            case "PTBREPORT" :
-            case "PTBDETAIL" :
-                IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id19 + '-txtProcessDate').getValue(), 'Ymd');
-                break;
-                /*case "PAPINT" : case "PARINT" :
-                 IN_FECHA_PROCESO = this.getValue('cbxDateYear')+this.getValue('cbxDateMonth')+this.getValue('cbxDatePeriod');
-                 break;*/
-            case "PCADUCOS" :
-                IN_FECHA_PROCESO = this.getValue('cmbDateFromYear') + this.getValue('cmbDateFromMonth');
-                //A1955KEY2 = this.getValue('cmbDateFromYear')+this.getValue('cmbDateFromMonth');
-                //A1955KEY4 = this.getValue('cmbDateToYear')+this.getValue('cmbDateToMonth');
-                break;
-        }
-
-        this.beanOption = {
-            A1955MODUL: A1955MODUL,
-            IN_FECHA_PROCESO: IN_FECHA_PROCESO,
-            A1955KEY2: A1955KEY2,
-            A1955KEY4: A1955KEY4,
-            strOption: this.view.params.action
+       
+    },
+    
+     // <editor-fold defaultstate="collapsed" desc="Info Detail merge from/to">
+    onDetailMergeFromClick: function () {
+        // var store = grid.getStore();
+        //var rec = store.getAt(rowIndex);
+        var rec = {
+            VP_OPCION: '1',
+            VP_NCTA: this.getValue('A4356NCTAF'),
+            VP_PRDA: this.getValue('A4356FCRE'), //A4356PRDA
+            VP_TRAN: 'USMG',
+            VP_MDA : this.getValue('A4356MDA'),
+            VP_VBAL: this.getValue('A4356VBALF').replace(",",'').replace(",",'').replace(",",'')
         };
+        this.winDataEntry('U', rec);
+    },
+    onDetailMergeToClick: function () {
+        // var store = grid.getStore();
+        //var rec = store.getAt(rowIndex);
+        var rec = {
+            VP_OPCION: '2',
+            VP_NCTA: this.getValue('A4356NCTAT'),
+            VP_PRDA: this.getValue('A4356FCRE'), // A4356PRDA
+            VP_TRAN: 'MERG',
+            VP_MDA : this.getValue('A4356MDA'),
+            VP_VBAL: this.getValue('A4356VBALT').replace(",",'').replace(",",'').replace(",",'')
+        };
+        this.winDataEntry('U', rec);
+    },
+    winDataEntry: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileMergeDataEntryDetail', {
+            id: 'FileMergeDataEntryDetail',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
     }
+    // </editor-fold>
 });
 
 

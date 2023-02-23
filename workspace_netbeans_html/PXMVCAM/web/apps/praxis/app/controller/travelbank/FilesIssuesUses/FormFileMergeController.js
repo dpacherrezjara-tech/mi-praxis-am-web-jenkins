@@ -63,8 +63,8 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormFileMergeContro
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssueDataEntry', {
-            id: 'FormFileIssueDataEntry',
+        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileMergeDataEntry', {
+            id: 'FileMergeDataEntry',
             params: {
                 action: action,
                 rec: rec

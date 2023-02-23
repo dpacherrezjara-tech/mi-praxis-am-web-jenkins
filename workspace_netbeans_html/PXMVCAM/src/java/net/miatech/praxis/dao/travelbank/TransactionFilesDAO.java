@@ -962,7 +962,7 @@ public class TransactionFilesDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PXTRVLBANK.SQP04823(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXTRVLBANK.SQP04823(?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -1005,11 +1005,14 @@ public class TransactionFilesDAO {
                 objRtn.A4357SERV = rs01.getString("A4357SERV");
                 objRtn.A4357TIPD = rs01.getString("A4357TIPD");
                 objRtn.A4357FEMI = rs01.getString("A4357FEMI");
-                objRtn.A4357FEXP = rs01.getString("A4308VORG");
+                objRtn.A4357FEXP = rs01.getString("A4357FEXP");
                 objRtn.A4357STS = rs01.getString("A4357STS");
                 objRtn.A4357ERR = rs01.getString("A4357ERR");
                 objRtn.A4357IDFIL = rs01.getString("A4357IDFIL");
                 objRtn.A4357TYPE = rs01.getString("A4357TYPE");
+                objRtn.A4357TRNCU = rs01.getString("A4357TRNCU");
+                objRtn.A4357IDISS = rs01.getString("A4357IDISS");
+                
                 // aut
                 objRtn.A4357REGIS = rs01.getString("A4357REGIS");
                 objRtn.A4357FREGI = rs01.getString("A4357FREGI");

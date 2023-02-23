@@ -304,8 +304,7 @@ public class TransactionFilesController extends BaseController {
         return new Gson().toJson(map);
     }
     // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="LOSSES">
     @RequestMapping(value = "/searchLosses")
     public @ResponseBody
@@ -320,12 +319,12 @@ public class TransactionFilesController extends BaseController {
             filter.VP_OPCION = request.getParameter("VP_OPCION");
             filter.VP_IDLOS = request.getParameter("VP_IDLOS");
             filter.VP_TICKET = request.getParameter("VP_TICKET");
-            filter.VP_NCTA = request.getParameter("VP_NCTA");                                
+            filter.VP_NCTA = request.getParameter("VP_NCTA");
             filter.VP_IDFIL1 = request.getParameter("VP_IDFIL1");
             filter.VP_IDFIL2 = request.getParameter("VP_IDFIL2");
             filter.VP_DESDE = request.getParameter("VP_DESDE");
             filter.VP_HASTA = request.getParameter("VP_HASTA");
-            
+
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
@@ -347,7 +346,7 @@ public class TransactionFilesController extends BaseController {
         return new Gson().toJson(map);
     }
     // </editor-fold>
-     // <editor-fold defaultstate="collapsed" desc="MERGE">
+    // <editor-fold defaultstate="collapsed" desc="MERGE">
     @RequestMapping(value = "/searchMerge")
     public @ResponseBody
     String searchMerge(ModelMap map, HttpServletRequest request) {
