@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1740TITRA',
+                            id:prototype.id+'-txtA4405TITRA',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 4,
@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1740SUBTI',
+                            id:prototype.id+'-txtA4405SUBTI',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 4,
@@ -213,7 +213,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1740CATEG',
+                            id:prototype.id+'-txtA4405CATEG',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 4,
@@ -238,56 +238,56 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740CIA',
+                            id: prototype.id + '-txtA4405CIA',
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740UNIDA',
+                            id: prototype.id + '-txtA4405UNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740CECOS',
+                            id: prototype.id + '-txtA4405CECOS',
                             enforceMaxLength: true,
                             maxLength: 6,
                             width: 50
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740UBICA',
+                            id: prototype.id + '-txtA4405UBICA',
                             enforceMaxLength: true,
                             maxLength: 4,
                             width: 40
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740CTA',
+                            id: prototype.id + '-txtA4405CTA',
                             enforceMaxLength: true,
                             maxLength: 4,
                             width: 40
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740SCTA',
+                            id: prototype.id + '-txtA4405SCTA',
                             enforceMaxLength: true,
                             maxLength: 5,
                             width: 50
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740EQUI',
+                            id: prototype.id + '-txtA4405EQUI',
                             enforceMaxLength: true,
                             maxLength: 4,
                             width: 40
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtA1740ICIA',
+                            id: prototype.id + '-txtA4405ICIA',
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30
@@ -308,7 +308,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1740CLIE',
+                            id:prototype.id+'-txtA4405CLIE',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 40,
@@ -333,7 +333,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1740FINI2',
+                            id:prototype.id+'-txtA4405FINI2',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -349,7 +349,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.DataEntry',{
                         { xtype: 'tbspacer', width: 30 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1740FFIN2',
+                            id:prototype.id+'-txtA4405FFIN2',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',

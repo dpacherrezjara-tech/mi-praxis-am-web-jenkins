@@ -50,20 +50,20 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.AccountMast
         this.btnSearch_click();
     },
     setFormatParameter: function() {
-        var IN_A1740TITRA = Ext.getCmp(prototype.id + '-txtDocumentType').getValue();
-        var IN_A1740TIPO = Ext.getCmp(prototype.id + '-cmbCtaType').getValue();
-        var A1740SUBTI = Ext.getCmp(prototype.id + '-txtSubType').getValue();
-        var A1740CATEG = Ext.getCmp(prototype.id + '-txtCategory').getValue();
-        var A1740CTA = Ext.getCmp(prototype.id + '-txtCta').getValue();
-        var A1740SCTA = Ext.getCmp(prototype.id + '-txtSubCta').getValue();
+        var IN_A4405TITRA = Ext.getCmp(prototype.id + '-txtDocumentType').getValue();
+        var IN_A4405TIPO = Ext.getCmp(prototype.id + '-cmbCtaType').getValue();
+        var A4405SUBTI = Ext.getCmp(prototype.id + '-txtSubType').getValue();
+        var A4405CATEG = Ext.getCmp(prototype.id + '-txtCategory').getValue();
+        var A4405CTA = Ext.getCmp(prototype.id + '-txtCta').getValue();
+        var A4405SCTA = Ext.getCmp(prototype.id + '-txtSubCta').getValue();
         
         searchParams = {
-            IN_A1740TITRA: IN_A1740TITRA,
-            IN_A1740TIPO: IN_A1740TIPO,
-            A1740SUBTI: A1740SUBTI,
-            A1740CATEG: A1740CATEG,
-            A1740CTA: A1740CTA,
-            A1740SCTA: A1740SCTA
+            IN_A4405TITRA: IN_A4405TITRA,
+            IN_A4405TIPO: IN_A4405TIPO,
+            A4405SUBTI: A4405SUBTI,
+            A4405CATEG: A4405CATEG,
+            A4405CTA: A4405CTA,
+            A4405SCTA: A4405SCTA
         };
     },
 //    btnDisplay_click: function() {
@@ -131,12 +131,12 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.AccountMast
     },
     exportExcel: function() {
         this.setFormatParameter();
-        global.getFile(prototype.url + '/getXLSX?IN_A1740TITRA=' + searchParams.IN_A1740TITRA + 
-                '&IN_A1740TIPO=' + searchParams.IN_A1740TIPO + 
-                '&A1740SUBTI=' + searchParams.A1740SUBTI + 
-                '&A1740CATEG=' + searchParams.A1740CATEG + 
-                '&A1740CTA=' + searchParams.A1740CTA + 
-                '&A1740SCTA=' + searchParams.A1740SCTA);
+        global.getFile(prototype.url + '/getXLSX?IN_A4405TITRA=' + searchParams.IN_A4405TITRA + 
+                '&IN_A4405TIPO=' + searchParams.IN_A4405TIPO + 
+                '&A4405SUBTI=' + searchParams.A4405SUBTI + 
+                '&A4405CATEG=' + searchParams.A4405CATEG + 
+                '&A4405CTA=' + searchParams.A4405CTA + 
+                '&A4405SCTA=' + searchParams.A4405SCTA);
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
