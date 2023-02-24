@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.controller.travelbank.DeliveryFiles.DeliveryEntryControll
         let url = this.url + '/getDeliveryRaw';
         fetch(url + '?' + new URLSearchParams(searchParams))
                 .then(async res => {
-                    const isJson = res.headers.get('content-type')?.includes('application/json');
+                    const isJson = res.headers.get('content-type').includes('application/json');
                     const data = isJson ? await res.json() : null;
 
                     // check for error response

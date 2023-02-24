@@ -4,7 +4,7 @@ package net.miatech.praxis.logic.travelbank;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import net.miatech.beans.A1740Filter;
+import net.miatech.beans.A4405Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.travelbank.AccountMasterTravelBankDAO;
 
@@ -22,14 +22,14 @@ public class AccountMasterTravelBankLogic {
         objDAO.setSession(ss);
     }
 
-    public List<A1740Filter> setPX126S02A1740(A1740Filter filter) throws SQLException {
-        return objDAO.loadPX126S02A1740(filter);
+    public List<A4405Filter> setPX126S02A4405(A4405Filter filter) throws SQLException {
+        return objDAO.loadPX126S02A4405(filter);
     }
 
-    public String accountMasterMaintance(A1740Filter filter, String strOption) throws SQLException {
+    public String accountMasterMaintance(A4405Filter filter, String strOption) throws SQLException {
         return objDAO.accountMasterMaintance(filter, strOption);
     }
-    public List<A1740Filter> loadPX126S02A1740EXCEL(A1740Filter filter) throws SQLException, Exception {
-        return objDAO.loadPX126S02A1740EXCEL(filter);
+    public List<A4405Filter> loadPX126S02A4405EXCEL(A4405Filter filter) throws SQLException, Exception {
+        return objDAO.loadPX126S02A4405EXCEL(filter);
     }
 }
