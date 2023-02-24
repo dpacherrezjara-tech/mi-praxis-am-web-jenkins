@@ -19,6 +19,7 @@ import net.miatech.praxis.travelbank.SQP04820Filter;
 import net.miatech.praxis.travelbank.SQP04821Filter;
 import net.miatech.praxis.travelbank.SQP04822Filter;
 import net.miatech.praxis.travelbank.SQP04823Filter;
+import net.miatech.praxis.travelbank.SQP04824Filter;
 
 /**
  *
@@ -82,5 +83,9 @@ public class TransactionFilesLogic {
     }
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="LIABILITY">
+
+    public List<SQP04824Filter> getSQP04824Filter(SQP04824Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04824Filter(filter);
+    }
     // </editor-fold>
 }
