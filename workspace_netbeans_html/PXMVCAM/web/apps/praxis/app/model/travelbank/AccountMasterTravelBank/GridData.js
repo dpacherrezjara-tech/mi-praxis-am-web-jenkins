@@ -1,21 +1,21 @@
     Ext.define('Ext.Praxis.model.travelbank.AccountMasterTravelBank.GridData', {
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'A1740TITRA', type: 'string'},
-        {name: 'A1740TIPO', type: 'string'},
-        {name: 'A1740TIPODESC', type: 'string'},
-        {name: 'A1740SUBTI', type: 'string'},
-        {name: 'A1740CATEG', type: 'string'},
-        {name: 'A1740CIA', type: 'string'},
-        {name: 'A1740UNIDA', type: 'string'},
-        {name: 'A1740CECOS', type: 'string'},
-        {name: 'A1740UBICA', type: 'string'},
-        {name: 'A1740CTA', type: 'string'},
-        {name: 'A1740SCTA', type: 'string'},
-        {name: 'A1740EQUI', type: 'string'},
-        {name: 'A1740ICIA', type: 'string'},
-        {name: 'A1740INTNU', type: 'string'},
-        {name: 'A1740CLIE', type: 'string'},
-        {name: 'A1740FINI', type: 'string'}
+        {name: 'A4405TITRA', type: 'string'},
+        {name: 'A4405TIPO', type: 'string'},
+        {name: 'A4405TIPODESC', type: 'string'},
+        {name: 'A4405SUBTI', type: 'string'},
+        {name: 'A4405CATEG', type: 'string'},
+        {name: 'A4405CIA', type: 'string'},
+        {name: 'A4405UNIDA', type: 'string'},
+        {name: 'A4405CECOS', type: 'string'},
+        {name: 'A4405UBICA', type: 'string'},
+        {name: 'A4405CTA', type: 'string'},
+        {name: 'A4405SCTA', type: 'string'},
+        {name: 'A4405EQUI', type: 'string'},
+        {name: 'A4405ICIA', type: 'string'},
+        {name: 'A4405INTNU', type: 'string'},
+        {name: 'A4405CLIE', type: 'string'},
+        {name: 'A4405FINI', type: 'string'}
     ]
 });

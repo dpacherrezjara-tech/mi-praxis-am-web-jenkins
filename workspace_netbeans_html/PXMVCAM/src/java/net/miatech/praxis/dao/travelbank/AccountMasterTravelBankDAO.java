@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import net.miatech.beans.A1740Filter;
+import net.miatech.beans.A4405Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.utils.Functions;
@@ -46,12 +46,12 @@ public class AccountMasterTravelBankDAO {
         session = ss;
     }
 
-    public List<A1740Filter> loadPX126S02A1740(A1740Filter filter) {
-        List<A1740Filter> lstRtn = new ArrayList<>(0);
-        A1740Filter objRtn;
+    public List<A4405Filter> loadPX126S02A4405(A4405Filter filter) {
+        List<A4405Filter> lstRtn = new ArrayList<>(0);
+        A4405Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = 20, totRows = -1;
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04480(?,?,?,?,?,?,?,?,?,?)}"; // PX126S01A1740
+            strSQL = "{CALL PXTRVLBANK" + ".SQP04844(?,?,?,?,?,?,?,?,?,?)}"; // PX126S01A4405
 
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
@@ -65,12 +65,12 @@ public class AccountMasterTravelBankDAO {
             cs.registerOutParameter(9, Types.INTEGER);
             cs.registerOutParameter(10, Types.INTEGER);
 
-            cs.setString(1, filter.IN_A1740TITRA.trim());
-            cs.setString(2, filter.IN_A1740TIPO.trim());
-            cs.setString(3, filter.A1740SUBTI.trim());
-            cs.setString(4, filter.A1740CATEG.trim());
-            cs.setString(5, filter.A1740CTA.trim());
-            cs.setString(6, filter.A1740SCTA.trim());
+            cs.setString(1, filter.IN_A4405TITRA.trim());
+            cs.setString(2, filter.IN_A4405TIPO.trim());
+            cs.setString(3, filter.A4405SUBTI.trim());
+            cs.setString(4, filter.A4405CATEG.trim());
+            cs.setString(5, filter.A4405CTA.trim());
+            cs.setString(6, filter.A4405SCTA.trim());
             cs.setInt(7, PAGINIT);
             cs.setInt(8, filter.page.PAGROW);
             cs.setInt(9, totRows);
@@ -108,32 +108,32 @@ public class AccountMasterTravelBankDAO {
             int pos = 0;
             while (rst.next()) {
                 pos++;
-                objRtn = new A1740Filter();
+                objRtn = new A4405Filter();
                 objRtn.RN = rst.getLong("NO");
-                objRtn.A1740TITRA = rst.getString("A1740TITRA").trim();
-                objRtn.A1740TIPO = rst.getString("A1740TIPO").trim();
-                objRtn.A1740TIPODESC = rst.getString("A1740TIPODESC").trim();
-                objRtn.A1740SUBTI = rst.getString("A1740SUBTI").trim();
-                objRtn.A1740CATEG = rst.getString("A1740CATEG").trim();
-                objRtn.A1740CIA = rst.getString("A1740CIA").trim();
-                objRtn.A1740UNIDA = rst.getString("A1740UNIDA").trim();
-                objRtn.A1740CECOS = rst.getString("A1740CECOS").trim();
-                objRtn.A1740UBICA = rst.getString("A1740UBICA").trim();
-                objRtn.A1740CTA = rst.getString("A1740CTA").trim();
-                objRtn.A1740SCTA = rst.getString("A1740SCTA").trim();
-                objRtn.A1740EQUI = rst.getString("A1740EQUI").trim();
-                objRtn.A1740ICIA = rst.getString("A1740ICIA").trim();
-                objRtn.A1740CLIE = rst.getString("A1740CLIE").trim();
-                objRtn.A1740FINI = Functions.getMonthConvertDate(rst.getString("A1740FINI").trim());
-                objRtn.A1740FFIN = Functions.getMonthConvertDate(rst.getString("A1740FFIN").trim());
+                objRtn.A4405TITRA = rst.getString("A4405TITRA").trim();
+                objRtn.A4405TIPO = rst.getString("A4405TIPO").trim();
+                objRtn.A4405TIPODESC = rst.getString("A4405TIPODESC").trim();
+                objRtn.A4405SUBTI = rst.getString("A4405SUBTI").trim();
+                objRtn.A4405CATEG = rst.getString("A4405CATEG").trim();
+                objRtn.A4405CIA = rst.getString("A4405CIA").trim();
+                objRtn.A4405UNIDA = rst.getString("A4405UNIDA").trim();
+                objRtn.A4405CECOS = rst.getString("A4405CECOS").trim();
+                objRtn.A4405UBICA = rst.getString("A4405UBICA").trim();
+                objRtn.A4405CTA = rst.getString("A4405CTA").trim();
+                objRtn.A4405SCTA = rst.getString("A4405SCTA").trim();
+                objRtn.A4405EQUI = rst.getString("A4405EQUI").trim();
+                objRtn.A4405ICIA = rst.getString("A4405ICIA").trim();
+                objRtn.A4405CLIE = rst.getString("A4405CLIE").trim();
+                objRtn.A4405FINI = Functions.getMonthConvertDate(rst.getString("A4405FINI").trim());
+                objRtn.A4405FFIN = Functions.getMonthConvertDate(rst.getString("A4405FFIN").trim());
 
-                objRtn.A1740REGIS = rst.getString("A1740REGIS").trim();
-                objRtn.A1740FREGI = Functions.getMonthConvertDate(rst.getString("A1740FREGI").trim());
-                objRtn.A1740HREGI = Functions.ConvertedTime(rst.getString("A1740HREGI").trim());
-                objRtn.A1740REGVI = rst.getString("A1740REGVI").trim();
-                objRtn.A1740FREVI = Functions.getMonthConvertDate(rst.getString("A1740FREVI").trim());
-                objRtn.A1740HREVI = Functions.ConvertedTime(rst.getString("A1740HREVI").trim());
-                objRtn.A1740INTNU = rst.getString("A1740INTNU").trim();                
+                objRtn.A4405REGIS = rst.getString("A4405REGIS").trim();
+                objRtn.A4405FREGI = Functions.getMonthConvertDate(rst.getString("A4405FREGI").trim());
+                objRtn.A4405HREGI = Functions.ConvertedTime(rst.getString("A4405HREGI").trim());
+                objRtn.A4405REGVI = rst.getString("A4405REGVI").trim();
+                objRtn.A4405FREVI = Functions.getMonthConvertDate(rst.getString("A4405FREVI").trim());
+                objRtn.A4405HREVI = Functions.ConvertedTime(rst.getString("A4405HREVI").trim());
+                objRtn.A4405INTNU = rst.getString("A4405INTNU").trim();                
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -152,14 +152,14 @@ public class AccountMasterTravelBankDAO {
         return lstRtn;
     }
 
-     public List<A1740Filter> loadPX126S02A1740EXCEL(A1740Filter filter) throws SQLException, Exception {
-        List<A1740Filter> lstRtn = new ArrayList<A1740Filter>(0);
-        A1740Filter objRtn;
+     public List<A4405Filter> loadPX126S02A4405EXCEL(A4405Filter filter) throws SQLException, Exception {
+        List<A4405Filter> lstRtn = new ArrayList<A4405Filter>(0);
+        A4405Filter objRtn;
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04480(?,?,?,?,?,?,?,?,?,?)}"; // PX126S01A1740
+        String SQLCLL01 = "{CALL PXTRVLBANK" + ".SQP04844(?,?,?,?,?,?,?,?,?,?)}"; // PX126S01A4405
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -170,12 +170,12 @@ public class AccountMasterTravelBankDAO {
             cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
 
-            cstmt01.setString(1, filter.IN_A1740TITRA.trim());
-            cstmt01.setString(2, filter.IN_A1740TIPO.trim());
-            cstmt01.setString(3, filter.A1740SUBTI.trim());
-            cstmt01.setString(4, filter.A1740CATEG.trim());
-            cstmt01.setString(5, filter.A1740CTA.trim());
-            cstmt01.setString(6, filter.A1740SCTA.trim());
+            cstmt01.setString(1, filter.IN_A4405TITRA.trim());
+            cstmt01.setString(2, filter.IN_A4405TIPO.trim());
+            cstmt01.setString(3, filter.A4405SUBTI.trim());
+            cstmt01.setString(4, filter.A4405CATEG.trim());
+            cstmt01.setString(5, filter.A4405CTA.trim());
+            cstmt01.setString(6, filter.A4405SCTA.trim());
 
             cstmt01.setInt(7, filter.page.PAGNUM);
             cstmt01.setInt(8, filter.page.PAGROW);
@@ -192,33 +192,33 @@ public class AccountMasterTravelBankDAO {
             rs01 = cstmt01.getResultSet();
 
             while (rs01.next()) {
-                objRtn = new A1740Filter();
+                objRtn = new A4405Filter();
 
                  objRtn.RN = rs01.getLong("NO");
-                objRtn.A1740TITRA = rs01.getString("A1740TITRA").trim();
-                objRtn.A1740TIPO = rs01.getString("A1740TIPO").trim();
-                objRtn.A1740TIPODESC = rs01.getString("A1740TIPODESC").trim();
-                objRtn.A1740SUBTI = rs01.getString("A1740SUBTI").trim();
-                objRtn.A1740CATEG = rs01.getString("A1740CATEG").trim();
-                objRtn.A1740CIA = rs01.getString("A1740CIA").trim();
-                objRtn.A1740UNIDA = rs01.getString("A1740UNIDA").trim();
-                objRtn.A1740CECOS = rs01.getString("A1740CECOS").trim();
-                objRtn.A1740UBICA = rs01.getString("A1740UBICA").trim();
-                objRtn.A1740CTA = rs01.getString("A1740CTA").trim();
-                objRtn.A1740SCTA = rs01.getString("A1740SCTA").trim();
-                objRtn.A1740EQUI = rs01.getString("A1740EQUI").trim();
-                objRtn.A1740ICIA = rs01.getString("A1740ICIA").trim();
-                objRtn.A1740CLIE = rs01.getString("A1740CLIE").trim();
-                objRtn.A1740FINI = Functions.getMonthConvertDate(rs01.getString("A1740FINI").trim());
-                objRtn.A1740FFIN = Functions.getMonthConvertDate(rs01.getString("A1740FFIN").trim());
+                objRtn.A4405TITRA = rs01.getString("A4405TITRA").trim();
+                objRtn.A4405TIPO = rs01.getString("A4405TIPO").trim();
+                objRtn.A4405TIPODESC = rs01.getString("A4405TIPODESC").trim();
+                objRtn.A4405SUBTI = rs01.getString("A4405SUBTI").trim();
+                objRtn.A4405CATEG = rs01.getString("A4405CATEG").trim();
+                objRtn.A4405CIA = rs01.getString("A4405CIA").trim();
+                objRtn.A4405UNIDA = rs01.getString("A4405UNIDA").trim();
+                objRtn.A4405CECOS = rs01.getString("A4405CECOS").trim();
+                objRtn.A4405UBICA = rs01.getString("A4405UBICA").trim();
+                objRtn.A4405CTA = rs01.getString("A4405CTA").trim();
+                objRtn.A4405SCTA = rs01.getString("A4405SCTA").trim();
+                objRtn.A4405EQUI = rs01.getString("A4405EQUI").trim();
+                objRtn.A4405ICIA = rs01.getString("A4405ICIA").trim();
+                objRtn.A4405CLIE = rs01.getString("A4405CLIE").trim();
+                objRtn.A4405FINI = Functions.getMonthConvertDate(rs01.getString("A4405FINI").trim());
+                objRtn.A4405FFIN = Functions.getMonthConvertDate(rs01.getString("A4405FFIN").trim());
 
-                objRtn.A1740REGIS = rs01.getString("A1740REGIS").trim();
-                objRtn.A1740FREGI = Functions.getMonthConvertDate(rs01.getString("A1740FREGI").trim());
-                objRtn.A1740HREGI = Functions.ConvertedTime(rs01.getString("A1740HREGI").trim());
-                objRtn.A1740REGVI = rs01.getString("A1740REGVI").trim();
-                objRtn.A1740FREVI = Functions.getMonthConvertDate(rs01.getString("A1740FREVI").trim());
-                objRtn.A1740HREVI = Functions.ConvertedTime(rs01.getString("A1740HREVI").trim());
-                objRtn.A1740INTNU = rs01.getString("A1740INTNU").trim();
+                objRtn.A4405REGIS = rs01.getString("A4405REGIS").trim();
+                objRtn.A4405FREGI = Functions.getMonthConvertDate(rs01.getString("A4405FREGI").trim());
+                objRtn.A4405HREGI = Functions.ConvertedTime(rs01.getString("A4405HREGI").trim());
+                objRtn.A4405REGVI = rs01.getString("A4405REGVI").trim();
+                objRtn.A4405FREVI = Functions.getMonthConvertDate(rs01.getString("A4405FREVI").trim());
+                objRtn.A4405HREVI = Functions.ConvertedTime(rs01.getString("A4405HREVI").trim());
+                objRtn.A4405INTNU = rs01.getString("A4405INTNU").trim();
                 
      
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -255,37 +255,37 @@ public class AccountMasterTravelBankDAO {
 
     }
     
-     public String accountMasterMaintance(A1740Filter filter, String strOption) {
+     public String accountMasterMaintance(A4405Filter filter, String strOption) {
         String STR_RESULT = "";
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04481(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX126S02A1740
+            strSQL = "{CALL PXTRVLBANK" + ".SQP04845(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX126S02A4405
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(3, filter.A1740TITRA);
-            cs.setString(4, filter.A1740TIPO);
-            cs.setString(5, filter.A1740SUBTI);
-            cs.setString(6, filter.A1740CATEG);
-            cs.setString(7, filter.A1740CIA);
-            cs.setString(8, filter.A1740UNIDA);
-            cs.setString(9, filter.A1740CECOS);
-            cs.setString(10, filter.A1740UBICA);
-            cs.setString(11, filter.A1740CTA);
-            cs.setString(12, filter.A1740SCTA);
-            cs.setString(13, filter.A1740EQUI);
-            cs.setString(14, filter.A1740ICIA);
-            cs.setString(15, filter.A1740CLIE);
-            cs.setString(16, filter.A1740FINI);
-            cs.setString(17, filter.A1740FFIN);
+            cs.setString(3, filter.A4405TITRA);
+            cs.setString(4, filter.A4405TIPO);
+            cs.setString(5, filter.A4405SUBTI);
+            cs.setString(6, filter.A4405CATEG);
+            cs.setString(7, filter.A4405CIA);
+            cs.setString(8, filter.A4405UNIDA);
+            cs.setString(9, filter.A4405CECOS);
+            cs.setString(10, filter.A4405UBICA);
+            cs.setString(11, filter.A4405CTA);
+            cs.setString(12, filter.A4405SCTA);
+            cs.setString(13, filter.A4405EQUI);
+            cs.setString(14, filter.A4405ICIA);
+            cs.setString(15, filter.A4405CLIE);
+            cs.setString(16, filter.A4405FINI);
+            cs.setString(17, filter.A4405FFIN);
             cs.setString(18, session.getUserView().getUserInfo().USR);
             cs.setString(19, Functions.getFechaActual());
             cs.setString(20, Functions.getHoraActual());
-            cs.setString(21, filter.IN_A1740TITRA_OLD);
-            cs.setString(22, filter.IN_A1740TIPO_OLD);
-            cs.setString(23, filter.IN_A1740SUBTI_OLD);
-            cs.setString(24, filter.IN_A1740CATEG_OLD);
-            cs.setString(25, filter.A1740INTNU);
+            cs.setString(21, filter.IN_A4405TITRA_OLD);
+            cs.setString(22, filter.IN_A4405TIPO_OLD);
+            cs.setString(23, filter.IN_A4405SUBTI_OLD);
+            cs.setString(24, filter.IN_A4405CATEG_OLD);
+            cs.setString(25, filter.A4405INTNU);
             cs.execute();
 
             rst = cs.getResultSet();

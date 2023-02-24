@@ -1,10 +1,10 @@
 Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAccountMasterTravelBankController',{
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAccountMasterTravelBankController',
-    lblA1740TITRA: '',
-    lblA1740TIPO: '',
-    lblA1740SUBTI: '',
-    lblA1740CATEG: '',
+    lblA4405TITRA: '',
+    lblA4405TIPO: '',
+    lblA4405SUBTI: '',
+    lblA4405CATEG: '',
     init: function(view){
     },
     afterRender: function(){ 
@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
                 Ext.getCmp(prototype.id+'-btn-update').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
-                Ext.getCmp(prototype.id + '-txtA1740TITRA').focus();
+                Ext.getCmp(prototype.id + '-txtA4405TITRA').focus();
                 Ext.getCmp(prototype.id + '-cmbCtaType2').setValue("");
                 Ext.getCmp(prototype.id + '-cmbINTNU').setValue("");
                 break;
@@ -35,36 +35,36 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
         global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
-//        this.setComboBoxItemData(rec.get('A1740TIPO'));
-        Ext.getCmp(prototype.id + '-cmbCtaType2').setValue(rec.get('A1740TIPO'));
-        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU')=== 'YES' ? 'Y' : 'N');
-        Ext.getCmp(prototype.id + '-txtA1740TITRA').setValue(rec.get('A1740TITRA'));
-        Ext.getCmp(prototype.id + '-txtA1740SUBTI').setValue(rec.get('A1740SUBTI'));
-        Ext.getCmp(prototype.id + '-txtA1740CATEG').setValue(rec.get('A1740CATEG'));
-        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA'));
-        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA'));
-        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS'));
-        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA'));
-        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA'));
+//        this.setComboBoxItemData(rec.get('A4405TIPO'));
+        Ext.getCmp(prototype.id + '-cmbCtaType2').setValue(rec.get('A4405TIPO'));
+        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A4405INTNU')=== 'YES' ? 'Y' : 'N');
+        Ext.getCmp(prototype.id + '-txtA4405TITRA').setValue(rec.get('A4405TITRA'));
+        Ext.getCmp(prototype.id + '-txtA4405SUBTI').setValue(rec.get('A4405SUBTI'));
+        Ext.getCmp(prototype.id + '-txtA4405CATEG').setValue(rec.get('A4405CATEG'));
+        Ext.getCmp(prototype.id + '-txtA4405CIA').setValue(rec.get('A4405CIA'));
+        Ext.getCmp(prototype.id + '-txtA4405UNIDA').setValue(rec.get('A4405UNIDA'));
+        Ext.getCmp(prototype.id + '-txtA4405CECOS').setValue(rec.get('A4405CECOS'));
+        Ext.getCmp(prototype.id + '-txtA4405UBICA').setValue(rec.get('A4405UBICA'));
+        Ext.getCmp(prototype.id + '-txtA4405CTA').setValue(rec.get('A4405CTA'));
         
-        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA'));
-        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI'));
-        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA'));
-        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE'));
-        Ext.getCmp(prototype.id + '-txtA1740FINI2').setValue(rec.get('A1740FINI'));
-        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN')==='9999/99/99' ? '' : rec.get('A1740FFIN'));
+        Ext.getCmp(prototype.id + '-txtA4405SCTA').setValue(rec.get('A4405SCTA'));
+        Ext.getCmp(prototype.id + '-txtA4405EQUI').setValue(rec.get('A4405EQUI'));
+        Ext.getCmp(prototype.id + '-txtA4405ICIA').setValue(rec.get('A4405ICIA'));
+        Ext.getCmp(prototype.id + '-txtA4405CLIE').setValue(rec.get('A4405CLIE'));
+        Ext.getCmp(prototype.id + '-txtA4405FINI2').setValue(rec.get('A4405FINI'));
+        Ext.getCmp(prototype.id + '-txtA4405FFIN2').setValue(rec.get('A4405FFIN')==='9999/99/99' ? '' : rec.get('A4405FFIN'));
         
-        this.lblA1740TITRA = rec.get('A1740TITRA');
-        this.lblA1740TIPO = rec.get('A1740TIPO');
-        this.lblA1740SUBTI = rec.get('A1740SUBTI');
-        this.lblA1740CATEG = rec.get('A1740CATEG');
+        this.lblA4405TITRA = rec.get('A4405TITRA');
+        this.lblA4405TIPO = rec.get('A4405TIPO');
+        this.lblA4405SUBTI = rec.get('A4405SUBTI');
+        this.lblA4405CATEG = rec.get('A4405CATEG');
         
-        Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1740REGIS'));
-        Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1740FREGI'));
-        Ext.getCmp(prototype.id + '-HOCR').setValue(rec.get('A1740HREGI'));
-        Ext.getCmp(prototype.id + '-USUP').setValue(rec.get('A1740REGVI'));
-        Ext.getCmp(prototype.id + '-FEUP').setValue(rec.get('A1740FREVI'));
-        Ext.getCmp(prototype.id + '-HOUP').setValue(rec.get('A1740HREVI'));
+        Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A4405REGIS'));
+        Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A4405FREGI'));
+        Ext.getCmp(prototype.id + '-HOCR').setValue(rec.get('A4405HREGI'));
+        Ext.getCmp(prototype.id + '-USUP').setValue(rec.get('A4405REGVI'));
+        Ext.getCmp(prototype.id + '-FEUP').setValue(rec.get('A4405FREVI'));
+        Ext.getCmp(prototype.id + '-HOUP').setValue(rec.get('A4405HREVI'));
     },
     setComboBoxItemData: function(data) {
         var index = this.getIndexData(data);
@@ -85,7 +85,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
         return -1;
     },
     onTITRABlur: function() {
-        var TypeDocument = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
+        var TypeDocument = Ext.getCmp(prototype.id + '-txtA4405TITRA').getValue();
         Ext.getCmp(prototype.id + '-label_required01').show();
         
         switch (TypeDocument) {
@@ -116,20 +116,20 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
     },
     validaRequiredFields: function() {
         var bvalida = true;
-        var TypeDocument = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
+        var TypeDocument = Ext.getCmp(prototype.id + '-txtA4405TITRA').getValue();
         var cmbCtaType2 = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
         var cmbINTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
-        var txtA1740SUBTI = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
-        var txtA1740CATEG = Ext.getCmp(prototype.id + '-txtA1740CATEG').getValue();
+        var txtA4405SUBTI = Ext.getCmp(prototype.id + '-txtA4405SUBTI').getValue();
+        var txtA4405CATEG = Ext.getCmp(prototype.id + '-txtA4405CATEG').getValue();
         
         switch (TypeDocument) {
             case "EMD":
-                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA1740SUBTI === "" || txtA1740CATEG ===""){
+                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA4405SUBTI === "" || txtA4405CATEG ===""){
                     bvalida = false;
                 }
                 break;
             case "MPD":
-                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA1740SUBTI === ""){
+                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA4405SUBTI === ""){
                     bvalida = false;
                 }
                 break;
@@ -149,13 +149,13 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
                 fn: function() {}
             });
         } else {
-            var txtA1740FINI2 = Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue();
-            var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
+            var txtA4405FINI2 = Ext.getCmp(prototype.id + '-txtA4405FINI2').getValue();
+            var txtA4405FFIN2 = Ext.getCmp(prototype.id + '-txtA4405FFIN2').getValue();
             
-            console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
-            if(txtA1740FFIN2 !== null)
+            console.log(txtA4405FINI2 + '-' + txtA4405FFIN2);
+            if(txtA4405FFIN2 !== null)
             {
-                if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
+                if ( txtA4405FINI2 !== null && txtA4405FFIN2 !== null && txtA4405FINI2 <= txtA4405FFIN2){
                     Ext.Msg.show({
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to insert ?',
@@ -206,13 +206,13 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
                 fn: function() {}
             });
         } else { 
-            var txtA1740FINI2 = Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue();
-            var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
+            var txtA4405FINI2 = Ext.getCmp(prototype.id + '-txtA4405FINI2').getValue();
+            var txtA4405FFIN2 = Ext.getCmp(prototype.id + '-txtA4405FFIN2').getValue();
             
-            console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
-            if(txtA1740FFIN2 !== null)
+            console.log(txtA4405FINI2 + '-' + txtA4405FFIN2);
+            if(txtA4405FFIN2 !== null)
             {
-                if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
+                if ( txtA4405FINI2 !== null && txtA4405FFIN2 !== null && txtA4405FINI2 <= txtA4405FFIN2){
                 Ext.Msg.show({
                     title:'.:PRAXIS:.',
                     msg: 'Are you sure to update ?',
@@ -305,46 +305,46 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountMasterTravelBank.DataEntryAc
 
         var strOption = p.action;
         
-        var A1740TITRA = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
-        var A1740TIPO = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
-        var A1740INTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
-        var A1740SUBTI = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
-        var A1740CATEG = Ext.getCmp(prototype.id + '-txtA1740CATEG').getValue();
-        var A1740CIA = Ext.getCmp(prototype.id + '-txtA1740CIA').getValue();
-        var A1740UNIDA = Ext.getCmp(prototype.id + '-txtA1740UNIDA').getValue();
-        var A1740CECOS = Ext.getCmp(prototype.id + '-txtA1740CECOS').getValue();
-        var A1740UBICA = Ext.getCmp(prototype.id + '-txtA1740UBICA').getValue();
-        var A1740CTA = Ext.getCmp(prototype.id + '-txtA1740CTA').getValue();
-        var A1740SCTA = Ext.getCmp(prototype.id + '-txtA1740SCTA').getValue();
-        var A1740EQUI = Ext.getCmp(prototype.id + '-txtA1740EQUI').getValue();
-        var A1740ICIA = Ext.getCmp(prototype.id + '-txtA1740ICIA').getValue();
-        var A1740CLIE = Ext.getCmp(prototype.id + '-txtA1740CLIE').getValue();
-        var A1740FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue(), 'Ymd');
-        var A1740FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue(), 'Ymd');
-        A1740FFIN = A1740FFIN === '' ? '99999999' : A1740FFIN;
+        var A4405TITRA = Ext.getCmp(prototype.id + '-txtA4405TITRA').getValue();
+        var A4405TIPO = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
+        var A4405INTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
+        var A4405SUBTI = Ext.getCmp(prototype.id + '-txtA4405SUBTI').getValue();
+        var A4405CATEG = Ext.getCmp(prototype.id + '-txtA4405CATEG').getValue();
+        var A4405CIA = Ext.getCmp(prototype.id + '-txtA4405CIA').getValue();
+        var A4405UNIDA = Ext.getCmp(prototype.id + '-txtA4405UNIDA').getValue();
+        var A4405CECOS = Ext.getCmp(prototype.id + '-txtA4405CECOS').getValue();
+        var A4405UBICA = Ext.getCmp(prototype.id + '-txtA4405UBICA').getValue();
+        var A4405CTA = Ext.getCmp(prototype.id + '-txtA4405CTA').getValue();
+        var A4405SCTA = Ext.getCmp(prototype.id + '-txtA4405SCTA').getValue();
+        var A4405EQUI = Ext.getCmp(prototype.id + '-txtA4405EQUI').getValue();
+        var A4405ICIA = Ext.getCmp(prototype.id + '-txtA4405ICIA').getValue();
+        var A4405CLIE = Ext.getCmp(prototype.id + '-txtA4405CLIE').getValue();
+        var A4405FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA4405FINI2').getValue(), 'Ymd');
+        var A4405FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA4405FFIN2').getValue(), 'Ymd');
+        A4405FFIN = A4405FFIN === '' ? '99999999' : A4405FFIN;
         
         return {
             strOption: strOption,
-            A1740TITRA: A1740TITRA,
-            A1740TIPO: A1740TIPO,
-            A1740INTNU: A1740INTNU,
-            A1740SUBTI: A1740SUBTI,
-            A1740CATEG: A1740CATEG,
-            A1740CIA: A1740CIA,
-            A1740UNIDA: A1740UNIDA,
-            A1740CECOS: A1740CECOS,
-            A1740UBICA: A1740UBICA,
-            A1740CTA: A1740CTA,
-            A1740SCTA: A1740SCTA,
-            A1740EQUI: A1740EQUI,
-            A1740ICIA: A1740ICIA,
-            A1740CLIE: A1740CLIE,
-            A1740FINI: A1740FINI,
-            A1740FFIN: A1740FFIN,
-            IN_A1740TITRA_OLD: this.lblA1740TITRA,
-            IN_A1740TIPO_OLD: this.lblA1740TIPO,
-            IN_A1740SUBTI_OLD: this.lblA1740SUBTI,
-            IN_A1740CATEG_OLD: this.lblA1740CATEG
+            A4405TITRA: A4405TITRA,
+            A4405TIPO: A4405TIPO,
+            A4405INTNU: A4405INTNU,
+            A4405SUBTI: A4405SUBTI,
+            A4405CATEG: A4405CATEG,
+            A4405CIA: A4405CIA,
+            A4405UNIDA: A4405UNIDA,
+            A4405CECOS: A4405CECOS,
+            A4405UBICA: A4405UBICA,
+            A4405CTA: A4405CTA,
+            A4405SCTA: A4405SCTA,
+            A4405EQUI: A4405EQUI,
+            A4405ICIA: A4405ICIA,
+            A4405CLIE: A4405CLIE,
+            A4405FINI: A4405FINI,
+            A4405FFIN: A4405FFIN,
+            IN_A4405TITRA_OLD: this.lblA4405TITRA,
+            IN_A4405TIPO_OLD: this.lblA4405TIPO,
+            IN_A4405SUBTI_OLD: this.lblA4405SUBTI,
+            IN_A4405CATEG_OLD: this.lblA4405CATEG
         };
     }
     

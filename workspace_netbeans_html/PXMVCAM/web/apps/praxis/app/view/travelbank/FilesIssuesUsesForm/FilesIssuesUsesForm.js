@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id01 = 'FilesIssuesUsesForm';
 //ISSUES
@@ -24,15 +19,15 @@ prototype.id14 = 'FormFileExpireDataEntryDetail';
 //LOSSES
 prototype.id15 = 'FormFileLosses';
 prototype.id16 = 'FormFileLossesDataEntry';
-prototype.id17 = 'FormFileLossesDataEntryHeader';
-prototype.id18 = 'FormFileLossesDataEntryDetail';
 //MERGE
-//
+prototype.id17 = 'FormFileMerge';
+prototype.id18 = 'FormFileMergeDataEntry';
+prototype.id19 = 'FormFileMergeDataEntryDetail';
 //LIABILITY
 
 prototype.url = CONTEXTPATH + '/FilesIssuesUses';
 prototype.widthContenedor = 1300;
-prototype.widthGrid = 980;
+prototype.widthGrid = 990;
 // </editor-fold>
 
 Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm', {
@@ -42,7 +37,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
         'Ext.Praxis.controller.travelbank.FilesIssuesUses.FilesIssuesUsesController',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssue',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedForm',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FileExpireForm'
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FileExpireForm',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.LossesForm.FileLossesForm',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileMergeForm'
     ],
     controller: 'FilesIssuesUsesController',
     btnActive: 1,
@@ -172,7 +169,13 @@ getTypeForm = () => {
             break;
         case 3:
             return prototype.id11 + '-fileExpireForm';
-            break;            
+            break;
+        case 4:
+            return prototype.id15 + '-fileLossesForm';
+            break;
+        case 5:
+            return prototype.id17 + '-fileMergeForm';
+            break;
         default:
             return '';
             break;

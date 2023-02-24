@@ -39,97 +39,97 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.Info', {
                             align: 'center'
                         },
                         items: [
-                            {text: 'Type', width: 50, dataIndex: 'A1740TITRA',
+                            {text: 'Type', width: 50, dataIndex: 'A4405TITRA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'AccountType', width: 35, dataIndex: 'A1740TIPO', hidden: true,
+                            {text: 'AccountType', width: 35, dataIndex: 'A4405TIPO', hidden: true,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Account Type', width: 90, dataIndex: 'A1740TIPODESC',
+                            {text: 'Account Type', width: 90, dataIndex: 'A4405TIPODESC',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Sub Type', width: 70, dataIndex: 'A1740SUBTI',
+                            {text: 'Sub Type', width: 70, dataIndex: 'A4405SUBTI',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Category', width: 70, dataIndex: 'A1740CATEG',
+                            {text: 'Category', width: 70, dataIndex: 'A4405CATEG',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Company', width: 80, dataIndex: 'A1740CIA',
+                            {text: 'Company', width: 80, dataIndex: 'A4405CIA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Unit', width: 40, dataIndex: 'A1740UNIDA',
+                            {text: 'Unit', width: 40, dataIndex: 'A4405UNIDA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'C.Cost', width: 70, dataIndex: 'A1740CECOS',
+                            {text: 'C.Cost', width: 70, dataIndex: 'A4405CECOS',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Location', width: 70, dataIndex: 'A1740UBICA',
+                            {text: 'Location', width: 70, dataIndex: 'A4405UBICA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Account', width: 70, dataIndex: 'A1740CTA',
+                            {text: 'Account', width: 70, dataIndex: 'A4405CTA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Sub account', width: 90, dataIndex: 'A1740SCTA',
+                            {text: 'Sub account', width: 90, dataIndex: 'A4405SCTA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Equipment', width: 80, dataIndex: 'A1740EQUI',
+                            {text: 'Equipment', width: 80, dataIndex: 'A4405EQUI',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Inter company', width: 100, dataIndex: 'A1740ICIA',
+                            {text: 'Inter company', width: 100, dataIndex: 'A4405ICIA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Country Location', width: 120, dataIndex: 'A1740INTNU',
+                            {text: 'Country Location', width: 120, dataIndex: 'A4405INTNU',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Client', width: 320, dataIndex: 'A1740CLIE',
+                            {text: 'Client', width: 320, dataIndex: 'A4405CLIE',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Effectiveness', width: 90, dataIndex: 'A1740FINI',
+                            {text: 'Effectiveness', width: 90, dataIndex: 'A4405FINI',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;

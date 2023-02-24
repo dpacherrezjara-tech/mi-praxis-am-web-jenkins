@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.miatech.beans.A1740Filter;
+import net.miatech.beans.A4405Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
@@ -51,23 +51,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AccountMasterTravelBankController extends BaseController {
     
     private AccountMasterTravelBankLogic logic;
-    private A1740Filter filter;
+    private A4405Filter filter;
     
     @RequestMapping(value = "/search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
-        List<A1740Filter> listaData;
-        filter = new A1740Filter();
+        List<A4405Filter> listaData;
+        filter = new A4405Filter();
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {
-            filter.IN_A1740TITRA = request.getParameter("IN_A1740TITRA").trim();
-            filter.IN_A1740TIPO = request.getParameter("IN_A1740TIPO").trim();
-            filter.A1740SUBTI = request.getParameter("A1740SUBTI").trim();
-            filter.A1740CATEG = request.getParameter("A1740CATEG").trim();
-            filter.A1740CTA = request.getParameter("A1740CTA").trim();
-            filter.A1740SCTA = request.getParameter("A1740SCTA").trim();
+            filter.IN_A4405TITRA = request.getParameter("IN_A4405TITRA").trim();
+            filter.IN_A4405TIPO = request.getParameter("IN_A4405TIPO").trim();
+            filter.A4405SUBTI = request.getParameter("A4405SUBTI").trim();
+            filter.A4405CATEG = request.getParameter("A4405CATEG").trim();
+            filter.A4405CTA = request.getParameter("A4405CTA").trim();
+            filter.A4405SCTA = request.getParameter("A4405SCTA").trim();
             
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
@@ -77,7 +77,7 @@ public class AccountMasterTravelBankController extends BaseController {
             
             logic = new AccountMasterTravelBankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
-            listaData = logic.setPX126S02A1740(filter);
+            listaData = logic.setPX126S02A4405(filter);
             logic = null;
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -96,30 +96,30 @@ public class AccountMasterTravelBankController extends BaseController {
     public @ResponseBody
     String Maintance(ModelMap map, HttpServletRequest request) {
         String strOption;
-        filter = new A1740Filter();
+        filter = new A4405Filter();
         
         try {
             strOption = request.getParameter("strOption");
-            filter.A1740TITRA = request.getParameter("A1740TITRA");
-            filter.A1740TIPO = request.getParameter("A1740TIPO");
-            filter.A1740INTNU = request.getParameter("A1740INTNU");
-            filter.A1740SUBTI = request.getParameter("A1740SUBTI");
-            filter.A1740CATEG = request.getParameter("A1740CATEG");
-            filter.A1740CIA = request.getParameter("A1740CIA");
-            filter.A1740UNIDA = request.getParameter("A1740UNIDA");
-            filter.A1740CECOS = request.getParameter("A1740CECOS");
-            filter.A1740UBICA = request.getParameter("A1740UBICA");
-            filter.A1740CTA = request.getParameter("A1740CTA");
-            filter.A1740SCTA = request.getParameter("A1740SCTA");
-            filter.A1740EQUI = request.getParameter("A1740EQUI");
-            filter.A1740ICIA = request.getParameter("A1740ICIA");
-            filter.A1740CLIE = request.getParameter("A1740CLIE");
-            filter.A1740FINI = request.getParameter("A1740FINI");
-            filter.A1740FFIN = request.getParameter("A1740FFIN");
-            filter.IN_A1740TITRA_OLD = request.getParameter("IN_A1740TITRA_OLD");
-            filter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD");
-            filter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD");
-            filter.IN_A1740CATEG_OLD = request.getParameter("IN_A1740CATEG_OLD");
+            filter.A4405TITRA = request.getParameter("A4405TITRA");
+            filter.A4405TIPO = request.getParameter("A4405TIPO");
+            filter.A4405INTNU = request.getParameter("A4405INTNU");
+            filter.A4405SUBTI = request.getParameter("A4405SUBTI");
+            filter.A4405CATEG = request.getParameter("A4405CATEG");
+            filter.A4405CIA = request.getParameter("A4405CIA");
+            filter.A4405UNIDA = request.getParameter("A4405UNIDA");
+            filter.A4405CECOS = request.getParameter("A4405CECOS");
+            filter.A4405UBICA = request.getParameter("A4405UBICA");
+            filter.A4405CTA = request.getParameter("A4405CTA");
+            filter.A4405SCTA = request.getParameter("A4405SCTA");
+            filter.A4405EQUI = request.getParameter("A4405EQUI");
+            filter.A4405ICIA = request.getParameter("A4405ICIA");
+            filter.A4405CLIE = request.getParameter("A4405CLIE");
+            filter.A4405FINI = request.getParameter("A4405FINI");
+            filter.A4405FFIN = request.getParameter("A4405FFIN");
+            filter.IN_A4405TITRA_OLD = request.getParameter("IN_A4405TITRA_OLD");
+            filter.IN_A4405TIPO_OLD = request.getParameter("IN_A4405TIPO_OLD");
+            filter.IN_A4405SUBTI_OLD = request.getParameter("IN_A4405SUBTI_OLD");
+            filter.IN_A4405CATEG_OLD = request.getParameter("IN_A4405CATEG_OLD");
             
             logic = new AccountMasterTravelBankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
@@ -139,19 +139,19 @@ public class AccountMasterTravelBankController extends BaseController {
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-        filter = new A1740Filter();
+        filter = new A4405Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            filter.IN_A1740TITRA = request.getParameter("IN_A1740TITRA").trim();
-            filter.IN_A1740TIPO = request.getParameter("IN_A1740TIPO").trim();
-            filter.A1740SUBTI = request.getParameter("A1740SUBTI").trim();
-            filter.A1740CATEG = request.getParameter("A1740CATEG").trim();
-            filter.A1740CTA = request.getParameter("A1740CTA").trim();
-            filter.A1740SCTA = request.getParameter("A1740SCTA").trim();
+            filter.IN_A4405TITRA = request.getParameter("IN_A4405TITRA").trim();
+            filter.IN_A4405TIPO = request.getParameter("IN_A4405TIPO").trim();
+            filter.A4405SUBTI = request.getParameter("A4405SUBTI").trim();
+            filter.A4405CATEG = request.getParameter("A4405CATEG").trim();
+            filter.A4405CTA = request.getParameter("A4405CTA").trim();
+            filter.A4405SCTA = request.getParameter("A4405SCTA").trim();
 
             logic = new AccountMasterTravelBankLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A1740Filter> listaData = logic.loadPX126S02A1740EXCEL(filter);
+            List<A4405Filter> listaData = logic.loadPX126S02A4405EXCEL(filter);
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
@@ -291,22 +291,22 @@ public class AccountMasterTravelBankController extends BaseController {
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
 
-                CH_00.setCellValue(listaData.get(vi).A1740TITRA);
-                CH_01.setCellValue(listaData.get(vi).A1740TIPO);
-                CH_02.setCellValue(listaData.get(vi).A1740TIPODESC);
-                CH_03.setCellValue(listaData.get(vi).A1740SUBTI);
-                CH_04.setCellValue(listaData.get(vi).A1740CATEG);
-                CH_05.setCellValue(listaData.get(vi).A1740CIA);
-                CH_06.setCellValue(listaData.get(vi).A1740UNIDA);
-                CH_07.setCellValue(listaData.get(vi).A1740CECOS);
-                CH_08.setCellValue(listaData.get(vi).A1740UBICA);
-                CH_09.setCellValue(listaData.get(vi).A1740CTA);
-                CH_10.setCellValue(listaData.get(vi).A1740SCTA);
-                CH_11.setCellValue(listaData.get(vi).A1740EQUI);
-                CH_12.setCellValue(listaData.get(vi).A1740ICIA);
-                CH_13.setCellValue(listaData.get(vi).A1740INTNU);
-                CH_14.setCellValue(listaData.get(vi).A1740CLIE);
-                CH_15.setCellValue(listaData.get(vi).A1740FINI);
+                CH_00.setCellValue(listaData.get(vi).A4405TITRA);
+                CH_01.setCellValue(listaData.get(vi).A4405TIPO);
+                CH_02.setCellValue(listaData.get(vi).A4405TIPODESC);
+                CH_03.setCellValue(listaData.get(vi).A4405SUBTI);
+                CH_04.setCellValue(listaData.get(vi).A4405CATEG);
+                CH_05.setCellValue(listaData.get(vi).A4405CIA);
+                CH_06.setCellValue(listaData.get(vi).A4405UNIDA);
+                CH_07.setCellValue(listaData.get(vi).A4405CECOS);
+                CH_08.setCellValue(listaData.get(vi).A4405UBICA);
+                CH_09.setCellValue(listaData.get(vi).A4405CTA);
+                CH_10.setCellValue(listaData.get(vi).A4405SCTA);
+                CH_11.setCellValue(listaData.get(vi).A4405EQUI);
+                CH_12.setCellValue(listaData.get(vi).A4405ICIA);
+                CH_13.setCellValue(listaData.get(vi).A4405INTNU);
+                CH_14.setCellValue(listaData.get(vi).A4405CLIE);
+                CH_15.setCellValue(listaData.get(vi).A4405FINI);
                 
 
                 CH_00.setCellStyle(bodyStyle);
@@ -372,7 +372,7 @@ public class AccountMasterTravelBankController extends BaseController {
    /* @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-        filter = new A1740Filter();
+        filter = new A4405Filter();
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
@@ -392,16 +392,16 @@ public class AccountMasterTravelBankController extends BaseController {
             Workbook workbook = null;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
 
-            filter.IN_A1740TITRA = request.getParameter("IN_A1740TITRA").trim();
-            filter.IN_A1740TIPO = request.getParameter("IN_A1740TIPO").trim();
-            filter.A1740SUBTI = request.getParameter("A1740SUBTI").trim();
-            filter.A1740CATEG = request.getParameter("A1740CATEG").trim();
-            filter.A1740CTA = request.getParameter("A1740CTA").trim();
-            filter.A1740SCTA = request.getParameter("A1740SCTA").trim();
+            filter.IN_A4405TITRA = request.getParameter("IN_A4405TITRA").trim();
+            filter.IN_A4405TIPO = request.getParameter("IN_A4405TIPO").trim();
+            filter.A4405SUBTI = request.getParameter("A4405SUBTI").trim();
+            filter.A4405CATEG = request.getParameter("A4405CATEG").trim();
+            filter.A4405CTA = request.getParameter("A4405CTA").trim();
+            filter.A4405SCTA = request.getParameter("A4405SCTA").trim();
                         
             logic = new AccountMasterTravelBankLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
-            List<A1740Filter> listaData = logic.loadPX126S02A1740EXCEL(filter);
+            List<A4405Filter> listaData = logic.loadPX126S02A4405EXCEL(filter);
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             workbook = new XSSFWorkbook();
@@ -547,21 +547,21 @@ public class AccountMasterTravelBankController extends BaseController {
                 Cell cell63 = row.createCell(13);
                 Cell cell64 = row.createCell(14);
 
-                cell50.setCellValue(listaData.get(vi).A1740TITRA);
-                cell51.setCellValue(listaData.get(vi).A1740TIPO);
-                cell52.setCellValue(listaData.get(vi).A1740TIPODESC);
-                cell53.setCellValue(listaData.get(vi).A1740SUBTI);
-                cell54.setCellValue(listaData.get(vi).A1740CATEG);
-                cell55.setCellValue(listaData.get(vi).A1740CIA);
-                cell56.setCellValue(listaData.get(vi).A1740UNIDA);
-                cell57.setCellValue(listaData.get(vi).A1740CECOS);
-                cell58.setCellValue(listaData.get(vi).A1740UBICA);
-                cell59.setCellValue(listaData.get(vi).A1740CTA);
-                cell60.setCellValue(listaData.get(vi).A1740SCTA);
-                cell61.setCellValue(listaData.get(vi).A1740EQUI);
-                cell62.setCellValue(listaData.get(vi).A1740ICIA);
-                cell63.setCellValue(listaData.get(vi).A1740CLIE);
-                cell64.setCellValue(listaData.get(vi).A1740FINI);
+                cell50.setCellValue(listaData.get(vi).A4405TITRA);
+                cell51.setCellValue(listaData.get(vi).A4405TIPO);
+                cell52.setCellValue(listaData.get(vi).A4405TIPODESC);
+                cell53.setCellValue(listaData.get(vi).A4405SUBTI);
+                cell54.setCellValue(listaData.get(vi).A4405CATEG);
+                cell55.setCellValue(listaData.get(vi).A4405CIA);
+                cell56.setCellValue(listaData.get(vi).A4405UNIDA);
+                cell57.setCellValue(listaData.get(vi).A4405CECOS);
+                cell58.setCellValue(listaData.get(vi).A4405UBICA);
+                cell59.setCellValue(listaData.get(vi).A4405CTA);
+                cell60.setCellValue(listaData.get(vi).A4405SCTA);
+                cell61.setCellValue(listaData.get(vi).A4405EQUI);
+                cell62.setCellValue(listaData.get(vi).A4405ICIA);
+                cell63.setCellValue(listaData.get(vi).A4405CLIE);
+                cell64.setCellValue(listaData.get(vi).A4405FINI);
 
 
                 cell50.setCellStyle(bodyStyle);

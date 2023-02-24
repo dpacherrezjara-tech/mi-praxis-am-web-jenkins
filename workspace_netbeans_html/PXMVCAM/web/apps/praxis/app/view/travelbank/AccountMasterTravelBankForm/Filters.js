@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.Filters', {
                 },
                 {
                     xtype: 'datefield',
-                    id:prototype.id+'-txtA1740FINI',
+                    id:prototype.id+'-txtA4405FINI',
                     format: 'Y/m/d',
                     fieldStyle: 'text-align:center;',
                     editable: false,
@@ -196,7 +196,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountMasterTravelBankForm.Filters', {
                 },
                 {
                     xtype: 'datefield',
-                    id:prototype.id+'-txtA1740FFIN',
+                    id:prototype.id+'-txtA4405FFIN',
                     format: 'Y/m/d',
                     fieldStyle: 'text-align:center;',
                     editable: false,
