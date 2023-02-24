@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
     beanUpdate: {},
     bean: {},
     bean2: {},
+    bean3: {},
 
     /**
      * Constructor
@@ -277,6 +278,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         //if (me.bean2.length > 0) {
         me.exportExcel(prototype.url01 + '/getXLSX2?beanString=' + encodeURI(JSON.stringify(me.bean2)));
         //}
+    },
+    onSearchkey: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onSearchClick();
+        }
+
     },
     onSearchClick: function (obj, e) {
         var me = this;
@@ -679,6 +686,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
             Ext.getCmp(prototype.idRFNDQuery + '-tbspacer2').hide();
         }
     },
+    onTextKeypress: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickBtnSearch();
+        }
+
+    },
     onClickBtnSearch: function () {
         var me = this;
         var txtTKT = Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').getValue();
@@ -704,9 +717,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         if (me.bean2.IN_PREME !== undefined) {
 
             me.bean3.IN_PREME = me.bean2.IN_PREME;
+            me.bean3.IN_ANIO=me.bean2.IN_ANIO;
             me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
             me.bean3.IN_USER = me.bean2.IN_USER;
-            me.bean3.IN_TICKET = txtTKT;
+            me.bean3.IN_TKT = txtTKT;
             me.bean3.IN_IATA = txtIata;
 
             Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
