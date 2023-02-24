@@ -43,7 +43,7 @@
         Ext.getCmp(prototype.id + '-txtA4290LONG').setValue(rec.get('A4290LONG'));
         Ext.getCmp(prototype.id + '-txtA4290LATI').setValue(rec.get('A4290LATI'));
         
-        Ext.getCmp(prototype.id + '-txtStartDate').setValue(rec.get('A4290FINI'));
+        Ext.getCmp(prototype.id + '-txtStartDate').setValue(rec.get('A4290FINI'));        
         Ext.getCmp(prototype.id + '-txtEndDate').setValue(rec.get('A4290FFIN')==='9999/99/99' ? '' : rec.get('A4290FFIN'));
         
         Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A4290REGIS'));
@@ -55,7 +55,6 @@
         
         this.lblA4290CTATO_OLD = rec.get('A4290CTATO');
         this.lblA4290FINI_OLD = Ext.util.Format.date(rec.get('A4290FINI'), 'Ymd');
-
     },
     onCancelClick: function(btn){
         this.view.close();
@@ -72,9 +71,11 @@
         var txtA4290NOMBR = Ext.getCmp(prototype.id + '-txtA4290NOMBR').getValue();
         var txtA4290NOMCD = Ext.getCmp(prototype.id + '-txtA4290NOMCD').getValue();
         var txtA4290STAT = Ext.getCmp(prototype.id + '-txtA4290STAT').getValue();
-
+        
+        var txtStartDate = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtStartDate').getValue(), 'Ymd');
+        
         if (txtA4290CTATO === "" || txtA4290PAIS === "" || txtA4290CIUD === "" ||
-                txtA4290NOMBR === "" || txtA4290NOMCD === "" || txtA4290STAT === "") {
+                txtA4290NOMBR === "" || txtA4290NOMCD === "" || txtA4290STAT === "" || txtStartDate === "") {
             global.Msg({
                 msg: 'You must enter all required fields.',
                 fn: function() {}
@@ -87,7 +88,7 @@
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function(btn) {txtA4290NOMBR
                     if (btn === 'yes') {
                         this.view.params.action = "I";
                         this.crud();
@@ -177,7 +178,8 @@
         var A4290LATI = Ext.getCmp(prototype.id + '-txtA4290LATI').getValue();
                 	        
         var A4290FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtStartDate').getValue(), 'Ymd');
-        var A4290FFIN  = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtEndDate').getValue(), 'Ymd');
+        var A4290FFIN  = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtEndDate').getValue(), 'Ymd');  
+                
         A4290FFIN  = A4290FFIN  === '' ? '99999999' : A4290FFIN ;
         
         return {

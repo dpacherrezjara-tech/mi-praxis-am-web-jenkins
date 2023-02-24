@@ -366,8 +366,18 @@ Ext.define('Ext.Praxis.view.sales.AttosMasterFileForm.DataEntry',{
                                             xtype: 'label',
                                             text: 'Start Date',
                                             style: 'font-weight:bold;color:#000;',
-                                            width: 130
+                                            width: 110
                                         },
+                                        {
+                                            xtype: 'label',
+                                            text: '(*)',
+                                            style: 'font-weight:bold;color:red;',
+                                            width: 20,
+                                            autoEl: {
+                                                tag: 'label',
+                                                'data-qtip': 'Mandatory Field'
+                                            }
+                                        },                               
                                         {
                                             xtype: 'datefield',
                                             id:prototype.id+'-txtStartDate',
