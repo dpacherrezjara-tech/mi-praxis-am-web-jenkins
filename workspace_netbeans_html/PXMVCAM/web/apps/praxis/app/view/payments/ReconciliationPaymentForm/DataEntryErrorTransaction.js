@@ -113,6 +113,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSMERCHID',
                                     text: 'Sales Merchant ID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -445,6 +446,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateCERROR',
                                     text: 'Sett. vs Sales',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -481,6 +483,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                         {
                             xtype: 'label',
                             text: 'Sales Information',
+                            id: prototype.id + '-txtFromDateTITULO',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -499,6 +502,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {
                                     xtype: 'label',
                                     text: 'Sales Date',
+                                    id: prototype.id + '-txtFromDateBSUMDATE',
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -786,6 +790,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSVFOPS',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Sales Amount',
                                     width: 120
@@ -987,6 +992,53 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
 
                                 },
                                 {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelBpo',
+                                    layout: 'hbox',
+                                    hidden: true,
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'Bpo Rev.',
+                                            textAlign: 'center',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            margin: '4 4 4 4',
+                                            width: 70
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            id: prototype.id + '-openBpoObserv',
+                                            //margin: '4 4 4 4',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/facsimil.png',
+                                            tooltip: 'BPO Rev.',
+                                            listeners: {
+                                                click: 'bpoRev_keyDownHandler'
+                                            }
+
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-closeBpoObserv',
+                                            hidden: true,
+                                            width: 25,
+                                            //margin: '4 4 4 4',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/cancel.png',
+                                            tooltip: 'Close BPO Rev.',
+                                            listeners: {
+                                                click: 'closeBpoRev_keyDownHandler'
+                                            }
+
+                                        }
+                                    ]
+                                },
                             ]
                         },
                         {xtype: 'tbspacer', height: 5},
@@ -1082,6 +1134,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSDATE',
                                     text: 'Sales Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',

@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGridMsiTracki
     title: 'MSI Tracking - Grid Data',
     header: true,
     height: 480,
-    width: 1490,
+    width: 1570,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -179,6 +179,25 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGridMsiTracki
                                             {
                                                 text: 'Submission<br>Merchant ID', dataIndex: 'SMERCHID', width: 100,
                                             },
+                                            {
+                                                text: 'Select',
+                                                xtype: 'checkcolumn',
+//                                                        id: prototype.id + '-id_checkIATA',
+                                                width: 70,
+                                                dataIndex: 'false',
+                                                listeners: {
+                                                    checkchange: 'checkPP'
+                                                },
+                                                        renderer: function (value, meta, record, row, col) {
+                                                            var status_match = ['1', '5', '6', '7'];
+                                                            if (status_match.indexOf(record.data.STVAL) >= 0) {
+                                                                meta['tdCls'] = 'x-item-disabled';                                         
+                                                            } else {
+                                                                meta['tdCls'] = '';  
+                                                            }
+                                                            return new Ext.ux.CheckColumn().renderer(value);
+                                                        }
+                                            }
                                         ]
                                     }
                                 },
@@ -206,11 +225,19 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGridMsiTracki
             },
             items: [
                 {
-                    text: 'Update',hidden:true,
+                    text: 'Update',//hidden:true,
                     id: prototype.id + '-btn-msi-update',
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onMsiUpdateClick'
+                    }
+                },
+                {
+                    text: 'Update Manual Msi', //hidden: true,
+                    id: prototype.id + '-btn-msi-manual-update',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onMsiManualUpdateClick'
                     }
                 },
                 {

@@ -94,7 +94,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                         Ext.getCmp(prototype.id + '-btnReverse').show();
                     }
                 } else {
-                    Ext.getCmp(prototype.id + '-btn-update').show();
+//                    Ext.getCmp(prototype.id + '-btn-update').show();
+//                    Ext.getCmp(prototype.id + '-panelBpo').show();
                 }
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -155,7 +156,23 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         /* else {
          Ext.getCmp(prototype.id + '-chkSelection').show();
          }*/
-
+        if(this.beanResult.TDOC === 'S'){
+//            this.setTitle()('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
+            Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Sales Date');
+            Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Sales Merchant ID');
+            Ext.getCmp(prototype.id + '-txtFromDateCERROR').setText('Sett. vs Sales');
+            Ext.getCmp(prototype.id + '-txtFromDateTITULO').setText('Sales Information');
+            Ext.getCmp(prototype.id + '-txtFromDateBSUMDATE').setText('Sales Date');
+            Ext.getCmp(prototype.id + '-txtFromDateSVFOPS').setText('Sales Amount');
+        }else{
+            Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Refund Date');
+            Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Refund Merchant ID');
+            Ext.getCmp(prototype.id + '-txtFromDateCERROR').setText('Sett. vs Refund');
+            Ext.getCmp(prototype.id + '-txtFromDateTITULO').setText('Refund Information');
+            Ext.getCmp(prototype.id + '-txtFromDateBSUMDATE').setText('Refund Date');
+            Ext.getCmp(prototype.id + '-txtFromDateSVFOPS').setText('Refund Amount');
+        }
+        
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
@@ -1274,4 +1291,63 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         Ext.getCmp(prototype.id + '-dataEntryError').close();
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
+    bpoRev_keyDownHandler: function () {
+        this.flag_bporev = true;
+        Ext.getCmp(prototype.id + '-panelScanCard').hide();
+        Ext.getCmp(prototype.id + '-panelBpoObserv').show();
+        Ext.getCmp(prototype.id + '-closeBpoObserv').show();
+    },
+    transactionInStandBy: function (btn) {
+        var beanTemp = {};
+
+        beanTemp.AREFNBR = this.beanResult.AREFNBR;
+        beanTemp.PRDA = this.beanResult.PRDA;
+        beanTemp.TDOC = this.beanResult.TDOC;
+        beanTemp.OBSERV_BPO = this.getValue("de-txtBpoOBSERV-RO");
+
+        var beanString = JSON.stringify(beanTemp);
+
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update this transaction?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            meDE.BpoRevA4116(beanString);
+                        }
+                    }
+                });
+    },
+    BpoRevA4116: function (beanString) {
+        Ext.Ajax.request({
+            url: prototype.url + '/BpoRevTransaction',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-dataEntryError').unmask();
+                    me.setGridDataMainErrorTransaction();
+                    Ext.getCmp(prototype.id + '-dataEntryError').close();
+                } else {
+                    global.Msg({msg: res.msjOption});
+                    //global.Msg({msg: 'Failed to Update Transaction'});
+                }
+            }
+        });
+    },
+    closeBpoRev_keyDownHandler: function () {
+        this.flag_bporev = false;
+        Ext.getCmp(prototype.id + '-panelScanCard').show();
+        Ext.getCmp(prototype.id + '-panelBpoObserv').hide();
+        Ext.getCmp(prototype.id + '-closeBpoObserv').hide();
+    }
 });
