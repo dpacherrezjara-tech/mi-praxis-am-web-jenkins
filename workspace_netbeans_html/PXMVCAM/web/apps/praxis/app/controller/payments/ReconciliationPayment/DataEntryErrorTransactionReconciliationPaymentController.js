@@ -94,8 +94,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                         Ext.getCmp(prototype.id + '-btnReverse').show();
                     }
                 } else {
-//                    Ext.getCmp(prototype.id + '-btn-update').show();
-//                    Ext.getCmp(prototype.id + '-panelBpo').show();
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                    Ext.getCmp(prototype.id + '-panelBpo').show();
                 }
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
