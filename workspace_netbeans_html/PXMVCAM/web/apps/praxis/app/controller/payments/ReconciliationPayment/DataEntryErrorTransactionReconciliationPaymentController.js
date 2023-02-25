@@ -164,6 +164,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             Ext.getCmp(prototype.id + '-txtFromDateTITULO').setText('Sales Information');
             Ext.getCmp(prototype.id + '-txtFromDateBSUMDATE').setText('Sales Date');
             Ext.getCmp(prototype.id + '-txtFromDateSVFOPS').setText('Sales Amount');
+            Ext.getCmp(prototype.id + '-gridTot_VFOPs').setText('Sales<br>Amount');
+            Ext.getCmp(prototype.id + '-gridA720FECVTA').setText('Sales<br>Date');
+            Ext.getCmp(prototype.id + '-gridBlockTot_VFOPs').setText('Sales<br>Amount');
+            Ext.getCmp(prototype.id + '-gridBlockA720FECVTA').setText('Sales<br>Date');
+            Ext.getCmp(prototype.id + '-gridAdjTot_VFOPs').setText('Sales<br>Amount');
+            Ext.getCmp(prototype.id + '-gridAdjA720FECVTA').setText('Sales<br>Date');
         }else{
             Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Refund Date');
             Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Refund Merchant ID');
@@ -171,6 +177,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             Ext.getCmp(prototype.id + '-txtFromDateTITULO').setText('Refund Information');
             Ext.getCmp(prototype.id + '-txtFromDateBSUMDATE').setText('Refund Date');
             Ext.getCmp(prototype.id + '-txtFromDateSVFOPS').setText('Refund Amount');
+            Ext.getCmp(prototype.id + '-gridTot_VFOPs').setText('Refund<br>Amount');
+            Ext.getCmp(prototype.id + '-gridA720FECVTA').setText('Refund<br>Date');
+            Ext.getCmp(prototype.id + '-gridBlockTot_VFOPs').setText('Refund<br>Amount');
+            Ext.getCmp(prototype.id + '-gridBlockA720FECVTA').setText('Refund<br>Date');
+            Ext.getCmp(prototype.id + '-gridAdjTot_VFOPs').setText('Refund<br>Amount');
+            Ext.getCmp(prototype.id + '-gridAdjA720FECVTA').setText('Refund<br>Date');
         }
         
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);

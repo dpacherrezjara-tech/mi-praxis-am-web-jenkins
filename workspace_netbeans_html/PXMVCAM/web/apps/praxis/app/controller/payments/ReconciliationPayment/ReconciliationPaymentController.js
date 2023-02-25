@@ -2727,11 +2727,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         console.log(rec);
-        if (rec.data.TDOC === "S") {
-            this.winDataEntryError('U', rec, all, rowIndex);
-        } else {
-            this.winDataEntryErrorRefund('U', rec, all, rowIndex);
-        }
+        this.winDataEntryError('U', rec, all, rowIndex);
     },
     winDataEntryError: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
@@ -2739,20 +2735,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
 
         Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTransaction', {
             id: prototype.id + '-dataEntryError',
-            params: {
-                action: action,
-                rec: rec,
-                all: all,
-                rowIndex: rowIndex
-            }
-        }).show();
-    },
-    winDataEntryErrorRefund: function (action, rec, all, rowIndex) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;
-
-        Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTransactionRefund', {
-            id: prototype.id + '-dataEntryErrorRefund',
             params: {
                 action: action,
                 rec: rec,

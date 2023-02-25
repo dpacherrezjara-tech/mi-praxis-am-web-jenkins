@@ -1447,7 +1447,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id+'-gridTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1455,7 +1455,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id+'-gridA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1770,7 +1770,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     }
                                                 },
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id+'-gridAdjTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1778,7 +1778,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id+'-gridAdjA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1951,7 +1951,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80, id: prototype.id+'-gridBlockTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1959,7 +1959,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70, id: prototype.id+'-gridBlockA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
