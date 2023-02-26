@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                     Ext.getCmp(prototype.id + '-panelScan').hide();
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
-                    Ext.getCmp(prototype.id + '-gridColumnFill').hide();
+                    //Ext.getCmp(prototype.id + '-gridColumnFill').hide();
                     Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
                     //Coupons
                     Ext.getCmp(prototype.id + '-coupons_sales').show();
@@ -226,6 +226,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
         }
 
+        this.setValue('de-txtBpoOBSERV-RO', this.beanResult.OBSERV_BPO);
         this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
         this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
         this.setValue('de-txtIDCONL', this.beanResult.IDCONL);

@@ -565,7 +565,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     readOnly: true,
                                     width: 105
                                 },
-                                        //{xtype: 'tbspacer', width: 5}
+                                //{xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -894,433 +894,420 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelFondo',
-                            layout: 'vbox',
+                            id: prototype.id + '-panelScan',
+                            layout: 'hbox',
                             hidden: false,
-                            width: 960,
                             border: false,
-                            margin: '0 2 0 50',
+                            margin: '0 2 0 100',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
+                                {xtype: 'tbspacer', width: 7},
+                                /*{
+                                 xtype: 'button',
+                                 width: 25,
+                                 hidden: true,
+                                 //margin: '4 1 1 1',
+                                 iconCls: 'prx-icon-add',
+                                 tooltip: 'Add',
+                                 listeners: {
+                                 click: 'txtTKTScan_keyDownHandler'
+                                 }
+                                 
+                                 },*/
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reset Scan',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 1 1 1',
+                                    icon: 'resources/img/icon/48x48/exchange.png',
+                                    tooltip: 'Reset',
+                                    listeners: {
+                                        click: 'resetScan_keyDownHandler'
+                                    }
+
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id + '-chkBlocked',
+                                    boxLabel: '<b>Blocked</b>',
+                                    checked: false,
+                                    width: 90,
+                                    listeners: {
+                                        change: 'cambiarGrillaChk'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'MSI Tracking',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-update',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'MSI Tracking',
+                                    listeners: {
+                                        click: 'msiTracking_keyDownHandler'
+                                    }
+
+                                },
+                                //150
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Adj. Pago Duplicado',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 130
+                                },
+                                {xtype: 'tbspacer', width: 2},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-add',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'Add Adjustment',
+                                    listeners: {
+                                        click: 'addAdjustment_keyDownHandler'
+                                    }
+
+                                },
+                                {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-panelScan',
+                                    id: prototype.id + '-panelBpo',
                                     layout: 'hbox',
-                                    hidden: false,
+                                    hidden: true,
                                     border: false,
-                                    margin: '0 0 0 0',
                                     bodyStyle: 'background:#efe5e5;',
                                     items: [
-                                        {xtype: 'tbspacer', width: 57},
-                                        /*{
-                                         xtype: 'button',
-                                         width: 25,
-                                         hidden: true,
-                                         //margin: '4 1 1 1',
-                                         iconCls: 'prx-icon-add',
-                                         tooltip: 'Add',
-                                         listeners: {
-                                         click: 'txtTKTScan_keyDownHandler'
-                                         }
-                                         
-                                         },*/
-                                        {xtype: 'tbspacer', width: 40},
                                         {
                                             xtype: 'label',
-                                            text: 'Reset Scan',
+                                            text: 'Bpo Rev.',
                                             textAlign: 'center',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             margin: '4 4 4 4',
-                                            width: 80
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'button',
-                                            width: 25,
-                                            //margin: '4 1 1 1',
-                                            icon: 'resources/img/icon/48x48/exchange.png',
-                                            tooltip: 'Reset',
-                                            listeners: {
-                                                click: 'resetScan_keyDownHandler'
-                                            }
-
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'checkboxfield',
-                                            id: prototype.id + '-chkBlocked',
-                                            boxLabel: '<b>Blocked</b>',
-                                            checked: false,
-                                            width: 90,
-                                            listeners: {
-                                                change: 'cambiarGrillaChk'
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'MSI Tracking',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 90
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'button',
-                                            width: 25,
-                                            //margin: '4 4 4 4',
-                                            iconCls: 'prx-icon-update',
-                                            //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                            tooltip: 'MSI Tracking',
-                                            listeners: {
-                                                click: 'msiTracking_keyDownHandler'
-                                            }
-
-                                        },
-                                        //150
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Adj. Pago Duplicado',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 130
+                                            width: 70
                                         },
                                         {xtype: 'tbspacer', width: 2},
                                         {
                                             xtype: 'button',
                                             width: 25,
+                                            id: prototype.id + '-openBpoObserv',
                                             //margin: '4 4 4 4',
-                                            iconCls: 'prx-icon-add',
-                                            //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                            tooltip: 'Add Adjustment',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/facsimil.png',
+                                            tooltip: 'BPO Rev.',
                                             listeners: {
-                                                click: 'addAdjustment_keyDownHandler'
+                                                click: 'bpoRev_keyDownHandler'
                                             }
 
                                         },
-                                        {xtype: 'tbspacer', width: 30},
+                                        {xtype: 'tbspacer', width: 2},
                                         {
-                                            xtype: 'panel',
-                                            id: prototype.id + '-panelBpo',
-                                            layout: 'hbox',
+                                            xtype: 'button',
+                                            id: prototype.id + '-closeBpoObserv',
                                             hidden: true,
-                                            border: false,
-                                            bodyStyle: 'background:#efe5e5;',
-                                            items: [
-                                                {
-                                                    xtype: 'label',
-                                                    text: 'Bpo Rev.',
-                                                    textAlign: 'center',
-                                                    style: 'font-weight:bold;color:#0B333C;',
-                                                    margin: '4 4 4 4',
-                                                    width: 70
-                                                },
-                                                {xtype: 'tbspacer', width: 2},
-                                                {
-                                                    xtype: 'button',
-                                                    width: 25,
-                                                    id: prototype.id + '-openBpoObserv',
-                                                    //margin: '4 4 4 4',
-                                                    //iconCls: 'prx-icon-add',
-                                                    icon: 'resources/img/botones/facsimil.png',
-                                                    tooltip: 'BPO Rev.',
-                                                    listeners: {
-                                                        click: 'bpoRev_keyDownHandler'
-                                                    }
-
-                                                },
-                                                {xtype: 'tbspacer', width: 2},
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-closeBpoObserv',
-                                                    hidden: true,
-                                                    width: 25,
-                                                    //margin: '4 4 4 4',
-                                                    //iconCls: 'prx-icon-add',
-                                                    icon: 'resources/img/botones/cancel.png',
-                                                    tooltip: 'Close BPO Rev.',
-                                                    listeners: {
-                                                        click: 'closeBpoRev_keyDownHandler'
-                                                    }
-
-                                                }
-                                            ]
-                                        },
-                                    ]
-                                },
-                                {xtype: 'tbspacer', height: 5},
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id + '-panelScanCard',
-                                    layout: 'hbox',
-                                    hidden: false,
-                                    border: false,
-                                    margin: '0 0 0 0',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Add Ticket',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 80
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-input-txtTKTScan',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:center;',
-                                            width: 100,
-                                            maskRe: /[0-9]/,
-                                            enforceMaxLength: true,
-                                            maxLength: 13,
-                                        },
-                                        {xtype: 'tbspacer', width: 3},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Add C. Card',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 80
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtCard1',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            maskRe: /[0-9]/,
-                                            maxLength: 6,
-                                            width: 100,
-                                            enableKeyEvents: true,
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'label',
-                                            text: '*****(*)',
-                                            padding: '3 0',
-                                            width: 65,
-                                            autoEl: {
-                                                tag: 'label',
-                                                'data-qtip': '5 encrypted characters for AMEX and 6 characters for the rest.'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtCard2',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            maskRe: /[0-9]/,
-                                            maxLength: 4,
-                                            width: 65,
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Approval',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 60
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtApproval',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            maskRe: /[0-9]/,
-                                            maxLength: 6,
-                                            width: 85,
-                                            enableKeyEvents: true,
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'label',
-                                            id: prototype.id + '-txtFromDateSDATE',
-                                            text: 'Sales Date',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 80
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'datefield',
-                                            id: prototype.id + '-txtFromDate',
-                                            fieldStyle: 'text-align:center',
-                                            format: 'Y/m/d',
-                                            formatText: '',
-                                            invalidText: 'Format valid YYYY/MM/DD',
-                                            minValue: new Date(1990, 00, 01),
-                                            maskRe: /[0-9/]/,
-                                            editable: false,
-                                            enforceMaxLength: true,
-                                            maxLength: 10,
-                                            inputAttrTpl: "data-qtip='Format valid YYYY/MM/DD'",
-                                            width: 90
-                                        },
-                                        {xtype: 'tbspacer', width: 15},
-                                        {
-                                            xtype: 'button',
                                             width: 25,
                                             //margin: '4 4 4 4',
-                                            iconCls: 'prx-icon-add',
-                                            tooltip: 'Add',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/cancel.png',
+                                            tooltip: 'Close BPO Rev.',
                                             listeners: {
-                                                click: 'addCreditCard_keyDownHandler'
+                                                click: 'closeBpoRev_keyDownHandler'
                                             }
 
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'button',
-                                            width: 25,
-                                            //margin: '4 4 4 4',
-                                            iconCls: 'prx-icon-clear',
-                                            tooltip: 'Clean',
-                                            listeners: {
-                                                click: 'clear_keyDownHandler'
-                                            }
-
-                                        },
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id + '-panelBpoObserv',
-                                    layout: 'hbox',
-                                    hidden: true,
-                                    border: false,
-                                    margin: '0 0 0 50',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            text: 'BPO Observation',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-txtBpoOBSERV-RO',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:left;',
-                                            enforceMaxLength: true,
-                                            readOnly: false,
-                                            maxLength: 50,
-                                            width: 320,
-                                        },
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id + '-panelMsiTracing',
-                                    layout: 'hbox',
-                                    hidden: true,
-                                    border: false,
-                                    margin: '0 2 0 2',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7},
-                                        {
-                                            xtype: 'label',
-                                            text: 'MSI Tracking',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 90
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'button',
-                                            width: 25,
-                                            //margin: '4 4 4 4',
-                                            iconCls: 'prx-icon-update',
-                                            //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                            tooltip: 'MSI Tracking',
-                                            listeners: {
-                                                click: 'msiTracking_keyDownHandler'
-                                            }
-
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Reverse Match',
-                                            id: prototype.id + '-labelReverse',
-                                            hidden: true,
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 90
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {
-                                            xtype: 'button',
-                                            width: 25,
-                                            //margin: '4 4 4 4',
-                                            iconCls: 'prx-icon-image-log',
-                                            id: prototype.id + '-btnReverse',
-                                            hidden: true,
-                                            //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                            tooltip: 'Reverse match',
-                                            listeners: {
-                                                click: 'reverseMatch_keyDownHandler'
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 20},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Adjustment',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 80
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-CODADJU',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:left;',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            maxLength: 50,
-                                            width: 200,
-                                        },
-                                        {xtype: 'tbspacer', width: 20},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Observation',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            margin: '4 4 4 4',
-                                            width: 80
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-txtOBSERV-RO',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:left;',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            maxLength: 50,
-                                            width: 320,
-                                        },
+                                        }
                                     ]
                                 },
                             ]
                         },
+                        {xtype: 'tbspacer', height: 5},
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelScanCard',
+                            layout: 'hbox',
+                            hidden: false,
+                            border: false,
+                            margin: '0 2 0 50',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Add Ticket',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-input-txtTKTScan',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 100,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    maxLength: 13,
+                                },
+                                {xtype: 'tbspacer', width: 3},
+                                {
+                                    xtype: 'label',
+                                    text: 'Add C. Card',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtCard1',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 6,
+                                    width: 100,
+                                    enableKeyEvents: true,
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'label',
+                                    text: '*****(*)',
+                                    padding: '3 0',
+                                    width: 65,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': '5 encrypted characters for AMEX and 6 characters for the rest.'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtCard2',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 4,
+                                    width: 65,
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'label',
+                                    text: 'Approval',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 60
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtApproval',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 6,
+                                    width: 85,
+                                    enableKeyEvents: true,
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSDATE',
+                                    text: 'Sales Date',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'datefield',
+                                    id: prototype.id + '-txtFromDate',
+                                    fieldStyle: 'text-align:center',
+                                    format: 'Y/m/d',
+                                    formatText: '',
+                                    invalidText: 'Format valid YYYY/MM/DD',
+                                    minValue: new Date(1990, 00, 01),
+                                    maskRe: /[0-9/]/,
+                                    editable: false,
+                                    enforceMaxLength: true,
+                                    maxLength: 10,
+                                    inputAttrTpl: "data-qtip='Format valid YYYY/MM/DD'",
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-add',
+                                    tooltip: 'Add',
+                                    listeners: {
+                                        click: 'addCreditCard_keyDownHandler'
+                                    }
 
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-clear',
+                                    tooltip: 'Clean',
+                                    listeners: {
+                                        click: 'clear_keyDownHandler'
+                                    }
+
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelBpoObserv',
+                            layout: 'hbox',
+                            hidden: true,
+                            border: false,
+                            margin: '0 2 0 100',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'BPO Observation',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtBpoOBSERV-RO',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    enforceMaxLength: true,
+                                    readOnly: false,
+                                    maxLength: 50,
+                                    width: 320,
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelMsiTracing',
+                            layout: 'hbox',
+                            hidden: true,
+                            border: false,
+                            margin: '0 2 0 2',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'MSI Tracking',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-update',
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'MSI Tracking',
+                                    listeners: {
+                                        click: 'msiTracking_keyDownHandler'
+                                    }
+
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reverse Match',
+                                    id: prototype.id + '-labelReverse',
+                                    hidden: true,
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-image-log',
+                                    id: prototype.id + '-btnReverse',
+                                    hidden: true,
+                                    //icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                    tooltip: 'Reverse match',
+                                    listeners: {
+                                        click: 'reverseMatch_keyDownHandler'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'Adjustment',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-CODADJU',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    maxLength: 50,
+                                    width: 200,
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'Observation',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtOBSERV-RO',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    maxLength: 50,
+                                    width: 320,
+                                },
+                            ]
+                        },
                         {
                             xtype: 'panel',
                             id: prototype.id + '-panelDataInfoScan',
@@ -1447,7 +1434,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id+'-gridTot_VFOPs',
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id + '-gridTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1455,7 +1442,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id+'-gridA720FECVTA',
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id + '-gridA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1546,40 +1533,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                 ]
                                             },
                                             {
-                                                header: 'Del.',
-                                                id: prototype.id + '-gridColumnDelete',
-                                                dataIndex: '',
-                                                xtype: 'widgetcolumn',
-                                                align: 'center',
-                                                width: 40,
-                                                widget: {
-                                                    xtype: 'button',
-                                                    icon: 'resources/img/icon/delete.png',
-                                                    tooltip: 'remove',
-                                                    listeners: {
-                                                        click: function (button, e, eOpts) {
-                                                            var record = button.getWidgetRecord();
-                                                            if (record.data.FDESGLOSE !== '1') {
-                                                                meDE.removeTKT(record);
-                                                            }
-
-                                                        }
-                                                    }
-                                                }
-
-                                            },
-                                            {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
-                                                width: 30,
-                                                text: 'Fill',
-                                                id: prototype.id + '-gridColumnFill',
+                                                width: 40,
+                                                text: 'Del.',
+                                                id: prototype.id + '-gridColumnDelete',
                                                 align: 'center',
                                                 items: [
                                                     {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Fill TKT & PNR',
-                                                        handler: 'onTktPnr'
+                                                        iconCls: 'prx-icon-image-trash',
+                                                        tooltip: 'Delete',
+                                                        handler: 'removeTKT'
                                                     }
                                                 ]
                                             },
@@ -1598,16 +1562,16 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     }
                                                 ]
                                             },
-                                                    /*{
-                                                     text: 'Select',
-                                                     xtype: 'checkcolumn',
-                                                     id: prototype.id + '-id_checkManual',
-                                                     width: 50,
-                                                     dataIndex: 'false',
-                                                     listeners: {
-                                                     checkchange: 'checkManual'
-                                                     },
-                                                     },*/
+                                            /*{
+                                             text: 'Select',
+                                             xtype: 'checkcolumn',
+                                             id: prototype.id + '-id_checkManual',
+                                             width: 50,
+                                             dataIndex: 'false',
+                                             listeners: {
+                                             checkchange: 'checkManual'
+                                             },
+                                             },*/
                                         ]
                                     }
                                 },
@@ -1770,7 +1734,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     }
                                                 },
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id+'-gridAdjTot_VFOPs',
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id + '-gridAdjTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1778,7 +1742,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id+'-gridAdjA720FECVTA',
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id + '-gridAdjA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1827,31 +1791,31 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return '';
                                                 }
                                             },
-                                                    /*{text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
-                                                     renderer: function (value, meta, record, row, col) {
-                                                     meta.style = "background-color:#fae2a0;";
-                                                     switch (value) {
-                                                     case '':
-                                                     return 'DIFERENCIA LIQUIDACION VS SALE';
-                                                     case '01':
-                                                     return 'DIFERENCIA LIQUIDACION VS SALE';
-                                                     case '02':
-                                                     return 'PAGO DUPLICADO';
-                                                     case '03':
-                                                     return 'ADM/AVISOS DE CARGO';
-                                                     default:
-                                                     return 'DIFERENCIA LIQUIDACION VS SALE';
-                                                     }
-                                                     },
-                                                     editor: {
-                                                     xtype: 'combo',
-                                                     store: storeComboAdj,
-                                                     editable: false,
-                                                     valueField: 'code',
-                                                     displayField: 'name',
-                                                     value: '',
-                                                     }
-                                                     },*/
+                                            /*{text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
+                                             renderer: function (value, meta, record, row, col) {
+                                             meta.style = "background-color:#fae2a0;";
+                                             switch (value) {
+                                             case '':
+                                             return 'DIFERENCIA LIQUIDACION VS SALE';
+                                             case '01':
+                                             return 'DIFERENCIA LIQUIDACION VS SALE';
+                                             case '02':
+                                             return 'PAGO DUPLICADO';
+                                             case '03':
+                                             return 'ADM/AVISOS DE CARGO';
+                                             default:
+                                             return 'DIFERENCIA LIQUIDACION VS SALE';
+                                             }
+                                             },
+                                             editor: {
+                                             xtype: 'combo',
+                                             store: storeComboAdj,
+                                             editable: false,
+                                             valueField: 'code',
+                                             displayField: 'name',
+                                             value: '',
+                                             }
+                                             },*/
                                         ]
                                     }
                                 },
@@ -1951,7 +1915,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80, id: prototype.id+'-gridBlockTot_VFOPs',
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80, id: prototype.id + '-gridBlockTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1959,7 +1923,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70, id: prototype.id+'-gridBlockA720FECVTA',
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70, id: prototype.id + '-gridBlockA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 

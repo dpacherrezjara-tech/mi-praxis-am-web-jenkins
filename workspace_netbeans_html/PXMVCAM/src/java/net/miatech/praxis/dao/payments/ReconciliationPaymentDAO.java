@@ -3813,6 +3813,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.ISREFNBR = rs01.getString("ISREFNBR").trim();
                 objRtn.DES_MERCHANT = rs01.getString("DES_MERCHANT").trim();
                 objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
+                objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
 
                 objRtn.GROSAMOUN = rs01.getDouble("GROSAMOUN");
                 objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
@@ -4134,8 +4135,8 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(2, filter.PRDA.trim());
             cstmt01.setString(3, filter.PAYDATE.trim());
             cstmt01.setString(4, filter.BSUMDATE.trim());
-            cstmt01.setString(5, filter.IDITEMS.trim());
-            cstmt01.setString(6, filter.IDITEMT.trim());
+            cstmt01.setString(5, filter.AREFNBR.trim());
+            cstmt01.setString(6, filter.TDOC.trim());
             cstmt01.setString(7, filter.CERROR.trim());
             cstmt01.setString(8, filter.SCOUNTRY.trim());
             cstmt01.setString(9, session.getUserView().getUserInfo().USR);
@@ -4821,7 +4822,7 @@ public class ReconciliationPaymentDAO {
         return lstInfo;
     }
 
-    public List<A4331Filter> loadPX606SQP04463(A4331Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04828(A4331Filter filter) throws SQLException, Exception {
 
         List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
         A4331Filter beanTkt;
@@ -4863,7 +4864,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04463(?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04828(?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4886,8 +4887,8 @@ public class ReconciliationPaymentDAO {
                 beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                 beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                 beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
-                beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
-                beanTkt.TRANSDATE = rst.getString("TRANSDATE").trim();
+                beanTkt.BSUMDATE = rst.getString("SDATE").trim();
+                beanTkt.TRANSDATE = "";
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.SPNR = rst.getString("SPNR").trim();
@@ -4908,8 +4909,8 @@ public class ReconciliationPaymentDAO {
 
                 beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
 
-                beanTkt.IDITEMS = rst.getString("IDITEMS");
-                beanTkt.IDITEMT = rst.getString("IDITEMT");
+                beanTkt.IDITEMS = "";
+                beanTkt.IDITEMT = "";
 
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");

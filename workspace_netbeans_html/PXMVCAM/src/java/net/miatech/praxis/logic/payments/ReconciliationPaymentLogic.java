@@ -172,8 +172,8 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04754(filter);
     }
 
-    public List<A4331Filter> loadPX606SQP04463(A4331Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04463(filter);
+    public List<A4331Filter> loadPX606SQP04828(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04828(filter);
     }
 
     public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
