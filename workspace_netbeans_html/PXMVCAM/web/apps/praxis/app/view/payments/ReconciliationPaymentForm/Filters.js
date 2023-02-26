@@ -767,7 +767,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             fieldStyle: 'text-align: left;',
                             labelWidth: 100,
                             width: 350,
-                            hidden: false,
+                            hidden: true,
                             listeners: {
                                 change: 'btnSearch_click'
                             }
@@ -780,6 +780,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             enableKeyEvents: true,
                             readOnly: false,
                             editable: true,
+                            hidden: true,
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
@@ -790,6 +791,26 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                                 change: 'btnSearch_click'
                             }
                         },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status:',
+                            id: prototype.id + '-cmbSTVALErr',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 215,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
+                        }
                     ]
                 },
                 {

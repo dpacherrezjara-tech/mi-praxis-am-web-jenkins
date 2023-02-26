@@ -1176,11 +1176,11 @@ public class ReconciliationPaymentController extends BaseController {
         map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
-
-    @RequestMapping(value = "MaintenanceMsi")
+    
+    @RequestMapping(value = "BpoRevTransaction")
     public @ResponseBody
-    String MaintenanceMsi(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceMsi-------------");
+    String BpoRevTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : BpoRevTransaction-------------");
         String msj = "";
         try {
             Gson gson = new Gson();
@@ -1193,7 +1193,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX606SQP04469(filter);
+            msj = logic.loadPX606SQP04846(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1214,7 +1214,7 @@ public class ReconciliationPaymentController extends BaseController {
         return new Gson().toJson(map);
     }
     
-        @RequestMapping(value = "ReverseTransaction")
+    @RequestMapping(value = "ReverseTransaction")
     public @ResponseBody
     String ReverseTransaction(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- Sales Reconciliation by AMEX : ReverseTransaction-------------");
@@ -1230,7 +1230,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX606SQP04728(filter);
+            msj = logic.loadPX606SQP04847(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1250,7 +1250,83 @@ public class ReconciliationPaymentController extends BaseController {
         map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "MaintenanceMsi")
+    public @ResponseBody
+    String MaintenanceMsi(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceMsi-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
 
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX606SQP04848(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+    
+    
+    
+    @RequestMapping(value = "MaintenanceManualMsi")
+    public @ResponseBody
+    String MaintenanceManualMsi(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceManualMsi-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX606SQP04849(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+    
     @RequestMapping(value = "searchAdjustmentErrorDetail")
     public @ResponseBody
     String searchAdjustmentErrorDetail(ModelMap map, HttpServletRequest request) {

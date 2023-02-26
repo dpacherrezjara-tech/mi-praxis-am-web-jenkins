@@ -3270,17 +3270,17 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04697(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04697(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
             cstmt.registerOutParameter(22, Types.INTEGER);
             cstmt.registerOutParameter(23, Types.INTEGER);
+            cstmt.registerOutParameter(24, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -3301,20 +3301,20 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(17, filter.IN_PROCTYPE.trim());
             cstmt.setString(18, filter.IN_SCURRENCY.trim());
             cstmt.setString(19, filter.IN_TKT.trim());
-            cstmt.setInt(20, filter.page.PAGNUM);
-            cstmt.setInt(21, filter.page.PAGROW);
-            cstmt.setInt(22, filter.page.TOTPAG);
-            cstmt.setInt(23, filter.page.TOTROW);
+            cstmt.setString(20, filter.IN_STVAL_ERR);
+            cstmt.setInt(21, filter.page.PAGNUM);
+            cstmt.setInt(22, filter.page.PAGROW);
+            cstmt.setInt(23, filter.page.TOTPAG);
+            cstmt.setInt(24, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(20);
-            filter.page.PAGROW = cstmt.getInt(21);
-            filter.page.TOTPAG = cstmt.getInt(22);
-            filter.page.TOTROW = cstmt.getInt(23);
+            filter.page.PAGNUM = cstmt.getInt(21);
+            filter.page.PAGROW = cstmt.getInt(22);
+            filter.page.TOTPAG = cstmt.getInt(23);
+            filter.page.TOTROW = cstmt.getInt(24);
 
             //cstmt.execute();
-
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN");
@@ -3522,17 +3522,17 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04696(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04696(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(14, Types.INTEGER);
             cstmt.registerOutParameter(15, Types.INTEGER);
             cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(18, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -3547,17 +3547,18 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(11, filter.IN_PROCTYPE.trim());
             cstmt.setString(12, filter.IN_SCURRENCY.trim());
             cstmt.setString(13, filter.IN_TKT.trim());
-            cstmt.setInt(14, filter.page.PAGNUM);   
-            cstmt.setInt(15, filter.page.PAGROW);
-            cstmt.setInt(16, filter.page.TOTPAG);
-            cstmt.setInt(17, filter.page.TOTROW);
+            cstmt.setString(14, filter.IN_STVAL_ERR);
+            cstmt.setInt(15, filter.page.PAGNUM);
+            cstmt.setInt(16, filter.page.PAGROW);
+            cstmt.setInt(17, filter.page.TOTPAG);
+            cstmt.setInt(18, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(14);
-            filter.page.PAGROW = cstmt.getInt(15);
-            filter.page.TOTPAG = cstmt.getInt(16);
-            filter.page.TOTROW = cstmt.getInt(17);
+            filter.page.PAGNUM = cstmt.getInt(15);
+            filter.page.PAGROW = cstmt.getInt(16);
+            filter.page.TOTPAG = cstmt.getInt(17);
+            filter.page.TOTROW = cstmt.getInt(18);
 
             cstmt.execute();
 
@@ -3789,19 +3790,19 @@ public class ReconciliationPaymentDAO {
                 }
                 objRtn.descVOID = rs01.getString("VOID").trim();
                 objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
-                if(rs01.getString("FREVERSA").equals("0")){
+                if (rs01.getString("FREVERSA").equals("0")) {
                     objRtn.descFREVERSA = "Processed Reverse";
-                }else if(rs01.getString("FREVERSA").equals("1")){
+                } else if (rs01.getString("FREVERSA").equals("1")) {
                     objRtn.descFREVERSA = "Pending reverse";
                 }
                 objRtn.FREVADM = rs01.getString("FREVADM").trim();
-                if(rs01.getString("FREVADM").equals("0")){
+                if (rs01.getString("FREVADM").equals("0")) {
                     objRtn.descFREVADM = "Processed Reverse";
-                }else if(rs01.getString("FREVADM").equals("1")){
+                } else if (rs01.getString("FREVADM").equals("1")) {
                     objRtn.descFREVADM = "Pending reverse";
                 }
                 objRtn.FADM = rs01.getString("FADM").trim();
-                if(rs01.getString("FADM").equals("1")){
+                if (rs01.getString("FADM").equals("1")) {
                     objRtn.descFADM = "ADM generado";
                 }
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
@@ -3842,7 +3843,7 @@ public class ReconciliationPaymentDAO {
                 if ("".equals(objRtn.CERROIN.trim())) {
                     objRtn.DES_CERROIN = "";
                 }
-                
+
                 objRtn.CODADJU = rs01.getString("CODADJU");
                 objRtn.DES_CODADJU = rs01.getString("DES_CODADJU");
                 if ("".equals(objRtn.CODADJU.trim())) {
@@ -4064,14 +4065,14 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04728(A4331Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04846(A4331Filter filter) throws SQLException, Exception {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         //lstSendManual
-        
+
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04728(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04846(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4079,16 +4080,15 @@ public class ReconciliationPaymentDAO {
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.PRDA.trim());
-            cstmt01.setString(3, filter.PAYDATE.trim());            
-            cstmt01.setString(4, filter.BSUMDATE.trim());
-            cstmt01.setString(5, filter.ISREFNBR.trim());           
-            cstmt01.setString(6, filter.CERROR.trim());
-            cstmt01.setString(7, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(8, Functions.getFechaActual());
-            cstmt01.setString(9, Functions.getHoraActual());
+            cstmt01.setString(2, filter.AREFNBR.trim());
+            cstmt01.setString(3, filter.PRDA.trim());
+            cstmt01.setString(4, filter.TDOC.trim());
+            cstmt01.setString(5, filter.OBSERV_BPO.trim());
+            cstmt01.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(7, Functions.getFechaActual());
+            cstmt01.setString(8, Functions.getHoraActual());
 
-            cstmt01.execute();            
+            cstmt01.execute();
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -4116,7 +4116,61 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04469(A4331Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04847(?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.PRDA.trim());
+            cstmt01.setString(3, filter.PAYDATE.trim());
+            cstmt01.setString(4, filter.BSUMDATE.trim());
+            cstmt01.setString(5, filter.IDITEMS.trim());
+            cstmt01.setString(6, filter.IDITEMT.trim());
+            cstmt01.setString(7, filter.CERROR.trim());
+            cstmt01.setString(8, filter.SCOUNTRY.trim());
+            cstmt01.setString(9, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(10, Functions.getFechaActual());
+            cstmt01.setString(11, Functions.getHoraActual());
+
+            cstmt01.execute();
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
 
         A4331Filter objRtn = new A4331Filter();
         CallableStatement cstmt01 = null;
@@ -4130,44 +4184,77 @@ public class ReconciliationPaymentDAO {
         Connection cnx = null;
         try {
             //Cambiar Status a las transacciones
-            if (lstSendManual != null && lstSendManual.size() > 0) {
-                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?,?)}";
-                cstmt01 = cnx.prepareCall(SQLCLL02);
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04848(?,?,?,?,?,?,?,?)}";
+            cstmt01 = cnx.prepareCall(SQLCLL02);
 
-                for (int i = 0; i < lstSendManual.size(); i++) {
-                    beanDet = lstSendManual.get(i);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR_1.trim());
+            cstmt01.setString(3, filter.TDOC_1.trim());
+            cstmt01.setString(4, filter.AREFNBR_2.trim());
+            cstmt01.setString(5, filter.TDOC_2.trim());
+            cstmt01.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(7, Functions.getFechaActual());
+            cstmt01.setString(8, Functions.getHoraActual());
 
-                    if (beanDet.STVAL.equals("1")) {
-                        if (beanDet.NBRINSTA == 0) {
-                            NEW_CERROR = "87";
-                        } else {
-                            NEW_CERROR = "86";
-                        }
-                        break;
-                    }
+            cstmt01.execute();
 
-                }
-
-                for (int i = 0; i < lstSendManual.size(); i++) {
-                    beanDet = lstSendManual.get(i);
-
-                    cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-                    cstmt01.setString(2, beanDet.PRDA.trim());
-                    cstmt01.setString(3, beanDet.PAYDATE.trim());
-                    cstmt01.setString(4, beanDet.BSUMDATE.trim());
-                    cstmt01.setString(5, beanDet.SMERCHID.trim());
-                    cstmt01.setString(6, beanDet.IDITEMS.trim());
-                    cstmt01.setString(7, beanDet.IDITEMT.trim());
-                    cstmt01.setString(8, beanDet.NEWSTVAL.trim());
-                    cstmt01.setString(9, NEW_CERROR);
-                    cstmt01.setString(10, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(11, Functions.getFechaActual());
-                    cstmt01.setString(12, Functions.getHoraActual());
-
-                    cstmt01.execute();
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
                 }
             }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX606SQP04849(A4331Filter filter) throws SQLException, Exception {
+
+        A4331Filter objRtn = new A4331Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String NEW_CERROR = "";
+        //lstSendManual
+        List<A4331Filter> lstSendManual = filter.lstSendManual;
+        A4331Filter beanDet;
+        String msj = "";
+
+        Connection cnx = null;
+        try {
+            //Cambiar Status a las transacciones
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04849(?,?,?,?,?,?,?,?,?,?)}";
+            cstmt01 = cnx.prepareCall(SQLCLL02);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR1.trim());
+            cstmt01.setString(3, filter.TDOC1.trim());
+            cstmt01.setString(4, filter.AREFNBR2.trim());
+            cstmt01.setString(5, filter.TDOC2.trim());
+            cstmt01.setString(6, filter.AREFNBR3.trim());
+            cstmt01.setString(7, filter.TDOC3.trim());
+            cstmt01.setString(8, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(9, Functions.getFechaActual());
+            cstmt01.setString(10, Functions.getHoraActual());
+
+            cstmt01.execute();
 
         } catch (Exception e) {
             msj = e.getMessage();

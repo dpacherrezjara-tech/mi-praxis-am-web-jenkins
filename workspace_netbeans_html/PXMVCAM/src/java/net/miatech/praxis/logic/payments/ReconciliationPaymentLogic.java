@@ -14,6 +14,7 @@ import net.miatech.praxis.dao.payments.ReconciliationPaymentDAO;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
+import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
@@ -123,12 +124,20 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04723(filter);
     }
     
-    public String loadPX606SQP04728(A4331Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04728(filter);
+    public String loadPX606SQP04846(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04846(filter);
     }
 
-    public String loadPX606SQP04469(A4331Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04469(filter);
+    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04847(filter);
+    }
+    
+    public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04848(filter);
+    }
+    
+    public String loadPX606SQP04849(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04849(filter);
     }
 
     public List<A4331Filter> loadPX606SQP04420(A4331Filter filter) throws SQLException, Exception {
