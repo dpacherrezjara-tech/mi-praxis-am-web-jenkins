@@ -733,7 +733,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX606SQP04463(filter);
+            lst = logic.loadPX606SQP04828(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
