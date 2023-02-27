@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     sumAmountBlocked: 0,
     gridAdjustmentRowIndex: 10,
     status_match: ['1', '5', '6', '7'],
+    flag_bporev: false,
     dataObtain: {},
             // </editor-fold>
             init: function (view) {
@@ -96,6 +97,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update').show();
                     Ext.getCmp(prototype.id + '-panelBpo').show();
+                    if (this.bean.STVAL === '0') {
+                        Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
+                    }
                 }
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -156,7 +160,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         /* else {
          Ext.getCmp(prototype.id + '-chkSelection').show();
          }*/
-        if(this.beanResult.TDOC === 'S'){
+        if (this.beanResult.TDOC === 'S') {
 //            this.setTitle()('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
             Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Sales Date');
             Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Sales Merchant ID');
@@ -170,7 +174,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             Ext.getCmp(prototype.id + '-gridBlockA720FECVTA').setText('Sales<br>Date');
             Ext.getCmp(prototype.id + '-gridAdjTot_VFOPs').setText('Sales<br>Amount');
             Ext.getCmp(prototype.id + '-gridAdjA720FECVTA').setText('Sales<br>Date');
-        }else{
+        } else {
             Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Refund Date');
             Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Refund Merchant ID');
             Ext.getCmp(prototype.id + '-txtFromDateCERROR').setText('Sett. vs Refund');
@@ -184,7 +188,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             Ext.getCmp(prototype.id + '-gridAdjTot_VFOPs').setText('Refund<br>Amount');
             Ext.getCmp(prototype.id + '-gridAdjA720FECVTA').setText('Refund<br>Date');
         }
-        
+
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
@@ -508,50 +512,52 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         return '';
     },
     onUpdateClick: function (btn) {
-        //console.log(this.beanResult.FREVERSA);
-        //var txtMsjInsert = this.validacionInsert();
-        if (this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1') {
-            global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
+        if (this.flag_bporev === true) {
+            this.transactionInStandBy(btn);
         } else {
-            var txtMsjDesglose = this.validacionDesglose();
-            var txtMsjMontos = this.validacionMontos();
-            var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
-            if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
-                var beanTemp = {};
-                this.llenarData(beanTemp);
-                beanTemp.option = 'U';
-                //this.ValidateTicketPNR(beanTemp, btn);
-                Ext.Msg.show(
-                        {
-                            title: '.:PRAXIS:.',
-                            msg: 'Are you sure to update?',
-                            buttons: Ext.MessageBox.YESNO,
-                            scope: this,
-                            animateTarget: btn,
-                            icon: Ext.MessageBox.QUESTION,
-                            modal: true,
-                            fn: function (btn) {
-                                if (btn === 'yes') {
-                                    meDE.MaintenanceA4116(beanTemp);
-                                }
-                            }
-                        });
+            //console.log(this.beanResult.FREVERSA);
+            //var txtMsjInsert = this.validacionInsert();
+            if (this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1') {
+                global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
             } else {
-                if (txtMsjValidacionTktPNR !== '') {
-                    console.log(txtMsjValidacionTktPNR);
-                    global.Msg({msg: txtMsjValidacionTktPNR});
-                } else if (txtMsjDesglose !== '') {
-                    console.log(txtMsjDesglose);
-                    global.Msg({msg: txtMsjDesglose});
-                } else if (txtMsjMontos !== '') {
-                    console.log(txtMsjMontos);
-                    global.Msg({msg: txtMsjMontos});
-                }
+                var txtMsjDesglose = this.validacionDesglose();
+                var txtMsjMontos = this.validacionMontos();
+                var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
+                if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
+                    var beanTemp = {};
+                    this.llenarData(beanTemp);
+                    beanTemp.option = 'U';
+                    //this.ValidateTicketPNR(beanTemp, btn);
+                    Ext.Msg.show(
+                            {
+                                title: '.:PRAXIS:.',
+                                msg: 'Are you sure to update?',
+                                buttons: Ext.MessageBox.YESNO,
+                                scope: this,
+                                animateTarget: btn,
+                                icon: Ext.MessageBox.QUESTION,
+                                modal: true,
+                                fn: function (btn) {
+                                    if (btn === 'yes') {
+                                        meDE.MaintenanceA4116(beanTemp);
+                                    }
+                                }
+                            });
+                } else {
+                    if (txtMsjValidacionTktPNR !== '') {
+                        console.log(txtMsjValidacionTktPNR);
+                        global.Msg({msg: txtMsjValidacionTktPNR});
+                    } else if (txtMsjDesglose !== '') {
+                        console.log(txtMsjDesglose);
+                        global.Msg({msg: txtMsjDesglose});
+                    } else if (txtMsjMontos !== '') {
+                        console.log(txtMsjMontos);
+                        global.Msg({msg: txtMsjMontos});
+                    }
 
+                }
             }
         }
-
-
     },
     onDeleteClick: function (btn) {
 
@@ -586,6 +592,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                     meDE.lstSendManual = [];
                     meDE.lstBlocked = [];
                     meDE.lstAdjustment = [];
+                    meDE.flag_bporev = false;
+
                     Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
                             Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
                             );
