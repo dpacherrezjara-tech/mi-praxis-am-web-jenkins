@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global Promise, global */
+
 Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.idRftx + '-dataEntryRftxController',
@@ -43,18 +45,30 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
      */
     afterRender: async function () {
         //dvt
-        Ext.getCmp(prototype.idRftx + '-dataEntryRftx').mask('Loading...');
-        let dataStatus = false;
-        dataStatus = await this.getRftxInfo();
-        dataStatus = await this.getRftxFop();
-        dataStatus = await this.getRftxTax();
-        dataStatus = await this.getRftxTot();
-        if (dataStatus) {
-            this.setValues();
-        } else {
-            global.Msg({msg: 'Not found'});
-        }
-        Ext.getCmp(prototype.idRftx + '-dataEntryRftx').unmask();
+        let me = this;
+        me.view.mask('Loading...');
+        let info = await me.getRftxInfo();
+        //Mejora rendimiento Dvicente 230227
+        Promise.allSettled([
+            me.getRftxFop(),
+            me.getRftxTax(),
+            me.getRftxTot()
+        ]).then(values => {
+            const[
+                {value:fop},
+                {value:tax},
+                {value:tot}
+            ] = values;
+            //console.log(values);
+            if(info&&fop&&tax&&tot){
+                me.setValues();
+            }else{
+                global.Msg({msg: 'Not found'});
+                me.view.close();
+            }
+            me.view.unmask();
+        }).catch (err => console.error(err));
+        
     },
     getRequestParams: function () {
         let p = this.view.params;

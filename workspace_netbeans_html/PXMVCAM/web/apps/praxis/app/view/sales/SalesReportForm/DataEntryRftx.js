@@ -606,7 +606,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                         xtype: 'textfield',
                                                                                         fieldStyle: 'text-align:left;',
                                                                                         labelSeparator: '',
-                                                                                        width: 12
+                                                                                        width: 18
                                                                                     },
                                                                                     items: [
                                                                                         {
@@ -620,34 +620,35 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             },
                                                                                             width: 70
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             xtype: 'label',
                                                                                             id: prototype.idRftx + '-det-lblTicket2',
@@ -660,6 +661,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             width: 70,
                                                                                             hidden: true
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-2',
                                                                                             margin: '1',
@@ -667,7 +669,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-2',
                                                                                             margin: '1',
@@ -675,7 +677,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-2',
                                                                                             margin: '1',
@@ -683,7 +685,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-2',
                                                                                             margin: '1',
@@ -691,7 +693,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5}
+                                                                                        {xtype: 'tbspacer', width: 3}
                                                                                     ]
                                                                                 },
                                                                                 {
@@ -705,7 +707,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                         xtype: 'textfield',
                                                                                         fieldStyle: 'text-align:left;',
                                                                                         labelSeparator: '',
-                                                                                        width: 12
+                                                                                        width: 18
                                                                                     },
                                                                                     items: [
                                                                                         {
@@ -720,6 +722,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             width: 70,
                                                                                             hidden: true
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-3',
                                                                                             margin: '1',
@@ -727,7 +730,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-3',
                                                                                             margin: '1',
@@ -735,7 +738,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-3',
                                                                                             margin: '1',
@@ -743,7 +746,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-3',
                                                                                             margin: '1',
@@ -751,7 +754,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             xtype: 'label',
                                                                                             id: prototype.idRftx + '-det-lblTicket4',
@@ -764,6 +767,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             width: 70,
                                                                                             hidden: true
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-4',
                                                                                             margin: '1',
@@ -771,7 +775,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-4',
                                                                                             margin: '1',
@@ -779,7 +783,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-4',
                                                                                             margin: '1',
@@ -787,7 +791,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-4',
                                                                                             margin: '1',
@@ -795,7 +799,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5}
+                                                                                        {xtype: 'tbspacer', width: 3}
                                                                                     ]
                                                                                 }
 
