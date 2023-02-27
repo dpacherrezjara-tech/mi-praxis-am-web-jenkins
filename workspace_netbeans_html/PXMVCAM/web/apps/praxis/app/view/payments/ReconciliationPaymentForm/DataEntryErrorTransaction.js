@@ -113,6 +113,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSMERCHID',
                                     text: 'Sales Merchant ID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -445,6 +446,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateCERROR',
                                     text: 'Sett. vs Sales',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -481,6 +483,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                         {
                             xtype: 'label',
                             text: 'Sales Information',
+                            id: prototype.id + '-txtFromDateTITULO',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -499,6 +502,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {
                                     xtype: 'label',
                                     text: 'Sales Date',
+                                    id: prototype.id + '-txtFromDateBSUMDATE',
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -786,6 +790,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSVFOPS',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Sales Amount',
                                     width: 120
@@ -893,7 +898,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                             layout: 'hbox',
                             hidden: false,
                             border: false,
-                            margin: '0 2 0 200',
+                            margin: '0 2 0 100',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
@@ -987,6 +992,53 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
 
                                 },
                                 {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelBpo',
+                                    layout: 'hbox',
+                                    hidden: true,
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'Bpo Rev.',
+                                            textAlign: 'center',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            margin: '4 4 4 4',
+                                            width: 70
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            id: prototype.id + '-openBpoObserv',
+                                            //margin: '4 4 4 4',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/facsimil.png',
+                                            tooltip: 'BPO Rev.',
+                                            listeners: {
+                                                click: 'bpoRev_keyDownHandler'
+                                            }
+
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-closeBpoObserv',
+                                            hidden: true,
+                                            width: 25,
+                                            //margin: '4 4 4 4',
+                                            //iconCls: 'prx-icon-add',
+                                            icon: 'resources/img/botones/cancel.png',
+                                            tooltip: 'Close BPO Rev.',
+                                            listeners: {
+                                                click: 'closeBpoRev_keyDownHandler'
+                                            }
+
+                                        }
+                                    ]
+                                },
                             ]
                         },
                         {xtype: 'tbspacer', height: 5},
@@ -1082,6 +1134,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtFromDateSDATE',
                                     text: 'Sales Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -1127,6 +1180,35 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                         click: 'clear_keyDownHandler'
                                     }
 
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelBpoObserv',
+                            layout: 'hbox',
+                            hidden: true,
+                            border: false,
+                            margin: '0 2 0 100',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'BPO Observation',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtBpoOBSERV-RO',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    enforceMaxLength: true,
+                                    readOnly: false,
+                                    maxLength: 50,
+                                    width: 320,
                                 },
                             ]
                         },
@@ -1231,17 +1313,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 956,
+                            width: 1030,
                             height: 270,
                             hidden: false,
                             autoScroll: true,
                             bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 80',
+                            margin: '10 2 12 10',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 897,
+                                    width: 1027,
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1352,7 +1434,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id + '-gridTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1360,7 +1442,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id + '-gridA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1397,7 +1479,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                             {
                                                 text: 'Coupons',
                                                 id: prototype.id + '-coupons_sales',
-                                                hidden: true,
+//                                                hidden: true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1451,40 +1533,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                 ]
                                             },
                                             {
-                                                header: 'Del.',
-                                                id: prototype.id + '-gridColumnDelete',
-                                                dataIndex: '',
-                                                xtype: 'widgetcolumn',
-                                                align: 'center',
-                                                width: 40,
-                                                widget: {
-                                                    xtype: 'button',
-                                                    icon: 'resources/img/icon/delete.png',
-                                                    tooltip: 'remove',
-                                                    listeners: {
-                                                        click: function (button, e, eOpts) {
-                                                            var record = button.getWidgetRecord();
-                                                            if (record.data.FDESGLOSE !== '1') {
-                                                                meDE.removeTKT(record);
-                                                            }
-
-                                                        }
-                                                    }
-                                                }
-
-                                            },
-                                            {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
-                                                width: 30,
-                                                text: 'Fill',
-                                                id: prototype.id + '-gridColumnFill',
+                                                width: 40,
+                                                text: 'Del.',
+                                                id: prototype.id + '-gridColumnDelete',
                                                 align: 'center',
                                                 items: [
                                                     {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Fill TKT & PNR',
-                                                        handler: 'onTktPnr'
+                                                        iconCls: 'prx-icon-image-trash',
+                                                        tooltip: 'Delete',
+                                                        handler: 'removeTKT'
                                                     }
                                                 ]
                                             },
@@ -1675,7 +1734,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     }
                                                 },
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id + '-gridAdjTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1683,7 +1742,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id + '-gridAdjA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1856,7 +1915,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80, id: prototype.id + '-gridBlockTot_VFOPs',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1864,7 +1923,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70, id: prototype.id + '-gridBlockA720FECVTA',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1887,7 +1946,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                 listeners: {
                                                     click: 'viewTicket'
                                                 },
-                                            },                                            
+                                            },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";

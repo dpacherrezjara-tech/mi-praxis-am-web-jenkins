@@ -569,7 +569,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'checkboxfield',
                             hidden: true,
@@ -645,7 +644,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             xtype: 'label',
                             text: 'Auth:',
                             padding: '8px 1px 2px 1px',
-                            width: 40,
+                            width: 30,
                         },
                         {
                             xtype: 'textfield',
@@ -665,7 +664,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             xtype: 'label',
                             text: 'PNR:',
                             padding: '8px 1px 2px 1px',
-                            width: 40
+                            width: 30
                         },
                         {
                             xtype: 'textfield',
@@ -693,7 +692,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             emptyText: 'All',
                             //maxLength: 3,
                             labelWidth: 70,
-                            width: 200,
+                            width: 150,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
@@ -705,7 +704,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             xtype: 'checkboxfield',
                             hidden: false,
                             id: prototype.id + '-chkVoid',
-                            width: 50,
+                            width: 40,
                             boxLabel: 'Void',
                             inputValue: '0',
                             padding: '5px 0px 0px 20px',
@@ -726,8 +725,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 50,
-                            width: 120,
+                            labelWidth: 40,
+                            width: 110,
                             hiddenLabel: false,
                             value: '',
                             listeners: {                                
@@ -746,8 +745,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 70,
-                            width: 140,
+                            labelWidth: 60,
+                            width: 130,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
@@ -765,8 +764,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             valueField: 'CODE',
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 350,
+                            labelWidth: 75,
+                            width: 310,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
@@ -783,13 +782,33 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 250,
+                            labelWidth: 85,
+                            width: 180,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
                             }
                         },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status:',
+                            id: prototype.id + '-cmbSTVALErr',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 50,
+                            width: 205,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
+                        }
                     ]
                 },
                 {

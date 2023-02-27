@@ -21,7 +21,7 @@ import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
-import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
 import net.miatech.utils.Functions;
@@ -74,7 +74,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04692_1(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04692_1(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -250,7 +250,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04693(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04693(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -965,10 +965,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04270(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04270(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
         double lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
         double lngTotQTYTRA = 0, lngTotQTYDOC = 0;
         double TGROSAMOUN_TOTAL = 0;
@@ -1038,7 +1038,7 @@ public class ReconciliationPaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
@@ -1178,10 +1178,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04471(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04471(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
         double lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
         double lngTotQTYTRA = 0, lngTotQTYDOC = 0;
         double TGROSAMOUN_TOTAL = 0;
@@ -1246,7 +1246,7 @@ public class ReconciliationPaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
@@ -2000,15 +2000,15 @@ public class ReconciliationPaymentDAO {
     }
 
     // ---------------------------------------------------
-    public List<A4116Filter> loadPX606SQP04694(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04694(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04694(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04694(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2042,7 +2042,7 @@ public class ReconciliationPaymentDAO {
             rst = cstmt.getResultSet();
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
                 beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                 beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                 beanTkt.IN_DATE = filter.IN_DATE.trim();
@@ -2117,15 +2117,15 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04695(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04695(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04695(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04695(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
 
@@ -2182,7 +2182,7 @@ public class ReconciliationPaymentDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
@@ -2274,10 +2274,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04721(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04721(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -2339,7 +2339,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04721(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04721(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2412,7 +2412,7 @@ public class ReconciliationPaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
                     beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
@@ -2598,10 +2598,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04698(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04698(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -2649,7 +2649,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt_usos = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04698(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04698(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SPRUT01556(?)}";
 
         Connection cnx = null;
@@ -2721,7 +2721,7 @@ public class ReconciliationPaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
                     beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
@@ -2854,7 +2854,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.USOS = cstmt_usos.getString(1);
                     cstmt_usos.close();
 
-                    beanTkt.A1531TTARJ = "AX";
+                    beanTkt.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                     beanTkt.FDESGLOSE = "1";
                     beanTkt.A1531NREF = beanTkt.SCARDN;
                     beanTkt.A1531CAPL = beanTkt.SAUTHOC;
@@ -2900,10 +2900,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04619(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04619(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -2950,7 +2950,7 @@ public class ReconciliationPaymentDAO {
             rst = cstmt.getResultSet();
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                 beanTkt.ZONA = rst.getString("ZONA").trim();
@@ -3218,10 +3218,10 @@ public class ReconciliationPaymentDAO {
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    public List<A4116Filter> loadPX606SQP04697(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04697(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
         double TGROSAMOUN_TOTAL = 0;
         double TGROSAMOUNC_TOTAL = 0;
         double DISCAMOUN_TOTAL = 0;
@@ -3270,17 +3270,17 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04697(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04697(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
             cstmt.registerOutParameter(22, Types.INTEGER);
             cstmt.registerOutParameter(23, Types.INTEGER);
+            cstmt.registerOutParameter(24, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -3301,20 +3301,20 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(17, filter.IN_PROCTYPE.trim());
             cstmt.setString(18, filter.IN_SCURRENCY.trim());
             cstmt.setString(19, filter.IN_TKT.trim());
-            cstmt.setInt(20, filter.page.PAGNUM);
-            cstmt.setInt(21, filter.page.PAGROW);
-            cstmt.setInt(22, filter.page.TOTPAG);
-            cstmt.setInt(23, filter.page.TOTROW);
+            cstmt.setString(20, filter.IN_STVAL_ERR);
+            cstmt.setInt(21, filter.page.PAGNUM);
+            cstmt.setInt(22, filter.page.PAGROW);
+            cstmt.setInt(23, filter.page.TOTPAG);
+            cstmt.setInt(24, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(20);
-            filter.page.PAGROW = cstmt.getInt(21);
-            filter.page.TOTPAG = cstmt.getInt(22);
-            filter.page.TOTROW = cstmt.getInt(23);
+            filter.page.PAGNUM = cstmt.getInt(21);
+            filter.page.PAGROW = cstmt.getInt(22);
+            filter.page.TOTPAG = cstmt.getInt(23);
+            filter.page.TOTROW = cstmt.getInt(24);
 
             //cstmt.execute();
-
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN");
@@ -3334,7 +3334,7 @@ public class ReconciliationPaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
@@ -3509,10 +3509,10 @@ public class ReconciliationPaymentDAO {
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    public List<A4116Filter> loadPX606SQP04696(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04696(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
         Integer TNCM_TOTAL = 0, TNCP_TOTAL = 0;
         Integer CPLM_TOTAL = 0, CPLP_TOTAL = 0;
         Integer CTAM_TOTAL = 0, CTAP_TOTAL = 0;
@@ -3522,17 +3522,17 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04696(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04696(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(14, Types.INTEGER);
             cstmt.registerOutParameter(15, Types.INTEGER);
             cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(18, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -3547,17 +3547,18 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(11, filter.IN_PROCTYPE.trim());
             cstmt.setString(12, filter.IN_SCURRENCY.trim());
             cstmt.setString(13, filter.IN_TKT.trim());
-            cstmt.setInt(14, filter.page.PAGNUM);   
-            cstmt.setInt(15, filter.page.PAGROW);
-            cstmt.setInt(16, filter.page.TOTPAG);
-            cstmt.setInt(17, filter.page.TOTROW);
+            cstmt.setString(14, filter.IN_STVAL_ERR);
+            cstmt.setInt(15, filter.page.PAGNUM);
+            cstmt.setInt(16, filter.page.PAGROW);
+            cstmt.setInt(17, filter.page.TOTPAG);
+            cstmt.setInt(18, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(14);
-            filter.page.PAGROW = cstmt.getInt(15);
-            filter.page.TOTPAG = cstmt.getInt(16);
-            filter.page.TOTROW = cstmt.getInt(17);
+            filter.page.PAGNUM = cstmt.getInt(15);
+            filter.page.PAGROW = cstmt.getInt(16);
+            filter.page.TOTPAG = cstmt.getInt(17);
+            filter.page.TOTROW = cstmt.getInt(18);
 
             cstmt.execute();
 
@@ -3580,7 +3581,7 @@ public class ReconciliationPaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4116Filter();
+                    beanTkt = new A4331Filter();
                     beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                     beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
@@ -3656,9 +3657,9 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public A4116Filter loadPX606SQP04720(A4116Filter filter) throws SQLException, Exception {
+    public A4331Filter loadPX606SQP04720(A4331Filter filter) throws SQLException, Exception {
 
-        A4116Filter objRtn = new A4116Filter();
+        A4331Filter objRtn = new A4331Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
@@ -3701,7 +3702,7 @@ public class ReconciliationPaymentDAO {
         hmDescTDOC.put("A", "Adjust.");
         hmDescTDOC.put("N", "ADM");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04720(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04720(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3789,19 +3790,19 @@ public class ReconciliationPaymentDAO {
                 }
                 objRtn.descVOID = rs01.getString("VOID").trim();
                 objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
-                if(rs01.getString("FREVERSA").equals("0")){
+                if (rs01.getString("FREVERSA").equals("0")) {
                     objRtn.descFREVERSA = "Processed Reverse";
-                }else if(rs01.getString("FREVERSA").equals("1")){
+                } else if (rs01.getString("FREVERSA").equals("1")) {
                     objRtn.descFREVERSA = "Pending reverse";
                 }
                 objRtn.FREVADM = rs01.getString("FREVADM").trim();
-                if(rs01.getString("FREVADM").equals("0")){
+                if (rs01.getString("FREVADM").equals("0")) {
                     objRtn.descFREVADM = "Processed Reverse";
-                }else if(rs01.getString("FREVADM").equals("1")){
+                } else if (rs01.getString("FREVADM").equals("1")) {
                     objRtn.descFREVADM = "Pending reverse";
                 }
                 objRtn.FADM = rs01.getString("FADM").trim();
-                if(rs01.getString("FADM").equals("1")){
+                if (rs01.getString("FADM").equals("1")) {
                     objRtn.descFADM = "ADM generado";
                 }
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
@@ -3812,6 +3813,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.ISREFNBR = rs01.getString("ISREFNBR").trim();
                 objRtn.DES_MERCHANT = rs01.getString("DES_MERCHANT").trim();
                 objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
+                objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
 
                 objRtn.GROSAMOUN = rs01.getDouble("GROSAMOUN");
                 objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
@@ -3842,7 +3844,7 @@ public class ReconciliationPaymentDAO {
                 if ("".equals(objRtn.CERROIN.trim())) {
                     objRtn.DES_CERROIN = "";
                 }
-                
+
                 objRtn.CODADJU = rs01.getString("CODADJU");
                 objRtn.DES_CODADJU = rs01.getString("DES_CODADJU");
                 if ("".equals(objRtn.CODADJU.trim())) {
@@ -3888,7 +3890,7 @@ public class ReconciliationPaymentDAO {
         return objRtn;
     }
 
-    public String loadPX606SQP04360(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04360(A4331Filter filter) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String msj = "";
@@ -3953,17 +3955,17 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04723(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04723(A4331Filter filter) throws SQLException, Exception {
 
-        A4116Filter objRtn = new A4116Filter();
+        A4331Filter objRtn = new A4331Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         //lstSendManual
-        List<A4116Filter> lstSendManual = filter.lstSendManual;
-        A4116Filter beanDet;
-        A4116Filter beanObser;
+        List<A4331Filter> lstSendManual = filter.lstSendManual;
+        A4331Filter beanDet;
+        A4331Filter beanObser;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04723(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04723(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3998,7 +4000,7 @@ public class ReconciliationPaymentDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -4064,14 +4066,65 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04728(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04846(A4331Filter filter) throws SQLException, Exception {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         //lstSendManual
-        
+
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04728(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04846(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR.trim());
+            cstmt01.setString(3, filter.PRDA.trim());
+            cstmt01.setString(4, filter.TDOC.trim());
+            cstmt01.setString(5, filter.OBSERV_BPO.trim());
+            cstmt01.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(7, Functions.getFechaActual());
+            cstmt01.setString(8, Functions.getHoraActual());
+
+            cstmt01.execute();
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04847(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4080,15 +4133,17 @@ public class ReconciliationPaymentDAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.PRDA.trim());
-            cstmt01.setString(3, filter.PAYDATE.trim());            
+            cstmt01.setString(3, filter.PAYDATE.trim());
             cstmt01.setString(4, filter.BSUMDATE.trim());
-            cstmt01.setString(5, filter.ISREFNBR.trim());           
-            cstmt01.setString(6, filter.CERROR.trim());
-            cstmt01.setString(7, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(8, Functions.getFechaActual());
-            cstmt01.setString(9, Functions.getHoraActual());
+            cstmt01.setString(5, filter.AREFNBR.trim());
+            cstmt01.setString(6, filter.TDOC.trim());
+            cstmt01.setString(7, filter.CERROR.trim());
+            cstmt01.setString(8, filter.SCOUNTRY.trim());
+            cstmt01.setString(9, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(10, Functions.getFechaActual());
+            cstmt01.setString(11, Functions.getHoraActual());
 
-            cstmt01.execute();            
+            cstmt01.execute();
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -4116,58 +4171,34 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04469(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
 
-        A4116Filter objRtn = new A4116Filter();
+        A4331Filter objRtn = new A4331Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String NEW_CERROR = "";
         //lstSendManual
-        List<A4116Filter> lstSendManual = filter.lstSendManual;
-        A4116Filter beanDet;
+        List<A4331Filter> lstSendManual = filter.lstSendManual;
+        A4331Filter beanDet;
         String msj = "";
 
         Connection cnx = null;
         try {
             //Cambiar Status a las transacciones
-            if (lstSendManual != null && lstSendManual.size() > 0) {
-                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04469(?,?,?,?,?,?,?,?,?,?,?,?)}";
-                cstmt01 = cnx.prepareCall(SQLCLL02);
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04848(?,?,?,?,?,?,?,?)}";
+            cstmt01 = cnx.prepareCall(SQLCLL02);
 
-                for (int i = 0; i < lstSendManual.size(); i++) {
-                    beanDet = lstSendManual.get(i);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR_1.trim());
+            cstmt01.setString(3, filter.TDOC_1.trim());
+            cstmt01.setString(4, filter.AREFNBR_2.trim());
+            cstmt01.setString(5, filter.TDOC_2.trim());
+            cstmt01.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(7, Functions.getFechaActual());
+            cstmt01.setString(8, Functions.getHoraActual());
 
-                    if (beanDet.STVAL.equals("1")) {
-                        if (beanDet.NBRINSTA == 0) {
-                            NEW_CERROR = "87";
-                        } else {
-                            NEW_CERROR = "86";
-                        }
-                        break;
-                    }
-
-                }
-
-                for (int i = 0; i < lstSendManual.size(); i++) {
-                    beanDet = lstSendManual.get(i);
-
-                    cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-                    cstmt01.setString(2, beanDet.PRDA.trim());
-                    cstmt01.setString(3, beanDet.PAYDATE.trim());
-                    cstmt01.setString(4, beanDet.BSUMDATE.trim());
-                    cstmt01.setString(5, beanDet.SMERCHID.trim());
-                    cstmt01.setString(6, beanDet.IDITEMS.trim());
-                    cstmt01.setString(7, beanDet.IDITEMT.trim());
-                    cstmt01.setString(8, beanDet.NEWSTVAL.trim());
-                    cstmt01.setString(9, NEW_CERROR);
-                    cstmt01.setString(10, session.getUserView().getUserInfo().USR);
-                    cstmt01.setString(11, Functions.getFechaActual());
-                    cstmt01.setString(12, Functions.getHoraActual());
-
-                    cstmt01.execute();
-                }
-            }
+            cstmt01.execute();
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -4195,13 +4226,70 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public List<A4116Filter> loadPX606SQP04414(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04849(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        A4331Filter objRtn = new A4331Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String NEW_CERROR = "";
+        //lstSendManual
+        List<A4331Filter> lstSendManual = filter.lstSendManual;
+        A4331Filter beanDet;
+        String msj = "";
 
-        A4116Filter objRtn;
-        objRtn = new A4116Filter();
+        Connection cnx = null;
+        try {
+            //Cambiar Status a las transacciones
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04849(?,?,?,?,?,?,?,?,?,?)}";
+            cstmt01 = cnx.prepareCall(SQLCLL02);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.AREFNBR1.trim());
+            cstmt01.setString(3, filter.TDOC1.trim());
+            cstmt01.setString(4, filter.AREFNBR2.trim());
+            cstmt01.setString(5, filter.TDOC2.trim());
+            cstmt01.setString(6, filter.AREFNBR3.trim());
+            cstmt01.setString(7, filter.TDOC3.trim());
+            cstmt01.setString(8, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(9, Functions.getFechaActual());
+            cstmt01.setString(10, Functions.getHoraActual());
+
+            cstmt01.execute();
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public List<A4331Filter> loadPX606SQP04414(A4331Filter filter) throws SQLException, Exception {
+
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
+
+        A4331Filter objRtn;
+        objRtn = new A4331Filter();
         objRtn.CODE = "";
         objRtn.NAME = "All";
         lstTkts.add(objRtn);
@@ -4224,7 +4312,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
@@ -4256,13 +4344,13 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04465(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04465(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
-        A4116Filter objRtn;
-        objRtn = new A4116Filter();
+        A4331Filter objRtn;
+        objRtn = new A4331Filter();
         objRtn.CODE = "";
         objRtn.NAME = "All";
         lstTkts.add(objRtn);
@@ -4285,7 +4373,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
@@ -4317,13 +4405,13 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04569(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04569(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
-        A4116Filter objRtn;
-        objRtn = new A4116Filter();
+        A4331Filter objRtn;
+        objRtn = new A4331Filter();
         objRtn.CODE = "";
         objRtn.NAME = "All";
         lstTkts.add(objRtn);
@@ -4345,7 +4433,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
@@ -4377,13 +4465,13 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04570(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04570(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
-        A4116Filter objRtn;
-        objRtn = new A4116Filter();
+        A4331Filter objRtn;
+        objRtn = new A4331Filter();
         objRtn.CODE = "";
         objRtn.NAME = "All";
         lstTkts.add(objRtn);
@@ -4406,7 +4494,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
@@ -4438,10 +4526,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04617(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04617(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4460,7 +4548,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.EMAIL = rst.getString("EMAIL").trim();
                 lstTkts.add(beanTkt);
@@ -4509,10 +4597,10 @@ public class ReconciliationPaymentDAO {
         return numero_a_cambiar;
     }
 
-    public List<A4116Filter> loadPX606SQP04722(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04722(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
-        A4116Filter beanRec;
+        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
+        A4331Filter beanRec;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4537,7 +4625,7 @@ public class ReconciliationPaymentDAO {
         } else {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04722(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04722(?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -4560,7 +4648,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanRec = new A4116Filter();
+                beanRec = new A4331Filter();
 
                 beanRec.A1531NREF = rst.getString("A1531NREF").trim();
                 beanRec.A1531CAPL = rst.getString("A1531CAPL").trim();
@@ -4631,10 +4719,10 @@ public class ReconciliationPaymentDAO {
         return lstInfo;
     }
 
-    public List<A4116Filter> loadPX606SQP04754(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04754(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
-        A4116Filter beanRec;
+        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
+        A4331Filter beanRec;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4678,7 +4766,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanRec = new A4116Filter();
+                beanRec = new A4331Filter();
 
                 beanRec.A1531NREF = rst.getString("A1531NREF").trim();
                 beanRec.A1531CAPL = rst.getString("A1531CAPL").trim();
@@ -4734,10 +4822,10 @@ public class ReconciliationPaymentDAO {
         return lstInfo;
     }
 
-    public List<A4116Filter> loadPX606SQP04463(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04828(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -4776,7 +4864,7 @@ public class ReconciliationPaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04463(?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04828(?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4793,14 +4881,14 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.PRDA = rst.getString("PRDA").trim();
                 beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                 beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                 beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
-                beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
-                beanTkt.TRANSDATE = rst.getString("TRANSDATE").trim();
+                beanTkt.BSUMDATE = rst.getString("SDATE").trim();
+                beanTkt.TRANSDATE = "";
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.SPNR = rst.getString("SPNR").trim();
@@ -4821,8 +4909,8 @@ public class ReconciliationPaymentDAO {
 
                 beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
 
-                beanTkt.IDITEMS = rst.getString("IDITEMS");
-                beanTkt.IDITEMT = rst.getString("IDITEMT");
+                beanTkt.IDITEMS = "";
+                beanTkt.IDITEMT = "";
 
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
@@ -4855,10 +4943,10 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04420(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04420(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -4940,7 +5028,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 if (contador == 0) {
                     TGROSAMOUN = Math.abs(rst.getDouble("TGROSAMOUN"));
@@ -5019,13 +5107,13 @@ public class ReconciliationPaymentDAO {
         return lstTkts;
     }
 
-    public List<A4116Filter> loadPX606SQP04470(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
 
-        List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
-        A4116Filter beanTkt;
+        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
+        A4331Filter beanTkt;
 
-        A4116Filter objRtn;
-        objRtn = new A4116Filter();
+        A4331Filter objRtn;
+        objRtn = new A4331Filter();
         objRtn.CODE = "";
         objRtn.NAME = "None";
         lstTkts.add(objRtn);
@@ -5047,7 +5135,7 @@ public class ReconciliationPaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4116Filter();
+                beanTkt = new A4331Filter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
