@@ -2854,7 +2854,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.USOS = cstmt_usos.getString(1);
                     cstmt_usos.close();
 
-                    beanTkt.A1531TTARJ = "AX";
+                    beanTkt.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                     beanTkt.FDESGLOSE = "1";
                     beanTkt.A1531NREF = beanTkt.SCARDN;
                     beanTkt.A1531CAPL = beanTkt.SAUTHOC;
