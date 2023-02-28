@@ -4912,6 +4912,8 @@ public class ReconciliationPaymentDAO {
                 beanTkt.IDITEMS = "";
                 beanTkt.IDITEMT = "";
 
+                beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
+                
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
 

@@ -6,6 +6,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataGridMsiTrac
     bean: {},
     beanMsi: {},
     paramsMsiTracking: {},
+    AREFNBR_1: '',
+    TDOC_1: '',
+    AREFNBR_2: '',
+    TDOC_2: '',
     init: function (view) {
         prototype.id = 'ReconciliationPaymentForm';
         prototype.url = CONTEXTPATH + '/ReconciliationPayment';
@@ -59,14 +63,18 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataGridMsiTrac
                 });
     },
     llenarData: function (beanMsiTemp) {
-        beanMsiTemp.lstSendManual = [];
-        var store_gridMsi = Ext.getCmp(prototype.id + '-gridMsiTracking').getStore();
+//        beanMsiTemp.lstSendManual = [];
+//        var store_gridMsi = Ext.getCmp(prototype.id + '-gridMsiTracking').getStore();
+//
+//        for (var i = 0; i < store_gridMsi.data.length; i++) {
+//            beanMsiTemp.lstSendManual.push(store_gridMsi.data.items[i].data);
+//        }
+//        
+//        console.log(beanMsiTemp);
+//        this.MaintenanceMsi(beanMsiTemp);
+        beanMsiTemp.AREFNBR_1 = this.AREFNBR_1;
+        beanMsiTemp.AREFNBR_2 = this.AREFNBR_2;
 
-        for (var i = 0; i < store_gridMsi.data.length; i++) {
-            beanMsiTemp.lstSendManual.push(store_gridMsi.data.items[i].data);
-        }
-        
-        console.log(beanMsiTemp);
         this.MaintenanceMsi(beanMsiTemp);
     },
     MaintenanceMsi: function (beanMsiTemp) {
