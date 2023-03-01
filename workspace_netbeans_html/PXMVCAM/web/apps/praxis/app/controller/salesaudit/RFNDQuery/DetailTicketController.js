@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setReadOnly(true);
                 var me = this;
                 rec = me.view.params.rec;
-                if (Ext.String.trim(rec.get('A3648FLAG'))=== 'F') {
+                if (Ext.String.trim(rec.get('A3648FLAG')) === 'F') {
                     Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').show();
                     Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setValue(rec.get('A3648PROCE'));
                     Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(true);
@@ -1086,11 +1086,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             return;
         }
         if (vl_STATUS === 'F') {
-            if (totaldif > 0) {
-                Ext.Msg.alert('.: PRAXIS :.', 'The amount of the RFND must not be greater than the Ticket');
-                bvalida = false;
-                return;
+            if (Ext.String.trim(txttrnc) !== 'EXCH') {
+                if (totaldif > 0) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'The amount of the RFND must not be greater than the Ticket');
+                    bvalida = false;
+                    return;
+                }
             }
+
             if (Ext.String.trim(CmbTRFND).length === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of RFND');
                 bvalida = false;

@@ -734,17 +734,17 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
             };
             console.log(searchParams);
 
-            var option = Ext.getCmp(prototype.id + '-rbgType').getValue();
-            switch (option.rb) {
-                case 'ACLARACIONES':
-                    console.log('Clarifications');
-                    this.search();
-                    break;
-                case 'AVISOS':
-                    console.log('Bank Notice');
-                    this.searchAvisos();
-                    break;
-            }
+//            var option = Ext.getCmp(prototype.id + '-rbgType').getValue();
+//            switch (option.rb) {
+//                case 'ACLARACIONES':
+//                    console.log('Clarifications');
+//                    this.search();
+//                    break;
+//                case 'AVISOS':
+//                    console.log('Bank Notice');
+//                    this.searchAvisos();
+//                    break;
+//            }
         }
     },
     searchDetCardTKT: function (bean) {
