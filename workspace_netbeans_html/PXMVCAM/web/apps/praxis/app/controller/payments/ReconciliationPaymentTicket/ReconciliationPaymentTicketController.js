@@ -330,7 +330,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4164AK");
+                    win.lblUser_toolTip("Estructura: A4337AK");
 
                     me.selectedChild('vskMain', 'boxDetByPNR');
 
@@ -1120,7 +1120,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
 //                },
 //                load: function (obj, obj2, success, response, obj5) {
 //                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
-//                    win.lblUser_toolTip("Estructura: A4165");
+//                    win.lblUser_toolTip("Estructura: A4338");
 //
 //                    me.selectedChild('vskMain', 'boxMainData');
 //
@@ -1166,7 +1166,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4165");
+                    win.lblUser_toolTip("Estructura: A4338");
 
                     me.selectedChild('vskMain', 'boxCopyMainData');
 
@@ -1212,7 +1212,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     me.selectedChild('vskMain', 'boxDetCountry');
 
@@ -1264,7 +1264,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     me.selectedChild('vskMain', 'boxDetCountryCopy');
 
@@ -1318,7 +1318,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     me.selectedChild('vskMain', 'boxDetCard');
 
@@ -1370,7 +1370,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4165");
+                    win.lblUser_toolTip("Estructura: A4338");
 
                     me.selectedChild('vskMain', 'boxDetCardCopy');
 
@@ -1424,7 +1424,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     me.selectedChild('vskMain', 'boxDetDay');
 
@@ -1482,7 +1482,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 },
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     me.selectedChild('vskMain', 'boxDetTicket');
 
@@ -1638,7 +1638,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
             success: function (response, opts) {
                 Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                win.lblUser_toolTip("Estructura: A4164");
+                win.lblUser_toolTip("Estructura: A4337");
 
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -1719,18 +1719,18 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
             success: function (response, opts) {
                 Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                win.lblUser_toolTip("Estructura: A4164");
+                win.lblUser_toolTip("Estructura: A4337");
 
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    var lstA4164 = res.lstWarnTkt;
+                    var lstA4337 = res.lstWarnTkt;
 
-                    if (lstA4164 !== undefined && lstA4164.length > 0) {
+                    if (lstA4337 !== undefined && lstA4337.length > 0) {
                         var DataEntry = Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.DataEntry', {
                             id: 'DataEntryReconciliationPaymentTicketForm'
                         });
                         var controller = DataEntry.getController();
-                        controller.lstA4164 = lstA4164;
+                        controller.lstA4337 = lstA4337;
                         controller.lstCards = me.lstTarjetas;
                         controller.actionCode = win.DE_ACT_VIEW;
                         DataEntry.show();
@@ -1757,7 +1757,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             beforerequest: Ext.getCmp(box).mask('Loading...'),
             success: function (response, opts) {
                 Ext.getCmp(box).unmask();
-                win.lblUser_toolTip("Estructura: A4164");
+                win.lblUser_toolTip("Estructura: A4337");
 
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -1801,7 +1801,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
 
                     me.selectedChild('vskMain', 'boxDetCountryS');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
@@ -1872,7 +1872,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
 
                     me.selectedChild('vskMain', 'boxDetCountrySCopy');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
@@ -1942,7 +1942,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
 
                     me.selectedChild('vskMain', 'boxDetCountryS');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
@@ -1977,7 +1977,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
 
                     me.selectedChild('vskMain', 'boxDetCardS');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
@@ -2044,7 +2044,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
 
                     me.selectedChild('vskMain', 'boxDetDayS');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
@@ -2102,7 +2102,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
             success: function (response, opts) {
                 Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                win.lblUser_toolTip("Estructura: A4164");
+                win.lblUser_toolTip("Estructura: A4337");
 
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -2193,7 +2193,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 //                    me.selectedChild('vskMain', 'boxDetTktMatch');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
 
@@ -2274,7 +2274,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
 //            beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
 //            success: function (response, opts) {
 //                Ext.getCmp(prototype.id + '-contentInfo').unmask();
-//                win.lblUser_toolTip("Estructura: A4164");
+//                win.lblUser_toolTip("Estructura: A4337");
 //
 //                var res = Ext.JSON.decode(response.responseText);
 //                if (res.success) {
@@ -2364,7 +2364,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
                     me.selectedChild('vskMain', 'boxDetTktS');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
@@ -2419,7 +2419,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 load: function (obj, obj2, success, response, obj5) {
 
                     me.selectedChild('vskMain', 'boxDetTktS');
-                    win.lblUser_toolTip("Estructura: A4164");
+                    win.lblUser_toolTip("Estructura: A4337");
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
