@@ -507,20 +507,44 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     ]
                                                                                 },
                                                                                 {
-                                                                                    id: prototype.idRftx + '-det-lblIssueDate',
-                                                                                    xtype: 'textfield',
+                                                                                    xtype: 'panel',
+                                                                                    layout: 'hbox',
                                                                                     margin: '1',
-                                                                                    fieldStyle: 'text-align:left;',
-                                                                                    labelSeparator: '',
-                                                                                    fieldLabel: '',
-                                                                                    maxLength: 8,
-                                                                                    enforceMaxLength: 8,
-                                                                                    readOnly: true,
-                                                                                    maskRe: /[0-9]/,
-                                                                                    width: 65,
-                                                                                    listeners: {
-                                                                                        blur: 'onBlurValueFecha'
-                                                                                    }
+                                                                                    border: false,
+                                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                                    defaults: {
+                                                                                        xtype: 'textfield',
+                                                                                        margin: '1',
+                                                                                        fieldStyle: 'text-align:left;',
+                                                                                        labelStyle: 'font-weight:bold;font-size:11px;',
+                                                                                        labelSeparator: ''
+                                                                                    },
+                                                                                    items: [
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblIssueDate',
+                                                                                            readOnly: true,
+                                                                                            width: 65,
+                                                                                            listeners: {
+                                                                                                blur: 'onBlurValueFecha'
+                                                                                            }
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblSaleDate',
+                                                                                            fieldLabel: 'Sale Date:',
+                                                                                            readOnly: true,
+                                                                                            width: 130,
+                                                                                            labelWidth:60
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblSaleSeq',
+                                                                                            fieldLabel: 'Sale Seq:',
+                                                                                            readOnly: true,
+                                                                                            width: 86,
+                                                                                            labelWidth:55
+                                                                                        }
+                                                                                    ]
                                                                                 },
                                                                                 {
                                                                                     xtype: 'panel',
@@ -1195,21 +1219,50 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                     ]
                                                 },
                                                 //</editor-fold>
+
                                                 {
-                                                    xtype: 'button',
-                                                    text: '<strong style="color:white;">FOP VOID<strong>',
-                                                    //ui: 'round',
-                                                    id: prototype.idRftx + '-det-btnFopVOID',
-                                                    scale: 'medium',
-                                                    margin: '9 0 0 6', //TBRL
-                                                    maxWidth: 85,
-                                                    height: 30,
-                                                    hidden:true,
-                                                    cls: 'x-btn-sent',
-                                                    overCls: 'x-btn-sent-over',
-                                                    listeners: {
-                                                        click: 'onFopVoid'
-                                                    }
+                                                    xtype: 'panel',
+                                                    bodyStyle: 'background: #E5ECEF',
+                                                    layout: {
+                                                        type: 'hbox'
+                                                    },
+                                                    margin: '1 1 1 1',
+                                                    border: false,
+                                                    items: [
+                                                        {
+                                                            xtype: 'button',
+                                                            text: '<strong style="color:white;">FOP VOID<strong>',
+                                                            //ui: 'round',
+                                                            id: prototype.idRftx + '-det-btnFopVOID',
+                                                            scale: 'medium',
+                                                            margin: '9 0 0 6', //TBRL
+                                                            maxWidth: 85,
+                                                            height: 30,
+                                                            hidden: true,
+                                                            cls: 'x-btn-sent',
+                                                            overCls: 'x-btn-sent-over',
+                                                            listeners: {
+                                                                click: 'onFopVoid'
+                                                            }
+                                                        },
+                                                        {
+                                                            xtype: 'label',
+                                                            id: prototype.idRftx + '-lblErrorDesc',
+                                                            flex: 1,
+                                                            height: 20,
+                                                            margin: '9 0 0 6',
+                                                            padding: '5',
+                                                            style: {
+                                                                background: '#DF8E46',
+                                                                color: '#080808',
+                                                                fontStyle: 'italic',
+                                                                fontSize: '10px',
+                                                                fontWeight: 'bold'
+                                                            },
+                                                            hidden: true
+                                                                    //text:'VR0032 - CUPON MAL COBRADO'
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },

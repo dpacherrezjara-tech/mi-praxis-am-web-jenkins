@@ -170,19 +170,27 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             //panel 2
             Ext.getCmp(prototype.idRftx + '-det-lblDigito').setValue(obj.a4373DCHEQ);
             Ext.getCmp(prototype.idRftx + '-det-lblDocType').setValue(obj.a4373TDOC);
-            Ext.getCmp(prototype.idRftx + '-det-lblSeq').setValue(obj.a4373SEQ);
+            Ext.getCmp(prototype.idRftx + '-det-lblSeq').setValue(obj.a4373TRNSQ);
             //panel 2.1
             Ext.getCmp(prototype.idRftx + '-det-lblGroup').setValue(obj.a4373GRUPO);
             Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(objGrupo.A1530FUENT + '-' + objGrupo.A1530PSVTA);
             Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(objGrupo.A1530IDFIL);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueDate').setValue(obj.a4373FECVT);
+            Ext.getCmp(prototype.idRftx + '-det-lblSaleDate').setValue(obj.a4373FTURB);
+            Ext.getCmp(prototype.idRftx + '-det-lblSaleSeq').setValue(obj.a4373SEQ);
             Ext.getCmp(prototype.idRftx + '-det-lblAuthorityNumber').setValue(obj.a4373CIAS + obj.a4373FORMS + obj.a4373SERIS);
 
             Ext.getCmp(prototype.idRftx + '-det-lblIssueCity').setValue(obj.a4373CIUEM);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueCtry').setValue(obj.a4373PAIEM);
             Ext.getCmp(prototype.idRftx + '-det-lblSaleCity').setValue(obj.a4373CIUVT);
             Ext.getCmp(prototype.idRftx + '-det-lblSaleCtry').setValue(obj.a4373PAIVT);
-
+            
+            if(obj.a4373MIAER.trim()!==''){
+                let lblError = Ext.getCmp(prototype.idRftx +'-lblErrorDesc');
+                let errDesc = obj.a4373MIAER + ' - ' + obj.error_DESC.trimEnd();
+                lblError.setText(errDesc);
+                lblError.show();
+            }
 
             //cupones
             if (objLst.length > 0) {
