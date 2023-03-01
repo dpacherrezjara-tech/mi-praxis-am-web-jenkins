@@ -27,6 +27,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         IN_TRANSACTION: '',
         IN_IATA: ''
     },
+    loading:false,
     /**
      * Constructor
      */
@@ -46,6 +47,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         this.getDataInputs();
         let findTkt = this.view.params.findTkt;
         if (findTkt.op === '6') {
+            this.loading = true;
             await this.findTicketToSearch();
         } else {
             this.btnSearch_click();
@@ -220,7 +222,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 meDE.tabId = '4';
                 break;
         }
-        this.btnSearch_click();
+        if(!this.loading)
+            this.btnSearch_click();
     },
 // </editor-fold>
 
@@ -1307,6 +1310,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                         meDE.paramsDE.IN_OPCION = '2';
                         localStorage.setItem(prototype.id + '-ticket-found', true);
                         this.btnSearch_click();
+                        this.loading = false;
                     });
                 } else {
                     global.Msg({
