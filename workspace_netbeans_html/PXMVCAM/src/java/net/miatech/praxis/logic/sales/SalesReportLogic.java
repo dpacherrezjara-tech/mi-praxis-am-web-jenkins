@@ -38,6 +38,7 @@ import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
 import net.miatech.beans.SQP04747Filter;
+import net.miatech.beans.SQP04874Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
@@ -270,5 +271,9 @@ public class SalesReportLogic {
     
      public Map<String,String> loadTicketFinder(Map<String,String> filter)throws Exception{
          return salesReportDAO.loadTicketFinder(filter);
+     }
+     
+     public List<SQP04874Filter> loadSQP04874Filter(SQP04874Filter filter)throws Exception{
+         return salesReportDAO.loadSQP04874Filter(filter);
      }
 }

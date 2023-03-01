@@ -45,6 +45,7 @@ import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
 import net.miatech.beans.SQP04747Filter;
+import net.miatech.beans.SQP04874Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
@@ -54,6 +55,7 @@ import net.miatech.praxis.A005;
 import net.miatech.praxis.A1772;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -4123,6 +4125,35 @@ public class SalesReportDAO {
             pasarGarbageCollector();
         }
         return result;
+    }
+    
+    public List<SQP04874Filter> loadSQP04874Filter(SQP04874Filter filter) throws Exception{
+        Connection con;
+        List<SQP04874Filter> lst = new ArrayList<>();
+        try{
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(con,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04874")
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04874Filter.class));
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("AIRLINE", filter.getCCUST());
+            params.addValue("TIPO", filter.getTIPO());
+            params.addValue("CIA", filter.getCIA());
+            params.addValue("FORMA", filter.getFORMA());
+            params.addValue("SERIE", filter.getSERIE());
+            params.addValue("SEQ", filter.getSEQ());
+            params.addValue("GRUPO", filter.getGRUPO());
+            Map<String,Object> obj = jdbcCall.execute(params);
+            lst = (List<SQP04874Filter>) obj.get("result");
+        }catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+        } finally {
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lst;
     }
 
 }

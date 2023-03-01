@@ -285,6 +285,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         if (title === 'TOTALS') {
             this.searchDet(url, title);
         } else {
+            store.getProxy().data = [];
             fetch(url + '?' + new URLSearchParams(meDE.paramsDE)).then(async res => {
                 gridView.mask('Loading...');
                 await res.json().then(obj => {
@@ -319,7 +320,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
             }).then(() => {
                 let boletobuscado = localStorage.getItem(prototype.id + '-ticket-found');
                 if (boletobuscado) {
-                    Ext.getCmp(prototype.idGr + '-tabMain').mask('Loading...');
+                    Ext.getCmp(prototype.idGr + '-tabMain').mask('Loading Ticket...');
                     const fnAbreTkt = () => {
                         //let column = gridView.getGridColumns()[12];
                         if (store.isLoaded()) {
@@ -331,7 +332,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                         }
                         Ext.getCmp(prototype.idGr + '-tabMain').unmask();
                     };
-                    setTimeout(fnAbreTkt, 200);
+                    setTimeout(fnAbreTkt, 800);
                     localStorage.removeItem(prototype.id + '-ticket-found');
                 }
                 global.clear();
