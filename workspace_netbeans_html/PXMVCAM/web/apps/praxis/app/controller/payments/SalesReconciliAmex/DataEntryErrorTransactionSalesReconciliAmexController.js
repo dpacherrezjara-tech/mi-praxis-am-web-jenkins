@@ -1116,30 +1116,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
     },
     addAdjustment_keyDownHandler: function () {
-        if (this.sumAmount === this.bean.TGROSAMOUN) {
-            global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+
+        if (this.getValue('de-txtISREFNBR').trim() === '' && this.getValue('de-txtSPNR').trim() == '') {
+            global.Msg({msg: 'Please fill the Ticket and PNR fields'});
         } else {
-            this.lstAdjustment = [];
-            Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
-            Ext.getCmp(prototype.id + '-panelADJ').show();
-            //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
-            var rec = Object.create(this.bean);
-            rec.A1531VFOP = rec.TGROSAMOUN;
-            rec.tot_VFOP = rec.TGROSAMOUN;
-            rec.A720AGENTE = $('#menuUser').text();
-            rec.CERROR = '01';
-            rec.A1531TTARJ = 'AX';
-            rec.A1531NREF = rec.SCARDN;
-            rec.A1531CAPL = rec.SAUTHOC;
-            rec.A720FECVTA = rec.BSUMDATE;
-            rec.A720PNR = rec.SPNR;
-            rec.A1531TKT = rec.ISREFNBR;
-            this.lstAdjustment.push(rec);
-            Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-                    Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
-                    );
-            this.calcularMontos();
-            this.helpByCreditCardForAdjustment();
+            if (this.sumAmount === this.bean.TGROSAMOUN) {
+                global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+            } else {
+                this.lstAdjustment = [];
+                Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+                Ext.getCmp(prototype.id + '-panelADJ').show();
+                //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
+                var rec = Object.create(this.bean);
+                rec.A1531VFOP = rec.TGROSAMOUN;
+                rec.tot_VFOP = rec.TGROSAMOUN;
+                rec.A720AGENTE = $('#menuUser').text();
+                rec.CERROR = '01';
+                rec.A1531TTARJ = 'AX';
+                rec.A1531NREF = rec.SCARDN;
+                rec.A1531CAPL = rec.SAUTHOC;
+                rec.A720FECVTA = rec.BSUMDATE;
+                rec.A720PNR = this.getValue('de-txtSPNR').trim(); //rec.SPNR;
+                rec.A1531TKT = this.getValue('de-txtISREFNBR').trim(); //rec.ISREFNBR;
+                this.lstAdjustment.push(rec);
+                Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                        Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                        );
+                this.calcularMontos();
+                this.helpByCreditCardForAdjustment();
+            }
         }
     },
     helpByCreditCardForAdjustment: function () {
