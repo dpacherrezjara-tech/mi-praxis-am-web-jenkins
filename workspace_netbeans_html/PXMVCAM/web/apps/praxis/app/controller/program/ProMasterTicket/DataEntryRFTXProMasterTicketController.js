@@ -157,7 +157,20 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryRFTXProMaster
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
                     if (res.success) {
-                        me01.gridDataAC = res.data;                        
+                        me01.gridDataAC = res.data;
+                        if(me01.gridDataAC.length > 0) {
+                            me01.beanA4373 = me01.gridDataAC[0];
+                            Ext.getCmp(prototype.id+'-2-lblPagActual').setText(win.formatLngNumber(me01.beanA4373.page.PAGNUM));
+                            Ext.getCmp(prototype.id+'-2-lblPagTotal').setText(win.formatLngNumber(me01.beanA4373.page.TOTPAG));
+                            Ext.getCmp(prototype.id+'-2-lblRowsTotal').setText(win.formatLngNumber(me01.beanA4373.page.TOTROW));
+                            Ext.getCmp(prototype.id+'-2-boxPaginacion').show();
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                            Ext.getCmp(prototype.id+'-2-lblPagActual').setText('0');
+                            Ext.getCmp(prototype.id+'-2-lblPagTotal').setText('0');
+                            Ext.getCmp(prototype.id+'-2-lblRowsTotal').setText('0');
+                            Ext.getCmp(prototype.id+'-2-boxPaginacion').hide();
+                        }
                     } else {
                         global.Msg({msg: res.sesion});
                     }
@@ -166,7 +179,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryRFTXProMaster
             }
         });
         Ext.getCmp(prototype.id+'-2-gridData').bindStore(storeGridDatas);
-        //Ext.getCmp(prototype.id+'-2-paggin').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id+'-2-paggin').bindStore(storeGridDatas);
                  
     },
     //</editor-fold>

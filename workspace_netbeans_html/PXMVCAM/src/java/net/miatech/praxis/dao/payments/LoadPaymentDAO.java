@@ -273,6 +273,7 @@ public class LoadPaymentDAO {
                     objRtn.A1530FUENT = rs01.getString("A1530FUENT").trim();
                     objRtn.A1530PSVTA = rs01.getString("A1530PSVTA").trim();
                     objRtn.A1530IDFIL = rs01.getString("A1530IDFIL").trim();
+                    objRtn.A1530FECCO = rs01.getString("A1530FECCO").trim();
                     
                     
                     objRtn.page.PAGNUM = filter.page.PAGNUM;

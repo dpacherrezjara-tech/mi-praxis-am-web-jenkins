@@ -138,6 +138,7 @@ public class A4373 {
     public String A1530FUENT = ""; 
     public String A1530PSVTA = ""; 
     public String A1530IDFIL = ""; 
+    public String A1530FECCO = "";
     
     public long RN = 0; 
     public Pagination page = new Pagination();
