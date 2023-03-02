@@ -5,10 +5,10 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', {
         'Ext.Praxis.controller.program.ProMasterTicket.DataEntryRFTXProMasterTicketController'
     ],
     controller: 'DataEntryRFTXProMasterTicketController',
-    title: 'Refund tax',
+    title: 'Refund Tax',
     header: true,
-    width: 887,
-    height: 460,
+    width: 1000,
+    height: 480,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -44,14 +44,74 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', {
                             border: false,
                             layout: {
                                 type: 'vbox',
-                                align: 'center'
+                                align: 'right'
                             },
                             defaults: {
                                 bodyStyle: 'background: transparent;',
                                 border: true,
-                                align: 'center'
+                                align: 'right'
                             },
                             items: [
+                                //<editor-fold defaultstate="collapsed" desc="boxPagination">
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id+'-2-boxPagination',
+                                    width: 110,
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'toolbar',
+                                            border: false,
+                                            items: [
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id+'-2-btn-pag-first',
+                                                    iconCls: 'prx-icon-pagination-first',
+                                                    tooltip: 'First Page',
+                                                    listeners: {
+                                                        click: 'pagFirst'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id+'-2-btn-pag-previous',
+                                                    iconCls: 'prx-icon-pagination-previous',
+                                                    tooltip: 'Previous Page',
+                                                    listeners: {
+                                                        click: 'pagPrevious'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id+'-2-btn-pag-next',
+                                                    iconCls: 'prx-icon-pagination-next',
+                                                    tooltip: 'Next Page',
+                                                    listeners: {
+                                                        click: 'pagNext'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id+'-2-btn-pag-last',
+                                                    iconCls: 'prx-icon-pagination-last',
+                                                    tooltip: 'Last Page',
+                                                    listeners: {
+                                                        click: 'pagLast'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'pagingtoolbar',
+                                                    id: prototype.id+'-2-paggin',
+                                                    pageSize: 10,
+                                                    border: false,
+                                                    displayInfo: false,
+                                                    hidden: true
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                //</editor-fold>
                                 // <editor-fold defaultstate="collapsed" desc="gridData">
                                 {
                                     xtype: 'grid',
@@ -87,7 +147,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', {
                                                     { text: 'CUR', dataIndex: 'A4373MDTX', width: 70 },
                                                     { text: 'AMOUNT', dataIndex: 'A4373TTAX', width: 70 },
                                                     { text: 'SALE DATE', dataIndex: 'A4373FTURB', width: 90 },
-                                                    //{ text: 'ACCOUNT DATE', dataIndex: 'ACCOUNT', width: 170 },                                                    
+                                                    { text: 'ACCOUNT DATE', dataIndex: 'A1530FECCO', width: 110 },                                                    
                                                     {
                                                         xtype: 'actioncolumn',
                                                         text: 'Edit',

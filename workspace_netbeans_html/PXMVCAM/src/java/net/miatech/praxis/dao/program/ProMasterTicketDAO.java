@@ -921,6 +921,7 @@ public class ProMasterTicketDAO {
                 objRtn.A1716PROV = rs01.getString("A1716PROV");
 
                 objRtn.A1716IDCON = rs01.getString("A1716IDCON");
+                objRtn.A1716CFOP = rs01.getString("A1716CFOP");
 
                 objRtn.TCOL = rs01.getString("TCOL");
                 /*
