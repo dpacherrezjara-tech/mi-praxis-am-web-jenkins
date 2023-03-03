@@ -6,10 +6,12 @@
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -1090,16 +1092,17 @@ public class DataRequestedByBankController extends BaseController {
                         break;
                     }
                 }
-                
+                LogR("Terminó creacion de PDF");
                 if (!msj.contains("Error")) {
 
-                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
                     Date date = new Date();
                     String RUTA = RUTA_DOWNLOAD + "/Aclaraciones" + dateFormat.format(date) + ".zip";
                     String zipNOMBRE = "Aclaraciones" + dateFormat.format(date) + ".zip";
-                    
+                    LogR("Inico ZIP");
 //                    FileOutputStream fileZip = new FileOutputStream(zipName);
                     ZipOutputStream os = new ZipOutputStream(new FileOutputStream(RUTA));
+                    LogR("Terminó ZIP");
                     for (int i = 0; i < lstPdfAdj.size(); i++) {
                         ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
                         os.putNextEntry(entrada);
@@ -1115,6 +1118,7 @@ public class DataRequestedByBankController extends BaseController {
                         os.closeEntry();
                     }
                     os.close();
+                    LogR("Terminó Creacion de ZIP");
                     List<String> lstPdfAdjZip = new ArrayList<String>();
                     lstPdfAdjZip.add(RUTA);
                     if (lstPdfAdjZip.size()>0){
@@ -1127,12 +1131,10 @@ public class DataRequestedByBankController extends BaseController {
                             Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE );
                         if(!file3.exists())
                             Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
-                        System.out.println(file1.exists());
-                        System.out.println(file2.exists());
-                        System.out.println(file3.exists());
-                    }  
+                    }
+                    LogR("Comienza Creacion de COrreo");
                     iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
-                    
+                    LogR("Termina Creacion de COrreo");
                     if (iboolean) {
                         info.add("Email Sent.");
                     } else {
@@ -4882,5 +4884,16 @@ public class DataRequestedByBankController extends BaseController {
         }
         return existe;
     }
-
+    
+    public void LogR(String Mensa) throws IOException{
+        File file = new File("\\\\WSFILE\\Documentos\\PAYMENT-CONTROL\\Log\\Log.txt");
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(Mensa + "\n");
+            bw.close();
+    }
 }

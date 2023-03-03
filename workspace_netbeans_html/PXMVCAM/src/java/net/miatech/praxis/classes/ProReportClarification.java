@@ -206,6 +206,7 @@ public class ProReportClarification {
         try {
 
 //            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+            
             fileTmp01 = new File(RUTA_DOWNLOAD + "\\" + strNomFile + ".pdf");
                     
             lstFileTmp.add(fileTmp01);
