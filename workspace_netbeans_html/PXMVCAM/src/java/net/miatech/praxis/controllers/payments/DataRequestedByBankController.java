@@ -794,7 +794,7 @@ public class DataRequestedByBankController extends BaseController {
 //                receptores.add("lmendoza@miatech.net");
                 // Emails CC
                 List<String> Ccp = new ArrayList<String>();
-                String strMails = "jtorres@miatech.net";//
+                String strMails = "jtorres@miatech.net;jsolano@miatech.net";//
                 if (!strMails.trim().equals("")) {
                     String[] parts = strMails.split(";");
                     for (int i = 0; i < parts.length; i++) {
@@ -1049,7 +1049,7 @@ public class DataRequestedByBankController extends BaseController {
                 
                 // Emails CC
                 List<String> Ccp = new ArrayList<String>();
-                String strMails = "jtorres@miatech.net";//
+                String strMails = "jtorres@miatech.net;jsolano@miatech.net";//
                 if (!strMails.trim().equals("")) {
                     String[] parts = strMails.split(";");
                     for (int i = 0; i < parts.length; i++) {
@@ -1092,17 +1092,14 @@ public class DataRequestedByBankController extends BaseController {
                         break;
                     }
                 }
-                LogR("Terminó creacion de PDF");
                 if (!msj.contains("Error")) {
 
-                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     Date date = new Date();
                     String RUTA = RUTA_DOWNLOAD + "/Aclaraciones" + dateFormat.format(date) + ".zip";
                     String zipNOMBRE = "Aclaraciones" + dateFormat.format(date) + ".zip";
-                    LogR("Inico ZIP");
 //                    FileOutputStream fileZip = new FileOutputStream(zipName);
                     ZipOutputStream os = new ZipOutputStream(new FileOutputStream(RUTA));
-                    LogR("Terminó ZIP");
                     for (int i = 0; i < lstPdfAdj.size(); i++) {
                         ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
                         os.putNextEntry(entrada);
@@ -1118,7 +1115,6 @@ public class DataRequestedByBankController extends BaseController {
                         os.closeEntry();
                     }
                     os.close();
-                    LogR("Terminó Creacion de ZIP");
                     List<String> lstPdfAdjZip = new ArrayList<String>();
                     lstPdfAdjZip.add(RUTA);
                     if (lstPdfAdjZip.size()>0){
@@ -1132,9 +1128,7 @@ public class DataRequestedByBankController extends BaseController {
                         if(!file3.exists())
                             Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
                     }
-                    LogR("Comienza Creacion de COrreo");
                     iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
-                    LogR("Termina Creacion de COrreo");
                     if (iboolean) {
                         info.add("Email Sent.");
                     } else {
@@ -1171,7 +1165,7 @@ public class DataRequestedByBankController extends BaseController {
         } catch (Exception ex) {
             logError.error("An error ocurred, pleas try again later.");
             map.put("success", false);
-            map.put("msjError", msj);
+            map.put("msjError", msj + " - " + ex.getMessage());
         }
         return new Gson().toJson(map);
     }
