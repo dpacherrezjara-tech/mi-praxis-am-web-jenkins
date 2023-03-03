@@ -141,7 +141,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByBankForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnDisplay',
                             icon: 'resources/img/botones/FalseChart.png',
-                            tooltip: 'Display charts',
+                            tooltip: 'Display Charts',
                             listeners: {
                                 click: 'btnDisplay_click'
                             }
