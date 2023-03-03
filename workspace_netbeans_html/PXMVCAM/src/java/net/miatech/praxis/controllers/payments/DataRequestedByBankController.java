@@ -8,6 +8,7 @@ package net.miatech.praxis.controllers.payments;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,6 +36,7 @@ import net.miatech.praxis.payment.filter.A2290Filter;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.praxis.payment.filter.A2345Filter;
 import net.miatech.praxis.classes.ProReportClarification;
+import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.payment.ExcelChargeBack;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -688,6 +690,10 @@ public class DataRequestedByBankController extends BaseController {
         List<String> lstPdfAdj = new ArrayList<String>();
         List<String> lstPdfAdjName = new ArrayList<String>();
         String strCarpeta = "\\\\" + serverSession.getServerSession().getPropertySession().get("RUTA_REPOSITORY") + "\\am\\INSUMOS-MEDIOS-PAGOS\\BDR\\";
+        String RUTA_DOWNLOAD = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
+        String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+        String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
         HashMap nomAutorizacion = new HashMap();
         boolean hayUS = false, hayOtPais = false;
         List<String> info = new ArrayList<>(0);
@@ -786,7 +792,7 @@ public class DataRequestedByBankController extends BaseController {
 //                receptores.add("lmendoza@miatech.net");
                 // Emails CC
                 List<String> Ccp = new ArrayList<String>();
-                String strMails = "jtorres@miatech.net;ggutierrez@miatech.net";//
+                String strMails = "jtorres@miatech.net";//
                 if (!strMails.trim().equals("")) {
                     String[] parts = strMails.split(";");
                     for (int i = 0; i < parts.length; i++) {
@@ -826,7 +832,7 @@ public class DataRequestedByBankController extends BaseController {
                 }
                 for (int i = 0; i < lstFolioCCAdj.size(); i++) {
                     ProReportClarification proClarRejectCC = new ProReportClarification();
-                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i));
+                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i), RUTA_DOWNLOAD);
 
                     if (success) {
 
@@ -842,9 +848,10 @@ public class DataRequestedByBankController extends BaseController {
 
                     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     Date date = new Date();
-                    String zipName = "/Dumps/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String RUTA = RUTA_DOWNLOAD + "/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String zipNOMBRE = "Aclaraciones" + dateFormat.format(date) + ".zip";
 //                    FileOutputStream fileZip = new FileOutputStream(zipName);
-                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(zipName));
+                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(RUTA));
                     for (int i = 0; i < lstPdfAdj.size(); i++) {
                         ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
                         os.putNextEntry(entrada);
@@ -861,8 +868,21 @@ public class DataRequestedByBankController extends BaseController {
                     }
                     os.close();
                     List<String> lstPdfAdjZip = new ArrayList<String>();
-                    lstPdfAdjZip.add(zipName);
-
+                    lstPdfAdjZip.add(RUTA);
+                    if (lstPdfAdjZip.size()>0){
+                        File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE );
+                        File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE );
+                        File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
+                        if(!file1.exists())
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE );
+                        if(!file2.exists())
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE );
+                        if(!file3.exists())
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
+                        System.out.println(file1.exists());
+                        System.out.println(file2.exists());
+                        System.out.println(file3.exists());
+                    }
 //                    iboolean = proMail.enviaMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdj, emisor);
                     iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
                     
@@ -918,6 +938,10 @@ public class DataRequestedByBankController extends BaseController {
         List<String> lstPdfAdj = new ArrayList<String>();
         List<String> lstPdfAdjName = new ArrayList<String>();
         String strCarpeta = "\\\\" + serverSession.getServerSession().getPropertySession().get("RUTA_REPOSITORY") + "\\am\\INSUMOS-MEDIOS-PAGOS\\BDR\\";
+        String RUTA_DOWNLOAD = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
+        String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+        String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
         HashMap nomAutorizacion = new HashMap();
         boolean hayUS = false, hayOtPais = false;
         List<String> info = new ArrayList<>(0);
@@ -1023,7 +1047,7 @@ public class DataRequestedByBankController extends BaseController {
                 
                 // Emails CC
                 List<String> Ccp = new ArrayList<String>();
-                String strMails = "jtorres@miatech.net;ggutierrez@miatech.net";//
+                String strMails = "jtorres@miatech.net";//
                 if (!strMails.trim().equals("")) {
                     String[] parts = strMails.split(";");
                     for (int i = 0; i < parts.length; i++) {
@@ -1055,7 +1079,7 @@ public class DataRequestedByBankController extends BaseController {
                 }
                 for (int i = 0; i < lstFolioCCAdj.size(); i++) {
                     ProReportClarification proClarRejectCC = new ProReportClarification();
-                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i));
+                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i),RUTA_DOWNLOAD);
 
                     if (success) {
 
@@ -1071,9 +1095,11 @@ public class DataRequestedByBankController extends BaseController {
 
                     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     Date date = new Date();
-                    String zipName = "/Dumps/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String RUTA = RUTA_DOWNLOAD + "/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String zipNOMBRE = "Aclaraciones" + dateFormat.format(date) + ".zip";
+                    
 //                    FileOutputStream fileZip = new FileOutputStream(zipName);
-                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(zipName));
+                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(RUTA));
                     for (int i = 0; i < lstPdfAdj.size(); i++) {
                         ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
                         os.putNextEntry(entrada);
@@ -1090,8 +1116,21 @@ public class DataRequestedByBankController extends BaseController {
                     }
                     os.close();
                     List<String> lstPdfAdjZip = new ArrayList<String>();
-                    lstPdfAdjZip.add(zipName);
-
+                    lstPdfAdjZip.add(RUTA);
+                    if (lstPdfAdjZip.size()>0){
+                        File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE );
+                        File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE );
+                        File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
+                        if(!file1.exists())
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE );
+                        if(!file2.exists())
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE );
+                        if(!file3.exists())
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
+                        System.out.println(file1.exists());
+                        System.out.println(file2.exists());
+                        System.out.println(file3.exists());
+                    }  
                     iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
                     
                     if (iboolean) {
@@ -4823,6 +4862,25 @@ public class DataRequestedByBankController extends BaseController {
         } catch (IOException e) {
             throw new SpringException(e);
         }
+    }
+    
+    public Boolean zip(List<String> fileName){
+        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File( path + "\\" + fileName + ".zip");
+            
+            if (fileZip.exists())
+                fileZip.delete();
+            
+            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
+            
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
     }
 
 }

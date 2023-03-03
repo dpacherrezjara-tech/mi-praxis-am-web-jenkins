@@ -196,17 +196,18 @@ public class ProReportClarification {
 
     }
 
-    public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion) {
+    public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion, String RUTA_DOWNLOAD) {
         //Call Center y Web
         boolean success = true;
         String strNomFile = "Folio_" + folio;
         NumberFormat nfDbl = NumberFormat.getInstance(java.util.Locale.US);
         nfDbl.setMinimumFractionDigits(2);
         nfDbl.setMaximumFractionDigits(2);
-
         try {
 
-            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+//            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+            fileTmp01 = new File(RUTA_DOWNLOAD + "\\" + strNomFile + ".pdf");
+                    
             lstFileTmp.add(fileTmp01);
             PYi = 550;
             Hlng = 20;
