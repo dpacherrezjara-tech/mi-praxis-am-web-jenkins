@@ -41,6 +41,8 @@ import net.miatech.praxis.classes.ProReportClarification;
 import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.payment.ExcelChargeBack;
 import net.miatech.utils.Functions;
+import static net.miatech.utils.Functions.getFechaActual;
+import static net.miatech.utils.Functions.getHoraActual;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -846,6 +848,7 @@ public class DataRequestedByBankController extends BaseController {
                         break;
                     }
                 }
+                LogR("Terminó Creacion de PDF : " + getFechaActual() + " - Hora : " + getHoraActual() );
                 if (!msj.contains("Error")) {
 
                     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -885,8 +888,10 @@ public class DataRequestedByBankController extends BaseController {
                         System.out.println(file2.exists());
                         System.out.println(file3.exists());
                     }
+                    LogR("Terminó Creacion de ZIP : " + getFechaActual() + " - Hora : " + getHoraActual() );
 //                    iboolean = proMail.enviaMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdj, emisor);
                     iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
+                    LogR("Terminó Creacion de Email : " + getFechaActual() + " - Hora : " + getHoraActual() );
                     
                     if (iboolean) {
                         info.add("Email Sent.");
@@ -1092,6 +1097,7 @@ public class DataRequestedByBankController extends BaseController {
                         break;
                     }
                 }
+                LogR("Terminó Creacion de PDF : " + getFechaActual() + " - Hora : " + getHoraActual() );
                 if (!msj.contains("Error")) {
 
                     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -1128,7 +1134,9 @@ public class DataRequestedByBankController extends BaseController {
                         if(!file3.exists())
                             Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE , RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE );
                     }
+                    LogR("Terminó Creacion de ZIP : " + getFechaActual() + " - Hora : " + getHoraActual() );
                     iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
+                    LogR("Terminó Creacion de Email : " + getFechaActual() + " - Hora : " + getHoraActual() );
                     if (iboolean) {
                         info.add("Email Sent.");
                     } else {
