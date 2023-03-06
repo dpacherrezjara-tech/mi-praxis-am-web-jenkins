@@ -30,6 +30,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     URL_VIEWTICKET : '',
     gridDataMemoAC: [],
     gridDataTktRealUsesAC: [],
+    
+    TKT_RESULT_01 : {},
+    
     init: function (view) {
 //        this.bean.IN_CIA  = '139';
 //        this.bean.IN_FORMA= this.TicketNumber.substr(0,4); 
@@ -642,21 +645,85 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 	}
     },
     
-    btnRFTX_clickHandler: function () {
-                
-        var beanA4373 = {};       
+    btnRFTX_clickHandler: function () {           
+                 
         
-        beanA4373.IN_CIA = win.getValue('txtFilterTicketCia');
-        beanA4373.IN_FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
-        beanA4373.IN_SERIA = win.getValue('txtFilterTicketFormSer').substring(4, 10);
+        if(TKT_RESULT_01.fileA720.A4373_TOT === 1) 
+        {
+            //console.log('gridData_act1_clickHandler');
+            //console.log(data);
+            //var me01 = this;
+
+            //if(data.STAT === 'RFTX' || data.STAT === 'RFTX-VOID'){
+                var rec = {
+                    data:{
+                        /*
+                        A4373AIRLI: '139',
+                        A4373CIA:data.A4373CIA,
+                        DOCUMENTO:data.A4373FORMA + data.A4373SERIE,
+                        A4373SEQ:data.A4373SEQ
+                        * */
+                       
+                        A4373AIRLI: '139',
+                        A4373CIA: TKT_RESULT_01.fileA720.A720CIA,
+                        DOCUMENTO: TKT_RESULT_01.fileA720.A720FORMA + TKT_RESULT_01.fileA720.A720SERIE,
+                        A4373SEQ: TKT_RESULT_01.fileA720.A720SEQ
+                    
+                    }
+                };
+
+                var recRFTX = {
+                        /*
+                        A1530TCAMB: data.A1530TCAMB,
+                        A1530MDA:data.A1530MDA,
+                        A1530FUENT:data.A1530FUENT,
+                        A1530PSVTA:data.A1530PSVTA,
+                        A1530IDFIL:data.A1530IDFIL,
+                        A1530GRUPO:data.A4373GRUPO
+                        */
+                       
+                        A1530TCAMB: TKT_RESULT_01.fileA1530.A1530TCAMB,
+                        A1530MDA: TKT_RESULT_01.fileA1530.A1530MDA,
+                        A1530FUENT:TKT_RESULT_01.fileA1530.A1530FUENT,
+                        A1530PSVTA:TKT_RESULT_01.fileA1530.A1530PSVTA,
+                        A1530IDFIL:TKT_RESULT_01.fileA1530.A1530IDFIL,
+                        A1530GRUPO:TKT_RESULT_01.fileA1530.A1530GRUPO     
+                        
+                        
+                        //objRtn.fileA1530.A1530IDFIL = rs01.getString("A1530IDFIL");                    
+                        //objRtn.fileA1530.A1530GRUPO = rs01.getString("A1530GRUPO");
+                };
+
+                prototype.idRftx = 'SalesReportFormRftx';
+                var viewRftx = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
+                    id: prototype.idRftx + '-dataEntryRftx',
+                   params: {
+                        rec: rec,
+                        groupData: recRFTX,
+                        exchrate: Ext.getCmp(prototype.id+'-lblExchangeLocalRate').value,
+                        locCurr: Ext.getCmp(prototype.id+'-lblCurrency').value
+                    }
+                });
+                viewRftx.show();
+            //}
+        }
+        else
+        {
+            var beanA4373 = {};       
         
-        var DataEntryLogRFTX = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', { id: 'DataEntryRFTXProMasterTicketForm' });
-        var controller = DataEntryLogRFTX.getController();
-        controller.beanA4373 = beanA4373;
-                
-        controller.actionCode = this.actionCode2;
-        DataEntryLogRFTX.show();     
-       
+            beanA4373.IN_CIA = win.getValue('txtFilterTicketCia');
+            beanA4373.IN_FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
+            beanA4373.IN_SERIA = win.getValue('txtFilterTicketFormSer').substring(4, 10);
+            
+            
+            var DataEntryLogRFTX = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryRFTX', { id: 'DataEntryRFTXProMasterTicketForm' });
+            var controller = DataEntryLogRFTX.getController();
+            controller.beanA4373 = beanA4373;
+
+            controller.actionCode = this.actionCode2;
+            DataEntryLogRFTX.show();     
+        }
+         
     },
     
     imgSearchTKT_clickHandler: function (cmp, a, event) {
@@ -1626,6 +1693,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             AL: paramsResultSet02.fileA730.A730CARRA1,
                                             FLIGHT : paramsResultSet02.fileA730.A730NVLO1,
                                             DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                            REF : paramsResultSet02.fileA730.CPN_REF,
                                             //STAT : 'EXCH',
                                             STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                             AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR1, '0,000.00'),
@@ -1660,6 +1728,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     AL: paramsResultSet02.fileA730.A730CARRA2,
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO2,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                                    REF : paramsResultSet02.fileA730.CPN_REF,
                                                     //STAT : 'EXCH',
                                                     STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR2, '0,000.00'),
@@ -1696,6 +1765,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     AL: paramsResultSet02.fileA730.A730CARRA3,
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO3,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                                    REF : paramsResultSet02.fileA730.CPN_REF,
                                                     //STAT : 'EXCH',
                                                     STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR3, '0,000.00'),
@@ -1730,6 +1800,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     AL: paramsResultSet02.fileA730.A730CARRA4,
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO4,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                                    REF : paramsResultSet02.fileA730.CPN_REF,
                                                     //STAT : 'EXCH',
                                                     STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR4, '0,000.00'),
@@ -1773,6 +1844,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO1,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO1,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR1, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -1811,6 +1883,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO2,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO2,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR2, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -1849,6 +1922,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO3,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO3,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR3, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -1887,6 +1961,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO4,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO4,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR4, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -1933,6 +2008,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet11.fileA1692.CARR,
                                         FLIGHT : paramsResultSet11.fileA1692.NFLIGHT,
                                         DATE : paramsResultSet11.fileA1692.DFLIGHT,
+                                        REF : paramsResultSet11.fileA1692.CPN_REF,
                                         STAT : 'FLWN',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet11.fileA1692.VCPN, '0,000.00'),
                                         CRCY : paramsResultSet11.fileA1692.MDACP,
@@ -2002,6 +2078,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet12.fileA1818.CARR,
                                         FLIGHT : paramsResultSet12.fileA1818.NFLIGHT,
                                         DATE : paramsResultSet12.fileA1818.DFLIGHT,
+                                        REF : paramsResultSet12.fileA1818.CPN_REF,
                                         STAT : 'FLWN-EMD',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet12.fileA1818.VCPN, '0,000.00'),
                                         CRCY : paramsResultSet12.fileA1818.MDACP,
@@ -2291,6 +2368,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                              AL: paramsResultSet02.fileA730.A730CARRA1,
                                              FLIGHT : paramsResultSet02.fileA730.A730NVLO1,
                                              DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                             REF : paramsResultSet02.fileA730.CPN_REF,
                                              STAT : 'EXCH',
                                              AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR1, '0,000.00'),
                                              CRCY : paramsResultSet02.fileA730.A730MONREG,
@@ -2324,6 +2402,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                      AL: paramsResultSet02.fileA730.A730CARRA2,
                                                      FLIGHT : paramsResultSet02.fileA730.A730NVLO2,
                                                      DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                                     REF : paramsResultSet02.fileA730.CPN_REF,
                                                      STAT : 'EXCH',
                                                      AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR2, '0,000.00'),
                                                      CRCY : paramsResultSet02.fileA730.A730MONREG,
@@ -2359,6 +2438,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                      AL: paramsResultSet02.fileA730.A730CARRA3,
                                                      FLIGHT : paramsResultSet02.fileA730.A730NVLO3,
                                                      DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                                     REF : paramsResultSet02.fileA730.CPN_REF,
                                                      STAT : 'EXCH',
                                                      AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR3, '0,000.00'),
                                                      CRCY : paramsResultSet02.fileA730.A730MONREG,
@@ -2392,6 +2472,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                      AL: paramsResultSet02.fileA730.A730CARRA4,
                                                      FLIGHT : paramsResultSet02.fileA730.A730NVLO4,
                                                      DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                                     REF : paramsResultSet02.fileA730.CPN_REF,
                                                      STAT : 'EXCH',
                                                      AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR4, '0,000.00'),
                                                      CRCY : paramsResultSet02.fileA730.A730MONREG,
@@ -2434,6 +2515,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO1,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO1,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR1, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -2472,6 +2554,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO2,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO2,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR2, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -2510,6 +2593,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO3,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO3,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR3, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -2548,6 +2632,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet03.fileA713.A713NVLO4,
                                                     //DATE : paramsResultSet03.fileA713.A713FVLO4,
                                                     DATE : paramsResultSet03.fileA713.A713FECVTA,
+                                                    REF : paramsResultSet03.fileA713.CPN_REF,
                                                     STAT : paramsResultSet03.fileA713.A713TDOC ==='VOID' ? 'RFND-VOID' : 'RFND',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet03.fileA713.A713VALOR4, '0,000.00'),
                                                     CRCY : paramsResultSet03.fileA713.A713MONREG,
@@ -2594,6 +2679,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet11.fileA1692.CARR,
                                         FLIGHT : paramsResultSet11.fileA1692.NFLIGHT,
                                         DATE : paramsResultSet11.fileA1692.DFLIGHT,
+                                        REF : paramsResultSet11.fileA1692.CPN_REF,
                                         STAT : 'FLWN',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet11.fileA1692.VCPN, '0,000.00'),
                                         CRCY : paramsResultSet11.fileA1692.MDACP,
@@ -3371,6 +3457,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 break;
                         }
                         //</editor-fold>
+                        
+                        TKT_RESULT_01 = me01.beanResultSet01;
                     
                         if(me01.beanResultSet01.fileA720.A4373_TOT==0)
                             Ext.getCmp(prototype.id+'-btnRFTX').hide();

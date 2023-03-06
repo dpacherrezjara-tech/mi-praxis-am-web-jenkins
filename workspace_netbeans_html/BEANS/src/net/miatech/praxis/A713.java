@@ -408,4 +408,6 @@ public class A713 {
     public String A713VRIC = "";
     public String A713ARPI = "";
     public String A713FLAGTN = "";
+    
+    public String CPN_REF = "";
 }

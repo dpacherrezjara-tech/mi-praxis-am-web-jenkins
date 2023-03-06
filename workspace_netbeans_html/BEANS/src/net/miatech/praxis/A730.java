@@ -191,4 +191,6 @@ public class A730 {
     public String A730RFIC = "";
     public String A730RFIS = "";
     
+    public String CPN_REF = "";
+    
 }
