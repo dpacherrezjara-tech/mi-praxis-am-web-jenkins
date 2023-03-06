@@ -57,4 +57,5 @@ public class A1692 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
+    public String CPN_REF = "";
 }

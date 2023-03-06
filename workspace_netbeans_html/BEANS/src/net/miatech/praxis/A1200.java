@@ -73,4 +73,5 @@ public class A1200 {
     public String MDACOMVENT = "";
     public double COMVENREV = 0;
     public String MDACOMREV = "";
+    public String CPN_REF = "";
 }
