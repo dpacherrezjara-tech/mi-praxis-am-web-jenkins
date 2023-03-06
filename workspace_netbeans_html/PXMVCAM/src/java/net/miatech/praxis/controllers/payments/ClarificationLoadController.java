@@ -84,7 +84,7 @@ public class ClarificationLoadController extends BaseController {
             if (banco.equals("EL") || banco.equals("US") || banco.equals("AX")) {
 
                 byte[] fileData2 = excelfile.getBytes();
-                msjResult = uploadCSV(fileData2, banco);
+                msjResult = uploadCSV(fileData2, banco,filename);
 
             } else if (banco.equals("STB") && input.equals("C")) {
 
@@ -503,7 +503,7 @@ public class ClarificationLoadController extends BaseController {
         return v_fecha;
     }
 
-    private String uploadCSV(byte[] bytes, String strBanco) throws Exception {
+    private String uploadCSV(byte[] bytes, String strBanco, String fileName) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
 
@@ -545,11 +545,35 @@ public class ClarificationLoadController extends BaseController {
                     TARJETA = fields[5].toString();
                     MONTO = fields[1].toString();
                     FECTRX = fields[11].toString();
+//                    String[] fieldsDate = FECTRX.split("/");
+//                    String formatted_day = String.format("%0" + 2 + "d", Integer.valueOf(fieldsDate[0]));
+//                    String formatted_month = String.format("%0" + 2 + "d", Integer.valueOf(fieldsDate[1]));
+//                    FECTRX = fieldsDate[2] + formatted_month + formatted_day ;
                     MONTODISPUTA = fields[7].toString();
-                    RESPONDEEL = fields[13].toString();
-                    NROBOLAER = fields[4].toString();
+                    String FECHARespondel = fileName.substring(14,22);
+                    boolean files = (FECHARespondel != null && FECHARespondel.matches("[0-9]+"));
+                    if(files == true){
+                        RESPONDEEL = String.format("%0" + 2 + "d", Integer.valueOf(FECHARespondel.substring(6,8))) + "/" + 
+                                     String.format("%0" + 2 + "d", Integer.valueOf(FECHARespondel.substring(4,6))) + "/" + 
+                                     FECHARespondel.substring(0,4) + "-1";
+                    }
+                    else{
+                        System.out.println("Error en formato fecha");
+                        mensaje = "Error : Unnsopported File Name";
+                        break;
+                    }
+                    String Numb = fields[4].toString();
+                    if ((Numb.trim().length() < 13) && !(Numb.trim().equals(""))) {
+                        mensaje = "Error : Invalid Ticket";
+                        break;
+                    }
+                    NROBOLAER = Numb;
                     NROAFILICACION = fields[10].toString();
                     RESPONDEMAS = fields[12].toString();
+//                    String[] fieldsDate1 = RESPONDEMAS.split("/");
+//                    String formatted_day1 = String.format("%0" + 2 + "d", Integer.valueOf(fieldsDate1[0]));
+//                    String formatted_month1 = String.format("%0" + 2 + "d", Integer.valueOf(fieldsDate1[1]));
+//                    FECTRX = fieldsDate1[2] + formatted_month1 + formatted_day1 ;
                     MOTIVO = fields[3].toString();
                     CODIGOMOTIVO = fields[8].toString();
                     ESTATUS = fields[2].toString();
@@ -557,7 +581,6 @@ public class ClarificationLoadController extends BaseController {
                     DIASREST = fields[49].toString();
                     NROREFADQUI = fields[42].toString();
                     ROC = fields[9].toString();
-                    
                     MONTO = MONTO.replace(",", "");
                     try {
                         double mt = Double.parseDouble(MONTO);
@@ -572,18 +595,11 @@ public class ClarificationLoadController extends BaseController {
                     } catch (Exception e) {
 //                        msj = " monto (I) monto No es númerico";
                     }
-
                     String RealTrama = NROCASO + "," + TARJETA + "," + MONTO + "," + FECTRX + "," + MONTODISPUTA + "," + RESPONDEEL + ","
                             + NROBOLAER + "," + NROAFILICACION + "," + RESPONDEMAS + "," + MOTIVO + "," + CODIGOMOTIVO + ","
                             + ESTATUS + "," + MONTOTRXS + "," + DIASREST + "," + NROREFADQUI + "," + ROC;
-
+                    RealTrama = RealTrama.replaceAll("\"","");
                     System.out.println(RealTrama);
-                    String Numb = fields[4].toString();
-                    if ((Numb.trim().length() < 13) && !(Numb.trim().equals(""))) {
-//                        System.out.println(Numb);
-                        mensaje = "Error : Invalid Ticket";
-                        break;
-                    }
                     listaExcelString.add(RealTrama);
                 } else {
                     System.out.println(line + ":" + fil);
