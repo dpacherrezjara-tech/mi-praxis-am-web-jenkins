@@ -46,8 +46,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
             data: [
                 {"code": "1", "name": "FOLIO"},
                 {"code": "2", "name": "SYSTEM DATE"},
-                {"code": "3", "name": "TICKET"},
-                {"code": "4", "name": "AUTHORISED - REJECTED / DATE"}
+                {"code": "3", "name": "TICKET"}
+                //{"code": "4", "name": "AUTHORISED - REJECTED / DATE"}
             ]
         }));
 
