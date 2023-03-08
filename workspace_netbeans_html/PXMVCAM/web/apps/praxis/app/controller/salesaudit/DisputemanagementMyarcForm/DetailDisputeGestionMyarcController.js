@@ -204,11 +204,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
             return;
         }
         if (Ext.getCmp(prototype.idDisputeGestionMyarc + '-Argument').getValue() === '') {
-            Ext.MessageBox.alert('PRAXIS', "The Argument must not exceed 300 characters", function (btn, text) {
+            Ext.MessageBox.alert('PRAXIS', "You must enter the argument that does not exceed 2000 characters", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.idDisputeGestionMyarc + '-Argument').focus();", 100);
             });
             return;
+        }
+        if (Ext.getCmp(prototype.idDisputeGestionMyarc + '-Argument').getValue() !== '') {
+            if (Ext.getCmp(prototype.idDisputeGestionMyarc + '-Argument').getValue().length > 2000) {
+                Ext.MessageBox.alert('PRAXIS', "The Argument must not exceed 2000 characters", function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idDisputeGestionMyarc + '-Argument').focus();", 100);
+                });
+                return;
+            }
         }
         if (Ext.getCmp(prototype.idDisputeGestionMyarc + '-ComboStatus').getValue() === 'WA') {
             if (Ext.getCmp(prototype.idDisputeGestionMyarc + '-ComboStatus2').getValue() === '') {
