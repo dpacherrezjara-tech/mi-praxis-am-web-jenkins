@@ -107,18 +107,41 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     },
     //<editor-fold defaultstate="collapsed" desc="Obteniendo Valores">
     getRftxInfo: async function () {
-        let body = this.objReq;
-        let response = await this.getFetchAsync(this.url + '/getRftxInfo', body);
-        let refs = await this.getFetchAsync(this.url + '/getRftxRefs', body);
-        if (response.success) {
-            this.objRftx.info = response.data;
-            this.setRequestObj(response.data[0]);
-            if (refs.success) {
-                this.objRftx.ref = refs.data.ref;
-                this.objRftx.obs = refs.data.obs;
+        let me= this;
+        let params = me.objReq;
+//        let response = await this.getFetchAsync(this.url + '/getRftxInfo', body);
+//        let refs = await this.getFetchAsync(this.url + '/getRftxRefs', body);
+//        if (response.success) {
+//            this.objRftx.info = response.data;
+//            this.setRequestObj(response.data[0]);
+//            if (refs.success) {
+//                this.objRftx.ref = refs.data.ref;
+//                this.objRftx.obs = refs.data.obs;
+//            }
+//        }
+
+        return Promise.allSettled([
+            me.getFetchAsync(me.url + '/getRftxInfo', params),
+            me.getFetchAsync(me.url + '/getRftxRefs', params)
+        ]).then(values => {
+            const[
+                {value: info},
+                {value: refs}
+            ] = values;
+            //console.log(values);
+            let status = info.success&&refs.success;
+            if(status){
+                me.objRftx.info = info.data;
+                me.setRequestObj(info.data[0]);
+                me.objRftx.ref = refs.data.ref;
+                me.objRftx.obs = refs.data.obs;
             }
-        }
-        return response.success;
+            return status;
+        }).catch(e=>{
+            console.error('Error RFTX: ',e);
+            return false;
+        });
+
     },
     getRftxFop: async function () {
         let body = this.objReq;
@@ -184,9 +207,10 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblIssueCtry').setValue(obj.a4373PAIEM);
             Ext.getCmp(prototype.idRftx + '-det-lblSaleCity').setValue(obj.a4373CIUVT);
             Ext.getCmp(prototype.idRftx + '-det-lblSaleCtry').setValue(obj.a4373PAIVT);
-            
-            if(obj.a4373MIAER.trim()!==''){
-                let lblError = Ext.getCmp(prototype.idRftx +'-lblErrorDesc');
+
+            //Descripcion de Error
+            if (obj.a4373STAT !== '1' && obj.a4373STAT !== '4') {
+                let lblError = Ext.getCmp(prototype.idRftx + '-lblErrorDesc');
                 let errDesc = obj.a4373MIAER + ' - ' + obj.error_DESC.trimEnd();
                 lblError.setText(errDesc);
                 lblError.show();
@@ -229,6 +253,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
                 objObs.forEach(o => obs = obs + o);
                 Ext.getCmp(prototype.idRftx + '-det-lblObservation').setValue(obs);
             }
+
+            //imagen void
             if (obj.a4373TDOC === 'VOID') {
                 let panelFop = Ext.getCmp(prototype.idRftx + '-panel-Fop'),
                         panelTax = Ext.getCmp(prototype.idRftx + '-panel-Tax');
