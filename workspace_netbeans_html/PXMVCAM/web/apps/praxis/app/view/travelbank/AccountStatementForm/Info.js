@@ -50,6 +50,21 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
                         align: 'center'
                     },
                     items: [
+                        {
+                            xtype: 'panel',
+                            padding: '2px',
+                            layout: {
+                                type: 'hbox',
+                                pack: 'end'
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield', width: 250, id: prototype.id + '-A4417SALDO', readOnly: true,
+                                    fieldLabel: 'Balance:', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:14px;', value: '0.00'
+                                }
+                            ]
+                        },
                         // <editor-fold defaultstate="collapsed" desc="gridData">                        
                         {
                             xtype: 'grid',
@@ -62,13 +77,6 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
                                 deferEmptyText: false,
                                 emptyText: 'No data Available'
                             },
-                            tbar: [
-                                {
-                                    xtype: 'textfield', width: 250, id: prototype.id + '-A4417SALDO', readOnly: true,
-                                    fieldLabel: 'Balance:', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:14px;', value: '0.00'
-                                }
-                            ],
                             columns: {
                                 defaults: {
                                     menuDisabled: true,
@@ -86,16 +94,16 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
                                         text: 'File', dataIndex: 'A4417ARCHI', width: 70
                                     },
                                     {
-                                        text: 'Transaction<br> ID (BT)', dataIndex: 'A4417TRXID', width: 120
+                                        text: 'Transaction<br> ID (BT)', dataIndex: 'A4417TRXID', width: 90
                                     },
                                     {
-                                        text: 'Credit ID (TR)', dataIndex: 'A4417CREID', width: 120
+                                        text: 'Credit ID (TR)', dataIndex: 'A4417CREID', width: 90
                                     },
                                     {
-                                        text: 'Transaction', dataIndex: 'A4417TRANS', width: 100
+                                        text: 'Transaction', dataIndex: 'A4417TRANS', width: 80
                                     },
                                     {
-                                        text: 'Service <br>credit code', dataIndex: 'A4417SRVCC', width: 120
+                                        text: 'Service <br>credit code', dataIndex: 'A4417SRVCC', width: 100
                                     },
                                     {
                                         text: 'BT curr.', dataIndex: 'A4417BTCUR', width: 70,
@@ -115,7 +123,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
                                         }
                                     },
                                     {
-                                        text: 'Type', dataIndex: 'A4417TYPEI', width: 90
+                                        text: 'Type', dataIndex: 'A4417TYPEI', width: 70
                                     },
                                     {
                                         text: 'Document<br>number', dataIndex: 'A4417DNUBR', width: 110
@@ -129,19 +137,17 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
                                                 metaData.style = "text-align:right;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-//                                        summaryType: function (records, values) {
-//                                            var i = 0, total = 0, record;
-//                                            for (; i < records.length; ++i) {
-//                                                record = records[i];
-////                                                if (record.get('MES2') !== '%')
-//                                                total += record.get('A4417TOTTR');
-//                                            }
-//                                            // return  Ext.util.Format.number(total, '0,000.00');
-//                                            Ext.getCmp(prototype.id + '-A4417SALDO').setValue(total);
-//                                        }
+                                    },
+                                    {
+                                        text: 'Balance', dataIndex: 'A4417SALDO', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (value < 0)
+                                                metaData.style = "text-align:right;color:red";
+                                            else
+                                                metaData.style = "text-align:right;";
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
                                     }
-
-
 //                                    {
 //                                        text: 'Reception Status', dataIndex: 'A4275STREC', width: 145,
 //                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {

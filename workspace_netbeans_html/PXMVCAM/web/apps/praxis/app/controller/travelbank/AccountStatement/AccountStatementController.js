@@ -48,22 +48,15 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountStatement.AccountStatementCo
         });
     },
     afterRender: function () {
-        this.btnClear_click();
+        // this.btnClear_click();
         this.btnSearch_click();
     },
     setFormatParameter: function () {
-//            filter.VP_OPCION = request.getParameter("VP_OPCION");
-//            filter.VP_DESDE = request.getParameter("VP_DESDE");
-//            filter.VP_HASTA = request.getParameter("VP_HASTA");
-//            filter.VP_NCTA = request.getParameter("VP_NCTA");
-//            filter.VP_MONEDA = request.getParameter("VP_MONEDA");
-//            filter.VP_ARCHI = request.getParameter("VP_ARCHI");
-
         let VL_OPCION = Ext.getCmp(prototype.id + '-cboFileType').getValue(),
                 VL_DESDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtDateFrom').getValue(), 'Ymd'),
                 VL_HASTA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtDateTo').getValue(), 'Ymd'),
                 VL_NCTA = Ext.getCmp(prototype.id + '-txtAccountNumber').getValue(),
-                VL_MONEDA = '',
+                VL_MONEDA =Ext.getCmp(prototype.id + '-txtAccountNumberCurr').getValue(),
                 VL_ARCHI = '';
 
         searchParams = {
@@ -89,6 +82,9 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountStatement.AccountStatementCo
         let url = prototype.url + '/search',
                 store = Ext.StoreMgr.lookup(prototype.id + "storeInfo"),
                 grilla = Ext.getCmp(prototype.id + '-gridData').getView();
+        
+        grilla.getStore().removeAll();
+        
         grilla.mask('Loading...');
         fetch(url + '?' + new URLSearchParams(searchParams)).then(async res => {
             await res.json().then(obj => {
@@ -135,6 +131,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountStatement.AccountStatementCo
         Ext.getCmp(prototype.id + '-txtDateFrom').setValue(new Date());
         Ext.getCmp(prototype.id + '-txtDateTo').setValue(new Date());
         Ext.getCmp(prototype.id + '-txtAccountNumber').setValue("");
+        Ext.getCmp(prototype.id + '-txtAccountNumberCurr').setValue("");
         Ext.getCmp(prototype.id + '-cboFileType').setValue("");
 
     },

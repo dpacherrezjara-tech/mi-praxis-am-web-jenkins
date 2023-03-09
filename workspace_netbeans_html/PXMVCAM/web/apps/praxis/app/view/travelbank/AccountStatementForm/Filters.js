@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Filters', {
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    html: '<strong>Filter Type</strong>',
+                                    html: '<strong>Type date</strong>',
                                     align: 'center',
                                     fieldStyle: 'text-align: center;',
                                     padding: '8px 7px 8px 0px'
@@ -89,10 +89,10 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Filters', {
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
-                                            ["", "(ALL)"],
-                                            ["1", "Issue"],
-                                            ["2", "Used"],
-                                            ["3", "Merged"]                                            
+                                            ["", "(Select)"],
+                                            ["1", "Transmision date"],
+                                            ["2", "Transaction date"],
+                                            ["3", "Account date"]                                            
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Filters', {
                                     triggerAction: 'all',
                                     listeners: {
                                         afterrender: function (combo, eOpts) {
-                                            combo.setValue("3");
+                                             combo.setValue("");
                                         },
                                         keyup: function (combo, e) {
                                             var key = String.fromCharCode(e.getKey());
@@ -124,7 +124,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Filters', {
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    html: '<strong>Transmission date:</strong>',
+                                    html: '<strong>Date:</strong>',
                                     align: 'center',
                                     fieldStyle: 'text-align: center;',
                                     padding: '8px 7px 8px 0px'
@@ -158,7 +158,7 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Filters', {
                                     id: prototype.id + '-txtDateTo',
                                     fieldStyle: 'text-align:center',
                                     format: 'Y/m/d',
-                                    formatText: '',
+                                    formatText: '', value: new Date(),
                                     invalidText: 'Format valid YYYY/MM/DD',
                                     minValue: new Date(1990, 00, 01),
                                     maskRe: /[0-9/]/,
@@ -169,17 +169,20 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Filters', {
                                     width: 90
                                 },
                                 {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'label',
-                                    html: '<strong>Account Nbr:</strong>',
-                                    align: 'center',
-                                    fieldStyle: 'text-align: center;',
-                                    padding: '8px 7px 8px 0px'
+                                {                                    
+                                    id:prototype.id + '-txtAccountNumber',
+                                    fieldLabel: 'Account Nbr:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                    maxLength: 20, value:'8139204153239670',
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                    maskRe: /[0-9]/,
+                                    width:250,
+                                    emptyText: ''
                                 },
                                 {
-                                    id:prototype.id + '-txtAccountNumber',
-                                    maxLength: 9,
-                                    maskRe: /[0-9]/,
+                                    id:prototype.id + '-txtAccountNumberCurr',
+                                    fieldLabel: 'Curr.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                    maxLength: 3, value:'',   
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                     width:150,
                                     emptyText: ''
                                 }
