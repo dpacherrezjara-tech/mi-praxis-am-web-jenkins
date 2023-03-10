@@ -71,7 +71,6 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.LoadFileContr
                 //var res = Ext.JSON.decode(response.responseText);
                 var mensaje = res.sesion;
                 if (res.success) {
-                    console.log(res);
                     var SQLCODE = res.SQLCODE;
                     var MESSAGE = res.MESSAGE;
                     var msj = MESSAGE;
