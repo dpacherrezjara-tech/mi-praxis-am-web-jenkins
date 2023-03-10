@@ -71,6 +71,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.LoadFileContr
                 //var res = Ext.JSON.decode(response.responseText);
                 var mensaje = res.sesion;
                 if (res.success) {
+                    console.log(res);
                     var SQLCODE = res.SQLCODE;
                     var MESSAGE = res.MESSAGE;
                     var msj = MESSAGE;
@@ -80,7 +81,8 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.LoadFileContr
                     Ext.MessageBox.alert('PRAXIS', msj, function (btn, text) {
                         if (btn === 'ok' || btn === 'cancel'){
                             if (SQLCODE==="0") {
-                                Ext.getCmp(prototype.idLoadFileConsortia + '-win').close();
+                                //Ext.getCmp(prototype.idLoadFileConsortia + '-win').close();
+                                me.view.close();
                             }else{
                                 Ext.create('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.LoadErrorFile', {
                                     id: 'LoadErrorFileInvoiceCommissionConsortiaForm',
