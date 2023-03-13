@@ -217,6 +217,7 @@ public class A4331Filter extends A4331 {
     public String A1531NREF = "";
     public String A1531CAPL = "";
     public String A1531CFOP = "";
+    public String A1531MFOP = "";
     public String A1531TTARJ = "";
     public String USOS = "";
     public double A1531VFOP = 0.0;    

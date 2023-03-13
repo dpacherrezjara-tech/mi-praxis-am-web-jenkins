@@ -4657,6 +4657,7 @@ public class ReconciliationPaymentDAO {
                 beanRec.A1531SERIE = rst.getString("A1531SERIE").trim();
                 beanRec.A1531TKT = beanRec.A1531CIA + beanRec.A1531FORMA + beanRec.A1531SERIE;
                 beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
+                beanRec.A1531MFOP = rst.getString("A1531MFOP").trim();
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.SADJUST = rst.getDouble("SADJUST");
@@ -4775,6 +4776,7 @@ public class ReconciliationPaymentDAO {
                 beanRec.A1531SERIE = rst.getString("A1531SERIE").trim();
                 beanRec.A1531TKT = beanRec.A1531CIA + beanRec.A1531FORMA + beanRec.A1531SERIE;
                 beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
+                beanRec.A1531MFOP = rst.getString("A1531MFOP").trim();
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");

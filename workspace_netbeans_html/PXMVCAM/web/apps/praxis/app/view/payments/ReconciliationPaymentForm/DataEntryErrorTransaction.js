@@ -1313,7 +1313,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 1030,
+                            width: 1060,
                             height: 270,
                             hidden: false,
                             autoScroll: true,
@@ -1323,7 +1323,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 1027,
+                                    width: 1057,
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1426,6 +1426,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
 //                                                    return value;
 //                                                }
 //                                            },
+                                            {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
@@ -1631,7 +1639,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAdjustment',
-                                    width: 897,
+                                    width: 927,
                                     height: 60,
                                     hidden: true,
                                     columnLines: true,
@@ -1705,6 +1713,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
 //                                                    return value;
 //                                                }
 //                                            },
+                                            {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
                                             {header: 'Amount', dataIndex: 'A1531VFOP', width: 70, xtype: 'gridcolumn',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#F0FA8F";
@@ -1826,7 +1842,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                             id: prototype.id + '-panelDataInfoBlocked',
                             layout: 'vbox',
                             border: false,
-                            width: 870,
+                            width: 900,
                             height: 245,
                             hidden: true,
                             bodyStyle: 'background:#E5ECEF;',
@@ -1835,7 +1851,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoBlocked',
-                                    width: 852,
+                                    width: 882,
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1906,6 +1922,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                         }
                                                     }
                                                 ]
+                                            },
+                                            {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
                                             },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
