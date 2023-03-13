@@ -1143,8 +1143,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }, listeners: {
                 beforeload: function(obj) {
                     obj.proxy.extraParams = {beanString : JSON.stringify(me.searchParams)};
+                    Ext.getCmp(prototype.id + '-boxContenedorGrid').mask('Loading...');
                 },
+                
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + '-boxContenedorGrid').unmask('Loading...');
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
