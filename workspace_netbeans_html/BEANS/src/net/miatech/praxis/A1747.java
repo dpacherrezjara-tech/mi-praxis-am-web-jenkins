@@ -50,6 +50,9 @@ public class A1747 {
     public String FCONT = "";
     public String IDCON = "";
     
+    public String TIPOC = "";
+    public String TUA = "";
+    
     public String USCR = "";
     public String FECR = "";
     public String HOCR = "";
