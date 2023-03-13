@@ -1061,11 +1061,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         // diferencia de total a rfnd
         if (parseFloat(txtTotal) !== 0) {
             totaldif = (txtTotalram - txtTotal);
-            if (totaldif !== 0) {
+            if (totaldif > txtTotalram) {
                 if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
                     totaldif = (txtTotalram - txtTotalXml);
                 }
             }
+            
         } else {
             totaldif = (txtTotalram - txtTotalXml);
         }
