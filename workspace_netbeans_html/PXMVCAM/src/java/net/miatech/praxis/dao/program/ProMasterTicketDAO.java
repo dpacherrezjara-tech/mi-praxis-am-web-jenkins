@@ -602,7 +602,10 @@ public class ProMasterTicketDAO {
                                                             objRtn11.fileA1692.CLAS = rs11.getString("CLAS");
                                                             objRtn11.fileA1692.FBASE = rs11.getString("FBASE");
                                                             objRtn11.fileA1692.VCPN = rs11.getDouble("VCPN");
-                                                            objRtn11.fileA1692.CPN_REF = rs11.getString("CPN_REF");
+                                                            objRtn11.fileA1692.A4373CUPN1 = rs11.getString("A4373CUPN1");
+                                                            objRtn11.fileA1692.A4373CUPN2 = rs11.getString("A4373CUPN2");
+                                                            objRtn11.fileA1692.A4373CUPN3 = rs11.getString("A4373CUPN3");
+                                                            objRtn11.fileA1692.A4373CUPN4 = rs11.getString("A4373CUPN4");
                                                             
                                                             filter.lstResultSet11.add(objRtn11);
                                                         }
@@ -626,7 +629,10 @@ public class ProMasterTicketDAO {
                                                                 objRtn12.fileA1818.FBASE = rs12.getString("FBASE");
                                                                 objRtn12.fileA1818.VCPN = rs12.getDouble("VCPN");
                                                                 objRtn12.fileA1818.MDACP = rs12.getString("MDACP");
-                                                                objRtn12.fileA1818.CPN_REF = rs12.getString("CPN_REF");
+                                                                objRtn12.fileA1818.A4373CUPN1 = rs12.getString("A4373CUPN1");
+                                                                objRtn12.fileA1818.A4373CUPN2 = rs12.getString("A4373CUPN2");
+                                                                objRtn12.fileA1818.A4373CUPN3 = rs12.getString("A4373CUPN3");
+                                                                objRtn12.fileA1818.A4373CUPN4 = rs12.getString("A4373CUPN4");
                                                                 filter.lstResultSet12.add(objRtn12);
                                                             }
                                                             if (cstmt01.getMoreResults()) {

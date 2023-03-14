@@ -57,5 +57,8 @@ public class A1818 {
     public String FEUP = "";
     public String HOUP = "";
     
-    public String CPN_REF = "";
+    public String A4373CUPN1 = "";
+    public String A4373CUPN2 = "";
+    public String A4373CUPN3 = "";
+    public String A4373CUPN4 = "";
 }
