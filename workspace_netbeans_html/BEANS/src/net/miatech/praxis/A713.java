@@ -410,4 +410,8 @@ public class A713 {
     public String A713FLAGTN = "";
     
     public String CPN_REF = "";
+    public String A4373CUPN1 = "";
+    public String A4373CUPN2 = "";
+    public String A4373CUPN3 = "";
+    public String A4373CUPN4 = "";
 }
