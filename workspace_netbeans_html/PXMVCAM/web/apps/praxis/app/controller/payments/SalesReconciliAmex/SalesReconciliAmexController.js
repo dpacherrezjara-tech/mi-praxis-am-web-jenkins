@@ -2900,30 +2900,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }).show();
     },
-    winDataEntryErrorRefund: function (action, rec, all, rowIndex) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;
-
-        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransactionRefund', {
-            id: prototype.id + '-dataEntryErrorRefund',
-            params: {
-                action: action,
-                rec: rec,
-                all: all,
-                rowIndex: rowIndex
-            }
-        }).show();
-    },
+//    winDataEntryErrorRefund: function (action, rec, all, rowIndex) {
+//        action = action === null || action === undefined ? 'U' : action;
+//        rec = rec === null || rec === undefined ? {} : rec;
+//
+//        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransactionRefund', {
+//            id: prototype.id + '-dataEntryErrorRefund',
+//            params: {
+//                action: action,
+//                rec: rec,
+//                all: all,
+//                rowIndex: rowIndex
+//            }
+//        }).show();
+//    },
     onEditClickSettlement: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
-        if (rec.data.RECTYPE !== 'CHARGEBACK') {
-            this.winDataEntrySettlement('U', rec);
-        }
-        if (rec.data.RECTYPE === 'CHARGEBACK') {
-            this.winDataEntryChargeback('U', rec);
-        }
-
+//        if (rec.data.RECTYPE !== 'CHARGEBACK') {
+//            this.winDataEntrySettlement('U', rec);
+//        }
+//        if (rec.data.RECTYPE === 'CHARGEBACK') {
+//            this.winDataEntryChargeback('U', rec);
+//        }
+        this.winDataEntryError('U', rec, all, rowIndex);
     },
     winDataEntrySettlement: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;

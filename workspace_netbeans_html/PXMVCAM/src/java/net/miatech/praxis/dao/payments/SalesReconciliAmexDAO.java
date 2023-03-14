@@ -2856,6 +2856,7 @@ public class SalesReconciliAmexDAO {
                     cstmt_usos.close();
 
                     beanTkt.A1531TTARJ = rst.getString("A1531TTARJ").trim();
+                    beanTkt.A1531MFOP = rst.getString("A1531MFOP").trim();
                     beanTkt.FDESGLOSE = "1";
                     beanTkt.A1531NREF = beanTkt.SCARDN;
                     beanTkt.A1531CAPL = beanTkt.SAUTHOC;
@@ -4646,6 +4647,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
+                beanRec.A1531MFOP = rst.getString("A1531MFOP").trim();
                 beanRec.SADJUST = rst.getDouble("SADJUST");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
                 beanRec.tot_VFOPB = rst.getDouble("tot_VFOPB");
@@ -4763,6 +4765,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531TKT = beanRec.A1531CIA + beanRec.A1531FORMA + beanRec.A1531SERIE;
                 beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
+                beanRec.A1531MFOP = rst.getString("A1531MFOP").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
                 beanRec.tot_VFOPB = rst.getDouble("tot_VFOPB");
