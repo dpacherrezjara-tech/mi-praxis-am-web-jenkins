@@ -98,7 +98,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                         fn: function(btn) {
                             if (btn === 'yes') {
                                 this.p.action = "I";
-                                this.crud();
+                                this.validation();
                             }
                         }
                     });
@@ -155,10 +155,52 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 break;            
         }                  
     },
-    crud: function() {
+    validation: function() {
         var rec = this.p.rec;
         var strOption = this.p.action;
         //console.log('opcion : ' + strOption);
+        Ext.Ajax.request({
+            url: this.url + '/validation',
+            method: 'POST',
+            timeout: 60000000,
+            params: this.getDataEntryValues(strOption),
+            success: function(response) {
+                var res = Ext.JSON.decode(response.responseText);
+                var result = res.data;
+                var val_flown = result.IN_FLOWN;
+                var val_emd = result.IN_EMD;
+                if (val_flown === 0){
+                    /*Ext.Msg.show({
+                        title: '.:Flown Validation:.',
+                        msg: 'Flown Valuation is pendinng'
+                    });*/
+                    Ext.Msg.alert('.:Flown Validation:.','Flown Valuation is pending');
+                } else{
+                    if(val_emd === 0){
+                        Ext.Msg.show({
+                            title: '.:PRAXIS:.',
+                            msg: 'EMDs Valuation is pending. Are you sure to insert ?',
+                            buttons: Ext.MessageBox.YESNO,
+                            scope: this,
+                            icon: Ext.MessageBox.QUESTION,
+                            modal: true,
+                            fn: function(btn) {
+                                if (btn === 'yes') {
+                                    this.p.action = "D";
+                                    //this.crudPending();
+                                    console.log("Entro al yes");
+                                }
+                            }
+                        });
+                    } else {
+                        //this.crud();
+                        console.log("EMD es mayor a 0");
+                    }
+                }
+            }
+        });
+    },
+    crud: function(){
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
