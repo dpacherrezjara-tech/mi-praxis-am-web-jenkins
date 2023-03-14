@@ -387,7 +387,10 @@ public class ProMasterTicketDAO {
                         objRtn02.fileA730.A730SEQUEN = rs02.getString("A730SEQUEN");
                         objRtn02.fileA730.A730SEQ720 = rs02.getString("A730SEQ720");
                         objRtn02.fileA730.A730TYPCP1 = rs02.getString("A730TYPCP1");
-                        objRtn02.fileA730.CPN_REF = rs02.getString("CPN_REF");
+                        objRtn02.fileA730.A4373CUPN1 = rs11.getString("A4373CUPN1");
+                        objRtn02.fileA730.A4373CUPN2 = rs11.getString("A4373CUPN2");
+                        objRtn02.fileA730.A4373CUPN3 = rs11.getString("A4373CUPN3");
+                        objRtn02.fileA730.A4373CUPN4 = rs11.getString("A4373CUPN4");
 
                         //<editor-fold defaultstate="collapsed" desc="{...} A730 Coupon 1">
                         objRtn02.fileA730.A730CONEX1 = rs02.getString("A730CONEX1");
@@ -507,7 +510,10 @@ public class ProMasterTicketDAO {
                             objRtn03.fileA713.A713CUPON2 = rs03.getString("A713CUPON2");
                             objRtn03.fileA713.A713CUPON3 = rs03.getString("A713CUPON3");
                             objRtn03.fileA713.A713CUPON4 = rs03.getString("A713CUPON4");
-                            objRtn03.fileA713.CPN_REF = rs03.getString("CPN_REF");
+                            objRtn03.fileA713.A4373CUPN1 = rs11.getString("A4373CUPN1");
+                            objRtn03.fileA713.A4373CUPN2 = rs11.getString("A4373CUPN2");
+                            objRtn03.fileA713.A4373CUPN3 = rs11.getString("A4373CUPN3");
+                            objRtn03.fileA713.A4373CUPN4 = rs11.getString("A4373CUPN4");
                             filter.lstResultSet03.add(objRtn03);
                         }
                         if (cstmt01.getMoreResults()) {
@@ -651,6 +657,10 @@ public class ProMasterTicketDAO {
                                                                     objRtn13.fileA1200.FBASIS = rs13.getString("FBASIS");
                                                                     objRtn13.fileA1200.GROSS = rs13.getDouble("GROSS");
                                                                     objRtn13.fileA1200.CURRENC = rs13.getString("CURRENC");
+                                                                    objRtn13.fileA1200.A4373CUPN1 = rs12.getString("A4373CUPN1");
+                                                                    objRtn13.fileA1200.A4373CUPN2 = rs12.getString("A4373CUPN2");
+                                                                    objRtn13.fileA1200.A4373CUPN3 = rs12.getString("A4373CUPN3");
+                                                                    objRtn13.fileA1200.A4373CUPN4 = rs12.getString("A4373CUPN4");
                                                                     filter.lstResultSet13.add(objRtn13);
                                                                 }
                                                                 if (cstmt01.getMoreResults()) {
@@ -677,7 +687,6 @@ public class ProMasterTicketDAO {
                                                                         objRtn14.fileA2033.TTRANS = rs14.getInt("TTRANS");
                                                                         objRtn14.fileA2033.ESTTRX = rs14.getString("ESTTRX");
                                                                         objRtn14.fileA2033.AMOUNTLOC = rs14.getDouble("AMOUNTLOC");
-                                                                        objRtn14.fileA2033.CPN_REF = rs14.getString("CPN_REF");
                                                                         filter.lstResultSet14.add(objRtn14);
                                                                     }
                                                                     if (cstmt01.getMoreResults()) {

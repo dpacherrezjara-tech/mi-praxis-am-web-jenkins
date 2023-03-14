@@ -192,5 +192,9 @@ public class A730 {
     public String A730RFIS = "";
     
     public String CPN_REF = "";
+    public String A4373CUPN1 = "";
+    public String A4373CUPN2 = "";
+    public String A4373CUPN3 = "";
+    public String A4373CUPN4 = "";
     
 }
