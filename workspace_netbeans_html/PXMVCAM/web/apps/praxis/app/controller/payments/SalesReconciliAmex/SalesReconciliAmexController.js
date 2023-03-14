@@ -2880,11 +2880,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         console.log(rec);
-        if (rec.data.TDOC === "S") {
-            this.winDataEntryError('U', rec, all, rowIndex);
-        } else {
-            this.winDataEntryErrorRefund('U', rec, all, rowIndex);
-        }
+        this.winDataEntryError('U', rec, all, rowIndex);
     },
     winDataEntryError: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
