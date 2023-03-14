@@ -1164,6 +1164,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 rec.CERROR = '01';
                 rec.A1531TTARJ = 'AX';
                 rec.A1531NREF = rec.SCARDN;
+                rec.A1531MFOP = rec.SCURRENCY;
                 rec.A1531CAPL = rec.SAUTHOC;
                 rec.A720FECVTA = rec.BSUMDATE;
                 rec.A720PNR = this.getValue('de-txtSPNR').trim(); //rec.SPNR;

@@ -218,6 +218,7 @@ public class A4116Filter extends A4116 {
     public String A1531CAPL = "";
     public String A1531CFOP = "";
     public String A1531TTARJ = "";
+    public String A1531MFOP = "";
     public String USOS = "";
     public double A1531VFOP = 0.0;    
     public double tot_VFOP = 0.0;
