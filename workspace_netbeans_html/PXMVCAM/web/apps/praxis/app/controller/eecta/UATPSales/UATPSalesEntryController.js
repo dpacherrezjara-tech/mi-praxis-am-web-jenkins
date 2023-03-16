@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesEntryController', {
      * Se ejecuta luego de haber cargado todos los componentes
      */
     afterRender: function () {
-        console.log("Ventana de Carga mostrado");
+        //console.log("Ventana de Carga mostrado");
     },
     onSaveClick:function(btn){
         var  file = Ext.getCmp(prototype.id + '-file').getValue().trim();
@@ -87,6 +87,9 @@ Ext.define('Ext.Praxis.controller.eecta.UATPSales.UATPSalesEntryController', {
                 console.log('server-side failure with status code ' + opts.response.status);
             }
         });
+    },
+    onCancelClick:function(){
+        this.view.close();
     }
 });
 

@@ -83,7 +83,16 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.UATPSalesEntry', {
                             listeners: {
                                 click: 'onSaveClick'
                             }
+                        },
+                        {
+                            text: 'Close',
+                            id: prototype.id02 + '-btn-close',
+                            iconCls: 'prx-icon-cancel',
+                            listeners: {
+                                click: 'onCancelClick'
+                            }
                         }
+                        
                     ]
                 }
             ]
