@@ -381,6 +381,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommission').setValue(Ext.util.Format.number(rec.get('A4363SCOMI'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommissionXml').setValue(Ext.util.Format.number(rec.get('A4363XCOMI'), '0,000.00'));
         //penalidad
+        Ext.getCmp(prototype.idARCDetailTicket + '-txtPenaltyXML').setValue(Ext.util.Format.number(rec.get('A4363PENCT'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setValue(Ext.util.Format.number(rec.get('A4363PENAD'), '0,000.00'));
         // total
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotal').setValue(Ext.util.Format.number(rec.get('A4363STOTL'), '0,000.00'));
