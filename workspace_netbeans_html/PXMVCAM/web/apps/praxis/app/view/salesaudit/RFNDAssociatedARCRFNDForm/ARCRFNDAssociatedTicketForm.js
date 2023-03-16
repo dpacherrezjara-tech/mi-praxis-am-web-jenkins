@@ -1116,7 +1116,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                             xtype: 'displayfield',
                             fieldLabel: 'Penalty:'
                         },
-                        {xtype: 'tbspacer', width: 270},
+                        {xtype: 'tbspacer', width: 120},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idARCDetailTicket + '-txtPenaltyXML',
+                            fieldLabel: '', readOnly: true,
+                            labelWidth: 70,
+                            value: '0'
+                        },
                         {
                             xtype: 'numberfield',
                             id: prototype.idARCDetailTicket + '-txtPenalty',
