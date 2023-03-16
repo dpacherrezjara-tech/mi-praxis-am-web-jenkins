@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                             columnLines: true,
                             //width: 990,
                             width: '100%',
-                            height: 510,
+                            height: 525,
                             padding: '0px 5px 1px 5px',                           
                             features: [
                                 {
@@ -71,10 +71,16 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                             columns: {
                                 items: [
                                     {text: 'Id File', dataIndex: 'A4264IDFIL', width: 110, align: 'center',padding:8},
-                                    {text: 'Invoice Code', dataIndex: 'A4264INVC', align: 'left', width: 120},
-                                    {text: 'Processing Date', dataIndex: 'A4264PRDA', align: 'left', width:120},
+                                    {text: 'Invoice Code', dataIndex: 'A4264INVC', align: 'center', width: 120},
+                                    {text: 'Processing Date', dataIndex: 'A4264PRDA', align: 'center', width:120,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            //console.log(metaData);
+                                            metaData.style = 'font-style: italic;';
+                                            return value;
+                                        }
+                                    },
                                     {text: 'File Name', dataIndex: 'A4264FLNM', width: 120, align: 'left',flex:1},
-                                    {text: 'Total Nbr. of Batches', dataIndex: 'A4264TTRNC', width: 155, align: 'left',
+                                    {text: 'Total Nbr.<br>of Batches', dataIndex: 'A4264TTRNC', width: 120, align: 'center',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000');
@@ -83,7 +89,7 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000');
                                         }
                                     },
-                                    {text: 'Total Received', dataIndex: 'A4264TLINVC', width: 120, align: 'left',
+                                    {text: 'Total Received', dataIndex: 'A4264TLINVC', width: 120, align: 'center',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000');
@@ -93,41 +99,40 @@ Ext.define('Ext.Praxis.view.eecta.UATPSalesForm.InfoGrid', {
                                         }
                                     },
                                     {
-                                        text: 'Status', dataIndex: 'A4264STREC', width: 120, align: 'left',
+                                        text: 'Status', dataIndex: 'A4264STREC', width: 120, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            var html = '<img src="resources/img/icon/delete.png" title="Error" >';
                                             switch (value) {
                                                 case '0':
-                                                    return 'OK';
+                                                    html =  '<img src="resources/img/icon/check.png" width="16" height="16" title="Formateado">';
                                                     break;
                                                 case '1':
-                                                    return 'With Errors';
-                                                    break;
-                                                default:
-                                                    return 'Error';
+                                                    html = '<img src="resources/img/icon/warning.png" title="With Errors" >';
                                                     break;
                                             }
+                                            return html;
                                         }
                                     },
                                     {
-                                        text: 'St. Formateo', dataIndex: 'A4264STCAR', width: 120, align: 'left',
+                                        text: 'St. Formateo', dataIndex: 'A4264STCAR', width: 120, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            var html = '<img src="resources/img/icon/delete.png" title="Error" >';
                                             switch (value) {
                                                 case 'P':
-                                                    return 'Pending';
+                                                    html = '<img src="resources/img/icon/16x16/loading_robot.png" title="Pending" >';
                                                     break;
                                                 case '0':
-                                                    return 'Loaded OK';
+                                                    html =  '<img src="resources/img/icon/check.png" width="16" height="16" title="Loaded OK">';
                                                     break;
                                                 case '1':
-                                                    return 'With Errors';
+                                                    html = '<img src="resources/img/icon/warning.png" title="With Errors" >';
                                                     break;
                                                 case '2':
-                                                    return 'Without Sales';
+                                                    html =  '<img src="resources/img/icon/list-error.png" width="16" height="16" title="Without Sales">';
                                                     break;
-                                                default:
-                                                    return 'Error';
-                                                    break;
-                                            }
+                                            }                                            
+                                            return html;
+                                            
                                         }
                                     },
                                 ],
