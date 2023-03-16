@@ -199,21 +199,22 @@ public class UATPSalesDAO {
     public SQP04629Filter getSQP04629Filter(SQP04629Filter filter) throws SQLException, Exception{
         Connection cnx = null;
         CallableStatement cstmt = null;
-        String SQL = "{CALL PXUATP.SQP04629(?,?,?,?)}";
-        SQP04629Filter response = null;
+        String SQL = "{CALL PXUATP.SQP04629(?,?)}";
+        SQP04629Filter response =  new SQP04629Filter();
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQL);
             cstmt.setString(1,filter.getIN_CCUST());
             cstmt.setString(2, filter.getIN_IDFILE());
-            cstmt.registerOutParameter(3, Types.VARCHAR);
-            cstmt.registerOutParameter(4, Types.VARCHAR);
+            //cstmt.registerOutParameter(3, Types.VARCHAR);
+            //cstmt.registerOutParameter(4, Types.VARCHAR);
             cstmt.execute();
-            response = new SQP04629Filter();
-            response.setOU_SQLCODE(cstmt.getString(3));
-            response.setOU_MESSAGE(cstmt.getString(4));
+            response.setOU_SQLCODE("1");
+            response.setOU_MESSAGE("Proceso culminado.");
         } catch (Exception e) {
             logError.info("Exception -> User: " + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(),e);
+            response.setOU_SQLCODE("2");
+            response.setOU_MESSAGE("Error al procesar => " + e.getMessage());
         } finally {
             if (cstmt != null) {
                 try {

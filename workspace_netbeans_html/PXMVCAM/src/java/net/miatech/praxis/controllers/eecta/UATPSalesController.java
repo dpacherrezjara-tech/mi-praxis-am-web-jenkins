@@ -119,13 +119,11 @@ public class UATPSalesController extends BaseController{
             JsonObject gson_detail = parser.parse(request.getParameter("beanString")).getAsJsonObject();
             filter.setIN_CCUST(gson_detail.get("CCUST").getAsString());
             filter.setIN_IDFILE(gson_detail.get("IDFILE").getAsString());
-//            logic = new UATPSalesLogic();
-//            logic.setSession((IServerSession) serverSession.getServerSession());
-//            filter = logic.setSQP04629Filter(filter);
-//            map.put("success", filter.getOU_SQLCODE().equals("1"));
-            filter.setOU_SQLCODE("0");
-            filter.setOU_MESSAGE("Execution completed successfully");
-            map.put("success",true);
+            logic = new UATPSalesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            filter = logic.setSQP04629Filter(filter);
+            map.put("success", filter.getOU_SQLCODE().equals("1"));
+            //map.put("success",true);
             map.put("response",filter);
         } catch (Exception e) {
             map.put("success", false);
