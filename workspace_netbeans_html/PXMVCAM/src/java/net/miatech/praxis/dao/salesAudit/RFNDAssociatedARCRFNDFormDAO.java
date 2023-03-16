@@ -298,6 +298,9 @@ public class RFNDAssociatedARCRFNDFormDAO {
                 objRtn.A4363COMID = rs01.getDouble("A4363COMID");
                 objRtn.A4363SCOMD = rs01.getDouble("A4363SCOMD");
                 objRtn.A4363TOTAD = rs01.getDouble("A4363TOTAD");
+                objRtn.A4363PENCT = rs01.getDouble("A4363PENCT");
+                objRtn.A4363IVACT = rs01.getDouble("A4363IVACT");
+                objRtn.A4363TOTCT = rs01.getDouble("A4363TOTCT");
 
                 lstRtn.add(objRtn);
             }
