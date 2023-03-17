@@ -364,7 +364,30 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAssociat
                             },
                             height: 120,
                             width: 930
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idARCDetailTicket + '-txtCorreo',
+                            fieldLabel: 'E-mail',
+                            //fieldLabel: '<span class="red-label">*</span>' + l10n('E-mail'),
+                            name: 'emailAddress',
+                            regex: /^(")?(?:[^\."])(?:(?:[\.])?(?:[\w\-!#$%&'*+\/=?\^_`{|}~]))*\1@(\w[\-\w]*\.){1,5}([A-Za-z]){2,6}$/,
+                            allowBlank: false,
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            maxLength: 50, enforceMaxLength: 50,
+                            labelWidth: 35
                         }
+                        /*{
+                            xtype: 'textfield',
+                            id: prototype.idARCDetailTicket + '-txtCorreo',
+                            fieldLabel: 'E-mail',
+                            labelWidth: 35,
+                            maxLength: 50, enforceMaxLength: 50,
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            width: 200
+                        }*/
 
                     ]
                 },

@@ -389,6 +389,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
             CH_16 = row.createCell(16);
             CH_17 = row.createCell(17);
             CH_18 = row.createCell(18);
+            CH_19 = row.createCell(19);
 
             CH_00.setCellValue("System Date");
             CH_01.setCellValue("Issue Date");
@@ -409,6 +410,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
             CH_16.setCellValue("Req. Reason");
             CH_17.setCellValue("Status Audit");
             CH_18.setCellValue("Status ");
+            CH_19.setCellValue("E-Mail ");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -429,6 +431,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 18));
+             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -449,6 +452,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
             CH_16.setCellStyle(headerStyle);
             CH_17.setCellStyle(headerStyle);
             CH_18.setCellStyle(headerStyle);
+            CH_19.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -475,6 +479,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                 CH_16 = row.createCell(16);
                 CH_17 = row.createCell(17);
                 CH_18 = row.createCell(18);
+                CH_19 = row.createCell(19);
 
                 CH_00.setCellValue(listaData.get(vi).A4363FREGI);
                 CH_01.setCellValue(listaData.get(vi).A4363FEVTA);
@@ -513,6 +518,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                         break;
                 }
                 CH_18.setCellValue(vl_A4076FLAG);
+                CH_19.setCellValue(listaData.get(vi).A4363EMAIL);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -533,6 +539,7 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                 CH_16.setCellStyle(bodyStyle);
                 CH_17.setCellStyle(bodyStyle);
                 CH_18.setCellStyle(bodyStyle);
+                CH_19.setCellStyle(bodyStyle);
 
                 // </editor-fold>
                 iter.next();

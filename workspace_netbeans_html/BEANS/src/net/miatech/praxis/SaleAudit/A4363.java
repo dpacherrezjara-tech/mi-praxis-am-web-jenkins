@@ -107,6 +107,7 @@ public class A4363 {
     public String A4363FOLIO;
     public String A4363CUPON;
     public String A4363RAAG;
+    public String A4363EMAIL;
     
 // datos de montos 
     public double A4363STARF = 0d;

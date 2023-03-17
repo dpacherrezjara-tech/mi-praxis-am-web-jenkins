@@ -48,6 +48,7 @@ public class A4363Filter extends A4363 {
     public String IN_CPN7 = "";
     public String IN_CPN8 = "";
     public String IN_TRFND = "";
+    public String IN_EMAIL= "";
 
     public double IN_TARIF = 0d;
     public double IN_TARIFEQUI = 0d;
