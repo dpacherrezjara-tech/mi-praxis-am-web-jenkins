@@ -158,6 +158,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     validation: function() {
         var rec = this.p.rec;
         var strOption = this.p.action;
+        var me = this;
         //console.log('opcion : ' + strOption);
         Ext.Ajax.request({
             url: this.url + '/validation',
@@ -181,26 +182,27 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                             title: '.:PRAXIS:.',
                             msg: 'EMDs Valuation is pending. Are you sure to insert ?',
                             buttons: Ext.MessageBox.YESNO,
-                            scope: this,
+                            scope: me,
                             icon: Ext.MessageBox.QUESTION,
                             modal: true,
                             fn: function(btn) {
                                 if (btn === 'yes') {
-                                    this.p.action = "D";
-                                    //this.crudPending();
-                                    console.log("Entro al yes");
+                                    me.p.action = "I";
+                                    me.crud();                                    
                                 }
                             }
                         });
                     } else {
-                        //this.crud();
-                        console.log("EMD es mayor a 0");
+                        me.p.action = "I";
+                        me.crud();                        
                     }
                 }
             }
         });
     },
     crud: function(){
+        var rec = this.p.rec;
+        var strOption = this.p.action;
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
