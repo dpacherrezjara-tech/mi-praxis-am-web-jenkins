@@ -315,10 +315,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          autoLoad: false,
          fields: ['code', 'name'],
          data: [
-         ["", "All"],         
-         ["FIRST", "First Data"],
+         ["", "All"],
+         ["FIRSTD00", "First Data"],
          ["PRISMA", "Prisma"],
-         ["WP", "WorldPay"],
+         ["WP00", "WorldPay"],
          ["GETMEX00", "GetNetMex"],
          ["ATCAN00", "Atcan"],
          ]
@@ -634,11 +634,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.setFormatParameter();
         if (selectedValue === 'ER') {
             Ext.getCmp(prototype.id + '-frmQueueError').setVisible(true);
-            Ext.getCmp(prototype.id + '-cmbProT').setVisible(true);
+            //Ext.getCmp(prototype.id + '-cmbProT').setVisible(true);
             Ext.getCmp(prototype.id + '-cmbCurr').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-frmQueueError').setVisible(false);
-            Ext.getCmp(prototype.id + '-cmbProT').setVisible(false);
+            //Ext.getCmp(prototype.id + '-cmbProT').setVisible(false);
             Ext.getCmp(prototype.id + '-cmbCurr').setVisible(false);
         }
         if (selectedValue === 'SE') {
@@ -778,7 +778,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-paggin13').bindStore(storeGridDatas);
     },
     setGridDataChangePayment: function () {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
         me.panelActual = '-boxMainChangePayment';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         //me.setWidthPie();
@@ -815,7 +815,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         //Ext.getCmp(prototype.id + '-paggin19').bindStore(storeGridDatas);
     },
     setGridDataSummaryTransactionError: function () {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
         me.panelActual = '-boxSummaryTransactionError';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -1078,7 +1078,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             global.selectedChild(me.childs, prototype.id + me.panelActual);
         }
 
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -1112,7 +1112,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
     },
     setGridDataMainSettlement: function () {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
         me.panelActual = '-boxMainSettlement';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -1163,12 +1163,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        this.beanSettlement.IN_PROCTYPE = rowData.data.IN_PROCTYPE;
 
         me.paramsDetailSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataSettlement();
     },
     setGridDataSettlement: function () {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -1231,6 +1232,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanFilterSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         this.beanFilterSettlement.IN_ZONA_SETT = Ext.getCmp(prototype.id + '-cmbZONAsett').getValue();
         this.beanFilterSettlement.IN_SCOUNTRY_SETT = Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').getValue();
+        this.beanFilterSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanFilterSettlement);
 
         if (me.panelActual !== '-boxDetSettlement') {
@@ -1242,7 +1244,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.setGridDataFilterSettlement();
     },
     setGridDataFilterSettlement: function () {
-        win.lblUser_toolTip("Estructura: A4116/A4117/A4118");
+        win.lblUser_toolTip("Estructura: A4331/A4117/A4118");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -1320,12 +1322,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
+        this.beanSettlement.IN_PROCTYPE = rowData.data.IN_PROCTYPE;
 
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataDetSettlement();
     },
     setGridDataDetSettlement: function () {
-        win.lblUser_toolTip("Estructura: A4116/A4117/A4118");
+        win.lblUser_toolTip("Estructura: A4331/A4117/A4118");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -1458,7 +1461,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     setGridDataMainSummary: function () {
-        win.lblUser_toolTip("Estructura: A4113");
+        win.lblUser_toolTip("Estructura: A4332");
         me.panelActual = '-boxMainSummary';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -1510,13 +1513,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSummary.IN_DATE = rowData.data.IN_DATE;
         this.beanSummary.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanSummary.SCOUNTRY = rowData.data.SCOUNTRY;
+        this.beanSummary.IN_PROCTYPE = rowData.data.IN_PROCTYPE;
         console.log(this.beanSummary);
 
         me.paramsDetailSummary.beanString = JSON.stringify(this.beanSummary);
         this.setGridData();
     },
     setGridData: function () {
-        win.lblUser_toolTip("Estructura: A4113");
+        win.lblUser_toolTip("Estructura: A4332");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -1778,7 +1782,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.setGridDataDetTransaction();
     },
     setGridDataDetTransaction: function () {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
 
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -1854,7 +1858,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.setGridDataDiffTransaction();
     },
     setGridDataDiffTransaction: function () {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4331");
 
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
