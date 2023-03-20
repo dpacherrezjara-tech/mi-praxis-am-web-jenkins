@@ -21,6 +21,7 @@ public class A4113Filter extends A4113 {
     public String IN_SCOUNTRY_SUMM = "";
     public String IN_PCURRENCY = "";
     public String DATE = "";
+    public String IN_PROCTYPE = "";
 
     public String IN_SDATE = "";
     public String IN_EPAAMEDATA = "";
