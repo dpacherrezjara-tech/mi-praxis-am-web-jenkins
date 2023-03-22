@@ -36,6 +36,10 @@ public class AccountingMasterProcessLogic {
         return accountingMasterProcessDAO.accountMaintance(filter, strOption);
     }
      
+    public A1955Filter accountValidation(A1955Filter filter) throws SQLException, Exception {
+        return accountingMasterProcessDAO.accountValidation(filter);
+    }
+     
     public String reversaFlown(A1955Filter filter) throws SQLException, Exception {
         return accountingMasterProcessDAO.reversaFlown(filter);
     }
