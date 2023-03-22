@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                 beforerequest: Ext.getCmp(prototype.idRfnd + '-dataEntryRfnd').mask('Loading...', ''),
                 success: function (response, options) {
                     var res = Ext.JSON.decode(response.responseText);
-                    console.log('lstrfnd',res);
+                    //console.log('lstrfnd',res);
                     var lstRFND = res.lstRFND;
                     //var lstRFNDGrilla = res.lstRFNDGrilla;
                     var lstRFNDGrilla = res.lstRFND;
