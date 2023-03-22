@@ -268,6 +268,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                     maxLength: 8,
                                                                     enforceMaxLength: 8,
                                                                     width: 110,
+                                                                    readOnly: true,
                                                                     listeners: {
                                                                         blur: 'onBlurValueIata'
                                                                     }
@@ -281,6 +282,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                     defaults: {
                                                                         xtype: 'textfield',
                                                                         margin: '0 0 0 0',
+                                                                        readOnly: true,
                                                                         fieldStyle: 'text-align:left;',
                                                                         labelSeparator: ''
                                                                     },
@@ -609,6 +611,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     fieldStyle: 'text-align:left;',
                                                                                     labelSeparator: '',
                                                                                     fieldLabel: '',
+                                                                                    readOnly: true,
                                                                                     width: 260
                                                                                 },
                                                                                 {
@@ -618,6 +621,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     fieldStyle: 'text-align:left;',
                                                                                     labelSeparator: '',
                                                                                     fieldLabel: '',
+                                                                                    readOnly: true,
                                                                                     width: 260
                                                                                 },
                                                                                 {
@@ -920,6 +924,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                     margin: '1 1 1 1',
                                                                     defaults: {
                                                                         xtype: 'label',
+                                                                        readOnly: true,
                                                                         width: 30
                                                                     },
                                                                     items: [
@@ -962,7 +967,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                             maxLength: 19,
                                                                             enforceMaxLength: 19,
                                                                             maskRe: /[xX0-9*]/,
-                                                                            fieldStyle: 'text-align:left;',
+                                                                            fieldStyle: 'text-align:left;font-style: italic;font-size: 10.3px;',
                                                                             listeners: {
                                                                                 change: 'onUpperValue'
                                                                             }
@@ -973,7 +978,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                         {
                                                                             xtype: 'textfield',
                                                                             id: prototype.idRftx + '-det-lblFOPCur1',
-                                                                            readOnly: true,
                                                                             maxLength: 3,
                                                                             enforceMaxLength: 3,
                                                                             maskRe: /[a-zA-Z]/,
@@ -1022,6 +1026,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                     margin: '1 1 1 1',
                                                                     defaults: {
                                                                         xtype: 'label',
+                                                                        readOnly: true,
                                                                         width: 30
                                                                     },
                                                                     items: [
@@ -1064,7 +1069,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                             maxLength: 19,
                                                                             enforceMaxLength: 19,
                                                                             maskRe: /[xX0-9*]/,
-                                                                            fieldStyle: 'text-align:left;',
+                                                                            fieldStyle: 'text-align:left;font-style: italic;font-size: 10.3px;',
                                                                             listeners: {
                                                                                 change: 'onUpperValue'
                                                                             }
@@ -1075,7 +1080,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                         {
                                                                             xtype: 'textfield',
                                                                             id: prototype.idRftx + '-det-lblFOPCur2',
-                                                                            readOnly: true,
                                                                             maxLength: 3,
                                                                             enforceMaxLength: 3,
                                                                             maskRe: /[a-zA-Z]/,
@@ -1324,6 +1328,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1349,7 +1354,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur1',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1397,6 +1401,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1422,7 +1427,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur2',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1470,6 +1474,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1495,7 +1500,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur3',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1543,6 +1547,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1568,7 +1573,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur4',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,

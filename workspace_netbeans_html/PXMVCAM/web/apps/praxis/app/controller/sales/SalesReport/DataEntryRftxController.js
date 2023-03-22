@@ -243,14 +243,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
                 });
             }
 
+            //referencias y observaciones
             if (objRef.length > 0) {
-                let ref = '';
-                objRef.forEach(r => ref = ref + r);
+                let ref = objRef.map(x=>x.a4376FRCA.trim()).join(', ');
                 Ext.getCmp(prototype.idRftx + '-det-lblReference').setValue(ref);
             }
             if (objObs.length > 0) {
-                let obs = '';
-                objObs.forEach(o => obs = obs + o);
+                let obs = objObs.map(x=>x.a4376FRCA.trim()).join(', ');
                 Ext.getCmp(prototype.idRftx + '-det-lblObservation').setValue(obs);
             }
 
