@@ -24,6 +24,11 @@ prototype.id17 = 'FormFileMerge';
 prototype.id18 = 'FormFileMergeDataEntry';
 prototype.id19 = 'FormFileMergeDataEntryDetail';
 //LIABILITY
+prototype.id20 = 'FormFileLiability';
+prototype.id21 = 'FormFileLiabilityDataEntry';
+//consulta transaction ID
+prototype.id22 = 'FormTransactions';
+prototype.id23 = 'FormTransactionsDataEntry';
 
 prototype.url = CONTEXTPATH + '/FilesIssuesUses';
 prototype.widthContenedor = 1300;
@@ -39,7 +44,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.FileUsedForm',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.ExpireForm.FileExpireForm',
         'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.LossesForm.FileLossesForm',
-        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileMergeForm'
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.MergeForm.FileMergeForm',
+        'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.LiabilityForm.FileLiabilityForm'
+        //'Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.TransactionsForm'        
     ],
     controller: 'FilesIssuesUsesController',
     btnActive: 1,
@@ -143,6 +150,17 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.FilesIssuesUsesForm',
                                 }
                             }
                         }
+//                        {
+//                            xtype: 'button', width: '8rem', height: '2rem',
+//                            text: 'Transactions', iconCls: 'prx-icon-docum',
+//                            id: prototype.id01 + '-btn-transaction',
+//                            listeners: {
+//                                click: (e) => {
+//                                    this.btnActive = 7;
+//                                    setOnClickBtnActive(e.id, 7);
+//                                }
+//                            }
+//                        }
                     ]
                 },
                 {
@@ -176,6 +194,12 @@ getTypeForm = () => {
         case 5:
             return prototype.id17 + '-fileMergeForm';
             break;
+        case 6:
+            return prototype.id19 + '-fileLiabilityForm';
+            break;
+//        case 7:
+//            return prototype.id + '-transactionsForm';   
+//            break;
         default:
             return '';
             break;
@@ -190,6 +214,7 @@ setOnClickBtnActive = (btnId, index) => {
     Ext.getCmp(prototype.id01 + '-btn-losses').setStyle('background', '');
     Ext.getCmp(prototype.id01 + '-btn-merge').setStyle('background', '');
     Ext.getCmp(prototype.id01 + '-btn-liability').setStyle('background', '');
+//    Ext.getCmp(prototype.id01 + '-btn-transaction').setStyle('background', '');
     if (this.btnActive === index) {
         Ext.getCmp(btnId).setStyle('background', '#68A0EC'); //active
         //rednderizar objeto

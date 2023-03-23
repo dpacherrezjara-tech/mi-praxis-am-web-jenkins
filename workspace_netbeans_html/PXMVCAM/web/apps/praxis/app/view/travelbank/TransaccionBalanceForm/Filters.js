@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIssueFilters', {
+Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Filters', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id02 + '-formFileIssueFilters',
+    alias: 'widget.' + prototype.id + '-filters',
     border: false,
     bodyStyle: 'background-color: #E3EAF9;',
     margin: '2 0 2 0 ',
@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
             items: [
                 {
                     xtype: 'panel',
-                    id: prototype.id02 + '-boxSearchFilter',
+                    id: prototype.id + '-boxSearchFilter',
                     width: '100%',
                     layout: 'vbox',
                     border: false,
@@ -47,18 +47,15 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id02 + '-cmbfiltro',
-                                            fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            id: prototype.id + '-cmbfiltro',
+                                            fieldLabel: 'Date type', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 120,
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ["", "(Select)"],
-                                                    ["1", "TRANSMISSION DATE"],
-                                                    ["2", "NUMBER IDENTIFIER"],
-                                                    ["3", "ACCOUNTING DATE"],
-                                                    ["4", "ACCOUNTING PERIOD"],
-                                                    ["5", "UNIQUE SERVICE CREDIT ID"]
+                                                    ["1", "Transmission Date"],
+                                                    ["2", "Account date"]
                                                 ]
                                             }),
                                             queryMode: 'local',
@@ -71,7 +68,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                             valueField: 'code', displayField: 'name',
                                             width: 300,
                                             height: 26,
-                                            value: "1",
+                                            value: "",
                                             //listConfig: {maxHeight: 111},
                                             enableKeyEvents: true,
                                             padding: '4 0',
@@ -81,10 +78,10 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                         }
                                     ]
                                 },
-                                // <editor-fold defaultstate="collapsed" desc="BoxFilter01">
+                                // <editor-fold defaultstate="collapsed" desc="Desde/Hasta">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id02 + '-BoxFilter01',
+                                    id: prototype.id + '-BoxFechasDesdeHasta',
                                     border: false,
                                     hidden: false,
                                     layout: 'hbox',
@@ -97,7 +94,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                     items: [
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id02 + '-fecha1',
+                                            id: prototype.id + '-fecha1',
                                             fieldLabel: 'Date from', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 125,
                                             width: 200,
@@ -105,7 +102,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                             format: 'Ymd',
                                             //formatText: '',
                                             //invalidText: 'Type the date in the format: YYYY/MM/DD',
-                                            value:'20221001',
+                                            value: '20221001',
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -117,18 +114,18 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                                 //change: 'onUpperValue',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        Ext.getCmp(prototype.id02 + '-fecha2').focus();
+                                                        Ext.getCmp(prototype.id + '-fecha2').focus();
                                                     }
                                                 }
                                             }
                                         },
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id02 + '-fecha2',
+                                            id: prototype.id + '-fecha2',
                                             fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 30,
                                             width: 130,
                                             height: 26,
-                                            format: 'Ymd', value:new Date(),
+                                            format: 'Ymd', value: new Date(),
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -146,65 +143,13 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                         }
                                     ]
                                 },
-                                // </editor-fold>
-                                // <editor-fold defaultstate="collapsed" desc="BoxFilter02">
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id02 + '-BoxFilter02',
-                                    border: false,
-                                    hidden: true,
-                                    layout: 'hbox',
-                                    bodyStyle: 'background: transparent;"',
-                                    margin: '3 0',
-                                    defaults: {
-                                        anchor: '100%',
-                                        padding: '4 0'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id02 + '-A4280IDFILE1',
-                                            fieldLabel: 'From number ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 9,
-                                            width: 215,
-                                            height: 26,
-                                            maskRe: /[0-9]/,
-                                            value: '',
-                                            //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
-                                            listeners: {
-                                                keypress: 'onTxtFilterKeypress'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id02 + '-A4280IDFILE2',
-                                            fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 30,
-                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            maxLength: 9,
-                                            width: 130,
-                                            height: 26,
-                                            maskRe: /[0-9]/,
-                                            value: '',
-                                            //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
-                                            listeners: {
-                                                keypress: 'onTxtFilterKeypress'
-                                            }
-                                        }
-                                    ]
-                                },
                                 // </editor-fold>                                
-                                // <editor-fold defaultstate="collapsed" desc="BoxFilter03">
+                                // <editor-fold defaultstate="collapsed" desc="Account Number">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id02 + '-BoxFilter03',
+                                    id: prototype.id + '-BoxAccountNumber',
                                     border: false,
-                                    hidden: true,
+                                    hidden: false,
                                     layout: 'hbox',
                                     bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
@@ -215,13 +160,13 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id02 + '-A4281IDISS',
-                                            fieldLabel: 'Nbr. Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                            id: prototype.id + '-NCTA',
+                                            fieldLabel: 'Account Number', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 10,
-                                            width: 215,
+                                            maxLength: 20,
+                                            width: 280,
                                             height: 26,
                                             maskRe: /[0-9]/,
                                             value: '',
@@ -232,10 +177,13 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                         }
                                     ]
                                 },
-                                // </editor-fold>
+                                // </editor-fold>                                 
+                                // <editor-fold defaultstate="collapsed" desc="Unique Service Credit ID">
                                 {
-                                    xtype: 'panel',                                    
-                                    border: false,                               
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxUniqueServiceCreditID',
+                                    border: false,
+                                    hidden: false,
                                     layout: 'hbox',
                                     bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
@@ -245,37 +193,26 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.IssueForm.FormFileIss
                                     },
                                     items: [
                                         {
-                                            xtype: 'combo',
-                                            id: prototype.id02 + '-cmbSTS',
-                                            fieldLabel: 'Final State', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            //labelWidth: 120,
-                                            store: new Ext.data.SimpleStore({
-                                                fields: ['code', 'name'],
-                                                data: [
-                                                    ["", "(All)"],
-                                                    ["0", "OPEN"],
-                                                    ["1", "CLOSED"]                                                    
-                                                ]
-                                            }),
-                                            queryMode: 'local',
-                                            triggerAction: 'all',
-                                            autoSelect: false,
-                                            forceSelection: true,
-                                            caseSensitive: false,
-                                            editable: true,
-                                            typeAhead: true,
-                                            valueField: 'code', displayField: 'name',
-                                            width: 200,
-                                            height: 26,
-                                            value: "",                                            
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-creditID',
+                                            fieldLabel: 'Credit ID', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
+                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
-                                            padding: '4 0',
+                                            enforceMaxLength: true,
+                                            maxLength:10,
+                                            width: 220,
+                                            height: 26,
+                                            maskRe: /[0-9]/,
+                                            value: '',
+                                            //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
-                                                // change: 'onMostrarFiltrosChange'
+                                                keypress: 'onTxtFilterKeypress'
                                             }
                                         }
                                     ]
                                 }
+                                // </editor-fold>  
+                                                                                                                                                               
                             ]
                         }
                     ]
