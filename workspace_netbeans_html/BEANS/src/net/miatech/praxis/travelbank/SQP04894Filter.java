@@ -32,6 +32,9 @@ public class SQP04894Filter {
     public Double XTCAMBIO = 0.00;
     public Double XVREVENUE = 0.00;
     public Double XVPESOS = 0.00;
-
+    public String XFLAG1 = "";
+    public String XERROR = "";
+    public String XIDISR = "";
+    public String XIDRIN = "";
     public Pagination page = new Pagination();
 }

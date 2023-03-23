@@ -5,9 +5,9 @@
  */
 
 
-Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsController', {
+Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalanceController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.FormTransactionsController',
+    alias: 'controller.TransaccionBalanceController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},
@@ -15,8 +15,9 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
     // </editor-fold>
     init: function ( ) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
-        //prototype.id22 = 'FilesIssuesUsesForm';
-        prototype.url = CONTEXTPATH + '/TransactionFiles';
+        //prototype.id = 'FilesIssuesUsesForm';
+        prototype.id = 'TransaccionBalanceForm';
+        prototype.url = CONTEXTPATH + '/TransaccionBalance';
         //prototype.widthContenedor = 1300;
         //prototype.widthGrid = 863;
         // </editor-fold>
@@ -31,27 +32,27 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
     onMostrarFiltrosChange: function (cmp, newValue, oldValue, eOpts) {
         this.limpiarFiltros();
 //        var strOpcion = this.getValue('cmbfiltro');
-//        Ext.getCmp(prototype.id22 + '-BoxUniqueServiceCreditID').hide();
-//        Ext.getCmp(prototype.id22 + '-BoxAccountNumber').hide();
-//        Ext.getCmp(prototype.id22 + '-BoxFechasDesdeHasta').hide();
-//        Ext.getCmp(prototype.id22 + '-BoxNbrIDENTIFIER').hide();
+//        Ext.getCmp(prototype.id + '-BoxUniqueServiceCreditID').hide();
+//        Ext.getCmp(prototype.id + '-BoxAccountNumber').hide();
+//        Ext.getCmp(prototype.id + '-BoxFechasDesdeHasta').hide();
+//        Ext.getCmp(prototype.id + '-BoxNbrIDENTIFIER').hide();
 
 //        switch (strOpcion) {
 //            case "1" :
-//                Ext.getCmp(prototype.id22 + '-BoxUniqueServiceCreditID').show();
-//                Ext.getCmp(prototype.id22 + '-A4357IDMER').focus();
+//                Ext.getCmp(prototype.id + '-BoxUniqueServiceCreditID').show();
+//                Ext.getCmp(prototype.id + '-A4357IDMER').focus();
 //                break;
 //            case "2" :
-//                Ext.getCmp(prototype.id22 + '-BoxAccountNumber').show();
-//                Ext.getCmp(prototype.id22 + '-A4357NCTAT').focus();
+//                Ext.getCmp(prototype.id + '-BoxAccountNumber').show();
+//                Ext.getCmp(prototype.id + '-A4357NCTAT').focus();
 //                break;
 //            case "3" :
-//                Ext.getCmp(prototype.id22 + '-BoxFechasDesdeHasta').show();
-//                Ext.getCmp(prototype.id22 + '-fecha1').focus();
+//                Ext.getCmp(prototype.id + '-BoxFechasDesdeHasta').show();
+//                Ext.getCmp(prototype.id + '-fecha1').focus();
 //                break;
 //            case "4" :
-//                Ext.getCmp(prototype.id22 + '-BoxNbrIDENTIFIER').show();
-//                Ext.getCmp(prototype.id22 + '-A4357IDFIL1').focus();
+//                Ext.getCmp(prototype.id + '-BoxNbrIDENTIFIER').show();
+//                Ext.getCmp(prototype.id + '-A4357IDFIL1').focus();
 //                break;
 //        }
     },
@@ -83,8 +84,8 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
     btnSearch_click: function (obj, e) {
 //        alert('btnSearch_click of FormFileUsedController ');
         var strFiltro = this.getValue('cmbfiltro');
-        var VP_ACCNBR = Ext.getCmp(prototype.id22 + '-NCTA').getValue();
-        var VP_CREDID = Ext.getCmp(prototype.id22 + '-creditID').getValue();
+        var VP_ACCNBR = Ext.getCmp(prototype.id + '-NCTA').getValue();
+        var VP_CREDID = Ext.getCmp(prototype.id + '-creditID').getValue();
 
         if (VP_ACCNBR === '') {
             global.Msg({
@@ -100,15 +101,15 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
         }
 
         if (strFiltro !== '') {
-            console.log(Ext.util.Format.date(Ext.getCmp(prototype.id22 + '-fecha1').getValue(), 'Ymd'))
-            //me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id22 + '-fecha2').getValue(), 'Ymd');
+            console.log(Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd'))
+            //me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
         }
         this.setFormatParameter();
         this.setGridData();
 
     },
     btnFilter_click: function (obj) {
-        var option = Ext.getCmp(prototype.id22 + '-boxSearchFilter');
+        var option = Ext.getCmp(prototype.id + '-boxSearchFilter');
         if (option.isVisible())
             option.setVisible(false);
         else
@@ -133,20 +134,20 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
         this.limpiarFiltros();
         this.setValue("cmbfiltro", "");
         // <editor-fold defaultstate="collapsed" desc="Clear Grilla">
-        Ext.getCmp(prototype.id22 + '-gridData').getStore().removeAll();
-        Ext.getCmp(prototype.id22 + '-lbl-currentPage').setText("1");
-        Ext.getCmp(prototype.id22 + '-lbl-pageCount').setText("0");
-        Ext.getCmp(prototype.id22 + '-lbl-total').setText("0");
+        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-lbl-currentPage').setText("1");
+        Ext.getCmp(prototype.id + '-lbl-pageCount').setText("0");
+        Ext.getCmp(prototype.id + '-lbl-total').setText("0");
         // </editor-fold>
         // <editor-fold defaultstate="collapsed" desc="show">
-        Ext.getCmp(prototype.id22 + '-boxMainData').show();
+        Ext.getCmp(prototype.id + '-boxMainData').show();
         // </editor-fold>
     },
     btnAdd_click: function () {
         this.winDataEntry('I');
     },
     btnBack_click: function () {
-        if (Ext.getCmp(prototype.id22 + '-boxMainData').isVisible()) {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             var heightMenu = 400;
             Ext.getCmp('App-main-region-content-north').setHeight(heightMenu);
         }
@@ -166,13 +167,13 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
         // <editor-fold defaultstate="collapsed" desc="llenarData">
         var cmbfiltro = this.getValue('cmbfiltro');
         me.searchParams.VP_OPCION = cmbfiltro;
-        me.searchParams.VP_ACCNBR = Ext.getCmp(prototype.id22 + '-NCTA').getValue();
-        me.searchParams.VP_CREDID = Ext.getCmp(prototype.id22 + '-creditID').getValue();
+        me.searchParams.VP_ACCNBR = Ext.getCmp(prototype.id + '-NCTA').getValue();
+        me.searchParams.VP_CREDID = Ext.getCmp(prototype.id + '-creditID').getValue();
         switch (cmbfiltro) {
             case "1" :
             case "2" :
-                me.searchParams.VP_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id22 + '-fecha1').getValue(), 'Ymd');
-                me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id22 + '-fecha2').getValue(), 'Ymd');
+                me.searchParams.VP_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+                me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
                 break;
         }
         // </editor-fold>
@@ -202,14 +203,14 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
                 load: function (obj) {
                     //win.lblUser_toolTip("Estructura: A4357");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
-                    var pag = Ext.getCmp(prototype.id22 + '-paggin');
+                    var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
                     var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
                     var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
                     var total = Ext.util.Format.number(pagData.total, '0,000');
-                    Ext.getCmp(prototype.id22 + '-lbl-currentPage').setText(currentPage);
-                    Ext.getCmp(prototype.id22 + '-lbl-pageCount').setText(pageCount);
-                    Ext.getCmp(prototype.id22 + '-lbl-total').setText(total);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
                     // </editor-fold>
                     if (obj.data.length === 0) {
                         Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Data not found', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
@@ -217,27 +218,27 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
                 }
             }
         });
-        Ext.getCmp(prototype.id22 + '-gridData').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id22 + '-gridData').getStore().reload();
-        Ext.getCmp(prototype.id22 + '-paggin').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData').getStore().reload();
+        Ext.getCmp(prototype.id + '-paggin').setStore(storeGridDatas);
     },
     // </editor-fold>    
 
     exportExcel: function () {
-        if (Ext.getCmp(prototype.id22 + '-boxMainData').isVisible()) {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             global.getFile(_path);
         }
     },
     limpiarFiltros: function () {
 //        // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
-//        Ext.getCmp(prototype.id22+'-cmbDatePeriodFrom').setValue('');
-//        Ext.getCmp(prototype.id22+'-cmbDatePeriodTo').setValue('');
+//        Ext.getCmp(prototype.id+'-cmbDatePeriodFrom').setValue('');
+//        Ext.getCmp(prototype.id+'-cmbDatePeriodTo').setValue('');
 //        var mes = new Date().getMonth()+1;
 //        if(mes < 10) mes = "0"+mes;
-//        Ext.getCmp(prototype.id22+'-cmbDateMonthFrom').setValue(mes);
-//        Ext.getCmp(prototype.id22+'-cmbDateMonthTo').setValue(mes);
-//        Ext.getCmp(prototype.id22+'-cmbDateYearFrom').setValue(new Date().getFullYear());
-//        Ext.getCmp(prototype.id22+'-cmbDateYearTo').setValue(new Date().getFullYear());
+//        Ext.getCmp(prototype.id+'-cmbDateMonthFrom').setValue(mes);
+//        Ext.getCmp(prototype.id+'-cmbDateMonthTo').setValue(mes);
+//        Ext.getCmp(prototype.id+'-cmbDateYearFrom').setValue(new Date().getFullYear());
+//        Ext.getCmp(prototype.id+'-cmbDateYearTo').setValue(new Date().getFullYear());
 //        // </editor-fold>
 //        // <editor-fold defaultstate="collapsed" desc="Clear Campos">
 //        this.setValue("cboEstado", "");        
@@ -245,43 +246,43 @@ Ext.define('Ext.Praxis.controller.travelbank.FilesIssuesUses.FormTransactionsCon
 //        this.setValue("txtDateTo", "");
 //        // </editor-fold>
 //        // <editor-fold defaultstate="collapsed" desc="show">
-//        Ext.getCmp(prototype.id22+'-boxDateFilter').hide();
-//        Ext.getCmp(prototype.id22+'-boxPeriodFilter').hide();
+//        Ext.getCmp(prototype.id+'-boxDateFilter').hide();
+//        Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
 //        // </editor-fold>
     },
 
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function (obj, e) {
-        if (Ext.getCmp(prototype.id22 + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id22 + '-paggin').moveFirst();
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').moveFirst();
         }
     },
     pagPrevious: function (obj, e) {
-        if (Ext.getCmp(prototype.id22 + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id22 + '-paggin').movePrevious();
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').movePrevious();
         }
     },
     pagNext: function (obj, e) {
-        if (Ext.getCmp(prototype.id22 + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id22 + '-paggin').moveNext();
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').moveNext();
         }
     },
     pagLast: function (obj, e) {
-        if (Ext.getCmp(prototype.id22 + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id22 + '-paggin').moveLast();
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').moveLast();
         }
     },
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
-        return Ext.getCmp(prototype.id22 + '-' + id).getValue();
+        return Ext.getCmp(prototype.id + '-' + id).getValue();
     },
     focus: function (id) {
-        Ext.getCmp(prototype.id22 + '-' + id).focus();
+        Ext.getCmp(prototype.id + '-' + id).focus();
     },
     setValue: function (id, txt) {
-        return Ext.getCmp(prototype.id22 + '-' + id).setValue(txt);
+        return Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());

@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filters', {
+Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Filters', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id22 + '-filters',
+    alias: 'widget.' + prototype.id + '-filters',
     border: false,
     bodyStyle: 'background-color: #E3EAF9;',
     margin: '2 0 2 0 ',
@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
             items: [
                 {
                     xtype: 'panel',
-                    id: prototype.id22 + '-boxSearchFilter',
+                    id: prototype.id + '-boxSearchFilter',
                     width: '100%',
                     layout: 'vbox',
                     border: false,
@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id22 + '-cmbfiltro',
+                                            id: prototype.id + '-cmbfiltro',
                                             fieldLabel: 'Date type', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 120,
                                             store: new Ext.data.SimpleStore({
@@ -81,7 +81,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                 // <editor-fold defaultstate="collapsed" desc="Desde/Hasta">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id22 + '-BoxFechasDesdeHasta',
+                                    id: prototype.id + '-BoxFechasDesdeHasta',
                                     border: false,
                                     hidden: false,
                                     layout: 'hbox',
@@ -94,7 +94,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                     items: [
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id22 + '-fecha1',
+                                            id: prototype.id + '-fecha1',
                                             fieldLabel: 'Date from', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 125,
                                             width: 200,
@@ -114,14 +114,14 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                                 //change: 'onUpperValue',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        Ext.getCmp(prototype.id22 + '-fecha2').focus();
+                                                        Ext.getCmp(prototype.id + '-fecha2').focus();
                                                     }
                                                 }
                                             }
                                         },
                                         {
                                             xtype: 'datefield',
-                                            id: prototype.id22 + '-fecha2',
+                                            id: prototype.id + '-fecha2',
                                             fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 30,
                                             width: 130,
                                             height: 26,
@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                 // <editor-fold defaultstate="collapsed" desc="Account Number">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id22 + '-BoxAccountNumber',
+                                    id: prototype.id + '-BoxAccountNumber',
                                     border: false,
                                     hidden: false,
                                     layout: 'hbox',
@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id22 + '-NCTA',
+                                            id: prototype.id + '-NCTA',
                                             fieldLabel: 'Account Number', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
@@ -181,7 +181,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                 // <editor-fold defaultstate="collapsed" desc="Unique Service Credit ID">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id22 + '-BoxUniqueServiceCreditID',
+                                    id: prototype.id + '-BoxUniqueServiceCreditID',
                                     border: false,
                                     hidden: false,
                                     layout: 'hbox',
@@ -194,7 +194,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Filt
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id22 + '-creditID',
+                                            id: prototype.id + '-creditID',
                                             fieldLabel: 'Credit ID', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,

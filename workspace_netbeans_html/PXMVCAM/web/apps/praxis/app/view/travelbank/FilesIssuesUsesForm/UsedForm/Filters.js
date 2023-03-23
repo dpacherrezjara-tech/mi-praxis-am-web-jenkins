@@ -220,7 +220,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.UsedForm.Filters', {
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 9,
+                                            maxLength: 10,
                                             width: 215,
                                             height: 26,
                                             maskRe: /[0-9]/,

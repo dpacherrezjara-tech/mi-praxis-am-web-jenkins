@@ -24,7 +24,6 @@ import net.miatech.praxis.travelbank.SQP04821Filter;
 import net.miatech.praxis.travelbank.SQP04822Filter;
 import net.miatech.praxis.travelbank.SQP04823Filter;
 import net.miatech.praxis.travelbank.SQP04824Filter;
-import net.miatech.praxis.travelbank.SQP04894Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -748,6 +747,7 @@ public class TransactionFilesDAO {
 
         return lstRtn;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="LOSSES">
     public List<SQP04821Filter> getSQP04821Filter(SQP04821Filter filter) throws SQLException, Exception {
@@ -791,8 +791,8 @@ public class TransactionFilesDAO {
                 objRtn.A4347CCUST = rs01.getString("A4347CCUST");
                 objRtn.A4347IDLOS = rs01.getString("A4347IDLOS");
                 objRtn.A4347SQLOS = rs01.getString("A4347SQLOS");
-                objRtn.A4347NCTA = rs01.getString("A4347NCTA");                
-                objRtn.A4347PNR = rs01.getString("A4347PNR");                
+                objRtn.A4347NCTA = rs01.getString("A4347NCTA");
+                objRtn.A4347PNR = rs01.getString("A4347PNR");
                 objRtn.A4347PRDA = rs01.getString("A4347PRDA");
                 objRtn.A4347SQDIA = rs01.getString("A4347SQDIA");
                 objRtn.A4347MDA = rs01.getString("A4347MDA");
@@ -805,7 +805,7 @@ public class TransactionFilesDAO {
                 objRtn.A4347SERIE = rs01.getString("A4347SERIE");
                 objRtn.A4347STS = rs01.getString("A4347STS");
                 objRtn.A4347ERR = rs01.getString("A4347ERR");
-                
+
                 objRtn.A4347IDFIL = rs01.getString("A4347IDFIL");
                 objRtn.A4347TYPE = rs01.getString("A4347TYPE");
                 objRtn.A4347PCONT = rs01.getString("A4347PCONT");
@@ -826,7 +826,7 @@ public class TransactionFilesDAO {
                 objRtn.A4347FPROC = rs01.getString("A4347FPROC");
                 objRtn.A4347HPROC = rs01.getString("A4347HPROC");
                 objRtn.A4347STSP2 = rs01.getString("A4347STSP2");
-                  
+
                 // aut
                 objRtn.A4347REGIS = rs01.getString("A4347REGIS");
                 objRtn.A4347FREGI = rs01.getString("A4347FREGI");
@@ -864,6 +864,7 @@ public class TransactionFilesDAO {
 
         return lstRtn;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="MERGE">
     public List<SQP04822Filter> getSQP04822Filter(SQP04822Filter filter) throws SQLException, Exception {
@@ -919,7 +920,7 @@ public class TransactionFilesDAO {
                 objRtn.A4356IDFIL = rs01.getString("A4356IDFIL");
                 objRtn.A4356TYPE = rs01.getString("A4356TYPE");
                 objRtn.A4356PCONT = rs01.getString("A4356PCONT");
-                objRtn.A4356FCONT = rs01.getString("A4356FCONT");                
+                objRtn.A4356FCONT = rs01.getString("A4356FCONT");
                 // aut
                 objRtn.A4356REGIS = rs01.getString("A4356REGIS");
                 objRtn.A4356FREGI = rs01.getString("A4356FREGI");
@@ -975,7 +976,7 @@ public class TransactionFilesDAO {
             cstmt01.registerOutParameter(9, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.VP_OPCION);            
+            cstmt01.setString(2, filter.VP_OPCION);
             cstmt01.setString(3, filter.VP_NCTA);
             cstmt01.setString(4, filter.VP_PRDA);
             cstmt01.setString(5, filter.VP_TRAN);
@@ -1000,7 +1001,7 @@ public class TransactionFilesDAO {
                 objRtn.A4357RFCTA = rs01.getString("A4357RFCTA");
                 objRtn.A4357PRDA = rs01.getString("A4357PRDA");
                 objRtn.A4357SQDIA = rs01.getString("A4357SQDIA");
-                objRtn.A4357MDA = rs01.getString("A4357MDA");                
+                objRtn.A4357MDA = rs01.getString("A4357MDA");
                 objRtn.A4357DEC = rs01.getString("A4357DEC");
                 objRtn.A4357VALOR = rs01.getDouble("A4357VALOR");
                 objRtn.A4357BALNC = rs01.getDouble("A4357BALNC");
@@ -1014,7 +1015,7 @@ public class TransactionFilesDAO {
                 objRtn.A4357TYPE = rs01.getString("A4357TYPE");
                 objRtn.A4357TRNCU = rs01.getString("A4357TRNCU");
                 objRtn.A4357IDISS = rs01.getString("A4357IDISS");
-                
+
                 // aut
                 objRtn.A4357REGIS = rs01.getString("A4357REGIS");
                 objRtn.A4357FREGI = rs01.getString("A4357FREGI");
@@ -1052,6 +1053,7 @@ public class TransactionFilesDAO {
 
         return lstRtn;
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="LIABILITY">
     public List<SQP04824Filter> getSQP04824Filter(SQP04824Filter filter) throws SQLException, Exception {
@@ -1071,7 +1073,7 @@ public class TransactionFilesDAO {
             cstmt01.registerOutParameter(12, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.VP_OPCION);            
+            cstmt01.setString(2, filter.VP_OPCION);
             cstmt01.setString(3, filter.VP_IDMER);
             cstmt01.setString(4, filter.VP_NCTAT);
             cstmt01.setString(5, filter.VP_DESDE);
@@ -1098,7 +1100,7 @@ public class TransactionFilesDAO {
                 objRtn.A4357RFCTA = rs01.getString("A4357RFCTA");
                 objRtn.A4357PRDA = rs01.getString("A4357PRDA");
                 objRtn.A4357SQDIA = rs01.getString("A4357SQDIA");
-                objRtn.A4357MDA = rs01.getString("A4357MDA");                
+                objRtn.A4357MDA = rs01.getString("A4357MDA");
                 objRtn.A4357DEC = rs01.getString("A4357DEC");
                 objRtn.A4357VALOR = rs01.getDouble("A4357VALOR");
                 objRtn.A4357BALNC = rs01.getDouble("A4357BALNC");
@@ -1111,7 +1113,7 @@ public class TransactionFilesDAO {
                 objRtn.A4357IDFIL = rs01.getString("A4357IDFIL");
                 objRtn.A4357TYPE = rs01.getString("A4357TYPE");
                 objRtn.A4357TRNCU = rs01.getString("A4357TRNCU");
-                objRtn.A4357IDISS = rs01.getString("A4357IDISS");                
+                objRtn.A4357IDISS = rs01.getString("A4357IDISS");
                 // aut
                 objRtn.A4357REGIS = rs01.getString("A4357REGIS");
                 objRtn.A4357FREGI = rs01.getString("A4357FREGI");
@@ -1149,83 +1151,6 @@ public class TransactionFilesDAO {
 
         return lstRtn;
     }
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="CONSULTA POR TRANSACC ID">
-    public List<SQP04894Filter> getSQP04894Filter(SQP04894Filter filter) throws SQLException, Exception {
-        List<SQP04894Filter> lstRtn = new ArrayList<SQP04894Filter>(0);
-        SQP04894Filter objRtn;
 
-        CallableStatement cstmt01 = null;
-        ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PXTRVLBANK.SQP04894(?,?,?,?,?,?)}";
-        Connection cnx = null;
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt01 = cnx.prepareCall(SQLCLL01);
-//            cstmt01.registerOutParameter(9, Types.INTEGER);
-//            cstmt01.registerOutParameter(10, Types.INTEGER);
-//            cstmt01.registerOutParameter(11, Types.INTEGER);
-//            cstmt01.registerOutParameter(12, Types.INTEGER);
-            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.VP_OPCION);            
-            cstmt01.setString(3, filter.VP_FECHA1);
-            cstmt01.setString(4, filter.VP_FECHA2);
-            cstmt01.setString(5, filter.VP_ACCNBR);
-            cstmt01.setString(6, filter.VP_CREDID);
-//            cstmt01.setInt(9, filter.page.PAGNUM);
-//            cstmt01.setInt(10, filter.page.PAGROW);
-//            cstmt01.setInt(11, filter.page.TOTPAG);
-//            cstmt01.setInt(12, filter.page.TOTROW);
-            cstmt01.execute();
-//            filter.page.PAGNUM = cstmt01.getInt(9);
-//            filter.page.PAGROW = cstmt01.getInt(10);
-//            filter.page.TOTPAG = cstmt01.getInt(11);
-//            filter.page.TOTROW = cstmt01.getInt(12);
-
-            rs01 = cstmt01.getResultSet();
-            while (rs01.next()) {
-                objRtn = new SQP04894Filter();
-                objRtn.XAIRLIN = rs01.getString("XAIRLIN");
-                objRtn.XCREDID = rs01.getString("XCREDID");
-                objRtn.XFILE = rs01.getString("XFILE");
-                objRtn.XTRANSACTION = rs01.getString("XTRANSACTION");
-                objRtn.XDATE = rs01.getString("XDATE");
-                objRtn.XTICKET = rs01.getString("XTICKET");
-                objRtn.XCURR = rs01.getString("XCURR");
-                objRtn.XVALUE = rs01.getDouble("XVALUE");                               
-                objRtn.XBALANCE = rs01.getDouble("XBALANCE");
-                objRtn.XTCAMBIO = rs01.getDouble("XTCAMBIO");
-                objRtn.XVREVENUE = rs01.getDouble("XVREVENUE");
-                objRtn.XVPESOS = rs01.getDouble("XVPESOS");            
-                
-//                objRtn.page.PAGNUM = filter.page.PAGNUM;
-//                objRtn.page.PAGROW = filter.page.PAGROW;
-//                objRtn.page.TOTPAG = filter.page.TOTPAG;
-//                objRtn.page.TOTROW = filter.page.TOTROW;
-
-                lstRtn.add(objRtn);
-            }
-
-        } finally {
-            if (rs01 != null) {
-                try {
-                    rs01.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            if (cstmt01 != null) {
-                try {
-                    cstmt01.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-
-        return lstRtn;
-    }
-    // </editor-fold>
+    // </editor-fold>    
 }

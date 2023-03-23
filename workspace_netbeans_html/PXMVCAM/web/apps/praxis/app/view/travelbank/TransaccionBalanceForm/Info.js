@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info', {
+Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id22 + '-info',
+    alias: 'widget.' + prototype.id + '-info',
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
     items: [
         {
             region: 'center',
-            id: prototype.id22 + '-boxConsultas',
+            id: prototype.id + '-boxConsultas',
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                 // <editor-fold defaultstate="collapsed" desc="boxMainData">
                 {
                     region: 'center',
-                    id: prototype.id22 + '-boxMainData',
+                    id: prototype.id + '-boxMainData',
                     hidden: false,
                     layout: {
                         type: 'vbox',
@@ -41,9 +41,9 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
-                            id: prototype.id22 + '-gridData',
+                            id: prototype.id + '-gridData',
                             //width: prototype.widthGrid,
-                            width: 850,
+                            width: 1150,
                             // width: '100vw',
                             height: 510,
                             columnLines: true,
@@ -70,14 +70,17 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
 //                                        ]
 //                                    },
                                     {
-                                        text: 'File', dataIndex: 'XFILE', width: 90,
+                                        text: 'File', dataIndex: 'XFILE', width: 70,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
                                     },
                                     {
-                                        text: 'Transacction', dataIndex: 'XTRANSACTION', width: 100
+                                        text: 'Transacction', dataIndex: 'XTRANSACTION', width: 90
+                                    },
+                                    {
+                                        text: 'Credit ID', dataIndex: 'XCREDID', width: 90
                                     },
                                     {
                                         text: 'Date', dataIndex: 'XDATE', width: 80,
@@ -87,12 +90,20 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                                         }
                                     },
                                     {
-                                        text: 'Ticket', dataIndex: 'XTICKET', width: 110,
+                                        text: 'Ticket', dataIndex: 'XTICKET', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
                                     },
+                                    {
+                                        text: 'Credit<br>ID Ref.', dataIndex: 'XIDISR', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+
                                     {
                                         text: 'Curr.', dataIndex: 'XCURR', width: 70,
                                         renderer: function (value, metaData) {
@@ -115,23 +126,48 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                                         text: 'Balance', dataIndex: 'XBALANCE', width: 90,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');;
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                            ;
                                         }
                                     },
                                     {
                                         text: 'TC. BSR', dataIndex: 'XTCAMBIO', width: 90,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0.000000');;
+                                            return Ext.util.Format.number(value, '0.000000');
+                                            ;
                                         }
                                     },
                                     {
                                         text: 'Valor USD', dataIndex: 'XVREVENUE', width: 90,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');;
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                            ;
+                                        }
+                                    },
+                                    {
+                                        text: 'Ind.', dataIndex: 'XFLAG1', width: 50,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value; //Ext.util.Format.number(value, '0.000000');;
+                                        }
+                                    },
+                                    {
+                                        text: 'Error', dataIndex: 'XERROR', width: 60,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value; //Ext.util.Format.number(value, '0.000000');;
+                                        }
+                                    },
+                                    {
+                                        text: 'Crd. ID<br>Reinst. ', dataIndex: 'XIDRIN', width: 90,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value; //Ext.util.Format.number(value, '0.000000');;
                                         }
                                     }
+
                                 ]
                             }
                         },
@@ -139,7 +175,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',
-                            id: prototype.id22 + '-pie',
+                            id: prototype.id + '-pie',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center',
@@ -170,7 +206,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                                             width: 50
                                         },
                                         {
-                                            id: prototype.id22 + '-lbl-currentPage',
+                                            id: prototype.id + '-lbl-currentPage',
                                             text: '1',
                                             width: 50
                                         },
@@ -179,7 +215,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                                             width: 50
                                         },
                                         {
-                                            id: prototype.id22 + '-lbl-pageCount',
+                                            id: prototype.id + '-lbl-pageCount',
                                             text: '0',
                                             width: 50
                                         },
@@ -189,7 +225,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Info
                                             width: 80
                                         },
                                         {
-                                            id: prototype.id22 + '-lbl-total',
+                                            id: prototype.id + '-lbl-total',
                                             text: '0',
                                             width: 50
                                         }

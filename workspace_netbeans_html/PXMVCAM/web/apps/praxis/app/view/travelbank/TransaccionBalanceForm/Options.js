@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Options', {
+Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Options', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id22 + '-options',
+    alias: 'widget.' + prototype.id + '-options',
     border: false,
     layout: {
         type: 'hbox',
@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
     items: [
         {
             xtype: 'panel',
-            id: prototype.id22+'-boxPaginacion',
+            id: prototype.id+'-boxPaginacion',
             hidden: false,
             width: 100,
             border: false,
@@ -21,7 +21,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btn-pag-first',
+                            id: prototype.id + '-btn-pag-first',
                             iconCls: 'prx-icon-pagination-first',
                             tooltip: 'First Page',
                             listeners: {
@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btn-pag-previous',
+                            id: prototype.id + '-btn-pag-previous',
                             iconCls: 'prx-icon-pagination-previous',
                             tooltip: 'Previous Page',
                             listeners: {
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btn-pag-next',
+                            id: prototype.id + '-btn-pag-next',
                             iconCls: 'prx-icon-pagination-next',
                             tooltip: 'Next Page',
                             listeners: {
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btn-pag-last',
+                            id: prototype.id + '-btn-pag-last',
                             iconCls: 'prx-icon-pagination-last',
                             tooltip: 'Last Page',
                             listeners: {
@@ -59,7 +59,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id22 + '-paggin',
+                            id: prototype.id + '-paggin',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btnSearch',
+                            id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
                             listeners: {
@@ -88,7 +88,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btnFilter',
+                            id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button', hidden:true, /* por ahora NO */
-                            id: prototype.id22 + '-btnExcel',
+                            id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
                             listeners: {
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btnClear',
+                            id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
                             listeners: {
@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button', disabled:true,
-                            id: prototype.id22 + '-btnAdd',
+                            id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
                             tooltip: 'New',
                             listeners: {
@@ -124,7 +124,7 @@ Ext.define('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.TransactionsForm.Opti
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id22 + '-btnBack',
+                            id: prototype.id + '-btnBack',
                             iconCls: 'prx-icon-back',
                             tooltip: 'Back',
                             listeners: {
