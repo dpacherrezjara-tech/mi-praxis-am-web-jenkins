@@ -1,5 +1,6 @@
 
 prototype.id = 'PendingGroupingForm';
+prototype.id2 = 'DataEntryPendingGroupingForm';
 prototype.url = CONTEXTPATH + '/PendingGroupingForm';
 prototype.widthWindow = 1200;
 prototype.heightWindow = 768;
@@ -236,6 +237,26 @@ Ext.define('Ext.Praxis.view.salesaudit.PendingGroupingForm.PendingGroupingForm',
                                             }
                                         },
                                         {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-ComboTrncu',
+                                            fieldLabel: 'Transaccion',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 150,
+                                            labelWidth: 70,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 150
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbSearchAfterRender'
+                                                //change: 'onCmbTrncuChange'
+
+                                            }
+                                        },
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtIATA',
                                             width: 100,
@@ -392,6 +413,7 @@ Ext.define('Ext.Praxis.view.salesaudit.PendingGroupingForm.PendingGroupingForm',
                                     {text: 'System<br>Date', dataIndex: 'A3329FREGI', width: 70},
                                      {text: 'Processing<br>Date', dataIndex: 'A3329FPROC', width: 80},
                                     {text: 'Country', dataIndex: 'A3329PAIS', width: 70},
+                                    {text: 'Transaction', dataIndex: 'A3329TRNCU', width: 80},
                                     {text: 'Ticket', dataIndex: 'A3329TIKET', width: 100},
                                     {text: 'IATA', dataIndex: 'A3329IATA', width: 70},
                                     {text: 'Agency', dataIndex: 'A3329NAMEAGEN', width: 180, renderer: 'onRendererColumnAttr'},
