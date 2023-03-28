@@ -377,7 +377,7 @@ Ext.define('Ext.Praxis.view.salesaudit.PendingGroupingForm.PendingGroupingForm',
                                 selType: 'checkboxmodel',
                                 listeners: {
                                     beforeselect: function (grid, record, index, eOpts, metaData) {
-                                        if (Ext.String.trim(record.get('A3329FLAG')) !== 'Pending') {
+                                        if (Ext.String.trim(record.get('A3329FLAG')) !== 'Pending' && Ext.String.trim(record.get('A3329FLAG')) !== 'Unregistered Client') {
                                             return false;
                                         } else {
                                             return true;

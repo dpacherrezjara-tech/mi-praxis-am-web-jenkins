@@ -69,7 +69,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "Y", "name": "PENDING GROUPING"},
-                {"code": "A", "name": "WITH GROUPING"}
+                {"code": "A", "name": "WITH GROUPING"},
+                {"code": "C", "name": "UNREGISTERED CLIENT"}
             ]
         }));
 
@@ -142,7 +143,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
     OnColumnStatusRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         if (String(record.get('A3329FLAG')) === 'Void') {
             value = 'red';
-        } else if (String(record.get('A3329FLAG')) === 'Pending') {
+        }else if (String(record.get('A3329FLAG')) === 'Unregistered Client') {
+            value = 'orange';
+        }else if (String(record.get('A3329FLAG')) === 'Pending') {
             value = 'yellow';
         } else {
             value = 'green';
