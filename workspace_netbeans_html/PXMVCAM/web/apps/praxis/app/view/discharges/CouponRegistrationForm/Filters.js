@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Filters', {
             border: false,
             bodyStyle: 'background: transparent',
             padding: '0px 5px 1px 0px',
-            layout: 'vbox',
+            layout: {type:'vbox',align:'center'},
             defaults: {
                 labelStyle: 'font-weight:bold;',
                 fieldStyle: 'text-align: center;',
@@ -90,18 +90,31 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Filters', {
                             labelWidth: 30
                         },
                         {
+                            xtype:'textfield',
+                            id: prototype.id + '-txtCia',
+                            value:'139',
+                            required: true,
+                            disabled: false,
+                            readOnly: false,
+                            fieldLabel: 'Ticket:',
+                            maxLength: 3,
+                            width:80,
+                            labelWidth:40,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/
+                        },
+                        {
                             xtype: 'textfield',
                             id: prototype.id + '-txtTicket',
                             required: true,
                             disabled: false,
                             readOnly: false,
-                            fieldLabel: 'Ticket',
-                            width: 150,
-                            labelWidth: 50,
+                            fieldLabel: '',
+                            width: 90,
                             enableKeyEvents: true,
                             labelAlign: 'left',
                             enforceMaxLength: true,
-                            maxLength: 13,
+                            maxLength: 10,
                             maskRe: /[0-9]/
                         }
                     ]

@@ -8,56 +8,56 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Options', {
         pack: 'end'
     },
     items: [
-        {
-            xtype: 'panel',
-            width: 100,
-            border: false,
-            items: [
-                {
-                    xtype: 'toolbar',
-                    cls: 'x-toolbar-pag',
-                    items: [
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-first',
-                            iconCls: 'prx-icon-pagination-first',
-                            tooltip: 'First Page'
-
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-previous',
-                            iconCls: 'prx-icon-pagination-previous',
-                            tooltip: 'Previous Page'
-
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-next',
-                            iconCls: 'prx-icon-pagination-next',
-                            tooltip: 'Next Page'
-
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-last',
-                            iconCls: 'prx-icon-pagination-last',
-                            tooltip: 'Last Page'
-
-                        }
-                        , {
-                            xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',
-                            pageSize: 10,
-                            border: false,
-                            displayInfo: false,
-                            hidden: true
-                        }
-                    ]
-                }
-            ]
-        },
-        {xtype: 'tbspacer', width: 20},
+//        {
+//            xtype: 'panel',
+//            width: 100,
+//            border: false,
+//            items: [
+//                {
+//                    xtype: 'toolbar',
+//                    cls: 'x-toolbar-pag',
+//                    items: [
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-first',
+//                            iconCls: 'prx-icon-pagination-first',
+//                            tooltip: 'First Page'
+//
+//                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-previous',
+//                            iconCls: 'prx-icon-pagination-previous',
+//                            tooltip: 'Previous Page'
+//
+//                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-next',
+//                            iconCls: 'prx-icon-pagination-next',
+//                            tooltip: 'Next Page'
+//
+//                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-last',
+//                            iconCls: 'prx-icon-pagination-last',
+//                            tooltip: 'Last Page'
+//
+//                        }
+//                        , {
+//                            xtype: 'pagingtoolbar',
+//                            id: prototype.id + '-paggin',
+//                            pageSize: 10,
+//                            border: false,
+//                            displayInfo: false,
+//                            hidden: true
+//                        }
+//                    ]
+//                }
+//            ]
+//        },
+//        {xtype: 'tbspacer', width: 20},
         {
             xtype: 'panel',
             border: true,

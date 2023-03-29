@@ -88,6 +88,7 @@ public class CouponRegistrationController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_OPCION = Integer.parseInt(request.getParameter("IN_OPCION"));
+            filter.IN_TIPOC = request.getParameter("IN_TIPOC");
             filter.IN_FECHAFROM = request.getParameter("IN_FECHAFROM");
             filter.IN_FECHATO = request.getParameter("IN_FECHATO");
             filter.IN_TKT = request.getParameter("IN_TKT");

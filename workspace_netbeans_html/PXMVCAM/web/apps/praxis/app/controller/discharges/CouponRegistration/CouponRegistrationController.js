@@ -9,13 +9,12 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
     alias: 'controller.CouponRegistrationController',
     fecha: new Date(),
     paginActual: '',
-    drillDown: [],
     gridActual: '',
     me: '',
     searchParams: {},
     summaryParams: {},
     paramsDetail: {},
-    panelAnterior:null,
+    panelAnterior: null,
     init: function (view) {
         prototype.id = 'CouponRegistrationForm';
         prototype.url = CONTEXTPATH + '/CouponRegistration';
@@ -67,6 +66,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         this.setStoreData();
 //      this.btnSearch_click();
     },
+    //<editor-fold defaultstate="collapsed" desc="utils">
     eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
@@ -75,6 +75,11 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
+    getSelectecOption: function () {
+        return Ext.getCmp(prototype.id + '-cmbDate').getValue();
+    },
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="set vars">
     setStoreData: function () {
         var cmbDate = Ext.getCmp(prototype.id + '-cmbDate');
         cmbDate.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -100,6 +105,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                 break;
             case '3':
                 Ext.getCmp(prototype.id + '-txtTicket').show();
+                Ext.getCmp(prototype.id + '-txtCia').show();
                 break;
         }
     },
@@ -107,140 +113,248 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         Ext.getCmp(prototype.id + '-txtFDesde').hide();
         Ext.getCmp(prototype.id + '-txtFHasta').hide();
         Ext.getCmp(prototype.id + '-txtTicket').hide();
+        Ext.getCmp(prototype.id + '-txtCia').hide();
     },
-    btnSearch_click: function (obj, e) {
-        //this.setFormatParameter();
-        this.setGridData(obj, e);
-    },
-    setFormatParameter: function () {
+    setSummaryParameter: function () {
         var IN_OPCION = Ext.getCmp(prototype.id + '-cmbDate').getValue();
         var IN_FECHAFROM = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFDesde').getValue(), 'Ymd');
         var IN_FECHATO = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFHasta').getValue(), 'Ymd');
-        var IN_TKT = Ext.getCmp(prototype.id + '-txtTicket').getValue();
 
         summaryParams = {
-            TFECHA: '0',
+            TFECHA: IN_OPCION,
             TIPO: '',
             FINICIO: IN_FECHAFROM,
             FFIN: IN_FECHATO
         };
-        searchParams = {
-            IN_OPCION: IN_OPCION,
-            IN_FECHAFROM: IN_FECHAFROM,
-            IN_FECHATO: IN_FECHATO,
-            IN_TKT: IN_TKT
-        };
-        //console.log(searchParams);
+
     },
+    setDetailParameter: function (opcion, from, to, tipoc, tkt = '') {
+        searchParams = {
+            IN_OPCION: opcion,
+            IN_FECHAFROM: from,
+            IN_FECHATO: to,
+            IN_TIPOC: tipoc,
+            IN_TKT: tkt
+        };
+        console.log(searchParams);
+    },
+    //</editor-fold>
     setGridData: function (obj, val) {
         let me = this;
         let option = me.getSelectecOption();
         win.lblUser_toolTip("Estructura: A1747");
-        this.setFormatParameter();
-        if (option !== '3' && option !== '') {
-            me.getSummaryData();
-            //me.ejemplo();
+        const actions = {
+            '' : () => {global.Msg({msg:'Seleccione una Opcion'});},
+            '1': () => me.getSummaryData(option),
+            '2': () => me.getSummaryData(option),
+            '3': () => me.getTktDetailData(option)
+        };
+        const selectedAction = actions[option];
+        if (selectedAction) {
+            selectedAction();
         }
-//        var storeGridDatas = Ext.create('Ext.Praxis.store.discharges.GridData', {
-//            proxy: {
-//                url: prototype.url + '/search'
-//            }, listeners: {
-//                beforeload: function(obj) {
-//                    obj.proxy.extraParams = searchParams;
-//                },
-//                load: function(obj) {
-//                    var pag = Ext.getCmp(prototype.id + '-paggin');
-//                    var pagData = pag.getPageData();
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-//                    if (obj.data.length === 0) {
-//                        global.Msg({
-//                            msg: 'Data not found.'
-//                        });
-//                    }
-//                }
-//            }
-//        });
         global.clear();
-//        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
-    getSummaryData: async function () {
+    getSummaryData: async function (tfecha) {
+        this.setSummaryParameter();
         let panel = Ext.getCmp(prototype.id + '-regionCenterGrid01');
         panel.mask('Loading...');
         panel.removeAll();
         let data = await fetch(prototype.url + '/searchSummary?' + new URLSearchParams(summaryParams))
                 .then(async res => await res.json())
-                .catch(err => console.error(err));
+                .catch(err => {
+                    console.error('Error al obtener data',err);
+                    global.Msg({msg:'Data not Found'});
+                });
+        let summaryStore = Ext.create('Ext.data.Store', {
+            storeId: prototype.id + '-summary-data',
+            pageSize: 20,
+            proxy: {
+                type: 'memory',
+                enablePaging: true
+            },
+            autoLoad: true,
+            autoSync: true,
+            data: data
+        });
         let summaryGrid = Ext.create('Ext.grid.Panel', {
-            store: Ext.create('Ext.data.Store', {
-                storeId: prototype.id + '-summary-data',
-                data: data
-            }),
-            id:prototype.id+'-summary-grid',
+            store: summaryStore,
+            id: prototype.id + '-summary-grid',
+            title: 'Coupon Registrarion Summary',
             height: 550,
-            width: 650,
-            //<editor-fold defaultstate="collapsed" desc="columnas">
-            columns: [
-                {text: 'Accounting Data', dataIndex: 'fvta',width:100},
-                {text: 'Discharge Type', dataIndex: 'tipoc',width:100},
-                {text: 'N° de Documentos', dataIndex: 'tdocs',width:100},
-                {text: 'Fare Amount', dataIndex: 'tfare',width:100,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        metaData.style = 'text-align:center;';
-                        return Ext.util.Format.number(value, '0,000.00');
-                    }},
-                {text: 'YQ Amount', dataIndex: 'tyq',width:100,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        return Ext.util.Format.number(value, '0,000.00');
-                    }},
+            width: 750,
+            features: [
                 {
-                    xtype: 'actioncolumn',
-                    sortable: false,
-                    width: 60,
-                    align: 'center', items: [
-                        {
-                            iconCls:'prx-icon-image-file',
-                            tooltip: 'Show Details',
-                            handler: 'onShowDetail'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'actioncolumn',
-                    sortable: false,
-                    width: 60,
-                    align: 'center', items: [
-                        {
-                            iconCls:'prx-icon-excel',
-                            tooltip: 'Download Details',
-                            handler: 'onDownloadClick'
-                        }
-                    ]
+                    dock: 'bottom',
+                    ftype: 'summary',
                 }
-            ]
-                    //</editor-fold>
+            ],
+            resizable: false,
+            columnLines: true,
+            viewConfig: {
+                stripeRows: true,
+                enableTextSelection: true,
+                markDirty: false,
+            },
+            //<editor-fold defaultstate="collapsed" desc="columnas">
+            columns: {
+                items: [
+                    {
+                        text: tfecha === '1' ? 'Accounting Date' : 'Emission Date',
+                        dataIndex: tfecha === '1' ? 'fcont' : 'fvta',
+                        width: 150
+                    },
+                    {text: 'Discharge Type', dataIndex: 'tipoc', width: 150,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            let newVal = '';
+                            switch (value) {
+                                case '1':
+                                    newVal = 'NATURAL';
+                                    metaData.style = 'background:#DAE570;';
+                                    break;
+                                case '2':
+                                    newVal = 'ETNICO';
+                                    metaData.style = 'background:#9EE570;';
+                                    break;
+                                case '3':
+                                    newVal = 'NO REEMBOLSABLE';
+                                    metaData.style = 'background:#E59570;';
+                                    break;
+                                case '4':
+                                    newVal = 'ETNICO A NATURAL';
+                                    metaData.style = 'background:#70E5A3;';
+                                    break;
+                                case '5':
+                                    newVal = 'NO REEMBOLSABLE A NATURAL';
+                                    metaData.style = 'background:#70E5D1;';
+                                    break;
+                                case '6':
+                                    newVal = 'NO-SHOW';
+                                    metaData.style = 'background:#7087E5;';
+                                    break;
+                                case '7':
+                                    newVal = 'RAC474';
+                                    metaData.style = 'background:#9E70E5;';
+                                    break;
+                                case '7':
+                                    newVal = 'RFTX';
+                                    metaData.style = 'background:#E570C7;';
+                                    break;
+                                default:
+                                    newVal = 'DESCONOCIDO';
+                                    metaData.style = 'background:#E83636;';
+                            }
+                            metaData.style += 'text-align:center;font-weight: bold;';
+                            return newVal;
+                        }},
+                    {text: 'N° de <br>Documentos', dataIndex: 'tdocs', width: 100,
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex) {
+                            return Ext.util.Format.number(value, '0,000');
+                        }, },
+                    {text: 'Fare Amount', dataIndex: 'tfare', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:right;';
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
+                    },
+                    {text: 'YQ Amount', dataIndex: 'tyq', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:right;';
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
+                    },
+                    {
+                        xtype: 'actioncolumn',
+                        sortable: false,
+                        width: 60,
+                        align: 'center', items: [
+                            {
+                                iconCls: 'prx-icon-image-file',
+                                tooltip: 'Show Details',
+                                handler: 'onShowDetail'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'actioncolumn',
+                        sortable: false,
+                        width: 60,
+                        align: 'center', items: [
+                            {
+                                iconCls: 'prx-icon-excel',
+                                tooltip: 'Download Details',
+                                handler: 'onDownloadClick'
+                            }
+                        ]
+                    }
+                ],
+                defaults: {
+                    align: 'center'
+                }
+            },
+            //</editor-fold>
+            bbar: Ext.create('Ext.toolbar.Paging', {
+                id: prototype.id + '-summary-paggin',
+                store: summaryStore,
+                displayInfo: true, // display additional information like "Displaying x of y items"
+            })
         });
         panel.add(summaryGrid);
         panel.unmask();
     },
-    getSummaryDetailData: async function (grid, record) {
+    getTktDetailData:function(opcion){
+        let me = this;
+        let cia = Ext.getCmp(prototype.id + '-txtCia').getValue();
+        let tkt = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+        me.setDetailParameter(opcion,'','','',cia + tkt);
+        me.getSummaryDetailData();
+    },
+    getSummaryDetailData: async function () {
         let me = this;
         let parentContainer = Ext.getCmp(prototype.id + '-regionCenterGrid01');
-        me.panelAnterior = parentContainer.items.last();
-        me.panelAnterior.setVisible(false);
-        let data = await fetch(prototype.url + '/search?' + new URLSearchParams(searchParams))
-                .then(async res => await res.json())
-                .catch(err => console.error(err));
+        parentContainer.mask('Loading Details...');
+        let opcion = me.getSelectecOption()!=='3';
+        if(opcion){
+            me.panelAnterior = parentContainer.items.last();
+            me.panelAnterior.setVisible(false);
+        }else{
+            parentContainer.removeAll();
+        }
+
+        let detailStore = Ext.create('Ext.data.Store', {
+            storeId: prototype.id + '-detail-summary-data',
+            loadMask: true,
+            proxy: {
+                type: 'ajax',
+                enablePaging: true,
+                url: prototype.url + '/search',
+                extraParams: searchParams,
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data',
+                    totalProperty: 'total'
+                }
+            },
+            autoLoad: true,
+        });
+
         let detailPanel = Ext.create('Ext.grid.Panel', {
-            store: Ext.create('Ext.data.Store', {
-                storeId: prototype.id + '-detail-summary-data',
-                data: data.data
-            }),
-            id:prototype.id+'-detail-summary-grid',
-            height: 550,
-            width: 1480,
+            store: detailStore,
+            id: prototype.id + '-detail-summary-grid',
+            title: 'Coupon Registrarion Detail',
+            height: 560,
+            width: 1485,
             //<editor-fold defaultstate="collapsed" desc="columnas">
             columns: [
                 {text: 'Accounting <br>Date', dataIndex: 'FCONT', width: 80},
@@ -280,30 +394,94 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                     }
                 }
             ],
-                    //</editor-fold>
-            dockedItems:[
+            //</editor-fold>
+            dockedItems: [
                 {
-                    xtype:'button',
-                    text: 'Atrás',
-                    width:100,
-                    maxWidth:100,
-                    handler:function(){
-                        this.up().up().remove(this.up());
-                        me.panelAnterior.setVisible(true);
-                    }
-                }
-            ]      
+                    xtype: 'panel',
+                    border: false,
+                    layout: {
+                        type: 'hbox',
+                        align: 'center'
+                    },
+                    items: [
+                        opcion?
+                        {
+                            xtype: 'button',
+                            text: 'Atrás',
+                            tooltip: 'Volver a Summary',
+                            width: 100,
+                            maxWidth: 100,
+                            handler: function () {
+                                parentContainer.remove(this.up().up(), true);
+                                me.panelAnterior.setVisible(true);
+                            }
+                        }:null,
+                        //<editor-fold defaultstate="collapsed" desc="paginado">
+                        {
+                            xtype: 'panel',
+                            width: 100,
+                            border: false,
+                            items: [
+                                {
+                                    xtype: 'toolbar',
+                                    cls: 'x-toolbar-pag',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-det-first',
+                                            iconCls: 'prx-icon-pagination-first',
+                                            tooltip: 'First Page',
+                                            listeners: {click: 'paginMove'}
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-det-previous',
+                                            iconCls: 'prx-icon-pagination-previous',
+                                            tooltip: 'Previous Page',
+                                            listeners: {click: 'paginMove'}
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-det-next',
+                                            iconCls: 'prx-icon-pagination-next',
+                                            tooltip: 'Next Page',
+                                            listeners: {click: 'paginMove'}
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-det-last',
+                                            iconCls: 'prx-icon-pagination-last',
+                                            tooltip: 'Last Page',
+                                            listeners: {click: 'paginMove'}
+
+                                        }
+                                        , {
+                                            xtype: 'pagingtoolbar',
+                                            id: prototype.id + '-det-paggin',
+                                            store: detailStore,
+                                            border: false,
+                                            displayInfo: false,
+                                            hidden: true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                        //</editor-fold>
+                    ]
+                },
+            ],
         });
         parentContainer.add(detailPanel);
-        
-    },
-    getSelectecOption: function () {
-        return Ext.getCmp(prototype.id + '-cmbDate').getValue();
-    },
-    onShowDetail: function(grid, record, action, rowIndex, colIndex, item, e){
-        this.getSummaryDetailData(grid,record);
+        parentContainer.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="botones">
+    btnSearch_click: function (obj, e) {
+        this.setGridData(obj, e);
+    },
     btnBack_click: function (obj, e) {
         global.showMenu();
     },
@@ -348,6 +526,14 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             option.setVisible(true);
         }
     },
+    onShowDetail: function (grid, record) {
+        let me = this;
+        const rec = grid.getStore().getAt(record);
+        let fecha = rec.get('fcont') ? rec.get('fcont') : rec.get('fvta');
+        me.setDetailParameter(me.getSelectecOption(), fecha, fecha, rec.get('tipoc'));
+        //console.log(searchParams);
+        me.getSummaryDetailData();
+    },
     //</editor-fold>
     /*     
      * Funciones para la paginacion     
@@ -372,6 +558,22 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         var pag = Ext.getCmp(prototype.id + '-paggin');
         var pagData = pag.getPageData();
         pag.moveLast();
-    }
+    },
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="paginacion detail">
+    paginMove: function (button) {
+        let buttonId = button.getId().split('-').at(-1);
+        let pag = Ext.getCmp(prototype.id + '-det-paggin');
+        const actions = {
+            'first': () => pag.moveFirst(),
+            'previous': () => pag.movePrevious(),
+            'next': () => pag.moveNext(),
+            'last': () => pag.moveLast()
+        };
+        const selectedAction = actions[buttonId];
+        if (selectedAction) {
+            selectedAction();
+        }
+    },
     //</editor-fold>
 });
