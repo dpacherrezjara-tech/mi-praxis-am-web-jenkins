@@ -33,6 +33,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
 
     OnBeforeShow: function () {
         prototype.id = 'PendingGroupingForm';
+        prototype.id2 = 'DataEntryPendingGroupingForm';
         prototype.url = CONTEXTPATH + '/PendingGroupingForm';
         prototype.url2 = CONTEXTPATH + '/SalesAuditAccepted';
         prototype.widthWindow = 1366;
@@ -43,6 +44,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
         var cmbSearch = Ext.getCmp(prototype.id + '-cbxFiltro');
         var CmbSource = Ext.getCmp(prototype.id + '-ComboSource');
         var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
+        var ComboTrncu = Ext.getCmp(prototype.id + '-ComboTrncu');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -69,13 +71,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "Y", "name": "PENDING GROUPING"},
-                {"code": "A", "name": "WITH GROUPING"}
+                {"code": "A", "name": "WITH GROUPING"},
+                {"code": "C", "name": "UNREGISTERED CLIENT"}
+            ]
+        }));
+        ComboTrncu.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "SALE", "name": "SALE"},
+                {"code": "EXCH", "name": "EXCH"},
+                {"code": "RFND", "name": "RFND"}
             ]
         }));
 
         cmbSearch.setValue('');
         cmbStatus.setValue('');
         CmbSource.setValue('');
+        ComboTrncu.setValue('');
     },
     setCountry: function () {
         var me = this;
@@ -142,6 +154,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
     OnColumnStatusRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         if (String(record.get('A3329FLAG')) === 'Void') {
             value = 'red';
+        } else if (String(record.get('A3329FLAG')) === 'Unregistered Client') {
+            value = 'orange';
         } else if (String(record.get('A3329FLAG')) === 'Pending') {
             value = 'yellow';
         } else {
@@ -176,6 +190,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
         var txtAudit = Ext.getCmp(prototype.id + '-txtAudit').getValue();
         var CmbStatus = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
         var txtNumber = Ext.getCmp(prototype.id + '-txtNumber').getValue();
+        var ComboTrncu = Ext.getCmp(prototype.id + '-ComboTrncu').getValue();
 
         if (cbxFiltro === '') {
             Ext.MessageBox.alert('PRAXIS', 'Select Search Type', function (btn, text) {
@@ -184,8 +199,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
             });
             return;
         }
-        if(txtCountry==='ALL'){
-            txtCountry='';            
+        if (txtCountry === 'ALL') {
+            txtCountry = '';
         }
         if (cbxFiltro === '3') {
             if (txtIATA === '') {
@@ -252,6 +267,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
         me.beanTMP.VP_TKT = txtFrmaSerie;
         me.beanTMP.VP_SEQ = txtSeq;
         me.beanTMP.VP_COXPADRE = txtNumber;
+        me.beanTMP.VP_TRNCU = ComboTrncu;
 
         /*
          * El valor obtenido del checkbox se interpreta de forma inversa para 
@@ -330,7 +346,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
     onExcelClick: function () {
         var me = this;
 
-         var cbxFiltro = String(Ext.getCmp(prototype.id + '-cbxFiltro').getValue());
+        var cbxFiltro = String(Ext.getCmp(prototype.id + '-cbxFiltro').getValue());
         var txtFilterDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
         var txtFilterDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
         var txtCia = Ext.getCmp(prototype.id + '-txtCia').getValue();
@@ -342,6 +358,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
         var txtAudit = Ext.getCmp(prototype.id + '-txtAudit').getValue();
         var CmbStatus = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
         var txtNumber = Ext.getCmp(prototype.id + '-txtNumber').getValue();
+        var ComboTrncu = Ext.getCmp(prototype.id + '-ComboTrncu').getValue();
 
         if (cbxFiltro === '') {
             Ext.MessageBox.alert('PRAXIS', 'Select Search Type', function (btn, text) {
@@ -350,8 +367,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
             });
             return;
         }
-        if(txtCountry==='ALL'){
-            txtCountry='';            
+        if (txtCountry === 'ALL') {
+            txtCountry = '';
         }
         if (cbxFiltro === '3') {
             if (txtIATA === '') {
@@ -418,6 +435,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.PendingGroupingForm.PendingGrouping
         me.beanEXCEL.VP_TKT = txtFrmaSerie;
         me.beanEXCEL.VP_SEQ = txtSeq;
         me.beanEXCEL.VP_COXPADRE = txtNumber;
+        me.beanTMP.VP_TRNCU = ComboTrncu;
 
         if (Ext.Object.getSize(me.beanEXCEL) > 0) {
             Ext.Msg.show({
