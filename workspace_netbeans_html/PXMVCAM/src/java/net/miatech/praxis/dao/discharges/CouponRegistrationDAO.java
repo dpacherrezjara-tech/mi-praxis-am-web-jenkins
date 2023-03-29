@@ -12,10 +12,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX549S01A1747Filter;
+import net.miatech.beans.SQP04905Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  *
@@ -131,5 +138,26 @@ public class CouponRegistrationDAO {
         }
         return lstRtn;
     }
-
+    
+    public List<SQP04905Filter> loadSQP04905Filter(SQP04905Filter filter)throws Exception{
+        List<SQP04905Filter> lst = new ArrayList<>();
+        try{
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(cnx,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04905")
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04905Filter.class));
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("TFECHA", filter.getTFECHA());
+            params.addValue("FINICIO", filter.getFINICIO());
+            params.addValue("FFIN", filter.getFFIN());
+            params.addValue("TIPO", filter.getTIPO());
+            Map<String,Object> obj = jdbcCall.execute(params);
+            lst = (List<SQP04905Filter>) obj.get("result");
+        }catch(Exception ex){
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + ex.getMessage(), ex);
+        }
+        return lst;
+    }
 }
