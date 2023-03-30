@@ -12,10 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX549S01A1747Filter;
+import net.miatech.beans.SQP04905Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.discharges.CouponRegistrationLogic;
@@ -32,10 +34,13 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -83,6 +88,7 @@ public class CouponRegistrationController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_OPCION = Integer.parseInt(request.getParameter("IN_OPCION"));
+            filter.IN_TIPOC = request.getParameter("IN_TIPOC");
             filter.IN_FECHAFROM = request.getParameter("IN_FECHAFROM");
             filter.IN_FECHATO = request.getParameter("IN_FECHATO");
             filter.IN_TKT = request.getParameter("IN_TKT");
@@ -304,6 +310,24 @@ public class CouponRegistrationController extends BaseController {
         } catch (IOException e) {
             throw new SpringException(e);
         }
-
+    }
+    
+    @RequestMapping(value = "searchSummary")
+    public ResponseEntity<?> searchSummary (@RequestParam Map<String,String> params){
+        logic = new CouponRegistrationLogic();
+        List res =  new ArrayList();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            Gson gson = new Gson();
+            SQP04905Filter filter = gson.fromJson(gson.toJson(params), SQP04905Filter.class);
+            filter.limpiaFechas();
+            res = logic.loadSQP04905Filter(filter);
+            if (!res.isEmpty()) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
