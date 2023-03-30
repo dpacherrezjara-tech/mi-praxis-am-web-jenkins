@@ -116,6 +116,22 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Filters', {
                             enforceMaxLength: true,
                             maxLength: 10,
                             maskRe: /[0-9]/
+                        }, 
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbType',
+                            fieldStyle: 'text-align: left;',
+                            required: true,
+                            disabled: false,
+                            fieldLabel: 'Type: ',
+                            width: 220,
+                            labelWidth: 40,
+                            labelAlign: 'left',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
                         }
                     ]
                 }

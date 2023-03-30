@@ -93,6 +93,23 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             ]
         }));
         cmbDate.setValue("");
+        var cmbType = Ext.getCmp(prototype.id + '-cmbType');
+        cmbType.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "Select"],
+                ["1", "1. NATURAL"],
+                ["2", "2. ETHNIC"],
+                ["3", "3. NON REFUNDABLE"],
+                ["4", "4. ETHNIC-NATURAL"],
+                ["5", "5. NON REFUNDABLE-NATURAL"],
+                ["6", "6. NO SHOW"],
+                ["7", "7. RAC474"],
+                ["8", "8. RFTX"]
+            ]
+        }));
+        cmbType.setValue("");
     },
     changeCmbDate: function (obj, value) {
         this.clearFields();
@@ -102,6 +119,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             case '2':
                 Ext.getCmp(prototype.id + '-txtFDesde').show();
                 Ext.getCmp(prototype.id + '-txtFHasta').show();
+                Ext.getCmp(prototype.id + '-cmbType').show();
                 break;
             case '3':
                 Ext.getCmp(prototype.id + '-txtTicket').show();
@@ -114,15 +132,16 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         Ext.getCmp(prototype.id + '-txtFHasta').hide();
         Ext.getCmp(prototype.id + '-txtTicket').hide();
         Ext.getCmp(prototype.id + '-txtCia').hide();
+        Ext.getCmp(prototype.id + '-cmbType').hide();
     },
     setSummaryParameter: function () {
         var IN_OPCION = Ext.getCmp(prototype.id + '-cmbDate').getValue();
         var IN_FECHAFROM = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFDesde').getValue(), 'Ymd');
         var IN_FECHATO = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFHasta').getValue(), 'Ymd');
-
+        var IN_TIPOC = Ext.getCmp(prototype.id + '-cmbType').getValue();
         summaryParams = {
             TFECHA: IN_OPCION,
-            TIPO: '',
+            TIPO: IN_TIPOC,
             FINICIO: IN_FECHAFROM,
             FFIN: IN_FECHATO
         };
@@ -144,7 +163,9 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         let option = me.getSelectecOption();
         win.lblUser_toolTip("Estructura: A1747");
         const actions = {
-            '' : () => {global.Msg({msg:'Seleccione una Opcion'});},
+            '': () => {
+                global.Msg({msg: 'Seleccione una Opcion'});
+            },
             '1': () => me.getSummaryData(option),
             '2': () => me.getSummaryData(option),
             '3': () => me.getTktDetailData(option)
@@ -163,8 +184,8 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         let data = await fetch(prototype.url + '/searchSummary?' + new URLSearchParams(summaryParams))
                 .then(async res => await res.json())
                 .catch(err => {
-                    console.error('Error al obtener data',err);
-                    global.Msg({msg:'Data not Found'});
+                    console.error('Error al obtener data', err);
+                    global.Msg({msg: 'Data not Found'});
                 });
         let summaryStore = Ext.create('Ext.data.Store', {
             storeId: prototype.id + '-summary-data',
@@ -313,22 +334,22 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         panel.add(summaryGrid);
         panel.unmask();
     },
-    getTktDetailData:function(opcion){
+    getTktDetailData: function (opcion) {
         let me = this;
         let cia = Ext.getCmp(prototype.id + '-txtCia').getValue();
         let tkt = Ext.getCmp(prototype.id + '-txtTicket').getValue();
-        me.setDetailParameter(opcion,'','','',cia + tkt);
+        me.setDetailParameter(opcion, '', '', '', cia + tkt);
         me.getSummaryDetailData();
     },
     getSummaryDetailData: async function () {
         let me = this;
         let parentContainer = Ext.getCmp(prototype.id + '-regionCenterGrid01');
         parentContainer.mask('Loading Details...');
-        let opcion = me.getSelectecOption()!=='3';
-        if(opcion){
+        let opcion = me.getSelectecOption() !== '3';
+        if (opcion) {
             me.panelAnterior = parentContainer.items.last();
             me.panelAnterior.setVisible(false);
-        }else{
+        } else {
             parentContainer.removeAll();
         }
 
@@ -347,14 +368,27 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                 }
             },
             autoLoad: true,
+            listeners: {
+                load: function (store, records, successful, operation) {
+                    if (successful) {
+                        let rec = records[0].data.page;
+                        Ext.getCmp(prototype.id + '-lbl-det-currentPage').setText(rec.PAGNUM);
+                        Ext.getCmp(prototype.id + '-lbl-det-pageCount').setText(rec.TOTPAG);
+                        Ext.getCmp(prototype.id + '-lbl-det-total').setText(rec.TOTROW);
+                        //Ext.getCmp().setText();
+                    }else{
+                        global.Msg({msg:'Data not Found'});
+                    }
+                }
+            }
         });
 
         let detailPanel = Ext.create('Ext.grid.Panel', {
             store: detailStore,
             id: prototype.id + '-detail-summary-grid',
             title: 'Coupon Registrarion Detail',
-            height: 560,
-            width: 1485,
+            height: 580,
+            width: 1488,
             //<editor-fold defaultstate="collapsed" desc="columnas">
             columns: [
                 {text: 'Accounting <br>Date', dataIndex: 'FCONT', width: 80},
@@ -404,18 +438,18 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                         align: 'center'
                     },
                     items: [
-                        opcion?
-                        {
-                            xtype: 'button',
-                            text: 'Atrás',
-                            tooltip: 'Volver a Summary',
-                            width: 100,
-                            maxWidth: 100,
-                            handler: function () {
-                                parentContainer.remove(this.up().up(), true);
-                                me.panelAnterior.setVisible(true);
-                            }
-                        }:null,
+                        opcion ?
+                                {
+                                    xtype: 'button',
+                                    text: 'Atrás',
+                                    tooltip: 'Volver a Summary',
+                                    width: 100,
+                                    maxWidth: 100,
+                                    handler: function () {
+                                        parentContainer.remove(this.up().up(), true);
+                                        me.panelAnterior.setVisible(true);
+                                    }
+                                } : null,
                         //<editor-fold defaultstate="collapsed" desc="paginado">
                         {
                             xtype: 'panel',
@@ -473,6 +507,54 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                         //</editor-fold>
                     ]
                 },
+                //<editor-fold defaultstate="collapsed" desc="info paginado">
+                {
+                    xtype: 'panel',
+                    border: true,
+                    width: '100%',
+                    height: 30,
+                    dock: 'bottom',
+                    layout: {
+                        type: 'hbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        xtype: 'label',
+                        margin: '3px 0px 0px 5px'
+                    },
+                    items: [
+                        {
+                            text: 'Page',
+                            width: 50
+                        },
+                        {
+                            id: prototype.id + '-lbl-det-currentPage',
+                            text: '1',
+                            width: 50
+                        },
+                        {
+                            text: 'Of',
+                            width: 50
+                        },
+                        {
+                            id: prototype.id + '-lbl-det-pageCount',
+                            text: '0',
+                            width: 50
+                        },
+                        {xtype: 'tbspacer', width: 100},
+                        {
+                            text: 'Total Records',
+                            width: 80
+                        },
+                        {
+                            id: prototype.id + '-lbl-det-total',
+                            text: '0',
+                            width: 50
+                        }
+                    ]
+                }
+                //</editor-fold>
             ],
         });
         parentContainer.add(detailPanel);
@@ -487,12 +569,15 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
     },
     btnClear_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-cmbDate').setValue('');
+        Ext.getCmp(prototype.id + '-cmbType').setValue('');
+        Ext.getCmp(prototype.id + '-regionCenterGrid01').removeAll();
         this.clearFields();
     },
     clearFields: function () {
         Ext.getCmp(prototype.id + '-txtFDesde').setValue('');
         Ext.getCmp(prototype.id + '-txtFHasta').setValue('');
         Ext.getCmp(prototype.id + '-txtTicket').setValue('');
+        Ext.getCmp(prototype.id + '-txtCia').setValue('139');
     },
     btnExcel_click: function (obj, e) {
         //this.setFormatParameter();
