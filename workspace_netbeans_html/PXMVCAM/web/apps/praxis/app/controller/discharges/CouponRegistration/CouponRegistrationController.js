@@ -36,21 +36,6 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             '#CouponRegistrationForm-btnBack': {
                 click: this.btnBack_click
             },
-            '#CouponRegistrationForm-btnExcel': {
-                click: this.btnExcel_click
-            },
-            '#CouponRegistrationForm-btn-pag-first': {
-                click: this.pagFirst
-            },
-            '#CouponRegistrationForm-btn-pag-previous': {
-                click: this.pagPrevious
-            },
-            '#CouponRegistrationForm-btn-pag-next': {
-                click: this.pagNext
-            },
-            '#CouponRegistrationForm-btn-pag-last': {
-                click: this.pagLast
-            },
             //-----------------Eventos Especificos -------------------            
 
             '#CouponRegistrationForm-cmbDate': {
@@ -257,7 +242,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                                     newVal = 'RAC474';
                                     metaData.style = 'background:#9E70E5;';
                                     break;
-                                case '7':
+                                case '8':
                                     newVal = 'RFTX';
                                     metaData.style = 'background:#E570C7;';
                                     break;
@@ -315,7 +300,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                             {
                                 iconCls: 'prx-icon-excel',
                                 tooltip: 'Download Details',
-                                handler: 'onDownloadClick'
+                                handler: 'btnGridExcel'
                             }
                         ]
                     }
@@ -389,6 +374,11 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             title: 'Coupon Registrarion Detail',
             height: 580,
             width: 1488,
+            viewConfig: {
+                stripeRows: true,
+                enableTextSelection: true,
+                markDirty: false,
+            },
             //<editor-fold defaultstate="collapsed" desc="columnas">
             columns: [
                 {text: 'Accounting <br>Date', dataIndex: 'FCONT', width: 80},
@@ -579,30 +569,6 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         Ext.getCmp(prototype.id + '-txtTicket').setValue('');
         Ext.getCmp(prototype.id + '-txtCia').setValue('139');
     },
-    btnExcel_click: function (obj, e) {
-        //this.setFormatParameter();
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
-            buttons: Ext.MessageBox.OKCANCEL,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'ok') {
-                    this.exportExcel();
-                }
-            }
-        });
-    },
-    exportExcel: function () {
-        this.setFormatParameter();
-        global.getFile(prototype.url + '/getXLSX?IN_OPCION=' + searchParams.IN_OPCION
-                + '&IN_FECHAFROM=' + searchParams.IN_FECHAFROM
-                + '&IN_FECHATO=' + searchParams.IN_FECHATO
-                + '&IN_TKT=' + searchParams.IN_TKT
-                );
-    },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
@@ -619,30 +585,27 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         //console.log(searchParams);
         me.getSummaryDetailData();
     },
-    //</editor-fold>
-    /*     
-     * Funciones para la paginacion     
-     */
-    //<editor-fold defaultstate="collapsed" desc="paginado">
-    pagFirst: function (obj, e) {
-        var pag = Ext.getCmp(prototype.id + '-paggin');
-        var pagData = pag.getPageData();
-        pag.moveFirst();
+    btnGridExcel: function (grid, record) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    this.onDownloadDetail(grid, record);
+                }
+            }
+        });
     },
-    pagPrevious: function (obj, e) {
-        var pag = Ext.getCmp(prototype.id + '-paggin');
-        var pagData = pag.getPageData();
-        pag.movePrevious();
-    },
-    pagNext: function (obj, e) {
-        var pag = Ext.getCmp(prototype.id + '-paggin');
-        var pagData = pag.getPageData();
-        pag.moveNext();
-    },
-    pagLast: function (obj, e) {
-        var pag = Ext.getCmp(prototype.id + '-paggin');
-        var pagData = pag.getPageData();
-        pag.moveLast();
+    onDownloadDetail:function(grid, record){
+        let me = this;
+        const rec = grid.getStore().getAt(record);
+        let fecha = rec.get('fcont') ? rec.get('fcont') : rec.get('fvta');
+        me.setDetailParameter(me.getSelectecOption(), fecha, fecha, rec.get('tipoc'));
+        global.getFile(prototype.url + '/getXLSX?' + new URLSearchParams(searchParams));
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="paginacion detail">
