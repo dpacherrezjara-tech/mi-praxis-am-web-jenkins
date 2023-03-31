@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 
         this.setValue('txtTICKET', record.strTicket.substring(0,13));
         this.setValue('txtCUPON', record.strTicket.substring(14));
-//        this.setValue('txtSEQ', record.SEQ);
+        this.setValue('txtSEQ', record.SEQ);
         
         this.setValue('txtDFLIGHT', record.DFLIGHT);
         this.setValue('txtNFLIGHT', record.NFLIGHT);
@@ -158,8 +158,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
         beanTemp.TICKET_2 = this.getValue("txtTICKET_2");
         beanTemp.CUPON = this.getValue("txtCUPON");
         beanTemp.CUPON_2 = this.getValue("txtCUPON_2");
+        beanTemp.SEQ = this.getValue("txtSEQ");
+        beanTemp.SEQ_2 = this.getValue("txtSEQ_2").padStart(5, '0');
         
-        beanTemp.SEQ = this.bean.data.SEQ;
         beanTemp.LNKMVLO = this.bean.data.LNKMVLO;
         
         beanTemp.DFLIGHT = this.getValue("txtDFLIGHT");
@@ -372,10 +373,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 
         Ext.getCmp(prototype.id + '-txtTICKET').setReadOnly(false);
         Ext.getCmp(prototype.id + '-txtCUPON').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-txtSEQ').setReadOnly(false);
         Ext.getCmp(prototype.id + '-txtCHAIR').setReadOnly(false);
         
         Ext.getCmp(prototype.id + '-txtTICKET_2').setReadOnly(true);
         Ext.getCmp(prototype.id + '-txtCUPON_2').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtSEQ_2').setReadOnly(true);
     },
     Habilitarlbl: function() {
         Ext.getCmp(prototype.id + '-lblDescripcion').show();
