@@ -87,16 +87,18 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                 ["1", "1. NATURAL"],
                 ["2", "2. ETHNIC"],
                 ["3", "3. NON REFUNDABLE"],
-                ["4", "4. ETHNIC-NATURAL"],
-                ["5", "5. NON REFUNDABLE-NATURAL"],
-                ["6", "6. NO SHOW"],
-                ["7", "7. RAC474"],
-                ["8", "8. RFTX"]
+                ["6", "4. NO SHOW"],
+                ["7", "5. RAC474"],
+                ["8", "6. RFTX"],
+                ["9", "7. ANCILLARIE NATURAL"],
+                ["10", "8. ANCILLARIE NO SHOW"],
+                ["11", "9. ANCILLARIE RAC474"],
             ]
         }));
         cmbType.setValue("");
     },
     changeCmbDate: function (obj, value) {
+        Ext.getCmp(prototype.id + '-regionCenterGrid01').removeAll();
         this.clearFields();
         this.hideComponents();
         switch (value) {
@@ -140,7 +142,6 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             IN_TIPOC: tipoc,
             IN_TKT: tkt
         };
-        console.log(searchParams);
     },
     //</editor-fold>
     setGridData: function (obj, val) {
@@ -168,10 +169,10 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         panel.removeAll();
         let data = await fetch(prototype.url + '/searchSummary?' + new URLSearchParams(summaryParams))
                 .then(async res => await res.json())
-                .catch(err => {
-                    console.error('Error al obtener data', err);
+                .catch(() => {
                     global.Msg({msg: 'Data not Found'});
                 });
+        //console.log(data);
         let summaryStore = Ext.create('Ext.data.Store', {
             storeId: prototype.id + '-summary-data',
             pageSize: 20,
@@ -186,8 +187,8 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         let summaryGrid = Ext.create('Ext.grid.Panel', {
             store: summaryStore,
             id: prototype.id + '-summary-grid',
-            title: 'Coupon Registrarion Summary',
-            height: 550,
+            title: 'Coupon Registration Summary',
+            height: 590,
             width: 750,
             features: [
                 {
@@ -226,14 +227,6 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                                     newVal = 'NO REEMBOLSABLE';
                                     metaData.style = 'background:#E59570;';
                                     break;
-                                case '4':
-                                    newVal = 'ETNICO A NATURAL';
-                                    metaData.style = 'background:#70E5A3;';
-                                    break;
-                                case '5':
-                                    newVal = 'NO REEMBOLSABLE A NATURAL';
-                                    metaData.style = 'background:#70E5D1;';
-                                    break;
                                 case '6':
                                     newVal = 'NO-SHOW';
                                     metaData.style = 'background:#7087E5;';
@@ -245,6 +238,18 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                                 case '8':
                                     newVal = 'RFTX';
                                     metaData.style = 'background:#E570C7;';
+                                    break;
+                                case '9':
+                                    newVal = 'ANCILLARIE NATURAL';
+                                    metaData.style = 'background:#70E5A3;';
+                                    break;
+                                case '10':
+                                    newVal = 'ANCILLARIE NO SHOW';
+                                    metaData.style = 'background:#70E5D1;';
+                                    break;
+                                case '11':
+                                    newVal = 'ANCILLARIE RAC474';
+                                    metaData.style = 'background:#8EB4A2;';
                                     break;
                                 default:
                                     newVal = 'DESCONOCIDO';
@@ -361,8 +366,8 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                         Ext.getCmp(prototype.id + '-lbl-det-pageCount').setText(rec.TOTPAG);
                         Ext.getCmp(prototype.id + '-lbl-det-total').setText(rec.TOTROW);
                         //Ext.getCmp().setText();
-                    }else{
-                        global.Msg({msg:'Data not Found'});
+                    } else {
+                        global.Msg({msg: 'Data not Found'});
                     }
                 }
             }
@@ -371,7 +376,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         let detailPanel = Ext.create('Ext.grid.Panel', {
             store: detailStore,
             id: prototype.id + '-detail-summary-grid',
-            title: 'Coupon Registrarion Detail',
+            title: 'Coupon Registration Detail',
             height: 580,
             width: 1488,
             viewConfig: {
@@ -379,45 +384,58 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                 enableTextSelection: true,
                 markDirty: false,
             },
+            columnLines: true,
             //<editor-fold defaultstate="collapsed" desc="columnas">
-            columns: [
-                {text: 'Accounting <br>Date', dataIndex: 'FCONT', width: 80},
-                {text: 'Issue <br>Date', dataIndex: 'FVTA', width: 80},
-                {text: 'Air', dataIndex: 'CCIA', width: 55},
-                {text: 'Document', dataIndex: 'FORMASERIE', width: 80},
-                {text: 'Coupon', dataIndex: 'CUPON', width: 70},
-                {text: 'Discharge <br>Type', dataIndex: 'TIPOC', width: 150},
-                {text: 'Source', dataIndex: 'FTE', width: 65},
-                {text: 'IATA', dataIndex: 'AGTIA', width: 80},
-                {text: 'Country', dataIndex: 'PSVVTA', width: 60},
-                {text: 'Zone', dataIndex: 'ZONA', width: 55},
-                {text: 'Document <br>Type', dataIndex: 'CDOC', width: 70},
-                {text: 'From', dataIndex: 'CDEPART', width: 60},
-                {text: 'To', dataIndex: 'CARRIVA', width: 60},
-                {text: 'Carrier', dataIndex: 'CARR', width: 60},
-                {text: 'Flight <br>Date', dataIndex: 'DFLIGHT', width: 80},
-                {text: 'Currency', dataIndex: 'MDACP', width: 65},
-                {text: 'Fare <br>Amount', dataIndex: 'VCPNRV', width: 80,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        return Ext.util.Format.number(value, '0,000.00');
-                    }
+            columns: {
+                defaults: {
+                    align: 'center'
                 },
-                {text: 'Comm <br>Amount', dataIndex: 'COMREV', width: 80,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        return Ext.util.Format.number(value, '0,000.00');
+                items: [
+                    {text: 'Accounting <br>Date', dataIndex: 'FCONT', width: 80},
+                    {text: 'Issue <br>Date', dataIndex: 'FVTA', width: 80},
+                    {text: 'Air', dataIndex: 'CCIA', width: 55},
+                    {text: 'Document', dataIndex: 'FORMASERIE', width: 80},
+                    {text: 'Coupon', dataIndex: 'CUPON', width: 70,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'font-weight:bold;';
+                            return value;
+                        }},
+                    {text: 'Discharge <br>Type', dataIndex: 'TIPOC', width: 150,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'background:#84DAA8;font-weight:bold;';
+                            return value;
+                        }},
+                    {text: 'Source', dataIndex: 'FTE', width: 65},
+                    {text: 'IATA', dataIndex: 'AGTIA', width: 80},
+                    {text: 'Country', dataIndex: 'PSVVTA', width: 60},
+                    {text: 'Zone', dataIndex: 'ZONA', width: 55},
+                    {text: 'Document <br>Type', dataIndex: 'CDOC', width: 70},
+                    {text: 'From', dataIndex: 'CDEPART', width: 60},
+                    {text: 'To', dataIndex: 'CARRIVA', width: 60},
+                    {text: 'Carrier', dataIndex: 'CARR', width: 60},
+                    {text: 'Flight <br>Date', dataIndex: 'DFLIGHT', width: 80},
+                    {text: 'Currency', dataIndex: 'MDACP', width: 65},
+                    {text: 'Fare <br>Amount', dataIndex: 'VCPNRV', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            return Ext.util.Format.number(value, '0,000.00');
+                        }
+                    },
+                    {text: 'Comm <br>Amount', dataIndex: 'COMREV', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            return Ext.util.Format.number(value, '0,000.00');
+                        }
+                    },
+                    {text: 'SComm <br>Amount', dataIndex: 'SCOMREV', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            return Ext.util.Format.number(value, '0,000.00');
+                        }
+                    },
+                    {text: 'YQ <br>Amount', dataIndex: 'YQREV', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            return Ext.util.Format.number(value, '0,000.00');
+                        }
                     }
-                },
-                {text: 'SComm <br>Amount', dataIndex: 'SCOMREV', width: 80,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        return Ext.util.Format.number(value, '0,000.00');
-                    }
-                },
-                {text: 'YQ <br>Amount', dataIndex: 'YQREV', width: 80,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        return Ext.util.Format.number(value, '0,000.00');
-                    }
-                }
-            ],
+                ]},
             //</editor-fold>
             dockedItems: [
                 {
@@ -600,7 +618,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             }
         });
     },
-    onDownloadDetail:function(grid, record){
+    onDownloadDetail: function (grid, record) {
         let me = this;
         const rec = grid.getStore().getAt(record);
         let fecha = rec.get('fcont') ? rec.get('fcont') : rec.get('fvta');

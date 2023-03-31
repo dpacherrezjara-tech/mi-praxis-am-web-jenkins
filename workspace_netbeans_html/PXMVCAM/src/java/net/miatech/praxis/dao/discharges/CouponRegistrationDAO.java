@@ -59,7 +59,7 @@ public class CouponRegistrationDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL LIBSAP51.SQP03891(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL SQP03891(?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();

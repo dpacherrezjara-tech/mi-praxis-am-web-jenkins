@@ -9,9 +9,17 @@ public class SQP04905Filter {
     private String TFECHA, FINICIO, FFIN, TIPO;
     
     //RESULT SET
-    private String FVTA,TIPOC;
+    private String FVTA,FCONT,TIPOC;
     private Integer TDOCS;
     private Double TFARE, TYQ;
+
+    public String getFCONT() {
+        return FCONT;
+    }
+
+    public void setFCONT(String FCONT) {
+        this.FCONT = FCONT;
+    }
     
     public void limpiaFechas(){
         this.FINICIO = this.FINICIO.replace("/", "");
