@@ -1,11 +1,20 @@
 
+import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -21,7 +30,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import net.miatech.beans.SaleAudit.A3647Filter;
 import net.miatech.praxis.classes.ProMail;
+import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
 
@@ -81,7 +98,112 @@ public class test {
         
     }
     
-    public static void main(String[] args) { //maineMAIL
+    public static void main(String[] args) { // mainRefund
+        // TODO code application logic here
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw); 
+        
+        try{
+            A3647Filter beanGene = new A3647Filter();
+            beanGene.IN_CIA = "139"; 
+            beanGene.IN_FORMA = "4405";
+            beanGene.IN_SERIE = "365101";
+            beanGene.IN_CORRL= "0001";
+            beanGene.IN_PREME = "0000000294";
+            beanGene.IN_ANIO = "2023";
+            beanGene.IN_SEQ = "00";
+            rfndnotifiUpdateCPN(beanGene);
+
+        }
+        
+        catch(Exception e){
+            e.printStackTrace(pw);
+            sw.toString();
+            System.out.println("Exception -> User: LZAMBRANO Message: " + e.getMessage() + ". StackTrace:" + sw.toString());
+        }
+        
+    }
+    
+    public static boolean rfndnotifiUpdateCPN(A3647Filter beanGene) {
+        String mensaje = "";
+        String token = "";
+        boolean success = true;
+        String urlREST = "https://reembolsosespecialesam.miatech.net:8182";
+        //String urlREST = "https://10.0.0.63:8182";
+        
+        try {
+            
+            /*
+             Se establece tiempo límite de conexión por 60 min
+             */
+            Unirest.setTimeouts(3600000, 3600000);
+
+            /*
+             Preparando parámetros para enviar por body
+            
+             */
+            disableSslVerification(); // Deshabilitamos validacion certificado
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("ticket", beanGene.IN_CIA + "" + beanGene.IN_FORMA + "" + beanGene.IN_SERIE);
+            bodyData.put("correlativo", beanGene.IN_CORRL);
+            bodyData.put("prememo", beanGene.IN_PREME);
+            bodyData.put("anio", beanGene.IN_ANIO);
+            bodyData.put("secuencia", beanGene.IN_SEQ);
+            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/usos-sabre")
+                    .header("content-type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .header("Authorization", "Token " + token)
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+
+            success = Boolean.parseBoolean(response.getBody().getObject().get("success").toString());
+
+        } catch (Exception e) {
+            mensaje = e.getMessage();
+        }
+
+        return success;
+    }
+    
+    private static void disableSslVerification() 
+    {
+        try
+        {
+            // Create a trust manager that does not validate certificate chains
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+            };
+
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void maineMAIL(String[] args) { //maineMAIL
         // TODO code application logic here
         
         StringWriter sw = new StringWriter();
