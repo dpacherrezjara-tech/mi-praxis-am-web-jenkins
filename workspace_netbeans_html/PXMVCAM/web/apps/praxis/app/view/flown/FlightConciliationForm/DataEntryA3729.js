@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                         {xtype: 'tbspacer', width: 65},
                         {
                             xtype: 'label',
-                            text: 'Sequence',
+                            text: 'New Sequence',
                             style: 'font-weight:bold;color:#000;',
                             width: 90
                         },                        
