@@ -122,6 +122,16 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 win.focus('1-txtTicketForSer');
                 win.setValue('1-txtFromDate', '');
                 win.setValue('1-txtToDate', '');
+               
+            case '7':
+                Ext.getCmp(prototype.id+'-1-Box_Option01').hide();
+                Ext.getCmp(prototype.id+'-1-Box_Option02').hide();
+                Ext.getCmp(prototype.id+'-1-Box_Option03').hide();
+                Ext.getCmp(prototype.id+'-1-Box_Option04').show();
+                Ext.getCmp(prototype.id+'-1-Box_OptionDates').show();
+                Ext.getCmp(prototype.id+'-1-Box_OptionDates').setStyle('left','433px');
+                win.focus('1-txtNREF_P1');
+                break;
 
                 break;
             default:
@@ -229,6 +239,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 case 6:
                     this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
                     break;
+                case 7:
+                    this.bean.IN_TEXT = win.getValue('1-txtNREF_P1')+win.getValue('1-txtNREF_P2');
+                    break;
             }
             
             
@@ -313,6 +326,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                     break;
                 case 6:
                     this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
+                    break;
+                case 7:
+                    this.bean.IN_TEXT = win.getValue('1-txtNREF_P1')+win.getValue('1-txtNREF_P2');
                     break;
             }
             

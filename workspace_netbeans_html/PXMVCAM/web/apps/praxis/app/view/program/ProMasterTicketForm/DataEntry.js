@@ -80,7 +80,8 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         fields: ['code', 'name'],
                                                         data: [
                                                             ["", "Select"], ["1", "Ticket"], ["2", "Pax Name"],
-                                                            ["3", "PNR"], ["4", "C.Card"], ["5", "IATA"], ["6","ADM/ACM"]
+                                                            ["3", "PNR"], ["4", "C.Card"], ["7", "C.Card Void"],
+                                                            ["5", "IATA"], ["6","ADM/ACM"]                                                            
                                                         ]
                                                     }),
                                                     queryMode: 'local',
