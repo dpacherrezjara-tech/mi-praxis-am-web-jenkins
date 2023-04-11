@@ -939,7 +939,7 @@ public class RFNDQueryController extends BaseController {
             bodyData.put("prememo", beanGene.IN_PREME);
             bodyData.put("anio", beanGene.IN_ANIO);
             bodyData.put("secuencia", beanGene.IN_SEQ);
-            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/usos-sabre")
+            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/special_refund/sabre-uses")
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .header("Authorization", "Token " + token)
@@ -978,7 +978,7 @@ public class RFNDQueryController extends BaseController {
             HashMap bodyData = new HashMap<>();
             bodyData.put("preme", beanGene.IN_PREME);
             bodyData.put("anio", beanGene.IN_ANIO);
-            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/praxis/manual-response")
+            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/special_refund/manual-response")
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .header("Authorization", "Token " + token)
