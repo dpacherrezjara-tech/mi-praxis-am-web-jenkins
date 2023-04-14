@@ -1,11 +1,11 @@
 //<editor-fold defaultstate="collapsed" desc="Stores">
-let storeInfo = Ext.create('Ext.data.Store', {
-    storeId: prototype.id + 'storeInfo',
-    page: {
-        start: 0,
-        limit: 20
-    }
-});
+//let storeInfo = Ext.create('Ext.data.Store', {
+//    storeId: prototype.id + 'storeInfo',
+//    page: {
+//        start: 0,
+//        limit: 20
+//    }
+//});
 //</editor-fold>
 
 Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
@@ -72,7 +72,16 @@ Ext.define('Ext.Praxis.view.travelbank.AccountStatementForm.Info', {
                             width: prototype.widthGrid,
                             height: 510,
                             columnLines: true,
-                            store: storeInfo,
+                            //store: storeInfo,
+                            store: [
+                                Ext.create('Ext.data.Store', {
+                                    storeId: prototype.id + 'storeInfo',
+                                    page: {
+                                        start: 0,
+                                        limit: 20
+                                    }
+                                })
+                            ],
                             viewConfig: {
                                 deferEmptyText: false,
                                 emptyText: 'No data Available'

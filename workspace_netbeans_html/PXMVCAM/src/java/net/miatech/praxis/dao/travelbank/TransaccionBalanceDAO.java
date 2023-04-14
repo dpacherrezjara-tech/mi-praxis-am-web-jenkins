@@ -80,6 +80,8 @@ public class TransaccionBalanceDAO {
                 objRtn.XAIRLIN = rs01.getString("XAIRLIN");
                 objRtn.XCREDID = rs01.getString("XCREDID");
                 objRtn.XFILE = rs01.getString("XFILE");
+                objRtn.XSRVCC = rs01.getString("XSRVCC");    
+                objRtn.XTYPEI = rs01.getString("XTYPEI");                    
                 objRtn.XTRANSACTION = rs01.getString("XTRANSACTION");
                 objRtn.XDATE = rs01.getString("XDATE");
                 objRtn.XTICKET = rs01.getString("XTICKET");

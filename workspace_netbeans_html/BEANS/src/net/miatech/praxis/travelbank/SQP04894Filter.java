@@ -23,6 +23,8 @@ public class SQP04894Filter {
     public String XAIRLIN = "";
     public String XCREDID = "";
     public String XFILE = "";
+    public String XSRVCC = "";  
+    public String XTYPEI = "";      
     public String XTRANSACTION = "";
     public String XDATE = "";
     public String XTICKET = "";

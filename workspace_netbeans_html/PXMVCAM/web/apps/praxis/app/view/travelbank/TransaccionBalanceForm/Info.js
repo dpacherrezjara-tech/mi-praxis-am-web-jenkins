@@ -77,8 +77,14 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                         }
                                     },
                                     {
-                                        text: 'Transacction', dataIndex: 'XTRANSACTION', width: 90
+                                        text: 'Transacction', dataIndex: 'XTRANSACTION', width: 80
                                     },
+                                     {
+                                        text: 'H/S<br>Type', dataIndex: 'XTYPEI', width: 60
+                                    }, 
+                                    {
+                                        text: 'Credit<br>Code', dataIndex: 'XSRVCC', width: 60
+                                    },                                    
                                     {
                                         text: 'Credit ID', dataIndex: 'XCREDID', width: 90
                                     },
@@ -105,7 +111,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                     },
 
                                     {
-                                        text: 'Curr.', dataIndex: 'XCURR', width: 70,
+                                        text: 'Curr.', dataIndex: 'XCURR', width: 60,
                                         renderer: function (value, metaData) {
                                             metaData.style = "text-align:center;";
                                             return value;
@@ -159,14 +165,14 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                             metaData.style = "text-align:center;";
                                             return value; //Ext.util.Format.number(value, '0.000000');;
                                         }
-                                    },
-                                    {
-                                        text: 'Crd. ID<br>Reinst. ', dataIndex: 'XIDRIN', width: 90,
-                                        renderer: function (value, metaData) {
-                                            metaData.style = "text-align:center;";
-                                            return value; //Ext.util.Format.number(value, '0.000000');;
-                                        }
                                     }
+//                                    {
+//                                        text: 'Crd. ID<br>Reinst. ', dataIndex: 'XIDRIN', width: 90,
+//                                        renderer: function (value, metaData) {
+//                                            metaData.style = "text-align:center;";
+//                                            return value; //Ext.util.Format.number(value, '0.000000');;
+//                                        }
+//                                    }
 
                                 ]
                             }
