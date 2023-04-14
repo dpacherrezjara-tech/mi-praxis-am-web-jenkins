@@ -2474,7 +2474,7 @@ public class FlightConciliationDAO {
         boolean existe = false;
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "SELECT CCUST FROM PRAXIS.A3729 WHERE CCUST = ? AND TICKET = ? AND CUPON = ? LIMIT 1";
+        String SQLCLL01 = "SELECT CCUST FROM PRAXIS.A3729 WHERE CCUST = ? AND TICKET = ? AND CUPON = ? AND SEQ = ? LIMIT 1";
 
         Connection cnx = null;
         try {
@@ -2484,6 +2484,7 @@ public class FlightConciliationDAO {
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
             cstmt.setString(2, filter.TICKET_2.trim());
             cstmt.setString(3, filter.CUPON_2.trim());
+            cstmt.setString(4, filter.SEQ_2.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();
@@ -2515,7 +2516,7 @@ public class FlightConciliationDAO {
 
         String strMsj = "";
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04323(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04323(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2547,16 +2548,17 @@ public class FlightConciliationDAO {
             cstmt.setString(19, filter.STASABR.trim());
 
             cstmt.setString(20, filter.SEQ.trim());
-            cstmt.setString(21, filter.LNKMVLO.trim());
+            cstmt.setString(21, filter.SEQ_2.trim());
+            cstmt.setString(22, filter.LNKMVLO.trim());
 
-            cstmt.setString(22, filter.USCR.trim());
-            cstmt.setString(23, filter.FECR.trim());
-            cstmt.setString(24, filter.HOCR.trim());
+            cstmt.setString(23, filter.USCR.trim());
+            cstmt.setString(24, filter.FECR.trim());
+            cstmt.setString(25, filter.HOCR.trim());
 
-            cstmt.setString(25, session.getUserView().getUserInfo().USR);
-            cstmt.setString(26, Functions.getFechaActual());
-            cstmt.setString(27, Functions.getHoraActual());
-            cstmt.setString(28, "A3729");
+            cstmt.setString(26, session.getUserView().getUserInfo().USR);
+            cstmt.setString(27, Functions.getFechaActual());
+            cstmt.setString(28, Functions.getHoraActual());
+            cstmt.setString(29, "A3729");
             cstmt.execute();
 
             strMsj = "Insertion was successful.";
