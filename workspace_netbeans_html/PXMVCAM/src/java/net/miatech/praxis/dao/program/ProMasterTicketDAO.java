@@ -1978,7 +1978,9 @@ public class ProMasterTicketDAO {
 
         String SQLCLL01 = "";
        
-        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; 
+        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}";
+        //SQLCLL01 = "{CALL LIBSAP53.SQP00697(?,?,?,?,?,?,?,?,?)}"; 
+        
         if(filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3)))
         {
             SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}"; 
@@ -2020,6 +2022,7 @@ public class ProMasterTicketDAO {
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 objRtn.SCARDN = rs01.getString("SCARDN");
                 objRtn.SAUTHOC = rs01.getString("SAUTHOC");
+                objRtn.A720TKVOID = rs01.getString("A720TKVOID");
                 lstRtn.add(objRtn);
             }
         }catch(SQLException e){
