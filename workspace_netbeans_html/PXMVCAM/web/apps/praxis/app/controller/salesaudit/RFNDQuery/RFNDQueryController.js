@@ -135,7 +135,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "4", "name": "AUTHORISED - REJECTED / DATE"},
-                {"code": "5", "name": "CAPTURED BY BPO"},
+                {"code": "5", "name": "CAPTURED BY ROBOT"},
                 {"code": "1", "name": "FOLIO"},
                 {"code": "2", "name": "SYSTEM DATE"},
                 {"code": "3", "name": "TICKET"}
