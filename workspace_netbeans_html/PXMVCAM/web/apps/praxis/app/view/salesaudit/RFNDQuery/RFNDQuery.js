@@ -728,6 +728,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.RFNDQuery', {
                                     {text: 'System<br>Date', dataIndex: 'A3648FREGI', width: 70},
                                     {text: 'Authorise/</br>Reject date',dataIndex: 'A3648FAUTO',width: 80},
                                     {text: 'Issue<br>Date', dataIndex: 'A3648XFSAL', width: 70},
+                                    {text: 'Captured <br> by bpo', dataIndex: 'A3648FGUPO', width: 100, sortable: true, align: 'center'},
                                     {text: 'Zone', dataIndex: 'A3648ARCD', width: 120}, //renderer: 'onRendererColumnTYPE'
                                     {text: 'Area', dataIndex: 'A3648COCD', width: 70}, // renderer: 'onRendererColumnBase'
                                     {text: 'Ticket', dataIndex: 'A3648TICKET', width: 120},
