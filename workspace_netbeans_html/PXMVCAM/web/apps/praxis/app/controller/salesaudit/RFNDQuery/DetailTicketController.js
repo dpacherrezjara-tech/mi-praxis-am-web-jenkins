@@ -1034,6 +1034,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var reg4 = grid04.getStore().getCount();
         var gridPAYMENT = Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENT');
         var reg5 = gridPAYMENT.getStore().getCount();
+        // para las monedas 
+        var txtmda=Ext.getCmp(prototype.idDetailTicket + '-txtmda').getValue();
+        var txtmoneda='';
+        if(txtmda=== null) {
+            txtmda='';
+        }
+        if(Ext.String.trim(txtmda)!==''){
+            txtmoneda=Ext.String.trim(txtmda);
+        }
         //diferencia tarifa
         if (Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue() === null) {
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(0);
@@ -1094,7 +1103,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     return;
                 }
             }
-
+            
+            if(Ext.String.trim(txtmoneda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the currency');
+                bvalida = false;
+                return;
+            }
+            
             if (Ext.String.trim(CmbTRFND).length === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of RFND');
                 bvalida = false;
