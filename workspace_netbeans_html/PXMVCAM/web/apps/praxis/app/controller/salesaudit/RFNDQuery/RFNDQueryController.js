@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         var txtCia = Ext.getCmp(prototype.idRFNDQuery + '-txtCia');
         var txtFrmaSerie = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie');
         var txtfolio = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio');
-        if (obj.getValue() === "2" || obj.getValue() === "4") {
+        if (obj.getValue() === "2" || obj.getValue() === "4" || obj.getValue() === "5") {
             txtFilterDateFrom.show();
             txtFilterDateTo.show();
             txtCia.hide();
@@ -134,10 +134,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
+                {"code": "4", "name": "AUTHORISED - REJECTED / DATE"},
+                {"code": "5", "name": "CAPTURED BY ROBOT"},
                 {"code": "1", "name": "FOLIO"},
                 {"code": "2", "name": "SYSTEM DATE"},
-                {"code": "3", "name": "TICKET"},
-                {"code": "4", "name": "AUTHORISED - REJECTED / DATE"}
+                {"code": "3", "name": "TICKET"}
+
             ]
         }));
 
@@ -717,7 +719,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         if (me.bean2.IN_PREME !== undefined) {
 
             me.bean3.IN_PREME = me.bean2.IN_PREME;
-            me.bean3.IN_ANIO=me.bean2.IN_ANIO;
+            me.bean3.IN_ANIO = me.bean2.IN_ANIO;
             me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
             me.bean3.IN_USER = me.bean2.IN_USER;
             me.bean3.IN_TKT = txtTKT;

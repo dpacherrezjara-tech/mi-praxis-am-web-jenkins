@@ -1034,6 +1034,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var reg4 = grid04.getStore().getCount();
         var gridPAYMENT = Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENT');
         var reg5 = gridPAYMENT.getStore().getCount();
+        // para las monedas 
+        var txtmda = Ext.getCmp(prototype.idDetailTicket + '-txtmda').getValue();
+        var txtEqmda = Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').getValue();
+        var txtmoneda = '';
+        if (txtmda === null) {
+            txtmda = '';
+        }
+        if (txtEqmda === null) {
+            txtEqmda = '';
+        }
+        if (Ext.String.trim(txtmda) !== '') {
+            txtmoneda = Ext.String.trim(txtmda);
+        }
         //diferencia tarifa
         if (Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue() === null) {
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(0);
@@ -1057,7 +1070,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var txtTotal = Ext.getCmp(prototype.idDetailTicket + '-txtTotal').getValue().replace(new RegExp(',', 'g'), '');
         var txtTotalXml = Ext.getCmp(prototype.idDetailTicket + '-txtTotalXml').getValue().replace(new RegExp(',', 'g'), '');
         var txtTotalram = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(new RegExp(',', 'g'), '');
-
+        // para validar la tarifa equiva
+        var txtTotalEqFareAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalEqFareAm').getValue();
+        var txtTotalFareAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue();
         // diferencia de total a rfnd
         if (parseFloat(txtTotal) !== 0) {
             totaldif = (txtTotalram - txtTotal);
@@ -1066,7 +1081,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     totaldif = (txtTotalram - txtTotalXml);
                 }
             }
-            
+
         } else {
             totaldif = (txtTotalram - txtTotalXml);
         }
@@ -1093,6 +1108,39 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     bvalida = false;
                     return;
                 }
+            }
+            if (txtTotalFareAm !== 0 && Ext.String.trim(txtmda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the fare currency');
+                bvalida = false;
+                return;
+            }
+            if (txtTotalFareAm === 0 && txtTotalEqFareAm !== 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the amount fare');
+                bvalida = false;
+                return;
+            }
+
+            if (txtTotalEqFareAm !== 0 && Ext.String.trim(txtEqmda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the currency Eq.');
+                bvalida = false;
+                return;
+            }
+            if (txtTotalEqFareAm === 0 && Ext.String.trim(txtEqmda).length !== 0 && txtTotalFareAm !== 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the Fare Eq.');
+                bvalida = false;
+                return;
+            }
+            
+            if (Ext.String.trim(txtEqmda) === Ext.String.trim(txtmda)) {
+                Ext.Msg.alert('.: PRAXIS :.', 'Currencies must be different');
+                bvalida = false;
+                return;
+            }
+
+            if (Ext.String.trim(txtmoneda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the currency');
+                bvalida = false;
+                return;
             }
 
             if (Ext.String.trim(CmbTRFND).length === 0) {

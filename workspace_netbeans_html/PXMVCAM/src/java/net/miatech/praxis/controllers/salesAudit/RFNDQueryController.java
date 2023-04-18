@@ -387,7 +387,7 @@ public class RFNDQueryController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25,CH_26;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -417,6 +417,7 @@ public class RFNDQueryController extends BaseController {
             CH_23 = row.createCell(23);
             CH_24 = row.createCell(24);
             CH_25 = row.createCell(25);
+            CH_26 = row.createCell(26);
 
             CH_00.setCellValue("System Date");
             CH_01.setCellValue("Issue Date");
@@ -444,6 +445,7 @@ public class RFNDQueryController extends BaseController {
             CH_23.setCellValue("Module");
             CH_24.setCellValue("Process");
             CH_25.setCellValue("Authorise/Reject date");
+            CH_26.setCellValue("Captured /by bpo");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -471,6 +473,7 @@ public class RFNDQueryController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 25));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 26, 26));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -498,6 +501,7 @@ public class RFNDQueryController extends BaseController {
             CH_23.setCellStyle(headerStyle);
             CH_24.setCellStyle(headerStyle);
             CH_25.setCellStyle(headerStyle);
+            CH_26.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -531,6 +535,7 @@ public class RFNDQueryController extends BaseController {
                 CH_23 = row.createCell(23);
                 CH_24 = row.createCell(24);
                 CH_25 = row.createCell(25);
+                CH_26 = row.createCell(26);
 
                 CH_00.setCellValue(listaData.get(vi).A3648FREGI);
                 CH_01.setCellValue(listaData.get(vi).A3648XFSAL);
@@ -586,6 +591,7 @@ public class RFNDQueryController extends BaseController {
                 CH_23.setCellValue(listaData.get(vi).A3648TRNCO);
                 CH_24.setCellValue(vl_PROCE);
                 CH_25.setCellValue(listaData.get(vi).A3648FAUTO);
+                CH_26.setCellValue(listaData.get(vi).A3648FGUPO);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -613,6 +619,7 @@ public class RFNDQueryController extends BaseController {
                 CH_23.setCellStyle(bodyStyle);
                 CH_24.setCellStyle(bodyStyle);
                 CH_25.setCellStyle(bodyStyle);
+                CH_26.setCellStyle(bodyStyle);
 
                 // </editor-fold>
                 iter.next();
