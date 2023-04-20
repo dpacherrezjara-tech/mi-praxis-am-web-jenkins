@@ -29,13 +29,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 // </editor-fold>
 
 /**
@@ -146,7 +145,7 @@ public class ADMReasonsController extends BaseController {
         String fileNameDownload = String.format("ADM Reasons - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         
         try {
-            Workbook workbook = null;
+            //Workbook workbook = null;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             
             String beanString = request.getParameter("beanString");
@@ -155,19 +154,21 @@ public class ADMReasonsController extends BaseController {
             filter.page.START = 0;
             filter.page.LIMIT = 0;
             
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            //int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+           // int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            //filter.page.PAGROW = 20;
+            //start = (start != 0 ? start : 0);
+            //filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             
             logic = new ADMReasonsLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2560Filter> listaData = logic.SearchADMReasons(filter);
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
-            workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("ADM Reasons");
+            //workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
+            Sheet sheet = workbook.createSheet("ADMReasons");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
 //            CellStyle headerStyle = workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
