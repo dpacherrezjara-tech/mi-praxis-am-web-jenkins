@@ -258,9 +258,13 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                             metaData.style += 'text-align:center;font-weight: bold;';
                             return newVal;
                         }},
-                    {text: 'N° de <br>Documentos', dataIndex: 'tdocs', width: 100,
+                    {text: 'N° de <br>Documentos', dataIndex: 'tdocs', width: 120,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex) {
+                            metaData.style = 'font-weight:bold;';
                             return Ext.util.Format.number(value, '0,000');
                         }, },
                     {text: 'Fare Amount', dataIndex: 'tfare', width: 100,
@@ -303,7 +307,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                         width: 60,
                         align: 'center', items: [
                             {
-                                iconCls: 'prx-icon-excel',
+                                iconCls: 'prx-icon-download',
                                 tooltip: 'Download Details',
                                 handler: 'btnGridExcel'
                             }
@@ -377,8 +381,8 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             store: detailStore,
             id: prototype.id + '-detail-summary-grid',
             title: 'Coupon Registration Detail',
-            height: 580,
-            width: 1488,
+            height: 590,
+            width: 1490,
             viewConfig: {
                 stripeRows: true,
                 enableTextSelection: true,
@@ -620,10 +624,44 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
     },
     onDownloadDetail: function (grid, record) {
         let me = this;
+        me.onProgressBar(true);
         const rec = grid.getStore().getAt(record);
         let fecha = rec.get('fcont') ? rec.get('fcont') : rec.get('fvta');
         me.setDetailParameter(me.getSelectecOption(), fecha, fecha, rec.get('tipoc'));
-        global.getFile(prototype.url + '/getXLSX?' + new URLSearchParams(searchParams));
+        let filename = 'T' + rec.get('tipoc') + '_' + fecha;
+        searchParams.nameFile = filename;
+        fetch(prototype.url + '/downloadText?' + new URLSearchParams(searchParams))
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.download = `CouponRegistration - ${filename}.zip`;
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    me.onProgressBar(false);
+                })
+                .catch(err => {
+                    global.Msg({msg:'Error al Descargar.'})
+                    me.onProgressBar(false);
+                    console.error(err);
+                });
+        //global.getFile(prototype.url + '/getXLSX?' + new URLSearchParams(searchParams));
+    },
+    onProgressBar: function (enable) {
+        let pb = Ext.getCmp(prototype.id + '-progressBar');
+        if (enable) {
+            pb.setVisible(true);
+            pb.wait({
+                text: 'Descargando...',
+                interval: 500
+            });
+        } else {
+            pb.reset();
+            pb.setVisible(false);
+        }
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="paginacion detail">

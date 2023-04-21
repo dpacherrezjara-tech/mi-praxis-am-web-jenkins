@@ -6,14 +6,18 @@
 package net.miatech.praxis.controllers.discharges;
 
 import com.google.gson.Gson;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX549S01A1747Filter;
@@ -22,6 +26,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.discharges.CouponRegistrationLogic;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -34,7 +39,9 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -92,7 +99,7 @@ public class CouponRegistrationController extends BaseController {
             filter.IN_FECHAFROM = request.getParameter("IN_FECHAFROM");
             filter.IN_FECHATO = request.getParameter("IN_FECHATO");
             filter.IN_TKT = request.getParameter("IN_TKT");
-            
+
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
 
@@ -114,7 +121,7 @@ public class CouponRegistrationController extends BaseController {
 
         return lst;
     }
-    
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -188,7 +195,7 @@ public class CouponRegistrationController extends BaseController {
             Cell CH1_17 = row.createCell(17);
             Cell CH1_18 = row.createCell(18);
             Cell CH1_19 = row.createCell(19);
-            
+
             CH1_00.setCellValue("Accounting Date");
             CH1_01.setCellValue("Issue Date");
             CH1_02.setCellValue("Air");
@@ -311,11 +318,11 @@ public class CouponRegistrationController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "searchSummary")
-    public ResponseEntity<?> searchSummary (@RequestParam Map<String,String> params){
+    public ResponseEntity<?> searchSummary(@RequestParam Map<String, String> params) {
         logic = new CouponRegistrationLogic();
-        List res =  new ArrayList();
+        List res = new ArrayList();
         try {
             logic.setSession(this.serverSession.getServerSession());
             Gson gson = new Gson();
@@ -325,6 +332,79 @@ public class CouponRegistrationController extends BaseController {
             if (!res.isEmpty()) {
                 return new ResponseEntity<>(res, HttpStatus.OK);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "downloadText")
+    public ResponseEntity<byte[]> descargarTextoDetail(HttpServletRequest request) {
+
+        try {
+            String nombreFile = request.getParameter("nameFile");
+            String fileNameDownload = String.format("CouponRegistration - " + nombreFile + ".txt", UUID.randomUUID().toString().toLowerCase());
+
+            List<PX549S01A1747Filter> lstObj = this.getList(request, true);
+            List<String> filas = new ArrayList<>();
+
+            File fil = File.createTempFile(fileNameDownload, ".txt");
+
+            //encabezado
+            String headersTxt = "Accounting Date,Issue Date,Air,Document,Coupon,Discharge Type,Source,IATA,Country,Zone,"
+                + "Document Type,From,To,Carrier,Flight Date,Currency,Fare Amount,Comm Amount,SComm Amount,YQ Amount";
+            filas.add(headersTxt);
+
+            //data
+            for (PX549S01A1747Filter obj : lstObj) {
+                StringBuilder fila = new StringBuilder();
+                fila.append(obj.FCONT).append(",");
+                fila.append(obj.FVTA).append(",");
+                fila.append(obj.CCIA).append(",");
+                fila.append(obj.FORMASERIE).append(",");
+                fila.append(obj.CUPON).append(",");
+                fila.append(obj.TIPOC).append(",");
+                fila.append(obj.FTE).append(",");
+                fila.append(obj.AGTIA).append(",");
+                fila.append(obj.PSVVTA).append(",");
+                fila.append(obj.ZONA).append(",");
+                fila.append(obj.CDOC).append(",");
+                fila.append(obj.CDEPART).append(",");
+                fila.append(obj.CARRIVA).append(",");
+                fila.append(obj.CARR).append(",");
+                fila.append(obj.DFLIGHT).append(",");
+                fila.append(obj.MDACP).append(",");
+                fila.append(obj.VCPNRV).append(",");
+                fila.append(obj.COMREV).append(",");
+                fila.append(obj.SCOMREV).append(",");
+                fila.append(obj.YQREV);
+                
+                filas.add(fila.toString());
+            }
+
+            //escribe en txt
+            try (FileWriter fw = new FileWriter(fil)) {
+                fw.append(String.join("\n", filas));
+            }
+            
+            //descarga en zip
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ZipOutputStream zos = new ZipOutputStream(baos);
+            
+            ZipEntry entrada1 = new ZipEntry(fileNameDownload);
+            zos.putNextEntry(entrada1);
+            zos.write(FileUtils.readFileToByteArray(fil));
+            zos.closeEntry();
+            
+            zos.finish();
+            zos.close();
+            
+            //respuesta http
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "CouponRegistration-" + nombreFile + ".zip");
+            
+            return new ResponseEntity<byte[]>(baos.toByteArray(),headers,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
