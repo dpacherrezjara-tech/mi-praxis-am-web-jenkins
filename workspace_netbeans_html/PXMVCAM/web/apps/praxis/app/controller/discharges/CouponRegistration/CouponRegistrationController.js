@@ -263,7 +263,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                             return Ext.util.Format.number(value, '0,000');
                         },
                         summaryType: 'sum',
-                        summaryRenderer: function (value, summaryData, dataIndex) {
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData) {
                             metaData.style = 'font-weight:bold;';
                             return Ext.util.Format.number(value, '0,000');
                         }, },
