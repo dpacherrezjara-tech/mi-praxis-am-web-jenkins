@@ -417,7 +417,9 @@ public class CouponRegistrationController extends BaseController {
         zos.finish();
         zos.close();
 
-        file.deleteOnExit();
+        if(file!=null){
+            file.delete();
+        }
 
         //respuesta http
         HttpHeaders headers = new HttpHeaders();

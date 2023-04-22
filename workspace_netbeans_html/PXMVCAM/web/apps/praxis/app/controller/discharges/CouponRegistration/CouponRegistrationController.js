@@ -647,7 +647,13 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         curl = curl + new URLSearchParams(searchParams);
         //console.log(curl);
         fetch(curl)
-                .then(response => response.blob())
+                .then(async response => {
+                    if (!response.ok) {
+                        throw new Error('Error ' + response.status + ': ' + response.statusText);
+                    }
+                    const arch = await response.blob();
+                    return arch;
+                })
                 .then(blob => {
                     const url = URL.createObjectURL(blob);
 
@@ -658,7 +664,7 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                     link.click();
                     link.remove();
                     me.onProgressBar(false);
-                    global.Msg({msg:'Descarga Exitosa.'});
+                    global.Msg({msg: 'Descarga Exitosa.'});
                 })
                 .catch(err => {
                     global.Msg({msg: 'Error al Descargar.'})
