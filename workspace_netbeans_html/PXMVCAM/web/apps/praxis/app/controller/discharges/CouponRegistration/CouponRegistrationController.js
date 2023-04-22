@@ -610,27 +610,43 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
     btnGridExcel: function (grid, record) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
-            buttons: Ext.MessageBox.OKCANCEL,
+            msg: 'Choose your download format.',
+            width: 280,
+            buttons: Ext.MessageBox.YESNOCANCEL,
+            buttonText: {
+                yes: 'Excel',
+                no: 'Text File',
+                cancel: 'Cancel'
+            },
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
             fn: function (btn) {
-                if (btn === 'ok') {
-                    this.onDownloadDetail(grid, record);
+                switch (btn) {
+                    case 'yes':
+                        this.onDownloadDetail(grid, record, 'xlsx');
+                        break;
+                    case 'no':
+                        this.onDownloadDetail(grid, record, 'txt');
+                        break;
+                    default:
                 }
             }
         });
     },
-    onDownloadDetail: function (grid, record) {
+    onDownloadDetail: function (grid, record, type) {
         let me = this;
         me.onProgressBar(true);
         const rec = grid.getStore().getAt(record);
-        let fecha = rec.get('fcont') ? rec.get('fcont') : rec.get('fvta');
+        let fecha = (rec.get('fcont') ? rec.get('fcont') : rec.get('fvta')).trim();
         me.setDetailParameter(me.getSelectecOption(), fecha, fecha, rec.get('tipoc'));
         let filename = 'T' + rec.get('tipoc') + '_' + fecha;
         searchParams.nameFile = filename;
-        fetch(prototype.url + '/downloadText?' + new URLSearchParams(searchParams))
+        //console.log(searchParams);
+        let curl = prototype.url + (type === 'xlsx' ? '/downloadExcel' : '/downloadText') + '?';
+        curl = curl + new URLSearchParams(searchParams);
+        //console.log(curl);
+        fetch(curl)
                 .then(response => response.blob())
                 .then(blob => {
                     const url = URL.createObjectURL(blob);
@@ -642,13 +658,13 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                     link.click();
                     link.remove();
                     me.onProgressBar(false);
+                    global.Msg({msg:'Descarga Exitosa.'});
                 })
                 .catch(err => {
-                    global.Msg({msg:'Error al Descargar.'})
+                    global.Msg({msg: 'Error al Descargar.'})
                     me.onProgressBar(false);
                     console.error(err);
                 });
-        //global.getFile(prototype.url + '/getXLSX?' + new URLSearchParams(searchParams));
     },
     onProgressBar: function (enable) {
         let pb = Ext.getCmp(prototype.id + '-progressBar');

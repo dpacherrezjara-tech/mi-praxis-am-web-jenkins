@@ -15,11 +15,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX549S01A1747Filter;
 import net.miatech.beans.SQP04905Filter;
 import net.miatech.praxis.controllers.BaseController;
@@ -34,10 +32,9 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -122,172 +119,172 @@ public class CouponRegistrationController extends BaseController {
         return lst;
     }
 
-    @RequestMapping(value = "getXLSX")
-    public @ResponseBody
-    void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("CouponRegistration : getXLSX");
-
-        String fileNameDownload = String.format("CouponRegistration - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+    @RequestMapping(value = "downloadExcel")
+    public ResponseEntity<byte[]> descargarExcelDetail(HttpServletRequest request) {
+        String nombreFile = request.getParameter("nameFile");
+        String fileNameDownload = "CouponRegistration - " + nombreFile.trim() + ".xlsx";
 
         try {
-            Workbook workbook;
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
+
+            String[] nameArr = fileNameDownload.split("\\.");
+            String prefix = nameArr[0];
+            String suffix = "." + nameArr[1];
+            File file = File.createTempFile(prefix, suffix);
+
             List<PX549S01A1747Filter> listaData = this.getList(request, true);
 
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            try (SXSSFWorkbook workbook = new SXSSFWorkbook()) {
+                workbook.setCompressTempFiles(true); // Opcional: comprimir archivos temporales para reducir el espacio en disco utilizado
+                Sheet sheet = workbook.createSheet("CouponRegistration");
+                XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+                CellStyle bodyStyle = workbook.createCellStyle();
+                Font headerFont = workbook.createFont();
 
-            workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("CouponRegistration");
+                headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+                headerFont.setColor(IndexedColors.BLACK.getIndex());
 
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
+                headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+                headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+                headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+                headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+                headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+                headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+                headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+                headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+                headerStyle.setFont(headerFont);
 
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
+                bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+                bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+                bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+                bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+                bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+                bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                Integer vi = 0;
+                Integer vj = 0; //Almacena el numero de fila
+                Iterator iter = listaData.iterator();
 
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
+                // ====== CREANDO TITULOS ======================================
+                Row row = sheet.createRow(vj);
 
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            Integer vi = 0;
-            Integer vj = 0; //Almacena el numero de fila
-            Iterator iter = listaData.iterator();
+                Cell CH1_00 = row.createCell(0);
+                Cell CH1_01 = row.createCell(1);
+                Cell CH1_02 = row.createCell(2);
+                Cell CH1_03 = row.createCell(3);
+                Cell CH1_04 = row.createCell(4);
+                Cell CH1_05 = row.createCell(5);
+                Cell CH1_06 = row.createCell(6);
+                Cell CH1_07 = row.createCell(7);
+                Cell CH1_08 = row.createCell(8);
+                Cell CH1_09 = row.createCell(9);
+                Cell CH1_10 = row.createCell(10);
+                Cell CH1_11 = row.createCell(11);
+                Cell CH1_12 = row.createCell(12);
+                Cell CH1_13 = row.createCell(13);
+                Cell CH1_14 = row.createCell(14);
+                Cell CH1_15 = row.createCell(15);
+                Cell CH1_16 = row.createCell(16);
+                Cell CH1_17 = row.createCell(17);
+                Cell CH1_18 = row.createCell(18);
+                Cell CH1_19 = row.createCell(19);
 
-            // ====== CREANDO TITULOS ======================================
-            Row row = sheet.createRow(vj);
+                CH1_00.setCellValue("Accounting Date");
+                CH1_01.setCellValue("Issue Date");
+                CH1_02.setCellValue("Air");
+                CH1_03.setCellValue("Document");
+                CH1_04.setCellValue("Coupon");
+                CH1_05.setCellValue("Discharge Type");
+                CH1_06.setCellValue("Source");
+                CH1_07.setCellValue("IATA");
+                CH1_08.setCellValue("Country");
+                CH1_09.setCellValue("Zone");
+                CH1_10.setCellValue("Document Type");
+                CH1_11.setCellValue("From");
+                CH1_12.setCellValue("To");
+                CH1_13.setCellValue("Carrier");
+                CH1_14.setCellValue("Flight Date");
+                CH1_15.setCellValue("Currency");
+                CH1_16.setCellValue("Fare Amount");
+                CH1_17.setCellValue("Comm Amount");
+                CH1_18.setCellValue("SComm Amount");
+                CH1_19.setCellValue("YQ Amount");
 
-            Cell CH1_00 = row.createCell(0);
-            Cell CH1_01 = row.createCell(1);
-            Cell CH1_02 = row.createCell(2);
-            Cell CH1_03 = row.createCell(3);
-            Cell CH1_04 = row.createCell(4);
-            Cell CH1_05 = row.createCell(5);
-            Cell CH1_06 = row.createCell(6);
-            Cell CH1_07 = row.createCell(7);
-            Cell CH1_08 = row.createCell(8);
-            Cell CH1_09 = row.createCell(9);
-            Cell CH1_10 = row.createCell(10);
-            Cell CH1_11 = row.createCell(11);
-            Cell CH1_12 = row.createCell(12);
-            Cell CH1_13 = row.createCell(13);
-            Cell CH1_14 = row.createCell(14);
-            Cell CH1_15 = row.createCell(15);
-            Cell CH1_16 = row.createCell(16);
-            Cell CH1_17 = row.createCell(17);
-            Cell CH1_18 = row.createCell(18);
-            Cell CH1_19 = row.createCell(19);
+                CH1_00.setCellStyle(headerStyle);
+                CH1_01.setCellStyle(headerStyle);
+                CH1_02.setCellStyle(headerStyle);
+                CH1_03.setCellStyle(headerStyle);
+                CH1_04.setCellStyle(headerStyle);
+                CH1_05.setCellStyle(headerStyle);
+                CH1_06.setCellStyle(headerStyle);
+                CH1_07.setCellStyle(headerStyle);
+                CH1_08.setCellStyle(headerStyle);
+                CH1_09.setCellStyle(headerStyle);
+                CH1_10.setCellStyle(headerStyle);
+                CH1_11.setCellStyle(headerStyle);
+                CH1_12.setCellStyle(headerStyle);
+                CH1_13.setCellStyle(headerStyle);
+                CH1_14.setCellStyle(headerStyle);
+                CH1_15.setCellStyle(headerStyle);
+                CH1_16.setCellStyle(headerStyle);
+                CH1_17.setCellStyle(headerStyle);
+                CH1_18.setCellStyle(headerStyle);
+                CH1_19.setCellStyle(headerStyle);
 
-            CH1_00.setCellValue("Accounting Date");
-            CH1_01.setCellValue("Issue Date");
-            CH1_02.setCellValue("Air");
-            CH1_03.setCellValue("Document");
-            CH1_04.setCellValue("Coupon");
-            CH1_05.setCellValue("Discharge Type");
-            CH1_06.setCellValue("Source");
-            CH1_07.setCellValue("IATA");
-            CH1_08.setCellValue("Country");
-            CH1_09.setCellValue("Zone");
-            CH1_10.setCellValue("Document Type");
-            CH1_11.setCellValue("From");
-            CH1_12.setCellValue("To");
-            CH1_13.setCellValue("Carrier");
-            CH1_14.setCellValue("Flight Date");
-            CH1_15.setCellValue("Currency");
-            CH1_16.setCellValue("Fare Amount");
-            CH1_17.setCellValue("Comm Amount");
-            CH1_18.setCellValue("SComm Amount");
-            CH1_19.setCellValue("YQ Amount");
-
-            CH1_00.setCellStyle(headerStyle);
-            CH1_01.setCellStyle(headerStyle);
-            CH1_02.setCellStyle(headerStyle);
-            CH1_03.setCellStyle(headerStyle);
-            CH1_04.setCellStyle(headerStyle);
-            CH1_05.setCellStyle(headerStyle);
-            CH1_06.setCellStyle(headerStyle);
-            CH1_07.setCellStyle(headerStyle);
-            CH1_08.setCellStyle(headerStyle);
-            CH1_09.setCellStyle(headerStyle);
-            CH1_10.setCellStyle(headerStyle);
-            CH1_11.setCellStyle(headerStyle);
-            CH1_12.setCellStyle(headerStyle);
-            CH1_13.setCellStyle(headerStyle);
-            CH1_14.setCellStyle(headerStyle);
-            CH1_15.setCellStyle(headerStyle);
-            CH1_16.setCellStyle(headerStyle);
-            CH1_17.setCellStyle(headerStyle);
-            CH1_18.setCellStyle(headerStyle);
-            CH1_19.setCellStyle(headerStyle);
-
-            //          ========================================================
-            ++vj;
-            while (iter.hasNext()) {
-
-                row = sheet.createRow(vj);
-                Cell rcell0 = row.createCell(0);
-                Cell rcell1 = row.createCell(1);
-                Cell rcell2 = row.createCell(2);
-                Cell rcell3 = row.createCell(3);
-                Cell rcell4 = row.createCell(4);
-                Cell rcell5 = row.createCell(5);
-                Cell rcell6 = row.createCell(6);
-                Cell rcell7 = row.createCell(7);
-                Cell rcell8 = row.createCell(8);
-                Cell rcell9 = row.createCell(9);
-                Cell rcell10 = row.createCell(10);
-                Cell rcell11 = row.createCell(11);
-                Cell rcell12 = row.createCell(12);
-                Cell rcell13 = row.createCell(13);
-                Cell rcell14 = row.createCell(14);
-                Cell rcell15 = row.createCell(15);
-                Cell rcell16 = row.createCell(16);
-                Cell rcell17 = row.createCell(17);
-                Cell rcell18 = row.createCell(18);
-                Cell rcell19 = row.createCell(19);
-
-                rcell0.setCellValue(listaData.get(vi).FCONT);
-                rcell1.setCellValue(listaData.get(vi).FVTA);
-                rcell2.setCellValue(listaData.get(vi).CCIA);
-                rcell3.setCellValue(listaData.get(vi).FORMASERIE);
-                rcell4.setCellValue(listaData.get(vi).CUPON);
-                rcell5.setCellValue(listaData.get(vi).TIPOC);
-                rcell6.setCellValue(listaData.get(vi).FTE);
-                rcell7.setCellValue(listaData.get(vi).AGTIA);
-                rcell8.setCellValue(listaData.get(vi).PSVVTA);
-                rcell9.setCellValue(listaData.get(vi).ZONA);
-                rcell10.setCellValue(listaData.get(vi).CDOC);
-                rcell11.setCellValue(listaData.get(vi).CDEPART);
-                rcell12.setCellValue(listaData.get(vi).CARRIVA);
-                rcell13.setCellValue(listaData.get(vi).CARR);
-                rcell14.setCellValue(listaData.get(vi).DFLIGHT);
-                rcell15.setCellValue(listaData.get(vi).MDACP);
-                rcell16.setCellValue(listaData.get(vi).VCPNRV);
-                rcell17.setCellValue(listaData.get(vi).COMREV);
-                rcell18.setCellValue(listaData.get(vi).SCOMREV);
-                rcell19.setCellValue(listaData.get(vi).YQREV);
-                iter.next();
-                ++vi;
+                //          ========================================================
                 ++vj;
-            }
+                while (iter.hasNext()) {
+
+                    row = sheet.createRow(vj);
+                    Cell rcell0 = row.createCell(0);
+                    Cell rcell1 = row.createCell(1);
+                    Cell rcell2 = row.createCell(2);
+                    Cell rcell3 = row.createCell(3);
+                    Cell rcell4 = row.createCell(4);
+                    Cell rcell5 = row.createCell(5);
+                    Cell rcell6 = row.createCell(6);
+                    Cell rcell7 = row.createCell(7);
+                    Cell rcell8 = row.createCell(8);
+                    Cell rcell9 = row.createCell(9);
+                    Cell rcell10 = row.createCell(10);
+                    Cell rcell11 = row.createCell(11);
+                    Cell rcell12 = row.createCell(12);
+                    Cell rcell13 = row.createCell(13);
+                    Cell rcell14 = row.createCell(14);
+                    Cell rcell15 = row.createCell(15);
+                    Cell rcell16 = row.createCell(16);
+                    Cell rcell17 = row.createCell(17);
+                    Cell rcell18 = row.createCell(18);
+                    Cell rcell19 = row.createCell(19);
+
+                    rcell0.setCellValue(listaData.get(vi).FCONT);
+                    rcell1.setCellValue(listaData.get(vi).FVTA);
+                    rcell2.setCellValue(listaData.get(vi).CCIA);
+                    rcell3.setCellValue(listaData.get(vi).FORMASERIE);
+                    rcell4.setCellValue(listaData.get(vi).CUPON);
+                    rcell5.setCellValue(listaData.get(vi).TIPOC);
+                    rcell6.setCellValue(listaData.get(vi).FTE);
+                    rcell7.setCellValue(listaData.get(vi).AGTIA);
+                    rcell8.setCellValue(listaData.get(vi).PSVVTA);
+                    rcell9.setCellValue(listaData.get(vi).ZONA);
+                    rcell10.setCellValue(listaData.get(vi).CDOC);
+                    rcell11.setCellValue(listaData.get(vi).CDEPART);
+                    rcell12.setCellValue(listaData.get(vi).CARRIVA);
+                    rcell13.setCellValue(listaData.get(vi).CARR);
+                    rcell14.setCellValue(listaData.get(vi).DFLIGHT);
+                    rcell15.setCellValue(listaData.get(vi).MDACP);
+                    rcell16.setCellValue(listaData.get(vi).VCPNRV);
+                    rcell17.setCellValue(listaData.get(vi).COMREV);
+                    rcell18.setCellValue(listaData.get(vi).SCOMREV);
+                    rcell19.setCellValue(listaData.get(vi).YQREV);
+                    iter.next();
+                    ++vi;
+                    ++vj;
+                }
 
 //            sheet.autoSizeColumn(0, true);
 //            sheet.autoSizeColumn(1, true);
@@ -304,19 +301,22 @@ public class CouponRegistrationController extends BaseController {
 //            sheet.autoSizeColumn(12, true);
 //            sheet.autoSizeColumn(13, true);
 //            sheet.autoSizeColumn(14, true);
-            /**
-             * fileNameDownload = Nombre de descarga
-             */
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+                /**
+                 * fileNameDownload = Nombre de descarga
+                 */
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    workbook.write(fos);
+                }
+            }
 
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-            fos.close();
+            ResponseEntity<byte[]> response = this.zipFile(fileNameDownload, file);
 
-        } catch (IOException e) {
-            throw new SpringException(e);
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "searchSummary")
@@ -343,16 +343,19 @@ public class CouponRegistrationController extends BaseController {
 
         try {
             String nombreFile = request.getParameter("nameFile");
-            String fileNameDownload = String.format("CouponRegistration - " + nombreFile + ".txt", UUID.randomUUID().toString().toLowerCase());
+            String fileNameDownload = "CouponRegistration - " + nombreFile.trim() + ".txt";
 
             List<PX549S01A1747Filter> lstObj = this.getList(request, true);
             List<String> filas = new ArrayList<>();
 
-            File fil = File.createTempFile(fileNameDownload, ".txt");
+            String[] nameArr = fileNameDownload.split("\\.");
+            String prefix = nameArr[0];
+            String suffix = "." + nameArr[1];
+            File file = File.createTempFile(prefix, suffix);
 
             //encabezado
             String headersTxt = "Accounting Date,Issue Date,Air,Document,Coupon,Discharge Type,Source,IATA,Country,Zone,"
-                + "Document Type,From,To,Carrier,Flight Date,Currency,Fare Amount,Comm Amount,SComm Amount,YQ Amount";
+                    + "Document Type,From,To,Carrier,Flight Date,Currency,Fare Amount,Comm Amount,SComm Amount,YQ Amount";
             filas.add(headersTxt);
 
             //data
@@ -378,36 +381,48 @@ public class CouponRegistrationController extends BaseController {
                 fila.append(obj.COMREV).append(",");
                 fila.append(obj.SCOMREV).append(",");
                 fila.append(obj.YQREV);
-                
+
                 filas.add(fila.toString());
             }
 
             //escribe en txt
-            try (FileWriter fw = new FileWriter(fil)) {
+            try (FileWriter fw = new FileWriter(file)) {
                 fw.append(String.join("\n", filas));
             }
-            
-            //descarga en zip
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ZipOutputStream zos = new ZipOutputStream(baos);
-            
-            ZipEntry entrada1 = new ZipEntry(fileNameDownload);
-            zos.putNextEntry(entrada1);
-            zos.write(FileUtils.readFileToByteArray(fil));
-            zos.closeEntry();
-            
-            zos.finish();
-            zos.close();
-            
-            //respuesta http
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDispositionFormData("attachment", "CouponRegistration-" + nombreFile + ".zip");
-            
-            return new ResponseEntity<byte[]>(baos.toByteArray(),headers,HttpStatus.OK);
+
+            ResponseEntity<byte[]> response = this.zipFile(fileNameDownload, file);
+
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<byte[]> zipFile(String fileNameDownload, File file) throws IOException {
+
+        String flnm = fileNameDownload.split("\\.")[0];
+
+        System.out.println("Nombre de Archivo: " + fileNameDownload);
+
+        //descarga en zip
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ZipOutputStream zos = new ZipOutputStream(baos);
+
+        ZipEntry entrada1 = new ZipEntry(fileNameDownload);
+        zos.putNextEntry(entrada1);
+        zos.write(FileUtils.readFileToByteArray(file));
+        zos.closeEntry();
+
+        zos.finish();
+        zos.close();
+
+        file.deleteOnExit();
+
+        //respuesta http
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", flnm + ".zip");
+        return new ResponseEntity<byte[]>(baos.toByteArray(), headers, HttpStatus.OK);
     }
 }
