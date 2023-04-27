@@ -4,26 +4,17 @@
  * and open the template in the editor.
  */
 
-/* global Promise, global */
-
 Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.idRftx + '-dataEntryRftxController',
     url: CONTEXTPATH + '/SalesReport',
     meDET: '',
-    paramsProrrate: {},
     //<editor-fold defaultstate="collapsed" desc="View Vars">
     groupInfo: '',
-    objRftx: {
-        info: [],
-        taxes: [],
-        fop: [],
-        totales: {},
-        ref: {},
-        obs: {}
-    },
-    objReq: {},
-    stVoid: '',
+    objInfo: '',
+    objTax: '',
+    objFop: '',
+    objTot: '',
     //</editor-fold>
     /**
      * Constructor
@@ -40,143 +31,77 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
      */
     afterRender: async function () {
         //dvt
-        let me = this;
-        me.view.mask('Loading...');
-        me.getRequestParams();
-        let info = await me.getRftxInfo();
-        //Mejora rendimiento Dvicente 230227
-        if (info && me.stVoid === 'VOID') {
-            Ext.getCmp(prototype.idRftx + '-det-btnFopVOID').show();
-            me.setValues();
-            me.view.unmask();
-        } else if (info && me.stVoid !== 'VOID') {
-            Promise.allSettled([
-                me.getRftxFop(),
-                me.getRftxTax(),
-                me.getRftxTot()
-            ]).then(values => {
-                const[
-                    {value: fop},
-                    {value: tax},
-                    {value: tot}
-                ] = values;
-                //console.log(values);
-                if (info && fop && tax && tot) {
-                    me.setValues();
-                } else {
-                    global.Msg({msg: 'Not found'});
-                    me.view.close();
-                }
-                me.view.unmask();
-            }).catch(err => console.error(err));
-        } else {
+        Ext.getCmp(prototype.idRftx + '-dataEntryRftx').mask('Loading...');
+        let dataStatus = false;
+        dataStatus = await this.getRftxInfo();
+        dataStatus = await this.getRftxFop();
+        dataStatus = await this.getRftxTax();
+        dataStatus = await this.getRftxTot();
+        if (dataStatus) {
+            this.setValues();
+        }else{
             global.Msg({msg: 'Not found'});
-            me.view.close();
         }
+        Ext.getCmp(prototype.idRftx + '-dataEntryRftx').unmask();
     },
     getRequestParams: function () {
-        let me = this;
-        let p = me.view.params;
+        let p = this.view.params;
         this.groupInfo = p.groupData;
         let bean = p.rec.data;
-        me.stVoid = bean.A4373TDOC || '';
-        me.objReq = {
+        let body = {
             AIRLINE: bean.A4373AIRLI,
             CIA: bean.A4373CIA,
             FORMA: bean.DOCUMENTO.substring(0, 4),
             SERIE: bean.DOCUMENTO.substring(4, 10),
-            SEQ: bean.A4373SEQ
+            SEQ: '00'
         };
-    },
-    setRequestObj: function (obj) {
-        let objReq = this.objReq;
-        objReq.AIRLINE = obj.a4373CIAI;
-        objReq.CIA = obj.a4373CIAI;
-        objReq.FORMA = obj.a4373FORMI;
-        objReq.SERIE = obj.a4373SERII;
-        objReq.SEQ = obj.a4373SEQ;
+        return body;
     },
     setValues: function () {
         this.setInfoValues();
-        if (this.stVoid !== 'VOID') {
-            this.setFopValues();
-            this.setTaxValues();
-            this.setTotalValues();
-        }
-        this.setFacsimil();
+        this.setFopValues();
+        this.setTaxValues();
+        this.setTotalValues();
     },
     //<editor-fold defaultstate="collapsed" desc="Obteniendo Valores">
     getRftxInfo: async function () {
-        let me= this;
-        let params = me.objReq;
-//        let response = await this.getFetchAsync(this.url + '/getRftxInfo', body);
-//        let refs = await this.getFetchAsync(this.url + '/getRftxRefs', body);
-//        if (response.success) {
-//            this.objRftx.info = response.data;
-//            this.setRequestObj(response.data[0]);
-//            if (refs.success) {
-//                this.objRftx.ref = refs.data.ref;
-//                this.objRftx.obs = refs.data.obs;
-//            }
-//        }
-
-        return Promise.allSettled([
-            me.getFetchAsync(me.url + '/getRftxInfo', params),
-            me.getFetchAsync(me.url + '/getRftxRefs', params)
-        ]).then(values => {
-            const[
-                {value: info},
-                {value: refs}
-            ] = values;
-            //console.log(values);
-            let status = info.success&&refs.success;
-            if(status){
-                me.objRftx.info = info.data;
-                me.setRequestObj(info.data[0]);
-                me.objRftx.ref = refs.data.ref;
-                me.objRftx.obs = refs.data.obs;
-            }
-            return status;
-        }).catch(e=>{
-            console.error('Error RFTX: ',e);
-            return false;
-        });
-
+        let body = this.getRequestParams();
+        let response = await this.getFetchAsync(this.url + '/getRftxInfo', body);
+        if (response.success) {
+            this.objInfo = response.data;
+        }
+        return response.success ;
     },
     getRftxFop: async function () {
-        let body = this.objReq;
+        let body = this.getRequestParams();
         let response = await this.getFetchAsync(this.url + '/getRftxFop', body);
         if (response.success) {
-            this.objRftx.fop = response.data;
+            this.objFop = response.data;
         }
         return response.success;
     },
     getRftxTax: async function () {
-        let body = this.objReq;
+        let body = this.getRequestParams();
         let response = await this.getFetchAsync(this.url + '/getRftxTax', body);
         if (response.success) {
-            this.objRftx.taxes = response.data;
+            this.objTax = response.data;
         }
         return response.success;
     },
     getRftxTot: async function () {
-        let body = this.objReq;
+        let body = this.getRequestParams();
         let response = await this.getFetchAsync(this.url + '/getRftxTot', body);
         if (response.success) {
-            this.objRftx.totales = response.data;
+            this.objTot = response.data;
         }
         return response.success;
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Seteando Valores">
     setInfoValues: function () {
-        let obj = this.objRftx.info[0];
-        let objRef = this.objRftx.ref;
-        let objObs = this.objRftx.obs;
-        let objLst = this.objRftx.info;
+        let obj = this.objInfo;
         let objGrupo = this.groupInfo;
         if (obj && objGrupo) {
-            //console.log('obj data', obj);
             //panel 1
             Ext.getCmp(prototype.idRftx + '-det-lblCia').setValue(obj.a4373CIA);
             Ext.getCmp(prototype.idRftx + '-det-lblDocumento').setValue(obj.a4373FORMA + obj.a4373SERIE);
@@ -187,104 +112,30 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblTransactionNbr').setValue(obj.a4373TRNN);
             Ext.getCmp(prototype.idRftx + '-det-lblIata').setValue(obj.a4373AGENT);
             Ext.getCmp(prototype.idRftx + '-det-lblMdtx').setValue(obj.a4373MDTX.trim());
-            Ext.getCmp(prototype.idRftx + '-det-lblCurr').setValue(Ext.util.Format.number(obj.a4373TTAX, '0,000.00'));
+            Ext.getCmp(prototype.idRftx + '-det-lblCurr').setValue(obj.a4373TTAX);
             Ext.getCmp(prototype.idRftx + '-det-lblExchangeRate').setValue(objGrupo.A1530TCAMB);
             Ext.getCmp(prototype.idRftx + '-det-lblLocalCur').setValue(objGrupo.A1530MDA);
             //panel 2
             Ext.getCmp(prototype.idRftx + '-det-lblDigito').setValue(obj.a4373DCHEQ);
             Ext.getCmp(prototype.idRftx + '-det-lblDocType').setValue(obj.a4373TDOC);
-            Ext.getCmp(prototype.idRftx + '-det-lblSeq').setValue(obj.a4373TRNSQ);
+            Ext.getCmp(prototype.idRftx + '-det-lblSeq').setValue(obj.a4373SEQ);
             //panel 2.1
             Ext.getCmp(prototype.idRftx + '-det-lblGroup').setValue(obj.a4373GRUPO);
-            Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(objGrupo.A1530FUENT + '-' + objGrupo.A1530PSVTA);
+            Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(objGrupo.A1530FUENT);
             Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(objGrupo.A1530IDFIL);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueDate').setValue(obj.a4373FECVT);
-            Ext.getCmp(prototype.idRftx + '-det-lblSaleDate').setValue(obj.a4373FTURB);
-            Ext.getCmp(prototype.idRftx + '-det-lblSaleSeq').setValue(obj.a4373SEQ);
-            Ext.getCmp(prototype.idRftx + '-det-lblAuthorityNumber').setValue(obj.a4373CIAS + obj.a4373FORMS + obj.a4373SERIS);
-
-            Ext.getCmp(prototype.idRftx + '-det-lblIssueCity').setValue(obj.a4373CIUEM);
-            Ext.getCmp(prototype.idRftx + '-det-lblIssueCtry').setValue(obj.a4373PAIEM);
-            Ext.getCmp(prototype.idRftx + '-det-lblSaleCity').setValue(obj.a4373CIUVT);
-            Ext.getCmp(prototype.idRftx + '-det-lblSaleCtry').setValue(obj.a4373PAIVT);
-
-            //Descripcion de Error
-            if (obj.a4373STAT !== '1' && obj.a4373STAT !== '4') {
-                let lblError = Ext.getCmp(prototype.idRftx + '-lblErrorDesc');
-                let errDesc = obj.a4373MIAER + ' - ' + obj.error_DESC.trimEnd();
-                lblError.setText(errDesc);
-                lblError.show();
-            }
-
-            //cupones
-            if (objLst.length > 0) {
-                objLst.forEach((element, index) => {
-                    if (index < 4) {
-                        let indexCmp = index + 1;
-                        let lblTkt = Ext.getCmp(prototype.idRftx + `-det-lblTicket${indexCmp}`);
-                        let c1 = Ext.getCmp(prototype.idRftx + `-det-lblCup01-${indexCmp}`);
-                        let c2 = Ext.getCmp(prototype.idRftx + `-det-lblCup02-${indexCmp}`);
-                        let c3 = Ext.getCmp(prototype.idRftx + `-det-lblCup03-${indexCmp}`);
-                        let c4 = Ext.getCmp(prototype.idRftx + `-det-lblCup04-${indexCmp}`);
-                        lblTkt.getEl().update(element.a4373FORMA + element.a4373SERIE);
-                        c1.setValue(element.a4373CUPN1);
-                        c2.setValue(element.a4373CUPN2);
-                        c3.setValue(element.a4373CUPN3);
-                        c4.setValue(element.a4373CUPN4);
-                        if (indexCmp > 1) {
-                            lblTkt.show();
-                            c1.show();
-                            c2.show();
-                            c3.show();
-                            c4.show();
-                        }
-                    }
-                    //console.log(`objeto ${index}`, element);
-                });
-            }
-
-            //referencias y observaciones
-            if (objRef.length > 0) {
-                let ref = objRef.map(x=>x.a4376FRCA.trim()).join(', ');
-                Ext.getCmp(prototype.idRftx + '-det-lblReference').setValue(ref);
-            }
-            if (objObs.length > 0) {
-                let obs = objObs.map(x=>x.a4376FRCA.trim()).join(', ');
-                Ext.getCmp(prototype.idRftx + '-det-lblObservation').setValue(obs);
-            }
-
-            //imagen void
-            if (obj.a4373TDOC === 'VOID') {
-                let panelFop = Ext.getCmp(prototype.idRftx + '-panel-Fop'),
-                        panelTax = Ext.getCmp(prototype.idRftx + '-panel-Tax');
-                panelFop.removeAll();
-                panelTax.removeAll();
-                let imgFop = Ext.create('Ext.Img', {
-                    src: 'resources/img/icon/void.png',
-                    width: panelFop.getWidth(),
-                    height: 130
-                }),
-                        imgTax = Ext.create('Ext.Img', {
-                            src: 'resources/img/icon/void.png',
-                            width: panelTax.getWidth(),
-                            height: 150
-                        });
-                panelFop.add(imgFop);
-                panelTax.add(imgTax);
-
-            }
 
             //datos de auditoria
-            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS || '');
-            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI || '');
-            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS || '');
-            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI || '');
+            Ext.getCmp(prototype.idRftx + '-usr-userCreated').setValue(obj.a4373REGIS || 'SAP51');
+            Ext.getCmp(prototype.idRftx + '-usr-dateCreated').setValue(obj.a4373FREGI || '20221229');
+            Ext.getCmp(prototype.idRftx + '-usr-userUpdated').setValue(obj.a4373REVIS || 'SAP51');
+            Ext.getCmp(prototype.idRftx + '-usr-dateUpdated').setValue(obj.a4373FREVI || '20221229');
 
         }
 
     },
     setFopValues: function () {
-        let obj = this.objRftx.fop;
+        let obj = this.objFop;
         if (obj.length > 0) {
             let fopother = 0;
             let fopShow = 0;
@@ -313,7 +164,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         }
     },
     setTaxValues: function () {
-        let obj = this.objRftx.taxes;
+        let obj = this.objTax;
         if (obj.length > 0) {
             let taxother = 0;
             let taxShow = 0;
@@ -337,7 +188,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         }
     },
     setTotalValues: function () {
-        let obj = this.objRftx.totales;
+        let obj = this.objTot;
         if (obj) {
             //fop totals
             Ext.getCmp(prototype.idRftx + '-det-lblFOP').setValue(Ext.util.Format.number(obj.fop, '0,000.00') || 0);
@@ -349,14 +200,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         }
     },
     //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="delivery">
     onDelivery: function () {
         let bean = {};
         bean.TDNR = Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = Ext.getCmp(prototype.idRftx + '-det-lblSource').getValue().trim().substr(0, 3);
-        bean.SEQTKT = this.view.params.rec.data.A4373SEQ;
-        bean.IDFILE = Ext.getCmp(prototype.idRftx + '-det-lblFileId').getValue().trim();
-        console.log(bean);
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
             bean.A720TKVOID = '';//this.gloA720TKVOID;
             this.searchDelivery(bean);
@@ -426,13 +275,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
         });
     },
     //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Botones">
+
     onFareCalc: async function (obj) {
         let lblDocumento = Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
         if (lblDocumento !== '') {
             let win = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx', {
                 params: {
-                    body: this.objReq
+                    body: this.getRequestParams()
                 }
             });
             win.show();
@@ -465,13 +314,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             var win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx({
                 params: {
                     stGroup: statusGrupo,
-                    requestParams: this.objReq
+                    requestParams: this.getRequestParams()
                 }
             });
             win.show();
         }
     },
-    onClickSearchFOP: function (obj) {
+    onClickSearchFOP:function(obj){
         let lblFOP = Ext.getCmp(prototype.idRftx + '-det-lblFOP').getValue().trim();
         let lblDocumento = Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
         if (Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().length !== 3) {
@@ -495,72 +344,11 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             var win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPRftx({
                 params: {
                     stGroup: statusGrupo,
-                    requestParams: this.objReq
+                    requestParams: this.getRequestParams()
                 }
             });
             win.show();
         }
-    },
-    onFopVoid: function (obj) {
-        let me = this;
-        let lblDocumento = Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().trim();
-        if (Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue().length !== 3) {
-            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Cia', function (btn, text) {
-                if (btn === 'ok') {
-                    this.onFocus('-det-lblCia');
-                }
-            });
-            return;
-        }
-        if (Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue().length !== 10) {
-            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Document', function (btn, text) {
-                if (btn === 'ok') {
-                    this.onFocus('-det-lblDocumento');
-                }
-            });
-            return;
-        }
-        if (me.stVoid === 'VOID' && lblDocumento !== '') {
-            let grupo = Ext.getCmp(prototype.idRftx + '-det-lblGroup').getValue();
-            let win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid({
-                params: {
-                    objReq: {TIPO: 'RFND', GRUPO: grupo, ...me.objReq}
-                }
-            });
-            win.show();
-        }
-    },
-    //</editor-fold>
-    setFacsimil: function () {
-        var p = this.view.params;
-        var bean = p.rec.data;
-        //console.log(bean);
-        paramsProrrate = {
-            IN_TIPOCAP: 'A',
-            IN_AIRLIN: bean.A4373AIRLI,
-            IN_GRUPO: bean.A4373GRUPO,
-            IN_CIA: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblCia').getValue()), //bean.A4373CIAI,
-            IN_FORMA: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue()).substr(0, 4), //bean.A4373FORMI,
-            IN_SERIE: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblDocumento').getValue()).substr(4, 6), //bean.A4373SERII,
-            IN_SEQ: bean.A4373SEQ,
-            IN_FTE: Ext.getCmp(prototype.idRftx + '-det-lblSource').getValue().substr(0, 3), //bean.A4373ORIG,
-            IN_TRX: 'RFND', //bean.A4373TRNCU,
-            IN_EDITABLE: false,
-            IN_TCAMB: p.exchrate,
-            IN_REVENUE: '',
-            IN_STATUS: 'CLOSED',
-            IN_ERROR: '',
-            IN_TDOC: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblDocType').getValue()),
-            IN_ISSUEDATE: bean.A4373FECVT,
-            IN_CUPON1: '',
-            IN_CUPON2: '',
-            IN_CUPON3: '',
-            IN_CUPON4: '',
-            IN_FORCE: '',
-            IN_IDFIL: Ext.String.trim(Ext.getCmp(prototype.idRftx + '-det-lblFileId').getValue())//bean.A4373IDFIL
-        };
-        //console.log(paramsProrrate);
-        Ext.getCmp(prototype.idRftx + '-widget-facsimil').setParam(paramsProrrate);
     },
     //<editor-fold defaultstate="collapsed" desc="FETCH">
     getFetchAsync: async function (url, params, method = 'GET') {
@@ -583,7 +371,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
                 reqUrl = url;
                 if (params !== null && params !== undefined) {
                     reqUrl = reqUrl + '?' + new URLSearchParams(params);
-                } else {
+                }else{
                     ready = false;
                 }
                 break;
@@ -612,6 +400,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
                         return {success: true, data: resObj};
                         break;
                     case 204:
+                        console.log(await res.json().msg);
                         return {success: false};
                         break;
                     default:
@@ -627,7 +416,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     }
     //</editor-fold>
 
-
+    
 });
 
 

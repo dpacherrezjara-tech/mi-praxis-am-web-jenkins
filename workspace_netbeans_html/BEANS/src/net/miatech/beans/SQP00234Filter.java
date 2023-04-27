@@ -20,6 +20,7 @@ public class SQP00234Filter{
     public int QTY_SALE = 0;
     public int QTY_EXCH = 0;
     public int QTY_RFND = 0;
+    public int QTY_RFTX = 0;
     public int QTY_MEMO = 0;
     public int QTY_OK_IC = 0;
     public int QTY_ERR_IC = 0;
