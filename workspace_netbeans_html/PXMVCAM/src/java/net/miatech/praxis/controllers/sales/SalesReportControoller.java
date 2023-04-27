@@ -2106,7 +2106,7 @@ public class SalesReportControoller extends BaseController {
     public ResponseEntity<?> getRftxInfo(@RequestParam Map<String, String> body) {
         logic = new SalesReportLogic();
         S0001A4373Filter filter = new S0001A4373Filter();
-        S0001A4373Filter res;
+        List<S0001A4373Filter> res;
         try {
             filter.setAIRLINE(body.get("AIRLINE"));
             filter.setCIA(body.get("CIA"));
