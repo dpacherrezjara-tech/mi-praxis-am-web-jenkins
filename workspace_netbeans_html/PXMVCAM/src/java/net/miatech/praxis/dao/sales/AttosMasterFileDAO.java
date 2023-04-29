@@ -218,6 +218,12 @@ public class AttosMasterFileDAO {
                 ciudad.A4290CTATO = rst.getString("A4290CTATO").trim();
                 ciudad.A4290FINI = Functions.getMonthConvertDate(rst.getString("A4290FINI"));
                 ciudad.A4290FFIN = Functions.getMonthConvertDate(rst.getString("A4290FFIN"));
+                
+                //if (rst.getString("A4290FFIN").trim().equals("99999999")) {
+                if (ciudad.A4290FFIN.trim().equals("9999/99/99")) {
+                    ciudad.A4290FFIN = ""; 
+                }
+                
                 ciudad.A4290NOMBR = rst.getString("A4290NOMBR").trim().toUpperCase();
                 ciudad.A4290CATEG = rst.getString("A4290CATEG").trim().toUpperCase();
                 ciudad.A4290CIUD = rst.getString("A4290CIUD").trim().toUpperCase();
