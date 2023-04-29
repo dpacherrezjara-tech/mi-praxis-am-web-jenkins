@@ -91,8 +91,8 @@ Ext.define('Ext.Praxis.view.sales.AttosMasterFileForm.Info', {
                                             return value;
                                         }
                                     },
-                                    {text: 'Start Date', dataIndex: 'A4290FINI', width: 80, hidden: true},
-                                    {text: 'End Date', dataIndex: 'A4290FFIN', width: 80, hidden: true}
+                                    {text: 'Start Date', dataIndex: 'A4290FINI', width: 80, hidden: false},
+                                    {text: 'End Date', dataIndex: 'A4290FFIN', width: 80, hidden: false}
                                 ]
                             },
                             {text: 'Status', width: 60, dataIndex: 'A4290STAT'},
