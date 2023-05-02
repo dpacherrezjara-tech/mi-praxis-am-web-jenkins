@@ -7525,7 +7525,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAuditCom',
 //                                    width: 1342,
-                                    width: 1462,
+                                    width: 410,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -7645,7 +7645,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAuditComByDay',
 //                                    width: 1342,
-                                    width: 1462,
+                                    width: 410,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'

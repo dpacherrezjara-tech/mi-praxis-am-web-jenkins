@@ -3408,7 +3408,12 @@ public class ProPaymentsControlDAO {
             cstmt.setInt(6, filter.page.TOTPAG);
             cstmt.setInt(7, filter.page.TOTROW);
             cstmt.execute();
-
+            
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
@@ -3498,6 +3503,11 @@ public class ProPaymentsControlDAO {
             cstmt.setInt(5, filter.page.TOTPAG);
             cstmt.setInt(6, filter.page.TOTROW);
             cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
 
             rst = cstmt.getResultSet();
 
@@ -3589,8 +3599,14 @@ public class ProPaymentsControlDAO {
             cstmt.setInt(4, filter.page.PAGROW);
             cstmt.setInt(5, filter.page.TOTPAG);
             cstmt.setInt(6, filter.page.TOTROW);
+            
             cstmt.execute();
-
+                
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
+            
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
