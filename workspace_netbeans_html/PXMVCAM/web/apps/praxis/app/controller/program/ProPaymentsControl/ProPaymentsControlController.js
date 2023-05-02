@@ -2854,6 +2854,11 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                         obj.proxy.extraParams = me.paramsDetail;
                     },
                     load: function (obj) {
+                        var pag = Ext.getCmp(prototype.id + '-paggin11');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -2866,7 +2871,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setTitle('<center style="font-size:12px;">Sales Date : ' + data.IN_FECHA + '</center>');
 
                         }
-//                        me.setWidthPie();
+                        me.setWidthPie();
                     }
                 }
             });
@@ -2874,6 +2879,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             global.clear();
             Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
         }
     },
     cmbTDOC_changeHandler: function () {
@@ -3033,6 +3039,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             case '-boxAuditComByDay':
                 me.pagginActual = '-paggin10';
                 break;
+            case '-boxAuditComByDayDAY':
+                me.pagginActual = '-paggin11';
+                break;    
 //            case '-boxByMerchant':
 //                me.pagginActual = '-paggin8';
 //                break;

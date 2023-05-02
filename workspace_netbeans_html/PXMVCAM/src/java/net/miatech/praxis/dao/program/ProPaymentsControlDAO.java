@@ -3574,9 +3574,7 @@ public class ProPaymentsControlDAO {
         List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
         IMF145Filter bean;
 
-        long QTYSALES = 0, AMOUNTS = 0, QTYSALCA = 0, AMOUNTCA = 0, QTYSALCC = 0, AMOUNTCC = 0, QTYSALBA = 0, diffAMOUNTCC = 0, diffQTYSALCC = 0;
-        long AMOUNTBA = 0, VALOREX = 0, VALORCA = 0, VALORCC = 0;
-//        double AMOUNT = 0, COMISION = 0, TAX = 0, AYQ = 0, AYR = 0, FARE = 0;
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3593,7 +3591,7 @@ public class ProPaymentsControlDAO {
             cstmt.registerOutParameter(6, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_FECHA);
+            cstmt.setString(2, filter.IN_FECHA_DIA);
 
             cstmt.setInt(3, filter.page.PAGNUM);
             cstmt.setInt(4, filter.page.PAGROW);
@@ -3610,7 +3608,9 @@ public class ProPaymentsControlDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
             }
             rst.close();
 
@@ -3626,6 +3626,10 @@ public class ProPaymentsControlDAO {
                     bean.SADJUST = rst.getLong("SADJUST");
                     bean.SFEEAMOU = rst.getLong("SFEEAMOU");
                     bean.DIF = rst.getLong("DIF");
+
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
