@@ -1390,7 +1390,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 1-30',
-                                                id: prototype.id+'-txtRange1A',
+                                                id: prototype.id + '-txtRange1A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1417,7 +1417,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 31 - 60',
-                                                id: prototype.id+'-txtRange2A',
+                                                id: prototype.id + '-txtRange2A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1444,7 +1444,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 61 - 90',
-                                                id: prototype.id+'-txtRange3A',
+                                                id: prototype.id + '-txtRange3A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1470,7 +1470,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 ]
                                             },
                                             {
-                                                id: prototype.id+'-txtRange4A',
+                                                id: prototype.id + '-txtRange4A',
                                                 text: 'Over 91',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -1686,7 +1686,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 1-30',
-                                                id: prototype.id+'-txtRange11A',
+                                                id: prototype.id + '-txtRange11A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1713,7 +1713,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 31 - 60',
-                                                id: prototype.id+'-txtRange22A',
+                                                id: prototype.id + '-txtRange22A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1740,7 +1740,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 61 - 90',
-                                                id: prototype.id+'-txtRange33A',
+                                                id: prototype.id + '-txtRange33A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1767,7 +1767,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Over 91',
-                                                id: prototype.id+'-txtRange44A',
+                                                id: prototype.id + '-txtRange44A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1982,7 +1982,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 1-30',
-                                                id: prototype.id+'-txtRange111A',
+                                                id: prototype.id + '-txtRange111A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2009,7 +2009,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 31 - 60',
-                                                id: prototype.id+'-txtRange222A',
+                                                id: prototype.id + '-txtRange222A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2036,7 +2036,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Days 61 - 90',
-                                                id: prototype.id+'-txtRange333A',
+                                                id: prototype.id + '-txtRange333A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2063,7 +2063,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             },
                                             {
                                                 text: 'Over 91',
-                                                id: prototype.id+'-txtRange444A',
+                                                id: prototype.id + '-txtRange444A',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -6854,7 +6854,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totpercCA , '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCA, '0,000') + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -6904,7 +6904,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totpercCC , '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCC, '0,000') + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -6963,7 +6963,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totpercBA , '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totpercBA, '0,000') + '<b>';
                                                                 }
                                                             }
                                                         ]
@@ -6996,7 +6996,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                     metaData.style = "text-align:right;background-color:#b2e1ff;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
-                                                                },                                                                
+                                                                },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridNewAmex').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
@@ -7268,7 +7268,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totpercCA, '0,000')+ '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCA, '0,000') + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -7318,7 +7318,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridNewAmexByCountry').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totpercCC, '0,000')+ '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totpercCC, '0,000') + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -7507,8 +7507,247 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 },
                             ]
                         },
-                        
-                        
+                        // <editor-fold defaultstate="collapsed" desc="boxAuditCom">
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxAuditCom',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: false,
+                            height: 'auto',
+                            width: 1527,
+                            margin: '20 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridAuditCom',
+//                                    width: 1342,
+                                    width: 1462,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Payment',
+//                                                id: prototype.id + '-adgTitFecha',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'strFormatDate', width: 100,
+                                                        listeners: {
+                                                            click: 'OnviewAuditComDetDay'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Settlement',
+//                                                id: prototype.id + '-adgSalDate',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Commission', dataIndex: 'SADJUST', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSADJUST, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Fare',
+//                                                id: prototype.id + '-adgSalDate',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Commission', dataIndex: 'SFEEAMOU', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Diff', dataIndex: 'DIF', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totDIF, '0,000') + '<b>';
+                                                }
+                                            },
+                                            
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        // </editor-fold>
+                        // <editor-fold defaultstate="collapsed" desc="boxAuditComByDay">
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxAuditComByDay',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: false,
+                            height: 'auto',
+                            width: 1527,
+                            margin: '20 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridAuditComByDay',
+//                                    width: 1342,
+                                    width: 1462,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Payment',
+//                                                id: prototype.id + '-adgTitFecha',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'strFormatDate', width: 100,
+                                                        listeners: {
+                                                            click: 'OnviewAuditComDetDayDAY'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Commission',
+//                                                id: prototype.id + '-adgSalDate',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Settlement', dataIndex: 'SADJUST', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridAuditComByDay').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSADJUST, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Audit',
+//                                                id: prototype.id + '-adgSalDate',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Commission', dataIndex: 'SFEEAMOU', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridAuditComByDay').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Diff', dataIndex: 'DIF', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridAuditComByDay').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totDIF, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }  
+                            ]
+                        },
+                        // </editor-fold> 
+
+
                         
                         // Pie                        
                         {
