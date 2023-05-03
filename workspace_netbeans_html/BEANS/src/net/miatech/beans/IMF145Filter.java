@@ -46,5 +46,23 @@ public class IMF145Filter extends IMF145{
     public long totVALORCA;
     public long totVALORCC;
     
+    public String SDATE = "";
+    public String CCIA = "";
+    public String FORMA = "";
+    public String SERIE = "";
+    public String TICKET = "";
+    public String SAUTHOC = "";
+    public String SCARDN = "";
+    public String SAGENT = "";
+    public String IN_FECHA_DIA = "";
+    public String IN_CURRENCY = "";
+    public String PCURRENCY = "";
+    public long SADJUST = 0;
+    public long SFEEAMOU = 0;
+    public long DIF = 0;
+    public long totSADJUST = 0;
+    public long totSFEEAMOU = 0;
+    public long totDIF = 0;
+    
     public Pagination page = new Pagination();
 }
