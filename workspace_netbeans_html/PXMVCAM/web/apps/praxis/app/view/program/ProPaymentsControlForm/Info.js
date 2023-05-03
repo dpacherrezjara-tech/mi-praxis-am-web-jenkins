@@ -7686,7 +7686,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                                 height: 28,
                                                                 renderer: function (toolTip, record, ctx) {
                                                                     var label = '';
-                                                                    toolTip.setHtml(label + ' - ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                    toolTip.setHtml('<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                                 }
                                                             }
                                                         }

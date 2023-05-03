@@ -2764,13 +2764,13 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                         var data = obj.data.items[0].data;
                         var lstAuditChart = [];
                         var obj1 = {};
-                        obj1.perc1 = data.SADJUST;
+                        obj1.perc1 = data.totSADJUST;
                         obj1.strDescription = 'Settlement';
                         var obj2 = {};
-                        obj2.perc1 = data.SFEEAMOU;
+                        obj2.perc1 = data.totSFEEAMOU;
                         obj2.strDescription = 'Fare';
                         var obj3 = {};
-                        obj3.perc1 = data.DIF;
+                        obj3.perc1 = data.totDIF;
                         obj3.strDescription = 'Difference';
                         
                         lstAuditChart.push(obj3);
