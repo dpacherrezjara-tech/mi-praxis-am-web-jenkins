@@ -3574,7 +3574,7 @@ public class ProPaymentsControlDAO {
         List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
         IMF145Filter bean;
 
-        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+        long SVFOPS = 0, DISCRATEC = 0, FINSAMOUC = 0, SINSAMOUC = 0, DISCAMOUN = 0, RATESFEED = 0, SADJUST = 0, SFEEAMOU = 0, DIF = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3608,6 +3608,12 @@ public class ProPaymentsControlDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
+                SVFOPS = rst.getLong("SVFOPS");
+                DISCRATEC = rst.getLong("DISCRATEC");
+                FINSAMOUC = rst.getLong("FINSAMOUC");
+                SINSAMOUC = rst.getLong("SINSAMOUC");
+                DISCAMOUN = rst.getLong("DISCAMOUN");
+                RATESFEED = rst.getLong("RATESFEED");
                 SADJUST = rst.getLong("SADJUST");
                 SFEEAMOU = rst.getLong("SFEEAMOU");
                 DIF = rst.getLong("DIF");
@@ -3629,11 +3635,25 @@ public class ProPaymentsControlDAO {
                     bean.SAGENT = rst.getString("SAGENT").trim();
                     bean.SDATE = rst.getString("SDATE").trim();
                     bean.strFormatDate = Functions.getMonthConvert6(filter.SDATE);
+                    bean.SPNR = rst.getString("SPNR").trim();
+                    bean.SCURRENCY = rst.getString("SCURRENCY").trim();
                     
+                    bean.SVFOPS = rst.getLong("SVFOPS");
+                    bean.DISCRATEC = rst.getLong("DISCRATEC");
+                    bean.FINSAMOUC = rst.getLong("FINSAMOUC");
+                    bean.SINSAMOUC = rst.getLong("SINSAMOUC");
+                    bean.DISCAMOUN = rst.getLong("DISCAMOUN");
+                    bean.RATESFEED = rst.getLong("RATESFEED");
                     bean.SADJUST = rst.getLong("SADJUST");
                     bean.SFEEAMOU = rst.getLong("SFEEAMOU");
                     bean.DIF = rst.getLong("DIF");
-
+                    
+                    bean.totSVFOPS = SVFOPS;
+                    bean.totDISCRATEC = DISCRATEC;
+                    bean.totFINSAMOUC = FINSAMOUC;
+                    bean.totSINSAMOUC = SINSAMOUC;
+                    bean.totDISCAMOUN = DISCAMOUN;
+                    bean.totRATESFEED = RATESFEED;
                     bean.totSADJUST = SADJUST;
                     bean.totSFEEAMOU = SFEEAMOU;
                     bean.totDIF = DIF;
