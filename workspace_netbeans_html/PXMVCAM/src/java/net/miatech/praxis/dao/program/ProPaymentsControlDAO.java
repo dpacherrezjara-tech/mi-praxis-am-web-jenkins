@@ -3574,7 +3574,7 @@ public class ProPaymentsControlDAO {
         List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
         IMF145Filter bean;
 
-        long SVFOPS = 0, DISCRATEC = 0, FINSAMOUC = 0, SINSAMOUC = 0, DISCAMOUN = 0, RATESFEED = 0, SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+        double SVFOPS = 0, DISCRATEC = 0, FINSAMOUC = 0, SINSAMOUC = 0, DISCAMOUN = 0, RATESFEED = 0, SADJUST = 0, SFEEAMOU = 0, DIF = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3608,15 +3608,15 @@ public class ProPaymentsControlDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                SVFOPS = rst.getLong("SVFOPS");
-                DISCRATEC = rst.getLong("DISCRATEC");
-                FINSAMOUC = rst.getLong("FINSAMOUC");
-                SINSAMOUC = rst.getLong("SINSAMOUC");
-                DISCAMOUN = rst.getLong("DISCAMOUN");
-                RATESFEED = rst.getLong("RATESFEED");
-                SADJUST = rst.getLong("SADJUST");
-                SFEEAMOU = rst.getLong("SFEEAMOU");
-                DIF = rst.getLong("DIF");
+                SVFOPS = rst.getDouble("SVFOPS");
+                DISCRATEC = rst.getDouble("DISCRATEC");
+                FINSAMOUC = rst.getDouble("FINSAMOUC");
+                SINSAMOUC = rst.getDouble("SINSAMOUC");
+                DISCAMOUN = rst.getDouble("DISCAMOUN");
+                RATESFEED = rst.getDouble("RATESFEED");
+                SADJUST = rst.getDouble("SADJUST");
+                SFEEAMOU = rst.getDouble("SFEEAMOU");
+                DIF = rst.getDouble("DIF");
             }
             rst.close();
 
@@ -3638,15 +3638,15 @@ public class ProPaymentsControlDAO {
                     bean.SPNR = rst.getString("SPNR").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
                     
-                    bean.SVFOPS = rst.getLong("SVFOPS");
-                    bean.DISCRATEC = rst.getLong("DISCRATEC");
-                    bean.FINSAMOUC = rst.getLong("FINSAMOUC");
-                    bean.SINSAMOUC = rst.getLong("SINSAMOUC");
-                    bean.DISCAMOUN = rst.getLong("DISCAMOUN");
-                    bean.RATESFEED = rst.getLong("RATESFEED");
-                    bean.SADJUST = rst.getLong("SADJUST");
-                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
-                    bean.DIF = rst.getLong("DIF");
+                    bean.SVFOPS = rst.getDouble("SVFOPS");
+                    bean.DISCRATEC = rst.getDouble("DISCRATEC");
+                    bean.FINSAMOUC = rst.getDouble("FINSAMOUC");
+                    bean.SINSAMOUC = rst.getDouble("SINSAMOUC");
+                    bean.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                    bean.RATESFEED = rst.getDouble("RATESFEED");
+                    bean.SADJUST = rst.getDouble("SADJUST");
+                    bean.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    bean.DIF = rst.getDouble("DIF");
                     
                     bean.totSVFOPS = SVFOPS;
                     bean.totDISCRATEC = DISCRATEC;

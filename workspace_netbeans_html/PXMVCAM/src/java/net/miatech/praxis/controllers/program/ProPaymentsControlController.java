@@ -1671,10 +1671,10 @@ public class ProPaymentsControlController extends BaseController {
             CH1_4.setCellValue("");
             CH1_5.setCellValue("");
             CH1_6.setCellValue("Comm.Rate");
-            CH1_7.setCellValue("Curr");
-            CH1_8.setCellValue("FINSAMOUC");
-            CH1_9.setCellValue("SINSAMOUC");
-            CH1_10.setCellValue("DISCAMOUN");
+            CH1_7.setCellValue("Settlement");
+            CH1_8.setCellValue("");
+            CH1_9.setCellValue("");
+            CH1_10.setCellValue("");
             CH1_11.setCellValue("USD");
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
@@ -1699,10 +1699,7 @@ public class ProPaymentsControlController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 14));
             ++vj;
             //============================================
@@ -1732,7 +1729,12 @@ public class ProPaymentsControlController extends BaseController {
             CH2_4.setCellValue("Auth.");
             CH2_5.setCellValue("Amount");
             
-            CH2_11.setCellValue("RATESFEED");
+            CH2_7.setCellValue("Curr.");
+            CH2_8.setCellValue("Sale Fare");
+            CH2_9.setCellValue("Audit Comm.");
+            CH2_10.setCellValue("Sett. Comm.");
+            
+            CH2_11.setCellValue("Exchange rate");
             CH2_12.setCellValue("Sett. Comm.");
             CH2_13.setCellValue("Fare. Comm.");
             CH2_14.setCellValue("Diff. Comm");
@@ -1760,6 +1762,10 @@ public class ProPaymentsControlController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 13));
