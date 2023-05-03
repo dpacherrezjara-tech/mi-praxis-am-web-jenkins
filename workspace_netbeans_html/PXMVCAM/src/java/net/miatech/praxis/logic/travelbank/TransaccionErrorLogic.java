@@ -10,6 +10,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.travelbank.TransaccionErrorDAO;
 import net.miatech.praxis.travelbank.SQP04948Filter;
+import net.miatech.praxis.travelbank.SQP04949Filter;
 
 /**
  *
@@ -27,6 +28,13 @@ public class TransaccionErrorLogic {
     public List<SQP04948Filter> getSQP04948Filter(SQP04948Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04948Filter(filter);
     }
-
     // </editor-fold>
+    
+      // <editor-fold defaultstate="collapsed" desc="Detalle de errores"
+    public List<SQP04949Filter> getSQP04949Filter(SQP04949Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04949Filter(filter);
+    }
+    // </editor-fold>
+    
+    
 }

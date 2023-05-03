@@ -12,6 +12,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.logic.travelbank.TransaccionErrorLogic;
 import net.miatech.praxis.travelbank.SQP04948Filter;
+import net.miatech.praxis.travelbank.SQP04949Filter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -52,6 +53,42 @@ public class TransaccionErrorController extends BaseController {
             logic = new TransaccionErrorLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.getSQP04948Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/searchDetalle")
+    public @ResponseBody
+    String searchDetalle(ModelMap map, HttpServletRequest request) {
+        List<SQP04949Filter> listaData;
+        SQP04949Filter filter;
+        filter = new SQP04949Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+
+            filter.VP_PRDA = request.getParameter("VP_PRDA");
+            filter.VP_SQDIA = request.getParameter("VP_SQDIA");
+            filter.VP_CDERR = request.getParameter("VP_CDERR");
+
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new TransaccionErrorLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04949Filter(filter);
 
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
