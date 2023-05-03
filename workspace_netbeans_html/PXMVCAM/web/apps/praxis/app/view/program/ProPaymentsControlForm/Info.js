@@ -7582,7 +7582,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Commission', dataIndex: 'SADJUST', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                                    metaData.style = "text-align:right;background-color:#A0DBF9;";
                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                     return  value;
                                                                 },
@@ -7621,7 +7621,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Diff', dataIndex: 'DIF', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            metaData.style = "text-align:right;background-color:#F9E1A0;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
@@ -7672,7 +7672,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         {
                                                             type: 'pie3d',
                                                             angleField: 'perc1',
-                                                            colors: ['#EC3838', '#ff9900', '#339933'],
+                                                            colors: ['#F9E1A0', '#BFF4BF', '#A0DBF9'],
                                                             label: {
                                                                 field: 'strDescription',
                                                                 renderer: function (value, b, callout) {
@@ -7772,7 +7772,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             title: ['Settlement', 'Fare', 'Difference'],
                                                             xField: 'strFormatDate',
                                                             yField: ['SADJUST', 'SFEEAMOU', 'DIF'],
-                                                            colors: ['#c6f7cd', '#0066ff', '#CC0000'],
+                                                            colors: ['#1BB2FE', '#23FF23', '#F2B315'],
                                                             highlight: true,
                                                             style: {
                                                                 inGroupGapWidth: -7,
@@ -7867,7 +7867,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Settlement', dataIndex: 'SADJUST', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            metaData.style = "text-align:right;background-color:#A0DBF9;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
@@ -7906,7 +7906,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             {
                                                 text: 'Diff', dataIndex: 'DIF', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    metaData.style = "text-align:right;background-color:#F9E1A0;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
@@ -8003,7 +8003,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Settlement', dataIndex: 'SADJUST', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            metaData.style = "text-align:right;background-color:#A0DBF9;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
@@ -8042,7 +8042,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                             {
                                                 text: 'Diff', dataIndex: 'DIF', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    metaData.style = "text-align:right;background-color:#F9E1A0;";
                                                     value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
