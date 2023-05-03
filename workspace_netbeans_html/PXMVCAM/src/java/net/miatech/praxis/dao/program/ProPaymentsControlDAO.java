@@ -3525,7 +3525,7 @@ public class ProPaymentsControlDAO {
                     bean = new IMF145Filter();
                     bean.IN_FECHA_DIA = rst.getString("SDATE");
                     bean.SDATE = rst.getString("SDATE");
-                    bean.strFormatDate = Functions.getMonthConvert6(bean.SDATE);
+                    bean.strFormatDate = filter.strFormatDate;
                     
                     bean.SADJUST = rst.getLong("SADJUST");
                     bean.SFEEAMOU = rst.getLong("SFEEAMOU");
@@ -3619,9 +3619,16 @@ public class ProPaymentsControlDAO {
 
                 while (rst.next()) {
                     bean = new IMF145Filter();
-                    bean.IN_FECHA_DIA = rst.getString("SDATE");
-                    bean.SDATE = rst.getString("SDATE");
-                    bean.strFormatDate = Functions.getMonthConvert6(bean.SDATE);
+                    bean.IN_FECHA_DIA = rst.getString("SDATE").trim();
+                    bean.CCIA = rst.getString("CCIA").trim();
+                    bean.FORMA = rst.getString("FORMA").trim();
+                    bean.SERIE = rst.getString("SERIE").trim();
+                    bean.TICKET = bean.CCIA + bean.FORMA + bean.SERIE;
+                    bean.SCARDN = rst.getString("SCARDN").trim();
+                    bean.SAUTHOC = rst.getString("SAUTHOC").trim();
+                    bean.SAGENT = rst.getString("SAGENT").trim();
+                    bean.SDATE = rst.getString("SDATE").trim();
+                    bean.strFormatDate = Functions.getMonthConvert6(filter.SDATE);
                     
                     bean.SADJUST = rst.getLong("SADJUST");
                     bean.SFEEAMOU = rst.getLong("SFEEAMOU");

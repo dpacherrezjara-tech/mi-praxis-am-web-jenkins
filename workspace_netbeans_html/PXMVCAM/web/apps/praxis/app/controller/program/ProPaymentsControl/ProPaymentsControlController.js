@@ -2761,12 +2761,31 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             msg: 'Data not found.'
                         });
                     } else {
-//                        var data = obj.data.items[0].data;
+                        var data = obj.data.items[0].data;
+                        var lstAuditChart = [];
+                        var obj1 = {};
+                        obj1.perc1 = data.SADJUST;
+                        obj1.strDescription = 'Settlement';
+                        var obj2 = {};
+                        obj2.perc1 = data.SFEEAMOU;
+                        obj2.strDescription = 'Fare';
+                        var obj3 = {};
+                        obj3.perc1 = data.DIF;
+                        obj3.strDescription = 'Difference';
+                        
+                        lstAuditChart.push(obj3);
+                        lstAuditChart.push(obj2);
+                        lstAuditChart.push(obj1);
 ////                            console.log(data);
 //                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
 //                        Ext.getCmp(prototype.id + '-lblFT_SVFOPUS1').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
 //                        Ext.getCmp(prototype.id + '-lblFT_Perc1').setText('100.00');
 //                        Ext.getCmp(prototype.id + '-lblTotTAX1').setText(Ext.util.Format.number(data.perc3, '0,000.00') + '%');
+                        
+                       
+                        Ext.getCmp(prototype.id + '-displayChart_AuditComm').bindStore(
+                            Ext.create('Ext.data.Store', {data: lstAuditChart, autoLoad: true})
+                            );
                     }
                     me.setWidthPie();
                 }
@@ -2775,7 +2794,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridAuditCom').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-grafNewCC').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-graficosAuditComm').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridAuditCom').setTitle('<center style="font-size:12px;">Currency: USD</center>');
         Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
     },
     // </editor-fold>  
@@ -2817,7 +2837,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             var data = obj.data.items[0].data;
                             console.log(data);
 
-                            Ext.getCmp(prototype.id + '-gridAuditComByDay').setTitle('<center style="font-size:12px;">Sales Date : ' + data.IN_FECHA + '</center>');
+                            Ext.getCmp(prototype.id + '-gridAuditComByDay').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD</center>');
 
                         }
                         me.setWidthPie();
@@ -2868,7 +2888,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             var data = obj.data.items[0].data;
                             console.log(data);
 
-                            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setTitle('<center style="font-size:12px;">Sales Date : ' + data.IN_FECHA + '</center>');
+                            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD</center>');
 
                         }
                         me.setWidthPie();
@@ -2881,6 +2901,22 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
         }
+    },
+    viewMasterTkt: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        prototypeProgram.view = 'program-pro-payments-control-form';
+        prototypeProgram.nprog = 'PX00000418';
+        prototypeProgram.title = 'Payments Control';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = rowData.data.CCIA;
+        beanProMasterTicket.IN_FORMA = rowData.data.FORMA;
+        beanProMasterTicket.IN_SERIE = rowData.data.SERIE;
+        console.log(beanProMasterTicket);
+        //beanProMasterTicket.IN_SEQ = data.SEQRO;
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     cmbTDOC_changeHandler: function () {
         this.btnSearch_click();
@@ -3041,7 +3077,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 break;
             case '-boxAuditComByDayDAY':
                 me.pagginActual = '-paggin11';
-                break;    
+                break;
 //            case '-boxByMerchant':
 //                me.pagginActual = '-paggin8';
 //                break;

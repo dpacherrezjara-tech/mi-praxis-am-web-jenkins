@@ -7515,61 +7515,111 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             border: false,
                             height: 'auto',
                             width: 1527,
-                            margin: '20 0 0 0 ',
+                            margin: '5 0 0 0 ',
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
                             },
                             items: [
                                 {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridAuditCom',
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '0 0 0 300',
+                                    width: 1500,
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridAuditCom',
 //                                    width: 1342,
-                                    width: 410,
-                                    columnLines: true,
-                                    features: [{
-                                            ftype: 'summary'
-                                        }],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {
-                                                text: 'Payment',
+                                            width: 410,
+                                            columnLines: true,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {
+                                                        text: 'Sales',
 //                                                id: prototype.id + '-adgTitFecha',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Date', dataIndex: 'strFormatDate', width: 100,
-                                                        listeners: {
-                                                            click: 'OnviewAuditComDetDay'
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
                                                         },
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "color:#057ECB;";
-                                                            value = '<b>' + value + '</b>';
-                                                            return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Settlement',
-//                                                id: prototype.id + '-adgSalDate',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
+                                                        columns: [
+                                                            {
+                                                                text: 'Date', dataIndex: 'strFormatDate', width: 100,
+                                                                listeners: {
+                                                                    click: 'OnviewAuditComDetDay'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "color:#057ECB;";
+                                                                    value = '<b>' + value + '</b>';
+                                                                    return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
                                                     {
-                                                        text: 'Commission', dataIndex: 'SADJUST', width: 100,
+                                                        text: 'Settlement',
+//                                                id: prototype.id + '-adgSalDate',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Commission', dataIndex: 'SADJUST', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSADJUST, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Fare',
+//                                                id: prototype.id + '-adgSalDate',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Commission', dataIndex: 'SFEEAMOU', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Diff', dataIndex: 'DIF', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -7578,50 +7628,177 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totSADJUST, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totDIF, '0,000') + '<b>';
                                                         }
-                                                    }
+                                                    },
                                                 ]
+                                            }
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '10 0 0 0',
+                                            width: 852,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
                                             },
-                                            {
-                                                text: 'Fare',
-//                                                id: prototype.id + '-adgSalDate',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Commission', dataIndex: 'SFEEAMOU', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000') + '<b>';
+                                            items: [
+                                                {
+                                                    xtype: 'polar',
+//                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                                    id: prototype.id + '-displayChart_AuditComm',
+                                                    width: 852,
+                                                    border: false,
+                                                    margin: '0 0 0 0',
+                                                    innerPadding: 60,
+                                                    height: 383,
+                                                    background: '#E3EAEF',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Audit Commission',
+                                                            alignTo: 'chart'
                                                         }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Diff', dataIndex: 'DIF', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return  value;
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridAuditCom').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totDIF, '0,000') + '<b>';
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['rotate', 'itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    series: [
+                                                        {
+                                                            type: 'pie3d',
+                                                            angleField: 'perc1',
+                                                            colors: ['#EC3838', '#ff9900', '#339933'],
+                                                            label: {
+                                                                field: 'strDescription',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 0;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
+                                                            },
+                                                            highlight: true,
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    toolTip.setHtml(label + ' - ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
                                                 }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    hidden: false,
+                                    margin: '5 0 5 0',
+                                    border: false,
+                                    layout: {
+                                        type: 'vbox',
+                                        aling: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            padding: '5 0 0 5',
+                                            border: true,
+                                            layout: {
+                                                type: 'vbox'
                                             },
-                                        ]
-                                    }
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-graficosAuditComm',
+                                                    width: 1500,
+                                                    border: false,
+                                                    height: 400,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: 'Total Audit Commission by Sales Date',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['SADJUST', 'SFEEAMOU', 'DIF'],
+                                                            grid: true,
+                                                            title: '',
+                                                            //title: 'Millions of USD',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+                                                            //                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Sales Date',
+                                                                translationX: -30
+                                                            }
+                                                        }],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: ['Settlement', 'Fare', 'Difference'],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['SADJUST', 'SFEEAMOU', 'DIF'],
+                                                            colors: ['#c6f7cd', '#0066ff', '#CC0000'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 1000
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    var label = '';
+                                                                    if (ctx.field === 'SADJUST') {
+                                                                        label = 'Settlement';
+                                                                    } else if (ctx.field === 'SFEEAMOU') {
+                                                                        label = 'Fare';
+                                                                    } else if (ctx.field === 'DIF') {
+                                                                        label = 'Difference';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                },
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -7657,7 +7834,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Payment',
+                                                text: 'Sales',
 //                                                id: prototype.id + '-adgTitFecha',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -7666,7 +7843,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'strFormatDate', width: 100,
+                                                        text: 'Date', dataIndex: 'SDATE', width: 100,
                                                         listeners: {
                                                             click: 'OnviewAuditComDetDayDAY'
                                                         },
@@ -7763,7 +7940,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAuditComByDayDAY',
 //                                    width: 1342,
-                                    width: 410,
+                                    width: 710,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -7776,8 +7953,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Payment',
-//                                                id: prototype.id + '-adgTitFecha',
+                                                text: 'Ticket', dataIndex: 'TICKET', width: 120,
+                                                listeners: {
+                                                    click: 'viewMasterTkt'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "color:#057ECB;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Credit Card',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -7785,17 +7972,24 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'strFormatDate', width: 100,
-                                                        listeners: {
-                                                            click: 'OnviewAuditComDetDayDAY'
-                                                        },
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "color:#057ECB;";
-                                                            value = '<b>' + value + '</b>';
-                                                            return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         }
-                                                    }
+                                                    },
+                                                    {
+                                                        text: 'Auth.', dataIndex: 'SAUTHOC', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            return value;
+                                                        }
+                                                    },
                                                 ]
+                                            },
+                                            {
+                                                text: 'Agent', dataIndex: 'SAGENT', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
                                             },
                                             {
                                                 text: 'Commission',
