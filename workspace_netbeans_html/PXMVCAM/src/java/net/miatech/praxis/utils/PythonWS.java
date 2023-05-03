@@ -1,0 +1,78 @@
+package net.miatech.praxis.utils;
+
+import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.concurrent.Future;
+import net.miatech.praxis.classes.CurrentSession;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+/**
+ *
+ * @author Dvicente
+ */
+@Component
+@Scope("request")
+public class PythonWS {
+
+    //<editor-fold defaultstate="collapsed" desc="vars">
+    @Autowired
+    private CurrentSession session;
+    //</editor-fold>
+
+    private String getRestUrl(String endpoint) {
+        String restUrl = this.session.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString() + endpoint;
+        System.out.println("ACTIVE URL: " + restUrl);
+        return restUrl;
+    }
+
+    public ResponseEntity<byte[]> downloadFilesFromPython(String endpoint, HashMap body) throws Exception {
+        Unirest.setTimeouts(3600000, 3600000);
+        Future<HttpResponse<JsonNode>> postFuture = Unirest.post(this.getRestUrl(endpoint))//Sending
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(body))
+                .asJsonAsync();
+
+        HttpResponse<JsonNode> postResponse = postFuture.get();
+        String downloadUrl = postResponse.getBody().getObject().getString("filename");
+
+        // Descargamos el archivo desde la URL de descarga obtenida
+        HttpResponse<InputStream> httpResponse = Unirest.get(downloadUrl).asBinary();
+
+        // Si la respuesta HTTP tiene éxito, leemos los datos de la respuesta
+        if (httpResponse.getStatus() == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = httpResponse.getBody();
+            byte[] responseBody = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+
+            String nombreFile = Paths.get(new URL(downloadUrl).getPath())
+                    .getFileName().toString();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", nombreFile);
+
+            // Devolvemos un ResponseEntity con los datos de la respuesta y el código de estado HTTP 200
+            return new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
+        } else {
+            System.out.println("Falló la descarga del archivo. Código de respuesta HTTP: " + httpResponse.getStatus());
+            // Devolvemos un ResponseEntity con el código de estado HTTP 400 si la descarga falla
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+}
