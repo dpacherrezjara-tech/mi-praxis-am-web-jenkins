@@ -16,8 +16,8 @@ public class ReconciliationDoublePaymentLogic {
 
     }
 
-    public List<A4116Filter> loadPX622SQP04472(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX622SQP04472(filter);
+    public List<A4116Filter> loadPX622SQP04955(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX622SQP04955(filter);
     }
 
     public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
@@ -32,8 +32,8 @@ public class ReconciliationDoublePaymentLogic {
         return ReconciliationDoublePaymentDAO.loadPX570SQP04359(filter);
     }
 
-    public String loadPX622SQP04542(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX622SQP04542(filter);
+    public String loadPX622SQP04954(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX622SQP04954(filter);
     }
     
     public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {

@@ -41,7 +41,7 @@ public class ReconciliationDoublePaymentDAO {
         session = ss;
     }
 
-    public List<A4116Filter> loadPX622SQP04472(A4116Filter filter) throws SQLException, Exception {
+    public List<A4116Filter> loadPX622SQP04955(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
@@ -97,7 +97,7 @@ public class ReconciliationDoublePaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04472(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04955(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -349,7 +349,7 @@ public class ReconciliationDoublePaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04470(?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04470(?)}";
 
         Connection cnx = null;
         try {
@@ -913,7 +913,7 @@ public class ReconciliationDoublePaymentDAO {
         return objRtn;
     }
 
-    public String loadPX622SQP04542(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX622SQP04954(A4116Filter filter) throws SQLException, Exception {
 
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
@@ -922,7 +922,7 @@ public class ReconciliationDoublePaymentDAO {
         List<A4116Filter> lstSendManual = filter.lstSendManual;
         A4116Filter beanDet;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04542(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04954(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {

@@ -98,7 +98,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX622SQP04472(filter);
+            lst = logic.loadPX622SQP04955(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -249,7 +249,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
             logic = new ReconciliationDoublePaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX622SQP04542(filter);
+            msj = logic.loadPX622SQP04954(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
