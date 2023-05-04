@@ -203,6 +203,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         Ext.getCmp(prototype.id + '-lblTARJ').setVisible(visible);
         Ext.getCmp(prototype.id + '-lblFINSUMO').setVisible(visible);
         Ext.getCmp(prototype.id + '-cmbFINSUMO').setVisible(visible);
+        Ext.getCmp(prototype.id + '-rbgType').setVisible(visible);
+        Ext.getCmp(prototype.id + '-hboxFilter2').setVisible(visible);
+        Ext.getCmp(prototype.id + '-hboxFilterAudit').setVisible(true);
     },
     obtainData: function () {
         var storeComboDataYear = win.getStoreYear(false);
@@ -319,6 +322,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbPais').setValue('');
+                    Ext.getCmp(prototype.id + '-cmbPaises').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbPaises').setValue('');
 
                     Ext.getCmp(prototype.id + '-cmbBank').bindStore(
                             Ext.create('Ext.data.Store', {data: res.lstBank, autoLoad: true})
@@ -529,6 +536,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             me.beanAuditCom.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
             me.beanAuditCom.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
             me.beanAuditCom.IN_CURRENCY = Ext.getCmp(prototype.id + '-cmbFTE').getValue();
+            me.beanAuditCom.IN_SCOUNTRY = Ext.getCmp(prototype.id + '-cmbPaises').getValue();
 
             var beanString = JSON.stringify(me.beanAuditCom);
             searchParamsAuditCom = {
@@ -2799,14 +2807,14 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
     },
     // </editor-fold>  
-    OnviewAuditComDetDay: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+    OnviewAuditComByCard: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
-        me.panelActual = '-boxAuditComByDay';
+        me.panelActual = '-boxAuditComByCard';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.paramsDetail.beanString = JSON.stringify(rowData.data);
-        this.SetOnGridAuditComDetDay();
+        this.SetOnGridAuditComByCard();
     },
-    SetOnGridAuditComDetDay: function () {
+    SetOnGridAuditComByCard: function () {
         win.lblUser_toolTip("Estructura: A4448");
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
         var msj = this.validateFields();
@@ -2816,7 +2824,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         } else {
             var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
                 proxy: {
-                    url: prototype.url + '/searchAuditComByDay'
+                    url: prototype.url + '/searchAuditComByCard'
                 }, listeners: {
                     beforeload: function (obj) {
                         obj.proxy.extraParams = me.paramsDetail;
@@ -2837,7 +2845,67 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             var data = obj.data.items[0].data;
                             console.log(data);
 
-                            Ext.getCmp(prototype.id + '-gridAuditComByDay').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD</center>');
+                            Ext.getCmp(prototype.id + '-gridAuditComByCard').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD</center>');
+
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridAuditComByCard').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridAuditComByCard').setStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
+        }
+    },
+    OnviewAuditComDetDay: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxAuditComByDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var GA = {};
+        GA.IN_FECHA = rowData.data.SDATE;
+        GA.IN_SCOUNTRY = rowData.data.SCOUNTRY;
+        GA.IN_SCARCOD = rowData.data.SCARCOD;
+        GA.SCARCOD = rowData.data.SCARCOD;
+        GA.SDATE = rowData.data.SDATE;
+        GA.strFormatDate = rowData.data.strFormatDate;
+        console.log(GA);
+        me.paramsDetail.beanString = JSON.stringify(GA);
+        this.SetOnGridAuditComDetDay();
+    },
+    SetOnGridAuditComDetDay: function () {
+        win.lblUser_toolTip("Estructura: A4448");
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchAuditComByDay'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsDetail;
+                    },
+                    load: function (obj) {
+                        var pag = Ext.getCmp(prototype.id + '-paggin11');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            console.log(obj.data);
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+
+                            Ext.getCmp(prototype.id + '-gridAuditComByDay').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD - Credit Card:' + data.SCARCOD + ' </center>');
 
                         }
                         me.setWidthPie();
@@ -2848,14 +2916,22 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             global.clear();
             Ext.getCmp(prototype.id + '-gridAuditComByDay').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridAuditComByDay').setStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
         }
     },
     OnviewAuditComDetDayDAY: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxAuditComByDayDAY';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.paramsDetail.beanString = JSON.stringify(rowData.data);
+        var GA = {};
+        GA.IN_FECHA_DIA = rowData.data.SDATE;
+        GA.IN_SCOUNTRY = rowData.data.SCOUNTRY;
+        GA.IN_SCARCOD = rowData.data.SCARCOD;
+        GA.SCARCOD = rowData.data.SCARCOD;
+        GA.SDATE = rowData.data.SDATE;
+        GA.strFormatDate = rowData.data.strFormatDate;
+        console.log(GA);
+        me.paramsDetail.beanString = JSON.stringify(GA);
         this.SetOnGridAuditComDetDayDAY();
     },
     SetOnGridAuditComDetDayDAY: function () {
@@ -2874,7 +2950,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                         obj.proxy.extraParams = me.paramsDetail;
                     },
                     load: function (obj) {
-                        var pag = Ext.getCmp(prototype.id + '-paggin11');
+                        var pag = Ext.getCmp(prototype.id + '-paggin12');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
@@ -2888,7 +2964,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             var data = obj.data.items[0].data;
                             console.log(data);
 
-                            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD</center>');
+                            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD - Credit Card:' + data.SCARCOD + ' </center>');
 
                         }
                         me.setWidthPie();
@@ -2899,7 +2975,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             global.clear();
             Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
         }
     },
     viewMasterTkt: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
@@ -3020,6 +3096,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 //                console.log(me.panelActual);
                 global.getFile(prototype.url + '/getXLSX_boxAuditCom?beanString=' + searchParamsAuditCom.beanString);
                 break; 
+            case  '-boxAuditComByCard':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditComByCard?beanString=' + me.paramsDetail.beanString);
+                break;    
             case  '-boxAuditComByDay':
 //                console.log(me.panelActual);
                 global.getFile(prototype.url + '/getXLSX_boxAuditComByDay?beanString=' + me.paramsDetail.beanString);
@@ -3084,11 +3164,14 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             case '-boxAuditCom':
                 me.pagginActual = '-paggin9';
                 break;
-            case '-boxAuditComByDay':
+            case '-boxAuditComByCard':
                 me.pagginActual = '-paggin10';
+                break;    
+            case '-boxAuditComByDay':
+                me.pagginActual = '-paggin11';
                 break;
             case '-boxAuditComByDayDAY':
-                me.pagginActual = '-paggin11';
+                me.pagginActual = '-paggin12';
                 break;
 //            case '-boxByMerchant':
 //                me.pagginActual = '-paggin8';

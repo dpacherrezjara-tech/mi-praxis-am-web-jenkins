@@ -1171,7 +1171,55 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
+    
+    @RequestMapping(value = "searchAuditComByCard")
+    public @ResponseBody
+    String searchAuditComByCard(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ProPaymentsControl : searchAuditComByCard-------------");
+        map.put("success", true);
+        List<IMF145Filter> lst = this.getListSearchAuditComByCard(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
 
+    public List<IMF145Filter> getListSearchAuditComByCard(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF145Filter> lst = new ArrayList<>(0);
+        IMF145Filter filter = new IMF145Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ProPaymentsControlLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF145Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadSQP04915(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
     @RequestMapping(value = "searchAuditComByDay")
     public @ResponseBody
     String searchAuditComByDay(ModelMap map, HttpServletRequest request) {
@@ -1426,6 +1474,191 @@ public class ProPaymentsControlController extends BaseController {
         }
     }
     
+    @RequestMapping(value = "getXLSX_boxAuditComByCard")
+    public @ResponseBody
+    void getXLSX_boxAuditComByCard(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Report : getXLSX_boxAuditCom");
+        String fileNameDownload = String.format("Report AuditCom By Card - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<IMF145Filter> listaData = this.getListSearchAuditComByCard(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle bodyStyle = (XSSFCellStyle) workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
+            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
+            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(255, 111, 111)));
+            bodyStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+            // ====== CREANDO TITULOS ======================================
+
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+
+            CH1_0.setCellValue("Sales");
+            CH1_1.setCellValue("Credit Card");
+            CH1_2.setCellValue("");
+            CH1_3.setCellValue("Settlement");
+            CH1_4.setCellValue("Fare");
+            CH1_5.setCellValue("Diff");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("Code");
+            CH2_2.setCellValue("Description");
+            CH2_3.setCellValue("Commision");
+            CH2_4.setCellValue("Commission");
+        
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+
+                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).SCARCOD);
+                rcell2.setCellValue(listaData.get(vi).SCARDescr);
+                rcell3.setCellValue(listaData.get(vi).SADJUST);
+                rcell4.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell5.setCellValue(listaData.get(vi).DIF);
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            // ======  Nivel de TOTALES ==========
+            Row rowTotal = sheet.createRow(vj);
+            Cell CH1_0_T = rowTotal.createCell(0);
+            Cell CH1_1_T = rowTotal.createCell(1);
+            Cell CH1_2_T = rowTotal.createCell(2);
+            Cell CH1_3_T = rowTotal.createCell(3);
+            Cell CH1_4_T = rowTotal.createCell(4);
+            Cell CH1_5_T = rowTotal.createCell(5);
+
+            CH1_0_T.setCellValue("");
+            CH1_1_T.setCellValue("");
+            CH1_2_T.setCellValue("");
+            CH1_3_T.setCellValue(listaData.get(0).totSADJUST);
+            CH1_4_T.setCellValue(listaData.get(0).totSFEEAMOU);
+            CH1_5_T.setCellValue(listaData.get(0).totDIF);
+
+            CH1_0_T.setCellStyle(totalStyle);
+            CH1_1_T.setCellStyle(totalStyle);
+            CH1_2_T.setCellStyle(totalStyle);
+            CH1_3_T.setCellStyle(totalStyle);
+            CH1_4_T.setCellStyle(totalStyle);
+            CH1_5_T.setCellStyle(totalStyle);
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
     @RequestMapping(value = "getXLSX_boxAuditComByDay")
     public @ResponseBody
     void getXLSX_boxAuditComByDay(HttpServletRequest request, HttpServletResponse response) {
@@ -1540,7 +1773,7 @@ public class ProPaymentsControlController extends BaseController {
                 Cell rcell2 = row1.createCell(2);
                 Cell rcell3 = row1.createCell(3);
 
-                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell0.setCellValue(listaData.get(vi).SDATE);
                 rcell1.setCellValue(listaData.get(vi).SADJUST);
                 rcell2.setCellValue(listaData.get(vi).SFEEAMOU);
                 rcell3.setCellValue(listaData.get(vi).DIF);
@@ -1802,7 +2035,7 @@ public class ProPaymentsControlController extends BaseController {
                 rcell8.setCellValue(listaData.get(vi).FINSAMOUC);
                 rcell9.setCellValue(listaData.get(vi).SINSAMOUC);
                 rcell10.setCellValue(listaData.get(vi).DISCAMOUN);
-                rcell11.setCellValue(listaData.get(vi).RATESFEED);
+                rcell11.setCellValue(listaData.get(vi).RATESFEED);//este
                 rcell12.setCellValue(listaData.get(vi).SADJUST);
                 rcell13.setCellValue(listaData.get(vi).SFEEAMOU);
                 rcell14.setCellValue(listaData.get(vi).DIF);
@@ -1852,12 +2085,12 @@ public class ProPaymentsControlController extends BaseController {
             CH1_3_T.setCellValue("");
             CH1_4_T.setCellValue("");
             CH1_5_T.setCellValue(listaData.get(0).totSVFOPS);
-            CH1_6_T.setCellValue(listaData.get(0).totDISCRATEC);
+            CH1_6_T.setCellValue("");
             CH1_7_T.setCellValue("");
             CH1_8_T.setCellValue(listaData.get(0).totFINSAMOUC);
             CH1_9_T.setCellValue(listaData.get(0).totSINSAMOUC);
             CH1_10_T.setCellValue(listaData.get(0).totDISCAMOUN);
-            CH1_11_T.setCellValue(listaData.get(0).totRATESFEED);
+            CH1_11_T.setCellValue("");
             CH1_12_T.setCellValue(listaData.get(0).totSADJUST);
             CH1_13_T.setCellValue(listaData.get(0).totSFEEAMOU);
             CH1_14_T.setCellValue(listaData.get(0).totDIF);
