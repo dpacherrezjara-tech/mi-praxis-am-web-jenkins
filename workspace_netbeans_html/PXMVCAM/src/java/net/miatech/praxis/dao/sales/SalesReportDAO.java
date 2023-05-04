@@ -14,6 +14,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -28,6 +29,7 @@ import net.miatech.beans.PX036S01A1735Filter;
 import net.miatech.beans.PX036S01A4374Filter;
 import net.miatech.beans.PX036S01A4375Filter;
 import net.miatech.beans.PX036S01A4376Filter;
+import net.miatech.beans.PX036S02A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
@@ -43,6 +45,7 @@ import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
 import net.miatech.beans.SQP04747Filter;
+import net.miatech.beans.SQP04874Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
@@ -52,6 +55,11 @@ import net.miatech.praxis.A005;
 import net.miatech.praxis.A1772;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  *
@@ -354,7 +362,7 @@ public class SalesReportDAO {
             cstmt01.execute();
 
             objRtn.A1772EMD = cstmt01.getString(3);
-            if (objRtn.A1772EMD == null) {
+            if(objRtn.A1772EMD == null){
                 objRtn.A1772EMD = "";
             }
         } finally {
@@ -375,7 +383,7 @@ public class SalesReportDAO {
 
         return objRtn;
     }
-
+    
     public A005 loadA005(A005 filter) throws SQLException, Exception {
         A005 objRtn = new A005();
 
@@ -485,32 +493,33 @@ public class SalesReportDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PX038S02A713(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PX038S02A713(?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             //cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
 
             cstmt01.setInt(1, filter.IN_OPCION);
             cstmt01.setString(2, filter.IN_AIRLIN);
             cstmt01.setString(3, filter.IN_GRUPO);
             cstmt01.setString(4, filter.IN_TKT);
-            cstmt01.setInt(5, filter.page.PAGNUM);
-            cstmt01.setInt(6, filter.page.PAGROW);
-            cstmt01.setInt(7, filter.page.TOTPAG);
-            cstmt01.setInt(8, filter.page.TOTROW);
+            cstmt01.setString(5, filter.IN_IATA);
+            cstmt01.setInt(6, filter.page.PAGNUM);
+            cstmt01.setInt(7, filter.page.PAGROW);
+            cstmt01.setInt(8, filter.page.TOTPAG);
+            cstmt01.setInt(9, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(5);
-            filter.page.PAGROW = cstmt01.getInt(6);
-            filter.page.TOTPAG = cstmt01.getInt(7);
-            filter.page.TOTROW = cstmt01.getInt(8);
+            filter.page.PAGNUM = cstmt01.getInt(6);
+            filter.page.PAGROW = cstmt01.getInt(7);
+            filter.page.TOTPAG = cstmt01.getInt(8);
+            filter.page.TOTROW = cstmt01.getInt(9);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -523,6 +532,7 @@ public class SalesReportDAO {
                 objRtn.A713FECVTA = rs01.getString("A713FECVTA");
                 objRtn.A713TRNCU = rs01.getString("A713TRNCU");
                 objRtn.CNJ = rs01.getString("CNJ");
+                objRtn.A713AGENTE = rs01.getString("A713AGENTE");
                 objRtn.A713TDOC = rs01.getString("A713TDOC");
                 objRtn.A713MONEDA = rs01.getString("A713MONEDA");
                 objRtn.A713TARIFA = rs01.getDouble("A713TARIFA");
@@ -607,6 +617,7 @@ public class SalesReportDAO {
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 objRtn.A720FECVTA = rs01.getString("A720FECVTA");
                 objRtn.CNJ = rs01.getString("CNJ");
+                objRtn.A720AGENTE = rs01.getString("A720AGENTE");
                 objRtn.A720TRNCU = rs01.getString("A720TRNCU");
                 objRtn.A720MDAAD = rs01.getString("A720MDAAD");
                 objRtn.A720ADC = rs01.getDouble("A720ADC");
@@ -655,34 +666,35 @@ public class SalesReportDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PX038S02A714(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PX038S02A714(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null; //session.getCNXIBMDB2().open();
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             //cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setInt(1, filter.IN_OPCION);
             cstmt01.setString(2, filter.IN_AIRLIN);
             cstmt01.setString(3, filter.IN_GRUPO);
             cstmt01.setString(4, filter.IN_TKT);
             cstmt01.setString(5, filter.IN_TRANSACTION);
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setString(6, filter.IN_IATA);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -693,6 +705,7 @@ public class SalesReportDAO {
                 objRtn.DOCUMENTO = rs01.getString("DOCUMENTO");
                 objRtn.A714FECVTA = rs01.getString("A714FECVTA");
                 objRtn.CNJ = rs01.getString("CNJ");
+                objRtn.A714AGENTE = rs01.getString("A714AGENTE");
                 objRtn.A714TRNCU = rs01.getString("A714TRNCU");
                 objRtn.A714TDOC = rs01.getString("A714TDOC");
                 objRtn.A714MDAFA = rs01.getString("A714MDAFA");
@@ -1199,7 +1212,7 @@ public class SalesReportDAO {
                     objRtn.A720MDARV = rs01.getString("A720MDARV");
                     objRtn.TICKET = rs01.getString("A720CIA") + rs01.getString("A720FORMA") + rs01.getString("A720SERIE");
                     objRtn.CPUI = "";
-                    objRtn.CUPON = i + "";
+                    objRtn.CUPON = i+"";
                     objRtn.CONEX = rs01.getString("A720CONEX" + i);
                     int op = i - 1;
                     objRtn.ORIGEN = rs01.getString("A720RUTA" + op);
@@ -3305,10 +3318,10 @@ public class SalesReportDAO {
             filter.dbException.MESSAGE = cstmt.getString(5);
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            filter.dbException.MESSAGE = e.getMessage();
+             filter.dbException.MESSAGE=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            filter.dbException.MESSAGE = e.getMessage();
+            filter.dbException.MESSAGE=e.getMessage();
         } finally {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
@@ -3350,10 +3363,10 @@ public class SalesReportDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -3390,10 +3403,10 @@ public class SalesReportDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -3438,10 +3451,10 @@ public class SalesReportDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -3483,10 +3496,10 @@ public class SalesReportDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -3494,7 +3507,7 @@ public class SalesReportDAO {
 
         return STR_RESULT;
     }
-
+    
     public String ProcesaInsertTAXCOMMManual(PX036S01A1731Filter filter, String lstTaxComm) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -3528,10 +3541,10 @@ public class SalesReportDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -3539,7 +3552,7 @@ public class SalesReportDAO {
 
         return STR_RESULT;
     }
-
+    
     public String ProcesaInsertFareCalcRfnd(PX036S01A1735Filter filter) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -3573,10 +3586,10 @@ public class SalesReportDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT = e.getMessage();
+            STR_RESULT=e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -3584,7 +3597,7 @@ public class SalesReportDAO {
 
         return STR_RESULT;
     }
-
+    
     public List<SQP04747Filter> loadSQP04747(SQP04747Filter filter) throws SQLException, Exception {
         List<SQP04747Filter> lstRtn = new ArrayList<>();
         CallableStatement cstmt01 = null;
@@ -3645,6 +3658,7 @@ public class SalesReportDAO {
                 objRtn.setA4373MIAER(rs01.getString("A4373MIAER"));
                 objRtn.setA4373STAT(rs01.getString("A4373STAT"));
                 objRtn.setQTY_ERROR(rs01.getInt("QTY_ERROR"));
+                objRtn.setA4373AGENT(rs01.getString("A4373AGENT"));
 
                 objRtn.setPag(page);
                 lstRtn.add(objRtn);
@@ -3669,12 +3683,11 @@ public class SalesReportDAO {
     }
 
     //get RFTX Info
-    public S0001A4373Filter loadS0001A4373(S0001A4373Filter filter) throws Exception {
+    public List<S0001A4373Filter> loadS0001A4373(S0001A4373Filter filter) throws Exception {
         CallableStatement cs = null;
         ResultSet rs = null;
-        S0001A4373Filter obj = null;
         String sql = "{CALL PRAXIS.S0001A4373(?,?,?,?,?)}";
-
+        List<S0001A4373Filter> lst = new ArrayList<>();
         Connection con = null;
         try {
             con = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -3687,7 +3700,7 @@ public class SalesReportDAO {
             cs.execute();
             rs = cs.getResultSet();
             while (rs.next()) {
-                obj = new S0001A4373Filter();
+                S0001A4373Filter obj = new S0001A4373Filter();
                 obj.setA4373AIRLI(rs.getString("A4373AIRLI"));
                 obj.setA4373CIA(rs.getString("A4373CIA"));
                 obj.setA4373FORMA(rs.getString("A4373FORMA"));
@@ -3745,12 +3758,15 @@ public class SalesReportDAO {
                 obj.setA4373LYQ4(rs.getDouble("A4373LYQ4"));
                 obj.setA4373FTURB(rs.getString("A4373FTURB"));
                 obj.setA4373SEQD(rs.getString("A4373SEQD"));
-
+                obj.setA4373CIUEM(rs.getString("A4373CIUEM"));
+                obj.setA4373PAIEM(rs.getString("A4373PAIEM"));
+                obj.setA4373CIUVT(rs.getString("A4373CIUVT"));
+                obj.setA4373PAIVT(rs.getString("A4373PAIVT"));
+                lst.add(obj);
             }
 
         } catch (Exception ex) {
             System.out.println("Error => " + ex.getMessage());
-            obj = null;
         } finally {
             if (rs != null) {
                 try {
@@ -3766,7 +3782,7 @@ public class SalesReportDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-        return obj;
+        return lst;
     }
 
     //get RFTX Fop
@@ -4035,4 +4051,109 @@ public class SalesReportDAO {
         }
         return lst;
     }
+    
+    //get References by type 
+    public List<PX036S02A4376Filter> loadRftxReferences(PX036S02A4376Filter filter) throws Exception{
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        List<PX036S02A4376Filter> lst = new ArrayList<>();
+        String sql = "{CALL PRAXIS.PX036S02A4376(?,?,?,?,?,?)}";
+
+        Connection con = null;
+        try {
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = con.prepareCall(sql);
+            cs.setString(1, filter.getAIRLINE());
+            cs.setString(2, filter.getCIA());
+            cs.setString(3, filter.getFORMA());
+            cs.setString(4, filter.getSERIE());
+            cs.setString(5, filter.getSEQ());
+            cs.setString(6, filter.getTIPO());
+            cs.execute();
+            rs = cs.getResultSet();
+            while (rs.next()) {
+                PX036S02A4376Filter obj = new PX036S02A4376Filter();
+                obj.setA4376FRCA(rs.getString("A4376FRCA"));
+                lst.add(obj);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+            lst = null;
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                try { cs.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lst;
+    }
+    
+    public Map<String,String> loadTicketFinder(Map<String,String> filter)throws Exception{
+        Connection con;
+        Map<String,String> result = new HashMap<>();
+        try{
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(con,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04787");
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("GRUPO", filter.get("GRUPO"));
+            params.addValue("AIRLINE", filter.get("AIRLINE"));
+            params.addValue("CIA", filter.get("CIA"));
+            params.addValue("FORMA", filter.get("FORMA"));
+            params.addValue("SERIE", filter.get("SERIE"));
+            Map<String,Object> obj = jdbcCall.execute(params);
+            List<Map<String,String>> lst = ((List<Map<String,String>>) obj.get("#result-set-1"));
+            if (lst!=null) {
+                if (!lst.isEmpty()) {
+                    result = lst.get(0);
+                }
+            }
+        }catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+        } finally {
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return result;
+    }
+    
+    public List<SQP04874Filter> loadSQP04874Filter(SQP04874Filter filter) throws Exception{
+        Connection con;
+        List<SQP04874Filter> lst = new ArrayList<>();
+        try{
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(con,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04874")
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04874Filter.class));
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("AIRLINE", filter.getCCUST());
+            params.addValue("TIPO", filter.getTIPO());
+            params.addValue("CIA", filter.getCIA());
+            params.addValue("FORMA", filter.getFORMA());
+            params.addValue("SERIE", filter.getSERIE());
+            params.addValue("SEQ", filter.getSEQ());
+            params.addValue("GRUPO", filter.getGRUPO());
+            Map<String,Object> obj = jdbcCall.execute(params);
+            lst = (List<SQP04874Filter>) obj.get("result");
+        }catch (Exception ex) {
+            System.out.println("Error => " + ex.getMessage());
+        } finally {
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lst;
+    }
+
 }

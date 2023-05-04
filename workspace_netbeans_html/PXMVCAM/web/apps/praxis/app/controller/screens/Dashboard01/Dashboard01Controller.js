@@ -87,6 +87,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             '#Dashboard01Form-btnBack_chartInter': {
                 click: this.btnDisplay_click
             },
+            '#Dashboard01Form-btnBack_chartFlown': {
+                click: this.btnDisplay_click
+            },
         });
 
 //        this.setStoreData();
@@ -543,10 +546,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 Ext.getCmp(prototype.id + '-panelChartSales').show();
                 break;
             case prototype.id + '-FlownAnalysis_tab' :
-                global.Msg({
-                    msg: 'Data not found'
-                });
-                isOK = false;
+                Ext.getCmp(prototype.id + '-panelChartFlown').show();
+                meFChart.inicio2();
                 break;
             case prototype.id + '-ScrInterline_tab' :
                 Ext.getCmp(prototype.id + '-panelChartInterline').show();
@@ -560,6 +561,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
 
         Ext.getCmp(prototype.id + '-panelChartInterline').hide();
         Ext.getCmp(prototype.id + '-panelChartSales').hide();
+        Ext.getCmp(prototype.id + '-panelChartFlown').hide();
 
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">

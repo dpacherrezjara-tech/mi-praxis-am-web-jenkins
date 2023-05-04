@@ -390,7 +390,7 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                             id: prototype.idnocompara + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: 600,
+                            width: 650,
                             height: 600,
                             features: [{
                                     //id: 'group',
@@ -410,6 +410,7 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                 },
                                 items: [
                                     {text: 'System <br> date', dataIndex: 'A3951FREGI', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Period', dataIndex: 'A3951PERIO', width: 75},
                                     {text: 'Country', dataIndex: 'A3951PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
                                     {text: 'Total', dataIndex: 'A3951CANTI', width: 120, align: 'right',
                                         cls: 'column_header_double',

@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Filters2', {
     items: [
         {
             xtype: 'label',
-            html: '<strong style="color:#000;">Processing Date </strong>',
+            html: '<strong style="color:#000;">Generation Date </strong>',
             labelStyle: 'font-weight:bold;',
             align: 'left',
             fieldStyle: 'text-align: left;',

@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         prototype.idRFNDQuery = 'RFNDQuery';
         prototype.idDetailTicket = 'DetailTicket';
         prototype.idRFNDFormRazones = 'FNDFormRazones';
-       prototype.idRFNDDIRFileViewer = 'RFNDDIRFileViewer';
+        prototype.idRFNDDIRFileViewer = 'RFNDDIRFileViewer';
         prototype.idDetailTicketHistory = 'DetailTicketHistory';
         prototype.url02 = CONTEXTPATH + '/RFNDPending';
         prototype.url01 = CONTEXTPATH + '/RFNDQuery';
@@ -55,7 +55,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         return Ext.util.Format.number(value, '0,000');
     },
     onColumnIntegerRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        return Ext.util.Format.number(value, '0,000');
+        if (value !== 0) {
+            metaData.style = "background-color: #86C8BC !important";
+            //Ext.util.Format.number(value, '0,000.00');
+        }
+        return value;
+
+        //return Ext.util.Format.number(value, '0,000');
     },
     onColumnAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "background:#D5F4D5 !important";
@@ -437,7 +443,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
                 color = '#CCFF00';
                 value = 'PENDING';
                 break;
-             case 'B':
+            case 'B':
                 color = '#FF9966';
                 value = 'GIVE USE IN PRAXIS';
                 break;

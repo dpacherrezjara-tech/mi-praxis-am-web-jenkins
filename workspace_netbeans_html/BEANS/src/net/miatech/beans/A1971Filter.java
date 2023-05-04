@@ -4,6 +4,7 @@
  */
 package net.miatech.beans;
 
+import java.sql.Array;
 import net.miatech.praxis.flown.A1971;
 
 /**
@@ -116,6 +117,47 @@ public class A1971Filter extends A1971 {
     public double totTBASICM = 0;
     public long totBASICM = 0;
     public long totQCPNVAL= 0;
+    public String strMonth = "";
+    public String strYear = "";
+    public String strValue = "";
+    public String IN_FECHA_FROMB = "";
+    public String IN_FECHA_TOB = "";
+    public String strMonthB = "";
+    public String strYearB = "";
+    public String strValueB = "";
+    public double Angle = 0;
+    public double AngleB = 0;
+    public String DFLIGHTB = "";
+    public double VCPN_JB = 0;
+    public long QTYPAX_JB = 0;
+    public double VCPN_YB = 0;
+    public long QTYPAX_YB = 0;
+    public double VCPNB = 0;
+    public long QTYPAXB = 0;
+    public long QFLIGHTB = 0;
+    public double VCPNONB = 0;
+    public long QCPNONB = 0;
+    public double VCPNOALB = 0;
+    public long QCPNOALB = 0;
+    public double VCPNNFB = 0;
+    public long QCPNNFB = 0;
+    public double VCPNNF = 0;
+    public long QCPNNF = 0;
+    public long QFLIGHT = 0;
+    public int MESES = 0;
+    public String strFormatDateB = "";
+    public double TOVCPNONB = 0;
+    public double TOVCPNON = 0;
+    public double TOVCPNOALB = 0;
+    public double TOVCPNOAL = 0;
+    
+    public String ZONAB = "";
+    public double QCFLOW = 0;
+    public double QCPAX = 0;
+    public double QCFLOWB = 0;
+    public double QCPAXB = 0;
+    public double AVGB = 0;
+    public String strDescripcionB = "";
     
     public Pagination page = new Pagination();
 }

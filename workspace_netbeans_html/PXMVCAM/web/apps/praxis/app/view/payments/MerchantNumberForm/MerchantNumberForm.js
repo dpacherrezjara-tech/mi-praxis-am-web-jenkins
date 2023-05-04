@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.MerchantNumberForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1600,
+                                        width: 1705,
                                         align: 'center'
                                     },
                                     items: [
@@ -65,19 +65,19 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.MerchantNumberForm', {
                                         {
                                             xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter',
-                                            hidden: true
+                                            hidden: false
                                         }
                                         ,
                                         {
                                             xtype: 'panel',
                                             height: 600,
-                                            width: 1600,
+                                            width: 1705,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1600,
+                                                    width: 1705,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
@@ -106,7 +106,3 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.MerchantNumberForm', {
         }
     ]
 });
-
-
-
-

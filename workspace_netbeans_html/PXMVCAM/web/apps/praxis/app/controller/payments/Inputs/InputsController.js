@@ -113,12 +113,19 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
+        
+        var month = this.fecha.getMonth() + 1;
+        
+        if (month < 10) {
+            month = '0' + month;
+        }
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
 
 
@@ -127,6 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
 
         Ext.getCmp(prototype.id + '-cmbYear').bindStore(storeComboDataYear);
@@ -630,7 +638,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                     var dias = ["7", "1", "2", "3", "4", "5", "6"];
                     var colorFlag;
                     var dia, mes, anio, mesf;
-
+                    
                     for (var i = 0; i < res.length; i++) {
                         dia = res[i].fecha.substring(6, 8);
                         mes = res[i].fecha.substring(4, 6);
@@ -638,13 +646,28 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                         mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
 
                         var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
-                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
-
+                        var color = '';
+                        //var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
+                        
+                        
+                        if (dt.getDay() === 0 || dt.getDay() === 6) {   // Domingo y Sabado
+                            if(me.beanCalendar.IN_FUENTE === 'AXPLUSGR-D' || me.beanCalendar.IN_FUENTE === 'AXLIGATB-D'){
+                                color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
+                            }else{
+                                color = '#FFFFFF'
+                            }
+                        } else if(res[i].strFormatDate === 'YELLOW' ){
+                            color = '#D8FF02'
+                        } else{
+                            color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
+                        }
+                        
 
                         if (mesf % 2 !== 0) {
                             colorFlag = '#65C3E5';
                         } else {
                             colorFlag = '#2e6bf4';
+                            //colorFlag = '#ffffff';
                         }
                         
 //                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
@@ -681,6 +704,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
     
     searchDelivery_clickHandler: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var beanDeliv = rowData.data;
+        beanDeliv.IN_FECRFILE = rowData.data.strFormatDate.replaceAll('-','');
         switch (columnNum) {
             case 1:
                 beanDeliv.IN_ERROR = '';
@@ -697,6 +721,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
             me.paramsDetail.consulta = '1';
             this.searchDelivery();
         }
+        console.log(beanDeliv);
     },
     searchDelivery: function () {
         me.setWidthPie();

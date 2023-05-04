@@ -391,12 +391,23 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.SalesReportController', {
         this.winDataEntry('I');
     },
     onEditClick: function (grid, rowIndex, colIndex) {
+        let cmbDate = Ext.getCmp(prototype.id + '-cmbDate');
+        let opTkt = {
+            op:cmbDate.getValue(),
+            documento:'',
+            grupo:grid.getStore().getAt(rowIndex).data.A1530GRUPO
+        };
+        if (opTkt.op==='6') {
+            let ticket = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+            if(ticket.trim().length===10) opTkt.documento = ticket;
+        }
         var rec = grid.getStore().getAt(rowIndex);
         var dataEntryGrupo = Ext.create('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
             id: prototype.id + '-dataEntryGrupo',
             params: {
                 rec: rec,
-                option: 'TKT'
+                option: 'TKT',
+                findTkt:opTkt
             }
         });
         dataEntryGrupo.show();

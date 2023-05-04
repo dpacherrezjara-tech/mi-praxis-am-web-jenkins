@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                     xtype: 'grid',
                     id: prototype.id + '-gridFAmonth',
                     width: 1482,
-                    height: 365,
+                    height: 392,
                     columnLines: true,
                     hidden: false,
                     margin: "5 0 0 0",

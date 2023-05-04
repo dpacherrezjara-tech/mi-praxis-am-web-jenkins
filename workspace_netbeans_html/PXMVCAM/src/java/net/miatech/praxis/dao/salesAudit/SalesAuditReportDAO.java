@@ -142,6 +142,7 @@ public class SalesAuditReportDAO {
                     objRtn.A1672COMEN = rs01.getString("A1672COMEN");
                     objRtn.A1672CMBPO = rs01.getString("A1672CMBPO");
                     objRtn.A1672TKCNX = rs01.getString("A1672CNX1");
+                    objRtn.A1672IDFIL = rs01.getString("A1672IDFIL");
 
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;
