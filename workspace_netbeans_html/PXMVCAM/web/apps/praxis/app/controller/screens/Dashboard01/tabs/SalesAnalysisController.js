@@ -361,7 +361,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.loadDDTpMCountryofSale(this.paramsCountryCity, this.beanCountryCity);
     },
     loadDDTpMCountryofSale: function (paramsCountryCity, bean) {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF081");
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/loadDDTpMCountryofSale'
@@ -500,7 +500,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
     },
     loadCountryOfSale: function () {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF081");
 
         this.showGrid('-BoxCountryOfSale');
         Ext.Ajax.request({
@@ -1495,7 +1495,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.loadDetPaisAlliances(this.beanAllianceDetPais);
     },
     loadDetPaisAlliances: function (searchParams) {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF083");
 
 
         this.showGrid('-BoxDetPaisAlliances');
@@ -1532,7 +1532,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.loadDetAgenteAlliances(this.beanAllianceDetAgente);
     },
     loadDetAgenteAlliances: function (searchParams) {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF084");
 
         me.panelActual = '-BoxDetAgenteAlliances';
         this.showGrid('-BoxDetAgenteAlliances');

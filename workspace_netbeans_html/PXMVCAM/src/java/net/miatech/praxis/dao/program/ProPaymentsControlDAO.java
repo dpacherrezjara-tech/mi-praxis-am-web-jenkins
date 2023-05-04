@@ -3376,4 +3376,319 @@ public class ProPaymentsControlDAO {
 
         return lista;
     }
+    
+    // ---------------------------------------------------------------------------------------------------------------
+    public List<IMF145Filter> loadSQP04912(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04912(?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA = rst.getString("SDATE");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.SDATE);
+                    
+                    bean.SADJUST = rst.getLong("SADJUST");
+                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
+                    bean.DIF = rst.getLong("DIF");
+                    
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+                    
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
+
+    public List<IMF145Filter> loadSQP04913(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04913(?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA);
+
+            cstmt.setInt(3, filter.page.PAGNUM);
+            cstmt.setInt(4, filter.page.PAGROW);
+            cstmt.setInt(5, filter.page.TOTPAG);
+            cstmt.setInt(6, filter.page.TOTROW);
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA_DIA = rst.getString("SDATE");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.strFormatDate = filter.strFormatDate;
+                    
+                    bean.SADJUST = rst.getLong("SADJUST");
+                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
+                    bean.DIF = rst.getLong("DIF");
+                    
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
+    
+    public List<IMF145Filter> loadSQP04914(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        double SVFOPS = 0, DISCRATEC = 0, FINSAMOUC = 0, SINSAMOUC = 0, DISCAMOUN = 0, RATESFEED = 0, SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04914(?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_DIA);
+
+            cstmt.setInt(3, filter.page.PAGNUM);
+            cstmt.setInt(4, filter.page.PAGROW);
+            cstmt.setInt(5, filter.page.TOTPAG);
+            cstmt.setInt(6, filter.page.TOTROW);
+            
+            cstmt.execute();
+                
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SVFOPS = rst.getDouble("SVFOPS");
+                DISCRATEC = rst.getDouble("DISCRATEC");
+                FINSAMOUC = rst.getDouble("FINSAMOUC");
+                SINSAMOUC = rst.getDouble("SINSAMOUC");
+                DISCAMOUN = rst.getDouble("DISCAMOUN");
+                RATESFEED = rst.getDouble("RATESFEED");
+                SADJUST = rst.getDouble("SADJUST");
+                SFEEAMOU = rst.getDouble("SFEEAMOU");
+                DIF = rst.getDouble("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA_DIA = rst.getString("SDATE").trim();
+                    bean.CCIA = rst.getString("CCIA").trim();
+                    bean.FORMA = rst.getString("FORMA").trim();
+                    bean.SERIE = rst.getString("SERIE").trim();
+                    bean.TICKET = bean.CCIA + bean.FORMA + bean.SERIE;
+                    bean.SCARDN = rst.getString("SCARDN").trim();
+                    bean.SAUTHOC = rst.getString("SAUTHOC").trim();
+                    bean.SAGENT = rst.getString("SAGENT").trim();
+                    bean.SDATE = rst.getString("SDATE").trim();
+                    bean.strFormatDate = Functions.getMonthConvert6(filter.SDATE);
+                    bean.SPNR = rst.getString("SPNR").trim();
+                    bean.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    
+                    bean.SVFOPS = rst.getDouble("SVFOPS");
+                    bean.DISCRATEC = rst.getDouble("DISCRATEC");
+                    bean.FINSAMOUC = rst.getDouble("FINSAMOUC");
+                    bean.SINSAMOUC = rst.getDouble("SINSAMOUC");
+                    bean.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                    bean.RATESFEED = rst.getDouble("RATESFEED");
+                    bean.SADJUST = rst.getDouble("SADJUST");
+                    bean.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    bean.DIF = rst.getDouble("DIF");
+                    
+                    bean.totSVFOPS = SVFOPS;
+                    bean.totDISCRATEC = DISCRATEC;
+                    bean.totFINSAMOUC = FINSAMOUC;
+                    bean.totSINSAMOUC = SINSAMOUC;
+                    bean.totDISCAMOUN = DISCAMOUN;
+                    bean.totRATESFEED = RATESFEED;
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
 }
