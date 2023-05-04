@@ -59,6 +59,8 @@ public class IMF145Filter extends IMF145{
     public String PCURRENCY = "";
     public String SPNR = "";
     public String SCURRENCY = "";
+    public String IN_SCARCOD = "";
+    public String SCARDescr = "";
     public double SVFOPS = 0;
     public double DISCRATEC = 0;
     public double FINSAMOUC = 0;

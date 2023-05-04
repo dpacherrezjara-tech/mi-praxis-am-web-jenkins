@@ -3389,30 +3389,31 @@ public class ProPaymentsControlDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04912(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04912(?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_FECHA_FROM);
             cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_SCOUNTRY);
 
-            cstmt.setInt(4, filter.page.PAGNUM);
-            cstmt.setInt(5, filter.page.PAGROW);
-            cstmt.setInt(6, filter.page.TOTPAG);
-            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
             cstmt.execute();
             
-            filter.page.PAGNUM = cstmt.getInt(4);
-            filter.page.PAGROW = cstmt.getInt(5);
-            filter.page.TOTPAG = cstmt.getInt(6);
-            filter.page.TOTROW = cstmt.getInt(7);
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
             
             rst = cstmt.getResultSet();
 
@@ -3473,6 +3474,108 @@ public class ProPaymentsControlDAO {
 
         return lista;
     }
+    
+    public List<IMF145Filter> loadSQP04915(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04915(?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA);
+            cstmt.setString(3, filter.IN_SCOUNTRY);
+
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA = rst.getString("SDATE");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.SDATE);
+                    
+                    bean.SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.SCARCOD = rst.getString("SCARCOD");
+                    bean.SCARDescr = rst.getString("SCARDescr");
+                    if(bean.SCARCOD.equals("AX")){
+                        bean.SCARDescr = "AMERICAN EXPRESS";
+                    }
+                    bean.SADJUST = rst.getLong("SADJUST");
+                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
+                    bean.DIF = rst.getLong("DIF");
+                    
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+                    
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
 
     public List<IMF145Filter> loadSQP04913(IMF145Filter filter) throws SQLException, Exception {
 
@@ -3485,29 +3588,31 @@ public class ProPaymentsControlDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04913(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04913(?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(3, Types.INTEGER);
-            cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_FECHA);
+            cstmt.setString(3, filter.IN_SCOUNTRY);
+            cstmt.setString(4, filter.IN_SCARCOD);
 
-            cstmt.setInt(3, filter.page.PAGNUM);
-            cstmt.setInt(4, filter.page.PAGROW);
-            cstmt.setInt(5, filter.page.TOTPAG);
-            cstmt.setInt(6, filter.page.TOTROW);
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
             cstmt.execute();
             
-            filter.page.PAGNUM = cstmt.getInt(3);
-            filter.page.PAGROW = cstmt.getInt(4);
-            filter.page.TOTPAG = cstmt.getInt(5);
-            filter.page.TOTROW = cstmt.getInt(6);
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
 
             rst = cstmt.getResultSet();
 
@@ -3527,6 +3632,8 @@ public class ProPaymentsControlDAO {
                     bean.SDATE = rst.getString("SDATE");
                     bean.strFormatDate = filter.strFormatDate;
                     
+                    bean.SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.SCARCOD = filter.IN_SCARCOD;
                     bean.SADJUST = rst.getLong("SADJUST");
                     bean.SFEEAMOU = rst.getLong("SFEEAMOU");
                     bean.DIF = rst.getLong("DIF");
@@ -3580,30 +3687,32 @@ public class ProPaymentsControlDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04914(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04914(?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(3, Types.INTEGER);
-            cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_FECHA_DIA);
-
-            cstmt.setInt(3, filter.page.PAGNUM);
-            cstmt.setInt(4, filter.page.PAGROW);
-            cstmt.setInt(5, filter.page.TOTPAG);
-            cstmt.setInt(6, filter.page.TOTROW);
+            cstmt.setString(3, filter.IN_SCOUNTRY);
+            cstmt.setString(4, filter.IN_SCARCOD);
+            
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
             
             cstmt.execute();
                 
-            filter.page.PAGNUM = cstmt.getInt(3);
-            filter.page.PAGROW = cstmt.getInt(4);
-            filter.page.TOTPAG = cstmt.getInt(5);
-            filter.page.TOTROW = cstmt.getInt(6);
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
             
             rst = cstmt.getResultSet();
 
@@ -3637,6 +3746,8 @@ public class ProPaymentsControlDAO {
                     bean.strFormatDate = Functions.getMonthConvert6(filter.SDATE);
                     bean.SPNR = rst.getString("SPNR").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    bean.SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.SCARCOD = filter.IN_SCARCOD;
                     
                     bean.SVFOPS = rst.getDouble("SVFOPS");
                     bean.DISCRATEC = rst.getDouble("DISCRATEC");

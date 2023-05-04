@@ -7560,7 +7560,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                             {
                                                                 text: 'Date', dataIndex: 'strFormatDate', width: 100,
                                                                 listeners: {
-                                                                    click: 'OnviewAuditComDetDay'
+                                                                    click: 'OnviewAuditComByCard'
                                                                 },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "color:#057ECB;";
@@ -7803,6 +7803,162 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             ]
                         },
                         // </editor-fold>
+                        // <editor-fold defaultstate="collapsed" desc="boxAuditComByCard">
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxAuditComByCard',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: false,
+                            height: 'auto',
+                            width: 1527,
+                            margin: '5 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    padding: '50 0 0 450',
+                                    width: 1500,
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridAuditComByCard',
+//                                    width: 1342,
+                                            width: 640,
+                                            columnLines: true,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {
+                                                        text: 'Sales',
+//                                                id: prototype.id + '-adgTitFecha',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Date', dataIndex: 'strFormatDate', width: 100,
+                                                                listeners: {
+                                                                    click: 'OnviewAuditComDetDay'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "color:#057ECB;";
+                                                                    value = '<b>' + value + '</b>';
+                                                                    return '<a href="#program-pro-payments-control-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Credit Card',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            resizable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Code', dataIndex: 'SCARCOD', width: 70,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Description', dataIndex: 'SCARDescr', width: 160,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Settlement',
+//                                                id: prototype.id + '-adgSalDate',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Commission', dataIndex: 'SADJUST', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#A0DBF9;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAuditComByCard').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSADJUST, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Fare',
+//                                                id: prototype.id + '-adgSalDate',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Commission', dataIndex: 'SFEEAMOU', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridAuditComByCard').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Diff', dataIndex: 'DIF', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#F9E1A0;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridAuditComByCard').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totDIF, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        // </editor-fold> 
                         // <editor-fold defaultstate="collapsed" desc="boxAuditComByDay">
                         {
                             xtype: 'panel',
@@ -7891,7 +8047,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     {
                                                         text: 'Commission', dataIndex: 'SFEEAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right; ";
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return  value;
                                                         },
@@ -8018,11 +8174,11 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return  value;
                                                 },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totDISCRATEC, '0,000.00') + '<b>';
-                                                }
+//                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                    var data = Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').getStore().getData().items[0].data;
+//                                                    metaData.style = 'text-align:right; margin-right:3px ';
+//                                                    return '<b>' + Ext.util.Format.number(data.totDISCRATEC, '0,000.00') + '<b>';
+//                                                }
                                             },
                                             {
                                                 text: 'Settlement',
@@ -8093,14 +8249,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         text: 'Exchange rate', dataIndex: 'RATESFEED', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            value = Ext.util.Format.number(value, '0,000.000000');
                                                             return  value;
                                                         },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totRATESFEED, '0,000.00') + '<b>';
-                                                        }
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.totRATESFEED, '0,000.000000') + '<b>';
+//                                                        }
                                                     },
                                                     {
                                                         text: 'Sett. Comm.', dataIndex: 'SADJUST', width: 100,
