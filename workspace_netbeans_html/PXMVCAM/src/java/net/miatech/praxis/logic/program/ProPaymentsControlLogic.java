@@ -124,6 +124,10 @@ public class ProPaymentsControlLogic {
         return ProPaymentsControlDAO.loadSQP04912(filter);
     }
     
+    public List<IMF145Filter> loadSQP04915(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04915(filter);
+    }
+    
     public List<IMF145Filter> loadSQP04913(IMF145Filter filter) throws SQLException, Exception {
         return ProPaymentsControlDAO.loadSQP04913(filter);
     }
