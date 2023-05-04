@@ -19,6 +19,7 @@ import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.ReconciliationDoublePaymentLogic;
 import net.miatech.praxis.logic.payments.SalesReconciliAmexLogic;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -108,20 +109,20 @@ public class ReconciliationDoublePaymentController extends BaseController {
     @RequestMapping(value = "getAdjustmentCodes")
     public @ResponseBody
     String getCodes(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- SalesReconciliAmex : getAdjustmentCodes-------------");
+        System.out.println("-------------- ReconciliationPayment : getAdjustmentCodes-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListGetAdjustmentCodes(request, false);
+        List<A4331Filter> lst = this.getListGetAdjustmentCodes(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListGetAdjustmentCodes(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListGetAdjustmentCodes(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -130,7 +131,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -148,7 +149,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX570SQP04470(filter);
+            lst = logic.loadPX606SQP04470(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -159,20 +160,20 @@ public class ReconciliationDoublePaymentController extends BaseController {
     @RequestMapping(value = "searchDetTktSettlement")
     public @ResponseBody
     String searchDetTktSettlement(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- SalesReconciliAmex : searchDetTktSettlement-------------");
+        System.out.println("-------------- ReconciliationPayment : searchDetTktSettlement-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListDetTktSettlement(request, false);
+        List<A4331Filter> lst = this.getListDetTktSettlement(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListDetTktSettlement(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListDetTktSettlement(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -181,7 +182,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -190,16 +191,18 @@ public class ReconciliationDoublePaymentController extends BaseController {
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
 
-            if (!bExcel) {
+            /*if (!bExcel) {
                 filter.page.PAGROW = 20;
                 start = (start != 0 ? start : 0);
                 filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             } else {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
-            }
+            }*/
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
 
-            lst = logic.loadPX570SQP04540(filter);
+            lst = logic.loadPX606SQP04698(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -209,21 +212,21 @@ public class ReconciliationDoublePaymentController extends BaseController {
     @RequestMapping(value = "searchTransactionErrorDetail")
     public @ResponseBody
     String searchTransactionErrorDetail(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Sales Adjustment - Double Payment : searchTransactionErrorDetail-------------");
+        System.out.println("-------------- Sales Reconciliation by AMEX : searchTransactionErrorDetail-------------");
 
         Gson gson = new Gson();
-        A4116Filter filter = new A4116Filter();
-        A4116Filter result = new A4116Filter();
-        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+        A4331Filter filter = new A4331Filter();
+        A4331Filter result = new A4331Filter();
+        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4116Filter.class);
+        filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationDoublePaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            result = logic.loadPX570SQP04359(filter);
-//            lstInfo = logic.loadPX570SQP04395(result);
+            result = logic.loadPX606SQP04720(filter);
+//            lstInfo = logic.loadPX606SQP04722(result);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);

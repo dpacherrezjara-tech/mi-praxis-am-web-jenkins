@@ -143,6 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
         beanTemp.TDOC = this.beanResult.TDOC;
+        beanTemp.AREFNBR = this.beanResult.AREFNBR;
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
@@ -151,7 +152,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         beanTemp.RFAUTOR = this.getValue("de-txtRFAUTOR");
         beanTemp.RFOPERB = this.getValue("de-txtRFOPERB");
 
-        //console.log(beanTemp);
+        console.log(beanTemp);
     },
     getData: function () {
 
