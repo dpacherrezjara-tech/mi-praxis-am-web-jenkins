@@ -3016,6 +3016,18 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 //                console.log(me.panelActual);
                 global.getFile(prototype.url + '/getXLSX_2?beanString=' + searchParams.beanString);
                 break;
+            case  '-boxAuditCom':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditCom?beanString=' + searchParamsAuditCom.beanString);
+                break; 
+            case  '-boxAuditComByDay':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditComByDay?beanString=' + me.paramsDetail.beanString);
+                break;
+            case  '-boxAuditComByDayDAY':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditComByDayDAY?beanString=' + me.paramsDetail.beanString);
+                break;
 //            case  '-boxGroupData':
 //                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
 //                break;
