@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.TransaccionErrorDeta
         'Ext.Praxis.view.travelbank.TransaccionErrorForm.InfoDetail'
     ],
     title: 'ERROR - View detail',
-    header: true,
+    header: true, 
     height: 600,
     width: 850,
     border: false,

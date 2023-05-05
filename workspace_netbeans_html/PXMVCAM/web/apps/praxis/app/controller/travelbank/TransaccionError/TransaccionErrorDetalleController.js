@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorDe
         this.p = this.view.params;
         //console.log(this.p);
         this.mostrarData(this.p.rec);
-        
+
 //        this.setStoreData();
 //        this.btnClear_click();
 //        this.btnSearch_click();
@@ -63,16 +63,27 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorDe
 
     // <editor-fold defaultstate="collapsed" desc="Info">
     onEditClick: function (grid, rowIndex) {
-        //console.log('onEditClick of FormFileUsedController ');
+
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        this.winDataEntry('U', rec);
+        console.log('onEditClick of Error view detail: ');
+        console.log(rec);        
+        // mostrar formulario segun tipo de error
+        switch (rec.data.A4435CDERR) {
+            case "FM0001":               
+                this.winDataEntry('U', rec);
+                break;
+            default:
+                alert('No implementado');
+                break;
+        }
+
     },
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.LiabilityForm.FileLiabilityDataEntry', {
-            id: 'FileLiabilityDataEntry',
+        Ext.create('Ext.Praxis.view.travelbank.TransaccionErrorForm.Crud.IssueDataEntry', {
+            id: 'CrudIssueDataEntry',
             params: {
                 action: action,
                 rec: rec
@@ -162,15 +173,15 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorDe
         this.setValue('A4435PRDA', rec.get('A4435PRDA'));
         this.setValue('A4435SQDIA', rec.get('A4435SQDIA'));
         this.setValue('A4435CDERR', rec.get('A4435CDERR'));
-        this.setValue('A4441DES', rec.get('A4441DES'));        
+        this.setValue('A4441DES', rec.get('A4441DES'));
         // </editor-fold>         
         this.setGridData();
     },
     // </editor-fold>   
     // <editor-fold defaultstate="collapsed" desc="setFormatParameter">
     setFormatParameter: function (rec) {
-        var me = this;       
-        me.searchParams = {            
+        var me = this;
+        me.searchParams = {
             VP_PRDA: rec.get('A4435PRDA'),
             VP_SQDIA: rec.get('A4435SQDIA'),
             VP_CDERR: rec.get('A4435CDERR')
@@ -194,7 +205,7 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorDe
 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function () {
-        
+
         var me = this;
         var storeGridDatas = Ext.create('Ext.Praxis.store.travelbank.AccountingMasterTravelbank.GridData', {
             proxy: {

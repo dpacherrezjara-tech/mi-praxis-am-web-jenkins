@@ -81,7 +81,7 @@ public class TransaccionErrorDAO {
             while (rs01.next()) {
                 objRtn = new SQP04948Filter();
                 objRtn.A4435CCUST = rs01.getString("A4435CCUST");
-                objRtn.A4435PRDA = rs01.getString("A4435PRDA");
+                objRtn.A4435PRDA = rs01.getString("A4435PRDA");                
                 objRtn.A4435SQDIA = rs01.getString("A4435SQDIA");
                 objRtn.A4435CDERR = rs01.getString("A4435CDERR");
                 objRtn.A4441DES = rs01.getString("A4441DES");
@@ -151,24 +151,22 @@ public class TransaccionErrorDAO {
                 objRtn.A4435CCUST = rs01.getString("A4435CCUST");
                 objRtn.A4435PRDA = rs01.getString("A4435PRDA");
                 objRtn.A4435SQDIA = rs01.getString("A4435SQDIA");
+                objRtn.A4435MDA = rs01.getString("A4435MDA");
                 objRtn.A4435CDERR = rs01.getString("A4435CDERR");
                 objRtn.A4435NCTA = rs01.getString("A4435NCTA");
                 objRtn.A4435FECHA = rs01.getString("A4435FECHA");
                 objRtn.A4435ID = rs01.getString("A4435ID");
                 objRtn.A4435SQ = rs01.getString("A4435SQ");
-                objRtn.A4435TYPE = rs01.getString("A4435TYPE");
-                
+                objRtn.A4435TYPE = rs01.getString("A4435TYPE");                
                 objRtn.A4435SERV = rs01.getString("A4435SERV");
-                objRtn.A4435TIPD = rs01.getString("A4435TIPD");
-                
+                objRtn.A4435TIPD = rs01.getString("A4435TIPD");                
                 objRtn.A4435CIA = rs01.getString("A4435CIA");
                 objRtn.A4435FORMA = rs01.getString("A4435FORMA");
                 objRtn.A4435SERIE = rs01.getString("A4435SERIE");
                 objRtn.A4435IDFIL = rs01.getString("A4435IDFIL");
                 objRtn.A4435IDISS = rs01.getString("A4435IDISS");
                 objRtn.A4435FEMI = rs01.getString("A4435FEMI");
-                objRtn.A4435STSER = rs01.getString("A4435STSER");
-                               
+                objRtn.A4435STSER = rs01.getString("A4435STSER");                               
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;

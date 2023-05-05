@@ -2,7 +2,11 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'TransaccionErrorForm';
 prototype.id2 = 'TransaccionErrorDetalleForm';
+prototype.id3 = 'CrudIssueDataEntry';
+
 prototype.url = CONTEXTPATH+'/TransaccionError';
+prototype.url1 = CONTEXTPATH+'/TransactionFiles';
+
 prototype.widthContenedor = 1300;//910
 prototype.widthGrid = 1200;
 // </editor-fold>

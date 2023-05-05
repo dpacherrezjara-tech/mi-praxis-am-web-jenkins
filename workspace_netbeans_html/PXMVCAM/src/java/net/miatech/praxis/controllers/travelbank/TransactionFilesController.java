@@ -17,6 +17,7 @@ import net.miatech.praxis.travelbank.SQP04821Filter;
 import net.miatech.praxis.travelbank.SQP04822Filter;
 import net.miatech.praxis.travelbank.SQP04823Filter;
 import net.miatech.praxis.travelbank.SQP04824Filter;
+import net.miatech.praxis.travelbank.SQP04970Filter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -100,6 +101,31 @@ public class TransactionFilesController extends BaseController {
 
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/searchIDISS")
+    public @ResponseBody
+    String searchIDISS(ModelMap map, HttpServletRequest request) {
+        List<SQP04970Filter> listaData;
+        SQP04970Filter filter;
+        filter = new SQP04970Filter();
+        try {
+            filter.VP_A4281IDISS = request.getParameter("VP_A4281IDISS");
+            filter.VP_A4281SQISS = request.getParameter("VP_A4281SQISS");
+            logic = new TransactionFilesLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04970Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size());
             map.put("data", listaData);
         } catch (NumberFormatException ex) {
             map.put("success", false);
