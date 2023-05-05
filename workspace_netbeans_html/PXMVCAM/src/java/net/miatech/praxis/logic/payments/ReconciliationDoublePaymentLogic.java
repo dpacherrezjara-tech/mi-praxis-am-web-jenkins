@@ -6,6 +6,7 @@ import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ReconciliationDoublePaymentDAO;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 
 public class ReconciliationDoublePaymentLogic {
 
@@ -16,24 +17,24 @@ public class ReconciliationDoublePaymentLogic {
 
     }
 
-    public List<A4116Filter> loadPX622SQP04472(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX622SQP04472(filter);
+    public List<A4116Filter> loadPX622SQP04955(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX622SQP04955(filter);
     }
 
-    public List<A4116Filter> loadPX570SQP04470(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX570SQP04470(filter);
+    public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX606SQP04470(filter);
     }
 
-    public List<A4116Filter> loadPX570SQP04540(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX570SQP04540(filter);
+    public List<A4331Filter> loadPX606SQP04698(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX606SQP04698(filter);
     }
 
-    public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX570SQP04359(filter);
+    public A4331Filter loadPX606SQP04720(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX606SQP04720(filter);
     }
 
-    public String loadPX622SQP04542(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationDoublePaymentDAO.loadPX622SQP04542(filter);
+    public String loadPX622SQP04954(A4116Filter filter) throws SQLException, Exception {
+        return ReconciliationDoublePaymentDAO.loadPX622SQP04954(filter);
     }
     
     public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {

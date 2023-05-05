@@ -173,7 +173,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'PNR', dataIndex: 'SPNR', width: 65,
@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'Indust.Speci. <br> Ref.Nbr<br>TKT', dataIndex: 'ISREFNBR', width: 120,
@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {
@@ -492,7 +492,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
-//                                                            return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                            return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {
@@ -504,7 +504,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
-//                                                                    return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                 ]
@@ -519,7 +519,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    return '<a href="#payments-sales-Adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {
@@ -713,7 +713,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 //                                                            value = '<br>' + value + '<br>';
-                                                    return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {text: 'PNR', dataIndex: 'SPNR', width: 80,
@@ -723,7 +723,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 //                                                            value = '<br>' + value + '<br>';
-                                                    return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
@@ -732,7 +732,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
-                                                    return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {text: 'Card Number', dataIndex: 'SCARDN', width: 140},
@@ -1088,7 +1088,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
-//                                                            return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                            return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {
@@ -1101,7 +1101,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
-//                                                                    return '<a href="#payments-sales-adjustment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                 ]
