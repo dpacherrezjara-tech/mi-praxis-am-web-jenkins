@@ -2773,13 +2773,13 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                         var lstAuditChart = [];
                         var obj1 = {};
                         obj1.perc1 = data.totSADJUST;
-                        obj1.strDescription = 'Settlement';
+                        obj1.strDescription = 'Paid to Bank';
                         var obj2 = {};
                         obj2.perc1 = data.totSFEEAMOU;
-                        obj2.strDescription = 'Fare';
+                        obj2.strDescription = 'Calculated';
                         var obj3 = {};
                         obj3.perc1 = data.totDIF;
-                        obj3.strDescription = 'Difference';
+                        obj3.strDescription = 'Overpaid';
                         
                         lstAuditChart.push(obj3);
                         lstAuditChart.push(obj2);
