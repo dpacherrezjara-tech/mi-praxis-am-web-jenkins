@@ -88,22 +88,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Options', {
                             tooltip: 'Display filter'
 
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnAdd',
-//                            iconCls: 'prx-icon-add',
-//                            tooltip: 'New'
-//                        },
-                        
-                        {
-                            xtype:'button',
-                            id: prototype.id+'-btnDisplay',
-                            icon: 'resources/img/botones/FalseChart.png',
-                            tooltip: 'Display Charts',
-                            listeners: {
-                                click: 'btnDisplay_click'
-                            }
-                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
@@ -116,15 +100,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id+'-btnQuery',
-//                            icon: 'resources/img/botones/query.png',
-//                            tooltip: 'Query',
-//                            listeners: {
-//                                click: 'btnQuery_click'
-//                            }
-//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnBack',

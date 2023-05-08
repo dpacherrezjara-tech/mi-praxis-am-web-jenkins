@@ -229,6 +229,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     id: prototype.id+'-cmbVISTA',           
                     triggerAction: 'all',
                     enableKeyEvents: true,
+                    caseSensitive: true,
                     readOnly: false,
                     editable: false,
                     valueField: 'code',
@@ -237,10 +238,10 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     labelWidth: 70,
                     fieldStyle: 'text-align: left;',
                     hidden: false,
-                    listeners:{
-                        select: 'btnSearch_click',
+//                    listeners:{
+//                        select: 'btnSearch_click',
 //                        change: 'ChangeVista_clickHandler'
-                    }
+//                    }
                 },
                 {
                     xtype: 'combo',
@@ -249,10 +250,10 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     enableKeyEvents: true,                    
                     readOnly: false,
                     editable: false,
-                    valueField: 'FUENTE',
-                    displayField: 'FUENTE',
+                    valueField: 'a051KEY2',
+                    displayField: 'a051DESCR1',
                     labelWidth: 50,
-                    width: 160,
+                    width: 250,
                     margin: '0px 0px 0px 20px',
                     hidden: false,
                     fieldStyle: 'text-align: left;',

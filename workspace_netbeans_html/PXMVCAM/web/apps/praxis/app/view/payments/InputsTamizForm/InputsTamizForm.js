@@ -1,6 +1,6 @@
 
 prototype.id = 'InputsTamizForm';
-prototype.url = CONTEXTPATH + '/Inputs';
+prototype.url = CONTEXTPATH + '/InputsTmz';
 
 Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
     extend: 'Ext.form.Panel',
@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
     requires: [
         'Ext.Praxis.view.payments.InputsTamizForm.Options',
         'Ext.Praxis.view.payments.InputsTamizForm.Filters',
-        'Ext.Praxis.view.payments.InputsTamizForm.Filters2',
         'Ext.Praxis.view.payments.InputsTamizForm.Info',
+        'Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz',
         'Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController'
     ],
     controller: 'InputsTamizController',
@@ -61,26 +61,20 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
                                     items: [
                                         {
                                             xtype: prototype.id + '-options'
-                                        }
-                                        ,
+                                        },
                                         {
                                             xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter'
-                                        }
-                                        ,
-                                        {
-                                            xtype: prototype.id + '-filters2',
-                                            id: prototype.id + '-contentFilter2'
-                                        }
-                                        ,
+                                        },
                                         {
                                             xtype: 'panel',
-                                            height: 600,
+                                            height: 650,
                                             width: 1400,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
+                                                    region:'center',
                                                     id: prototype.id + '-centerC-panel01',
                                                     width: 1400,
                                                     layout: 'border',
