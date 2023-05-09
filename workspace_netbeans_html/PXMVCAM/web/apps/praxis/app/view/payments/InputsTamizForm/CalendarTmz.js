@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
     config: {
         anio: null,
         dataFechas: [],
-        diasLaborales: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
+        diasLaborales: ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'],
         mesesAnual: ['JAN', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
         clickCallback: null
     },
@@ -136,22 +136,29 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                             },
                             items: me.mesesAnual.map((e, index) => {
                                 let fechas = [];
-                                let contador = 1;
-                                //console.log(index + 1);
-                                //console.log(me.fechas);
-                                while (contador < me.fechas[index][0].index) {
+                                let contadorInicio = 0;
+                                while (contadorInicio < me.fechas[index][0].index) {
                                     let obj = {};
                                     obj.fecha = '';
-                                    obj.index = contador;
+                                    obj.index = contadorInicio;
                                     obj.status = 'none';
                                     fechas.push(obj);
-                                    contador++;
+                                    contadorInicio++;
                                 }
                                 me.fechas[index].forEach(e => {
                                     fechas.push(e);
                                 });
+                                //console.log('contador fin',fechas.at(-1).index);
+                                while(fechas.at(-1).index<7){
+                                    let obj = {};
+                                    obj.fecha = '';
+                                    obj.index = fechas.at(-1).index+1;
+                                    obj.status = 'none';
+                                    fechas.push(obj);
+                                }
+                                //console.log('fechas contenedor',fechas);
                                 let componentes = [];
-                                for (let i = 1; i < 6; i++) {
+                                for (let i = 0; i < 7; i++) {
                                     let componente = {
                                         defaults: {
                                             xtype: 'label',
@@ -215,7 +222,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                         //</editor-fold>
                                         let props = {...sts[x.status]};
                                         componente.items.push({
-                                            text: x.fecha.substring(6,8),
+                                            text: x.fecha,//.substring(6, 8),
                                             id: prototype.id + `-${!x.procesador ? 'none' : x.procesador}-${x.fecha}`,
                                             ...props
                                         });
@@ -287,13 +294,18 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
         // itera sobre todas las fechas dentro del rango
         for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
             // si el día de la semana no es sábado ni domingo, añade la fecha al resultado
-            if (date.getDay() !== 0 && date.getDay() !== 6) {
-                let fecha = {
-                    fecha: this.convertirFechaStr(new Date(date)),
-                    index: date.getDay()
-                }
-                result.push(fecha);
+//            if (date.getDay() !== 0 && date.getDay() !== 6) {
+//                let fecha = {
+//                    fecha: this.convertirFechaStr(new Date(date)),
+//                    index: date.getDay()
+//                }
+//                result.push(fecha);
+//            }
+            let fecha = {
+                fecha: this.convertirFechaStr(new Date(date)),
+                index: date.getDay()
             }
+            result.push(fecha);
         }
         return result;
     },

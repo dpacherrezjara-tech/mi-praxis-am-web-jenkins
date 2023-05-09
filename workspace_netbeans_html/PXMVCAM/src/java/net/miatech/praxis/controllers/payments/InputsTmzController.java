@@ -7,6 +7,7 @@ import net.miatech.praxis.logic.payments.InputsTmzLogic;
 import net.miatech.praxis.payment.CalendarTmz;
 import net.miatech.praxis.payment.filter.SQP04971Filter;
 import net.miatech.praxis.payment.filter.SQP04972Filter;
+import net.miatech.praxis.payment.filter.SQP04974Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,18 @@ public class InputsTmzController {
         try {
             SQP04972Filter filter = this.parseObject(params, SQP04972Filter.class);
             List<CalendarTmz> res = logic.getSQP04972Filter(filter);
+            return new ResponseEntity<>(res,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error en getInfoCombos: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @RequestMapping(value = "getDetailSummaryInfo")
+    public ResponseEntity<?> getDetailSummaryInfo (@RequestParam Map<String, Object> params){
+        try {
+            SQP04974Filter filter = this.parseObject(params, SQP04974Filter.class);
+            List<SQP04974Filter> res = logic.getSQP04974Filter(filter);
             return new ResponseEntity<>(res,HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error en getInfoCombos: " + e.getMessage());

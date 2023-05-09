@@ -14,6 +14,10 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Info', {
             id: prototype.id + '-regionCenterForm01',
             xtype:'panel',
             width: 1400,
+            layout: {
+                type: 'vbox',
+                align: 'center'
+            },
             items: []
 
         },

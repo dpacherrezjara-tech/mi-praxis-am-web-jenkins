@@ -15,6 +15,7 @@ import net.miatech.praxis.payment.A4451;
 import net.miatech.praxis.payment.CalendarTmz;
 import net.miatech.praxis.payment.filter.SQP04971Filter;
 import net.miatech.praxis.payment.filter.SQP04972Filter;
+import net.miatech.praxis.payment.filter.SQP04974Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -141,12 +142,34 @@ public class InputsTMZDAO implements InputsTmzLogic {
         List<LocalDate> result = new ArrayList<>();
 
         while (!date.isAfter(endDate)) {
-            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
-                result.add(date);
-            }
+//            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+//                result.add(date);
+//            }
+            result.add(date);
             date = date.plusDays(1);
         }
         return result;
+    }
+
+    @Override
+    public List<SQP04974Filter> getSQP04974Filter(SQP04974Filter filter) {
+        List<SQP04974Filter> res = new ArrayList<>();
+        try {
+            JdbcTemplate jdbcTemplate = this.getConnection();
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXISMP")
+                    .withProcedureName("SQP04974")
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04974Filter.class));
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("TIPO", filter.getTIPO());
+            params.addValue("FECHA_FROM", filter.getFECHA_FROM());
+            params.addValue("FECHA_TO", filter.getFECHA_TO());
+            Map<String, Object> obj = jdbcCall.execute(params);
+            res = (List<SQP04974Filter>) obj.get("result");
+        } catch (Exception e) {
+            System.out.println("Error en getSQP04974Filter => " + e.getMessage());
+        }
+        return res;
     }
 
 }
