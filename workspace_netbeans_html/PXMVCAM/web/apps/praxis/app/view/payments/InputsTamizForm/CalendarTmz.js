@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                 xtype: 'label',
                                 style: {
                                     textAlign: 'center', // Centro el texto horizontalmente
-                                    'line-height': '100px',
+                                    'line-height': '115px',
                                     backgroundColor: 'transparent',
                                     fontWeight: 'bold'
                                 }
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                 return {
                                     id: prototype.id + '-mesAnual-' + x,
                                     width: 90,
-                                    height: 110,
+                                    height: 140,
                                     text: x
                                 }
                             })
@@ -141,18 +141,22 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                     let obj = {};
                                     obj.fecha = '';
                                     obj.index = contadorInicio;
+                                    obj.rn = contadorInicio;
                                     obj.status = 'none';
                                     fechas.push(obj);
                                     contadorInicio++;
                                 }
                                 me.fechas[index].forEach(e => {
+                                    let y = fechas.at(-1);
+                                    e.rn = (y ? y.rn : 0) + 1;
                                     fechas.push(e);
                                 });
                                 //console.log('contador fin',fechas.at(-1).index);
-                                while(fechas.at(-1).index<7){
+                                while (fechas.at(-1).index < 7) {
                                     let obj = {};
                                     obj.fecha = '';
-                                    obj.index = fechas.at(-1).index+1;
+                                    obj.rn = (fechas.at(-1).rn || 0) + 1;
+                                    obj.index = fechas.at(-1).index + 1;
                                     obj.status = 'none';
                                     fechas.push(obj);
                                 }
@@ -163,6 +167,9 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                         defaults: {
                                             xtype: 'label',
                                             flex: 1,
+                                            width: 90,
+                                            height: 18,
+                                            margin: 2,
                                             style: {
                                                 textAlign: 'center'
                                             },
@@ -222,19 +229,20 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                         //</editor-fold>
                                         let props = {...sts[x.status]};
                                         componente.items.push({
-                                            text: x.fecha,//.substring(6, 8),
-                                            id: prototype.id + `-${!x.procesador ? 'none' : x.procesador}-${x.fecha}`,
+                                            text: x.fecha, //.substring(6, 8),
+                                            id: prototype.id + `-${!x.procesador ? 'none' : x.procesador}-m${e}-d${x}-f${x.rn}`,
+                                            fecha:x.fecha,
                                             ...props
                                         });
                                     });
                                     componentes.push(componente);
 
                                 }
-                                //console.log('componentes',componentes);
+                                //console.log('componentes', componentes);
                                 return{
                                     id: prototype.id + `-mes-${e}`,
                                     width: 1200,
-                                    height: 110,
+                                    height: 140,
                                     defaults: {
                                         xtype: 'panel',
                                         flex: 1,
@@ -244,7 +252,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                             align: 'center'
                                         },
                                         bodyStyle: 'background-color: transparent;',
-                                        height: 90
+                                        height: 135
                                     },
                                     items: componentes
                                 }

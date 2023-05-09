@@ -279,6 +279,6 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         return Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
     onClickFecha: function (obj) {
-        alert(obj.id);
+        alert(obj.fecha);
     }
 });
