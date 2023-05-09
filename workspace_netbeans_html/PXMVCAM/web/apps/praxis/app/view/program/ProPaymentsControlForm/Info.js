@@ -7683,7 +7683,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                         {
                                                             type: 'pie3d',
                                                             angleField: 'perc1',
-                                                            colors: ['#E5BD4D', '#4ADF4A', '#4EB6EB'],
+                                                            colors: ['#F1CA5C', '#99EC99', '#84CBEF'],
                                                             label: {
                                                                 field: 'strDescription',
                                                                 renderer: function (value, b, callout) {
