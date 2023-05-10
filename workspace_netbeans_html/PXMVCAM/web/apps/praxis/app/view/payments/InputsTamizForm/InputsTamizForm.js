@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
         'Ext.Praxis.view.payments.InputsTamizForm.Info',
         'Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz',
         'Ext.Praxis.view.payments.InputsTamizForm.GridData',
+        'Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail',
         'Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController'
     ],
     controller: 'InputsTamizController',

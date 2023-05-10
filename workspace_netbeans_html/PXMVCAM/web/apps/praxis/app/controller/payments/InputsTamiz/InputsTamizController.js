@@ -17,30 +17,6 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
             '#InputsTamizForm-btnSearch': {
                 click: this.onClickSearchBtn
             },
-//            '#InputsTamizForm-btnClear': {
-//                click: this.btnClear_click
-//            },
-//            '#InputsTamizForm-btnExcel': {
-//                click: this.btnExcel_click
-//            },
-//            '#InputsTamizForm-btnFilter': {
-//                click: this.btnFilter_click
-//            },
-//            '#InputsTamizForm-btnAdd': {
-//                click: this.btnAdd_click
-//            },
-//            '#InputsTamizForm-btnBack': {
-//                click: this.btnBack_click
-//            },
-//            '#InputsTamizForm-btn-pag-first': {
-//                click: this.pagFirst
-//            },
-//            '#InputsTamizForm-btn-pag-previous': {
-//                click: this.pagPrevious
-//            },
-//            '#InputsTamizForm-btn-pag-next': {
-//                click: this.pagNext
-//            },
             '#InputsTamizForm-cmbVISTA': {
                 change: this.onChangeComboTipo
             },
@@ -91,7 +67,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
     onChangeComboTipo: function (obj) {
         const me = this;
         Ext.getCmp(prototype.id + '-regionCenterForm01').removeAll();
-        
+
         const opciones = {
             'C': () => {
                 Ext.getCmp(prototype.id + '-cmbDateFromMonth').hide();
@@ -127,7 +103,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         };
         opciones[comboTipo]();
     },
-    onClickSearchBtn:function(){
+    onClickSearchBtn: function () {
         const comboTipo = Ext.getCmp(prototype.id + '-cmbVISTA').getValue();
         const opciones = {
             'C': () => {
@@ -143,13 +119,13 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
     },
     setDetailParameters: function () {
         let IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
-                (Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue()||'01');
+                (Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() || '01') +
+                (Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue() || '01');
 
         let IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
-                (Ext.getCmp(prototype.id + '-cmbDateToDay').getValue()||'31');
-        let PROCESADOR = Ext.getCmp(prototype.id + '-cmbFUENTE').getValue()||'';
+                (Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() || '12') +
+                (Ext.getCmp(prototype.id + '-cmbDateToDay').getValue() || '31');
+        let PROCESADOR = Ext.getCmp(prototype.id + '-cmbFUENTE').getValue() || '';
         searchParamsDetail = {
             FECHA_FROM: IN_FECHA_FROM,
             FECHA_TO: IN_FECHA_TO,
@@ -253,13 +229,9 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         panel.add(calendario);
         panel.unmask();
     },
-    renderSummaryDetail:function(){
-//        if (!searchParamsDetail.TIPO) {
-//            global.Msg({msg: 'Choose your Processor'});
-//            return;
-//        }
+    renderSummaryDetail: function () {
         let curl = prototype.url + '/getDetailSummaryInfo';
-        console.log(curl);
+        //console.log(curl);
         let panel = Ext.getCmp(prototype.id + '-regionCenterForm01');
         panel.mask('Loading...');
         panel.removeAll();
@@ -279,6 +251,75 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         return Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
     onClickFecha: function (obj) {
-        alert(obj.fecha);
+        let searchParamsCalendarDE = {
+            CCUST: '139',
+            TIPO: obj.procesador || '',
+            FECHA_FROM: obj.fecha || ''
+        }
+        //console.log(searchParamsCalendarDE);
+        let dataEntry = Ext.create('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
+            id: prototype.id + '-calendarDataEntry-01',
+            searchParams: searchParamsCalendarDE
+        });
+        dataEntry.show();
+    },
+    onClickReceived: function (obj) {
+        //console.log(obj.lastFocused.record.data);
+        let data = obj.lastFocused.record.data;
+        let panelPrincipal = Ext.getCmp(prototype.id + '-regionCenterForm01');
+        let curl = prototype.url + '/getDataGridInfo';
+        let procesador = data.procesador.trim().substring(0, 4) === 'AMEX'
+                ? data.proseq.trim() : data.procesador.trim();
+        let searchParamsDetail = {
+            PROCESADOR: procesador,
+            FECHA_FROM: data.prda,
+            TIPO: '0',
+            total: 0
+                    //excel:false,
+                    //total:0
+        };
+        const volverSummary = (id) => {
+            Ext.getCmp(id).destroy();
+            Ext.getCmp(prototype.id + '-regionCenterForm01').items
+                    .items.at(-1).show();
+        };
+        panelPrincipal.items.items.at(-1).hide();
+        let nuevoPanel = Ext.create('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
+            id: prototype.id + '-detailForm-01',
+            searchParams: searchParamsDetail,
+            searchUrl: curl,
+            tipoGrid: '0',
+            volverCallback: volverSummary
+        });
+        panelPrincipal.add(nuevoPanel);
+    },
+    onClickLoaded: function (obj) {
+        let data = obj.lastFocused.record.data;
+        let panelPrincipal = Ext.getCmp(prototype.id + '-regionCenterForm01');
+        let curl = prototype.url + '/getDataGridInfo';
+        let procesador = data.procesador.trim().substring(0, 4) === 'AMEX'
+                ? data.proseq.trim() : data.procesador.trim();
+        let searchParamsDetail = {
+            PROCESADOR: procesador,
+            FECHA_FROM: data.prda,
+            TIPO: '1',
+            total: 0
+                    //excel:false,
+                    //total:0
+        };
+        const volverSummary = (id) => {
+            Ext.getCmp(id).destroy();
+            Ext.getCmp(prototype.id + '-regionCenterForm01').items
+                    .items.at(-1).show();
+        };
+        panelPrincipal.items.items.at(-1).hide();
+        let nuevoPanel = Ext.create('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
+            id: prototype.id + '-detailForm-01',
+            searchParams: searchParamsDetail,
+            searchUrl: curl,
+            tipoGrid: '1',
+            volverCallback: volverSummary
+        });
+        panelPrincipal.add(nuevoPanel);
     }
 });

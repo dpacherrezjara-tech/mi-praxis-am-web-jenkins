@@ -8,6 +8,8 @@ import net.miatech.praxis.payment.CalendarTmz;
 import net.miatech.praxis.payment.filter.SQP04971Filter;
 import net.miatech.praxis.payment.filter.SQP04972Filter;
 import net.miatech.praxis.payment.filter.SQP04974Filter;
+import net.miatech.praxis.payment.filter.SQP04975Filter;
+import net.miatech.praxis.payment.filter.SQP04976Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -58,7 +60,7 @@ public class InputsTmzController {
             List<CalendarTmz> res = logic.getSQP04972Filter(filter);
             return new ResponseEntity<>(res,HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println("Error en getInfoCombos: " + e.getMessage());
+            System.out.println("Error en getCalendarInfo: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -70,8 +72,48 @@ public class InputsTmzController {
             List<SQP04974Filter> res = logic.getSQP04974Filter(filter);
             return new ResponseEntity<>(res,HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println("Error en getInfoCombos: " + e.getMessage());
+            System.out.println("Error en getDetailSummaryInfo: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+    @RequestMapping(value = "getCalendarFechaInfo")
+    public ResponseEntity<?> getCalendarFechaInfo (@RequestParam Map<String, Object> params){
+        try {
+            SQP04975Filter filter = this.parseObject(params, SQP04975Filter.class);
+            List<SQP04975Filter> res = logic.getSQP04975Filter(filter);
+            return new ResponseEntity<>(res,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error en getCalendarFechaInfo: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } 
+    
+    @RequestMapping(value = "getDataGridInfo")
+    public ResponseEntity<?> getDataGridInfo (@RequestParam Map<String, Object> params){
+        try {
+            SQP04976Filter filter = new SQP04976Filter(); //this.parseObject(params, SQP04976Filter.class);
+            filter.setFECHA_FROM(params.get("FECHA_FROM").toString());
+            filter.setPROCESADOR(params.get("PROCESADOR").toString());
+            filter.setTIPO(params.get("TIPO").toString());
+            filter.setLimit(Integer.parseInt(params.get("limit").toString()));
+            filter.setStart(Integer.parseInt(params.get("start").toString()));
+            Boolean excel = false;//filter.getExcel()== null? false:filter.getExcel();
+            if (!excel) {
+                filter.getPage().PAGROW = 20;
+                Integer start = filter.getStart();
+                start = (start != 0 ? start : 0);
+                filter.getPage().PAGNUM = (start / filter.getPage().PAGROW) + 1;
+            } else {
+                filter.getPage().PAGROW = -1;
+                filter.getPage().PAGNUM = 1;
+            }
+            SQP04976Filter res = logic.getSQP04976Filter(filter);
+            return new ResponseEntity<>(res,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error en getDataGridInfo: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } 
 }

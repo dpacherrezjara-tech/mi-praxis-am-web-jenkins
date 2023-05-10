@@ -13,10 +13,11 @@ public class SQP04972Filter {
     private String TIPO;
     private String FROM_YEAR;
     //OUT
+    private int numFiles;
     private String STS;
     
     private List<Map<String,String>> lstFechas = new ArrayList<>();
-    private List<Map<String,String>> lstFiles = new ArrayList<>();
+    //private List<Map<String,String>> lstFiles = new ArrayList<>();
 
     public String getCCUST() {
         return CCUST;
@@ -58,13 +59,15 @@ public class SQP04972Filter {
         this.lstFechas = lstFechas;
     }
 
-    public List<Map<String, String>> getLstFiles() {
-        return lstFiles;
+    public int getNumFiles() {
+        return numFiles;
     }
 
-    public void setLstFiles(List<Map<String, String>> lstFiles) {
-        this.lstFiles = lstFiles;
+    public void setNumFiles(int numFiles) {
+        this.numFiles = numFiles;
     }
+
+    
     
     
 }

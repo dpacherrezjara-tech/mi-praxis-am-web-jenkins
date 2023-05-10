@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                             {text: 'Date', dataIndex: 'fregis', width: 100},
                         ]
                     },
-                    {text: 'Source', dataIndex: 'procesador', width: 100},
+                    {text: 'Source', dataIndex: 'procesador', flex: 1},
                     {text: 'Total Records',
                         defaults: {
                             menuDisabled: true,
@@ -90,8 +90,24 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                             align: 'center'
                         },
                         columns: [
-                            {text: 'Received', dataIndex: 'received', width: 70},
-                            {text: 'Loaded', dataIndex: 'loaded', width: 70, align: 'center'},
+                            {text: 'Received', dataIndex: 'received', width: 70,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = 'background:#CBCDA0;color:blue;text-align:center;font-weight: bold;cursor:pointer';
+                                    return value;
+                                },
+                                listeners: {
+                                    click: 'onClickReceived'
+                                }
+                            },
+                            {text: 'Loaded', dataIndex: 'loaded', width: 70, align: 'center',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = 'background:#8AB78B;color:blue;text-align:center;font-weight: bold;cursor:pointer';
+                                    return value;
+                                },
+                                listeners: {
+                                    click: 'onClickLoaded'
+                                }
+                            },
 //                            {text: 'Error', width: 70, flex: 1, dataIndex: 'QRECERR',
 //                                listeners: {
 //                                    click: 'searchDelivery_clickHandler'
@@ -124,8 +140,8 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                     }
                     return [];
                 });
-        if(data.length === 0){
-            global.Msg({msg:'Data not found'});
+        if (data.length === 0) {
+            global.Msg({msg: 'Data not found'});
             me.unmask()
             return;
         }

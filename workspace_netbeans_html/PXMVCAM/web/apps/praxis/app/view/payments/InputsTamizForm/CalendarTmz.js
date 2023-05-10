@@ -232,6 +232,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                             text: x.fecha, //.substring(6, 8),
                                             id: prototype.id + `-${!x.procesador ? 'none' : x.procesador}-m${e}-d${x}-f${x.rn}`,
                                             fecha:x.fecha,
+                                            procesador:!x.procesador ? 'none' : x.procesador,
                                             ...props
                                         });
                                     });
