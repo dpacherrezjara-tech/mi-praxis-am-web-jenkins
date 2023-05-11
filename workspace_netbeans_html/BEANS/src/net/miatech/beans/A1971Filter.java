@@ -160,4 +160,42 @@ public class A1971Filter extends A1971 {
     public String strDescripcionB = "";
     
     public Pagination page = new Pagination();
+    
+    public String IN_DATE = "";
+    public String IN_TIPO = "";
+    
+    public String DATE = "";
+    public double AM = 0;
+    public double CINCOD = 0;
+    public double AM_OTRO = 0;
+    public double CINCOD_OTRO = 0;
+    public double TOTAL = 0;
+    public double totAM = 0;
+    public double totCINCOD = 0;
+    public double totAM_OTRO = 0;
+    public double totCINCOD_OTRO = 0;
+    public double totTOTAL = 0;
+    public double TOTALAM = 0;
+    public double TOTALOT = 0;
+    public double totTOTALAM = 0;
+    public double totTOTALOT = 0;
+    
+    public String DATE0 = "";
+    public String strFormatDate0 = "";
+    public double AM0 = 0;
+    public double CINCOD0 = 0;
+    public double AM_OTRO0 = 0;
+    public double CINCOD_OTRO0 = 0;
+    public double TOTAL0 = 0;
+    public double totAM0 = 0;
+    public double totCINCOD0 = 0;
+    public double totAM_OTRO0 = 0;
+    public double totCINCOD_OTRO0 = 0;
+    public double totTOTAL0 = 0;
+    public double TOTALAM0 = 0;
+    public double TOTALOT0 = 0;
+    public double totTOTALAM0 = 0;
+    public double totTOTALOT0 = 0;
+    
+    
 }
