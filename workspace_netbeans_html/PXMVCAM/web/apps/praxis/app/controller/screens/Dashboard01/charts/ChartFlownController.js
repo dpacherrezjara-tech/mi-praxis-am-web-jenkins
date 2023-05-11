@@ -77,7 +77,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                 break;
             case 3:
                 this.loadFlownChartByZone();
-                break;    
+                break;
+            case 4:
+                this.loadFlownChartByCarrier();
+                break;
         }
     },
     inicio2: function () {
@@ -102,6 +105,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         if(this.cara === 3){
             meFChart.beanChartFM.MESES = 11;
         }
+        meFChart.beanChartFM.IN_DATE = Ext.getCmp(prototype.id + '-cmbFADateFromYear1').getValue();
+//        meFChart.beanChartFM.IN_TIPO = Ext.getCmp(prototype.id + '-cmbTypes').getValue();
         meFChart.searchParams = JSON.stringify(meFChart.beanChartFM);
         console.log(meFChart.beanChartFM);
     },
@@ -116,6 +121,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         Ext.getCmp(prototype.id + '-boxFlownByMonth').hide();
         Ext.getCmp(prototype.id + '-boxFlownOnOff').hide();
         Ext.getCmp(prototype.id + '-boxFlownByZone').hide();
+        Ext.getCmp(prototype.id + '-boxFlownByCarrier').hide();
     },
     chooseChart_clickHandler: function (obj, rb_new, rb_old, func) {
         var valueRadio = rb_new.rb;
@@ -137,7 +143,25 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                 Ext.getCmp(prototype.id + '-boxFlownByZone').show();
                 this.cara = 3;
                 this.loadFlownChartByZone();
-                break;    
+                break;
+           case 'CA':    
+                Ext.getCmp(prototype.id + '-boxFlownByCarrier').show();
+                this.cara = 4;
+                this.loadFlownChartByCarrier();
+                break; 
+        }
+        if(valueRadio === 'CA'){
+            Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').hide();
+            Ext.getCmp(prototype.id + '-txtOcultable').hide();
+            Ext.getCmp(prototype.id + '-cmbFADateToMonth1').hide();
+//            Ext.getCmp(prototype.id + '-txtOcultable2').show();
+//            Ext.getCmp(prototype.id + '-cmbTypes').show();
+        }else{
+            Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').show();
+            Ext.getCmp(prototype.id + '-txtOcultable').show();
+            Ext.getCmp(prototype.id + '-cmbFADateToMonth1').show();
+//            Ext.getCmp(prototype.id + '-txtOcultable2').hide();
+//            Ext.getCmp(prototype.id + '-cmbTypes').hide();
         }
     },
     loadFlownChartMonth: function () {
@@ -359,6 +383,103 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         Ext.getCmp(prototype.id + '-displayFlownByZonePieBack').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFlownByZonePieNow').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFlownByZoneLine').bindStore(storeGridDatas);
+        me.storeGridDatas = storeGridDatas;
+    },
+    loadFlownChartByCarrier: function () {
+        console.log('loadFlownChartByCarrier');
+        win.lblUser_toolTip("Estructura: IMF119");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchFlownByCarrier'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: meFChart.searchParams};
+                },
+                load: function (obj, obj2, success, response, obj5) {                
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res.data);
+                    if (res.success) {
+                        if (obj.data.length > 0) {
+//                            var obj = obj.data.items[0].data;
+    
+                            var lstTot_pie = [];
+                            var lstTotalesPie = [];
+                            var item_pie1 = {};
+                            var item_pie2 = {};
+                            var n = 0, p = 0;
+                            for(var a = 0 ;a < obj.data.length ;a++){
+                                lstTotalesPie = res.data[a];
+                                lstTotalesPie.n = lstTotalesPie.AM + lstTotalesPie.CINCOD;
+                                n += lstTotalesPie.n; 
+                                lstTotalesPie.p = lstTotalesPie.AM_OTRO + lstTotalesPie.CINCOD_OTRO; 
+                                p += lstTotalesPie.p;
+                            }
+                            
+                            item_pie1.AngleBNF = n; 
+                            lstTot_pie.push(item_pie1);   
+                            item_pie2.AngleBNF = p;
+                            lstTot_pie.push(item_pie2);
+                            
+                            var lstTot_pieNF = [];
+                            var lstTotalesPieNF = [];
+                            var item_pie1NF = {};
+                            var item_pie2NF = {};
+                            var item_pie3NF = {};
+                            var item_pie4NF = {};
+                            var n1 = 0, p1 = 0;
+                            for(var b = 0 ;b < obj.data.length ;b++){
+                                lstTotalesPieNF = res.data[b];
+                                lstTotalesPieNF.n1 = lstTotalesPieNF.AM0 + lstTotalesPieNF.CINCOD0;
+                                n1 += lstTotalesPieNF.n1; 
+                                lstTotalesPieNF.p1 = lstTotalesPieNF.AM_OTRO0 + lstTotalesPieNF.CINCOD_OTRO0; 
+                                p1 += lstTotalesPieNF.p1;
+                            }
+                            
+                            item_pie1NF.AngleNF = n1; 
+                            lstTot_pieNF.push(item_pie1NF);
+                            item_pie2NF.AngleNF = p1; 
+                            lstTot_pieNF.push(item_pie2NF);
+                            item_pie3NF.desAngleNF = p1 + 'd'; 
+                            lstTot_pieNF.push(item_pie3NF);
+                            item_pie4NF.desAngleNF = p1 + 'd'; 
+                            lstTot_pieNF.push(item_pie4NF);
+                        
+                            var storeDataTotales_pie = Ext.create('Ext.data.Store', {
+                                data: lstTot_pie,
+                                autoLoad: true
+                            });
+                             var storeDataTotales_pieNF = Ext.create('Ext.data.Store', {
+                                data: lstTot_pieNF,
+                                autoLoad: true
+                            });
+
+                            Ext.getCmp(prototype.id + '-displayFlownByCarrierFLIGHT').bindStore(storeDataTotales_pie);
+                            Ext.getCmp(prototype.id + '-displayFlownByCarrierPOLIZA').bindStore(storeDataTotales_pieNF);
+//
+//
+                            Ext.getCmp(prototype.id + '-displayFlownByCarrierFLIGHT').setTitle('<center style="font-size:14px;"> Flown By Carrier - ' + 'FLIGHT' + '</center>');
+                            Ext.getCmp(prototype.id + '-displayFlownByCarrierPOLIZA').setTitle('<center style="font-size:14px;"> Flown By Carrier - ' + 'POLIZA' + '</center>');
+//                            Ext.getCmp(prototype.id + '-displayFlownByCarrierBared').setTitle('<center style="font-size:20px;"> Pasenger By Market </center>');
+                            
+                            var vsy = '<a style="color:#1c50c9;">' + 'POLIZA' + '</a>'
+                            var vsyb = '<a style="color:#209938;">' + 'FLIGHT' + '</a>'
+                            var vs = vsyb + ' vs ' + vsy;
+                            Ext.getCmp(prototype.id + '-displayFlownByCarrierBared').setTitle('<center style="font-size:16px;"> Flown Total Qty Tickets - ' + vs + '</center>');
+                            
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFlownByCarrierBared').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
     },
     getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
