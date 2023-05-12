@@ -5453,6 +5453,125 @@ public class Dashboard01DAO {
 
         return listado;
     }
+    
+    public List<A1971Filter> loadPX109SQP00556CA(A1971Filter filter) throws SQLException, Exception {
+
+        List<A1971Filter> listado = new ArrayList();
+        
+        
+        
+        A1971Filter objRtn;
+        A1971Filter objRtn0;
+        int i = 0, j = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        
+        Double totAM = 0.0, totCINCOD = 0.0, totAM_OTRO = 0.0, totCINCOD_OTRO = 0.0, totTOTAL = 0.0;
+        Double totAM0 = 0.0, totCINCOD0 = 0.0, totAM_OTRO0 = 0.0, totCINCOD_OTRO0 = 0.0, totTOTAL0 = 0.0;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP00556CA(?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+        try {
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_DATE);
+            cstmt01.setString(3, filter.IN_TIPO);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            
+            String[] listado1FD = new String[12];
+            double[] listado1QF = new double[12];
+            double[] listado1BP = new double[12];
+            double[] listado1EP = new double[12];
+            double[] listado1EV = new double[12];
+            double[] listado1TV = new double[12];
+            
+            while (rs01.next()) {
+                objRtn0 = new A1971Filter();
+                objRtn0.DATE0 = rs01.getString("DPROCES");
+                objRtn0.strFormatDate0 = Functions.getMonthConvert6(objRtn0.DATE0);
+                objRtn0.AM0 = rs01.getDouble("QTYCPNAM1");
+                objRtn0.CINCOD0 = rs01.getDouble("QTYCPN5D1");
+                objRtn0.AM_OTRO0 = rs01.getDouble("QTYCPNAM2");
+                objRtn0.CINCOD_OTRO0 = rs01.getDouble("QTYCPN5D2");
+                objRtn0.TOTAL0 = rs01.getDouble("TOTAL");
+                
+                listado1FD[i] = objRtn0.strFormatDate0;
+                listado1QF[i] = objRtn0.AM0;
+                listado1BP[i] = objRtn0.CINCOD0;
+                listado1EP[i] = objRtn0.AM_OTRO0;
+                listado1EV[i] = objRtn0.CINCOD_OTRO0;
+                listado1TV[i] = objRtn0.TOTAL0;
+                i++;
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1971Filter();
+                    objRtn.DATE = rs01.getString("DPROCES");
+                    objRtn.strFormatDate = Functions.getMonthConvert6(objRtn.DATE);
+                    objRtn.AM = rs01.getDouble("QTYCPNAM1");
+                    objRtn.CINCOD = rs01.getDouble("QTYCPN5D1");
+                    objRtn.AM_OTRO = rs01.getDouble("QTYCPNAM2");
+                    objRtn.CINCOD_OTRO = rs01.getDouble("QTYCPN5D2");
+                    objRtn.TOTAL = rs01.getDouble("TOTAL");
+                    
+                    totAM += objRtn.AM;
+                    totCINCOD += objRtn.CINCOD;
+                    totAM_OTRO += objRtn.AM_OTRO;
+                    totCINCOD_OTRO += objRtn.CINCOD_OTRO;
+                    totTOTAL += objRtn.TOTAL;
+                    
+                    objRtn.strFormatDate0 = listado1FD[j];
+                    objRtn.AM0 = listado1QF[j];
+                    objRtn.CINCOD0 = listado1BP[j];
+                    objRtn.AM_OTRO0 = listado1EP[j];
+                    objRtn.CINCOD_OTRO0 = listado1EV[j];
+                    objRtn.TOTAL0 = listado1TV[j];
+                    
+                    totAM0 += objRtn.AM0;
+                    totCINCOD0 += objRtn.CINCOD0;
+                    totAM_OTRO0 += objRtn.AM_OTRO0;
+                    totCINCOD_OTRO0 += objRtn.CINCOD_OTRO0;
+                    totTOTAL0 += objRtn.TOTAL0;
+                    
+                    j++;
+                    listado.add(objRtn);
+                }
+            }
+            for(int a = 0 ; a <listado.size() ; a++ ){
+                listado.get(a).totAM = totAM;
+                listado.get(a).totCINCOD = totCINCOD;
+                listado.get(a).totAM_OTRO = totAM_OTRO;
+                listado.get(a).totCINCOD_OTRO = totCINCOD_OTRO;
+                listado.get(a).totTOTAL = totTOTAL;
+                listado.get(a).totAM0 = totAM0;
+                listado.get(a).totCINCOD0 = totCINCOD0;
+                listado.get(a).totAM_OTRO0 = totAM_OTRO0;
+                listado.get(a).totCINCOD_OTRO0 = totCINCOD_OTRO0;
+                listado.get(a).totTOTAL0 = totTOTAL0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return listado;
+    }
 
     public List<A1971Filter> loadPX109SQP01927(A1971Filter filter) throws SQLException, Exception {
 
