@@ -154,14 +154,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
             Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').hide();
             Ext.getCmp(prototype.id + '-txtOcultable').hide();
             Ext.getCmp(prototype.id + '-cmbFADateToMonth1').hide();
-//            Ext.getCmp(prototype.id + '-txtOcultable2').show();
-//            Ext.getCmp(prototype.id + '-cmbTypes').show();
+            Ext.getCmp(prototype.id + '-btnExcel_chartFlown').show();
         }else{
             Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').show();
             Ext.getCmp(prototype.id + '-txtOcultable').show();
             Ext.getCmp(prototype.id + '-cmbFADateToMonth1').show();
-//            Ext.getCmp(prototype.id + '-txtOcultable2').hide();
-//            Ext.getCmp(prototype.id + '-cmbTypes').hide();
+            Ext.getCmp(prototype.id + '-btnExcel_chartFlown').hide();
         }
     },
     loadFlownChartMonth: function () {
@@ -481,6 +479,27 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFlownByCarrierBared').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
+    },
+    btnExcel_click: function(obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
+    },
+    exportExcel: function() {
+        this.setFormatParameter();        
+        console.log(searchParams.beanString);
+        console.log(meFChart.searchParams);
+        global.getFile(prototype.url + '/getXLSX?beanString=' + meFChart.searchParams);
     },
     getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';

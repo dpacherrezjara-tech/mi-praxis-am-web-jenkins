@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     xtype: 'toolbar',
                                     padding: '4px 7px 4px 20px',
                                     bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
-                                    width: 80,
+                                    width: 130,
                                     items: [
                                         {
                                             xtype: 'button',
@@ -167,7 +167,16 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             id: prototype.id + '-btnBack_chartFlown',
                                             iconCls: 'prx-icon-back',
                                             tooltip: 'Back'
-                                        }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnExcel_chartFlown',
+                                            iconCls: 'prx-icon-excel',
+                                            tooltip: 'Export to Excel',
+                                            listeners: {
+                                           click: 'btnExcel_click'
+                                            }
+                                        },
                                     ]
                                 }
                             ]
@@ -1618,7 +1627,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleBNF',
-                                                            colors: ['#EC3838', '#ffc102'],
+                                                            colors: ['#38c8ec', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleBNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -1686,7 +1695,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 columns: [
                                                                     {text: 'AM', width: 80, dataIndex: 'AM',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = 'text-align:right;background:#f4d5d5;';
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -1698,7 +1707,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     },
                                                                     {text: '5D', width: 80, dataIndex: 'CINCOD',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = 'text-align:right;background:#f4d5d5;';
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -1801,7 +1810,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleNF',
-                                                            colors: ['#EC3838', '#ffc102'],
+                                                            colors: ['#38c8ec', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -1869,24 +1878,24 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 columns: [
                                                                     {text: 'AM', width: 80, dataIndex: 'AM0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = 'text-align:right;background:#f4d5d5;';
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                             var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                            return '<b>' + Ext.util.Format.number(data.totAM, '0,000') + '<b>';
+                                                                            return '<b>' + Ext.util.Format.number(data.totAM0, '0,000') + '<b>';
                                                                         }
                                                                     },
                                                                     {text: '5D', width: 80, dataIndex: 'CINCOD0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = 'text-align:right;background:#f4d5d5;';
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                             var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                            return '<b>' + Ext.util.Format.number(data.totCINCOD, '0,000') + '<b>';
+                                                                            return '<b>' + Ext.util.Format.number(data.totCINCOD0, '0,000') + '<b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -1905,7 +1914,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                             var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                            return '<b>' + Ext.util.Format.number(data.totAM_OTRO, '0,000') + '<b>';
+                                                                            return '<b>' + Ext.util.Format.number(data.totAM_OTRO0, '0,000') + '<b>';
                                                                         }
                                                                     },
                                                                     {text: '5D', width: 80, dataIndex: 'CINCOD_OTRO0',
@@ -1916,7 +1925,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                             var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                            return '<b>' + Ext.util.Format.number(data.totCINCOD_OTRO, '0,000') + '<b>';
+                                                                            return '<b>' + Ext.util.Format.number(data.totCINCOD_OTRO0, '0,000') + '<b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -1929,7 +1938,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totTOTAL, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTOTAL0, '0,000') + '<b>';
                                                                 }
                                                             }
                                                         ]
