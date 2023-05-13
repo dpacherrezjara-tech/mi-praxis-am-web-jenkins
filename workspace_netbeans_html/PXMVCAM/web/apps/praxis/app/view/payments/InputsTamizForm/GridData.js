@@ -5,7 +5,7 @@
 Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
     extend: 'Ext.panel.Panel',
     height: 650,
-    width: 800,
+    width: 900,
     layout: 'fit',
     align: 'center',
     config: {
@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
         let panel = Ext.create('Ext.grid.Panel', {
             id: prototype.id + '-grid-summary01',
             height: 550,
-            width: 800,
+            width: 900,
             features: [
                 {
                     dock: 'bottom',
@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                             {text: 'Date', dataIndex: 'fregis', width: 100},
                         ]
                     },
-                    {text: 'Source', dataIndex: 'procesador', flex: 1},
+                    {text: 'Source', dataIndex: 'nombreproc', flex: 1},
                     {text: 'Total Records',
                         defaults: {
                             menuDisabled: true,
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                         columns: [
                             {text: 'Received', dataIndex: 'received', width: 70,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = 'background:#CBCDA0;color:blue;text-align:center;font-weight: bold;cursor:pointer';
+                                    metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
                                     return value;
                                 },
                                 listeners: {
@@ -101,22 +101,29 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                             },
                             {text: 'Loaded', dataIndex: 'loaded', width: 70, align: 'center',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = 'background:#8AB78B;color:blue;text-align:center;font-weight: bold;cursor:pointer';
+                                    metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
                                     return value;
                                 },
                                 listeners: {
                                     click: 'onClickLoaded'
                                 }
                             },
-//                            {text: 'Error', width: 70, flex: 1, dataIndex: 'QRECERR',
-//                                listeners: {
-//                                    click: 'searchDelivery_clickHandler'
-//                                },
-//                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                    metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;font-weight:bold;';
-//                                    return '<a href="#payments-inputs-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + value + '</a>';
-//                                }
-//                            }
+                            {text: 'Exonerados', dataIndex: 'exonerados', width: 90, align: 'center',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
+                                    return value || 0;
+                                }
+                            },
+                            {text: 'Differences', width: 90, align: 'center',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
+                                    let loaded = record.get('loaded')||0;
+                                    let received = record.get('received')||0;
+                                    let exonerados = record.get('exonerados')||0;
+                                    let resta = (received - loaded) - exonerados;
+                                    return resta;
+                                }
+                            },
                         ]
                     }
                 ]
@@ -131,7 +138,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
     },
     getData: async function () {
         const me = this;
-        me.mask('Loading Data...')
+        me.mask('Loading Data...');
         const data = await fetch(`${me.searchUrl}?${new URLSearchParams(me.searchParams)}`)
                 .then(async res => {
                     if (res.ok) {
@@ -142,7 +149,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                 });
         if (data.length === 0) {
             global.Msg({msg: 'Data not found'});
-            me.unmask()
+            me.unmask();
             return;
         }
         let summaryStore = Ext.create('Ext.data.Store', {
@@ -158,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
         });
         Ext.getCmp(prototype.id + '-grid-summary01').setStore(summaryStore);
         Ext.getCmp(prototype.id + '-summary-paggin01').setStore(summaryStore);
-        me.unmask()
+        me.unmask();
     }
 });
 

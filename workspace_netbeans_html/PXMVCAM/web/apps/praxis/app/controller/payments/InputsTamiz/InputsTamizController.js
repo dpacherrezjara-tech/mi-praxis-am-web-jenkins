@@ -31,10 +31,17 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
             },
             '#InputsTamizForm-cmbYear': {
                 afterrender: this.afterRenderYear
+            },
+            '#InputsTamizForm-btnClear': {
+                click: this.onClearClick
+            },
+            '#InputsTamizForm-btnFilter': {
+                click: this.onFilterClick
             }
         });
     },
     xpanel_afterrender: async function (obj, e) {
+        win.lblUser_toolTip("Estructura: A4305 | A4344");
         await this.fillFiltersStores();
         this.renderSummaryDetail();
         //this.pruebaEndpoints();
@@ -129,7 +136,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         searchParamsDetail = {
             FECHA_FROM: IN_FECHA_FROM,
             FECHA_TO: IN_FECHA_TO,
-            TIPO: PROCESADOR
+            TIPO: PROCESADOR.trim()
         };
     },
     setCalendarParameters: function () {
@@ -138,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         let ANIO = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
         searchParamsCalendar = {
             CCUST: CCUST,
-            TIPO: PROCESADOR ? PROCESADOR.trim() : null,
+            TIPO: PROCESADOR,
             FROM_YEAR: ANIO
         };
     },
@@ -288,6 +295,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
             id: prototype.id + '-detailForm-01',
             searchParams: searchParamsDetail,
             searchUrl: curl,
+            titleGrid: `${data.nombreproc.trim()} ${data.prda}`,
             tipoGrid: '0',
             volverCallback: volverSummary
         });
@@ -302,10 +310,8 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         let searchParamsDetail = {
             PROCESADOR: procesador,
             FECHA_FROM: data.prda,
-            TIPO: '1',
-            total: 0
+            TIPO: '1'
                     //excel:false,
-                    //total:0
         };
         const volverSummary = (id) => {
             Ext.getCmp(id).destroy();
@@ -317,9 +323,21 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
             id: prototype.id + '-detailForm-01',
             searchParams: searchParamsDetail,
             searchUrl: curl,
+            titleGrid: `${data.nombreproc.trim()} ${data.prda}`,
             tipoGrid: '1',
             volverCallback: volverSummary
         });
         panelPrincipal.add(nuevoPanel);
+    },
+    onClearClick:function(){
+        this.fillFiltersStores();
+    },
+    onFilterClick:function(){
+        const opts = Ext.getCmp(prototype.id + '-contentFilter');
+        if(opts.isVisible()){
+            opts.hide();
+        }else{
+            opts.show();
+        }
     }
 });

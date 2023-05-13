@@ -322,7 +322,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     valueField: 'code',
                                     displayField: 'name',
                                     enableKeyEvents: true,
-                                    triggerAction: 'all'
+                                    triggerAction: 'all',
+                                    listeners:{
+                                        change:'onChangeStatusCmb'
+                                    }
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
@@ -347,7 +350,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
-                                    disabled: false,
+                                    disabled: true,
                                     typeAhead: true,
                                     valueField: 'code',
                                     displayField: 'name',

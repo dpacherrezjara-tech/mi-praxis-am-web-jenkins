@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
                             region: 'center',
                             width: 1500,
                             layout: 'border',
-                            
+
                             items: [
                                 {
                                     region: 'center',
@@ -62,7 +62,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
                                     },
                                     items: [
                                         {
-                                            xtype: prototype.id + '-options'
+                                            xtype: prototype.id + '-options',
                                         },
                                         {
                                             xtype: prototype.id + '-filters',
@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    region:'center',
+                                                    region: 'center',
                                                     id: prototype.id + '-centerC-panel01',
                                                     width: 1400,
                                                     layout: 'border',
@@ -96,10 +96,10 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
                                                 }
                                             ]
                                         }
-                                   ]
+                                    ]
                                 }
                             ]
-                            
+
                         }
                     ]
                 }

@@ -76,10 +76,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Status', dataIndex: 'desSTATUS', width: 70,
+                                            {text: 'Status', dataIndex: 'STATUS', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left;";
-                                                    return value;
+                                                    const sts = {
+                                                        '0':'Disabled',
+                                                        '1':'Enabled'
+                                                    }
+                                                    return sts[value.trim()];
                                                 }
                                             },
                                             {text: 'Operative<br>Unit', dataIndex: 'strDescripUNIOPE', width: 120},
