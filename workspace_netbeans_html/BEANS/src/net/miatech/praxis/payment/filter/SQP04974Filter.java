@@ -20,6 +20,7 @@ public class SQP04974Filter {
     private String PRDA;
     private String PROCESADOR;
     private String PROSEQ;
+    private String NOMBREPROC;
 
     public String getRN() {
         return RN;
@@ -116,8 +117,12 @@ public class SQP04974Filter {
     public void setFREGIS(String FREGIS) {
         this.FREGIS = FREGIS;
     }
-    
-    
-    
-    
+
+    public String getNOMBREPROC() {
+        return NOMBREPROC;
+    }
+
+    public void setNOMBREPROC(String NOMBREPROC) {
+        this.NOMBREPROC = NOMBREPROC;
+    }
 }

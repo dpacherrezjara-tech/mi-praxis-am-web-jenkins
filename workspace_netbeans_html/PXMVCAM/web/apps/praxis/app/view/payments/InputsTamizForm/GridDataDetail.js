@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
         tipoGrid: null,
         searchUrl: null,
         searchUrl: null,
+        titleGrid: null,
         volverCallback: null
     },
     fechas: [],
@@ -24,7 +25,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
     initComponent: function () {
         const me = this;
         let tipo = me.tipoGrid === '0' ? 'Received' : 'Loaded';
-        me.title = `${tipo} Detail - ${me.searchParams.FECHA_FROM}`;
+        me.title = `${tipo} Detail - ${me.titleGrid}`;
         let panel = null;
         if (me.tipoGrid === '0') {
             panel = Ext.create('Ext.grid.Panel', {
@@ -82,8 +83,11 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     items: [
                         {text: 'Seq', dataIndex: 'rn', width: 50},
                         {text: 'Grupo', dataIndex: 'a4305GRUPO', width: 100},
-                        {text: 'Procesador', dataIndex: 'a4305PROCE', width: 160},
-                        {text: 'Tipo File', dataIndex: 'a4305PROSQ', width: 100},
+                        {text: 'Procesador', dataIndex: 'a4305PROCE', width: 160,
+                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                return me.titleGrid.split(' ')[0];
+                            }
+                        },
                         {text: 'Fecha de Proceso', dataIndex: 'a4305PRDA', width: 120},
                         {text: 'Territorio', dataIndex: 'a4305TERRI', width: 100},
                         {text: 'Pais', dataIndex: 'a4305PAIS', width: 100},
@@ -181,12 +185,15 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     },
                     items: [
                         {text: 'RN', dataIndex: 'rn', width: 50},
-                        {text: 'Carrier', dataIndex: 'cxrrnum',width:50},
+                        {text: 'Procesador', dataIndex: 'procesador', width: 150 , 
+                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                return me.titleGrid.split(' ')[0];;
+                            }
+                        },
+                        {text: 'Carrier', dataIndex: 'cxrrnum',width:70},
                         {text: 'Max Long', dataIndex: 'tammaxlong',flex:1},
-                        {text: 'Procesador', dataIndex: 'procesador', width: 150},
-                        {text: 'Secuencia Procesado', dataIndex: 'procesaseq', width: 150},
                         {text: 'Fecha<br>Proceso', dataIndex: 'tradm', width: 120},
-                        {text: 'Seq', dataIndex: 'secuencia', width: 60},
+                        //{text: 'Seq', dataIndex: 'secuencia', width: 60},
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
@@ -222,10 +229,9 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 autoLoad: true,
                 listeners: {
                     load: function (store, records, successful, operation) {
-                        if (successful) {
-                            //console.log(records);
-                        } else {
+                        if (!successful) {
                             global.Msg({msg: 'Data not Found'});
+                            //console.log(records);
                         }
                     }
                 }
@@ -251,10 +257,9 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 autoLoad: true,
                 listeners: {
                     load: function (store, records, successful, operation) {
-                        if (successful) {
-                            console.log(records);
-                        } else {
+                        if (!successful) {
                             global.Msg({msg: 'Data not Found'});
+                            //console.log(records);
                         }
                     }
                 }

@@ -124,7 +124,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                             border: true,
                             defaults: {
                                 xtype: 'panel',
-                                bodyStyle: 'background-color: #8f9fa2;',
+                                //bodyStyle: 'background-color: #8f9fa2;',
                                 //border:false,
                                 layout: {
                                     type: 'hbox',
@@ -240,10 +240,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
 
                                 }
                                 //console.log('componentes', componentes);
+                                //console.log('index num',index%2===0);
                                 return{
                                     id: prototype.id + `-mes-${e}`,
                                     width: 1200,
                                     height: 140,
+                                    bodyStyle: index%2===0?'background-color: #A7B4BD;':'background-color: #B3C0CA;',
                                     defaults: {
                                         xtype: 'panel',
                                         flex: 1,
