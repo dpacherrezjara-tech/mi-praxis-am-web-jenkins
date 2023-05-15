@@ -213,50 +213,20 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                     },
                     {text: 'Discharge Type', dataIndex: 'tipoc', width: 150,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            let newVal = '';
-                            switch (value) {
-                                case '1':
-                                    newVal = 'NATURAL';
-                                    metaData.style = 'background:#DAE570;';
-                                    break;
-                                case '2':
-                                    newVal = 'ETNICO';
-                                    metaData.style = 'background:#9EE570;';
-                                    break;
-                                case '3':
-                                    newVal = 'NO REEMBOLSABLE';
-                                    metaData.style = 'background:#E59570;';
-                                    break;
-                                case '6':
-                                    newVal = 'NO-SHOW';
-                                    metaData.style = 'background:#7087E5;';
-                                    break;
-                                case '7':
-                                    newVal = 'RAC474';
-                                    metaData.style = 'background:#9E70E5;';
-                                    break;
-                                case '8':
-                                    newVal = 'RFTX';
-                                    metaData.style = 'background:#E570C7;';
-                                    break;
-                                case '9':
-                                    newVal = 'ANCILLARIE NATURAL';
-                                    metaData.style = 'background:#70E5A3;';
-                                    break;
-                                case '10':
-                                    newVal = 'ANCILLARIE NO SHOW';
-                                    metaData.style = 'background:#70E5D1;';
-                                    break;
-                                case '11':
-                                    newVal = 'ANCILLARIE RAC474';
-                                    metaData.style = 'background:#8EB4A2;';
-                                    break;
-                                default:
-                                    newVal = 'DESCONOCIDO';
-                                    metaData.style = 'background:#E83636;';
-                            }
-                            metaData.style += 'text-align:center;font-weight: bold;';
-                            return newVal;
+                            let def= 'DESCONOCIDO';
+                            const opts = {
+                              '1':'NATURAL',
+                              '2':'ETNICO',  
+                              '3':'NO REEMBOLSABLE',  
+                              '6':'NO-SHOW',  
+                              '7':'RAC474',  
+                              '8':'RFTX',  
+                              '9':'ANCILLARIE NATURAL',  
+                              '10':'ANCILLARIE NO SHOW',  
+                              '11':'ANCILLARIE RAC474',
+                            };
+                            metaData.style = 'text-align:center;font-weight: bold;';
+                            return opts[value] || def;
                         }},
                     {text: 'N° de <br>Documentos', dataIndex: 'tdocs', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
