@@ -3823,7 +3823,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.SPNR = rs01.getString("SPNR").trim();
                 objRtn.SELLERID = rs01.getString("SELLERID").trim();
                 objRtn.SCARDN = rs01.getString("SCARDN").trim();
-                objRtn.ISREFNBR = rs01.getString("ISREFNBR").trim();
+                objRtn.ISREFNBR = rs01.getString("TICKET1").trim();
                 objRtn.DES_MERCHANT = rs01.getString("DES_MERCHANT").trim();
                 objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
                 objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
