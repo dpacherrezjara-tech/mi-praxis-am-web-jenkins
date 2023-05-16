@@ -342,6 +342,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:center; margin-right:3px ';
+                                                                            data = 'Total';
+                                                                            return '<b>' + data + '</b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -583,6 +589,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:center; margin-right:3px ';
+                                                                            data = 'Total';
+                                                                            return '<b>' + data + '</b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -900,6 +912,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center";
                                                                     return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    data = 'Total';
+                                                                    return '<b>' + data + '</b>';
                                                                 }
                                                             },
                                                             {
@@ -1110,6 +1128,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center";
                                                                     return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    data = 'Total';
+                                                                    return '<b>' + data + '</b>';
                                                                 }
                                                             },
                                                             {
@@ -1488,7 +1512,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                         items: [
                                             {
                                                 text: '.',
-
                                                 defaults: {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
