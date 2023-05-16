@@ -149,8 +149,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
 
-        //Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue('2022');
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        //Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue('2022');
         //Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
@@ -160,8 +160,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
-        //Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue('2022');
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        //Ext.getCmp(prototype.id + '-cmbDateToYear').setValue('2022');
         //Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
@@ -316,6 +316,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          fields: ['code', 'name'],
          data: [
          ["", "All"],
+         ["AMEX", "Amex"],
          ["FIRSTD00", "First Data"],
          ["PRISMA", "Prisma"],
          ["WP00", "WorldPay"],
@@ -550,6 +551,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
+        me.bean.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         me.bean.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
@@ -680,6 +682,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                     this.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
                     this.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
                     this.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
+                    this.bean.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
                     this.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
                     this.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
                     this.bean.IN_AUTHE = Ext.getCmp(prototype.id + '-txtAuthE').getValue();
@@ -850,12 +853,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-gridSummaryTransactionError').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin18').bindStore(storeGridDatas);
     },
-    setGridDataFiltroPDATE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        this.beanSettlement.IN_DRILLDOWN = "PDATE";
+    setBeanSettlement: function(rowData){
         this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
+        this.beanSettlement.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
         this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
         this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
@@ -867,207 +870,71 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         } else {
             this.beanSettlement.IN_VOID = "";
         }
+    },
+    setGridDataFiltroPDATE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        this.beanSettlement.IN_DRILLDOWN = "PDATE";
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroTNCM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement = {};
         this.beanSettlement.IN_DRILLDOWN = "TNCM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroTNCP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TNCP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroCPLM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CPLM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroCPLP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CPLP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroCTAM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CTAM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroCTAP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CTAP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroCLIM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CLIM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroCLIP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "CLIP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PAYDATE;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroTGP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TGP";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
     setGridDataFiltroTGM: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         this.beanSettlement.IN_DRILLDOWN = "TGM";
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
-        this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-        this.beanSettlement.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        this.beanSettlement.IN_ZONA_ERR = Ext.getCmp(prototype.id + '-cmbZONAErr').getValue();
-        this.beanSettlement.IN_SCOUNTRY_ERR = Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').getValue();
-        this.beanSettlement.IN_STVAL_ERR = Ext.getCmp(prototype.id + '-cmbSTVALErr').getValue();
-        this.beanSettlement.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-        this.beanSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        if ($(Ext.getCmp(prototype.id + '-chkVoid')).prop('checked')) {
-            this.beanSettlement.IN_VOID = "V";
-        } else {
-            this.beanSettlement.IN_VOID = "";
-        }
+        this.setBeanSettlement(rowData);
         searchParamsMainSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataMainErrorTransaction();
     },
@@ -2562,6 +2429,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-txtCC22').setValue('');
         Ext.getCmp(prototype.id + '-txtAuthS').setValue('');
         Ext.getCmp(prototype.id + '-txtPNRError').setValue('');
+        Ext.getCmp(prototype.id + '-txtMERCHError').setValue('');
         Ext.getCmp(prototype.id + '-txtCC1').setValue('');
         Ext.getCmp(prototype.id + '-txtCC2').setValue('');
         Ext.getCmp(prototype.id + '-txtAuthE').setValue('');

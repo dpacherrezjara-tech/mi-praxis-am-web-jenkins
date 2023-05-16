@@ -594,7 +594,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
 //                            maxLength: 6,
-                            width: 100,
+                            width: 95,
                             enableKeyEvents: true,
 //                            listeners: {
 //                                keypress: 'txtPNR_keyDownHandler'
@@ -603,9 +603,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
-                            text: 'Credit Card:',
+                            text: 'C. Card:',
                             padding: '8px 1px 2px 1px',
-                            width: 70
+                            width: 50
                         },
                         {
                             xtype: 'textfield',
@@ -614,7 +614,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
                             maxLength: 6,
-                            width: 80,
+                            width: 65,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'txtPNR_keyDownHandler'
@@ -633,7 +633,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
                             maxLength: 4,
-                            width: 60,
+                            width: 50,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'txtPNR_keyDownHandler'
@@ -653,7 +653,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
                             maxLength: 6,
-                            width: 100,
+                            width: 60,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'txtPNR_keyDownHandler'
@@ -673,7 +673,27 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             enforceMaxLength: true,
                             maskRe: /[0-9a-zA-Z]/,
                             maxLength: 6,
-                            width: 100,
+                            width: 60,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            text: 'Merch:',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtMERCHError',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 15,
+                            width: 80,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'txtPNR_keyDownHandler'
@@ -681,7 +701,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         },
                         {
                             xtype: 'combo',
-                            fieldLabel: 'Document:',
+                            fieldLabel: 'Doc:',
                             id: prototype.id + '-cmbTDOCError',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -691,8 +711,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 70,
-                            width: 150,
+                            labelWidth: 40,
+                            width: 95,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
@@ -765,7 +785,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
                             labelWidth: 75,
-                            width: 310,
+                            width: 270,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
