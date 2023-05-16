@@ -125,6 +125,17 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
     },
     chooseChart_clickHandler: function (obj, rb_new, rb_old, func) {
         var valueRadio = rb_new.rb;
+        if(valueRadio === 'CA'){
+            Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').hide();
+            Ext.getCmp(prototype.id + '-txtOcultable').hide();
+            Ext.getCmp(prototype.id + '-cmbFADateToMonth1').hide();
+            Ext.getCmp(prototype.id + '-btnExcel_chartFlown').show();
+        }else{
+            Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').show();
+            Ext.getCmp(prototype.id + '-txtOcultable').show();
+            Ext.getCmp(prototype.id + '-cmbFADateToMonth1').show();
+            Ext.getCmp(prototype.id + '-btnExcel_chartFlown').hide();
+        }
         this.hidePanelGraficos();
         this.setFormatParameter();
         console.log(this.cara);
@@ -150,17 +161,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                 this.loadFlownChartByCarrier();
                 break; 
         }
-        if(valueRadio === 'CA'){
-            Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').hide();
-            Ext.getCmp(prototype.id + '-txtOcultable').hide();
-            Ext.getCmp(prototype.id + '-cmbFADateToMonth1').hide();
-            Ext.getCmp(prototype.id + '-btnExcel_chartFlown').show();
-        }else{
-            Ext.getCmp(prototype.id + '-cmbFADateFromMonth1').show();
-            Ext.getCmp(prototype.id + '-txtOcultable').show();
-            Ext.getCmp(prototype.id + '-cmbFADateToMonth1').show();
-            Ext.getCmp(prototype.id + '-btnExcel_chartFlown').hide();
-        }
+        
     },
     loadFlownChartMonth: function () {
         console.log('loadFlownChartMonth');
@@ -194,7 +195,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                                 data: lstTot_piePB,
                                 autoLoad: true
                             });
-                            Ext.getCmp(prototype.id + '-displayFlownMonthPieBack').bindStore(storeDataTotales_piePB);
+//                            Ext.getCmp(prototype.id + '-displayFlownMonthPieBack').bindStore(storeDataTotales_piePB);
                            
                            var lstTot_pieP = [];
                             var item_pie1P = {};
@@ -209,7 +210,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                                 data: lstTot_pieP,
                                 autoLoad: true
                             });
-                            Ext.getCmp(prototype.id + '-displayFlownMonthPieNow').bindStore(storeDataTotales_pieP);
+//                            Ext.getCmp(prototype.id + '-displayFlownMonthPieNow').bindStore(storeDataTotales_pieP);
                            
                             Ext.getCmp(prototype.id + '-displayFlownMonthPieNow').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + obj.strYear + '</center>');
                             Ext.getCmp(prototype.id + '-displayFlownMonthPieBack').setTitle('<center style="font-size:16px;"> Flown Total Amount USD - ' + obj.strYearB + '</center>');
@@ -230,6 +231,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
         Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayFlownMonthBared').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFlownMonthPieBack').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFlownMonthPieNow').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
 
     },

@@ -61,6 +61,12 @@ public class A1971Filter extends A1971 {
     public double VCPN_J = 0;
     public double AVG_J = 0;
     public long totQTYPAX_J = 0;
+    public long totVCPNB = 0;
+    public long totQTYPAXB = 0;
+    public long totVCPN_YB = 0;
+    public long totQTYPAX_YB = 0;
+    public long totVCPN_JB = 0;
+    public long totQTYPAX_JB = 0;
     public double totVCPN_J = 0;
     public double totAVG_J = 0;
     public long totKMS = 0;
@@ -112,7 +118,17 @@ public class A1971Filter extends A1971 {
     public long totQCPNON = 0;
     public double totVCPNON = 0;
     public long totQCPNOAL = 0;
-    public double totVCPNOAL = 0;
+    public long totQFLIGHTB = 0;
+    public long totQCPNOALB = 0;
+    public long totVCPNOALB = 0;
+    public long totQCPNONB = 0;
+    public long totVCPNONB = 0;
+    public long totQCPNNFB = 0;
+    public long totVCPNNFB = 0;
+    public long totQFLIGHT = 0;
+    public long totVCPNOAL = 0;
+    public long totQCPNNF = 0;
+    public long totVCPNNF = 0;
     
     public double totTBASICM = 0;
     public long totBASICM = 0;
