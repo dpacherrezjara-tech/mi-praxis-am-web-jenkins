@@ -149,8 +149,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
 
-        //Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue('2022');
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        //Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue('2022');
         //Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
@@ -160,8 +160,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
-        //Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue('2022');
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        //Ext.getCmp(prototype.id + '-cmbDateToYear').setValue('2022');
         //Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
@@ -316,6 +316,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          fields: ['code', 'name'],
          data: [
          ["", "All"],
+         ["AMEX", "Amex"],
          ["FIRSTD00", "First Data"],
          ["PRISMA", "Prisma"],
          ["WP00", "WorldPay"],
