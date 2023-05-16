@@ -265,6 +265,7 @@ public class A4331Filter extends A4331 {
     public String TDOC3 = "";
     
     public String IN_STVAL_ERR = "";
+    public String IN_MERCH_ERR = "";
     public String strFormatDate1 = "";
     public String IN_IDAC = "";
     

@@ -691,8 +691,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             id: prototype.id + '-txtMERCHError',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-                            maskRe: /[0-9a-zA-Z]/,
-                            maxLength: 8,
+                            maskRe: /[0-9]/,
+                            maxLength: 15,
                             width: 80,
                             enableKeyEvents: true,
                             listeners: {
