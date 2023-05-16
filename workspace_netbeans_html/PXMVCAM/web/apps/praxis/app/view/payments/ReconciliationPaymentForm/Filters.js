@@ -651,7 +651,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             id: prototype.id + '-txtAuthE',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-                            maskRe: /[0-9]/,
+                            maskRe: /[0-9a-zA-Z]/,
                             maxLength: 6,
                             width: 60,
                             enableKeyEvents: true,
