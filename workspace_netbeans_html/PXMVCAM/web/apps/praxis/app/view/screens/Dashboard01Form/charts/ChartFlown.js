@@ -76,6 +76,21 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             listeners: {
                                                 change: 'chooseChart_clickHandler'
                                             }
+                                        },
+                                        {xtype: 'tbspacer', width: 180},
+                                        {
+                                            xtype: 'radiogroup',
+                                            id: prototype.id + '-Box_Decide_ByCarrier',
+                                            fieldLabel: '',
+                                            hidden:true,
+                                            horizontal: true,
+                                            items: [
+                                                {boxLabel: '<strong style="color:#3399FF" >Qty</strong>', name: 'rd', inputValue: 'QT', width: 60, checked: true},
+                                                {boxLabel: '<strong style="color:#3399FF" >Amount</strong>', name: 'rd', inputValue: 'AT', width: 60},
+                                            ],
+                                            listeners: {
+                                                change: 'chooseChart_ByCarrier'
+                                            }
                                         }
                                     ]
                                 },
@@ -172,9 +187,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             xtype: 'button',
                                             id: prototype.id + '-btnExcel_chartFlown',
                                             iconCls: 'prx-icon-excel',
+                                            hidden:true,
                                             tooltip: 'Export to Excel',
                                             listeners: {
-                                           click: 'btnExcel_click'
+                                                click: 'btnExcel_click'
                                             }
                                         },
                                     ]
@@ -232,72 +248,83 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             bodyStyle: 'background-color: transparent;',
                                             items: [
                                                 {
-                                                    xtype: 'polar',
+                                                    xtype: 'cartesian',
                                                     id: prototype.id + '-displayFlownMonthPieBack',
-                                                    width: 555, //531
-                                                    height: 355,
-                                                    border: true,
+                                                    width: 550,
+                                                    border: false,
+                                                    height: 369,
                                                     margin: '5 10 0 0',
-                                                    innerPadding: 50,
                                                     background: '#E0F8F7',
-                                                    captions: {
-                                                        title: {
-                                                            text: '',
-                                                            alignTo: 'chart'
-                                                        }
-                                                    },
                                                     animation: {
-                                                        duration: 100
+                                                        duration: 200
                                                     },
-                                                    interactions: ['rotate', 'itemhighlight'],
-//                                                    rotation: (-0.5 * Math.PI) - (25/180 * Math.PI),
-//                                            legend: {
-//                                                docked: 'bottom',
-//                                                background: '#E3EAEF',
-//                                            },
+                                                    interactions: ['itemhighlight'],
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['VCPNB'],
+                                                            grid: true,
+                                                            title: '',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    return  '' + Ext.util.Format.number(value);
+                                                                } else {
+                                                                    return '0';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Total Value',
+                                                                translationX: -30
+                                                            }
+                                                        }],
                                                     series: [{
-                                                            type: 'pie3d',
-                                                            angleField: 'VCPNB',
-
-//                                                            rotation:90,
-                                                            colors: ['#0eeeee', '#0071c1', '#412e4e',
-                                                                '#06f985', '#0aac52', '#93d250',
-                                                                '#ffff00', '#ffc102', '#fe0000',
-                                                                '#ff0167', '#9b66fe', '#6600cd'],
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: [''],
+                                                            xField: 'strFormatDateB',
+                                                            yField: ['VCPNB'],
+                                                            colors: ['#22e6c9'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 600
+                                                            },
                                                             label: {
-                                                                field: 'strValueB',
-                                                                renderer: function (value, metaData, b, callout) {
-                                                                    metaData.style = "font-size:12px;font-weight:bold;text-align:center;";
-                                                                    var value0 = value.substr(0, 4);
-                                                                    var value1 = value.substr(4, 15);
-                                                                    var value2 = Ext.util.Format.number((value1 / 1000000), '0.0');
-                                                                    if ((value2 / 100) > 1) {
-//                                                                       console.log(value2 + ' es grande'); 
+                                                                field: [' '],
+//                                                            display: 'insideEnd',
+                                                                display: 'outside',
+                                                                calloutLine: {
+                                                                    length: 10,
+                                                                    width: 0,
+//                                                                color: '#FFFFFF',
+                                                                },
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutVertical = false;
+                                                                    if (value === 100) {
+                                                                        return Ext.util.Format.number(value, '0,000');
                                                                     } else {
-                                                                        if (value2 < 40) {
-//                                                                            console.log(value2 +  ' es chica no se muestra');
-                                                                            value0 = '';
-                                                                            value2 = '';
-                                                                        } else {
-//                                                                            console.log(value2 +  ' es chica');
-                                                                        }
+                                                                        return Ext.util.Format.number(value, '0,000.00');
                                                                     }
-                                                                    return value0 + value2 + 'M';
                                                                 }
                                                             },
-                                                            highlight: true,
                                                             tooltip: {
                                                                 trackMouse: true,
                                                                 height: 28,
                                                                 renderer: function (toolTip, record, ctx) {
-                                                                    var label = '';
-                                                                    if (ctx.field === 'strFormatDate') {
-                                                                        label = 'Total';
-                                                                    } else {
-                                                                        label = '';
+                                                                    var year = '';
+                                                                    var month = record.get('strMonth');
+                                                                    if (ctx.field === 'VCPN') {
+                                                                        year = record.get('strYear');
+                                                                    } else if (ctx.field === 'VCPNB') {
+                                                                        year = record.get('strYearB');
                                                                     }
-                                                                    toolTip.setHtml(record.get('TOOLTIP'));
-                                                                    toolTip.setHtml(label + 'Total Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + ' USD' + '</b>');
+                                                                    toolTip.setHtml('Total ' + year + '-' + month + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + ' USD' + '</b>');
                                                                 }
                                                             }
                                                         }]
@@ -311,9 +338,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     margin: "5 0 0 0",
                                                     border: false,
                                                     bodyStyle: 'background-color: #E3EAEF;',
-//                                            features: [{
-//                                                    ftype: 'summary'
-//                                                }],
+                                                    features: [{
+                                                            ftype: 'summary'
+                                                        }],
                                                     columns: {
                                                         defaults: {
                                                             menuDisabled: true,
@@ -331,6 +358,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:center; margin-right:3px ';
+                                                                            data = 'Total';
+                                                                            return '<b>' + data + '</b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -351,12 +384,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX_JB, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPN_JB', width: 60,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPN_JB, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -371,6 +414,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX_YB, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPN_YB', width: 90,
@@ -378,6 +426,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                                                 },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPN_YB, '0,000') + '<b>';
+                                                                                }
                                                                             }
                                                                         ]
                                                                     },
@@ -391,12 +444,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAXB, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNB', width: 90,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNB, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -432,65 +495,83 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             bodyStyle: 'background-color: transparent;',
                                             items: [
                                                 {
-                                                    xtype: 'polar',
+                                                    xtype: 'cartesian',
                                                     id: prototype.id + '-displayFlownMonthPieNow',
-                                                    width: 555,
-                                                    height: 355,
-                                                    border: true,
+                                                    width: 550,
+                                                    border: false,
+                                                    height: 369,
                                                     margin: '5 10 0 0',
-                                                    innerPadding: 50,
                                                     background: '#E0F8F7',
-                                                    captions: {
-                                                        title: {
-                                                            text: '',
-                                                            alignTo: 'chart'
-                                                        }
-                                                    },
                                                     animation: {
                                                         duration: 200
                                                     },
-                                                    interactions: ['rotate', 'itemhighlight'],
+                                                    interactions: ['itemhighlight'],
+                                                    axes: [{
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            fields: ['VCPN'],
+                                                            grid: true,
+                                                            title: '',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    return  '' + Ext.util.Format.number(value);
+                                                                } else {
+                                                                    return '0';
+                                                                }
+                                                            }
+                                                        }, {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                                            grid: true,
+                                                            title: {
+                                                                text: 'Total Value',
+                                                                translationX: -30
+                                                            }
+                                                        }],
                                                     series: [{
-                                                            type: 'pie3d',
-                                                            angleField: 'VCPN',
-                                                            colors: ['#0eeeee', '#0071c1', '#412e4e',
-                                                                '#06f985', '#0aac52', '#93d250',
-                                                                '#ffff00', '#ffc102', '#fe0000',
-                                                                '#ff0167', '#9b66fe', '#6600cd'],
-                                                            label: {
-                                                                field: 'strValue',
-                                                                renderer: function (value, metaData, b, callout) {
-                                                                    metaData.style = "font-size:12px;font-weight:bold;text-align:center;";
-                                                                    var value0 = value.substr(0, 4);
-                                                                    var value1 = value.substr(4, 15);
-                                                                    var value2 = Ext.util.Format.number((value1 / 1000000), '0.0');
-                                                                    if ((value2 / 100) > 1) {
-//                                                                       console.log(value2 + ' es grande'); 
-                                                                    } else {
-                                                                        if (value2 < 40) {
-//                                                                            console.log(value2 +  ' es chica no se muestra');
-                                                                            value0 = '';
-                                                                            value2 = '';
-                                                                        } else {
-//                                                                            console.log(value2 +  ' es chica');
-                                                                        }
-                                                                    }
-                                                                    return value0 + value2 + 'M';
-                                                                },
-                                                            },
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: [''],
+                                                            xField: 'strFormatDate',
+                                                            yField: ['VCPN'],
+                                                            colors: ['#22e6c9'],
                                                             highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7,
+                                                                minGapWidth: 2,
+                                                                maxBarWidth: 600
+                                                            },
+                                                            label: {
+                                                                field: [' '],
+//                                                            display: 'insideEnd',
+                                                                display: 'outside',
+                                                                calloutLine: {
+                                                                    length: 10,
+                                                                    width: 0,
+//                                                                color: '#FFFFFF',
+                                                                },
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutVertical = false;
+                                                                    if (value === 100) {
+                                                                        return Ext.util.Format.number(value, '0,000');
+                                                                    } else {
+                                                                        return Ext.util.Format.number(value, '0,000.00');
+                                                                    }
+                                                                }
+                                                            },
                                                             tooltip: {
                                                                 trackMouse: true,
                                                                 height: 28,
                                                                 renderer: function (toolTip, record, ctx) {
-                                                                    var label = '';
-                                                                    if (ctx.field === 'strFormatDate') {
-                                                                        label = 'Total';
-                                                                    } else {
-                                                                        label = '';
+                                                                    var year = '';
+                                                                    var month = record.get('strMonth');
+                                                                    if (ctx.field === 'VCPN') {
+                                                                        year = record.get('strYear');
+                                                                    } else if (ctx.field === 'VCPNB') {
+                                                                        year = record.get('strYearB');
                                                                     }
-                                                                    toolTip.setHtml(record.get('TOOLTIP'));
-                                                                    toolTip.setHtml(label + 'Total Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + ' USD' + '</b>');
+                                                                    toolTip.setHtml('Total ' + year + '-' + month + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + ' USD' + '</b>');
                                                                 }
                                                             }
                                                         }]
@@ -504,6 +585,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     margin: "5 0 0 0",
                                                     border: false,
                                                     bodyStyle: 'background-color: #E3EAEF;',
+                                                    features: [{
+                                                            ftype: 'summary'
+                                                        }],
                                                     columns: {
                                                         defaults: {
                                                             menuDisabled: true,
@@ -521,6 +605,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:center; margin-right:3px ';
+                                                                            data = 'Total';
+                                                                            return '<b>' + data + '</b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -541,12 +631,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPN_J', width: 60,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPN_J, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -561,6 +661,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX_Y, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPN_Y', width: 90,
@@ -568,6 +673,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                                                 },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPN_Y, '0,000') + '<b>';
+                                                                                }
                                                                             }
                                                                         ]
                                                                     },
@@ -581,12 +691,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPN', width: 90,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownMonthNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -767,7 +887,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleBNF',
-                                                            colors: ['#EC3838', '#ffc102'],
+                                                            colors: ['#38c8ec', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleBNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -794,6 +914,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     margin: "5 0 0 0",
                                                     border: false,
                                                     bodyStyle: 'background-color: #E3EAEF;',
+                                                    features: [{
+                                                            ftype: 'summary'
+                                                        }],
                                                     columns: {
                                                         defaults: {
                                                             menuDisabled: true,
@@ -805,6 +928,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center";
                                                                     return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    data = 'Total';
+                                                                    return '<b>' + data + '</b>';
                                                                 }
                                                             },
                                                             {
@@ -817,6 +946,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totQFLIGHTB, '0,000') + '<b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -837,12 +971,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQCPNOALB, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNOALB', width: 90,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNOALB, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -857,6 +1001,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQCPNONB, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNONB', width: 90,
@@ -864,6 +1013,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                                                 },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNONB, '0,000') + '<b>';
+                                                                                }
                                                                             }
                                                                         ]
                                                                     },
@@ -877,12 +1031,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQCPNNFB, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNNFB', width: 90,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffBack').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNNFB, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -939,7 +1103,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleNF',
-                                                            colors: ['#EC3838', '#ffc102'],
+                                                            colors: ['#38c8ec', '#ffc102'],
                                                             label: {
                                                                 field: 'AngleNF',
                                                                 renderer: function (value, metaData, b, callout) {
@@ -966,6 +1130,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     margin: "5 0 0 0",
                                                     border: false,
                                                     bodyStyle: 'background-color: #E3EAEF;',
+                                                    features: [{
+                                                            ftype: 'summary'
+                                                        }],
                                                     columns: {
                                                         defaults: {
                                                             menuDisabled: true,
@@ -977,6 +1144,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center";
                                                                     return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    data = 'Total';
+                                                                    return '<b>' + data + '</b>';
                                                                 }
                                                             },
                                                             {
@@ -989,6 +1162,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = "text-align:center";
                                                                             return value;
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totQFLIGHT, '0,000') + '<b>';
                                                                         }
                                                                     }
                                                                 ]
@@ -1009,12 +1187,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQCPNOAL, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNOAL', width: 90,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#deedfb;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNOAL, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -1029,6 +1217,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQCPNON, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNON', width: 90,
@@ -1036,6 +1229,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                                                 },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNON, '0,000') + '<b>';
+                                                                                }
                                                                             }
                                                                         ]
                                                                     },
@@ -1049,12 +1247,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQCPNNF, '0,000') + '<b>';
                                                                                 }
                                                                             },
                                                                             {text: 'Value', dataIndex: 'VCPNNF', width: 90,
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     metaData.style = "background:#fcf9ec;text-align:right";
                                                                                     return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                                                },
+                                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownOnOffNow').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totVCPNNF, '0,000') + '<b>';
                                                                                 }
                                                                             }
                                                                         ]
@@ -1320,7 +1528,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                         items: [
                                             {
                                                 text: '.',
-
                                                 defaults: {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
@@ -1470,7 +1677,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                     width: 1560,
                                     border: false,
                                     height: 300,
-                                    title: 'cuarenta y veinte',
+                                    title: '',
                                     background: '#E3EAEF',
                                     interactions: ['itemhighlight'],
 //                                    legend: {
@@ -1562,7 +1769,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                  *************************************************************************/
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-boxFlownByCarrier',
+                    id: prototype.id + '-boxFlownByCarrier1',
                     margin: '0 0 0 0',
                     hidden: true,
                     border: false,
@@ -1574,7 +1781,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                     items: [
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-boxFlownPiesAndGrillByCarrier',
+                            id: prototype.id + '-boxFlownPiesAndGrillByCarrier1',
                             margin: '0 0 0 0',
                             border: false,
                             layout: {
@@ -1586,7 +1793,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                 //FLIGHT DATE
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-boxChartFlownByCarrierFLIGHT',
+                                    id: prototype.id + '-boxChartFlownByCarrierFLIGHT1',
                                     border: false,
                                     margin: '5 0 5 0',
                                     layout: {
@@ -1607,7 +1814,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             items: [
                                                 {
                                                     xtype: 'polar',
-                                                    id: prototype.id + '-displayFlownByCarrierFLIGHT',
+                                                    id: prototype.id + '-displayFlownByCarrierFLIGHT1',
                                                     width: 555, //531
                                                     height: 355,
                                                     border: true,
@@ -1632,17 +1839,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 field: 'AngleBNF',
                                                                 renderer: function (value, metaData, b, callout) {
                                                                     var data;
+                                                                    var data2;
+                                                                    data2 = ' USD';
                                                                     console.log(value);
-                                                                    if (value > 5000000) {
+                                                                    if (value > 2000000) {
                                                                         value = Ext.util.Format.number(value, '0,000');
                                                                         data = 'Total AM :';
-                                                                        return data + value;
+                                                                        return data + value + data2;
                                                                     } else {
                                                                         value = Ext.util.Format.number(value, '0,000');
                                                                         data = 'Total OAL :';
-                                                                        return data + value;
+                                                                        return data + value + data2;
                                                                     }
-
                                                                 },
                                                             },
                                                             highlight: true,
@@ -1658,7 +1866,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 //GRILLA FLIGHT DATE
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.id + '-gridData_FlownByCarrierFLIGHT',
+                                                    id: prototype.id + '-gridData_FlownByCarrierFLIGHT1',
                                                     width: 480,
 //                                                    height: 600,
                                                     columnLines: true,
@@ -1682,7 +1890,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT1').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:center; margin-right:3px ';
                                                                     return '<b>' + 'Total' + '<b>';
                                                                 }
@@ -1699,7 +1907,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT1').getStore().getData().items[0].data;
                                                                             console.log(data);
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totAM, '0,000') + '<b>';
@@ -1711,7 +1919,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totCINCOD, '0,000') + '<b>';
                                                                         }
@@ -1730,7 +1938,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totAM_OTRO, '0,000') + '<b>';
                                                                         }
@@ -1741,7 +1949,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totCINCOD_OTRO, '0,000') + '<b>';
                                                                         }
@@ -1754,7 +1962,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     return Ext.util.Format.number(value, '0,000');
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT1').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.totTOTAL, '0,000') + '<b>';
                                                                 }
@@ -1769,7 +1977,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                 //POLIZA DATE
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-boxChartFlownByCarrierPOLIZA',
+                                    id: prototype.id + '-boxChartFlownByCarrierPOLIZA1',
                                     border: false,
                                     margin: '0 0 5 0',
                                     layout: {
@@ -1790,7 +1998,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             items: [
                                                 {
                                                     xtype: 'polar',
-                                                    id: prototype.id + '-displayFlownByCarrierPOLIZA',
+                                                    id: prototype.id + '-displayFlownByCarrierPOLIZA1',
                                                     width: 555, //531
                                                     height: 355,
                                                     border: true,
@@ -1815,17 +2023,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                 field: 'AngleNF',
                                                                 renderer: function (value, metaData, b, callout) {
                                                                     var data;
+                                                                    var data2;
+                                                                    data2 = ' USD';
                                                                     console.log(value);
-                                                                    if (value > 5000000) {
+                                                                    if (value > 2000000) {
                                                                         value = Ext.util.Format.number(value, '0,000');
                                                                         data = 'Total AM :';
-                                                                        return data + value;
+                                                                        return data + value + data2;
                                                                     } else {
                                                                         value = Ext.util.Format.number(value, '0,000');
                                                                         data = 'Total OAL :';
-                                                                        return data + value;
+                                                                        return data + value + data2;
                                                                     }
-
                                                                 },
                                                             },
                                                             highlight: true,
@@ -1841,7 +2050,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 //GRILLA POLIZA DATE
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.id + '-gridData_FlownByCarrierPOLIZA',
+                                                    id: prototype.id + '-gridData_FlownByCarrierPOLIZA1',
                                                     width: 480,
 //                                                    height: 600,
                                                     columnLines: true,
@@ -1865,7 +2074,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA1').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:center; margin-right:3px ';
                                                                     return '<b>' + 'Total' + '<b>';
                                                                 }
@@ -1882,7 +2091,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totAM0, '0,000') + '<b>';
                                                                         }
@@ -1893,7 +2102,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totCINCOD0, '0,000') + '<b>';
                                                                         }
@@ -1912,7 +2121,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totAM_OTRO0, '0,000') + '<b>';
                                                                         }
@@ -1923,7 +2132,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return Ext.util.Format.number(value, '0,000');
                                                                         },
                                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA1').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totCINCOD_OTRO0, '0,000') + '<b>';
                                                                         }
@@ -1936,7 +2145,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     return Ext.util.Format.number(value, '0,000');
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA1').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.totTOTAL0, '0,000') + '<b>';
                                                                 }
@@ -1950,10 +2159,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                 }
                             ]
                         },
-                        //GRAFICO DE BARRAS
+                        //GRAFICO DE BARRAS 1
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-boxFlownByCarrierBared',
+                            id: prototype.id + '-boxFlownByCarrierBared1',
                             margin: '0 0 0 0',
                             border: false,
                             layout: {
@@ -1964,7 +2173,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                             items: [
                                 {
                                     xtype: 'cartesian',
-                                    id: prototype.id + '-displayFlownByCarrierBared',
+                                    id: prototype.id + '-displayFlownByCarrierBared1',
                                     margin: '15 0 0 10 ',
                                     flipXY: true,
                                     width: 420,
@@ -1987,7 +2196,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             position: 'bottom',
                                             majorTickSteps: 5,
                                             fields: ['TOTAL0', 'TOTAL'],
-                                            title: 'Tickets 2022',
+                                            title: 'Tickets',
                                             grid: {
                                                 odd: {
                                                     fillStyle: 'rgba(245, 245, 245, 1.0)'
@@ -2046,6 +2255,502 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
 //                                                        year = record.get('strYearB');
                                                     }
                                                     toolTip.setHtml('Total ' + strFormatDate + ' Tickets: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            }
+                                        }]
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxFlownByCarrier2',
+                    margin: '0 0 0 0',
+                    hidden: true,
+                    border: false,
+                    layout: {
+                        type: 'hbox',
+                        pack: 'center'
+                    },
+                    bodyStyle: 'background-color: transparent;',
+                    items: [
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxFlownPiesAndGrillByCarrier2',
+                            margin: '0 0 0 0',
+                            border: false,
+                            layout: {
+                                type: 'vbox',
+                                pack: 'center'
+                            },
+                            bodyStyle: 'background-color: transparent;',
+                            items: [
+                                //FLIGHT DATE
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-boxChartFlownByCarrierFLIGHT2',
+                                    border: false,
+                                    margin: '5 0 5 0',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            margin: '5 0 5 0',
+                                            border: false,
+                                            layout: {
+                                                type: 'hbox',
+                                                pack: 'left'
+                                            },
+                                            bodyStyle: 'background-color: transparent;',
+                                            items: [
+                                                {
+                                                    xtype: 'polar',
+                                                    id: prototype.id + '-displayFlownByCarrierFLIGHT2',
+                                                    width: 555, //531
+                                                    height: 355,
+                                                    border: true,
+                                                    margin: '5 10 0 0',
+                                                    innerPadding: 50,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: '',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['rotate', 'itemhighlight'],
+                                                    series: [{
+                                                            type: 'pie3d',
+                                                            angleField: 'AngleBNF',
+                                                            colors: ['#38c8ec', '#ffc102'],
+                                                            label: {
+                                                                field: 'AngleBNF',
+                                                                renderer: function (value, metaData, b, callout) {
+                                                                    var data;
+                                                                    var data2;
+                                                                    data2 = ' USD';
+                                                                    console.log(value);
+                                                                    if (value > 2000000) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'Total AM :';
+                                                                        return data + value + data2;
+                                                                    } else {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'Total OAL :';
+                                                                        return data + value + data2;
+                                                                    }
+                                                                },
+                                                            },
+                                                            highlight: true,
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    toolTip.setHtml('Total Amount USD: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                },
+                                                //GRILLA FLIGHT DATE
+                                                {
+                                                    xtype: 'grid',
+                                                    id: prototype.id + '-gridData_FlownByCarrierFLIGHT2',
+                                                    width: 480,
+//                                                    height: 600,
+                                                    columnLines: true,
+                                                    margin: "5 5 0 0",
+                                                    border: false,
+                                                    bodyStyle: 'background-color: #E3EAEF;',
+                                                    features: [{
+                                                            ftype: 'summary'
+                                                        }],
+                                                    columns: {
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        items: [
+
+                                                            {text: 'Flight<br>Date', width: 80, dataIndex: 'strFormatDate',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:center;';
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + 'Total' + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Amount USD AM',
+                                                                defaults: {
+                                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {text: 'AM', width: 80, dataIndex: 'AMM',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT2').getStore().getData().items[0].data;
+                                                                            console.log(data);
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totAMM, '0,000') + '<b>';
+                                                                        }
+                                                                    },
+                                                                    {text: '5D', width: 80, dataIndex: 'CINCODM',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totCINCODM, '0,000') + '<b>';
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Amount USD OAL',
+                                                                defaults: {
+                                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {text: 'AM', width: 80, dataIndex: 'AM_OTROM',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#f4f4d5;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totAM_OTROM, '0,000') + '<b>';
+                                                                        }
+                                                                    },
+                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD_OTROM',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#f4f4d5;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totCINCOD_OTROM, '0,000') + '<b>';
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {text: 'Total', width: 80, dataIndex: 'TOTALM',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#deedfb;';
+                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierFLIGHT2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTOTALM, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                            ]
+                                        },
+                                    ]
+                                },
+                                //POLIZA DATE
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-boxChartFlownByCarrierPOLIZA2',
+                                    border: false,
+                                    margin: '0 0 5 0',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            margin: '0 0 5 0',
+                                            border: false,
+                                            layout: {
+                                                type: 'hbox',
+                                                pack: 'left'
+                                            },
+                                            bodyStyle: 'background-color: transparent;',
+                                            items: [
+                                                {
+                                                    xtype: 'polar',
+                                                    id: prototype.id + '-displayFlownByCarrierPOLIZA2',
+                                                    width: 555, //531
+                                                    height: 355,
+                                                    border: true,
+                                                    margin: '5 10 0 0',
+                                                    innerPadding: 50,
+                                                    background: '#E0F8F7',
+                                                    captions: {
+                                                        title: {
+                                                            text: '',
+                                                            alignTo: 'chart'
+                                                        }
+                                                    },
+                                                    animation: {
+                                                        duration: 200
+                                                    },
+                                                    interactions: ['rotate', 'itemhighlight'],
+                                                    series: [{
+                                                            type: 'pie3d',
+                                                            angleField: 'AngleNF',
+                                                            colors: ['#38c8ec', '#ffc102'],
+                                                            label: {
+                                                                field: 'AngleNF',
+                                                                renderer: function (value, metaData, b, callout) {
+                                                                    var data;
+                                                                    var data2;
+                                                                    data2 = ' USD';
+                                                                    console.log(value);
+                                                                    if (value > 2000000) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'Total AM :';
+                                                                        return data + value + data2;
+                                                                    } else {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'Total OAL :';
+                                                                        return data + value + data2;
+                                                                    }
+                                                                },
+                                                            },
+                                                            highlight: true,
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+                                                                    toolTip.setHtml('Total Amount USD: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            }
+                                                        }]
+                                                },
+                                                //GRILLA POLIZA DATE
+                                                {
+                                                    xtype: 'grid',
+                                                    id: prototype.id + '-gridData_FlownByCarrierPOLIZA2',
+                                                    width: 480,
+//                                                    height: 600,
+                                                    columnLines: true,
+                                                    margin: "5 5 0 0",
+                                                    border: false,
+                                                    bodyStyle: 'background-color: #E3EAEF;',
+                                                    features: [{
+                                                            ftype: 'summary'
+                                                        }],
+                                                    columns: {
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        items: [
+
+                                                            {text: 'Poliza<br>Date', width: 80, dataIndex: 'strFormatDate0',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:center;';
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + 'Total' + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Amount USD AM',
+                                                                defaults: {
+                                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {text: 'AM', width: 80, dataIndex: 'AMM0',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totAMM0, '0,000') + '<b>';
+                                                                        }
+                                                                    },
+                                                                    {text: '5D', width: 80, dataIndex: 'CINCODM0',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#d5f1f4;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totCINCODM0, '0,000') + '<b>';
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Amount USD OAL',
+                                                                defaults: {
+                                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {text: 'AM', width: 80, dataIndex: 'AM_OTROM0',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#f4f4d5;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totAM_OTROM0, '0,000') + '<b>';
+                                                                        }
+                                                                    },
+                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD_OTROM0',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = 'text-align:right;background:#f4f4d5;';
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA2').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totCINCOD_OTROM0, '0,000') + '<b>';
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {text: 'Total', width: 80, dataIndex: 'TOTALM0',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#d5f4d5;';
+                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_FlownByCarrierPOLIZA2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTOTALM0, '0,000') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                            ]
+                                        },
+                                    ]
+                                }
+                            ]
+                        },
+                        //GRAFICO DE BARRAS 2
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxFlownByCarrierBared2',
+                            margin: '0 0 0 0',
+                            border: false,
+                            layout: {
+                                type: 'vbox',
+                                pack: 'center'
+                            },
+                            bodyStyle: 'background-color: transparent;',
+                            items: [
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displayFlownByCarrierBared2',
+                                    margin: '15 0 0 10 ',
+                                    flipXY: true,
+                                    width: 420,
+                                    height: 747,
+                                    insetPadding: '20 20',
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: '',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    axes: [
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'bottom',
+                                            majorTickSteps: 5,
+                                            fields: ['TOTALM0', 'TOTALM'],
+                                            title: 'Amount',
+                                            grid: {
+                                                odd: {
+                                                    fillStyle: 'rgba(245, 245, 245, 1.0)'
+                                                },
+                                                even: {
+                                                    fillStyle: 'rgba(255, 255, 255, 1.0)'
+                                                }
+                                            },
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    return ' ' + Ext.util.Format.number((value / 1000000), '0,000') + 'M ';
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        }, {
+                                            type: 'category3d',
+                                            position: 'left',
+                                            fields: 'strFormatDate',
+                                            grid: true,
+                                            label: {
+                                                textAlign: 'left'
+                                            },
+                                        }],
+                                    series: [{
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            title: ['current', 'last'],
+                                            yField: ['TOTALM0', 'TOTALM'],
+                                            colors: ['#1c50c9', '#209938'],
+//                                            
+//                                            
+//                                            
+//                                            colors: ['#EC3838', '#ffc102'], //0eeeee 
+//                                                                '#0eeeee', '#0071c1', '#412e4e',
+//                                                                '#06f985', '#0aac52', '#93d250',
+//                                                                '#ffff00', '#ffc102', '#fe0000',
+//                                                                '#ff0167', '#9b66fe', '#6600cd'
+                                            xField: 'strFormatDate',
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7
+                                            },
+                                            highlight: {
+                                                strokeStyle: 'rgba(0, 0, 0, .2)',
+                                                lineWidth: 1
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var strFormatDate = record.get('strFormatDate');
+                                                    if (ctx.field === 'TOTALM') {
+//                                                        year = record.get('strYear');
+                                                    } else if (ctx.field === 'TOTALM0') {
+//                                                        year = record.get('strYearB');
+                                                    }
+                                                    toolTip.setHtml('Total ' + strFormatDate + ' Amount USD: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                 }
                                             }
                                         }]

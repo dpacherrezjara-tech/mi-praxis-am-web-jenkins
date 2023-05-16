@@ -5026,10 +5026,8 @@ public class Dashboard01DAO {
         int i = 0, j = 0;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        long QTYPAX = 0, QTYPAX_F = 0, QTYPAX_J = 0, QTYPAX_Y = 0;
-        long QTYVNR = 0, QTYNRE = 0, QTYFLI = 0, QBNPAX = 0;
-        double VCPN = 0, VCPN_F = 0, VCPN_J = 0, VCPN_Y = 0, AMTBN = 0, VCPNRE = 0;
-        double VCPNB = 0;
+        long QTYPAX_J = 0, VCPN_J = 0, QTYPAX_Y = 0, VCPN_Y = 0, QTYPAX = 0, VCPN = 0;
+        long QTYPAX_JB = 0, VCPN_JB = 0, QTYPAX_YB = 0, VCPN_YB = 0, QTYPAXB = 0, VCPNB = 0;
         String strYearB = "", strValueB = "", strMonthB = "";
         String fecha = Functions.getFechaActual();
         String[] listado1FD = new String[filter.MESES];
@@ -5147,11 +5145,40 @@ public class Dashboard01DAO {
                     objRtn.VCPNB = listado1TV[j];
                     objRtn.strYearB = strYearB;
                     objRtn.strValueB = objRtn.strMonth + ":" + objRtn.VCPNB;
+                    
+                    QTYPAX_J += objRtn.QTYPAX_J;
+                    VCPN_J += objRtn.VCPN_J;
+                    QTYPAX_Y += objRtn.QTYPAX_Y;
+                    VCPN_Y += objRtn.VCPN_Y;
+                    QTYPAX += objRtn.QTYPAX;
+                    VCPN += objRtn.VCPN;
+                    
+                    QTYPAX_JB += objRtn.QTYPAX_JB;
+                    VCPN_JB += objRtn.VCPN_JB;
+                    QTYPAX_YB += objRtn.QTYPAX_YB;
+                    VCPN_YB += objRtn.VCPN_YB;
+                    QTYPAXB += objRtn.QTYPAXB;
+                    VCPNB += objRtn.VCPNB;
+                    
                     j++;
                     listado.add(objRtn);
                 }
             }
-
+            for(int a = 0 ; a <listado.size() ; a++ ){
+                listado.get(a).totVCPN = VCPNB;
+                listado.get(a).totQTYPAX = QTYPAX;
+                listado.get(a).totVCPN_Y = VCPN_Y;
+                listado.get(a).totQTYPAX_Y = QTYPAX_Y;
+                listado.get(a).totVCPN_J = VCPN_J;
+                listado.get(a).totQTYPAX_J = QTYPAX_J;
+                listado.get(a).totVCPNB = VCPNB;
+                listado.get(a).totQTYPAXB = QTYPAXB;
+                listado.get(a).totVCPN_YB = VCPN_YB;
+                listado.get(a).totQTYPAX_YB = QTYPAX_YB;
+                listado.get(a).totVCPN_JB = VCPN_JB;
+                listado.get(a).totQTYPAX_JB = QTYPAX_JB;
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -5187,6 +5214,8 @@ public class Dashboard01DAO {
         ResultSet rs01 = null;
         long QTYPAX = 0, QTYPAX_F = 0, QTYPAX_J = 0, QTYPAX_Y = 0;
         long QTYVNR = 0, QTYNRE = 0, QTYFLI = 0, QBNPAX = 0;
+        long QFLIGHTB = 0,QCPNOALB = 0,VCPNOALB = 0,QCPNONB = 0,VCPNONB = 0,QCPNNFB = 0,VCPNNFB = 0;
+        long QFLIGHT = 0,QCPNOAL = 0,VCPNOAL = 0,QCPNON = 0,VCPNON = 0,QCPNNF = 0,VCPNNF = 0;
         double VCPN = 0, VCPN_F = 0, VCPN_J = 0, VCPN_Y = 0, AMTBN = 0, VCPNRE = 0;
         double VCPNB = 0, totVCPNNF = 0, totVCPNNFB = 0, UNI = 0, UNIB = 0;
         double TOVCPNONB = 0, TOVCPNOALB = 0, TOVCPNON = 0, TOVCPNOAL = 0;
@@ -5335,10 +5364,43 @@ public class Dashboard01DAO {
                     objRtn.TOVCPNON = TOVCPNON;
                     objRtn.TOVCPNOALB = TOVCPNOALB;
                     objRtn.TOVCPNOAL = TOVCPNOAL;
+                    
+                    QFLIGHTB += objRtn.QFLIGHTB;
+                    QCPNOALB += objRtn.QCPNOALB;
+                    VCPNOALB += objRtn.VCPNOALB;
+                    QCPNONB += objRtn.QCPNONB;
+                    VCPNONB += objRtn.VCPNONB;
+                    QCPNNFB += objRtn.QCPNNFB;
+                    VCPNNFB += objRtn.VCPNNFB;
+                    
+                    QFLIGHT += objRtn.QFLIGHT;
+                    QCPNOAL += objRtn.QCPNOAL;
+                    VCPNOAL += objRtn.VCPNOAL;
+                    QCPNON += objRtn.QCPNON;
+                    VCPNON += objRtn.VCPNON;
+                    QCPNNF += objRtn.QCPNNF;
+                    VCPNNF += objRtn.VCPNNF;
+                    
                     j++;
                     listado.add(objRtn);
                 }
             }
+            for(int a = 0 ; a <listado.size() ; a++ ){
+               listado.get(a).totQFLIGHTB = QFLIGHTB;
+               listado.get(a).totQCPNOALB = QCPNOALB;
+               listado.get(a).totVCPNOALB = VCPNOALB;
+               listado.get(a).totQCPNONB = QCPNONB;
+               listado.get(a).totVCPNONB = VCPNONB;
+               listado.get(a).totQCPNNFB = QCPNNFB;
+               listado.get(a).totVCPNNFB = VCPNNFB;
+               listado.get(a).totQFLIGHT= QFLIGHT;
+               listado.get(a).totQCPNOAL = QCPNOAL;
+               listado.get(a).totVCPNOAL = VCPNOAL;
+               listado.get(a).totQCPNON = QCPNON;
+               listado.get(a).totVCPNON = VCPNON;
+               listado.get(a).totQCPNNF = QCPNNF;
+               listado.get(a).totVCPNNF = VCPNNF;
+           }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -5467,7 +5529,9 @@ public class Dashboard01DAO {
         ResultSet rs01 = null;
         
         Double totAM = 0.0, totCINCOD = 0.0, totAM_OTRO = 0.0, totCINCOD_OTRO = 0.0, totTOTAL = 0.0;
+        Double totAMM = 0.0, totCINCODM = 0.0, totAM_OTROM = 0.0, totCINCOD_OTROM = 0.0, totTOTALM = 0.0;
         Double totAM0 = 0.0, totCINCOD0 = 0.0, totAM_OTRO0 = 0.0, totCINCOD_OTRO0 = 0.0, totTOTAL0 = 0.0;
+        Double totAMM0 = 0.0, totCINCODM0 = 0.0, totAM_OTROM0 = 0.0, totCINCOD_OTROM0 = 0.0, totTOTALM0 = 0.0;
 
         String SQLCLL01 = "{CALL PRAXIS.SQP00556CA(?,?,?)}";
 
@@ -5489,6 +5553,11 @@ public class Dashboard01DAO {
             double[] listado1EP = new double[12];
             double[] listado1EV = new double[12];
             double[] listado1TV = new double[12];
+            double[] listado1QFM = new double[12];
+            double[] listado1BPM = new double[12];
+            double[] listado1EPM = new double[12];
+            double[] listado1EVM = new double[12];
+            double[] listado1TVM = new double[12];
             
             while (rs01.next()) {
                 objRtn0 = new A1971Filter();
@@ -5499,6 +5568,11 @@ public class Dashboard01DAO {
                 objRtn0.AM_OTRO0 = rs01.getDouble("QTYCPNAM2");
                 objRtn0.CINCOD_OTRO0 = rs01.getDouble("QTYCPN5D2");
                 objRtn0.TOTAL0 = rs01.getDouble("TOTAL");
+                objRtn0.AMM0 = rs01.getDouble("AMOCPNAM1");
+                objRtn0.CINCODM0 = rs01.getDouble("AMOCPN5D1");
+                objRtn0.AM_OTROM0 = rs01.getDouble("AMOCPNAM2");
+                objRtn0.CINCOD_OTROM0 = rs01.getDouble("AMOCPN5D2");
+                objRtn0.TOTALM0 = objRtn0.AMM0 + objRtn0.CINCODM0 + objRtn0.AM_OTROM0 + objRtn0.CINCOD_OTROM0;
                 
                 listado1FD[i] = objRtn0.strFormatDate0;
                 listado1QF[i] = objRtn0.AM0;
@@ -5506,6 +5580,11 @@ public class Dashboard01DAO {
                 listado1EP[i] = objRtn0.AM_OTRO0;
                 listado1EV[i] = objRtn0.CINCOD_OTRO0;
                 listado1TV[i] = objRtn0.TOTAL0;
+                listado1QFM[i] = objRtn0.AMM0;
+                listado1BPM[i] = objRtn0.CINCODM0;
+                listado1EPM[i] = objRtn0.AM_OTROM0;
+                listado1EVM[i] = objRtn0.CINCOD_OTROM0;
+                listado1TVM[i] = objRtn0.TOTALM0;
                 i++;
             }
             rs01.close();
@@ -5520,12 +5599,22 @@ public class Dashboard01DAO {
                     objRtn.AM_OTRO = rs01.getDouble("QTYCPNAM2");
                     objRtn.CINCOD_OTRO = rs01.getDouble("QTYCPN5D2");
                     objRtn.TOTAL = rs01.getDouble("TOTAL");
+                    objRtn.AMM = rs01.getDouble("AMOCPNAM1");
+                    objRtn.CINCODM = rs01.getDouble("AMOCPN5D1");
+                    objRtn.AM_OTROM = rs01.getDouble("AMOCPNAM2");
+                    objRtn.CINCOD_OTROM = rs01.getDouble("AMOCPN5D2");
+                    objRtn.TOTALM = objRtn.AMM + objRtn.CINCODM + objRtn.AM_OTROM + objRtn.CINCOD_OTROM; 
                     
                     totAM += objRtn.AM;
                     totCINCOD += objRtn.CINCOD;
                     totAM_OTRO += objRtn.AM_OTRO;
                     totCINCOD_OTRO += objRtn.CINCOD_OTRO;
                     totTOTAL += objRtn.TOTAL;
+                    totAMM += objRtn.AMM;
+                    totCINCODM += objRtn.CINCODM;
+                    totAM_OTROM += objRtn.AM_OTROM;
+                    totCINCOD_OTROM += objRtn.CINCOD_OTROM;
+                    totTOTALM += objRtn.TOTALM;
                     
                     objRtn.strFormatDate0 = listado1FD[j];
                     objRtn.AM0 = listado1QF[j];
@@ -5533,12 +5622,22 @@ public class Dashboard01DAO {
                     objRtn.AM_OTRO0 = listado1EP[j];
                     objRtn.CINCOD_OTRO0 = listado1EV[j];
                     objRtn.TOTAL0 = listado1TV[j];
+                    objRtn.AMM0 = listado1QFM[j];
+                    objRtn.CINCODM0 = listado1BPM[j];
+                    objRtn.AM_OTROM0 = listado1EPM[j];
+                    objRtn.CINCOD_OTROM0 = listado1EVM[j];
+                    objRtn.TOTALM0 = listado1TVM[j];
                     
                     totAM0 += objRtn.AM0;
                     totCINCOD0 += objRtn.CINCOD0;
                     totAM_OTRO0 += objRtn.AM_OTRO0;
                     totCINCOD_OTRO0 += objRtn.CINCOD_OTRO0;
                     totTOTAL0 += objRtn.TOTAL0;
+                    totAMM0 += objRtn.AMM0;
+                    totCINCODM0 += objRtn.CINCODM0;
+                    totAM_OTROM0 += objRtn.AM_OTROM0;
+                    totCINCOD_OTROM0 += objRtn.CINCOD_OTROM0;
+                    totTOTALM0 += objRtn.TOTALM0;
                     
                     j++;
                     listado.add(objRtn);
@@ -5555,6 +5654,16 @@ public class Dashboard01DAO {
                 listado.get(a).totAM_OTRO0 = totAM_OTRO0;
                 listado.get(a).totCINCOD_OTRO0 = totCINCOD_OTRO0;
                 listado.get(a).totTOTAL0 = totTOTAL0;
+                listado.get(a).totAMM = totAMM;
+                listado.get(a).totCINCODM = totCINCODM;
+                listado.get(a).totAM_OTROM= totAM_OTROM;
+                listado.get(a).totCINCOD_OTROM = totCINCOD_OTROM;
+                listado.get(a).totTOTALM = totTOTALM;
+                listado.get(a).totAMM0 = totAMM0;
+                listado.get(a).totCINCODM0 = totCINCODM0;
+                listado.get(a).totAM_OTROM0 = totAM_OTROM0;
+                listado.get(a).totCINCOD_OTROM0 = totCINCOD_OTROM0;
+                listado.get(a).totTOTALM0 = totTOTALM0;
             }
 
         } catch (Exception e) {
@@ -5582,7 +5691,7 @@ public class Dashboard01DAO {
         ResultSet rs01 = null;
 
         long QTY = 0, QTY_VAL = 0, QTY_CON = 0, QTY_PEN = 0, QCPNON = 0, QCPNOAL = 0;
-        double VCPN_VAL = 0, VCPN_CON = 0, VCPN_PEN = 0, VCPNON = 0, VCPNOAL = 0;
+        long VCPN_VAL = 0, VCPN_CON = 0, VCPN_PEN = 0, VCPNON = 0, VCPNOAL = 0;
 
         String SQLCLL01 = "{CALL PRAXIS.SQP01927(?,?,?)}";
 
@@ -5606,7 +5715,7 @@ public class Dashboard01DAO {
                 QCPNON = rs01.getLong("QCPNON");
                 QCPNOAL = rs01.getLong("QCPNOAL");
                 //Total
-                VCPN_VAL = rs01.getDouble("VCPN_VAL");
+                VCPN_VAL = rs01.getLong("VCPN_VAL");
                 VCPN_CON = rs01.getLong("VCPN_CON");
                 VCPN_PEN = rs01.getLong("VCPN_PEN");
                 VCPNON = rs01.getLong("VCPNON");
@@ -5685,7 +5794,7 @@ public class Dashboard01DAO {
         ResultSet rs01 = null;
 
         long QTY = 0, QTY_VAL = 0, QTY_CON = 0, QTY_PEN = 0, QCPNON = 0, QCPNOAL = 0;
-        double VCPN_VAL = 0, VCPN_CON = 0, VCPN_PEN = 0, VCPNON = 0, VCPNOAL = 0;
+        long VCPN_VAL = 0, VCPN_CON = 0, VCPN_PEN = 0, VCPNON = 0, VCPNOAL = 0;
 
         String SQLCLL01 = "{CALL PRAXIS.SQP01928(?,?)}";
 
@@ -5709,7 +5818,7 @@ public class Dashboard01DAO {
                 QCPNON = rs01.getLong("QCPNON");
                 QCPNOAL = rs01.getLong("QCPNOAL");
                 //Total
-                VCPN_VAL = rs01.getDouble("VCPN_VAL");
+                VCPN_VAL = rs01.getLong("VCPN_VAL");
                 VCPN_CON = rs01.getLong("VCPN_CON");
                 VCPN_PEN = rs01.getLong("VCPN_PEN");
                 VCPNON = rs01.getLong("VCPNON");
