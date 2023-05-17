@@ -1867,7 +1867,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridData_FlownByCarrierFLIGHT1',
-                                                    width: 480,
+                                                    width: 580,
 //                                                    height: 600,
                                                     columnLines: true,
                                                     margin: "5 5 0 0",
@@ -1901,7 +1901,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AM',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AM',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -1913,7 +1913,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAM, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCOD',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -1932,7 +1932,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AM_OTRO',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AM_OTRO',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -1943,7 +1943,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAM_OTRO, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD_OTRO',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCOD_OTRO',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -1956,7 +1956,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     }
                                                                 ]
                                                             },
-                                                            {text: 'Total', width: 80, dataIndex: 'TOTAL',
+                                                            {text: 'Total', width: 100, dataIndex: 'TOTAL',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = 'text-align:right;background:#deedfb;';
                                                                     return Ext.util.Format.number(value, '0,000');
@@ -2051,7 +2051,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridData_FlownByCarrierPOLIZA1',
-                                                    width: 480,
+                                                    width: 580,
 //                                                    height: 600,
                                                     columnLines: true,
                                                     margin: "5 5 0 0",
@@ -2085,7 +2085,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AM0',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AM0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2096,7 +2096,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAM0, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD0',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCOD0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2115,7 +2115,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AM_OTRO0',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AM_OTRO0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2126,7 +2126,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAM_OTRO0, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD_OTRO0',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCOD_OTRO0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2139,7 +2139,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     }
                                                                 ]
                                                             },
-                                                            {text: 'Total', width: 80, dataIndex: 'TOTAL0',
+                                                            {text: 'Total', width: 100, dataIndex: 'TOTAL0',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = 'text-align:right;background:#d5f4d5;';
                                                                     return Ext.util.Format.number(value, '0,000');
@@ -2363,7 +2363,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridData_FlownByCarrierFLIGHT2',
-                                                    width: 480,
+                                                    width: 580,
 //                                                    height: 600,
                                                     columnLines: true,
                                                     margin: "5 5 0 0",
@@ -2397,7 +2397,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AMM',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AMM',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2409,7 +2409,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAMM, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCODM',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCODM',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2428,7 +2428,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AM_OTROM',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AM_OTROM',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2439,7 +2439,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAM_OTROM, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD_OTROM',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCOD_OTROM',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2452,7 +2452,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     }
                                                                 ]
                                                             },
-                                                            {text: 'Total', width: 80, dataIndex: 'TOTALM',
+                                                            {text: 'Total', width: 100, dataIndex: 'TOTALM',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = 'text-align:right;background:#deedfb;';
                                                                     return Ext.util.Format.number(value, '0,000');
@@ -2547,7 +2547,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridData_FlownByCarrierPOLIZA2',
-                                                    width: 480,
+                                                    width: 580,
 //                                                    height: 600,
                                                     columnLines: true,
                                                     margin: "5 5 0 0",
@@ -2581,7 +2581,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AMM0',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AMM0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2592,7 +2592,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAMM0, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCODM0',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCODM0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#d5f1f4;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2611,7 +2611,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     menuDisabled: true, sortable: false, align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    {text: 'AM', width: 80, dataIndex: 'AM_OTROM0',
+                                                                    {text: 'AM', width: 100, dataIndex: 'AM_OTROM0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2622,7 +2622,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                             return '<b>' + Ext.util.Format.number(data.totAM_OTROM0, '0,000') + '<b>';
                                                                         }
                                                                     },
-                                                                    {text: '5D', width: 80, dataIndex: 'CINCOD_OTROM0',
+                                                                    {text: '5D', width: 100, dataIndex: 'CINCOD_OTROM0',
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             metaData.style = 'text-align:right;background:#f4f4d5;';
                                                                             return Ext.util.Format.number(value, '0,000');
@@ -2635,7 +2635,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                                     }
                                                                 ]
                                                             },
-                                                            {text: 'Total', width: 80, dataIndex: 'TOTALM0',
+                                                            {text: 'Total', width: 100, dataIndex: 'TOTALM0',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = 'text-align:right;background:#d5f4d5;';
                                                                     return Ext.util.Format.number(value, '0,000');
