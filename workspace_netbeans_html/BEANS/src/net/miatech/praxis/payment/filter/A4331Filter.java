@@ -91,6 +91,13 @@ public class A4331Filter extends A4331 {
 
     public double totGROSAMOUN = 0;
     public double totTGROSAMOUN = 0;
+    public double totTGROSAMPAY = 0;
+    public double totSERVICFEEP = 0;
+    public double totOVERCOM12P = 0;
+    public double totTGROSAMPAY_CB = 0;
+    public double totSFEEAMOU_CB = 0;
+    public double totIVACOM12_CB = 0;
+    public double totNETOPAY = 0;
     public double totTGROSAMOUN_ACCOUNTED = 0;
     public double totTGROSAMOUN_PENDING = 0;
     public double totTGROSAMOUN_TO_DEBUG = 0;

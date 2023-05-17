@@ -58,6 +58,8 @@ public class A4113Filter extends A4113 {
     public double totADJAMOUNC = 0;
     public double totTAXAMOUNC = 0;
     public double totODBALAMOUC = 0;
+    public double totSERVICFEEP = 0;
+    public double totADJUSMENTP = 0;
     //Diferencia en totales
     public double totDIFF_PGROSAMOU = 0;
     public double totDIFF_PDISCAMOU = 0;

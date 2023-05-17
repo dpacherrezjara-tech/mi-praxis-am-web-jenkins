@@ -20,6 +20,7 @@ public class A4113 {
     public String PCURRENCY = "";
     public String ZONA = "";
     public String SCOUNTRY = "";
+    public String PROCTYPESQ = "";
 
     public double PNETAMOU = 0;
     public double PGROSAMOU = 0;
@@ -28,6 +29,8 @@ public class A4113 {
     public double PADJAMOUN = 0;
     public double PTAXAMOU = 0;
     public double ODBALAMOU = 0;
+    public double SERVICFEEP = 0;
+    public double ADJUSMENTP = 0;
 
     //Result Conciliation SUMMARY
     public double NETAMOUNC = 0;
