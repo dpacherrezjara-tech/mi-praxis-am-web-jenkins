@@ -121,6 +121,7 @@ public class A4331Filter extends A4331 {
     public String IN_PCURRENCY = "";
     public String IN_descSTVAL = "";
     public double IN_TGROSAMOUN = 0;
+    public double IN_TGROSAMPAY = 0;
     public String IN_ISREFNBR = "";
     public String IN_MERCHID = "";
     public String IN_PAYDATE = "";

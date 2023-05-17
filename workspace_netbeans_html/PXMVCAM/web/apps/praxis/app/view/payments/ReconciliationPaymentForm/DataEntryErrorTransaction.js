@@ -723,7 +723,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtTGROSAMOUN',
+                                    id: prototype.id + '-de-txtTGROSAMPAY',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     readOnly: true,

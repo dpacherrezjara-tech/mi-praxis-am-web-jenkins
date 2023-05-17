@@ -5445,7 +5445,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Document<br>Type', dataIndex: 'descTDOC', width: 70,
+                                            {text: 'Document<br>Type', dataIndex: 'TRANSTYPE', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
                                                     return value;
@@ -5489,7 +5489,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 95,
+                                                    {text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'INVOIRN', width: 95,
                                                         listeners: {
                                                             click: 'onViewPNR'
                                                         },
@@ -5589,7 +5589,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 90,
+                                                text: 'Transaction<br>Amount', dataIndex: 'TGROSAMPAY', width: 90,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -5601,7 +5601,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.TGROSAMOUN_TOTAL, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMPAY, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40,
