@@ -65,6 +65,7 @@ public class ReconciliationPaymentDAO {
         double totGROSAMOUNC = 0, totDISCAMOUNC = 0;
         double totSFEEAMOUNC = 0, totADJAMOUNC = 0;
         double totTAXAMOUNC = 0, totODBALAMOUC = 0;
+        double totSERVICFEEP = 0, totADJUSMENTP = 0;
 
         double totDIFF_PGROSAMOU = 0, totDIFF_PDISCAMOU = 0;
         double totDIFF_PSFEEAMOU = 0, totDIFF_PADJAMOUN = 0;
@@ -111,8 +112,8 @@ public class ReconciliationPaymentDAO {
                 totPNETAMOU = rst.getDouble("PNETAMOU");
                 totPGROSAMOU = rst.getDouble("PGROSAMOU");
                 totPDISCAMOU = rst.getDouble("PDISCAMOU");
-                totPSFEEAMOU = rst.getDouble("PSFEEAMOU");
-                totPADJAMOUN = rst.getDouble("PADJAMOUN");
+                totSERVICFEEP = rst.getDouble("SERVICFEEP");
+                totADJUSMENTP = rst.getDouble("ADJUSMENTP");
                 totPTAXAMOU = rst.getDouble("PTAXAMOU");
                 totODBALAMOU = rst.getDouble("ODBALAMOU");
                 totNETAMOUNC = rst.getDouble("NETAMOUNC");
@@ -126,8 +127,8 @@ public class ReconciliationPaymentDAO {
                 //Diferencias
                 totDIFF_PGROSAMOU = totPGROSAMOU - totGROSAMOUNC;
                 totDIFF_PDISCAMOU = totPDISCAMOU - totDISCAMOUNC;
-                totDIFF_PSFEEAMOU = totPSFEEAMOU - totSFEEAMOUNC;
-                totDIFF_PADJAMOUN = totPADJAMOUN - totADJAMOUNC;
+                totDIFF_PSFEEAMOU = totSERVICFEEP - totSFEEAMOUNC;
+                totDIFF_PADJAMOUN = totADJUSMENTP - totADJAMOUNC;
                 totDIFF_PTAXAMOU = totPTAXAMOU - totTAXAMOUNC;
                 totDIFF_ODBALAMOU = totODBALAMOU - totODBALAMOUC;
                 totDIFF_PNETAMOU = totPNETAMOU - totNETAMOUNC;
@@ -153,9 +154,10 @@ public class ReconciliationPaymentDAO {
                     beanTkt.PTAXAMOU = this.mantenerSigno(beanTkt.PDISCAMOU, rst.getDouble("PTAXAMOU"));
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    beanTkt.PROCTYPESQ = rst.getString("PROCTYPESQ").trim();
 
-                    beanTkt.PSFEEAMOU = rst.getDouble("PSFEEAMOU");
-                    beanTkt.PADJAMOUN = rst.getDouble("PADJAMOUN");
+                    beanTkt.SERVICFEEP = rst.getDouble("SERVICFEEP");
+                    beanTkt.ADJUSMENTP = rst.getDouble("ADJUSMENTP");
                     beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
                     beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
@@ -169,8 +171,8 @@ public class ReconciliationPaymentDAO {
                     //Diferencias
                     beanTkt.DIFF_PGROSAMOU = beanTkt.PGROSAMOU - beanTkt.GROSAMOUNC;
                     beanTkt.DIFF_PDISCAMOU = beanTkt.PDISCAMOU - beanTkt.DISCAMOUNC;
-                    beanTkt.DIFF_PSFEEAMOU = beanTkt.PSFEEAMOU - beanTkt.SFEEAMOUNC;
-                    beanTkt.DIFF_PADJAMOUN = beanTkt.PADJAMOUN - beanTkt.ADJAMOUNC;
+                    beanTkt.DIFF_PSFEEAMOU = beanTkt.SERVICFEEP - beanTkt.SFEEAMOUNC;
+                    beanTkt.DIFF_PADJAMOUN = beanTkt.ADJUSMENTP - beanTkt.ADJAMOUNC;
                     beanTkt.DIFF_PTAXAMOU = beanTkt.PTAXAMOU - beanTkt.TAXAMOUNC;
                     beanTkt.DIFF_ODBALAMOU = beanTkt.ODBALAMOU - beanTkt.ODBALAMOUC;
                     beanTkt.DIFF_PNETAMOU = beanTkt.PNETAMOU - beanTkt.NETAMOUNC;
@@ -180,8 +182,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
                     beanTkt.totPDISCAMOU = this.cambioSigno(beanTkt.totPGROSAMOU, totPDISCAMOU);
                     beanTkt.totPTAXAMOU = this.mantenerSigno(beanTkt.totPDISCAMOU, totPTAXAMOU);
-                    beanTkt.totPSFEEAMOU = totPSFEEAMOU;
-                    beanTkt.totPADJAMOUN = totPADJAMOUN;
+                    beanTkt.totSERVICFEEP = totSERVICFEEP;
+                    beanTkt.totADJUSMENTP = totADJUSMENTP;
                     beanTkt.totODBALAMOU = totODBALAMOU;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
@@ -194,8 +196,8 @@ public class ReconciliationPaymentDAO {
                     //Diferencia en totales
                     beanTkt.totDIFF_PGROSAMOU = totDIFF_PGROSAMOU;
                     beanTkt.totDIFF_PDISCAMOU = totDIFF_PDISCAMOU;
-                    beanTkt.totDIFF_PSFEEAMOU = totDIFF_PSFEEAMOU;
-                    beanTkt.totDIFF_PADJAMOUN = totDIFF_PADJAMOUN;
+                    beanTkt.totDIFF_PSFEEAMOU = totDIFF_PSFEEAMOU; //SERVICFEEP
+                    beanTkt.totDIFF_PADJAMOUN = totDIFF_PADJAMOUN; //ADJUSMENTP
                     beanTkt.totDIFF_PTAXAMOU = totDIFF_PTAXAMOU;
                     beanTkt.totDIFF_ODBALAMOU = totDIFF_ODBALAMOU;
                     beanTkt.totDIFF_PNETAMOU = totDIFF_PNETAMOU;
@@ -243,6 +245,7 @@ public class ReconciliationPaymentDAO {
         double totGROSAMOUNC = 0, totDISCAMOUNC = 0;
         double totSFEEAMOUNC = 0, totADJAMOUNC = 0;
         double totTAXAMOUNC = 0, totODBALAMOUC = 0;
+        double totSERVICFEEP = 0;
 
         double totDIFF_PGROSAMOU = 0, totDIFF_PDISCAMOU = 0;
         double totDIFF_PSFEEAMOU = 0, totDIFF_PADJAMOUN = 0;
@@ -268,7 +271,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(2, filter.DATE);
             cstmt.setString(3, filter.IN_PCURRENCY);
             cstmt.setString(4, filter.IN_DATE);
-            cstmt.setString(5, filter.SCOUNTRY);
+            cstmt.setString(5, filter.PROCTYPESQ.trim());
             cstmt.setString(6, filter.IN_PROCTYPE.trim());
             cstmt.setInt(7, filter.page.PAGNUM);
             cstmt.setInt(8, filter.page.PAGROW);
@@ -287,7 +290,7 @@ public class ReconciliationPaymentDAO {
                 totPNETAMOU = rst.getDouble("PNETAMOU");
                 totPGROSAMOU = rst.getDouble("PGROSAMOU");
                 totPDISCAMOU = rst.getDouble("PDISCAMOU");
-                totPSFEEAMOU = rst.getDouble("PSFEEAMOU");
+                totSERVICFEEP = rst.getDouble("SERVICFEEP");
                 totPADJAMOUN = rst.getDouble("PADJAMOUN");
                 totPTAXAMOU = rst.getDouble("PTAXAMOU");
                 totODBALAMOU = rst.getDouble("ODBALAMOU");
@@ -302,7 +305,7 @@ public class ReconciliationPaymentDAO {
                 //Diferencias
                 totDIFF_PGROSAMOU = totPGROSAMOU - totGROSAMOUNC;
                 totDIFF_PDISCAMOU = totPDISCAMOU - totDISCAMOUNC;
-                totDIFF_PSFEEAMOU = totPSFEEAMOU - totSFEEAMOUNC;
+                totDIFF_PSFEEAMOU = totSERVICFEEP - totSFEEAMOUNC;
                 totDIFF_PADJAMOUN = totPADJAMOUN - totADJAMOUNC;
                 totDIFF_PTAXAMOU = totPTAXAMOU - totTAXAMOUNC;
                 totDIFF_ODBALAMOU = totODBALAMOU - totODBALAMOUC;
@@ -337,7 +340,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.PDISCAMOU = this.cambioSigno(beanTkt.PGROSAMOU, rst.getDouble("PDISCAMOU"));
                     beanTkt.PTAXAMOU = this.mantenerSigno(beanTkt.PDISCAMOU, rst.getDouble("PTAXAMOU"));
 
-                    beanTkt.PSFEEAMOU = rst.getDouble("PSFEEAMOU");
+                    beanTkt.SERVICFEEP = rst.getDouble("SERVICFEEP");
                     beanTkt.PADJAMOUN = rst.getDouble("PADJAMOUN");
                     beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
                     beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
@@ -360,7 +363,7 @@ public class ReconciliationPaymentDAO {
                     //Diferencias
                     beanTkt.DIFF_PGROSAMOU = beanTkt.PGROSAMOU - beanTkt.GROSAMOUNC;
                     beanTkt.DIFF_PDISCAMOU = beanTkt.PDISCAMOU - beanTkt.DISCAMOUNC;
-                    beanTkt.DIFF_PSFEEAMOU = beanTkt.PSFEEAMOU - beanTkt.SFEEAMOUNC;
+                    beanTkt.DIFF_PSFEEAMOU = beanTkt.SERVICFEEP - beanTkt.SFEEAMOUNC;
                     beanTkt.DIFF_PADJAMOUN = beanTkt.PADJAMOUN - beanTkt.ADJAMOUNC;
                     beanTkt.DIFF_PTAXAMOU = beanTkt.PTAXAMOU - beanTkt.TAXAMOUNC;
                     beanTkt.DIFF_ODBALAMOU = beanTkt.ODBALAMOU - beanTkt.ODBALAMOUC;
@@ -371,7 +374,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
                     beanTkt.totPDISCAMOU = this.cambioSigno(beanTkt.totPGROSAMOU, totPDISCAMOU);
                     beanTkt.totPTAXAMOU = this.mantenerSigno(beanTkt.totPDISCAMOU, totPTAXAMOU);
-                    beanTkt.totPSFEEAMOU = totPSFEEAMOU;
+                    beanTkt.totSERVICFEEP = totSERVICFEEP;
                     beanTkt.totPADJAMOUN = totPADJAMOUN;
                     beanTkt.totODBALAMOU = totODBALAMOU;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
@@ -2066,20 +2069,22 @@ public class ReconciliationPaymentDAO {
                 //beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                 //beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                 //beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
-                beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
-                beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
-                beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
-                beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
+                beanTkt.TGROSAMPAY_CB = rst.getDouble("TGROSAMPAY_CB");
+                beanTkt.SFEEAMOU_CB = rst.getDouble("SFEEAMOU_CB");
+                beanTkt.IVACOM12_CB = rst.getDouble("IVACOM12_CB");
+                beanTkt.OVERCOM12P = rst.getDouble("OVERCOM12P");
                 beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
                 beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
-                beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
-                beanTkt.ZONA = rst.getString("ZONA");
-                beanTkt.SCOUNTRY = rst.getString("SCOUNTRY");
+                beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
+                beanTkt.ZONA = rst.getString("ZONA").trim();
+                beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                beanTkt.PROCTYPESQ = rst.getString("PROCTYPESQ").trim();
 
-                beanTkt.DISCAMOUN_IMPORT = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN_IMPORT"));
-                beanTkt.DISCAMOUN_IVA = this.mantenerSigno(beanTkt.DISCAMOUN_IMPORT, rst.getDouble("DISCAMOUN_IVA"));
+                beanTkt.SFEEAMOU = this.cambioSigno(beanTkt.TGROSAMPAY, rst.getDouble("SFEEAMOU"));
+                beanTkt.IVACOM12 = this.mantenerSigno(beanTkt.SFEEAMOU, rst.getDouble("IVACOM12"));
 
                 beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                beanTkt.SERVICFEEP = rst.getDouble("SERVICFEEP");
                 beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                 beanTkt.DISCRATE_IMPORT = rst.getDouble("RATECOMBA");
                 beanTkt.DISCRATE_IVA = rst.getDouble("RATEIVABA");
@@ -2135,8 +2140,8 @@ public class ReconciliationPaymentDAO {
 
         Connection cnx = null;
 
-        double totDISCAMOUN_IMPORT = 0, totDISCAMOUN_IVA = 0, totTAXAMOUN_AD = 0, totTAXAMOUN_CB = 0, totNETAMOUN = 0, totNETAMOUNC = 0, totTGROSAMOUN = 0,
-                totSFEEAMOU = 0, totACCEAMOU = 0, totGROSAMOUN = 0, totDISCAMOUN = 0;
+        double totSFEEAMOU = 0, totIVACOM12 = 0, totOVERCOM12P = 0, totIVACOM12_CB = 0, totNETAMOUN = 0, totNETAMOUNC = 0, totTGROSAMPAY = 0,
+                totACCEAMOU = 0, totTGROSAMPAY_CB = 0, totSFEEAMOU_CB = 0, totSERVICFEEP = 0;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -2153,7 +2158,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(5, filter.IN_STVAL);
             cstmt.setString(6, filter.IN_PNR);
             cstmt.setString(7, filter.IN_TDOC);
-            cstmt.setString(8, filter.IN_SCOUNTRY);
+            cstmt.setString(8, filter.PROCTYPESQ.trim());
             cstmt.setString(9, filter.IN_PROCTYPE.trim());
             cstmt.setInt(10, filter.page.PAGNUM);
             cstmt.setInt(11, filter.page.PAGROW);
@@ -2169,18 +2174,18 @@ public class ReconciliationPaymentDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totDISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
-                totDISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
-                totTAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
-                totTAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
+                totSFEEAMOU = rst.getDouble("SFEEAMOU");
+                totIVACOM12 = rst.getDouble("IVACOM12");
+                totOVERCOM12P = rst.getDouble("OVERCOM12P");
+                totIVACOM12_CB = rst.getDouble("IVACOM12_CB");
                 totNETAMOUN = rst.getDouble("NETAMOUN");
                 totNETAMOUNC = rst.getDouble("NETAMOUNC");
-                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                totTGROSAMPAY = rst.getDouble("TGROSAMPAY");
+                totSERVICFEEP = rst.getDouble("SERVICFEEP");
 
-                totSFEEAMOU = rst.getDouble("SFEEAMOU");
                 totACCEAMOU = rst.getDouble("ACCEAMOU");
-                totGROSAMOUN = rst.getDouble("GROSAMOUN");
-                totDISCAMOUN = rst.getDouble("DISCAMOUN");
+                totTGROSAMPAY_CB = rst.getDouble("TGROSAMPAY_CB");
+                totSFEEAMOU_CB = rst.getDouble("SFEEAMOU_CB");
             }
             rst.close();
 //
@@ -2209,25 +2214,26 @@ public class ReconciliationPaymentDAO {
                     //beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                     //beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                     //beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
-                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
-                    beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
-                    beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
-                    beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
+                    beanTkt.TGROSAMPAY_CB = rst.getDouble("TGROSAMPAY_CB");
+                    beanTkt.SFEEAMOU_CB = rst.getDouble("SFEEAMOU_CB");
+                    beanTkt.IVACOM12_CB = rst.getDouble("IVACOM12_CB");
+                    beanTkt.OVERCOM12P = rst.getDouble("OVERCOM12P");
                     beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
                     beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
 
                     beanTkt.ZONA = rst.getString("ZONA");
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY");
+                    beanTkt.PROCTYPESQ = rst.getString("PROCTYPESQ").trim();
 
-                    beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
-                    beanTkt.DISCAMOUN_IMPORT = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN_IMPORT"));
-                    beanTkt.DISCAMOUN_IVA = this.mantenerSigno(beanTkt.DISCAMOUN_IMPORT, rst.getDouble("DISCAMOUN_IVA"));
+                    beanTkt.SERVICFEEP = rst.getDouble("SERVICFEEP");
+                    beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
+                    beanTkt.SFEEAMOU = this.cambioSigno(beanTkt.TGROSAMPAY, rst.getDouble("SFEEAMOU"));
+                    beanTkt.IVACOM12 = this.mantenerSigno(beanTkt.SFEEAMOU, rst.getDouble("IVACOM12"));
 
-                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
                     beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                     beanTkt.DISCRATE_IMPORT = rst.getDouble("RATECOMBA");
-                    beanTkt.DISCRATE_IVA = rst.getDouble("RATEIVABA");
-                    beanTkt.RATECOMSM = rst.getDouble("RATECOMSM");
+                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
 
                     if (beanTkt.CERROR.equals("")) {
@@ -2242,16 +2248,17 @@ public class ReconciliationPaymentDAO {
                     beanTkt.page.TOTROW = filter.page.TOTROW;
 
                     //Totales
-                    beanTkt.totTAXAMOUN_AD = totTAXAMOUN_AD;
-                    beanTkt.totTAXAMOUN_CB = totTAXAMOUN_CB;
+                    beanTkt.totOVERCOM12P = totOVERCOM12P;
+                    beanTkt.totIVACOM12_CB = totIVACOM12_CB;
                     beanTkt.totNETAMOUN = totNETAMOUN;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
-                    beanTkt.totTGROSAMOUN = totTGROSAMOUN;
-                    beanTkt.totDISCAMOUN_IMPORT = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN_IMPORT);
-                    beanTkt.totDISCAMOUN_IVA = this.mantenerSigno(beanTkt.totDISCAMOUN_IMPORT, totDISCAMOUN_IVA);
-                    beanTkt.totSFEEAMOU = totSFEEAMOU;
+                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;
+                    beanTkt.totSFEEAMOU = this.cambioSigno(beanTkt.totTGROSAMPAY, totSFEEAMOU);
+                    beanTkt.totIVACOM12 = this.mantenerSigno(beanTkt.totSFEEAMOU, totIVACOM12);
                     beanTkt.totACCEAMOU = totACCEAMOU;
-                    beanTkt.totDISCAMOUN = totDISCAMOUN;
+                    beanTkt.totSFEEAMOU_CB = totSFEEAMOU_CB;
+                    beanTkt.totSERVICFEEP = totSERVICFEEP;
+                    beanTkt.totTGROSAMPAY_CB = totTGROSAMPAY_CB;
 
                     lstTkts.add(beanTkt);
                 }
@@ -2322,26 +2329,26 @@ public class ReconciliationPaymentDAO {
         hmDescFCOMPL.put("4", "BPO");
 
         double totGROSAMOUN = 0;
-        double totTGROSAMOUN = 0;
+        double totTGROSAMPAY = 0;
         double totDISCAMOUN_IMPORT = 0;
         double totDISCAMOUN_IVA = 0;
-        double totSFEEAMOU = 0;
+        double totSERVICFEEP = 0;
         double totACCEAMOU = 0;
         double totTAXAMOUN_AD = 0;
-        double totIVACOM12 = 0;
-        double totGROSAMOUN_CB = 0;
-        double totDISCAMOUN = 0;
-        double totTAXAMOUN_CB = 0;
-        double totNETAMOUN = 0;
+        double totOVERCOM12P = 0;
+        double totTGROSAMPAY_CB = 0;
+        double totSFEEAMOU = 0;
+        double totIVACOM12_CB = 0;
+        double totNETOPAY = 0;
         double totDISCAMOSC = 0;
         double ACCEAMOUC_TOTAL = 0;
-        double DISCAMOUNI_TOTAL = 0;
+        double totIVACOM12 = 0;
         double TGROSAMOUC_TOTAL = 0;
         double SFEEAMOUC_TOTAL = 0;
         double DISCAMOUNC_TOTAL = 0;
         double DISCAMOUIC_TOTAL = 0;
         double VATCOMMSIC_TOTAL = 0;
-        double DISCAMOUN_CB_TOTAL = 0;
+        double totSFEEAMOU_CB = 0;
         double SVFOPS_TOTAL = 0;
 
         CallableStatement cstmt = null;
@@ -2374,7 +2381,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(13, filter.IN_AUTHS.trim());
             cstmt.setString(14, filter.IN_RECTYPE.trim());
             cstmt.setString(15, filter.IN_ZONA_SETT.trim());
-            cstmt.setString(16, filter.IN_SCOUNTRY_SETT.trim());
+            cstmt.setString(16, filter.PROCTYPESQ.trim());
             cstmt.setString(17, filter.IN_PROCTYPE.trim());
             cstmt.setInt(18, filter.page.PAGNUM);
             cstmt.setInt(19, filter.page.PAGROW);
@@ -2391,29 +2398,30 @@ public class ReconciliationPaymentDAO {
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 totGROSAMOUN = rst.getDouble("totGROSAMOUN");
-                totTGROSAMOUN = rst.getDouble("totTGROSAMOUN");
+                totTGROSAMPAY = rst.getDouble("totTGROSAMPAY");
                 totDISCAMOUN_IMPORT = rst.getDouble("totDISCAMOUN_IMPORT");
                 totDISCAMOUN_IVA = rst.getDouble("totDISCAMOUN_IVA");
-                totSFEEAMOU = rst.getDouble("totSFEEAMOU");
+                totSERVICFEEP = rst.getDouble("totSERVICFEEP");
                 totACCEAMOU = rst.getDouble("totACCEAMOU");
                 totTAXAMOUN_AD = rst.getDouble("totTAXAMOUN_AD");
-                totIVACOM12 = rst.getDouble("totIVACOM12");
-                totGROSAMOUN_CB = rst.getDouble("totGROSAMOUN_CB");
-                totDISCAMOUN = rst.getDouble("totDISCAMOUN");
-                totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");
+                totOVERCOM12P = rst.getDouble("totOVERCOM12P");
+                totTGROSAMPAY_CB = rst.getDouble("totTGROSAMPAY_CB");
+                totSFEEAMOU = rst.getDouble("totSFEEAMOU");
+                totIVACOM12_CB = rst.getDouble("totIVACOM12_CB");
                 totDISCAMOSC = rst.getDouble("totDISCAMOSC");
 
                 ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
-                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
+                totIVACOM12 = rst.getDouble("totIVACOM12");
                 TGROSAMOUC_TOTAL = rst.getDouble("TGROSAMOUC_TOTAL");
                 SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
                 DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
                 DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
-                DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
+                totSFEEAMOU_CB = rst.getDouble("totSFEEAMOU_CB");
                 SVFOPS_TOTAL = rst.getDouble("SVFOPS_TOTAL");
 
-                totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD - DISCAMOUN_CB_TOTAL;
+                //totNETAMOUN = totTGROSAMPAY - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSERVICFEEP - totACCEAMOU - totTGROSAMPAY_CB - totSFEEAMOU - totIVACOM12_CB - totTAXAMOUN_AD - totSFEEAMOU_CB;
+                totNETOPAY = rst.getDouble("totNETOPAY");
             }
             rst.close();
 
@@ -2438,9 +2446,12 @@ public class ReconciliationPaymentDAO {
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                     beanTkt.QTYTKT = rst.getInt("QTYTKT");
-                    beanTkt.INVORNBR = rst.getString("INVORNBR");
+                    beanTkt.INVOIRN = rst.getString("INVOIRN").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
+                    beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
+                    beanTkt.PROCTYPESQ = rst.getString("PROCTYPESQ").trim();
+                    beanTkt.TRANSTYPE = rst.getString("TRANSTYPE").trim();
                     if (hmDescTDOC.containsKey(rst.getString("TDOC").trim())) {
                         beanTkt.descTDOC = hmDescTDOC.get(rst.getString("TDOC").trim()).toString();
                     } else {
@@ -2450,24 +2461,25 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
 
-                    beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
-                    beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
-                    beanTkt.DISCAMOUNI = this.mantenerSigno(beanTkt.DISCAMOUN, rst.getDouble("DISCAMOUNI"));
+                    beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
+                    beanTkt.SFEEAMOU = this.cambioSigno(beanTkt.TGROSAMPAY, rst.getDouble("SFEEAMOU"));
+                    beanTkt.IVACOM12 = this.mantenerSigno(beanTkt.SFEEAMOU, rst.getDouble("IVACOM12"));
 
                     beanTkt.SVFOPS = rst.getDouble("SVFOPS");
-                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    beanTkt.SERVICFEEP = rst.getDouble("SERVICFEEP");
                     beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                     beanTkt.DISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
                     beanTkt.DISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
                     beanTkt.DISCRATE_IMPORT = rst.getDouble("DISCRATE_IMPORT");
                     //beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
-                    beanTkt.GROSAMOUN_CB = rst.getDouble("GROSAMOUN_CB");
+                    beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
 
-                    beanTkt.DISCAMOUN_CB = rst.getDouble("DISCAMOUN_CB");
-                    beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
+                    beanTkt.SFEEAMOU_CB = rst.getDouble("SFEEAMOU_CB");
+                    beanTkt.IVACOM12_CB = rst.getDouble("IVACOM12_CB");
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
-                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU + beanTkt.GROSAMOUN_CB - rst.getDouble("DISCAMOUN") - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD - beanTkt.DISCAMOUN_CB;
+                    //beanTkt.NETAMOUN = beanTkt.TGROSAMPAY - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SERVICFEEP - beanTkt.ACCEAMOU + beanTkt.TGROSAMPAY - rst.getDouble("SFEEAMOU") - beanTkt.IVACOM12_CB - beanTkt.TAXAMOUN_AD - beanTkt.SFEEAMOU_CB;
+                    beanTkt.NETOPAY = rst.getDouble("NETOPAY");
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.FREGLA = rst.getString("FREGLA").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
@@ -2502,7 +2514,7 @@ public class ReconciliationPaymentDAO {
                     }
 
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
-                    beanTkt.DISCAMOUNC = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUNC"));
+                    beanTkt.DISCAMOUNC = this.cambioSigno(beanTkt.TGROSAMPAY, rst.getDouble("DISCAMOUNC"));
                     beanTkt.DISCAMOUIC = this.mantenerSigno(beanTkt.DISCAMOUNC, rst.getDouble("DISCAMOUIC"));
 
                     beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
@@ -2527,9 +2539,9 @@ public class ReconciliationPaymentDAO {
                         beanTkt.desCERROIN = "Difference";
                     }
 
-                    beanTkt.RATESFEE = rst.getDouble("RATESFEE");
+                    beanTkt.SFEERATE = rst.getDouble("SFEERATE");
                     beanTkt.RATEACCE = rst.getDouble("RATEACCE");
-                    beanTkt.IVACOM12 = rst.getDouble("IVACOM12");
+                    beanTkt.OVERCOM12P = rst.getDouble("OVERCOM12P");
 
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
@@ -2541,8 +2553,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
 
-                    beanTkt.CHADJNBR = rst.getString("CHADJNBR").trim();
-                    beanTkt.CHAADJCOD = rst.getString("CHAADJCOD").trim();
+                    beanTkt.CHGBNUM = rst.getString("CHGBNUM").trim();
+                    beanTkt.CODCHGBACK = rst.getString("CODCHGBACK").trim();
                     beanTkt.CHAADJDES = rst.getString("CHAADJDES").trim();
                     beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
                     beanTkt.SELLERID = rst.getString("SELLERID").trim();
@@ -2551,19 +2563,19 @@ public class ReconciliationPaymentDAO {
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
-                    beanTkt.totTGROSAMOUN = totTGROSAMOUN;
-                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN);
-                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.totDISCAMOUN, DISCAMOUNI_TOTAL);
+                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;
+                    beanTkt.totSFEEAMOU = this.cambioSigno(beanTkt.totTGROSAMPAY, totSFEEAMOU);
+                    beanTkt.totIVACOM12 = this.mantenerSigno(beanTkt.totSFEEAMOU, totIVACOM12);
                     beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
                     beanTkt.totDISCAMOUN_IVA = totDISCAMOUN_IVA;
-                    beanTkt.totSFEEAMOU = totSFEEAMOU;
+                    beanTkt.totSERVICFEEP = totSERVICFEEP;
                     beanTkt.totACCEAMOU = totACCEAMOU;
                     beanTkt.totTAXAMOUN_AD = totTAXAMOUN_AD;
-                    beanTkt.totIVACOM12 = totIVACOM12;
-                    beanTkt.totTAXAMOUN_CB = totTAXAMOUN_CB;
-                    beanTkt.totNETAMOUN = totNETAMOUN;
+                    beanTkt.totOVERCOM12P = totOVERCOM12P;
+                    beanTkt.totIVACOM12_CB = totIVACOM12_CB;
+                    beanTkt.totNETOPAY = totNETOPAY;
                     beanTkt.totDISCAMOSC = totDISCAMOSC;
-                    beanTkt.totGROSAMOUN_CB = totGROSAMOUN_CB;
+                    beanTkt.totTGROSAMPAY_CB = totTGROSAMPAY_CB;
 
                     beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
                     beanTkt.TGROSAMOUC_TOTAL = TGROSAMOUC_TOTAL;
@@ -2571,7 +2583,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
-                    beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
+                    beanTkt.totSFEEAMOU_CB = totSFEEAMOU_CB;
                     beanTkt.SVFOPS_TOTAL = SVFOPS_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;

@@ -1026,7 +1026,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSettlement.DATE = rowData.data.DATE;
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
-        this.beanSettlement.IN_SCOUNTRY = rowData.data.SCOUNTRY;
+        this.beanSettlement.PROCTYPESQ = rowData.data.PROCTYPESQ;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
@@ -1184,7 +1184,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
         this.beanSettlement.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
-        this.beanSettlement.IN_SCOUNTRY_SETT = rowData.data.SCOUNTRY;
+        this.beanSettlement.PROCTYPESQ = rowData.data.PROCTYPESQ;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
@@ -1260,6 +1260,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSettlementTktsDetail.IN_SAUTHOC = rowData.data.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = rowData.data.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = rowData.data.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = rowData.data.AREFNBR;
 
         me.paramsDetailDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         this.setGridDataDetTktSettlement();
@@ -1379,7 +1380,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSummary.DATE = rowData.data.DATE;
         this.beanSummary.IN_DATE = rowData.data.IN_DATE;
         this.beanSummary.IN_PCURRENCY = rowData.data.PCURRENCY;
-        this.beanSummary.SCOUNTRY = rowData.data.SCOUNTRY;
+        this.beanSummary.PROCTYPESQ = rowData.data.PROCTYPESQ; //SCOUNTRY
         this.beanSummary.IN_PROCTYPE = rowData.data.IN_PROCTYPE;
         console.log(this.beanSummary);
 

@@ -138,7 +138,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Serv. Fee', dataIndex: 'PSFEEAMOU', width: 110,
+                                                                text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 110,
                                                                 listeners: {
                                                                     //                                                    click: 'onGridDetBankS'
                                                                 },
@@ -151,11 +151,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataMainSummary').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totPSFEEAMOU, '0,000.00') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Adjustment', dataIndex: 'PADJAMOUN', width: 110,
+                                                                text: 'Adjustment', dataIndex: 'ADJUSMENTP', width: 110,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                                     value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
@@ -164,7 +164,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataMainSummary').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totPADJAMOUN, '0,000.00') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totADJUSMENTP, '0,000.00') + '<b>';
                                                                 }
                                                             },
                                                             {
@@ -702,7 +702,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Serv. Fee', dataIndex: 'PSFEEAMOU', width: 75,
+                                                                text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 75,
                                                                 listeners: {
                                                                     //                                                    click: 'onGridDetBankS'
                                                                 },
@@ -715,7 +715,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totPSFEEAMOU, '0,000.00') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
                                                                 }
                                                             },
 //                                                            {
@@ -3439,7 +3439,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'GROSS<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                text: 'GROSS<br>Amount', dataIndex: 'TGROSAMPAY', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -3466,7 +3466,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                      }
                                                      },*/
                                                     {
-                                                        text: 'Amount', dataIndex: 'DISCAMOUN_IMPORT', width: 90,
+                                                        text: 'Amount', dataIndex: 'SFEEAMOU', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3482,7 +3482,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                      }
                                                      },*/
                                                     {
-                                                        text: 'VAT', dataIndex: 'DISCAMOUN_IVA', width: 90,
+                                                        text: 'VAT', dataIndex: 'IVACOM12', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3492,7 +3492,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
+                                                text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -3508,7 +3508,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'VAT COMM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
+                                                text: 'VAT COMM<br>1+2', dataIndex: 'OVERCOM12P', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -3524,7 +3524,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Amount', dataIndex: 'GROSAMOUN', width: 100,
+                                                        text: 'Amount', dataIndex: 'TGROSAMPAY_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3532,7 +3532,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Commission', dataIndex: 'DISCAMOUN', width: 100,
+                                                        text: 'Commission', dataIndex: 'SFEEAMOU_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3540,7 +3540,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT', dataIndex: 'TAXAMOUN_CB', width: 100,
+                                                        text: 'VAT', dataIndex: 'IVACOM12_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3673,7 +3673,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'GROSS<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                text: 'GROSS<br>Amount', dataIndex: 'TGROSAMPAY', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -3685,7 +3685,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMPAY, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {
@@ -3705,7 +3705,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Sale Rate', dataIndex: 'RATECOMSM', width: 70,
+                                                        text: 'Sale Rate', dataIndex: 'DISCRATE', width: 70,
                                                         listeners: {
                                                             //                                                    click: 'onGridDetBankS'
                                                         },
@@ -3717,7 +3717,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'DISCAMOUN_IMPORT', width: 90,
+                                                        text: 'Amount', dataIndex: 'SFEEAMOU', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3726,11 +3726,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN_IMPORT, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT Rate', dataIndex: 'DISCRATE_IVA', width: 90,
+                                                        text: 'VAT Rate', dataIndex: 'DISCRATEI', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00 %');
@@ -3738,7 +3738,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT', dataIndex: 'DISCAMOUN_IVA', width: 90,
+                                                        text: 'VAT', dataIndex: 'IVACOM12', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3747,13 +3747,13 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN_IVA, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totIVACOM12, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
+                                                text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -3762,7 +3762,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {
@@ -3779,7 +3779,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'VAT COMM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
+                                                text: 'VAT COMM<br>1+2', dataIndex: 'OVERCOM12P', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -3788,7 +3788,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTAXAMOUN_AD, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totOVERCOM12P, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {
@@ -3800,7 +3800,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Amount', dataIndex: 'GROSAMOUN', width: 100,
+                                                        text: 'Amount', dataIndex: 'TGROSAMPAY_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3809,11 +3809,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totGROSAMOUN, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMPAY_CB, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'Commission', dataIndex: 'DISCAMOUN', width: 100,
+                                                        text: 'Commission', dataIndex: 'SFEEAMOU_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3822,11 +3822,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU_CB, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT', dataIndex: 'TAXAMOUN_CB', width: 100,
+                                                        text: 'VAT', dataIndex: 'IVACOM12_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3835,7 +3835,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTAXAMOUN_CB, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totIVACOM12_CB, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -4005,19 +4005,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                             {
                                                 text: 'Country', dataIndex: 'SCOUNTRY', width: 80,
                                             },
-                                            {
-                                                text: 'Transaction',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Type', dataIndex: 'RECTYPE', width: 100,
-                                                    }
-                                                ]
-                                            },
                                             {text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40,
                                                 listeners: {
                                                     click: 'onTktsDetail'
@@ -4031,7 +4018,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     }
                                                 }
                                             },
-                                            {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 100,
+                                            {text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'INVOIRN', width: 100,
                                                 listeners: {
                                                     click: 'onViewPNR'
                                                 },
@@ -4052,7 +4039,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Document <br> Type', dataIndex: 'descTDOC', width: 80,
+                                                text: 'Document<br>Type', dataIndex: 'TRANSTYPE', width: 80,
                                             },
                                             {text: 'Indust.Speci. <br> Ref.Nbr', dataIndex: 'ISREFNBR', width: 120,
                                                 listeners: {
@@ -4084,7 +4071,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                text: 'Transaction<br>Amount', dataIndex: 'TGROSAMPAY', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -4096,7 +4083,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMPAY, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {
@@ -4108,7 +4095,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Rate<br>Comm.', dataIndex: 'RATESFEE', width: 80,
+                                                        text: 'Rate<br>Comm.', dataIndex: 'SFEERATE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00 %');
@@ -4116,7 +4103,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         },
                                                     },
                                                     {
-                                                        text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 90,
+                                                        text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4125,7 +4112,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -4155,7 +4142,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT COMM<br>1 2', dataIndex: 'IVACOM12', width: 100,
+                                                        text: 'VAT COMM<br>1 2', dataIndex: 'OVERCOM12P', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4164,7 +4151,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px';
-                                                            return '<b>' + Ext.util.Format.number(data.totIVACOM12, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totOVERCOM12P, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -4186,7 +4173,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         },
                                                     },
                                                     {
-                                                        text: 'Discount<br>Amount', dataIndex: 'DISCAMOUN', width: 80,
+                                                        text: 'Discount<br>Amount', dataIndex: 'SFEEAMOU', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4195,7 +4182,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -4207,7 +4194,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         },
                                                     },
                                                     {
-                                                        text: 'Discount<br>Amount VAT', dataIndex: 'DISCAMOUNI', width: 90,
+                                                        text: 'Discount<br>Amount VAT', dataIndex: 'IVACOM12', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4216,7 +4203,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.DISCAMOUNI_TOTAL, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totIVACOM12, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -4290,7 +4277,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 text: 'VAT COMM<br>1 2', dataIndex: 'VATCOMMSIC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    if (data.IVACOM12 >= data.VATCOMMSIC - 0.5 && data.IVACOM12 <= data.VATCOMMSIC + 0.5) {
+                                                                    if (data.OVERCOM12P >= data.VATCOMMSIC - 0.5 && data.OVERCOM12P <= data.VATCOMMSIC + 0.5) {
                                                                         metaData.style = "text-align:right;background-color:#B2FAC6";
                                                                     } else {
                                                                         metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
@@ -4388,8 +4375,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Number', dataIndex: 'CHADJNBR', width: 110},
-                                                    {text: 'Reason Code', dataIndex: 'CHAADJCOD', width: 90},
+                                                    {text: 'Number', dataIndex: 'CHGBNUM', width: 110},
+                                                    {text: 'Reason Code', dataIndex: 'CODCHGBACK', width: 90},
                                                     {text: 'Description', dataIndex: 'CHAADJDES', width: 280,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
@@ -4405,7 +4392,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     },
                                                     {text: 'Seller ID', dataIndex: 'SELLERID', width: 70},
                                                     {
-                                                        text: 'Amount', dataIndex: 'GROSAMOUN_CB', width: 100,
+                                                        text: 'Amount', dataIndex: 'TGROSAMPAY_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4414,11 +4401,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totGROSAMOUN_CB, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMPAY_CB, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'Commission', dataIndex: 'DISCAMOUN_CB', width: 100,
+                                                        text: 'Commission', dataIndex: 'SFEEAMOU_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4427,11 +4414,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.DISCAMOUN_CB_TOTAL, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU_CB, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT', dataIndex: 'TAXAMOUN_CB', width: 100,
+                                                        text: 'VAT', dataIndex: 'IVACOM12_CB', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -4440,13 +4427,13 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTAXAMOUN_CB, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totIVACOM12_CB, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'Net Amount<br>to Receive AM', dataIndex: 'NETAMOUN', width: 100,
+                                                text: 'Net Amount<br>to Receive AM', dataIndex: 'NETOPAY', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -4455,7 +4442,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totNETAMOUN, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totNETOPAY, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {

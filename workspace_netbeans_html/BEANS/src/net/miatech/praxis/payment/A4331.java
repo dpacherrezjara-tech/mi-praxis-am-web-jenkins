@@ -42,6 +42,8 @@ public class A4331 {
     public String INVORNBR = "";
     public String SPNR = "";
     public String AREFNBR = "";
+    public String INVOIRN = "";
+    public String TRANSTYPE = "";
     public String SELLERID = "";
     public String SCARDN = "";
     public String ISREFNBR = "";
@@ -52,6 +54,9 @@ public class A4331 {
     public String CHADJNBR = "";
     public String CHAADJCOD = "";
     public String CHAADJDES = "";
+    public String CHGBNUM = "";
+    public String CODCHGBACK = "";
+    public double NETOPAY = 0;
     
     public String STRFND = "";
     public String RFAUTOR = "";
@@ -61,6 +66,7 @@ public class A4331 {
     
     public String ZONA = "";
     public String SCOUNTRY = "";
+    public String PROCTYPESQ = "";
     public String SDATE = "";
         
     public double GROSAMOUN = 0;
@@ -90,11 +96,18 @@ public class A4331 {
     
     //Result Conciliation SUMMARY
     
+    public double TGROSAMPAY = 0;
+    public double SERVICFEEP = 0;
+    public double OVERCOM12P = 0;
+    public double TGROSAMPAY_CB = 0;
+    public double SFEEAMOU_CB = 0;
+    public double IVACOM12_CB = 0;
     public double GROSAMOUNC = 0;
     public double TGROSAMOUC = 0;
     public double FINSAMOUC = 0;
     public double SINSAMOUC = 0;
     public double RATESFEE = 0;
+    public double SFEERATE = 0;
     public double RATEACCE = 0;
     public double IVACOM12 = 0;
     public double DISCRATE = 0;
