@@ -2646,6 +2646,7 @@ public class ReconciliationPaymentDAO {
 
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
+        double totTGROSAMPAY = 0;
         double totDISCAMOUN_IMPORT = 0;
         double totDISCAMOUN_IVA = 0;
         double totSFEEAMOU = 0;
@@ -2714,6 +2715,7 @@ public class ReconciliationPaymentDAO {
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 totGROSAMOUN = rst.getDouble("totGROSAMOUN");
+                totTGROSAMPAY = rst.getDouble("totTGROSAMPAY");
                 totTGROSAMOUN = rst.getDouble("totTGROSAMOUN");
                 totDISCAMOUN_IMPORT = rst.getDouble("totDISCAMOUN_IMPORT");
                 totDISCAMOUN_IVA = rst.getDouble("totDISCAMOUN_IVA");
@@ -2724,7 +2726,7 @@ public class ReconciliationPaymentDAO {
                 totGROSAMOUN_CB = rst.getDouble("totGROSAMOUN_CB");
                 totDISCAMOUN = rst.getDouble("totDISCAMOUN");
                 totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");
-                totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD;
+                totNETAMOUN = totTGROSAMPAY - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD;
                 totDISCAMOSC = rst.getDouble("totDISCAMOSC");
 
                 ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
@@ -2749,7 +2751,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
                     beanTkt.IN_ISREFNBR = filter.ISREFNBR.trim();
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
-                    beanTkt.IN_TGROSAMOUN = filter.IN_TGROSAMOUN;
+                    beanTkt.IN_TGROSAMPAY = filter.IN_TGROSAMPAY;
                     beanTkt.IN_descSTVAL = filter.IN_descSTVAL;
 
                     beanTkt.RN = rst.getString("RN").trim();
@@ -2847,6 +2849,7 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;
                     beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN);
                     beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.totDISCAMOUN, DISCAMOUNI_TOTAL);
                     beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
@@ -3246,6 +3249,7 @@ public class ReconciliationPaymentDAO {
         List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
         A4331Filter beanTkt;
         double TGROSAMOUN_TOTAL = 0;
+        double totTGROSAMPAY = 0;
         double TGROSAMOUNC_TOTAL = 0;
         double DISCAMOUN_TOTAL = 0;
         double DISCAMOUNI_TOTAL = 0;
@@ -3342,6 +3346,7 @@ public class ReconciliationPaymentDAO {
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN");
+                totTGROSAMPAY = rst.getDouble("TGROSAMPAY");
                 TGROSAMOUNC_TOTAL = rst.getDouble("TGROSAMOUNC_TOTAL");
                 DISCAMOUN_TOTAL = rst.getDouble("DISCAMOUN_TOTAL");
                 DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
@@ -3387,6 +3392,9 @@ public class ReconciliationPaymentDAO {
                     } else {
                         beanTkt.descTDOC = rst.getString("TDOC").trim();
                     }
+                    beanTkt.PROCTYPESQ = rst.getString("PROCTYPESQ").trim();
+                    beanTkt.INVOIRN = rst.getString("INVOIRN").trim();
+                    beanTkt.TRANSTYPE = rst.getString("TRANSTYPE").trim();
                     beanTkt.descVOID = rst.getString("VOID").trim();
                     beanTkt.STVAL = rst.getString("STVAL").trim();
                     if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
@@ -3435,6 +3443,7 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
 
+                    beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
                     beanTkt.DISCAMOUNI = this.mantenerSigno(beanTkt.DISCAMOUN, rst.getDouble("DISCAMOUNI"));
@@ -3483,6 +3492,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
                     beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
+                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;
                     beanTkt.DISCAMOUN_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUN_TOTAL, DISCAMOUN_TOTAL);
                     beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUN_TOTAL, DISCAMOUNI_TOTAL);
                     beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
@@ -3807,6 +3817,7 @@ public class ReconciliationPaymentDAO {
                 }
 
                 objRtn.AREFNBR = rs01.getString("AREFNBR").trim();
+                objRtn.TRANSTYPE = rs01.getString("TRANSTYPE").trim();
                 objRtn.TDOC = rs01.getString("TDOC").trim();
                 if (hmDescTDOC.containsKey(rs01.getString("TDOC").trim())) {
                     objRtn.descTDOC = hmDescTDOC.get(rs01.getString("TDOC").trim()).toString();
@@ -3842,9 +3853,10 @@ public class ReconciliationPaymentDAO {
 
                 objRtn.GROSAMOUN = rs01.getDouble("GROSAMOUN");
                 objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
+                objRtn.TGROSAMPAY = rs01.getDouble("TGROSAMPAY");
                 objRtn.SVFOPS = rs01.getDouble("SVFOPS");
 
-                objRtn.DIFF_AMOUNT = objRtn.TGROSAMOUN - objRtn.SVFOPS;
+                objRtn.DIFF_AMOUNT = objRtn.TGROSAMPAY - objRtn.SVFOPS;
 
                 objRtn.TRANSDATE = rs01.getString("TRANSDATE");
                 objRtn.TRANSID = rs01.getString("TRANSID");

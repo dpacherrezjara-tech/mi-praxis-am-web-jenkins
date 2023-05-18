@@ -211,11 +211,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
-        this.setValue('de-txtTDOC', this.beanResult.descTDOC);
+        this.setValue('de-txtTDOC', this.beanResult.TRANSTYPE);
         this.setValue('de-txtVOID', this.beanResult.descVOID);
         this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
-        this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
+        this.setValue('de-txtTGROSAMPAY', Ext.util.Format.number(this.beanResult.TGROSAMPAY, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
         //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
@@ -281,10 +281,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.CERROR = this.getValue("txtCERROR");
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
-        if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
+        if (this.getValue("de-txtTGROSAMPAY").trim() !== '') {
+            beanTemp.TGROSAMPAY = Number(this.getValue("de-txtTGROSAMPAY").trim().replaceAll(',', ''));
         } else {
-            beanTemp.TGROSAMOUN = 0;
+            beanTemp.TGROSAMPAY = 0;
         }
 
         beanTemp.AREFNBR = this.beanResult.AREFNBR;
@@ -348,7 +348,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
-        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_TGROSAMPAY = this.bean.TGROSAMPAY;
         this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
         this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
         this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
-        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_TGROSAMPAY = this.bean.TGROSAMPAY;
         this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
         this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
         this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
@@ -675,8 +675,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             suma_montos = suma_montos + parseFloat(this.lstAdjustment[i].A1531VFOP);
         }
 
-        if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
+        if (this.getValue("de-txtTGROSAMPAY").trim() !== '') {
+            monto_venta = Number(this.getValue("de-txtTGROSAMPAY").trim().replaceAll(',', ''));
         } else {
             monto_venta = 0;
         }
@@ -1051,14 +1051,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         var data = grid.getStore().getAt(rowIndex).data;
         console.log(data);
         if (data.STMANUAL !== 'Blocked') {
-            if (this.sumAmount === this.bean.TGROSAMOUN) {
+            if (this.sumAmount === this.bean.TGROSAMPAY) {
                 global.Msg({msg: 'The sum amount is equal to transaction amount.'});
             } else {
                 //this.lstAdjustment = [];
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
                 Ext.getCmp(prototype.id + '-panelADJ').show();
                 var rec = Object.create(grid.getStore().getAt(rowIndex).data);
-                var monto_ajustado = parseFloat(parseFloat(this.bean.TGROSAMOUN - this.sumAmount).toFixed(2))
+                var monto_ajustado = parseFloat(parseFloat(this.bean.TGROSAMPAY - this.sumAmount).toFixed(2))
 
                 rec.A1531VFOP = monto_ajustado;
                 rec.tot_VFOP = monto_ajustado;
@@ -1150,7 +1150,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         if (this.getValue('de-txtISREFNBR').trim() === '' && this.getValue('de-txtSPNR').trim() == '') {
             global.Msg({msg: 'Please fill the Ticket and PNR fields'});
         } else {
-            if (this.sumAmount === this.bean.TGROSAMOUN) {
+            if (this.sumAmount === this.bean.TGROSAMPAY) {
                 global.Msg({msg: 'The sum amount is equal to transaction amount.'});
             } else {
                 this.lstAdjustment = [];
@@ -1158,8 +1158,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 Ext.getCmp(prototype.id + '-panelADJ').show();
                 //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
                 var rec = Object.create(this.bean);
-                rec.A1531VFOP = rec.TGROSAMOUN;
-                rec.tot_VFOP = rec.TGROSAMOUN;
+                rec.A1531VFOP = rec.TGROSAMPAY;
+                rec.tot_VFOP = rec.TGROSAMPAY;
                 rec.A720AGENTE = $('#menuUser').text();
                 rec.CERROR = '01';
                 rec.A1531TTARJ = 'AX';
