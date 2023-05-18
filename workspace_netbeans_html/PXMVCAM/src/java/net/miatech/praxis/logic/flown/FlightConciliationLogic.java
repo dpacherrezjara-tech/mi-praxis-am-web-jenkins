@@ -73,6 +73,10 @@ public class FlightConciliationLogic {
         return objDAO.loadPX095S08VALID(filter, flag);
     }
 
+    public String loadPX095SQP04753(A3729Filter filter) throws SQLException {
+        return objDAO.loadPX095SQP04753(filter);
+    }    
+    
     public String loadPX095S03A1691(A1691Filter filter, String strOption) throws SQLException {
         return objDAO.loadPX095S03A1691(filter, strOption);
     }
