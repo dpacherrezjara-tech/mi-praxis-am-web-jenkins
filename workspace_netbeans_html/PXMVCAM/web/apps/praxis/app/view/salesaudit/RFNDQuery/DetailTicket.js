@@ -159,7 +159,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             width: 350
                         },
-                        {
+                        /*{
                             xtype: 'textfield',
                             id: prototype.idDetailTicket + '-txtRemarks',
                             fieldLabel: 'Remarks',
@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             value: 'xxxxxx',
                             readOnly: true,
                             width: 350
-                        },
+                        },*/
                         {
                             xtype: 'button', hidden: true,
                             id: prototype.idDetailTicket + '-txtImageView',
@@ -680,8 +680,17 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 200,
                             width: 570
+                        },{
+                            xtype: 'textarea',
+                            id: prototype.idDetailTicket + '-txtRemarks',
+                            fieldLabel:'Remarks',
+                            labelWidth:50,
+                            grow: true,
+                            readOnly: true,
+                            //anchor    : '100%',
+                            flex: 1,
+                            height: '100%'
                         }
-
                     ]
                 },
                 {
