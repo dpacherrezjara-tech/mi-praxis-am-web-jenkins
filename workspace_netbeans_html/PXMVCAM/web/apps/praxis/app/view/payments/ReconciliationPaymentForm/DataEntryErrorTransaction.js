@@ -1348,7 +1348,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                      }*/
 
                                                     value = 'Sales';
-
+                                                    
                                                     if (record.data.FDUPLIB > 0) {
                                                         value = 'Blocked'
                                                     }
