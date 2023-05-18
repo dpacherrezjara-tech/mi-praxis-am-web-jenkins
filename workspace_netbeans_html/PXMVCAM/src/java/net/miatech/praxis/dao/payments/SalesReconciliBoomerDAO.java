@@ -1362,6 +1362,7 @@ public class SalesReconciliBoomerDAO {
             cstmt.setString(16, filter.NEW_STVAL);
             cstmt.setString(17, filter.NEW_SCURRENCY);
             cstmt.setDouble(18, filter.NEW_SVFOP);
+            //cstmt.setString(19, filter.NEW_COMMENT);
             //Campos para el where
             cstmt.setString(19, filter.CCIAB.trim());
             cstmt.setString(20, filter.FORMAB.trim());

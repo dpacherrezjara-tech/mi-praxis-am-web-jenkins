@@ -897,6 +897,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 // </editor-fold>
                             ]
                         },
+                        //
                         {
                             region: 'center',
                             id: prototype.id + '-boxDetailNFLGITHData',
@@ -1387,7 +1388,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                align: 'center'
 //                            },
 //                            items: [
-//                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
+                        //                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
 //                                {
 //                                    xtype: 'grid',
 //                                    id: prototype.id + '-gridDetailLeg',
@@ -2687,6 +2688,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 }
                             ]
                         }
+
                         // </editor-fold>
 
                     ]

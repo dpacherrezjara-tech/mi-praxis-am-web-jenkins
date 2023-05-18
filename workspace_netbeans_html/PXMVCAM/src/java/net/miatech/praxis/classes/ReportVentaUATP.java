@@ -32,6 +32,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.eecta.SQP03874Filter;
 
 /**
@@ -39,19 +40,19 @@ import net.miatech.praxis.eecta.SQP03874Filter;
  * @author vhidalgo
  */
 public class ReportVentaUATP {
-
+    
     private String FILE = "RptVentaUATP.pdf";
     public final String FileTXT = "RptVentaUATP.txt";
     private Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD); //12
     private Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 7, Font.NORMAL); // 8  contenido  
-    private Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL); //10
+    private Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL); //10
     private Font subFont_1 = new Font(Font.FontFamily.TIMES_ROMAN, 6, Font.BOLD, BaseColor.WHITE); //8 titulos del grid
     private Font subFont_2 = new Font(Font.FontFamily.TIMES_ROMAN, 6, Font.NORMAL); //7 pie de lagina notas
     private int PYi = 0;
     private int Hlng = 12;
     private File fileTmp01, fileTmp02;
     private List<File> lstFileTmp = new ArrayList<File>();
-
+    private IServerSession session;
     class TableHeader extends PdfPageEventHelper {
 
         /**
@@ -93,28 +94,19 @@ public class ReportVentaUATP {
             PdfPTable table = new PdfPTable(3);
             try {
                 table.setWidths(new int[]{24, 24, 2});
-                table.setTotalWidth(700);
+                table.setTotalWidth(760);
                 table.setLockedWidth(true);
                 table.getDefaultCell().setFixedHeight(20); 
                 table.getDefaultCell().setBorder(Rectangle.BOTTOM);                
                 table.addCell(header);                
-                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);                
-                
-//                Paragraph Nbr_page = new Paragraph( String.format("Página: %d de ", writer.getPageNumber() ), subFont );                
-//                Nbr_page.getFont().setSize(9);
-//                table.addCell(Nbr_page);          
-                
+                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
                 table.addCell(String.format("Página: %d de ", writer.getPageNumber())); //original                                
                 
                 PdfPCell cell = new PdfPCell(Image.getInstance(total) );                
                 cell.setBorder(Rectangle.BOTTOM);   
-                table.addCell( cell );
+                table.addCell( cell );                
+                table.writeSelectedRows(0, -1, 15, 600, writer.getDirectContent()); //34 600 
                 
-//                Paragraph Nbr_page_total = new Paragraph(  String.format("%d ", Image.getInstance(total) )  , subFont );
-//                Nbr_page_total.getFont().setSize(9);                
-//                table.addCell( Nbr_page_total );
-                
-                table.writeSelectedRows(0, -1, 34, 600, writer.getDirectContent());  
                 
             } catch (DocumentException de) {
                 throw new ExceptionConverter(de);
@@ -223,11 +215,42 @@ public class ReportVentaUATP {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total", subFont_1)), PosX1, PYi, 0);
             
     }
-
-    public File createReport(List<SQP03874Filter> Data) {
+    public String setColumnMulticell( String Cadena, Integer wcolumn  ){        
+        //Obtner todas las cadenas de palabras completas
+        String strMulticell = "";
+        String[] cadena_nombre = Cadena.split(" "); 
+        Integer ttl_arrg = cadena_nombre.length;
+        String Line01="";String Line01_="";
+        String Line02="";String Line02_="";
+        String Line03="";
+        //cada linea debe ser menor a "wcolumn" posiciones      
+        for(int i=0;i<ttl_arrg;i++){
+            Line01_ = Line01_ + cadena_nombre[i]+ " ";;
+            if(Line01_.length() < wcolumn ){
+                Line01 = Line01 + cadena_nombre[i] + " ";                      
+            }else{
+                Line02_ = Line02_ + cadena_nombre[i]+ " ";;
+                if(Line02_.length() < wcolumn  ){
+                    Line02 = Line02 + cadena_nombre[i]+ " ";;
+                }else{                
+                    Line03 = Line03 + cadena_nombre[i]+ " ";;
+                }
+            }            
+        }        
+        if (!Line01.equals("")) strMulticell = Line01;
+        if (!Line02.equals("")) strMulticell = strMulticell + "|" + Line02;
+        if (!Line03.equals("")) strMulticell = strMulticell + "|" + Line03;
+        
+        return strMulticell;
+        
+    }
+    public void setSession(IServerSession ss) {
+        session = ss;
+    }
+    public File createReport(List<SQP03874Filter> Data, String Rutatmp ) {
 
         try {
-
+            
             //C:\Program Files\Apache Software Foundation\Apache Tomcat 8.0.27\temp\tmp5401410828782100458RptVentaUATP.pdf
             fileTmp01 = File.createTempFile("tmp", FILE);
             lstFileTmp.add(fileTmp01);
@@ -250,13 +273,8 @@ public class ReportVentaUATP {
             int PosX12;
             int PosX13;
             int PosX14;
-            int PosX15;
-            int PosX16;
-            int PosX17;
-            int PosX18;
-            int PosX19;
-            int PosX20;
-
+            int PosX15;            
+            
             int ItemPage = 0;
             int getPageNumber = 0;
             int PoxT;
@@ -278,8 +296,9 @@ public class ReportVentaUATP {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle, 300, PYi, 0);
 
             // Logo AEROMEXICO
-            Image img;
-            img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
+            Image img;                                    
+            img = Image.getInstance(String.format(Rutatmp+"%s", RESOURCES[0]));
+            //img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
             img.setAbsolutePosition(PosX1, 530);
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
@@ -309,8 +328,9 @@ public class ReportVentaUATP {
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
-            }
-            img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            }            
+            img = Image.getInstance(String.format(Rutatmp+"%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            //img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
             img.setAbsolutePosition(px1, 520); //530
             //img.scaleToFit(190, 40);
             img.scaleToFit(280, 60); //245 42
@@ -320,21 +340,34 @@ public class ReportVentaUATP {
             
             //datos CLIENTE           
             PYi = py0;
-            String A3953RSOCI_part1 = "";
-            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
-            int length = A3953RSOCI.length(); 
-            if(length > 44 ){
-               A3953RSOCI = A3953RSOCI.substring(0, 44);
-               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
-            }
-            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
-            if (!A3953RSOCI_part1.trim().equals("")){
+            String VL_A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+            if(VL_A3953RSOCI.length() < 30){               
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( VL_A3953RSOCI, catFont)), px1, PYi, 0);
                 PYi = PYi - Hlng;
-                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
-            }
-            PYi = PYi - Hlng;
+            }else{                    
+                String StrMulticell = this.setColumnMulticell(VL_A3953RSOCI, 30);                  
+                String[] ArgMulticell = StrMulticell.split("\\|");                
+                for(int j=0;j<ArgMulticell.length;j++){                
+                    ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( ArgMulticell[j], catFont)), px1, PYi, 0); 
+                    PYi = PYi - Hlng;
+                }
+            } 
+//            String A3953RSOCI_part1 = "";
+//            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+//            int length = A3953RSOCI.length(); 
+//            if(length > 44 ){
+//               A3953RSOCI = A3953RSOCI.substring(0, 44);
+//               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
+//            }
+//            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
+//            if (!A3953RSOCI_part1.trim().equals("")){
+//                PYi = PYi - Hlng;
+//                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
+//                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
+//            }
+//            PYi = PYi - Hlng;
+            
             Phrase DIRE1 = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953DIRE1, NORMAL)); //"AV. MARINA NACIONAL Nº. 329 INT C3 "
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, DIRE1, px1, PYi, 0);
             PYi = PYi - Hlng;            

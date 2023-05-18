@@ -99,64 +99,6 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                                     }
                                                 }
                                             }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id + '-btn-consultar',
-                                            text: 'Consultar',
-                                            margin: '1 0 0 10',
-                                            icon: 'resources/img/icon/search.png',
-                                            listeners: {
-                                                click: 'btnSearch_click'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            id: prototype.id + '-subBoxFilter01',
-                                            border: false,
-                                            hidden: false,
-                                            layout: 'hbox',
-                                            bodyStyle: 'background: transparent;"',
-                                            margin: '1 0 0 50',
-                                            defaults: {
-                                                anchor: '100%',
-                                                padding: '1 0'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'toolbar',
-                                                    dock: 'bottom',
-                                                    ui: 'footer',
-                                                    margin: '2 0 2 15',
-                                                    layout: {
-                                                        pack: 'center'
-                                                    },
-                                                    fieldStyle: 'text-align:center',
-                                                    defaults: {
-                                                        scale: 'medium'
-                                                    },
-                                                    items: [
-                                                        {
-                                                            xtype: 'button',
-                                                            id: prototype.id + '-btn-procesar',
-                                                            text: 'Procesar',
-                                                            icon: 'resources/img/botones/process.png',
-                                                            listeners: {
-                                                                click: 'btnProcesar_click'
-                                                            }
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            id: prototype.id + '-btn-get-UUID',
-                                                            text: 'UUID',
-                                                            icon: 'resources/img/botones/1400098721_cv.png',
-                                                            listeners: {
-                                                                click: 'btnUUIDForm_click'
-                                                            }
-                                                        }                                                        
-                                                    ]
-                                                }
-                                            ]
                                         }
                                     ]
                                 }

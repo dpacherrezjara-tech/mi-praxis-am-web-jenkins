@@ -93,7 +93,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             maskRe: /[0-9]/,
                             maxLength: 1,
                             width: 35
-                        },                        
+                        },
+                        /*
                         {xtype: 'tbspacer', width: 65},
                         {
                             xtype: 'label',
@@ -118,10 +119,10 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             readOnly: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 5,
+                            maxLength: 2,
                             width: 50
-                        }                        
+                        }
+                        */
                     ]
                 },
                 //<editor-fold defaultstate="collapsed" desc="Fila 2">
@@ -173,24 +174,46 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             maxLength: 1,
                             width: 35
                         },
-                        
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkDetail',
+                            width: 90,
+                            boxLabel: '<b>(Empty)</b>',
+                            inputValue: '1',
+                            listeners: {
+                                change: 'chkDetail_ChangeValue'
+                            }
+                        },
+                        /*
                         {xtype: 'tbspacer', width: 65},
                         {
                             xtype: 'label',
-                            text: 'New Sequence',
+                            text: 'Sequence',
                             style: 'font-weight:bold;color:#000;',
                             width: 90
-                        },                        
-                        {xtype: 'tbspacer', width: 30},
+                        },
+                        {
+                            xtype: 'label',
+                            text: '(*)',
+                            style: 'font-weight:bold;color:red;',
+                            width: 20,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtSEQ_2',
+                            id: prototype.id + '-txtSEQ',
                             fieldStyle: 'text-align:center',
-                            maskRe: /[0-9]/,
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            readOnly: true,
+                            maxLength: 2,
                             width: 50
-                        }                        
+                        }
+                        */
                     ]
                 },
                 //</editor-fold>

@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.controller.sales.CommissionBSPASR.DataEntrySendCommission
                     global.Msg({
                         msg: res.MESSAGE
                     });
-                    this.onCancelClick();
+                    //this.onCancelClick();
                 } else {
                     global.Msg({
                         msg: res.sesion

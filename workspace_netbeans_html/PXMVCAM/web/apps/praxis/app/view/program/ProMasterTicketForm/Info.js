@@ -1798,7 +1798,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                     padding: '4px 4px 0px 4px',
                                     defaults: {
                                         anchor: '100%',
-                                        width: 1050
+                                        width: 1250
                                     },
                                     items: [
                                         {
@@ -2583,8 +2583,74 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                     ]
                                                                 },
                                                                 // </editor-fold>
-                                                                {xtype: 'tbspacer', width: 40},
+                                                                {xtype: 'tbspacer', width: 15},
                                                                 // <editor-fold defaultstate="collapsed" desc="Fila 4 Columna 5">
+                                                                {
+                                                                    xtype: 'panel',
+                                                                    layout: 'vbox',
+                                                                    border: false,
+                                                                    bodyStyle: 'background: transparent',
+                                                                    defaults: {
+                                                                        anchor: '100%'
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            xtype: 'panel',
+                                                                            layout: 'hbox',
+                                                                            border: false,
+                                                                            bodyStyle: 'background: transparent',
+                                                                            defaults: {
+                                                                                anchor: '100%'
+                                                                            },
+                                                                            items: [
+                                                                                {
+                                                                                    xtype: 'label',
+                                                                                    text: 'STATUS MP',
+                                                                                    style: 'font-weight:bold;text-align:left;color:#0B333C;',
+                                                                                    padding: '4 0 5 0',
+                                                                                    width: 90
+                                                                                },
+                                                                                {
+                                                                                    xtype: 'textfield',
+                                                                                    id: prototype.id + '-lblMP1',
+                                                                                    value: '',
+                                                                                    readOnly: true,
+                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
+                                                                                    width: 90
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            xtype: 'panel',
+                                                                            layout: 'hbox',
+                                                                            border: false,
+                                                                            bodyStyle: 'background: transparent',
+                                                                            defaults: {
+                                                                                anchor: '100%'
+                                                                            },
+                                                                            items: [
+                                                                                {
+                                                                                    xtype: 'label',
+                                                                                    text: 'STATUS MP',
+                                                                                    style: 'font-weight:bold;text-align:left;color:#0B333C;',
+                                                                                    padding: '4 0 5 0',
+                                                                                    width: 90
+                                                                                },
+                                                                                {
+                                                                                    xtype: 'textfield',
+                                                                                    id: prototype.id + '-lblMP2',
+                                                                                    value: '',
+                                                                                    readOnly: true,
+                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
+                                                                                    width: 90
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                // </editor-fold>
+                                                                {xtype: 'tbspacer', width: 40},
+                                                                // <editor-fold defaultstate="collapsed" desc="Fila 4 Columna 6">
                                                                 {
                                                                     xtype: 'panel',
                                                                     layout: 'vbox',
@@ -2970,7 +3036,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                         },
                         items: [
                             {
-                                text: 'MODE', dataIndex: 'A1716MODO', width: 50,
+                                text: 'MODE', dataIndex: 'A1716MODO', width: 60,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var data = record.data;
                                             metaData.style = 'text-align:right;';                                                   
@@ -2985,6 +3051,17 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'F': rtn = 'FLWN'; break;
                                                     case 'C': rtn = 'COMM'; break;
                                                     case 'L': rtn = 'IPAY'; break;
+                                                    case 'A': 
+                                                                if(data.A1716TDOC.trim() === 'R')
+                                                                    rtn = 'PYMR';
+                                                                else if(data.A1716TDOC.trim() === 'S')
+                                                                    rtn = 'PYMS';
+                                                                else
+                                                                    rtn = 'PYMT';
+                                                                break;
+                                                    case 'K': rtn = 'PYMT'; break;
+                                                    case 'P': rtn = 'PLSG'; break;
+                                                    case 'B': rtn = 'CBCK'; break;
                                                     default: rtn = data.A1716MODO.trim();
                                             }
 

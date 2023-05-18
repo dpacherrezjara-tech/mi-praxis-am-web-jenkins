@@ -257,41 +257,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Filters', {
                                             listeners: {
                                                 //change: 'cmbfiltro_clickHandler'
                                             }
-                                        },
-                                        {
-                                            xtype: 'toolbar',
-                                            dock: 'bottom',
-                                            ui: 'footer',
-                                            margin: '2 0 2 15',
-                                            layout: {
-                                                pack: 'center'
-                                            },
-                                            fieldStyle: 'text-align:center',
-                                            defaults: {
-                                                scale: 'medium'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-apl-batch',
-                                                    text: 'Aplicar pago masivo',
-                                                    icon: 'resources/img/icon/single_format.png',                                                    
-                                                    listeners: {
-                                                        click: 'btnAplPaymentBatch'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-apl-reporte',
-                                                    text: 'Aplicar por reporte',
-                                                    icon: 'resources/img/botones/check.png',                                                    
-                                                    listeners: {
-                                                        click: 'btnApl_pay_click'
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                        
+                                        }                                        
                                     ]
                                 }
                                 // </editor-fold>                                

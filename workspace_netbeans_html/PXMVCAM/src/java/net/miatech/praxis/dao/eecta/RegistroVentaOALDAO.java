@@ -16,6 +16,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.eecta.SQP04163Filter;
 import net.miatech.praxis.eecta.SQP04164Filter;
 import net.miatech.praxis.eecta.SQP04173Filter;
+import net.miatech.praxis.eecta.SQP04256Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -291,5 +292,39 @@ public class RegistroVentaOALDAO {
         }
 
         return lstRtn;
+    }
+    public SQP04256Filter setSQP04256Filter(SQP04256Filter filter) throws SQLException, Exception {
+        SQP04256Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04256(?,?,?,?,?)}";
+        Connection cnx = null;
+        ResultSet rst = null;
+        cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+        try {
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(3, Types.VARCHAR);
+            cstmt01.registerOutParameter(4, Types.VARCHAR);
+            cstmt01.registerOutParameter(5, Types.VARCHAR);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_JSON_TEXT);
+            cstmt01.execute();
+            objRtn = new SQP04256Filter();
+            objRtn.dbException.SQLCODE = cstmt01.getString(3);
+            objRtn.dbException.MESSAGE = cstmt01.getString(4);
+            objRtn.OU_A4135IDFIL = cstmt01.getString(5);
+
+        } finally {
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return objRtn;
     }
 }

@@ -19,7 +19,7 @@ public class A730 {
     public String A730FORMA = "";
     public String A730SERIE = "";
     public String A730FECVTA = "";
-	public String A720TKVOID = "";
+    public String A720TKVOID = "";
     public String A730FLAG = "";
     public int A730NSEQ = 0;
     public String TRANS = "";

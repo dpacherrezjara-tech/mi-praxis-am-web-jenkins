@@ -366,20 +366,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 	}
     },
     btnProrrate_clickHandler: function () {
-        if(win.getValue('lblTicketNumber') !== ''){
-            //var params = {};
-            
-            /*var bean104 = {};
-            bean104.FUENTE = win.getValue('lblSource').trim().substr(0, 3);
-            bean104.TDNR = this.beanResultSet01.fileA720.A720CIAI + this.beanResultSet01.fileA720.A720FORMAI + this.beanResultSet01.fileA720.A720SERIEI;
-            bean104.AGTN = this.beanResultSet01.fileA720.A720AGENTE;
-
-            params.bean = bean104;
-            params.typeModal = 'PRORATE';
-            Ext.create('Ext.Praxis.view.screens.ScrProrrateoNewForm', {
-                id: 'ScrProrrateoNewForm',
-                params: params
-            }).show();*/
             try{
                 console.log('prorate call');
                 console.log(this.beanResultSet01);        
@@ -420,9 +406,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     console.log('prorate');
                    console.log(e);
             }
-            
-            
-	}
     },
     lnkLeg_clickHandler: function (obj, metaData, rowNum, column, obj2, rowData) {
         //alert(win.getValue('lblTicketNumber'));
@@ -644,56 +627,47 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             case prototype.id+'-imgSearchTKT4': p = 'TKT4'; break;
         }
         var strTKT = '';
-        var strCIA = '';
         var strSEQ = '';
 	switch(p){
             case 'TKT1':
-                if(win.getValue('lblRelatedTickets1').trim().length > 0){
-                    strCIA = win.getValue('lblRelatedTickets1').substr(0, 3);
+                if(win.getValue('lblRelatedTickets1').trim().length > 0 && win.getValue('lblRelatedTickets1').substr(0, 3) === '139'){
                     strTKT = win.getValue('lblRelatedTickets1').trim();
                     strSEQ = win.getValue('lblRelatedTickets1SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
-                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
                 }
                 break;
             case 'TKT2':
-                if(win.getValue('lblRelatedTickets2').trim().length > 0){
-                    strCIA = win.getValue('lblRelatedTickets2').substr(0, 3);
+                if(win.getValue('lblRelatedTickets2').trim().length > 0 && win.getValue('lblRelatedTickets2').substr(0, 3) === '139'){
                     strTKT = win.getValue('lblRelatedTickets2').trim();
                     strSEQ = win.getValue('lblRelatedTickets2SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
-                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
                 }
                 break;
             case 'TKT3':
-                if(win.getValue('lblRelatedTickets3').trim().length > 0){
-                    strCIA = win.getValue('lblRelatedTickets3').substr(0, 3);
+                if(win.getValue('lblRelatedTickets3').trim().length > 0 && win.getValue('lblRelatedTickets3').substr(0, 3) === '139'){
                     strTKT = win.getValue('lblRelatedTickets3').trim();
                     strSEQ = win.getValue('lblRelatedTickets3SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
-                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
                 }
                 break;
             case 'TKT4':
-                if(win.getValue('lblRelatedTickets4').trim().length > 0){
-                    strCIA = win.getValue('lblRelatedTickets4').substr(0, 3);
+                if(win.getValue('lblRelatedTickets4').trim().length > 0 && win.getValue('lblRelatedTickets4').substr(0, 3) === '139'){
                     strTKT = win.getValue('lblRelatedTickets4').trim();
                     strSEQ = win.getValue('lblRelatedTickets4SEQ').trim();
                     win.setValue('cbxSelectBy', 'TKT');
                     this.cbxSelectBy_closeHandler();
-                    win.setValue('txtFilterTicketCia', strCIA);
                     win.setValue('txtFilterTicketFormSer', (strTKT.length >= 3) ? strTKT.substr(3) : strTKT);
                     win.setValue('txtFilterTicketSeq',(strSEQ.length == 2) ? strSEQ : '00');
                     this.imgSearch_clickHandler();
@@ -1237,7 +1211,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblAgencyIATACity', (me01.beanResultSet01.fileA1007.A1007NOMCD !== '') ? me01.beanResultSet01.fileA1007.A1007NOMCD : ((me01.beanResultSet01.fileA003.A003CIUDAD !== '') ? me01.beanResultSet01.fileA003.A003CIUDAD : me01.beanResultSet01.fileA003.A003PROVIN));
                         win.setValue('lblAgencyGroup', '');
                         win.setValue('lblPassengerName', me01.beanResultSet01.fileA720.A720PAX);
-                        //win.setValue('lblChargeback', me01.beanResultSet01.fileA720.A2289_ESTADO);
+                        win.setValue('lblChargeback', me01.beanResultSet01.fileA720.A2289_ESTADO);
                         switch(me01.beanResultSet01.fileA720.A720TVENTA){
                             case 'I':
                                 win.setValue('lblSegmentIndicator', 'Int');
@@ -1596,7 +1570,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             FLIGHT : paramsResultSet02.fileA730.A730NVLO1,
                                             DATE : paramsResultSet02.fileA730.A730FECVTA,
                                             //STAT : 'EXCH',
-											STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',																		   
+                                            STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                             AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR1, '0,000.00'),
                                             CRCY : paramsResultSet02.fileA730.A730MONREG,
                                             FARE : paramsResultSet02.fileA730.A730FBUSO1
@@ -1630,7 +1604,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO2,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
                                                     //STAT : 'EXCH',
-													STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',																		   
+                                                    STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR2, '0,000.00'),
                                                     CRCY : paramsResultSet02.fileA730.A730MONREG,
                                                     FARE : paramsResultSet02.fileA730.A730FBUSO2
@@ -1666,7 +1640,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO3,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
                                                     //STAT : 'EXCH',
-													STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',																		   
+                                                    STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR3, '0,000.00'),
                                                     CRCY : paramsResultSet02.fileA730.A730MONREG,
                                                     FARE : paramsResultSet02.fileA730.A730FBUSO3
@@ -1700,7 +1674,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                                     FLIGHT : paramsResultSet02.fileA730.A730NVLO4,
                                                     DATE : paramsResultSet02.fileA730.A730FECVTA,
                                                     //STAT : 'EXCH',
-													STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',																		   
+                                                    STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
                                                     AMOUNT : Ext.util.Format.number(paramsResultSet02.fileA730.A730VALOR4, '0,000.00'),
                                                     CRCY : paramsResultSet02.fileA730.A730MONREG,
                                                     FARE : paramsResultSet02.fileA730.A730FBUSO4
@@ -1832,7 +1806,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             if(paramsResultSet03.fileA713.A713TDOC !=='VOID')
-                                            {
+                                            {    
                                                 intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                                 //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
                                                 intRemainingCommision += me01.beanResultSet01.fileA720.A720LRRCM3+me01.beanResultSet01.fileA720.A720LRSCM3;
@@ -1870,7 +1844,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             if(paramsResultSet03.fileA713.A713TDOC !=='VOID')
-                                            {     
+                                            {    
                                                 intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                                 //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
                                                 intRemainingCommision += me01.beanResultSet01.fileA720.A720LRRCM4+me01.beanResultSet01.fileA720.A720LRSCM4;
@@ -2417,7 +2391,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             if(paramsResultSet03.fileA713.A713TDOC !=='VOID')
-                                            {     
+                                            {    
                                                 intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                                 //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
                                                 intRemainingCommision += me01.beanResultSet01.fileA720.A720LRRCM1+me01.beanResultSet01.fileA720.A720LRSCM1;
@@ -2455,7 +2429,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             if(paramsResultSet03.fileA713.A713TDOC !=='VOID')
-                                            {     
+                                            {    
                                                 intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                                 //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
                                                 intRemainingCommision += me01.beanResultSet01.fileA720.A720LRRCM2+me01.beanResultSet01.fileA720.A720LRSCM2;
@@ -2493,7 +2467,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             if(paramsResultSet03.fileA713.A713TDOC !=='VOID')
-                                            {      
+                                            {    
                                                 intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                                 //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
                                                 intRemainingCommision += me01.beanResultSet01.fileA720.A720LRRCM3+me01.beanResultSet01.fileA720.A720LRSCM3;
@@ -2531,7 +2505,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             if(paramsResultSet03.fileA713.A713TDOC !=='VOID')
-                                            {
+                                            {    
                                                 intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                                 //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
                                                 intRemainingCommision += me01.beanResultSet01.fileA720.A720LRRCM4+me01.beanResultSet01.fileA720.A720LRSCM4;
@@ -3211,36 +3185,36 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 strA1531VFOP += paramsResultSet09.fileA1531.A1531VFOP;
                             }
                         }
-										 
-										 
-										  
-										  
-															
-															
-																	 
-																								
-																					   
-										  
-																	 
-																				 
-																				  
-																	 
-									 
-																			 
-									 
-								 
-										  
-								 
-																				 
-																				  
-																	 
-									 
-																			 
-									 
-								 
-								
-							 
-						 
+                        var SCARDN1 = '';
+                        var SCARDN2 = '';
+                        var SAUTHOC1 = '';
+                        var SAUTHOC2 = '';
+                        //win.setValue('lblMP1', 'Pending');
+                        //win.setValue('lblMP2', 'Pending');
+                        if(me01.filterTKT.lstResultSet22.length > 0){
+                            for(var i22 = 0; i22 < me01.filterTKT.lstResultSet22.length; i22++){
+                                paramsResultSet22 = me01.filterTKT.lstResultSet22[i22];
+                                if(i22==0)
+                                {                                    
+                                    SCARDN1 = paramsResultSet22.fileA4121.SCARDN;
+                                    SAUTHOC1 = paramsResultSet22.fileA4121.SCARDN;
+                                    if(SCARDN1!=='' && SAUTHOC1!=='')
+                                    {
+                                        win.setValue('lblMP1', 'Conciliate');
+                                    }
+                                }
+                                if(i22==1)
+                                {
+                                    SCARDN2 = paramsResultSet22.fileA4121.SCARDN;
+                                    SAUTHOC2 = paramsResultSet22.fileA4121.SCARDN;
+                                    if(SCARDN2!=='' && SAUTHOC2!=='')
+                                    {
+                                        win.setValue('lblMP2', 'Conciliate');
+                                    }
+                                }
+                                
+                            }
+                        }
                         win.setValue('lblFOP4MoreAmount', Ext.util.Format.number(strA1531VFOP, '0,000.00'));
                         
                         nPosition1 = 0;
@@ -3773,8 +3747,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         win.enabled('btnPayment', false);
         win.enabled('btnPNR', false);
         
-								   
-								   
+        win.setValue('lblMP1', '');
+        win.setValue('lblMP2', '');
         
         //Ext.getCmp(prototype.id+'-btnFacsimil0').hide();
         Ext.getCmp(prototype.id+'-btnDelivery0').hide();

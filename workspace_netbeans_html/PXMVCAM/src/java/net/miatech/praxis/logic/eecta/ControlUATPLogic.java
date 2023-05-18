@@ -16,6 +16,8 @@ import net.miatech.praxis.eecta.SQP04109Filter;
 import net.miatech.praxis.eecta.SQP04110Filter;
 import net.miatech.praxis.eecta.SQP04145Filter;
 import net.miatech.praxis.eecta.SQP04146Filter;
+import net.miatech.praxis.eecta.SQP04229Filter;
+import net.miatech.praxis.eecta.SQP04238Filter;
 
 /**
  *
@@ -48,12 +50,21 @@ public class ControlUATPLogic {
     public SQP03348Filter setSQP03348Filter(SQP03348Filter filter) throws SQLException, Exception {
         return objDAO.setSQP03348Filter(filter);
     }
-    
-     public List<SQP04145Filter> getSQP04145Filter(SQP04145Filter filter) throws SQLException, Exception {
+
+    public List<SQP04145Filter> getSQP04145Filter(SQP04145Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04145Filter(filter);
     }
+
     public List<SQP04146Filter> getSQP04146Filter(SQP04146Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04146Filter(filter);
     }
+
+    public SQP04229Filter setSQP04229Filter(SQP04229Filter filter) throws SQLException, Exception {
+        return objDAO.setSQP04229Filter(filter);
+    }
+    public List<SQP04238Filter> getSQP04238Filter(SQP04238Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04238Filter(filter);
+    }
+
 
 }

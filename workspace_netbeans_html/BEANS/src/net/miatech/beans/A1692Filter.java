@@ -89,6 +89,10 @@ public class A1692Filter extends A1692 {
     public double ISC = 0;
     public double TAX = 0;
     public double NETO = 0;
+    public double LAM_XD = 0;
+    public double EAM_XD = 0;
+    public double LAM_XV = 0;
+    public double EAM_XV = 0;
     public double A1437RATE = 0;
     public double A1437RCOMI = 0;
     public double totGROSS = 0;
@@ -96,6 +100,10 @@ public class A1692Filter extends A1692 {
     public double totOCOMIS = 0;
     public double totTAX = 0;
     public double totNETO = 0;
+    public double tot_LAM_XV = 0;
+    public double tot_EAM_XV = 0;
+    public double tot_LAM_XD = 0;
+    public double tot_EAM_XD = 0;
     //Billed , Not Billed
     public int CPN_Billed = 0;
     public int CPN_NoBilled = 0;
@@ -122,6 +130,8 @@ public class A1692Filter extends A1692 {
     public double A1692DEBTOTAL = 0.0;
     public double A1692CREDTOTAL = 0.0;
     public Pagination page = new Pagination();
+    //A1141
+    public String A1141TID = "";
     public int pos = 0;
     //PAGINACION ===============================================================
     public int intCurrentPg = -1;

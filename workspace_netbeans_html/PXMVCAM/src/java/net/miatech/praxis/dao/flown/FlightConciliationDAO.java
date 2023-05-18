@@ -2407,7 +2407,7 @@ public class FlightConciliationDAO {
         String strMsj = "";
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2442,11 +2442,15 @@ public class FlightConciliationDAO {
             cstmt.setString(20, Functions.getFechaActual());
             cstmt.setString(21, Functions.getHoraActual());
             cstmt.setString(22, "A3729");
+            cstmt.setString(23, filter.LNKMVLO.trim());
+            cstmt.setString(24, filter.FECR.trim());
+            cstmt.setString(25, filter.HOCR.trim());
             cstmt.execute();
 
             strMsj = "Upgrade was successful.";
 
         } catch (Exception e) {
+            strMsj = e.getMessage();
             e.printStackTrace();
         } finally {
             if (cstmt != null) {
