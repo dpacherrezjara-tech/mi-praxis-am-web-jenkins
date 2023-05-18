@@ -255,53 +255,54 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             if (win.getValue('txtCard1').trim() === '' && win.getValue('txtCard2').trim() === '') {
                 this.habilitarFiltros2();
             }
-        } else if (win.getValue('txtMERCHN') !== '') {
-            switch (e.getKey()) {
-                case 13:
-                    if (win.getValue('txtMERCHN').trim().length === 20) {
-                        var selectedValuem = win.getValue('rbgType').rbgType;
-                        switch (selectedValuem) {
-                            case 'Sales':
-                                this.beanDetailMer.IN_TDOC = 'S';
-                                break;
-                            case 'Refund':
-                                this.beanDetailMer.IN_TDOC = 'R';
-                                break;
-                        }
-                        this.beanDetailMer.strFecFiltro = win.getValue('cmbFecFiltro');
-                        this.beanDetailMer.strYearFrom = win.getValue('cmbDateFromYear');
-                        this.beanDetailMer.strMonthFrom = win.getValue('cmbDateFromMonth');
-                        this.beanDetailMer.strYearTo = win.getValue('cmbDateToYear');
-                        this.beanDetailMer.strMonthTo = win.getValue('cmbDateToMonth');
-                        this.beanDetailMer.IN_MERCHN = win.getValue('txtMERCHN');
-                        console.log(this.beanDetailMer);
-//                        this.searchDetMERCHAT(this.beanDetailMer);
-                    } else {
-                        win.setValue('txtMERCHN', '');
-                        global.Msg({msg: 'Merchant number must contain 20 digits.'});
-                    }
-                    if (win.getValue('txtMERCHN').trim() !== '') {
-                        win.enabled('cmbCURRENCY', false);
-                        win.enabled('cmbCardType', false);
-                        win.enabled('cmbCountry', false);
-                        win.enabled('cmbFOP', false);
-                        win.enabled('cmbSource', false);
-                    }
-                    break;
-                case 8://Backspace
-                    this.habilitarFiltros2();
-                    break;
-                case 32: //Spacebar
-                    this.habilitarFiltros2();
-                    break;
-                case 46: //Delete
-                    this.habilitarFiltros2();
-                    break;
-            }
-            if (win.getValue('txtMERCHN').trim() === '') {
-                this.habilitarFiltros2();
-            }
-        }
+        } 
+//        else if (win.getValue('txtMERCHN') !== '') {
+//            switch (e.getKey()) {
+//                case 13:
+//                    if (win.getValue('txtMERCHN').trim().length === 20) {
+//                        var selectedValuem = win.getValue('rbgType').rbgType;
+//                        switch (selectedValuem) {
+//                            case 'Sales':
+//                                this.beanDetailMer.IN_TDOC = 'S';
+//                                break;
+//                            case 'Refund':
+//                                this.beanDetailMer.IN_TDOC = 'R';
+//                                break;
+//                        }
+//                        this.beanDetailMer.strFecFiltro = win.getValue('cmbFecFiltro');
+//                        this.beanDetailMer.strYearFrom = win.getValue('cmbDateFromYear');
+//                        this.beanDetailMer.strMonthFrom = win.getValue('cmbDateFromMonth');
+//                        this.beanDetailMer.strYearTo = win.getValue('cmbDateToYear');
+//                        this.beanDetailMer.strMonthTo = win.getValue('cmbDateToMonth');
+//                        this.beanDetailMer.IN_MERCHN = win.getValue('txtMERCHN');
+//                        console.log(this.beanDetailMer);
+////                        this.searchDetMERCHAT(this.beanDetailMer);
+//                    } else {
+//                        win.setValue('txtMERCHN', '');
+//                        global.Msg({msg: 'Merchant number must contain 20 digits.'});
+//                    }
+//                    if (win.getValue('txtMERCHN').trim() !== '') {
+//                        win.enabled('cmbCURRENCY', false);
+//                        win.enabled('cmbCardType', false);
+//                        win.enabled('cmbCountry', false);
+//                        win.enabled('cmbFOP', false);
+//                        win.enabled('cmbSource', false);
+//                    }
+//                    break;
+//                case 8://Backspace
+//                    this.habilitarFiltros2();
+//                    break;
+//                case 32: //Spacebar
+//                    this.habilitarFiltros2();
+//                    break;
+//                case 46: //Delete
+//                    this.habilitarFiltros2();
+//                    break;
+//            }
+//            if (win.getValue('txtMERCHN').trim() === '') {
+//                this.habilitarFiltros2();
+//            }
+//        }
     },
     BuscarPNR_keyDownHandler: function (obj, e, eOpts) {
         switch (e.getKey()) {
@@ -708,7 +709,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
 
     //<editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
-        if (win.getValue('txtTicket').trim() !== '' || win.getValue('txtMERCHN').trim() !== '' || win.getValue('txtAUTHNBR').trim() !== ''
+        if (win.getValue('txtTicket').trim() !== '' || win.getValue('txtAUTHNBR').trim() !== ''
                 || win.getValue('txtCard1').trim() !== '' || win.getValue('txtCard2').trim() !== '' || win.getValue('txtPNR').trim() !== '') {
             if (win.getValue('txtTicket').trim() !== '') {
                 if (win.getValue('txtTicket').trim().length === 13) {
@@ -771,40 +772,42 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
 
 
 
-            } else if (win.getValue('txtMERCHN').trim() !== '') {
-                window.alert("2");
-                //	  		if(app.trim(txtMERCHN.text).length == 20){
-                //				
-                //				var selectedValuem:String = String(rbgType.selectedValue);
-                //				switch(selectedValuem){
-                //					case 'Sales':
-                //						beanDetailMer.IN_TDOC = 'S';
-                //						break;
-                //					case 'Refund':
-                //						beanDetailMer.IN_TDOC = 'R';
-                //						break;
-                //				}
-                //				beanDetailMer.strFecFiltro = String(cmbFecFiltro.selectedItem.data);
-                //				beanDetailMer.strYearFrom  = app.getYearCode2(cmbDateFromYear.selectedIndex+1);
-                //				beanDetailMer.strMonthFrom = app.getMonthCode(cmbDateFromMonth.selectedIndex).replace("00", "");
-                //				beanDetailMer.strYearTo    = app.getYearCode2(cmbDateToYear.selectedIndex+1);
-                //				beanDetailMer.strMonthTo   = app.getMonthCode(cmbDateToMonth.selectedIndex).replace("00", "");
-                //				beanDetailMer.IN_MERCHN    = txtMERCHN.text;
-                //				beanDetailMer.IN_AUTHNBR   = txtAUTHNBR.text;
-                //				if(String(chkADYEN.selected) == 'true'){
-                //					bean.IN_ADYEN = 'Y';
-                //				}else{
-                //					bean.IN_ADYEN = '';
-                //				}
-                //				
-                //				roBwrConciliation.searchDetMERCHAT(beanDetailMer);
-                //				
-                //			}else{
-                //				Alert.show("Merchant Number must contain 20 digits.");
-                //				txtMERCHN.text = '';
-                //			}
-                //			
-            } else if (win.getValue('txtAUTHNBR').trim() !== '') {
+            }
+//            else if (win.getValue('txtMERCHN').trim() !== '') {
+//                window.alert("2");
+//                //	  		if(app.trim(txtMERCHN.text).length == 20){
+//                //				
+//                //				var selectedValuem:String = String(rbgType.selectedValue);
+//                //				switch(selectedValuem){
+//                //					case 'Sales':
+//                //						beanDetailMer.IN_TDOC = 'S';
+//                //						break;
+//                //					case 'Refund':
+//                //						beanDetailMer.IN_TDOC = 'R';
+//                //						break;
+//                //				}
+//                //				beanDetailMer.strFecFiltro = String(cmbFecFiltro.selectedItem.data);
+//                //				beanDetailMer.strYearFrom  = app.getYearCode2(cmbDateFromYear.selectedIndex+1);
+//                //				beanDetailMer.strMonthFrom = app.getMonthCode(cmbDateFromMonth.selectedIndex).replace("00", "");
+//                //				beanDetailMer.strYearTo    = app.getYearCode2(cmbDateToYear.selectedIndex+1);
+//                //				beanDetailMer.strMonthTo   = app.getMonthCode(cmbDateToMonth.selectedIndex).replace("00", "");
+//                //				beanDetailMer.IN_MERCHN    = txtMERCHN.text;
+//                //				beanDetailMer.IN_AUTHNBR   = txtAUTHNBR.text;
+//                //				if(String(chkADYEN.selected) == 'true'){
+//                //					bean.IN_ADYEN = 'Y';
+//                //				}else{
+//                //					bean.IN_ADYEN = '';
+//                //				}
+//                //				
+//                //				roBwrConciliation.searchDetMERCHAT(beanDetailMer);
+//                //				
+//                //			}else{
+//                //				Alert.show("Merchant Number must contain 20 digits.");
+//                //				txtMERCHN.text = '';
+//                //			}
+//                //			
+//            }
+            else if (win.getValue('txtAUTHNBR').trim() !== '') {
                 console.log("----->");
                 var selectedValuec = win.getValue('rbgType').rbgType;
                 switch (selectedValuec) {
@@ -888,7 +891,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             this.bean.IN_TICKET = win.getValue('txtTicket').trim();
             this.bean.IN_FTE = win.getValue('cmbSource');
             this.bean.IN_CURRENCY = win.getValue('cmbCURRENCY');
-            this.bean.IN_MERCHN = win.getValue('txtMERCHN').trim();
+//            this.bean.IN_MERCHN = win.getValue('txtMERCHN').trim();
             this.bean.IN_AUTHNBR = win.getValue('txtAUTHNBR').trim();
             //            if(vskPrincipal.selectedChild == boxCharts){
             //                    with(boxSearchFilter){visible = false; includeInLayout = false}

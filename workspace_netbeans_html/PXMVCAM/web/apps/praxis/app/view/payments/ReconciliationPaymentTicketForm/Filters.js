@@ -437,30 +437,30 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             listeners:{
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
-                        {
-                            xtype: 'label',
-                            text: 'Merchant :',
-                            padding: '3 0',
-                            width: 74,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Merchant Number'
-                            }
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id+'-txtMERCHN',     
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9a-zA-Z]/,      
-                            maxLength: 20,
-                            width: 192,
-                            enableKeyEvents: true,
-                            listeners:{
-                                keypress: 'BuscarTKT_keyDownHandler'
-                            }
-                        },
+//                        {xtype: 'tbspacer', width: 10},
+//                        {
+//                            xtype: 'label',
+//                            text: 'Merchant :',
+//                            padding: '3 0',
+//                            width: 74,
+//                            autoEl: {
+//                                tag: 'label',
+//                                'data-qtip': 'Merchant Number'
+//                            }
+//                        },
+//                        {
+//                            xtype: 'textfield',
+//                            id: prototype.id+'-txtMERCHN',     
+//                            fieldStyle: 'text-align:center',
+//                            enforceMaxLength: true,     
+//                            maskRe: /[0-9a-zA-Z]/,      
+//                            maxLength: 20,
+//                            width: 192,
+//                            enableKeyEvents: true,
+//                            listeners:{
+//                                keypress: 'BuscarTKT_keyDownHandler'
+//                            }
+//                        },
                         {xtype: 'tbspacer', width: 25},
                         {
                             xtype: 'label',
