@@ -178,11 +178,6 @@ public class ViewTicketAccountingDAO {
                                     objRtn.PFC = rs01.getString("PRE_CONTA").substring(7885 + (i * x3), 7888 + (i * x3));
                                     objRtn.PNR = rs01.getString("PRE_CONTA").substring(8005 + (i * x6), 8011 + (i * x6));
                                     objRtn.IATAVTA = rs01.getString("PRE_CONTA").substring(8245 + (i * x8), 8253 + (i * x8));
-                                    if (objRtn.IATAVTA.trim().equals("")){
-                                        objRtn.IATAVTA = objRtn.PAIS;
-                                    }else{
-                                        objRtn.IATAVTA = objRtn.IATAVTA.trim() + "-" + objRtn.PAIS;
-                                    }
                                     objRtn.FECUSO = rs01.getString("PRE_CONTA").substring(8565 + (i * x8), 8573 + (i * x8));
                                     objRtn.CTA = (rs01.getString("PRE_CONTA").substring(8885 + (i * x29), 8914 + (i * x29))).trim();
 
@@ -1742,11 +1737,6 @@ public class ViewTicketAccountingDAO {
                                             objRtn.PFC = mapping.getString(N04_WO_PFC.get(i)[IDX_WO_PFC.RD_PFC]);
                                             objRtn.PNR = mapping.getString(N04_WO_PNR.get(i)[IDX_WO_PNR.RD_PNR]);
                                             objRtn.IATAVTA = mapping.getString(N04_WO_AGTVTA.get(i)[IDX_WO_AGTVTA.RD_AGTVTA]);
-                                            if (objRtn.IATAVTA.trim().equals("")){
-                                                objRtn.IATAVTA = objRtn.PAIS;
-                                            }else{
-                                                objRtn.IATAVTA = objRtn.IATAVTA.trim() + "-" + objRtn.PAIS;
-                                            }
                                             objRtn.FECUSO = mapping.getString(N04_WO_FECUSO.get(i)[IDX_WO_FECUSO.RD_FECUSO]);
                                             objRtn.CTA = mapping.getString(N04_WO_CTA.get(i)[IDX_WO_CTA.RD_CTA]);
                                             objRtn.LIB1 = mapping.getString(N04_WO_LIB1.get(i)[IDX_WO_LIB1.RD_LIB1]);
@@ -3336,11 +3326,6 @@ public class ViewTicketAccountingDAO {
                                             objRtn.PFC = mapping.getString(N04_WO_PFC.get(i)[IDX_WO_PFC.RD_PFC]);
                                             objRtn.PNR = mapping.getString(N04_WO_PNR.get(i)[IDX_WO_PNR.RD_PNR]);
                                             objRtn.IATAVTA = mapping.getString(N04_WO_AGTVTA.get(i)[IDX_WO_AGTVTA.RD_AGTVTA]);
-                                            if (objRtn.IATAVTA.trim().equals("")){
-                                                objRtn.IATAVTA = objRtn.PAIS;
-                                            }else{
-                                                objRtn.IATAVTA = objRtn.IATAVTA.trim() + "-" + objRtn.PAIS;
-                                            }
                                             objRtn.FECUSO = mapping.getString(N04_WO_FECUSO.get(i)[IDX_WO_FECUSO.RD_FECUSO]);
                                             objRtn.CTA = mapping.getString(N04_WO_CTA.get(i)[IDX_WO_CTA.RD_CTA]);
                                             objRtn.LIB1 = mapping.getString(N04_WO_LIB1.get(i)[IDX_WO_LIB1.RD_LIB1]);
@@ -4591,11 +4576,6 @@ public class ViewTicketAccountingDAO {
                                             objRtn.PFC = mapping.getString(N04_WO_PFC.get(i)[IDX_WO_PFC.RD_PFC]);
                                             objRtn.PNR = mapping.getString(N04_WO_PNR.get(i)[IDX_WO_PNR.RD_PNR]);
                                             objRtn.IATAVTA = mapping.getString(N04_WO_AGTVTA.get(i)[IDX_WO_AGTVTA.RD_AGTVTA]);
-                                            if (objRtn.IATAVTA.trim().equals("")){
-                                                objRtn.IATAVTA = objRtn.PAIS;
-                                            }else{
-                                                objRtn.IATAVTA = objRtn.IATAVTA.trim() + "-" + objRtn.PAIS;
-                                            }
                                             objRtn.FECUSO = mapping.getString(N04_WO_FECUSO.get(i)[IDX_WO_FECUSO.RD_FECUSO]);
                                             objRtn.CTA = mapping.getString(N04_WO_CTA.get(i)[IDX_WO_CTA.RD_CTA]);
                                             objRtn.LIB1 = mapping.getString(N04_WO_LIB1.get(i)[IDX_WO_LIB1.RD_LIB1]);

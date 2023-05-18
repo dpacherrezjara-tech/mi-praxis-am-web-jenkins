@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Options', {
         {
             xtype: 'panel',
             id: prototype.id + '-boxPaginacion',
-            hidden: true,
+            hidden: false,
             width: 100,
             border: false,
             items: [
@@ -144,16 +144,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Options', {
                             tooltip: 'New',
                             hidden: true,
                         },
-                        {
+                        /*{
                             xtype: 'button',
                             id: prototype.id + '-btnRefresh',
-                            icon: 'resources/img/botones/add.png',
+                            iconCls: 'prx-icon-add',
                             tooltip: 'New',
                             hidden: true,
                             listeners: {
                                 click: 'btnRefresh_click'
                             }
-                        },
+                        },*/
                         {
                             xtype:'button',
                             id: prototype.id+'-btnDisplay',

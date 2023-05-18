@@ -1,7 +1,6 @@
 prototype.widthContenedor = 1200;
 prototype.widthGrid = '100%';
 prototype.id01 = 'RegistroVentaOALCrud';
-prototype.id02 = 'RegistroVentaOALLoad';
 
 Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALForm', {
     extend: 'Ext.form.Panel',

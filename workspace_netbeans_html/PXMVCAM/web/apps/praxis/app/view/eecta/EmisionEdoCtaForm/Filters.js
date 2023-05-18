@@ -163,7 +163,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                             width: 210,
                                             height: 26,
                                             maskRe: /[0-9]/,
-                                            value: '',
+                                            value: '480',
                                             //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'

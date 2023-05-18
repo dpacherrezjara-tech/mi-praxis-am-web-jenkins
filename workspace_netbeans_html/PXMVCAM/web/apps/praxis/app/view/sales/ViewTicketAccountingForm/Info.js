@@ -199,7 +199,7 @@ Ext.define('Ext.Praxis.view.sales.ViewTicketAccountingForm.Info', {
                                     {text: 'F.OPEN', width: 80, dataIndex: 'FOPEN'},
                                     {text: 'VRIC', width: 80, dataIndex: 'VRIC'},
                                     {text: 'PFC', width: 80, dataIndex: 'PFC'},
-                                    {text: 'IATAVTA-PS', width: 100, dataIndex: 'IATAVTA'},
+                                    {text: 'IATAVTA', width: 80, dataIndex: 'IATAVTA'},
                                     {text: 'FECUSO', width: 80, dataIndex: 'FECUSO'},
                                     {text: 'CTA', width: 250, dataIndex: 'CTA',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {

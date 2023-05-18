@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             maxLength: 5,
                             readOnly: true,
                             width: 100,
-                            validator: function (value) {
+                            validator: function(value) {
                                 if (value === "0") {
                                     return "The value entered is too small.";
                                 } else
@@ -148,13 +148,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             triggerAction: 'all',
                             hideTrigger: false,
                             listeners: {
-                                afterrender: function (combo, eOpts) {
+                                afterrender: function(combo, eOpts) {
                                     combo.setValue("2");
                                 },
-                                focus: function (combo) {
+                                focus: function(combo) {
                                     combo.expand();
                                 },
-                                blur: function (combo, event, eOpts) {
+                                blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("2");
                                     }
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             readOnly: true,
                             maskRe: /[a-zA-Z]/,
                             width: 80,
-                            validator: function (value) {
+                            validator: function(value) {
                                 if (value === "") {
                                     return "It requires you to enter a Departure City";
                                 } else
@@ -233,7 +233,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             maskRe: /[a-zA-Z]/,
                             readOnly: true,
                             width: 100,
-                            validator: function (value) {
+                            validator: function(value) {
                                 if (value === "") {
                                     return "It requires you to enter a Arrival City";
                                 } else
@@ -289,7 +289,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             maxLength: 2,
                             readOnly: true,
                             width: 80,
-                            validator: function (value) {
+                            validator: function(value) {
                                 if (value === "") {
                                     return "It requires you to enter a Carrier";
                                 } else
@@ -328,8 +328,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                 fields: ['code', 'name'],
                                 data: [
                                     ["", "None"],
-                                    ["L", "L"],
-                                    ["S", "S"]
+                                    ["L", "Leg"],
+                                    ["S", "Segment"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -435,13 +435,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     listeners: {
-                                        afterrender: function (combo, eOpts) {
+                                        afterrender: function(combo, eOpts) {
                                             combo.setValue("");
                                         },
-                                        focus: function (combo) {
+                                        focus: function(combo) {
                                             combo.expand();
                                         },
-                                        blur: function (combo, event, eOpts) {
+                                        blur: function(combo, event, eOpts) {
                                             if (combo.getValue() === null) {
                                                 combo.setValue("");
                                             }
@@ -483,7 +483,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     listeners: {
-                                        select: function (comp, record, index) {
+                                        select: function(comp, record, index) {
                                             if (comp.rawValue === "&nbsp;") {
                                                 comp.setValue(null);
                                             }
@@ -551,7 +551,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     listeners: {
-                                        select: function (comp, record, index) {
+                                        select: function(comp, record, index) {
                                             if (comp.rawValue === "&nbsp;") {
                                                 comp.setValue(null);
                                             }
@@ -695,32 +695,32 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                 },
                                 {xtype: 'tbspacer', width: 300},
                                 {
-                                    xtype: 'panel',
-                                    border: false,
-                                    bodyStyle: 'background: #EFE9E5',
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtDESCRIP',
-                                            fieldStyle: 'text-align:left',
-                                            enforceMaxLength: true,
-                                            maxLength: 50,
-                                            inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                            width: 400,
-                                            hidden: false
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtDESCRIP2',
-                                            fieldStyle: 'text-align:left',
-                                            enforceMaxLength: true,
-                                            maxLength: 50,
-                                            inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                            width: 400,
-                                            hidden: false
-                                        }
-                                    ]
-                                }
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: #EFE9E5',
+                                items:[
+                                   {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 400,
+                                    hidden: false
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 400,
+                                    hidden: false
+                                } 
+                                ]
+                            }
                             ]
                         },
                         {
@@ -761,17 +761,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     tooltip: 'Qty ODS Coupons',
                                     width: 120,
                                     /*listeners: {
-                                     //                                        click: 'onQtyCouponsClick'
-                                     click: function() {
-                                     if (Ext.getCmp(prototype.id + '-txtDESCRIP').isVisible()) {
-                                     Ext.getCmp(prototype.id + '-txtDESCRIP-label').hide();
-                                     Ext.getCmp(prototype.id + '-txtDESCRIP').hide();
-                                     } else {
-                                     Ext.getCmp(prototype.id + '-txtDESCRIP-label').show();
-                                     Ext.getCmp(prototype.id + '-txtDESCRIP').show();
-                                     }
-                                     }
-                                     }*/
+//                                        click: 'onQtyCouponsClick'
+                                        click: function() {
+                                            if (Ext.getCmp(prototype.id + '-txtDESCRIP').isVisible()) {
+                                                Ext.getCmp(prototype.id + '-txtDESCRIP-label').hide();
+                                                Ext.getCmp(prototype.id + '-txtDESCRIP').hide();
+                                            } else {
+                                                Ext.getCmp(prototype.id + '-txtDESCRIP-label').show();
+                                                Ext.getCmp(prototype.id + '-txtDESCRIP').show();
+                                            }
+                                        }
+                                    }*/
                                 },
                                 {
                                     xtype: 'textfield',
@@ -820,13 +820,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     triggerAction: 'all',
                                     hideTrigger: false,
                                     listeners: {
-                                        afterrender: function (combo, eOpts) {
+                                        afterrender: function(combo, eOpts) {
                                             combo.setValue("");
                                         },
-                                        focus: function (combo) {
+                                        focus: function(combo) {
                                             combo.expand();
                                         },
-                                        blur: function (combo, event, eOpts) {
+                                        blur: function(combo, event, eOpts) {
                                             if (combo.getValue() === null) {
                                                 combo.setValue("");
                                             }
@@ -1102,13 +1102,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             triggerAction: 'all',
                             hideTrigger: false,
                             listeners: {
-                                afterrender: function (combo, eOpts) {
+                                afterrender: function(combo, eOpts) {
                                     combo.setValue("");
                                 },
-                                focus: function (combo) {
+                                focus: function(combo) {
                                     combo.expand();
                                 },
-                                blur: function (combo, event, eOpts) {
+                                blur: function(combo, event, eOpts) {
                                     if (combo.getValue() === null) {
                                         combo.setValue("");
                                     }
@@ -1271,7 +1271,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             listeners: {
-                                select: function (comp, record, index) {
+                                select: function(comp, record, index) {
                                     if (comp.rawValue === "&nbsp;") {
                                         comp.setValue(null);
                                     }
@@ -1332,7 +1332,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     width: 100,
                                     hideTrigger: true,
                                     listeners: {
-                                        blur: function (datefield, e, eOpts) {
+                                        blur: function(datefield, e, eOpts) {
                                             var a = datefield.getErrors();
                                             for (var i = 0; i < a.length; i++) {
                                                 if (a[i] === 'Type the date in the format: YYYYMMDD') {
@@ -1381,6 +1381,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     value: '0',
                                     width: 100
                                 },
+                                
                             ]
                         },
                         {
@@ -1430,13 +1431,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     triggerAction: 'all',
                                     hideTrigger: false,
                                     listeners: {
-                                        afterrender: function (combo, eOpts) {
+                                        afterrender: function(combo, eOpts) {
                                             combo.setValue("");
                                         },
-                                        focus: function (combo) {
+                                        focus: function(combo) {
                                             combo.expand();
                                         },
-                                        blur: function (combo, event, eOpts) {
+                                        blur: function(combo, event, eOpts) {
                                             if (combo.getValue() === null) {
                                                 combo.setValue("");
                                             }

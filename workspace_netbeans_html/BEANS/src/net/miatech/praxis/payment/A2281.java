@@ -37,8 +37,6 @@ public class A2281 {
     public String CLIENTE = "";
     public String option = "";
     public int DOCNUM = 0;
-    public String FECFROM = "";
-    public String FECTO = "";
     //Variables del 
     public String USCR = "";
     public String FECR = "";

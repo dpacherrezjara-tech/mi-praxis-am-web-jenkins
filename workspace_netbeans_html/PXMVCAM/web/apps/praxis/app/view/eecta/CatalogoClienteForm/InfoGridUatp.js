@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp', {
                             columnLines: true,
                             autoScroll: true,
                             width: '100%',
-                            height: 190,
+                            height: 130,
                             padding: '0px 5px 1px 5px',
                             plugins: {
                                 ptype: 'cellediting',

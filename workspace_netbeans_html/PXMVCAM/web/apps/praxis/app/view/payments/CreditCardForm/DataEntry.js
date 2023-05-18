@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
     controller: 'DataEntryCreditCardController',
     title:'Credit Card - Data Entry Form',
     header:true,
-    height:600,
+    height:510,
     width:820,
     resizable:false,
     layout:'fit',
@@ -84,12 +84,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                     maxLength: 2,
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
-                                    width: 70,
+                                    width: 50,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                { xtype: 'tbspacer', width: 40 },
                                 {
                                     xtype: 'label',
                                     text: 'Name: ',
@@ -106,60 +106,6 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                     width: 290
                                 },
                                 { xtype: 'tbspacer', width: 123 }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '2 2 2 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Date from:',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 80
-                                },
-                                { xtype: 'tbspacer', width: 56 },                                                                
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtFECFROM',
-                                    fieldStyle: 'text-align:center;',
-                                    enableKeyEvents: true,
-                                    enforceMaxLength: true,
-                                    width: 70,
-                                    readOnly: false,
-                                    maxLength: 8,
-                                    maskRe: /[0-9]/,                                    
-                                },
-                                { xtype: 'tbspacer', width: 20 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Date to:',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 80
-                                },
-                                { xtype: 'tbspacer', width: 40 },                                
-                                { xtype: 'tbspacer', width: 2 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtFECTO',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 70,
-                                    readOnly: false,
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
-                                    maskRe: /[0-9]/,                                    
-                                },   
-                                { xtype: 'tbspacer', width: 343 }
                             ]
                         },
                         {
@@ -188,12 +134,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                     maxLength: 2,
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
-                                    width: 70,
+                                    width: 50,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 555 }
+                                { xtype: 'tbspacer', width: 575 }
                             ]
                         },    
                         { xtype: 'tbspacer', width: 80, height: 10 },
@@ -401,73 +347,6 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                         { xtype: 'tbspacer', width: 6 },
                         {
                             xtype: 'label',
-                            text: 'Bank BSP Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                            bodyStyle: 'background:#E5ECEF;',
-                            fontSize: '11',
-                            width: 234,
-                            height: 20,
-                            margin: '4 2 4 8'
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '0 2 0 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [                                                       
-                                { xtype: 'tbspacer', width: 7 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Code',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 50
-                                },
-                                { xtype: 'tbspacer', width: 86 },                               
-                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtBSPBANK',
-                                    fieldStyle: 'text-align:center',
-                                    enableKeyEvents: false,
-                                    enforceMaxLength: true,
-                                    editable: true,
-                                    enabled: true,
-                                    maxLength: 2,
-                                    maskRe: /[a-zA-Z]/,
-                                    readOnly: false,
-                                    width: 70,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 20 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Name: ',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 90
-                                },
-                                { xtype: 'tbspacer', width: 32 },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-de-txtNAMEBSPBANK',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    readOnly: true,
-                                    maxChars: '40',
-                                    width: 290
-                                },
-                                { xtype: 'tbspacer', width: 123 }
-                            ]
-                        },
-                        { xtype: 'tbspacer', width: 6 },
-                        {
-                            xtype: 'label',
                             text: 'Financial Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
@@ -486,7 +365,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'National Credit Card Rate',
+                                    text: 'Commission Rate Normal',
                                     fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -496,17 +375,17 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATCNAC',
+                                    id:prototype.id+'-de-txtRATECON',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
-                                    maskRe: /[0-9.]/,
+                                    maskRe: /[1-9]/,
                                     maxLength: 5                                  
                                 },
                                 { xtype: 'tbspacer', width: 55 },
                                 {
                                     xtype: 'label',
-                                    text: 'National Debit Card Rate',
+                                    text: ' Rate IVA',
                                     fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -516,11 +395,11 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATDNAC',
+                                    id:prototype.id+'-de-txtRATEIVA',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 94,
-                                    maskRe: /[0-9.]/,
+                                    maskRe: /[1-9]/,
                                     maxLength: 5
                                 },
                                 { xtype: 'tbspacer', width: 30 }
@@ -538,7 +417,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
-                                    text: 'International Card Rate',
+                                    text: 'Commission Rate Promocional 1',
                                     fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -548,17 +427,17 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATCEXT',
+                                    id:prototype.id+'-de-txtRATECOP1',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 80,
-                                    maskRe: /[0-9.]/,
+                                    maskRe: /[1-9]/,
                                     maxLength: 5
                                 },
                                 { xtype: 'tbspacer', width: 55 },
                                 {
                                     xtype: 'label',
-                                    text: 'IVA Rate',
+                                    text: ' Commission Rate Promocional 2',
                                     fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -568,11 +447,11 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                 { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-de-txtRATEIVA',
+                                    id:prototype.id+'-de-txtRATECOP2',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 94,
-                                    maskRe: /[0-9.]/,
+                                    maskRe: /[1-9]/,
                                     maxLength: 5
                                 },
                                 { xtype: 'tbspacer', width: 30 }                        

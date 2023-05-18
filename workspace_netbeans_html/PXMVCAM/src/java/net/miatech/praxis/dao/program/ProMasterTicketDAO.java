@@ -24,7 +24,6 @@ import net.miatech.beans.PX040S01A720ResultSet12;
 import net.miatech.beans.PX040S01A720ResultSet13;
 import net.miatech.beans.PX040S01A720ResultSet14;
 import net.miatech.beans.PX040S01A720ResultSet15;
-import net.miatech.beans.PX040S01A720ResultSet22;
 import net.miatech.beans.PX040S02A720Filter;
 import net.miatech.beans.SQP00250Filter;
 import net.miatech.beans.SQP00697Filter;
@@ -64,13 +63,12 @@ public class ProMasterTicketDAO {
         PX040S01A720ResultSet13 objRtn13;
         PX040S01A720ResultSet14 objRtn14;
         PX040S01A720ResultSet15 objRtn15;
-        PX040S01A720ResultSet22 objRtn22;
 
         PreparedStatement pstmt01 = null, pstmt02 = null;
         ResultSet rstst01 = null, rstst02 = null;
         
         CallableStatement cstmt01 = null;
-        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null, rs22 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
         String SQLQRY01 = "SELECT"
                 + "   A720CIAI,A720FORMAI,A720SERIEI"
@@ -370,7 +368,7 @@ public class ProMasterTicketDAO {
                         objRtn02.fileA730.A730CUPON4 = rs02.getString("A730CUPON4");
                         objRtn02.fileA730.A730MONREG = rs02.getString("A730MONREG");
                         objRtn02.fileA730.A730FECVTA = rs02.getString("A730FECVTA");
-                        objRtn02.fileA730.A720TKVOID = rs02.getString("A720TKVOID");
+
                         objRtn02.fileA730.A730CIA720 = rs02.getString("A730CIA720");
 						objRtn02.fileA730.A720TKVOID = rs02.getString("A720TKVOID");
                         objRtn02.fileA730.A730FOR720 = rs02.getString("A730FOR720");
@@ -680,21 +678,6 @@ public class ProMasterTicketDAO {
                                                                             objRtn15.fileA1747.MDACP = rs15.getString("MDACP");
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
-                                                                        if (cstmt01.getMoreResults()) {
-                                                                            rs16 = cstmt01.getResultSet();
-                                                                            while (rs16.next()) {
-                                                                                
-                                                                            }
-                                                                            if (cstmt01.getMoreResults()) {
-                                                                                rs22 = cstmt01.getResultSet();
-                                                                                while (rs22.next()) {
-                                                                                    objRtn22 = new PX040S01A720ResultSet22();
-                                                                                    objRtn22.fileA4121.SCARDN = rs22.getString("SCARDN").trim();
-                                                                                    objRtn22.fileA4121.SAUTHOC = rs22.getString("SAUTHOC").trim();
-                                                                                    filter.lstResultSet22.add(objRtn22);
-                                                                                }
-                                                                            }
-                                                                        }
                                                                     }
                                                                 }
                                                             }
@@ -856,7 +839,7 @@ public class ProMasterTicketDAO {
         PX040S01A1716Filter objRtn;
 
         CallableStatement cstmt01 = null;
-        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
 
         String SQLCLL01 = "{CALL SQP04220(?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX040S01A1716
         //String SQLCLL01 = "{CALL PRAXIS.SQP00362(?,?,?,?)}";
@@ -1668,64 +1651,7 @@ public class ProMasterTicketDAO {
 
                                                                             lstRtn.add(objRtn);
                                                                         }
-                                                                    }
-
-                                                                    if (cstmt01.getMoreResults()) {
-                                                                            rs16 = cstmt01.getResultSet();
-                                                                                while (rs16.next()) {
-                                                                                    objRtn = new PX040S01A1716Filter();
-                                                                                    objRtn.A1716CCUST = rs16.getString("A4183CCUST");
-                                                                                    objRtn.A1716CIA = rs16.getString("A4183CIA");
-                                                                                    objRtn.A1716FORMA = rs16.getString("A4183FORMA");
-                                                                                    objRtn.A1716SERIE = rs16.getString("A4183SERIE");
-                                                                                    objRtn.A1716CUPON = rs16.getString("A4183CUPON");
-                                                                                    objRtn.A1716SEQT = rs16.getString("A4183SEQT");
-                                                                                    objRtn.A1716SEQ = rs16.getString("A4183SEQ");
-
-                                                                                    objRtn.A1716MODO = rs16.getString("A4183MODO");
-                                                                                    objRtn.A1716FUENT = rs16.getString("A4183FUENT");
-                                                                                    objRtn.A1716SUBFU = rs16.getString("A4183SUBFU");
-                                                                                    objRtn.A1716FP = rs16.getString("A4183FP");
-
-                                                                                    //objRtn.A1716FUENT = rs15.getString("A4070FUENT");
-                                                                                    objRtn.A1716ESTAD = rs16.getString("A4183ESTAD");
-                                                                                    objRtn.A1716FFILE = rs16.getString("A4183FFILE");
-                                                                                    objRtn.A1716FPRO = rs16.getString("A4183FPRO");
-                                                                                    objRtn.A1716GRUPO = rs16.getString("A4183GRUPO");
-                                                                                    objRtn.A1716CUR = rs16.getString("A4183CUR");
-                                                                                    objRtn.A1716ACTIV = rs16.getDouble("A4183ACTIV");
-                                                                                    objRtn.A1716PASIV = rs16.getDouble("A4183PASIV");
-                                                                                    objRtn.A1716CURRV = rs16.getString("A4183CURRV");
-                                                                                    objRtn.A1716ACTRV = rs16.getDouble("A4183ACTRV");
-                                                                                    objRtn.A1716PASRV = rs16.getDouble("A4183PASRV");
-                                                                                    objRtn.A1716CUENT = rs16.getString("A4183CUENT");
-                                                                                    objRtn.A1716SUBCU = rs16.getString("A4183SUBCU");
-                                                                                    objRtn.A1716IDFIL = rs16.getString("A4183IDFIL");
-                                                                                    objRtn.A1716TIDOC = rs16.getString("A4183TIDOC");
-                                                                                    objRtn.A1716TDOC = rs16.getString("A4183TDOC");
-                                                                                    objRtn.A1716ORIG = rs16.getString("A4183ORIG");
-                                                                                    objRtn.A1716FCONT = rs16.getString("A4183FCONT");
-
-                                                                                    objRtn.A1716TITU = rs16.getString("A4183TITU");
-
-                                                                                    objRtn.A1716COPE = rs16.getString("A4183COPE");
-                                                                                    objRtn.A1716PROV = rs16.getString("A4183PROV");
-
-                                                                                    objRtn.A1716IDCON = rs16.getString("A4183IDCON");
-
-                                                                                    objRtn.TCOL = rs16.getString("TCOL");
-                                                                //                    
-                                                                //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
-                                                                //
-                                                                //                     }
-                                                                //                    
-                                                                                    if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
-                                                                                        objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
-                                                                                    }
-
-                                                                                    lstRtn.add(objRtn);
-                                                                                }
-                                                                            }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -1945,8 +1871,6 @@ public class ProMasterTicketDAO {
                 objRtn.A720PNR = rs01.getString("A720PNR");
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
-                objRtn.SCARDN = rs01.getString("SCARDN");
-                objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 lstRtn.add(objRtn);
             }
         } finally {
@@ -1979,9 +1903,7 @@ public class ProMasterTicketDAO {
 
         String SQLCLL01 = "";
        
-        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}";
-        //SQLCLL01 = "{CALL LIBSAP53.SQP00697(?,?,?,?,?,?,?,?,?)}"; 
-        
+        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; 
         if(filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3)))
         {
             SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}"; 
@@ -2021,9 +1943,6 @@ public class ProMasterTicketDAO {
                 objRtn.A1531MFOP = rs01.getString("A1531MFOP");
                 objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
-                objRtn.SCARDN = rs01.getString("SCARDN");
-                objRtn.SAUTHOC = rs01.getString("SAUTHOC");
-                objRtn.A720TKVOID = rs01.getString("A720TKVOID");
                 lstRtn.add(objRtn);
             }
         }catch(SQLException e){
