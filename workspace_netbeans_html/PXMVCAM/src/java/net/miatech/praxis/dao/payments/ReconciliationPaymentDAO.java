@@ -4658,7 +4658,7 @@ public class ReconciliationPaymentDAO {
         if (filter.TDOC.trim().equals("R")) {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04456(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04958(?,?,?,?,?,?,?,?,?)}";
         } else {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
@@ -4779,7 +4779,7 @@ public class ReconciliationPaymentDAO {
             IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
 
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04457(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04957(?,?,?,?,?,?,?,?,?)}";
         } else {
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04754(?,?,?,?,?,?,?,?,?)}";
         }
