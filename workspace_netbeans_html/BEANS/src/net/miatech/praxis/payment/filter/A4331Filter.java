@@ -31,6 +31,7 @@ public class A4331Filter extends A4331 {
     public String IN_DATE_VALUE = "";
     public String DATE = "";
     public String strFormatDate = "";
+    public String strFormatDate2 = "";
     public String IN_PNR = "";
     public String IN_PNRError = "";
     public String IN_TDOCError  = "";
