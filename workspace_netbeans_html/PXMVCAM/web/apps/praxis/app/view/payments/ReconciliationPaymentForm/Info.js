@@ -5120,7 +5120,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'PRDA', width: 90,
+                                                        text: 'Date', dataIndex: 'strFormatDate', width: 90,
                                                         listeners: {
                                                             click: 'setGridDataFiltroPDATE'
                                                         },
@@ -5378,7 +5378,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                         items: [
                                             {
                                                 text: 'Processing',
-                                                id: prototype.id + '-htDateErrorTransaction',
+                                                id: prototype.id + '-htPreDateErrorTransactionMain1',
                                                 hidden: false,
                                                 defaults: {
                                                     menuDisabled: true,
@@ -5387,7 +5387,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'DATE', width: 80,
+                                                        text: 'Date', dataIndex: 'strFormatDate', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
@@ -5396,13 +5396,24 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 75,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
-                                                    metaData.style = "text-align:center;background-color:" + data.COLOR;
-                                                    return value;
-                                                }
-                                            },
+                                                text: 'Processing',
+                                                id: prototype.id + '-htPreDateErrorTransactionMain2',
+                                                hidden: false,
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'strFormatDate2', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },                                            
                                             {
                                                 text: 'Zone', dataIndex: 'ZONA', width: 50,
                                             },

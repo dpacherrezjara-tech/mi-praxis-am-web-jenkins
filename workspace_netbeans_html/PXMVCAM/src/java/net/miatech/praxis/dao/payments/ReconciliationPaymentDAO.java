@@ -3259,6 +3259,8 @@ public class ReconciliationPaymentDAO {
         double ACCEAMOU_TOTAL = 0;
         double DISCAMOUNC_TOTAL = 0;
         double DISCAMOUIC_TOTAL = 0;
+        String strFormatDate = "";
+        String strFormatDate2 = "";
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
@@ -3342,6 +3344,14 @@ public class ReconciliationPaymentDAO {
             filter.page.TOTPAG = cstmt.getInt(24);
             filter.page.TOTROW = cstmt.getInt(25);
 
+            if (filter.IN_DATE.trim().equals("PAYDATE")) {
+                strFormatDate = "PAYDATE";
+                strFormatDate2 = "PRDA";
+            } else {
+                strFormatDate = "PRDA";
+                strFormatDate2 = "PAYDATE";
+            }
+
             //cstmt.execute();
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -3376,6 +3386,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.IN_IDITEMS = filter.IN_IDITEMS.trim();
 
                     beanTkt.RN = rst.getString("RN").trim();
+                    beanTkt.strFormatDate = rst.getString(strFormatDate).trim();
+                    beanTkt.strFormatDate2 = rst.getString(strFormatDate2).trim();
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
@@ -3622,7 +3634,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
 
 //                    beanTkt.PAYDATE = rst.getString("PAYDATE");
-                    beanTkt.PRDA = rst.getString("PRDA");
+                    beanTkt.strFormatDate = rst.getString(filter.IN_DATE.trim());
                     beanTkt.TNCM = rst.getInt("TNCM");
                     beanTkt.TNCP = rst.getInt("TNCP");
                     beanTkt.CPLM = rst.getInt("CPLM");
@@ -4952,7 +4964,7 @@ public class ReconciliationPaymentDAO {
                 beanTkt.IDITEMT = "";
 
                 beanTkt.AREFNBR = rst.getString("AREFNBR").trim();
-                
+
                 beanTkt.INSTANBR = rst.getString("INSTANBR");
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
 

@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             fields: ['code', 'name'],
             data: [
                 ["PRDA", "Processing Date"],
-                //["PAYDATE", "Payment Date"]
+                ["PAYDATE", "Payment Date"]
             ]
         }));
         cmbDateSel.setValue("PRDA");
@@ -309,40 +309,40 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
          ]
          }));
          cmbErrorCode.setValue("");*/
-        
+
         var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
-         cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
-         autoLoad: false,
-         fields: ['code', 'name'],
-         data: [
-         ["", "All"],
-         ["AMEX", "Amex"],
-         ["FIRSTD00", "First Data"],
-         ["PRISMA", "Prisma"],
-         ["WP00", "WorldPay"],
-         ["GETMEX00", "GetNetMex"],
-         ["ATCAN00", "Atcan"],
-         ]
-         }));
-         cmbProT.setValue("");
-         
-         var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
-         cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
-         autoLoad: false,
-         fields: ['code', 'name'],
-         data: [
-         ["", "All"],
-         ["ARS", "ARS"],
-         ["CAD", "CAD"],
-         ["CLP", "CLP"],
-         ["EUR", "EUR"],
-         ["GBP", "GBP"],
-         ["USD", "USD"],
-         ]
-         }));
-         cmbCurr.setValue("");
-         
-         var cmbSTVALErr = Ext.getCmp(prototype.id + '-cmbSTVALErr');
+        cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["AMEX", "Amex"],
+                ["FIRSTD00", "First Data"],
+                ["PRISMA", "Prisma"],
+                ["WP00", "WorldPay"],
+                ["GETMEX00", "GetNetMex"],
+                ["ATCAN00", "Atcan"],
+            ]
+        }));
+        cmbProT.setValue("");
+
+        var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
+        cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["ARS", "ARS"],
+                ["CAD", "CAD"],
+                ["CLP", "CLP"],
+                ["EUR", "EUR"],
+                ["GBP", "GBP"],
+                ["USD", "USD"],
+            ]
+        }));
+        cmbCurr.setValue("");
+
+        var cmbSTVALErr = Ext.getCmp(prototype.id + '-cmbSTVALErr');
         cmbSTVALErr.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['CODE', 'NAME'],
@@ -362,7 +362,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbSTVALErr').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbSTVALErr').setValue('');
         Ext.getCmp(prototype.id + '-cmbSTVALErr').resumeEvents();
-         
+
         me.bean_warning = {};
         if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked')) {
             me.bean_warning.IN_WARNING = 'Y';
@@ -843,7 +843,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                         global.Msg({msg: 'Data not found.'});
                     } else {
                         var data = obj.data.items[0].data;
-//                        console.log(obj);                        
+                        console.log(data);
+                        if (data.IN_DATE === "PAYDATE") {
+                            Ext.getCmp(prototype.id + '-htPreDateErrorTransaction').setText('Payment');
+                        } else {
+                            Ext.getCmp(prototype.id + '-htPreDateErrorTransaction').setText('Processing');
+                        }
                     }
                 }
             }
@@ -853,8 +858,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-gridSummaryTransactionError').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin18').bindStore(storeGridDatas);
     },
-    setBeanSettlement: function(rowData){
-        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.PRDA;
+    setBeanSettlement: function (rowData) {
+        this.beanSettlement.IN_DRILLDOWN_DATE = rowData.data.strFormatDate;
         this.beanSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanSettlement.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         this.beanSettlement.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
@@ -968,7 +973,15 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                         global.Msg({msg: 'Data not found.'});
                     } else {
                         var data = obj.data.items[0].data;
-//                        console.log(obj);                        
+                        console.log(data);
+                        if (data.IN_DATE === "PAYDATE") {
+                            Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain1').setText('Payment');
+                            Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain2').setText('Processing');
+                            
+                        } else {
+                            Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain1').setText('Processing');
+                            Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain2').setText('Payment');
+                        }
                     }
                 }
             }
