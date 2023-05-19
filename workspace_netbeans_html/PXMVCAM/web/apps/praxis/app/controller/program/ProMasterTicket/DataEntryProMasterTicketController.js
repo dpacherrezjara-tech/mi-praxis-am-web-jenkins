@@ -25,6 +25,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 console.log('Entró a -->> SELECT_BY_TKT_2');
                 console.log(this.ticketNumber);
                 win.setValue('1-cbxSearchBy', "1");
+				win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
                 this.cbxSearchBy_changeHandler();
                 if (this.ticketNumber.length === 13) {
                     win.setValue('1-txtTicketCia', this.ticketNumber.substr(0, 3));
@@ -38,6 +40,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 break;
             case me.SELECT_BY_PNR:
                 win.setValue('1-cbxSearchBy', "3");
+				win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
                 this.cbxSearchBy_changeHandler();
                 break;
             case me.SELECT_BY_CC:
@@ -65,6 +69,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 Ext.getCmp(prototype.id+'-1-Box_Option03').hide();
                 Ext.getCmp(prototype.id+'-1-Box_Option04').hide();
                 Ext.getCmp(prototype.id+'-1-Box_OptionDates').hide();
+				win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
                 win.focus('1-txtTicketForSer');
                 break;
             case '2':
@@ -82,6 +88,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 Ext.getCmp(prototype.id+'-1-Box_Option03').show();
                 Ext.getCmp(prototype.id+'-1-Box_Option04').hide();
                 Ext.getCmp(prototype.id+'-1-Box_OptionDates').hide();
+				win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
+				
                 win.focus('1-txtPNR');
                 break;
             case '4':
@@ -109,6 +118,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 Ext.getCmp(prototype.id+'-1-Box_Option04').hide();
                 Ext.getCmp(prototype.id+'-1-Box_OptionDates').hide();
                 win.focus('1-txtTicketForSer');
+				win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
                 break;
             default:
                 Ext.getCmp(prototype.id+'-1-Box_Option01').hide();
