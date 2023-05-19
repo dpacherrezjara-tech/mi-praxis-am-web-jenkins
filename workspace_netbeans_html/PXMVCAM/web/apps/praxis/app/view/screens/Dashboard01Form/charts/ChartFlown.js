@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             xtype: 'radiogroup',
                                             id: prototype.id + '-Box_Decide_ByCarrier',
                                             fieldLabel: '',
-                                            hidden:true,
+                                            hidden: true,
                                             horizontal: true,
                                             items: [
                                                 {boxLabel: '<strong style="color:#3399FF" >Qty</strong>', name: 'rd', inputValue: 'QT', width: 60, checked: true},
@@ -187,7 +187,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                             xtype: 'button',
                                             id: prototype.id + '-btnExcel_chartFlown',
                                             iconCls: 'prx-icon-excel',
-                                            hidden:true,
+                                            hidden: true,
                                             tooltip: 'Export to Excel',
                                             listeners: {
                                                 click: 'btnExcel_click'
@@ -1819,7 +1819,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     height: 355,
                                                     border: true,
                                                     margin: '5 10 0 0',
-                                                    innerPadding: 50,
+                                                    innerPadding: 40,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
@@ -1828,28 +1828,34 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                         }
                                                     },
                                                     animation: {
-                                                        duration: 200
+                                                        duration: 100
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleBNF',
-                                                            colors: ['#38c8ec', '#ffc102'],
+                                                            colors: ['#38c8ec', '#72d0e8', '#ffc102', '#fcdd79'],
+                                                            rotation: 75,
                                                             label: {
                                                                 field: 'AngleBNF',
-                                                                renderer: function (value, metaData, b, callout) {
-                                                                    var data;
-                                                                    var data2;
-                                                                    data2 = ' USD';
-                                                                    console.log(value);
-                                                                    if (value > 2000000) {
+                                                                renderer: function (value, metaData, b, callout, d, e) {
+                                                                    var data = '';
+                                                                    if (d === 0) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total AM :';
-                                                                        return data + value + data2;
-                                                                    } else {
+                                                                        data = 'ON-AM';
+                                                                        return data;
+                                                                    } else if (d === 1) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total OAL :';
-                                                                        return data + value + data2;
+                                                                        data = 'ON-5D';
+                                                                        return data;
+                                                                    } else if (d === 2) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-AM';
+                                                                        return data;
+                                                                    } else if (d === 3) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-5D';
+                                                                        return data;
                                                                     }
                                                                 },
                                                             },
@@ -2003,37 +2009,45 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     height: 355,
                                                     border: true,
                                                     margin: '5 10 0 0',
-                                                    innerPadding: 50,
+                                                    innerPadding: 40,
                                                     background: '#E0F8F7',
+                                                    rotation: 90,
                                                     captions: {
                                                         title: {
                                                             text: '',
-                                                            alignTo: 'chart'
+                                                            alignTo: 'chart',
                                                         }
+                                                        
                                                     },
                                                     animation: {
-                                                        duration: 200
+                                                        duration: 100,
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleNF',
-                                                            colors: ['#38c8ec', '#ffc102'],
+                                                            colors: ['#38c8ec', '#72d0e8', '#ffc102', '#fcdd79'],
+                                                            rotation: 75,
                                                             label: {
                                                                 field: 'AngleNF',
-                                                                renderer: function (value, metaData, b, callout) {
-                                                                    var data;
-                                                                    var data2;
-                                                                    data2 = ' USD';
-                                                                    console.log(value);
-                                                                    if (value > 2000000) {
+                                                                renderer: function (value, metaData, b, callout, d, e) {
+                                                                    var data = '';
+                                                                    if (d === 0) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total AM :';
-                                                                        return data + value + data2;
-                                                                    } else {
+                                                                        data = 'ON-AM';
+                                                                        return data;
+                                                                    } else if (d === 1) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total OAL :';
-                                                                        return data + value + data2;
+                                                                        data = 'ON-5D';
+                                                                        return data;
+                                                                    } else if (d === 2) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-AM';
+                                                                        return data;
+                                                                    } else if (d === 3) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-5D';
+                                                                        return data;
                                                                     }
                                                                 },
                                                             },
@@ -2315,37 +2329,45 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     height: 355,
                                                     border: true,
                                                     margin: '5 10 0 0',
-                                                    innerPadding: 50,
+                                                    innerPadding: 40,
                                                     background: '#E0F8F7',
+                                                    rotation: 90,
                                                     captions: {
                                                         title: {
                                                             text: '',
-                                                            alignTo: 'chart'
+                                                            alignTo: 'chart',
                                                         }
+                                                        
                                                     },
                                                     animation: {
-                                                        duration: 200
+                                                        duration: 100,
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleBNF',
-                                                            colors: ['#38c8ec', '#ffc102'],
+                                                            colors: ['#38c8ec', '#72d0e8', '#ffc102', '#fcdd79'],
+                                                            rotation: 75,
                                                             label: {
                                                                 field: 'AngleBNF',
-                                                                renderer: function (value, metaData, b, callout) {
-                                                                    var data;
-                                                                    var data2;
-                                                                    data2 = ' USD';
-                                                                    console.log(value);
-                                                                    if (value > 2000000) {
+                                                                renderer: function (value, metaData, b, callout, d, e) {
+                                                                    var data = '';
+                                                                    if (d === 0) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total AM :';
-                                                                        return data + value + data2;
-                                                                    } else {
+                                                                        data = 'ON-AM';
+                                                                        return data;
+                                                                    } else if (d === 1) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total OAL :';
-                                                                        return data + value + data2;
+                                                                        data = 'ON-5D';
+                                                                        return data;
+                                                                    } else if (d === 2) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-AM';
+                                                                        return data;
+                                                                    } else if (d === 3) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-5D';
+                                                                        return data;
                                                                     }
                                                                 },
                                                             },
@@ -2499,37 +2521,45 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown', {
                                                     height: 355,
                                                     border: true,
                                                     margin: '5 10 0 0',
-                                                    innerPadding: 50,
+                                                    innerPadding: 40,
                                                     background: '#E0F8F7',
+                                                    rotation: 90,
                                                     captions: {
                                                         title: {
                                                             text: '',
-                                                            alignTo: 'chart'
+                                                            alignTo: 'chart',
                                                         }
+                                                        
                                                     },
                                                     animation: {
-                                                        duration: 200
+                                                        duration: 100,
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AngleNF',
-                                                            colors: ['#38c8ec', '#ffc102'],
+                                                            colors: ['#38c8ec', '#72d0e8', '#ffc102', '#fcdd79'],
+                                                            rotation: 75,
                                                             label: {
                                                                 field: 'AngleNF',
-                                                                renderer: function (value, metaData, b, callout) {
-                                                                    var data;
-                                                                    var data2;
-                                                                    data2 = ' USD';
-                                                                    console.log(value);
-                                                                    if (value > 2000000) {
+                                                                renderer: function (value, metaData, b, callout, d, e) {
+                                                                    var data = '';
+                                                                    if (d === 0) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total AM :';
-                                                                        return data + value + data2;
-                                                                    } else {
+                                                                        data = 'ON-AM';
+                                                                        return data;
+                                                                    } else if (d === 1) {
                                                                         value = Ext.util.Format.number(value, '0,000');
-                                                                        data = 'Total OAL :';
-                                                                        return data + value + data2;
+                                                                        data = 'ON-5D';
+                                                                        return data;
+                                                                    } else if (d === 2) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-AM';
+                                                                        return data;
+                                                                    } else if (d === 3) {
+                                                                        value = Ext.util.Format.number(value, '0,000');
+                                                                        data = 'OAL-5D';
+                                                                        return data;
                                                                     }
                                                                 },
                                                             },

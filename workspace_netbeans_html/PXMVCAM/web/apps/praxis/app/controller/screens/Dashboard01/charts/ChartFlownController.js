@@ -431,37 +431,59 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                             var lstTotalesPie = [];
                             var item_pie1 = {};
                             var item_pie2 = {};
-                            var n = 0, p = 0;
+                            var item_pie3 = {};
+                            var item_pie4 = {};
+                            var nAM = 0, pAM = 0;
+                            var nCN = 0, pCN = 0;
                             for(var a = 0 ;a < obj.data.length ;a++){
                                 lstTotalesPie = res.data[a];
-                                lstTotalesPie.n = lstTotalesPie.AM + lstTotalesPie.CINCOD;
-                                n += lstTotalesPie.n; 
-                                lstTotalesPie.p = lstTotalesPie.AM_OTRO + lstTotalesPie.CINCOD_OTRO; 
-                                p += lstTotalesPie.p;
+                                lstTotalesPie.nAM = lstTotalesPie.AM;
+                                nAM += lstTotalesPie.nAM;
+                                lstTotalesPie.nCN = lstTotalesPie.CINCOD;
+                                nCN += lstTotalesPie.nCN;
+                                lstTotalesPie.pAM = lstTotalesPie.AM_OTRO; 
+                                pAM += lstTotalesPie.pAM;
+                                lstTotalesPie.pCN = lstTotalesPie.CINCOD_OTRO; 
+                                pCN += lstTotalesPie.pCN;
                             }
                             
-                            item_pie1.AngleBNF = n; 
+                            item_pie1.AngleBNF = nAM; 
                             lstTot_pie.push(item_pie1);   
-                            item_pie2.AngleBNF = p;
+                            item_pie2.AngleBNF = nCN;
                             lstTot_pie.push(item_pie2);
+                            item_pie3.AngleBNF = pAM;
+                            lstTot_pie.push(item_pie3);
+                            item_pie4.AngleBNF = pCN;
+                            lstTot_pie.push(item_pie4);
                             
                             var lstTot_pieNF = [];
                             var lstTotalesPieNF = [];
                             var item_pie1NF = {};
                             var item_pie2NF = {};
-                            var n1 = 0, p1 = 0;
+                            var item_pie3NF = {};
+                            var item_pie4NF = {};
+                            var nAM1 = 0, pAM1 = 0;
+                            var nCN1 = 0, pCN1 = 0;
                             for(var b = 0 ;b < obj.data.length ;b++){
                                 lstTotalesPieNF = res.data[b];
-                                lstTotalesPieNF.n1 = lstTotalesPieNF.AM0 + lstTotalesPieNF.CINCOD0;
-                                n1 += lstTotalesPieNF.n1; 
-                                lstTotalesPieNF.p1 = lstTotalesPieNF.AM_OTRO0 + lstTotalesPieNF.CINCOD_OTRO0; 
-                                p1 += lstTotalesPieNF.p1;
+                                lstTotalesPieNF.nAM1 = lstTotalesPieNF.AM0;
+                                nAM1 += lstTotalesPieNF.nAM1;
+                                lstTotalesPieNF.nCN1 = lstTotalesPieNF.CINCOD0;
+                                nCN1 += lstTotalesPieNF.nCN1;
+                                lstTotalesPieNF.pAM1 = lstTotalesPieNF.AM_OTRO0; 
+                                pAM1 += lstTotalesPieNF.pAM1;
+                                lstTotalesPieNF.pCN1 = lstTotalesPieNF.CINCOD_OTRO0; 
+                                pCN1 += lstTotalesPieNF.pCN1;
                             }
                             
-                            item_pie1NF.AngleNF = n1; 
-                            lstTot_pieNF.push(item_pie1NF);
-                            item_pie2NF.AngleNF = p1; 
+                            item_pie1NF.AngleNF = nAM1; 
+                            lstTot_pieNF.push(item_pie1NF);   
+                            item_pie2NF.AngleNF = nCN1;
                             lstTot_pieNF.push(item_pie2NF);
+                            item_pie3NF.AngleNF = pAM1;
+                            lstTot_pieNF.push(item_pie3NF);
+                            item_pie4NF.AngleNF = pCN1;
+                            lstTot_pieNF.push(item_pie4NF);
                         
                             var storeDataTotales_pie = Ext.create('Ext.data.Store', {
                                 data: lstTot_pie,
@@ -474,12 +496,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
 
                             Ext.getCmp(prototype.id + '-displayFlownByCarrierFLIGHT1').bindStore(storeDataTotales_pie);
                             Ext.getCmp(prototype.id + '-displayFlownByCarrierPOLIZA1').bindStore(storeDataTotales_pieNF);
-//
-//
+
                             Ext.getCmp(prototype.id + '-displayFlownByCarrierFLIGHT1').setTitle('<center style="font-size:14px;"> Flown By Carrier - ' + 'FLIGHT - QTY' + '</center>');
                             Ext.getCmp(prototype.id + '-displayFlownByCarrierPOLIZA1').setTitle('<center style="font-size:14px;"> Flown By Carrier - ' + 'POLIZA - QTY' + '</center>');
-//                            Ext.getCmp(prototype.id + '-displayFlownByCarrierBared').setTitle('<center style="font-size:20px;"> Pasenger By Market </center>');
-                            
+                           
                             var vsy = '<a style="color:#1c50c9;">' + 'POLIZA' + '</a>'
                             var vsyb = '<a style="color:#209938;">' + 'FLIGHT' + '</a>'
                             var vs = vsyb + ' vs ' + vsy;
@@ -523,19 +543,30 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                             var lstTotalesPie = [];
                             var item_pie1 = {};
                             var item_pie2 = {};
-                            var n = 0, p = 0;
+                            var item_pie3 = {};
+                            var item_pie4 = {};
+                            var nAM = 0, pAM = 0;
+                            var nCN = 0, pCN = 0;
                             for(var a = 0 ;a < obj.data.length ;a++){
                                 lstTotalesPie = res.data[a];
-                                lstTotalesPie.n = lstTotalesPie.AMM + lstTotalesPie.CINCODM;
-                                n += lstTotalesPie.n; 
-                                lstTotalesPie.p = lstTotalesPie.AM_OTROM + lstTotalesPie.CINCOD_OTROM; 
-                                p += lstTotalesPie.p;
+                                lstTotalesPie.nAM = lstTotalesPie.AMM;
+                                nAM += lstTotalesPie.nAM;
+                                lstTotalesPie.nCN = lstTotalesPie.CINCODM;
+                                nCN += lstTotalesPie.nCN;
+                                lstTotalesPie.pAM = lstTotalesPie.AM_OTROM; 
+                                pAM += lstTotalesPie.pAM;
+                                lstTotalesPie.pCN = lstTotalesPie.CINCOD_OTROM; 
+                                pCN += lstTotalesPie.pCN;
                             }
                             
-                            item_pie1.AngleBNF = n; 
+                            item_pie1.AngleBNF = nAM; 
                             lstTot_pie.push(item_pie1);   
-                            item_pie2.AngleBNF = p;
+                            item_pie2.AngleBNF = nCN;
                             lstTot_pie.push(item_pie2);
+                            item_pie3.AngleBNF = pAM;
+                            lstTot_pie.push(item_pie3);
+                            item_pie4.AngleBNF = pCN;
+                            lstTot_pie.push(item_pie4);
                             
                             var lstTot_pieNF = [];
                             var lstTotalesPieNF = [];
@@ -543,19 +574,28 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartFlownControlle
                             var item_pie2NF = {};
                             var item_pie3NF = {};
                             var item_pie4NF = {};
-                            var n1 = 0, p1 = 0;
+                            var nAM1 = 0, pAM1 = 0;
+                            var nCN1 = 0, pCN1 = 0;
                             for(var b = 0 ;b < obj.data.length ;b++){
                                 lstTotalesPieNF = res.data[b];
-                                lstTotalesPieNF.n1 = lstTotalesPieNF.AMM0 + lstTotalesPieNF.CINCODM0;
-                                n1 += lstTotalesPieNF.n1; 
-                                lstTotalesPieNF.p1 = lstTotalesPieNF.AM_OTROM0 + lstTotalesPieNF.CINCOD_OTROM0; 
-                                p1 += lstTotalesPieNF.p1;
+                                lstTotalesPieNF.nAM1 = lstTotalesPieNF.AMM0;
+                                nAM1 += lstTotalesPieNF.nAM1;
+                                lstTotalesPieNF.nCN1 = lstTotalesPieNF.CINCODM0;
+                                nCN1 += lstTotalesPieNF.nCN1;
+                                lstTotalesPieNF.pAM1 = lstTotalesPieNF.AM_OTROM0; 
+                                pAM1 += lstTotalesPieNF.pAM1;
+                                lstTotalesPieNF.pCN1 = lstTotalesPieNF.CINCOD_OTROM0; 
+                                pCN1 += lstTotalesPieNF.pCN1;
                             }
                             
-                            item_pie1NF.AngleNF = n1; 
-                            lstTot_pieNF.push(item_pie1NF);
-                            item_pie2NF.AngleNF = p1; 
+                            item_pie1NF.AngleNF = nAM1; 
+                            lstTot_pieNF.push(item_pie1NF);   
+                            item_pie2NF.AngleNF = nCN1;
                             lstTot_pieNF.push(item_pie2NF);
+                            item_pie3NF.AngleNF = pAM1;
+                            lstTot_pieNF.push(item_pie3NF);
+                            item_pie4NF.AngleNF = pCN1;
+                            lstTot_pieNF.push(item_pie4NF);
                         
                             var storeDataTotales_pie = Ext.create('Ext.data.Store', {
                                 data: lstTot_pie,
