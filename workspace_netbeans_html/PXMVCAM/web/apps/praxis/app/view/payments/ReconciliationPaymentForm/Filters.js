@@ -306,7 +306,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {                                
-                                change: 'obtenerPaisesSumm'
+                                //change: 'obtenerPaisesSumm'
                             }
                         },
                         {
@@ -525,7 +525,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {                                
-                                change: 'obtenerPaisesSett'
+                                //change: 'obtenerPaisesSett'
                             }
                         },
                         {
@@ -750,7 +750,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                             listeners: {                                
-                                change: 'obtenerPaisesErr'
+                                //change: 'obtenerPaisesErr'
                             }
                         },
                         {

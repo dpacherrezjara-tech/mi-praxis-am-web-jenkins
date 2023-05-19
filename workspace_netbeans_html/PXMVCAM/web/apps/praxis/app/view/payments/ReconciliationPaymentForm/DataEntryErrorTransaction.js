@@ -2209,6 +2209,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                     }
                 },
                 {
+                    text: 'Change to',
+                    id: prototype.id + '-btn-update-tdoc',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateTdocClick'
+                    }
+                },
+                {
                     text: 'Delete',
                     id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
