@@ -946,7 +946,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                         change: 'cambiarGrillaChk'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
                                     text: 'MSI Tracking',
@@ -991,6 +991,26 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     }
 
                                 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Agent',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 50
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtAdjAgent',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 8,
+                                    width: 85,
+                                    enableKeyEvents: true,
+                                },
+                                
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'panel',

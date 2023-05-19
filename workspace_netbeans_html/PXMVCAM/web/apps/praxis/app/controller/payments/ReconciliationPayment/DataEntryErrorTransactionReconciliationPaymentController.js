@@ -1069,7 +1069,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 rec.A1531VFOP = monto_ajustado;
                 rec.tot_VFOP = monto_ajustado;
                 //rec.SADJUST = 0;
-                rec.A720AGENTE = $('#menuUser').text();
+                //rec.A720AGENTE = $('#menuUser').text(); Comentado para que tome el agente original (Cambio pedido por AM) 19/05/2023
                 rec.CERROR = '01';
                 this.lstAdjustment.push(rec);
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
@@ -1166,7 +1166,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 var rec = Object.create(this.bean);
                 rec.A1531VFOP = rec.TGROSAMPAY;
                 rec.tot_VFOP = rec.TGROSAMPAY;
-                rec.A720AGENTE = $('#menuUser').text();
+                rec.A720AGENTE = this.getValue('de-txtAdjAgent').trim();
                 rec.CERROR = '01';
                 rec.A1531TTARJ = 'AX';
                 rec.A1531NREF = rec.SCARDN;
