@@ -101,6 +101,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                         Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
                     }
                 }
+                if (this.bean.TDOC == 'S') {
+                    Ext.getCmp(prototype.id + '-btn-update-tdoc').setText('Change to Refund');
+                } else {
+                    Ext.getCmp(prototype.id + '-btn-update-tdoc').setText('Change to Sales');
+                }
+
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
@@ -1063,7 +1069,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 rec.A1531VFOP = monto_ajustado;
                 rec.tot_VFOP = monto_ajustado;
                 //rec.SADJUST = 0;
-                rec.A720AGENTE = $('#menuUser').text();
+                //rec.A720AGENTE = $('#menuUser').text(); Comentado para que tome el agente original (Cambio pedido por AM) 19/05/2023
                 rec.CERROR = '01';
                 this.lstAdjustment.push(rec);
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
@@ -1160,7 +1166,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 var rec = Object.create(this.bean);
                 rec.A1531VFOP = rec.TGROSAMPAY;
                 rec.tot_VFOP = rec.TGROSAMPAY;
-                rec.A720AGENTE = $('#menuUser').text();
+                rec.A720AGENTE = this.getValue('de-txtAdjAgent').trim();
                 rec.CERROR = '01';
                 rec.A1531TTARJ = 'AX';
                 rec.A1531NREF = rec.SCARDN;
@@ -1375,5 +1381,56 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         Ext.getCmp(prototype.id + '-panelScanCard').show();
         Ext.getCmp(prototype.id + '-panelBpoObserv').hide();
         Ext.getCmp(prototype.id + '-closeBpoObserv').hide();
-    }
+    },
+    onUpdateTdocClick: function (btn) {
+        if (this.beanResult.AREFNBR.trim() !== '') {
+            var beanTemp = {};
+
+            beanTemp.AREFNBR = this.beanResult.AREFNBR;
+            beanTemp.PRDA = this.beanResult.PRDA;
+            beanTemp.TDOC = this.beanResult.TDOC;
+
+            var beanString = JSON.stringify(beanTemp);
+
+            Ext.Msg.show(
+                    {
+                        title: '.:PRAXIS:.',
+                        msg: 'Are you sure to change this transaction?',
+                        buttons: Ext.MessageBox.YESNO,
+                        scope: this,
+                        animateTarget: btn,
+                        icon: Ext.MessageBox.QUESTION,
+                        modal: true,
+                        fn: function (btn) {
+                            if (btn === 'yes') {
+                                meDE.updateTdocTransaction(beanString);
+                            }
+                        }
+                    });
+        } else {
+            global.Msg({msg: 'AREFNBR is empty'});
+        }
+
+    },
+    updateTdocTransaction: function (beanString) {
+        Ext.Ajax.request({
+            url: prototype.url + '/updateTdocTransaction',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-dataEntryError').unmask();
+                    me.setGridDataMainErrorTransaction();
+                    Ext.getCmp(prototype.id + '-dataEntryError').close();
+                } else {
+                    global.Msg({msg: res.msjOption});
+                    //global.Msg({msg: 'Failed to Update Transaction'});
+                }
+            }
+        });
+    },
 });

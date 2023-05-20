@@ -377,11 +377,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').suspendEvents(false);
                     Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
-
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').resumeEvents();
                 }
 
                 me.llenarComboErrorIntegridad();
@@ -396,6 +397,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbZONAsett').suspendEvents(false);
+                    Ext.getCmp(prototype.id + '-cmbZONAErr').suspendEvents(false);
+                    Ext.getCmp(prototype.id + '-cmbZONASumm').suspendEvents(false);
+                    
                     Ext.getCmp(prototype.id + '-cmbZONAsett').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
@@ -410,16 +415,48 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbZONASumm').setValue('');
+                    
+                    Ext.getCmp(prototype.id + '-cmbZONAsett').resumeEvents();
+                    Ext.getCmp(prototype.id + '-cmbZONAErr').resumeEvents();
+                    Ext.getCmp(prototype.id + '-cmbZONASumm').resumeEvents();
+                    
+                    me.obtainGetCountries();
 
-                    me.obtenerPaisesSett();
+                    /*me.obtenerPaisesSett();
                     me.obtenerPaisesErr();
-                    me.obtenerPaisesSumm();
+                    me.obtenerPaisesSumm();*/
 
                 }
             }
         });
 
         //me.btnSearch_click();
+    },
+    obtainGetCountries: function () {
+        Ext.Ajax.request({
+            url: prototype.url + '/getCountries',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').setValue('');
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').setValue('');
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').setValue('');
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
     },
     obtenerPaisesSett: function () {
         var zona = Ext.getCmp(prototype.id + '-cmbZONAsett').getValue();
@@ -510,11 +547,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').suspendEvents(false);
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
-
+                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').resumeEvents();
                     /*Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
                      Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                      );
@@ -609,10 +647,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').suspendEvents(false);
                     Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').resumeEvents();
                     me.btnSearch_click();
                 } else
                     global.Msg({msg: res.sesion});
@@ -1124,7 +1164,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.setGridDataFilterSettlement();
     },
     setGridDataFilterSettlement: function () {
-        win.lblUser_toolTip("Estructura: A4331/A4117/A4118");
+        win.lblUser_toolTip("Estructura: A4331");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {

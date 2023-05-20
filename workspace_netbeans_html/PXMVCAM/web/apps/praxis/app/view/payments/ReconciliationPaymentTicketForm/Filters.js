@@ -1,6 +1,6 @@
 Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.'+prototype.id+'-filters',
+    alias: 'widget.' + prototype.id + '-filters',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '3 0',
@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id+'-boxSearchFilter',
+            id: prototype.id + '-boxSearchFilter',
             margin: '0 7',
             border: false,
             width: 1300,
@@ -28,8 +28,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                     },
                     items: [
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbFecFiltro',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFecFiltro',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -50,14 +50,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             listConfig: {minWidth: 130},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                             }
                         },
                         {xtype: 'tbspacer', width: 10},
                         //<editor-fold defaultstate="collapsed" desc="cmbDate">
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateFromYear',
+                            id: prototype.id + '-cmbDateFromYear',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateFromMonth',
+                            id: prototype.id + '-cmbDateFromMonth',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateToYear',
+                            id: prototype.id + '-cmbDateToYear',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateToMonth',
+                            id: prototype.id + '-cmbDateToMonth',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -182,8 +182,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             width: 74
                         },
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbFOP',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFOP',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -203,7 +203,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             valueField: 'code', displayField: 'name',
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                                 change: 'cbxFOPAC_changeHandler'
                             }
                         },
@@ -215,8 +215,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             width: 66
                         },
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbSource',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbSource',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -236,7 +236,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             valueField: 'code', displayField: 'name',
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                             }
                         },
                         {xtype: 'tbspacer', width: 30},
@@ -247,8 +247,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             width: 66
                         },
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbCURRENCY',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCURRENCY',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -262,10 +262,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             listConfig: {maxHeight: 111},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                             }
                         },
-                        
                     ]
                 },
                 {
@@ -286,14 +285,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtTicket',     
+                            id: prototype.id + '-txtTicket',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9]/,      
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
 //                            maxLength: 13,
                             width: 123,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
                                 change: 'onValidarChange',
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
@@ -311,14 +310,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtCard1',     
+                            id: prototype.id + '-txtCard1',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9]/,      
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
                             maxLength: 6,
                             width: 85,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
                                 keypress: 'tarjeta_keyDownHandler',
                             }
                         },
@@ -335,14 +334,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtCard2',     
+                            id: prototype.id + '-txtCard2',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9]/,      
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
                             maxLength: 4,
                             width: 65,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },
@@ -359,14 +358,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtAUTHNBR',     
+                            id: prototype.id + '-txtAUTHNBR',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9]/,      
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
                             maxLength: 6,
                             width: 120,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
                                 keypress: 'onTextKeypress'
                             }
                         },
@@ -382,8 +381,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             }
                         },
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbCardType',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCardType',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -397,7 +396,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             listConfig: {maxHeight: 111},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                             }
                         }
                     ]
@@ -419,8 +418,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 10},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbCountry',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCountry',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -434,7 +433,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             listConfig: {maxHeight: 111},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                             }
                         },
 //                        {xtype: 'tbspacer', width: 10},
@@ -474,37 +473,37 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtPNR',     
+                            id: prototype.id + '-txtPNR',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
+                            enforceMaxLength: true,
                             maskRe: /[0-9a-zA-Z]/,
                             maxLength: 6,
                             width: 70,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
                                 keypress: 'BuscarPNR_keyDownHandler'
                             }
                         },
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'radiogroup',
-                            id:prototype.id+'-rbgType',
+                            id: prototype.id + '-rbgType',
                             items: [
-                                { boxLabel: '<b style="color:#148D28;">Sales</b>', inputValue: 'Sales', name: 'rbgType', checked: true },
+                                {boxLabel: '<b style="color:#148D28;">Sales</b>', inputValue: 'Sales', name: 'rbgType', checked: true},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'Refund', name: 'rbgType' }
+                                {boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'Refund', name: 'rbgType'}
                             ],
-                            listeners: {change: 'cmbTranType_changeHandler' }
+                            listeners: {change: 'cmbTranType_changeHandler'}
                         },
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'checkboxfield',
-                            id: prototype.id+'-chkDIFF',
+                            id: prototype.id + '-chkDIFF',
                             boxLabel: '<b>Differences</b>',
                             checked: false,
                             width: 90,
-                            hidden:true,
-                            listeners:{
+                            hidden: true,
+                            listeners: {
                                 change: 'searchDifferences'
                             }
                         },
@@ -513,12 +512,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             xtype: 'label',
                             text: 'Complement:',
                             padding: '3 0',
-                            hidden:true,
+                            hidden: true,
                             width: 75
                         },
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbFCOMPL',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFCOMPL',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -532,15 +531,37 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: true,
-                            hidden:true,
+                            hidden: true,
                             width: 100,
                             value: "",
                             typeAhead: true,
                             valueField: 'code', displayField: 'name',
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                             }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status',
+                            id: prototype.id + '-cmbSTVAL',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"], ["1", "Match"], ["2", "Sales w/o Reconciliation"], ["3", "Reconciliation w/o Sales"],
+                                    ["4", "Match with Differences"], ["5", "Match Manual"], ["6", "Stand By"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 40,
+                            width: 200,
+                            hiddenLabel: false,
+                            value: '',
                         },
                     ]
                 }

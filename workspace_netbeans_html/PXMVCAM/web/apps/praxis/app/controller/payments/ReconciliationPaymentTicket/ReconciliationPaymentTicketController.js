@@ -227,6 +227,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                         this.beanDetailTar.IN_CARDN2 = win.getValue('txtCard2');
                         this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                         this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
+                        this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
                         console.log(this.beanDetailTar);
                         this.searchDetTARJETA(this.beanDetailTar);
                     } else {
@@ -760,6 +761,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                     this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                     this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                     this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
+                    this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
                     console.log(this.beanDetailTar);
                     this.searchDetTARJETA(this.beanDetailTar);
                 } else {
@@ -828,6 +830,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                 this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                 this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
+                this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
                 console.log(this.beanDetailTar);
 
                 if (win.getValue('txtAUTHNBR').trim().length === 6) {

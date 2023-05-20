@@ -1213,6 +1213,43 @@ public class ReconciliationPaymentController extends BaseController {
         map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "updateTdocTransaction")
+    public @ResponseBody
+    String updateTdocTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : updateTdocTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX606SQP04960(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
 
     @RequestMapping(value = "ReverseTransaction")
     public @ResponseBody
@@ -9398,6 +9435,57 @@ public class ReconciliationPaymentController extends BaseController {
             }
 
             lst = logic.loadPX606SQP04470(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+
+    }
+    
+    @RequestMapping(value = "getCountries")
+    public @ResponseBody
+    String getCountries(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ReconciliationPayment : getCountries-------------");
+
+        map.put("success", true);
+        List<A4331Filter> lst = this.getListCountries(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4331Filter> getListCountries(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX606SQP04959(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }

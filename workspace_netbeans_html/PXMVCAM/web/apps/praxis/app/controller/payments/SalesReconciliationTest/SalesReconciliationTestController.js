@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         me = this;
         prototypeProgram.view = 'payments-sales-reconciliation-test-form';
         prototypeProgram.nprog = 'PX00000584';
-        prototypeProgram.title = 'Sales Reconciliation by Ticket Test';
+        prototypeProgram.title = 'Sales Reconciliation by Ticket';
         prototypeProgram.modulo = '';
     },
     afterRender: function () {
