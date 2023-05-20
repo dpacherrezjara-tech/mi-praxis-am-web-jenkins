@@ -15,7 +15,7 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
         switch (this.p.action) {
             case 'U':
                 this.mostrarData(this.p.rec);
-                Ext.getCmp(prototype.id3+'-btn-save').show();
+                Ext.getCmp(prototype.id3 + '-btn-save').show();                
 //                Ext.getCmp(prototype.id3+'-btn-update').hide();                                           
 //                Ext.getCmp(prototype.id3+'-btn-cancel').show();
                 break;
@@ -81,30 +81,21 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
     // <editor-fold defaultstate="collapsed" desc="CRUD">
     onSaveClick: function (btn) {
         if (this.validaRequiredFields()) {
-            switch (this.getValue('cbxModulo')) {
-                case "PTBCREDITI" :
-                case "PTBCREDITU" :
-                case "PTBLOSSES" :
-                case "PTBEXPIRY" :
-                case "PTBREPORT" :
-                case "PTBDETAIL" :
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function (btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.llenarData();
-                                this.crud();
-                            }
-                        }
-                    });
-                    break;
-            }
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to save ?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        // this.view.params.action = "U";
+                        this.llenarData();
+                        this.crud();
+                    }
+                }
+            });
         } else {
             var msg = this.msjAlert;
             if (msg === '')
@@ -118,86 +109,63 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
         this.view.close();
     },
     onDeleteClick: function (btn) {
-        switch (this.getValue('cbxModulo')) {
-            case "PSALES" :
-                dataentryParams = {};
-                dataentryParams.IN_MODULO = 'SALES';
-                dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
-                this.setReverse(this.p.rec);
-                break;
-
-        }
+//        switch (this.getValue('cbxModulo')) {
+//            case "PSALES" :
+//                dataentryParams = {};
+//                dataentryParams.IN_MODULO = 'SALES';
+//                dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
+//                this.setReverse(this.p.rec);
+//                break;
+//
+//        }
     },
     // </editor-fold>
 
     validaRequiredFields: function () {
-        var cbxModulo = this.getValue('cbxModulo');
-        if (cbxModulo === '') {
-            this.msjAlert = 'Select Module.';
-            return false;
-        } else {
-            switch (cbxModulo) {
-                case "PTBCREDITI" :
-                case "PTBCREDITU" :
-                case "PTBLOSSES" :
-                case "PTBEXPIRY" :
-                case "PTBREPORT" :
-                case "PTBDETAIL" :
-                    if (this.getValue('txtProcessDate') === '' || this.getValue('txtProcessDate') === null) {
-                        this.msjAlert = 'Enter correct data';
-                        return false;
-                    }
-                    break;
-                case "PCADUCOS" :
-                    if (this.getValue('cmbDateFromYear') === '' || this.getValue('cmbDateFromMonth') === '') {
-                        this.msjAlert = 'Enter correct data';
-                        return false;
-                    }
-                    break;
-            }
-        }
+//        if (this.getValue('A4281IDISR') === '' || this.getValue('A4281IDISR') === null) {
+//            this.msjAlert = 'Enter correct data';
+//            return false;
+//        }
         return true;
     },
 
     crud: function () {
-//        var mod = this;
-//        Ext.Ajax.request({
-//            url: prototype.url + '/Maintance',
-//            method: 'POST',
-//            timeout: 60000000,
-//            params: this.beanOption,
-//
-//            beforerequest: Ext.getCmp('DataEntryAccountingMasterTravelbankForm').mask('Loading...'),
-//            success: function (response, options) {
-//                var res = Ext.JSON.decode(response.responseText);
-//                if (res.success) {
-//                    var msg = res.intResult;                    
-//                    var icon = 1;
-//                    if (msg === 'RECORD EXISTS') {
-//                        icon = 2;
-//                    }
-//                    global.Msg({
-//                        msg: msg,
-//                        icon: icon,
-//                        fn: function () {
-//                            if (msg === 'RECORD INSERTED') {
-//                                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').close(),
-//                                        Ext.getCmp(prototype.id3 + '-btnSearch').fireEvent('click', {});
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    global.Msg({
-//                        msg: res.sesion
-//                    });
-//                }
-//                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
-//            },
-//            failure: function (response, opts) {
-//                console.log('server-side failure with status code ' + response.status);
-//                Ext.getCmp('DataEntryAccountingMasterTravelbankForm').unmask();
-//            }
-//        });
+        //var mod = this;
+        Ext.Ajax.request({
+            url: prototype.url + '/setIssueCrud',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify(this.beanOption)
+            },
+            beforerequest: Ext.getCmp(prototype.id3 + '-formDataEntry').mask('Loading...'),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                if (res.success) {
+                    var msg = res.objRtn.dbException.MESSAGE;
+                    global.Msg({
+                        msg: msg,
+                        icon: res.objRtn.dbException.SQLCODE==='1'?1:2,
+                        fn: function () {
+                            if(res.objRtn.dbException.SQLCODE==='1'){
+                                Ext.getCmp('CrudIssueDataEntry').close();
+                                // Ext.getCmp(prototype.id3 + '-btnSearch').fireEvent('click', {});
+                            }                           
+                        }
+                    });
+                } else {
+                    global.Msg({
+                        msg: res.objRtn.dbException.MESSAGE
+                    });
+                }
+                Ext.getCmp(prototype.id3 + '-formDataEntry').unmask();
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+                Ext.getCmp(prototype.id3 + '-formDataEntry').unmask();
+            }
+        });
     },
 
     getData: function (rec) {
@@ -217,8 +185,9 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.total > 0) {
                     var rec1 = res.data[0];
-//                    console.log(rec1);                    
+                    //console.log(rec1);                    
                     me.setValue('A4281IDISS', rec1.A4281IDISS);
+                    me.setValue('A4281SQISS', rec1.A4281SQISS);
                     me.setValue('A4281TRNCU', rec1.A4281TRNCU);
                     me.setValue('A4281NCTA', rec1.A4281NCTA);
                     me.setValue('A4281SERV', rec1.A4281SERV);
@@ -229,19 +198,21 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
                     me.setValue('A4281FEMI', rec1.A4281FEMI);
                     me.setValue('A4281FEXP', rec1.A4281FEXP);
                     me.setValue('ticket-number', rec1.A4281CIA + rec1.A4281FORMA + rec1.A4281SERIE);
-                    me.setValue('A4281IDISR', rec1.A4281IDISR);
+                    me.setValue('A4281IDISR', rec1.A4281IDISR.trim());
+                    me.setValue('A4281SQISR', rec1.A4281SQISR.trim());
                     me.setValue('A4281REGIS', rec1.A4281REGIS);
                     me.setValue('A4281FREGI', rec1.A4281FREGI);
                     me.setValue('A4281HREGI', rec1.A4281HREGI);
                     me.setValue('A4281REVIS', rec1.A4281REVIS);
                     me.setValue('A4281FREVI', rec1.A4281FREVI);
                     me.setValue('A4281HREVI', rec1.A4281HREVI);
+                    Ext.getCmp(prototype.id3 + '-A4281IDISR').focus();
                 } else {
                     global.Msg({
                         msg: res.sesion
                     });
                 }
-               Ext.getCmp(prototype.id3 + '-formDataEntry').unmask();
+                Ext.getCmp(prototype.id3 + '-formDataEntry').unmask();
             },
             failure: function (response, opts) {
                 console.log('server-side failure with status code ' + response.status);
@@ -252,35 +223,38 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
     },
     llenarData: function () {
         this.beanOption = {};
-
-        var A1955KEY2 = '', A1955KEY4 = '', IN_FECHA_PROCESO = '';
-        var A1955MODUL = this.getValue('cbxModulo');
-
-        switch (this.getValue('cbxModulo')) {
-            case "PTBCREDITI" :
-            case "PTBCREDITU" :
-            case "PTBLOSSES" :
-            case "PTBEXPIRY" :
-            case "PTBREPORT" :
-            case "PTBDETAIL" :
-                IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id3 + '-txtProcessDate').getValue(), 'Ymd');
-                break;
-                /*case "PAPINT" : case "PARINT" :
-                 IN_FECHA_PROCESO = this.getValue('cbxDateYear')+this.getValue('cbxDateMonth')+this.getValue('cbxDatePeriod');
-                 break;*/
-            case "PCADUCOS" :
-                IN_FECHA_PROCESO = this.getValue('cmbDateFromYear') + this.getValue('cmbDateFromMonth');
-                //A1955KEY2 = this.getValue('cmbDateFromYear')+this.getValue('cmbDateFromMonth');
-                //A1955KEY4 = this.getValue('cmbDateToYear')+this.getValue('cmbDateToMonth');
-                break;
-        }
-
         this.beanOption = {
-            A1955MODUL: A1955MODUL,
-            IN_FECHA_PROCESO: IN_FECHA_PROCESO,
-            A1955KEY2: A1955KEY2,
-            A1955KEY4: A1955KEY4,
-            strOption: this.view.params.action
+            VP_ACTION: this.view.params.action,
+            A4281IDISS: Ext.getCmp(prototype.id3 + '-A4281IDISS').getValue(),
+            A4281SQISS: Ext.getCmp(prototype.id3 + '-A4281SQISS').getValue(),
+            A4281NCTA: Ext.getCmp(prototype.id3 + '-A4281NCTA').getValue(),
+            A4281SERV: Ext.getCmp(prototype.id3 + '-A4281SERV').getValue(),
+            A4281PRDA: '',
+            A4281MDA: '',
+            A4281SQDIA: '',
+            A4281DEC: '',
+            A4281VALOR: 00,
+            A4281REF: '',
+            A4281CIU: '',
+            A4281MOT: '',
+            A4281TIPD: '',
+            A4281FEMI: '',
+            A4281FEXP: '',
+            A4281NMC: '',
+            A4281CIA: '',
+            A4281FORMA: '',
+            A4281SERIE: '',
+            A4281STS: '',
+            A4281ERR: '',
+            A4281IDFIL: '',
+            A4281TYPE: '',
+            A4281TRNCU: '',
+            A4281IDISR: Ext.getCmp(prototype.id3 + '-A4281IDISR').getValue(),
+            A4281SQISR: Ext.getCmp(prototype.id3 + '-A4281SQISR').getValue(),
+            A4281TCUS: 0,
+            A4281TCMX: 0,
+            A4281VALUS: 0,
+            A4281VALMX: 0
         };
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
@@ -295,7 +269,7 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.Crud.IssueDataEntr
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
-    },
+    }
     // </editor-fold>
 });
 

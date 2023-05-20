@@ -15,6 +15,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.travelbank.SQP04948Filter;
 import net.miatech.praxis.travelbank.SQP04949Filter;
+import net.miatech.praxis.travelbank.SQP04984Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -196,4 +197,64 @@ public class TransaccionErrorDAO {
         return lstRtn;
     }
     // </editor-fold>
+    
+     public SQP04984Filter setSQP04984Filter(SQP04984Filter filter) throws SQLException, Exception {
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL PXTRVLBANK.SQP04984(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(33, Types.VARCHAR);
+            cstmt.registerOutParameter(34, Types.VARCHAR);
+            
+            cstmt.setString(1, filter.VP_ACTION);
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(3, filter.A4281IDISS);
+            cstmt.setString(4, filter.A4281SQISS);
+            cstmt.setString(5, filter.A4281NCTA);
+            cstmt.setString(6, filter.A4281SERV);
+            cstmt.setString(7, filter.A4281PRDA);
+            cstmt.setString(8, filter.A4281MDA);
+            cstmt.setString(9, filter.A4281SQDIA);
+            cstmt.setString(10, filter.A4281DEC);
+            cstmt.setDouble(11, filter.A4281VALOR);
+            cstmt.setString(12, filter.A4281REF);
+            cstmt.setString(13, filter.A4281CIU);
+            cstmt.setString(14, filter.A4281MOT);
+            cstmt.setString(15, filter.A4281TIPD);
+            cstmt.setString(16, filter.A4281FEMI);
+            cstmt.setString(17, filter.A4281FEXP);
+            cstmt.setString(18, filter.A4281NMC);
+            cstmt.setString(19, filter.A4281CIA);
+            cstmt.setString(20, filter.A4281FORMA);
+            cstmt.setString(21, filter.A4281SERIE);
+            cstmt.setString(22, filter.A4281STS);
+            cstmt.setString(23, filter.A4281ERR);
+            cstmt.setString(24, filter.A4281IDFIL);
+            cstmt.setString(25, filter.A4281TYPE);
+            cstmt.setString(26, filter.A4281TRNCU);
+            cstmt.setString(27, filter.A4281IDISR); //usado
+            cstmt.setString(28, filter.A4281SQISR); //usado
+            cstmt.setDouble(29, filter.A4281TCUS);
+            cstmt.setDouble(30, filter.A4281TCMX);
+            cstmt.setDouble(31, filter.A4281VALUS);
+            cstmt.setDouble(32, filter.A4281VALMX);            
+            cstmt.execute();
+            filter.dbException.SQLCODE = cstmt.getString(33);
+            filter.dbException.MESSAGE = cstmt.getString(34);            
+            
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
+    }
 }

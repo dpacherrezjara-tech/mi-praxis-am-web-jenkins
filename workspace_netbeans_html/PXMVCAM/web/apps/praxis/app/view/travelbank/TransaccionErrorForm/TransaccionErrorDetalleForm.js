@@ -113,149 +113,140 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.TransaccionErrorDeta
                     width: '100%',
                     border: false,
                     items: [
-                        {
-                            xtype: 'panel', width: '100%', border: false,
-                            layout: {
-                                type: 'hbox',
-                                pack: 'end'
-                            },
-                            items: [
-                                {
-                                    xtype: 'panel', border: false, hidden: false,
-                                    bodyStyle: 'background: transparent;',
-                                    margin: '0 0',
-                                    layout: {
-                                        type: 'hbox'
-                                    },
-                                    defaults: {
-                                        anchor: '100%',
-                                        padding: '0 0'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'combo',
-                                            id: prototype.id2 + '-cmbfiltroDataEntry',
-                                            fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            store: new Ext.data.SimpleStore({
-                                                fields: ['code', 'name'],
-                                                data: [
-                                                    ["", "(Select)"],
-                                                    ["1", "Ticket Number"]
-                                                ]
-                                            }),
-                                            queryMode: 'local',
-                                            triggerAction: 'all',
-                                            autoSelect: false,
-                                            forceSelection: true,
-                                            caseSensitive: false,
-                                            editable: true,
-                                            typeAhead: true,
-                                            valueField: 'code', displayField: 'name', width: 300, height: 26,
-                                            value: "", enableKeyEvents: true,
-                                            padding: '4 0',
-                                            listeners: {
-                                                change: 'onMostrarFiltrosChangeDataEntry'
-                                            }
-                                        },
-                                        // <editor-fold defaultstate="collapsed" desc="box:UNIQUE SERVICE CREDIT ID">
-                                        {
-                                            xtype: 'panel',
-                                            id: prototype.id2 + '-BoxUniqueServiceCreditID',
-                                            border: false,
-                                            hidden: true,
-                                            layout: 'hbox',
-                                            bodyStyle: 'background: transparent;"',
-                                            margin: '3 0',
-                                            defaults: {
-                                                anchor: '100%',
-                                                padding: '4 0'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id2 + '-A4308IDEXP-Filter',
-                                                    fieldLabel: 'Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 10, width: 250, height: 26,
-                                                    maskRe: /[0-9]/,
-                                                    listeners: {
-                                                        keypress: 'onTextKeypress'
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        // </editor-fold>
-
-                                        // <editor-fold defaultstate="collapsed" desc="box:ID REFERENCE NBR">
-                                        {
-                                            xtype: 'panel',
-                                            id: prototype.id2 + '-BoxIdReferenceNbr',
-                                            border: false,
-                                            hidden: true,
-                                            layout: 'hbox',
-                                            bodyStyle: 'background: transparent;"',
-                                            margin: '3 0',
-                                            defaults: {
-                                                anchor: '100%',
-                                                padding: '4 0'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id2 + '-A4308IDISS-Filter',
-                                                    fieldLabel: 'Id Reference', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 10, width: 250, height: 26,
-                                                    maskRe: /[0-9]/,
-                                                    listeners: {
-                                                        keypress: 'onTextKeypress'
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                        // </editor-fold>
-                                    ]
-                                },
-                                {xtype: 'tbspacer', width: '100px'},
-                                {
-                                    xtype: 'panel',
-                                    padding: 3,
-                                    layout: {
-                                        type: 'hbox'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'toolbar',
-                                            items: [
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id2 + '-btnSearch',
-                                                    iconCls: 'prx-icon-search',
-                                                    tooltip: 'Search', text:'Search',
-                                                    listeners: {
-                                                        click: 'btnSearchDetalleClick'
-                                                    }
-                                                }
+//                        {
+//                            xtype: 'panel', width: '100%', border: false,
+//                            layout: {
+//                                type: 'hbox',
+//                                pack: 'end'
+//                            },
+//                            items: [
+//                                {
+//                                    xtype: 'panel', border: false, hidden: false,
+//                                    bodyStyle: 'background: transparent;',
+//                                    margin: '0 0',
+//                                    layout: {
+//                                        type: 'hbox'
+//                                    },
+//                                    defaults: {
+//                                        anchor: '100%',
+//                                        padding: '0 0'
+//                                    },
+//                                    items: [
+//                                        {
+//                                            xtype: 'combo',
+//                                            id: prototype.id2 + '-cmbfiltroDataEntry',
+//                                            fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+//                                            store: new Ext.data.SimpleStore({
+//                                                fields: ['code', 'name'],
+//                                                data: [
+//                                                    ["", "(Select)"],
+//                                                    ["1", "Ticket Number"]
+//                                                ]
+//                                            }),
+//                                            queryMode: 'local',
+//                                            triggerAction: 'all',
+//                                            autoSelect: false,
+//                                            forceSelection: true,
+//                                            caseSensitive: false,
+//                                            editable: true,
+//                                            typeAhead: true,
+//                                            valueField: 'code', displayField: 'name', width: 300, height: 26,
+//                                            value: "", enableKeyEvents: true,
+//                                            padding: '4 0',
+//                                            listeners: {
+//                                                change: 'onMostrarFiltrosChangeDataEntry'
+//                                            }
+//                                        },
+//                                        // <editor-fold defaultstate="collapsed" desc="box:UNIQUE SERVICE CREDIT ID">
+//                                        {
+//                                            xtype: 'panel',
+//                                            id: prototype.id2 + '-BoxUniqueServiceCreditID',
+//                                            border: false,
+//                                            hidden: true,
+//                                            layout: 'hbox',
+//                                            bodyStyle: 'background: transparent;"',
+//                                            margin: '3 0',
+//                                            defaults: {
+//                                                anchor: '100%',
+//                                                padding: '4 0'
+//                                            },
+//                                            items: [
 //                                                {
-//                                                    xtype: 'button', disabled: true,
-//                                                    id: prototype.id2 + '-btnAdd',
-//                                                    iconCls: 'prx-icon-add',
-//                                                    text: 'Add',
+//                                                    xtype: 'textfield',
+//                                                    id: prototype.id2 + '-A4308IDEXP-Filter',
+//                                                    fieldLabel: 'Credit ID ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+//                                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+//                                                    enableKeyEvents: true,
+//                                                    enforceMaxLength: true,
+//                                                    maxLength: 10, width: 250, height: 26,
+//                                                    maskRe: /[0-9]/,
 //                                                    listeners: {
-//                                                        click: 'btnAdd_click'
+//                                                        keypress: 'onTextKeypress'
 //                                                    }
 //                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {xtype: 'tbspacer', width: '20px'}
-                            ]
-                        },
+//                                            ]
+//                                        },
+//                                        // </editor-fold>
+//
+//                                        // <editor-fold defaultstate="collapsed" desc="box:ID REFERENCE NBR">
+//                                        {
+//                                            xtype: 'panel',
+//                                            id: prototype.id2 + '-BoxIdReferenceNbr',
+//                                            border: false,
+//                                            hidden: true,
+//                                            layout: 'hbox',
+//                                            bodyStyle: 'background: transparent;"',
+//                                            margin: '3 0',
+//                                            defaults: {
+//                                                anchor: '100%',
+//                                                padding: '4 0'
+//                                            },
+//                                            items: [
+//                                                {
+//                                                    xtype: 'textfield',
+//                                                    id: prototype.id2 + '-A4308IDISS-Filter',
+//                                                    fieldLabel: 'Id Reference', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+//                                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+//                                                    enableKeyEvents: true,
+//                                                    enforceMaxLength: true,
+//                                                    maxLength: 10, width: 250, height: 26,
+//                                                    maskRe: /[0-9]/,
+//                                                    listeners: {
+//                                                        keypress: 'onTextKeypress'
+//                                                    }
+//                                                }
+//                                            ]
+//                                        }
+//                                        // </editor-fold>
+//                                    ]
+//                                },
+//                                {xtype: 'tbspacer', width: '100px'},
+//                                {
+//                                    xtype: 'panel',
+//                                    padding: 3,
+//                                    layout: {
+//                                        type: 'hbox'
+//                                    },
+//                                    items: [
+//                                        {
+//                                            xtype: 'toolbar',
+//                                            items: [
+//                                                {
+//                                                    xtype: 'button',
+//                                                    id: prototype.id2 + '-btnSearch',
+//                                                    iconCls: 'prx-icon-search',
+//                                                    tooltip: 'Search', text:'Search',
+//                                                    listeners: {
+//                                                        click: 'btnSearchDetalleClick'
+//                                                    }
+//                                                }
+//                                            ]
+//                                        }
+//                                    ]
+//                                },
+//                                {xtype: 'tbspacer', width: '20px'}
+//                            ]
+//                        },
                         {
                            xtype: prototype.id2 + '-infoDetail'
                         }

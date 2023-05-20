@@ -77,7 +77,6 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorDe
                 alert('No implementado');
                 break;
         }
-
     },
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -155,6 +154,9 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorDe
         // <editor-fold defaultstate="collapsed" desc="show">
         Ext.getCmp(prototype.id2 + '-boxMainData').show();
         // </editor-fold>
+    },
+    onCancelClick: function (btn) {
+        this.view.close();
     },
     btnAdd_click: function () {
         this.winDataEntry('I');

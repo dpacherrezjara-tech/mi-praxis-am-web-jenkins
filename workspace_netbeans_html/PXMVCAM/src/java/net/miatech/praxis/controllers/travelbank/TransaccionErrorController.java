@@ -10,9 +10,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.travelbank.TransaccionErrorLogic;
 import net.miatech.praxis.travelbank.SQP04948Filter;
 import net.miatech.praxis.travelbank.SQP04949Filter;
+import net.miatech.praxis.travelbank.SQP04984Filter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -101,6 +103,27 @@ public class TransaccionErrorController extends BaseController {
             map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "setIssueCrud")
+    public @ResponseBody
+    String setIssueCrud(ModelMap map, HttpServletRequest request) {
+        SQP04984Filter filter = new SQP04984Filter();
+        SQP04984Filter objRtn;        
+        logic = new TransaccionErrorLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            objRtn = logic.setSQP04984Filter(filter);        
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+            throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
     }
 
 }

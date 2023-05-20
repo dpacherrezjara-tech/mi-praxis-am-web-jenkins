@@ -38,6 +38,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.Crud.IssueDataEntry'
                             xtype: 'fieldset',                                                     
                             layout: 'vbox',
                             margin: '2 2 2 2',
+                            width: '100%',
                             border: true,
                             padding: 2,
                             items: [
@@ -50,18 +51,18 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.Crud.IssueDataEntry'
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id3 + '-A4281IDISS',
-                                            fieldLabel: 'U. Service Credit ID', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            fieldLabel: 'Credit ID', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125, fieldStyle: 'text-align:center;font-size:14px',
                                             readOnly: false,
                                             width: 245
                                         },
-                                        {
+                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id3 + '-A4281TRNCU',
-                                            fieldLabel: 'Transacction', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 120, fieldStyle: 'text-align:center;font-size:13px',
+                                            id: prototype.id3 + '-A4281SQISS',
+                                            fieldLabel: 'Seq.', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 50, fieldStyle: 'text-align:center;font-size:14px',
                                             readOnly: false,
-                                            width: 190
+                                            width: 90
                                         }
                                     ]
                                 },
@@ -81,6 +82,22 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.Crud.IssueDataEntry'
                                         }
                                     ]
                                 },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id3 + '-A4281TRNCU',
+                                            fieldLabel: 'Transacction', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 125, fieldStyle: 'text-align:center;font-size:13px',
+                                            readOnly: false,
+                                            width: 190
+                                        }
+                                    ]
+                                },                                
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -213,6 +230,13 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.Crud.IssueDataEntry'
                                             fieldLabel: 'Credit ID(REF.):', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125,  fieldStyle: 'text-align:left;font-size:13px',                                            
                                             width: 280
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id3 + '-A4281SQISR',
+                                            fieldLabel: 'Seq:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 50,  fieldStyle: 'text-align:left;font-size:13px',                                            
+                                            width: 100
                                         }
                                     ]
                                 },
@@ -306,8 +330,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionErrorForm.Crud.IssueDataEntry'
             style: 'aling:center padding: 5px;',
             items: [
                 {
-                    text: 'Save', 
-                    //disabled: true,
+                    text: 'Save',                     
                     id: prototype.id3 + '-btn-save',
                     iconCls: 'prx-icon-save',
                     listeners: {

@@ -83,26 +83,28 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
 //        alert('btnSearch_click of FormFileUsedController ');
-        var strFiltro = this.getValue('cmbfiltro');
+        // var strFiltro = this.getValue('cmbfiltro');
         var VP_ACCNBR = Ext.getCmp(prototype.id + '-NCTA').getValue();
         var VP_CREDID = Ext.getCmp(prototype.id + '-creditID').getValue();
+// SEQ QUITA A PEDIDO DE ROCIO
+//        if (VP_ACCNBR === '') {
+//            global.Msg({
+//                msg: 'Enter account number.'
+//            });
+//            return;
+//        }
+//        if (VP_CREDID === '') {
+//            global.Msg({
+//                msg: 'Enter credit ID'
+//            });
+//            return;
+//        }
 
-        if (VP_ACCNBR === '') {
+       if ( VP_ACCNBR === '' && VP_CREDID === '' ) {
             global.Msg({
-                msg: 'Enter account number.'
+                msg: 'Enter account number or  credit ID '
             });
             return;
-        }
-        if (VP_CREDID === '') {
-            global.Msg({
-                msg: 'Enter credit ID'
-            });
-            return;
-        }
-
-        if (strFiltro !== '') {
-            console.log(Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd'))
-            //me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
         }
         this.setFormatParameter();
         this.setGridData();

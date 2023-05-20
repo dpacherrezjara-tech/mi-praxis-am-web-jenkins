@@ -283,6 +283,7 @@ public class TransactionFilesDAO {
                 objRtn = new SQP04970Filter();
                 objRtn.A4281CCUST = rs01.getString("A4281CCUST");
                 objRtn.A4281IDISS = rs01.getString("A4281IDISS");
+                objRtn.A4281SQISS = rs01.getString("A4281SQISS");                
                 objRtn.A4281NCTA = rs01.getString("A4281NCTA");
                 objRtn.A4281SERV = rs01.getString("A4281SERV");
                 objRtn.A4281PRDA = rs01.getString("A4281PRDA");
