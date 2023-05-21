@@ -156,6 +156,22 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
                 ["1", "Processed"]
             ]
         }));
+        
+        var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
+        cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["AMEX", "Amex"],
+                ["FIRSTD00", "First Data"],
+                ["PRISMA", "Prisma"],
+                ["WP00", "WorldPay"],
+                ["GETMEX00", "GetNetMex"],
+                ["ATCAN00", "Atcan"],
+            ]
+        }));
+        cmbProT.setValue("");
 
         Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
@@ -198,7 +214,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
         me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
         me.bean.IN_STRFND = Ext.getCmp(prototype.id + '-cmbSTRFND').getValue();
-
+        me.bean.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
+        me.bean.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
+        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
+        
         var beanString = JSON.stringify(me.bean);
 
         searchParams = {
@@ -377,7 +396,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         Ext.getCmp(prototype.id + '-cmbCode').setValue('');
         Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
         Ext.getCmp(prototype.id + '-cmbBank').setValue('');
-
+        Ext.getCmp(prototype.id + '-txtMERCHError').setValue('');
     },
     btnExcel_click: function (obj, e) {
 
