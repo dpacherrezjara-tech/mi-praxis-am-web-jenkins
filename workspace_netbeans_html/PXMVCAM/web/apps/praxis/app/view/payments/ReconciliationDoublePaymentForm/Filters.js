@@ -198,7 +198,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 100,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
                     ]
@@ -277,7 +277,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 100,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
                         {
@@ -353,9 +353,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 80,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
+                        {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'label',
                             text: 'TKT:',
@@ -371,9 +372,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
 //                            maxLength: 6,
                             width: 95,
                             enableKeyEvents: true,
-//                            listeners: {
-//                                keypress: 'txtPNR_keyDownHandler'
-//                            }
+                            listeners: {
+                                keypress: 'eventKey'
+                            }
                         }
                     ]
                 }
