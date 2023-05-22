@@ -123,6 +123,24 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
+        
+        var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
+        cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["ARS", "ARS"],
+                ["CAD", "CAD"],
+                ["CLP", "CLP"],
+                ["EUR", "EUR"],
+                ["GBP", "GBP"],
+                ["JPY", "JPY"],
+                ["MXN", "MXN"],
+                ["USD", "USD"],
+            ]
+        }));
+        cmbCurr.setValue("");
 
         var cmbDateSel = Ext.getCmp(prototype.id + '-cmbDateSel');
         cmbDateSel.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -156,7 +174,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
                 ["1", "Processed"]
             ]
         }));
-        
+
         var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
         cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -181,6 +199,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         Ext.getCmp(prototype.id + '-cmbSTRFND').setValue('');
         Ext.getCmp(prototype.id + '-cmbSTRFND').resumeEvents();
 
+        this.obtainGetCountries();
+
         //me.obtainGetAdjustmentCode();
     },
     obtainGetAdjustmentCode: function () {
@@ -196,6 +216,42 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+    },
+    obtainGetCountries: function () {
+        Ext.Ajax.request({
+            url: 'ReconciliationPayment' + '/getCountries',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRY').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRY').setValue('');
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+    },
+    obtainGetCurrencies: function () {
+        Ext.Ajax.request({
+            url: 'ReconciliationPayment' + '/getCurrencies',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbCurr').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbCurr').setValue('');
                 } else
                     global.Msg({msg: res.sesion});
             }
@@ -217,7 +273,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         me.bean.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
         me.bean.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
-        
+        me.bean.IN_SCOUNTRY = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
+        me.bean.IN_PCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
+
         var beanString = JSON.stringify(me.bean);
 
         searchParams = {

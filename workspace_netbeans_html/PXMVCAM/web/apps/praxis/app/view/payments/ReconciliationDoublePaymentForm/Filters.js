@@ -375,7 +375,42 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             listeners: {
                                 keypress: 'eventKey'
                             }
-                        }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCurr',
+                            fieldLabel: 'Currency:',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 70,
+                            width: 200,
+                            hidden: false
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Country:',
+                            id: prototype.id + '-cmbSCOUNTRY',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 130,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
+                        },
                     ]
                 }
             ]
