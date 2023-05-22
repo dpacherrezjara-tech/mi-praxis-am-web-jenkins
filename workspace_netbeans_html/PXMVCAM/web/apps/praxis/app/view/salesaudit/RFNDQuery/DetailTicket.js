@@ -159,15 +159,16 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             width: 350
                         },
-                        /*{
+                        {
                             xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtRemarks',
-                            fieldLabel: 'Remarks',
-                            labelWidth: 50,
+                            id: prototype.idDetailTicket + '-txtAuthorise',
+                            fieldLabel: 'Autho/Reje date',
+                            labelWidth: 100,
+                            width: 180,
                             value: 'xxxxxx',
                             readOnly: true,
-                            width: 350
-                        },*/
+                            fieldStyle: 'font-weight: bold; color: blue;'
+                        },
                         {
                             xtype: 'button', hidden: true,
                             id: prototype.idDetailTicket + '-txtImageView',
@@ -176,7 +177,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             listeners: {
                                 click: 'onImageViewClick'
                             }
-                        },
+                        }
                     ]
                 },
                 {
@@ -391,14 +392,15 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             width: 900
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtAuthorise',
-                            fieldLabel: 'Autho/Reje date',
-                            labelWidth: 100,
-                            width: 180,
-                            value: 'xxxxxx',
+                            xtype: 'textarea',
+                            id: prototype.idDetailTicket + '-txtRemarks',
+                            //fieldLabel:'Remarks',
+                            labelWidth:50,
+                            grow: true,
                             readOnly: true,
-                            fieldStyle: 'font-weight: bold; color: blue;'
+                            //anchor    : '100%',
+                            flex: 1,
+                            height: '100%'
                         }
 
 
@@ -680,16 +682,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 200,
                             width: 570
-                        },{
-                            xtype: 'textarea',
-                            id: prototype.idDetailTicket + '-txtRemarks',
-                            fieldLabel:'Remarks',
-                            labelWidth:50,
-                            grow: true,
-                            readOnly: true,
-                            //anchor    : '100%',
-                            flex: 1,
-                            height: '100%'
                         }
                     ]
                 },
