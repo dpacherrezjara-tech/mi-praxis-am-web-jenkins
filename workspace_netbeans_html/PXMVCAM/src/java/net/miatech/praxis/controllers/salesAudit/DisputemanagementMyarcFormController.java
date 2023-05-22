@@ -27,6 +27,7 @@ import net.miatech.beans.SaleAudit.A4137Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.DisputemanagementMyarcFormLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -40,6 +41,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,7 +62,9 @@ public class DisputemanagementMyarcFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private DisputemanagementMyarcFormLogic logic;
-
+    @Autowired
+    private PythonWS pws;
+    
     @RequestMapping(value = "SearchReportMyarc")
     public @ResponseBody
     String SearchReportMyarc(ModelMap map, HttpServletRequest request) {
@@ -283,6 +287,29 @@ public class DisputemanagementMyarcFormController extends BaseController {
     
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
+    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
+        try {
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String urlREST = "MYARC/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim();
+
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
+        } catch (Exception e) {
+          throw new SpringException(e);
+        }
+
+        return new Gson().toJson(res);
+    }
+    /*
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
     String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
 
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
@@ -293,14 +320,9 @@ public class DisputemanagementMyarcFormController extends BaseController {
         String IN_ANIO = request.getParameter("IN_ANIO").trim();
         String IN_PREME = request.getParameter("IN_PREME").trim();
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
+        
         Unirest.setTimeouts(3600000, 3600000);
 
-        /*
-         Preparando parámetros para enviar por body
-         */
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_OPTION", "1");
         bodyData.put("IN_PATH", IN_PATH);
@@ -321,6 +343,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
 
         return new Gson().toJson(map);
     }
+    */
 
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody

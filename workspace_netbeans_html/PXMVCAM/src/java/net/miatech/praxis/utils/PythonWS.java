@@ -9,9 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import net.miatech.praxis.classes.CurrentSession;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -73,6 +77,20 @@ public class PythonWS {
             // Devolvemos un ResponseEntity con el código de estado HTTP 400 si la descarga falla
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public @ResponseBody
+    Object downloadFilesVisorPython(String endpoint, HashMap body) throws InterruptedException, ExecutionException, JSONException {
+        Unirest.setTimeouts(3600000, 3600000);
+        Future<HttpResponse<JsonNode>> postFuture = Unirest.post(this.getRestUrl(endpoint))//Sending
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(body))
+                .asJsonAsync();
+
+        HttpResponse<JsonNode> postResponse = postFuture.get();
+       Object obj = postResponse.getBody().getObject();//.getJSONArray("files"); //getString("files");
+        return obj;
     }
 
 }
