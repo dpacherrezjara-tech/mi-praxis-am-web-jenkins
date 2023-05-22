@@ -46,7 +46,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
                 
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
-        // me.beanTMP.IN_PATH = "D:\\PRAXIS_AM_HTML\\PXMVCAM\\web\\resources\\IMGTMPDISPUTE\\";
         me.beanTMP.IN_DATE = me.IN_DATE;
         me.beanTMP.IN_ANIO = me.IN_ANIO;
         me.beanTMP.IN_PREME = me.IN_PREME;
