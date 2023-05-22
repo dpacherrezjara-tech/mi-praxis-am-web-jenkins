@@ -337,6 +337,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                 ["CLP", "CLP"],
                 ["EUR", "EUR"],
                 ["GBP", "GBP"],
+                ["JPY", "JPY"],
+                ["MXN", "MXN"],
                 ["USD", "USD"],
             ]
         }));

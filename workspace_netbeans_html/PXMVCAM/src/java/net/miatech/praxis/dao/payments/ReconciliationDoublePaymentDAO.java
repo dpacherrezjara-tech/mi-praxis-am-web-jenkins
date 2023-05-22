@@ -59,10 +59,10 @@ public class ReconciliationDoublePaymentDAO {
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
-        hmDescFCOMPL.put("1", "Match"); //PLUSGRADE
-        hmDescFCOMPL.put("2", "Match"); //LIGAS
-        hmDescFCOMPL.put("3", "Match"); //TABLET
-        hmDescFCOMPL.put("4", "Match"); //BPO
+        hmDescFCOMPL.put("1", "PLUSGRADE"); //PLUSGRADE
+        hmDescFCOMPL.put("2", "LIGAS"); //LIGAS
+        hmDescFCOMPL.put("3", "TABLET"); //TABLET
+        hmDescFCOMPL.put("4", "BPO"); //BPO
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
@@ -98,17 +98,17 @@ public class ReconciliationDoublePaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04955(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04955(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(11, Types.INTEGER);
-            cstmt.registerOutParameter(12, Types.INTEGER);
-            cstmt.registerOutParameter(13, Types.INTEGER);
-            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(16, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(18, Types.INTEGER);
+            cstmt.registerOutParameter(19, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -120,17 +120,22 @@ public class ReconciliationDoublePaymentDAO {
             cstmt.setString(8, filter.IN_SCARDN1.trim() + '%' + filter.IN_SCARDN2.trim() + '%');
             cstmt.setString(9, filter.IN_SAUTHOC);
             cstmt.setString(10, filter.IN_STRFND);
-            cstmt.setInt(11, filter.page.PAGNUM);
-            cstmt.setInt(12, filter.page.PAGROW);
-            cstmt.setInt(13, filter.page.TOTPAG);
-            cstmt.setInt(14, filter.page.TOTROW);
+            cstmt.setString(11, filter.IN_PROCTYPE);
+            cstmt.setString(12, filter.IN_MERCH_ERR);
+            cstmt.setString(13, filter.IN_TKT);
+            cstmt.setString(14, filter.IN_SCOUNTRY.trim());
+            cstmt.setString(15, filter.IN_PCURRENCY.trim());
+            cstmt.setInt(16, filter.page.PAGNUM);
+            cstmt.setInt(17, filter.page.PAGROW);
+            cstmt.setInt(18, filter.page.TOTPAG);
+            cstmt.setInt(19, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(11);
-            filter.page.PAGROW = cstmt.getInt(12);
-            filter.page.TOTPAG = cstmt.getInt(13);
-            filter.page.TOTROW = cstmt.getInt(14);
+            filter.page.PAGNUM = cstmt.getInt(16);
+            filter.page.PAGROW = cstmt.getInt(17);
+            filter.page.TOTPAG = cstmt.getInt(18);
+            filter.page.TOTROW = cstmt.getInt(19);
 
             cstmt.execute();
 

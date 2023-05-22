@@ -198,7 +198,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 100,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
                     ]
@@ -238,7 +238,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 80,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
                         {
@@ -257,7 +257,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 60,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
                         {xtype: 'tbspacer', width: 20},
@@ -277,7 +277,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             width: 100,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'eventKey'
                             }
                         },
                         {
@@ -320,7 +320,97 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                             listeners: {
                                 change: 'btnSearch_click'
                             }
-                        }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbProT',
+                            fieldLabel: 'Proc Type',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 70,
+                            width: 200,
+                            hidden: false
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            text: 'Merch:',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtMERCHError',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 15,
+                            width: 80,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'eventKey'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            text: 'TKT:',
+                            padding: '8px 1px 2px 1px',
+                            width: 30
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtTKT',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+//                            maxLength: 6,
+                            width: 95,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'eventKey'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCurr',
+                            fieldLabel: 'Currency:',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 70,
+                            width: 200,
+                            hidden: false
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Country:',
+                            id: prototype.id + '-cmbSCOUNTRY',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 130,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
+                        },
                     ]
                 }
             ]

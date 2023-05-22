@@ -292,6 +292,7 @@ public class A4116Filter extends A4116 {
     public String SDATE = "";
     public String STIME = "";
     public String SCARCOD = "";
+    public String IN_MERCH_ERR = "";
     
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
