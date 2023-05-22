@@ -44,4 +44,10 @@ public class A4281 {
     public String A4281TRNCU = ""; //HAR(4) CCSID 284 NOT NULL, 
     public String A4281IDISR = ""; //HAR(10) CCSID 284 NOT NULL, 
     public String A4281SQISR = ""; //  CHAR(2) CCSID 284 NOT NULL
+    
+    public Double A4281TCUS = 0.0; //" NUMERIC(13 , 2) NOT NULL, 
+    public Double A4281TCMX = 0.0; //" NUMERIC(13 , 2) NOT NULL,
+    public Double A4281VALUS = 0.0; //" NUMERIC(13 , 2) NOT NULL, 
+    public Double A4281VALMX = 0.0; //" NUMERIC(13 , 2) NOT NULL,  
+            
 }

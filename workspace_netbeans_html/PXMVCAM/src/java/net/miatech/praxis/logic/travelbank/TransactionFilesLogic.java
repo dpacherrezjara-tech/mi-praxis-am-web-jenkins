@@ -20,6 +20,7 @@ import net.miatech.praxis.travelbank.SQP04821Filter;
 import net.miatech.praxis.travelbank.SQP04822Filter;
 import net.miatech.praxis.travelbank.SQP04823Filter;
 import net.miatech.praxis.travelbank.SQP04824Filter;
+import net.miatech.praxis.travelbank.SQP04970Filter;
 
 /**
  *
@@ -40,6 +41,10 @@ public class TransactionFilesLogic {
 
     public List<SQP04807Filter> getSQP04807Filter(SQP04807Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04807Filter(filter);
+    }
+
+    public List<SQP04970Filter> getSQP04970Filter(SQP04970Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04970Filter(filter);
     }
 
     // </editor-fold>

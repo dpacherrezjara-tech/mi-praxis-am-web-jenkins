@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountStatement.AccountStatementCo
     },
     setGridData: function (obj, val) {
         let url = prototype.url + '/search',
-                store = Ext.StoreMgr.lookup(prototype.id + "storeInfo"),
+                // store = Ext.StoreMgr.lookup(prototype.id + "storeInfo"),
                 grilla = Ext.getCmp(prototype.id + '-gridData').getView();
         
         grilla.getStore().removeAll();
@@ -104,8 +104,9 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountStatement.AccountStatementCo
                     Ext.getCmp(prototype.id + '-A4417SALDO').setValue(Ext.util.Format.number(VL_A4417SALDO, '0,000.00'));
 
                     let item = obj.data[0];
-                    store.getProxy().data = obj.data;
-                    store.page = {
+                    //store.getProxy().data = obj.data;
+                    grilla.getStore().getProxy().data = obj.data;
+                    grilla.getStore().page = {
                         start: 0,
                         limit: 20,
                         curpag: item.page.PAGNUM === 0 ? 1 : item.page.PAGNUM,
@@ -119,7 +120,7 @@ Ext.define('Ext.Praxis.controller.travelbank.AccountStatement.AccountStatementCo
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(total);
-                    store.load();
+                    grilla.getStore().load();
                 }
             }).catch(err => console.error('Error al consultar', err)).finally(() => {
                 grilla.unmask();

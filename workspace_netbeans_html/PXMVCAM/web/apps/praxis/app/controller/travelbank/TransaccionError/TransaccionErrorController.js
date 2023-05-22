@@ -5,9 +5,9 @@
  */
 
 
-Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalanceController', {
+Ext.define('Ext.Praxis.controller.travelbank.TransaccionError.TransaccionErrorController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.TransaccionBalanceController',
+    alias: 'controller.TransaccionErrorController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},
@@ -16,8 +16,8 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
     init: function ( ) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
         //prototype.id = 'FilesIssuesUsesForm';
-        prototype.id = 'TransaccionBalanceForm';
-        prototype.url = CONTEXTPATH + '/TransaccionBalance';
+        prototype.id = 'TransaccionErrorForm';
+        prototype.url = CONTEXTPATH + '/TransaccionError';
         //prototype.widthContenedor = 1300;
         //prototype.widthGrid = 863;
         // </editor-fold>
@@ -58,8 +58,7 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
     },
 
     // <editor-fold defaultstate="collapsed" desc="Info">
-    onEditClick: function (grid, rowIndex) {
-        //console.log('onEditClick of FormFileUsedController ');
+    onEditClick: function (grid, rowIndex) {        
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         this.winDataEntry('U', rec);
@@ -67,8 +66,8 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.travelbank.FilesIssuesUsesForm.LiabilityForm.FileLiabilityDataEntry', {
-            id: 'FileLiabilityDataEntry',
+        Ext.create('Ext.Praxis.view.travelbank.TransaccionErrorForm.TransaccionErrorDetalleForm', {
+            id: 'TransaccionErrorDetalleForm',
             params: {
                 action: action,
                 rec: rec
@@ -83,32 +82,28 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
 //        alert('btnSearch_click of FormFileUsedController ');
-        // var strFiltro = this.getValue('cmbfiltro');
-        var VP_ACCNBR = Ext.getCmp(prototype.id + '-NCTA').getValue();
-        var VP_CREDID = Ext.getCmp(prototype.id + '-creditID').getValue();
-// SEQ QUITA A PEDIDO DE ROCIO
+//        var strFiltro = this.getValue('cmbfiltro');
+//        var VP_ACCNBR = Ext.getCmp(prototype.id + '-NCTA').getValue();
+//        var VP_TICKET = Ext.getCmp(prototype.id + '-TicketNumber').getValue();
 //        if (VP_ACCNBR === '') {
 //            global.Msg({
 //                msg: 'Enter account number.'
 //            });
 //            return;
 //        }
-//        if (VP_CREDID === '') {
+//        if (VP_TICKET === '') {
 //            global.Msg({
 //                msg: 'Enter credit ID'
 //            });
 //            return;
 //        }
 
-       if ( VP_ACCNBR === '' && VP_CREDID === '' ) {
-            global.Msg({
-                msg: 'Enter account number or  credit ID '
-            });
-            return;
-        }
+//        if (strFiltro !== '') {
+//            console.log(Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd'))
+//            //me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+//        }
         this.setFormatParameter();
         this.setGridData();
-
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-boxSearchFilter');
@@ -158,26 +153,21 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
 
     // <editor-fold defaultstate="collapsed" desc="setFormatParameter">
     setFormatParameter: function () {
-        var me = this;
+        var me = this;       
         me.searchParams = {
             VP_OPCION: '',
-            VP_FECHA1: '',
-            VP_FECHA2: '',
-            VP_ACCNBR: '8139204153239670',
-            VP_CREDID: '0000000619'
+            VP_DESDE: '',
+            VP_HASTA: '',
+            VP_NCTA: '',
+            VP_TICKET: ''
         };
-        // <editor-fold defaultstate="collapsed" desc="llenarData">
-        var cmbfiltro = this.getValue('cmbfiltro');
-        me.searchParams.VP_OPCION = cmbfiltro;
-        me.searchParams.VP_ACCNBR = Ext.getCmp(prototype.id + '-NCTA').getValue();
-        me.searchParams.VP_CREDID = Ext.getCmp(prototype.id + '-creditID').getValue();
-        switch (cmbfiltro) {
-            case "1" :
-            case "2" :
-                me.searchParams.VP_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
-                me.searchParams.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
-                break;
-        }
+        // <editor-fold defaultstate="collapsed" desc="llenarData">        
+        me.searchParams.VP_OPCION = this.getValue('cmbfiltro');
+        me.searchParams.VP_DESDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+        me.searchParams.VP_HASTA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+        me.searchParams.VP_NCTA = Ext.getCmp(prototype.id + '-NCTA').getValue();
+        me.searchParams.VP_TICKET = Ext.getCmp(prototype.id + '-TicketNumber').getValue();
+        
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="asignación para EXCEL" >
@@ -196,7 +186,7 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
         var me = this;
         var storeGridDatas = Ext.create('Ext.Praxis.store.travelbank.AccountingMasterTravelbank.GridData', {
             proxy: {
-                url: prototype.url + '/searchTransactionId'
+                url: prototype.url + '/search'
             },
             listeners: {
                 beforeload: function (obj) {
