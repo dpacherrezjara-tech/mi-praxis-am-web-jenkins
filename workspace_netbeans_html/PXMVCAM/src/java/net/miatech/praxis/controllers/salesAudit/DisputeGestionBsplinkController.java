@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static jxl.biff.BaseCellFeatures.logger;
@@ -34,6 +35,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.ADMReportLogic;
 import net.miatech.praxis.logic.salesAudit.DisputeGestionBsplinkLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -48,6 +50,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -69,6 +72,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DisputeGestionBsplinkController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "SearchReportADM")
     public @ResponseBody
@@ -134,10 +139,10 @@ public class DisputeGestionBsplinkController extends BaseController {
                     vl_flag = "1";
                 }
 
-               // if (vl_flag.equals("0")) {
-                    map.put("success", true);
-                    map.put("data", lst_search);
-                    map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
+                // if (vl_flag.equals("0")) {
+                map.put("success", true);
+                map.put("data", lst_search);
+                map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
                 /*} else {
                     map.put("success", false);
                     map.put("sesion", "Could not send email!");
@@ -328,8 +333,8 @@ public class DisputeGestionBsplinkController extends BaseController {
     String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
         A2553 filter = new A2553();
         A2553 listenvio = new A2553();
-        String VL_ARCHI ="";
-        String result2 ="";
+        String VL_ARCHI = "";
+        String result2 = "";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -358,19 +363,19 @@ public class DisputeGestionBsplinkController extends BaseController {
                 if (!A2553ARCHV.equals("")) {
                     byte[] bytes = file.getBytes();
                     result = upload(bytes, filter.A2553CNXPA, A2553ARCHV);
-                    VL_ARCHI="1";
+                    VL_ARCHI = "1";
                 }
                 if (!A2553ARCHV2.equals("")) {
                     byte[] bytes2 = file2.getBytes();
                     result = upload(bytes2, filter.A2553CNXPA, A2553ARCHV2);
-                    VL_ARCHI="1";
+                    VL_ARCHI = "1";
                 }
                 if (!A2553ARCHV3.equals("")) {
                     byte[] bytes3 = file3.getBytes();
                     result = upload(bytes3, filter.A2553CNXPA, A2553ARCHV3);
-                    VL_ARCHI="1";
+                    VL_ARCHI = "1";
                 }
-                if(VL_ARCHI.equals("1")){
+                if (VL_ARCHI.equals("1")) {
                     result2 = upload_s3(filter.A2553CNXPA);
                 }
             } else {
@@ -388,6 +393,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+
     public String upload_s3(String IN_CNXPA) throws SQLException, Exception {
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
@@ -440,6 +446,34 @@ public class DisputeGestionBsplinkController extends BaseController {
 
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
+    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
+        try {
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String urlREST = "";
+            if (request.getParameter("IN_TIPO").trim().equals("USRBSP")) {
+                urlREST = "DISPUTAS/ROBOT" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+            } else {
+                urlREST = "DISPUTAS/WEB" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+            }
+
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
+
+        return new Gson().toJson(res);
+    }
+
+    /*@RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
     String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
 
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
@@ -450,14 +484,13 @@ public class DisputeGestionBsplinkController extends BaseController {
         String IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
         String IN_DOCUMENT = request.getParameter("IN_DOCUMENT").toString().trim();
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
+        
+        Se establece tiempo límite de conexión por 60 min
+         
         Unirest.setTimeouts(3600000, 3600000);
 
-        /*
-         Preparando parámetros para enviar por body
-         */
+        Preparando parámetros para enviar por body
+         
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_OPTION", "1");
         bodyData.put("IN_PATH", IN_PATH);
@@ -477,8 +510,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         map.put("data", body);
 
         return new Gson().toJson(map);
-    }
-
+    }*/
     public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A4137Filter;
@@ -292,8 +293,14 @@ public class DisputemanagementMyarcFormController extends BaseController {
         Object res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
-            String urlREST = "MYARC/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim();
-
+            String urlREST = "";
+            if(request.getParameter("IN_TIPO").trim().equals("AGENCY") ){
+                urlREST= "MYARC/ROBOT/" + "" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim()+ "/" + request.getParameter("IN_DATE").trim() ;
+            }else{
+                urlREST= "MYARC/WEB/" + "" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim()+ "/" + request.getParameter("IN_DATE").trim() ;
+            }
+                   
+            
             HashMap bodyData = new HashMap<>();
             bodyData.put("client", "am");
             bodyData.put("type", "VISOR");
@@ -301,7 +308,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
 
             res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
             //("success", true);
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | JSONException e) {
           throw new SpringException(e);
         }
 
