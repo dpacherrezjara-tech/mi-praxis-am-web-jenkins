@@ -1153,8 +1153,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
     },
     addAdjustment_keyDownHandler: function () {
-        if (this.getValue('de-txtISREFNBR').trim() === '' && this.getValue('de-txtSPNR').trim() == '') {
-            global.Msg({msg: 'Please fill the Ticket and PNR fields'});
+        if (this.getValue('de-txtISREFNBR').trim() === '' || this.getValue('de-txtSPNR').trim() == '' || this.getValue('de-txtAdjAgent').trim() == '') {
+            global.Msg({msg: 'Please fill the Ticket or PNR or AGENT fields'});
         } else {
             if (this.sumAmount === this.bean.TGROSAMPAY) {
                 global.Msg({msg: 'The sum amount is equal to transaction amount.'});
