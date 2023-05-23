@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
     alias: 'controller.RFNDDIRFileViewerController',
 
     beanTMP: {},
+    beanDataima: {},
     urlWin01: CONTEXTPATH + '/RFNDQuery',
     urlWin02: '',
 
@@ -62,16 +63,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
             success: function (response, options) {
                 Ext.getCmp(prototype.idRFNDDIRFileViewer + '-win').unmask();
                 var res = Ext.JSON.decode(response.responseText);
-                var data = Ext.JSON.decode(res.data);
+                me.beanDataima = res;
+                //console.log(res.map.files.myArrayList);
+                //var data = Ext.JSON.decode(res.data);
                 //console.log(data);
 
-                var dataRoot = {text: me.beanTMP.IN_FOLIO, filename: '', expanded: true, flag: false, children: []};
+                var dataRoot = {text: me.beanTMP.IN_DOCUMENT, filename: '', expanded: true, flag: false, children: []};
 
-                Ext.Object.each(data, function (index, value) {
+                Ext.Object.each(res.map.files.myArrayList, function (index, value) {
+                    var vd = value.map.url.split('/');
                     dataRoot.children.push({
                         leaf: true,
-                        text: value.filename,
-                        filename: value.filename,
+                        text: vd[5], //value.map.url,
+                        filename: value.map.url,
                         flag: true
                     });
                 });
@@ -114,7 +118,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
                         enableTextSelection: true,
                         markDirty: true,
                         getRowClass: function (record, rowIndex, rowParams, store) {
-                            if (rowIndex % 2 == 0)
+                            if (rowIndex % 2 === 0)
                                 return 'rowA';
                         }
                     }
@@ -136,7 +140,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
                     panel.update('<div id="' + prototype.idRFNDDIRFileViewer + '-imageViewerContainer" style="width: 768px; height: 575px;" ></div>');
 
                     // /resources
-                    var curect_file_path = CONTEXTPATH + "/IMGTMPRFND/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + record.get('filename');
+                    var curect_file_path = record.get('filename');//CONTEXTPATH + "/IMGTMPRFND/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + record.get('filename');
                     $("#" + prototype.idRFNDDIRFileViewer + "-imageViewerContainer").verySimpleImageViewer({
                         imageSource: curect_file_path,
                         frame: ['100%', '100%'],
@@ -149,7 +153,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
                     });
                 } else if (extensionFile === 'pdf') {
                     // /resources
-                    var curect_file_path = CONTEXTPATH + "/IMGTMPRFND/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + record.get('filename');
+                    var curect_file_path = record.get('filename');//CONTEXTPATH + "/IMGTMPRFND/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + record.get('filename');
                     var htmlPdf = '<object data="' + curect_file_path + '" style="width: 768px; height: 575px;" type="application/pdf">' +
                             '<embed src="' + curect_file_path + '"  style="width: 768px; height: 575px;" type="application/pdf" />' +
                             '</object>';
@@ -164,8 +168,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
     OnDownloadFile: function (grid, rowIndex, colIndex) {
         //console.log(rowIndex);
         var record = grid.getStore().getAt(rowIndex);
+        window.open(record.data.filename, '_blank');
         // /resources
-        window.open(CONTEXTPATH + "/IMGTMPRFND/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + record.get('filename'), '_blank');
+        //window.open(CONTEXTPATH + "/IMGTMPRFND/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + record.get('filename'), '_blank');
     },
 
     OnDownloadActionDisabled: function (view, rowIndex, colIndex, item, record) {
