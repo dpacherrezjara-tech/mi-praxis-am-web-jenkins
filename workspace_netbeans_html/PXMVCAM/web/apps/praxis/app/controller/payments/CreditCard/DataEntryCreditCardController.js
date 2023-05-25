@@ -54,18 +54,19 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
         this.setValue('de-txtCOUNTRY', this.beanResult.COUNTRY);
         this.setValue('de-txtCURRENC', this.beanResult.CURRENC);
         this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-        
+        this.setValue('de-txtFECFROM', this.beanResult.FECFROM);
+        this.setValue('de-txtFECTO', this.beanResult.FECTO);
+
         this.setValue('cmbFSTAT', this.beanResult.FSTAT);
         this.setValue('cmbFNOBANK', this.beanResult.FNOBANK);
         this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
 
+        this.setValue('de-txtBSPBANK', this.beanResult.BSPBANK.trim());
+        this.setValue('de-txtNAMEBSPBANK', this.beanResult.strBSPBANK);
 
-
-        this.setValue('de-txtRATECON', Ext.util.Format.number(this.beanResult.RATECON, '0,000.00'));
-        this.setValue('de-txtRATECOP1', Ext.util.Format.number(this.beanResult.RATECOP1, '0,000.00'));
-        this.setValue('de-txtRATECOP2', Ext.util.Format.number(this.beanResult.RATECOP2, '0,000.00'));
+        this.setValue('de-txtRATCNAC', Ext.util.Format.number(this.beanResult.RATCNAC, '0,000.00'));
+        this.setValue('de-txtRATDNAC', Ext.util.Format.number(this.beanResult.RATDNAC, '0,000.00'));
+        this.setValue('de-txtRATCEXT', Ext.util.Format.number(this.beanResult.RATCEXT, '0,000.00'));
         this.setValue('de-txtRATEIVA', Ext.util.Format.number(this.beanResult.RATEIVA, '0,000.00'));
         this.setValue('de-txtCODEQUIV', this.beanResult.CODEQUIV);
 
@@ -115,23 +116,46 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
-//        console.log('llenarData');
+//        console.log('llenarData');        
 
         beanTemp.CODE = this.getValue("de-txtCODE");
         beanTemp.NAME = this.getValue("de-txtNAMEC");
         beanTemp.NAMEBANK = this.getValue("de-txtNAMEBANK");
         beanTemp.CLIENTE = this.getValue("de-txtCLIENTE");
+        beanTemp.BSPBANK = this.getValue("de-txtBSPBANK");
         beanTemp.FSTAT = this.getValue("cmbFSTAT");
-        beanTemp.RATECON = this.getValue("de-txtRATECON");
-        beanTemp.RATECOP1 = this.getValue("de-txtRATECOP1");
-        beanTemp.RATECOP2 = this.getValue("de-txtRATECOP2");
-        beanTemp.RATEIVA = this.getValue("de-txtRATEIVA");
 
-        beanTemp.CODEBANK = me.bean.CODEBANK === undefined ? '' : me.bean.CODEBANK;
-        beanTemp.COUNTRY = me.bean.COUNTRY === undefined ? '' : me.bean.COUNTRY;
-        beanTemp.CURRENC = me.bean.CURRENC === undefined ? '' : me.bean.CURRENC;
-        beanTemp.FNOBANK = me.bean.FNOBANK === undefined ? '' : me.bean.FNOBANK;
+        if (this.getValue("de-txtRATCNAC").trim() === '') {
+            beanTemp.RATCNAC = 0;
+        } else {
+            beanTemp.RATCNAC = parseFloat(this.getValue("de-txtRATCNAC").trim().replace(',', ''));
+        }
 
+        if (this.getValue("de-txtRATDNAC").trim() === '') {
+            beanTemp.RATDNAC = 0;
+        } else {
+            beanTemp.RATDNAC = parseFloat(this.getValue("de-txtRATDNAC").trim().replace(',', ''));
+        }
+
+        if (this.getValue("de-txtRATCEXT").trim() === '') {
+            beanTemp.RATCEXT = 0;
+        } else {
+            beanTemp.RATCEXT = parseFloat(this.getValue("de-txtRATCEXT").trim().replace(',', ''));
+        }
+
+        if (this.getValue("de-txtRATEIVA").trim() === '') {
+            beanTemp.RATEIVA = 0;
+        } else {
+            beanTemp.RATEIVA = parseFloat(this.getValue("de-txtRATEIVA").trim().replace(',', ''));
+        }
+
+        beanTemp.FECFROM = this.getValue("de-txtFECFROM");
+        beanTemp.FECTO = this.getValue("de-txtFECTO");
+
+        beanTemp.CODEBANK = this.beanResult.CODEBANK === undefined ? '' : this.beanResult.CODEBANK;
+        beanTemp.COUNTRY = this.beanResult.COUNTRY === undefined ? '' : this.beanResult.COUNTRY;
+        beanTemp.CURRENC = this.beanResult.CURRENC === undefined ? '' : this.beanResult.CURRENC;
+        beanTemp.FNOBANK = this.beanResult.FNOBANK === undefined ? '' : this.beanResult.FNOBANK;
 
         beanTemp.NEW_CODEBANK = this.getValue("de-txtCODEBANK");
         beanTemp.NEW_COUNTRY = this.getValue("de-txtCOUNTRY");
@@ -140,20 +164,6 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
 
 
         beanTemp.CODEQUIV = this.getValue("de-txtCODEQUIV");
-
-        if (beanTemp.RATECON.trim() === '') {
-            beanTemp.RATECON = 0;
-        }
-        if (beanTemp.RATECOP1.trim() === '') {
-            beanTemp.RATECOP1 = 0;
-        }
-        if (beanTemp.RATECOP2.trim() === '') {
-            beanTemp.RATECOP2 = 0;
-        }
-        if (beanTemp.RATEIVA.trim() === '') {
-            beanTemp.RATEIVA = 0;
-        }
-
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -235,6 +245,20 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
     },
     onUpdateClick: function(btn) {
 //        console.log('onUpdateClick');
+        if (this.getValue('de-txtFECFROM').trim().length !== 0 || this.getValue('de-txtFECTO').trim().length !== 0) {
+            if (this.getValue('de-txtFECFROM').trim().length < 8 || this.getValue('de-txtFECTO').trim().length < 8) {
+                global.Msg({msg: 'Invalid Length Date'})
+            } else if (this.getValue('de-txtFECFROM') > this.getValue('de-txtFECTO')) {
+                global.Msg({msg: 'Invalid Date. *From Date* is greather than *To Date*'})
+            } else {
+                this.update(btn);
+            }
+        } else {
+            this.update(btn);
+        }
+
+    },
+    update: function(btn) {
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
