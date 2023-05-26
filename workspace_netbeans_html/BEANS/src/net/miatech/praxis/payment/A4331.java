@@ -47,6 +47,7 @@ public class A4331 {
     public String SELLERID = "";
     public String SCARDN = "";
     public String ISREFNBR = "";
+    public String TICKET = "";
     
     public String TRANSDATE = "";
     public String TRANSID = "";

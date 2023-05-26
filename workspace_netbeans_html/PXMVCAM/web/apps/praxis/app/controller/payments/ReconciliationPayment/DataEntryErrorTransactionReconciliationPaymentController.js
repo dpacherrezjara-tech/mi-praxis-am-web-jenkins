@@ -219,7 +219,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
         this.setValue('de-txtTDOC', this.beanResult.TRANSTYPE);
         this.setValue('de-txtVOID', this.beanResult.descVOID);
-        this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
+        this.setValue('de-txtINVOIRN', this.beanResult.INVOIRN);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
         this.setValue('de-txtTGROSAMPAY', Ext.util.Format.number(this.beanResult.TGROSAMPAY, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
