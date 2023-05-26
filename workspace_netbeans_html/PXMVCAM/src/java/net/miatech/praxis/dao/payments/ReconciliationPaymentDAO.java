@@ -3792,6 +3792,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
                 objRtn.AXPRODAT = rs01.getString("AXPRODAT").trim();
                 objRtn.SIREFNBR = rs01.getString("SIREFNBR").trim();
+                objRtn.INVOIRN = rs01.getString("INVOIRN").trim();
                 objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
                 objRtn.IDITEMS = rs01.getString("IDITEMS").trim();
                 objRtn.IDITEMT = rs01.getString("IDITEMT").trim();
@@ -3860,6 +3861,7 @@ public class ReconciliationPaymentDAO {
                 objRtn.SELLERID = rs01.getString("SELLERID").trim();
                 objRtn.SCARDN = rs01.getString("SCARDN").trim();
                 objRtn.ISREFNBR = rs01.getString("TICKET1").trim();
+                objRtn.TICKET = rs01.getString("TICKET1").trim();
                 objRtn.DES_MERCHANT = rs01.getString("DES_MERCHANT").trim();
                 objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
                 objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
