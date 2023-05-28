@@ -42,7 +42,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 this.actionCode = this.p.action;
                 this.bean = this.p.rec.data;
                 console.log(this.bean);
-
             },
     obtainGetAdjustmentCode: function () {
         Ext.Ajax.request({
@@ -63,20 +62,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         });
     },
     afterRender: function () {
-//        console.log('afterRender');
+        console.log('afterRender');
         this.obtainGetAdjustmentCode();
-        this.obtainData();
         switch (this.actionCode) {
-            case 'I':
-//                console.log('dd');
-                Ext.getCmp(prototype.id + '-btn-save').show();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
-                Ext.getCmp(prototype.id + '-btn-cancel').show();
-                break;
             case 'U':
                 this.getData();
-//                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
@@ -84,7 +74,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                     Ext.getCmp(prototype.id + '-panelScan').hide();
                     Ext.getCmp(prototype.id + '-panelMsiTracing').show();
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
-                    //Ext.getCmp(prototype.id + '-gridColumnFill').hide();
                     Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
                     //Coupons
                     Ext.getCmp(prototype.id + '-coupons_sales').show();
@@ -106,7 +95,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update-tdoc').setText('Change to Sales');
                 }
-
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
@@ -116,8 +104,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         var all = this.p.all;
         var rec;
         var rowIndex = this.p.rowIndex;
-        if (this.p.rowIndex < 19) {
+        if (this.p.rowIndex < 19) {            
             rec = all.getAt(rowIndex + 1);
+            console.log("Nueva Transaccion:")
+            console.log(rec)
             this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
             if (this.p.rec === null) {
                 Ext.getCmp(prototype.id + '-dataEntryError').close();
@@ -149,25 +139,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }).show();
     },
     mostrarData: function () {
-
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
-        this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
-        this.setValue('de-txtMERCHID', this.beanResult.PMERCHID);
+        this.setValue('de-txtSDATE', this.beanResult.SDATE);
+        this.setValue('de-txtPMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
         this.setValue('de-CODADJU', this.beanResult.DES_CODADJU);
-        /*var sMerch = this.beanResult.SMERCHID.trim();
-         if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
-         Ext.getCmp(prototype.id + '-labelScan').hide();
-         Ext.getCmp(prototype.id + '-panelScan').hide();
-         Ext.getCmp(prototype.id + '-panelScanCard').hide();
-         Ext.getCmp(prototype.id + '-panelDataInfoScan').hide();
-         }*/
-        /* else {
-         Ext.getCmp(prototype.id + '-chkSelection').show();
-         }*/
+        
         if (this.beanResult.TDOC === 'S') {
-//            this.setTitle()('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
             Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Sales Date');
             Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Sales Merchant ID');
             Ext.getCmp(prototype.id + '-txtFromDateCERROR').setText('Sett. vs Sales');
@@ -195,13 +174,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             Ext.getCmp(prototype.id + '-gridAdjA720FECVTA').setText('Refund<br>Date');
         }
 
-        this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
+        this.setValue('de-txtPROCTYPE', this.beanResult.PROCTYPE);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
         this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
         this.setValue('de-txtIDITEMS', this.beanResult.IDITEMS);
         this.setValue('de-txtIDITEMT', this.beanResult.IDITEMT);
-        this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
+        this.setValue('de-txtTICKET', this.beanResult.TICKET);
         this.setValue('de-txtSPNR', this.beanResult.SPNR);
         this.setValue('de-txtTRANSDATE', this.beanResult.TRANSDATE);
         this.setValue('txtCERRORHST', this.beanResult.CERRORHST);
@@ -209,7 +188,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
         this.setValue('txtCERROIN', this.beanResult.CERROIN);
         this.setValue('txtDES_CERROIN', this.beanResult.DES_CERROIN);
-        this.setValue('txtFLAG', this.beanResult.FSELEC);
+        this.setValue('txtFSELEC', this.beanResult.FSELEC);
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
         this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
@@ -217,16 +196,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtCountry', this.beanResult.SCOUNTRY);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
-        this.setValue('de-txtTDOC', this.beanResult.TRANSTYPE);
-        this.setValue('de-txtVOID', this.beanResult.descVOID);
+        this.setValue('de-txtTRANSTYPE', this.beanResult.TRANSTYPE);
+        this.setValue('de-txtFVOID', this.beanResult.FVOID);
         this.setValue('de-txtINVOIRN', this.beanResult.INVOIRN);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
         this.setValue('de-txtTGROSAMPAY', Ext.util.Format.number(this.beanResult.TGROSAMPAY, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
-        //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
-        // this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
-        // this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
 
         if (this.beanResult.SMERCHID === '9353227755') {
             this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
@@ -266,18 +242,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             return e;
         }
     },
-    obtainData: function () {
-//        console.log('obtainData');
-
-    },
     llenarData: function (beanTemp) {
 
         beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
         beanTemp.PRDA = this.getValue("de-txtPRDA");
-        beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
-        beanTemp.PMERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.SDATE = this.getValue("de-txtSDATE");
+        beanTemp.PMERCHID = this.getValue("de-txtPMERCHID");
         beanTemp.SMERCHID = this.beanResult.SMERCHID;
-        beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
+        beanTemp.PROCTYPE = this.getValue("de-txtPROCTYPE");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
         beanTemp.SCARDN = this.getValue("de-txtSCARDN");
         beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");
@@ -296,7 +268,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.AREFNBR = this.beanResult.AREFNBR;
 
         beanTemp.SPNR = this.getValue("de-txtSPNR");
-        beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
+        beanTemp.TICKET = this.getValue("de-txtTICKET");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
         beanTemp.OBSERV = this.getValue("de-txtOBSERV");
         beanTemp.lstSendManual = [];
@@ -347,7 +319,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         });
     },
     getBreakdownDataGrid: function () {
-        this.beanSettlementTktsDetail = {};
+        this.beanSettlementTktsDetail = {};       
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
         this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
@@ -488,11 +460,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             //return 'PNR field is empty';
         }
 
-        if (this.getValue("de-txtISREFNBR").trim() === '' && txtMsjMontos === '') {
+        if (this.getValue("de-txtTICKET").trim() === '' && txtMsjMontos === '') {
 
             for (var j = 0; j < this.lstSendManual.length; j++) {
                 if (this.lstSendManual[j].FDESGLOSE !== "1") {
-                    this.setValue('de-txtISREFNBR', this.lstSendManual[j].A1531TKT.substring(0, 14));
+                    this.setValue('de-txtTICKET', this.lstSendManual[j].A1531TKT.substring(0, 14));
                     break;
                 }
             }
@@ -511,10 +483,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             //return 'Ticket field is empty';
         }
 
-        /*if (this.getValue("de-txtISREFNBR").trim() === '') {
-         return 'Ticket field is empty';
-         }*/
-
         return '';
     },
     onUpdateClick: function (btn) {
@@ -528,8 +496,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             } else {
                 var txtMsjDesglose = this.validacionDesglose();
                 var txtMsjMontos = this.validacionMontos();
-                var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
-                if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
+                //var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
+                if (txtMsjDesglose + txtMsjMontos === '') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
                     beanTemp.option = 'U';
@@ -545,15 +513,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                                 modal: true,
                                 fn: function (btn) {
                                     if (btn === 'yes') {
-                                        meDE.MaintenanceA4116(beanTemp);
+                                        meDE.MaintenanceA4331(beanTemp);
                                     }
                                 }
                             });
                 } else {
-                    if (txtMsjValidacionTktPNR !== '') {
-                        console.log(txtMsjValidacionTktPNR);
-                        global.Msg({msg: txtMsjValidacionTktPNR});
-                    } else if (txtMsjDesglose !== '') {
+                    if (txtMsjDesglose !== '') {
                         console.log(txtMsjDesglose);
                         global.Msg({msg: txtMsjDesglose});
                     } else if (txtMsjMontos !== '') {
@@ -574,7 +539,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     // </editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA4116: function (beanTemp) {
+    MaintenanceA4331: function (beanTemp) {
 //        console.log(beanTemp);
         var beanString = JSON.stringify(beanTemp);
 //        console.log(beanString);
@@ -643,7 +608,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                                 modal: true,
                                 fn: function (btn) {
                                     if (btn === 'yes') {
-                                        meDE.MaintenanceA4116(beanTemp);
+                                        meDE.MaintenanceA4331(beanTemp);
                                     }
                                 }
                             });
@@ -657,7 +622,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
 
     validacionInsert: function () {
         var msjResult = '';
-        if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtISREFNBR") === '') {
+        if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtTICKET") === '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
@@ -740,7 +705,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     onTktPnr: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex).data;
         console.log(rec);
-        this.setValue('de-txtISREFNBR', rec.A1531TKT.substring(0, 14));
+        this.setValue('de-txtTICKET', rec.A1531TKT.substring(0, 14));
         this.setValue('de-txtSPNR', rec.A720PNR);
     },
     cambiarGrillaChk: function () {
@@ -890,7 +855,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         if (cant_cuotas > 0) {
             fecha_a_validar = this.getValue("de-txtTRANSDATE");
         } else {
-            fecha_a_validar = this.getValue("de-txtBSUMDATE");
+            fecha_a_validar = this.getValue("de-txtSDATE");
         }
 
         var cc1 = this.getValue("txtCard1");
@@ -906,7 +871,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
 
         beanGrid.SAUTHOC = approval;
-        beanGrid.BSUMDATE = sales_date;
+        beanGrid.SDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
         beanGrid.TDOC = this.beanResult.TDOC;
@@ -1153,13 +1118,19 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
     },
     addAdjustment_keyDownHandler: function () {
-        if (this.getValue('de-txtISREFNBR').trim() === '' || this.getValue('de-txtSPNR').trim() == '' || this.getValue('de-txtAdjAgent').trim() == '') {
+        if (this.getValue('de-txtTICKET').trim() === '' || this.getValue('de-txtSPNR').trim() == '' || this.getValue('de-txtAdjAgent').trim() == '') {
             global.Msg({msg: 'Please fill the Ticket or PNR or AGENT fields'});
         } else {
             if (this.sumAmount === this.bean.TGROSAMPAY) {
                 global.Msg({msg: 'The sum amount is equal to transaction amount.'});
             } else {
                 this.lstAdjustment = [];
+                //Reiniciamos la grilla principal
+                this.lstSendManual = [];
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
+                        Ext.create('Ext.data.Store', {data: this.lstSendManual, autoLoad: true})
+                        );
+                
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
                 Ext.getCmp(prototype.id + '-panelADJ').show();
                 //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
@@ -1168,13 +1139,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 rec.tot_VFOP = rec.TGROSAMPAY;
                 rec.A720AGENTE = this.getValue('de-txtAdjAgent').trim();
                 rec.CERROR = '01';
-                rec.A1531TTARJ = 'AX';
+                rec.A1531TTARJ = 'AX'; //EN AMEX SE SETEABA COMO AX, PERO EN TMZ EL BPO DEBE COLOCARLO
                 rec.A1531NREF = rec.SCARDN;
                 rec.A1531MFOP = rec.SCURRENCY;
                 rec.A1531CAPL = rec.SAUTHOC;
-                rec.A720FECVTA = rec.BSUMDATE;
+                rec.A720FECVTA = rec.SDATE;
                 rec.A720PNR = this.getValue('de-txtSPNR').trim(); //rec.SPNR;
-                rec.A1531TKT = this.getValue('de-txtISREFNBR').trim(); //rec.ISREFNBR;
+                rec.A1531TKT = this.getValue('de-txtTICKET').trim(); //rec.ISREFNBR;
                 this.lstAdjustment.push(rec);
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
                         Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
@@ -1194,7 +1165,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         if (cant_cuotas > 0) {
             fecha_a_validar = this.getValue("de-txtTRANSDATE");
         } else {
-            fecha_a_validar = this.getValue("de-txtBSUMDATE");
+            fecha_a_validar = this.getValue("de-txtSDATE");
         }
 
         var cc1 = this.getValue("de-txtSCARDN").substr(0, 6);
@@ -1206,7 +1177,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         var beanGrid = {};
         beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
         beanGrid.SAUTHOC = approval;
-        beanGrid.BSUMDATE = sales_date;
+        beanGrid.SDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
         beanGrid.TDOC = this.beanResult.TDOC;
@@ -1240,26 +1211,15 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                                 meDE.lstSendManual.push(res.lstInfo[i]);
                             }
                         }
-                        console.log(flag_blocked);
-                        /*if (flag_blocked) {
-                         global.Msg({msg: 'There are some blocked tickets'});
-                         }*/
+                        console.log(flag_blocked);                        
                     }
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
                 }
 
-                /*Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
-                 Ext.create('Ext.data.Store', {data: meDE.lstSendManual, autoLoad: true})
-                 );
-                 Ext.getCmp(prototype.id + '-gridDataInfoBlocked').bindStore(
-                 Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
-                 );*/
-
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
                         Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
                         );
-                //meDE.calcularMontos();
             }
         });
     },
@@ -1277,12 +1237,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            meDE.ReverseA4116(beanTemp);
+                            meDE.ReverseA4331(beanTemp);
                         }
                     }
                 });
     },
-    ReverseA4116: function (beanTemp) {
+    ReverseA4331: function (beanTemp) {
         var beanString = JSON.stringify(beanTemp);
         Ext.Ajax.request({
             url: prototype.url + '/ReverseTransaction',
@@ -1342,7 +1302,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
-                    msg: 'Are you sure to update this transaction?',
+                    msg: 'Are you sure to observe this transaction?',
                     buttons: Ext.MessageBox.YESNO,
                     scope: this,
                     animateTarget: btn,
