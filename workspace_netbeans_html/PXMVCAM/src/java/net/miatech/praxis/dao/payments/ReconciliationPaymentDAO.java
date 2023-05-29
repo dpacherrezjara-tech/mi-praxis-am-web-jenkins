@@ -3251,24 +3251,15 @@ public class ReconciliationPaymentDAO {
         A4331Filter beanTkt;
         double TGROSAMOUN_TOTAL = 0;
         double totTGROSAMPAY = 0;
-        double TGROSAMOUNC_TOTAL = 0;
-        double DISCAMOUN_TOTAL = 0;
-        double DISCAMOUNI_TOTAL = 0;
-        double SFEEAMOUC_TOTAL = 0;
-        double SFEEAMOU_TOTAL = 0;
-        double ACCEAMOUC_TOTAL = 0;
-        double ACCEAMOU_TOTAL = 0;
-        double DISCAMOUNC_TOTAL = 0;
-        double DISCAMOUIC_TOTAL = 0;
         String strFormatDate = "";
         String strFormatDate2 = "";
 
         HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
         hmDescFCOMPL.put("", "");
-        hmDescFCOMPL.put("1", "Match"); //PLUSGRADE
-        hmDescFCOMPL.put("2", "Match"); //LIGAS
-        hmDescFCOMPL.put("3", "Match"); //TABLET
-        hmDescFCOMPL.put("4", "Match"); //BPO
+        hmDescFCOMPL.put("1", "PLUSGRADE");
+        hmDescFCOMPL.put("2", "LIGAS");
+        hmDescFCOMPL.put("3", "TABLET");
+        hmDescFCOMPL.put("4", "BPO");
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -3358,15 +3349,6 @@ public class ReconciliationPaymentDAO {
             while (rst.next()) {
                 TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN");
                 totTGROSAMPAY = rst.getDouble("TGROSAMPAY");
-                TGROSAMOUNC_TOTAL = rst.getDouble("TGROSAMOUNC_TOTAL");
-                DISCAMOUN_TOTAL = rst.getDouble("DISCAMOUN_TOTAL");
-                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
-                SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
-                SFEEAMOU_TOTAL = rst.getDouble("SFEEAMOU_TOTAL");
-                ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
-                ACCEAMOU_TOTAL = rst.getDouble("ACCEAMOU_TOTAL");
-                DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
-                DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
             }
             rst.close();
 
@@ -3392,9 +3374,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
-                    beanTkt.STYPECD = rst.getString("STYPECD").trim();
-                    beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();                    
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
@@ -3408,7 +3388,6 @@ public class ReconciliationPaymentDAO {
                     beanTkt.PROCTYPESQ = rst.getString("PROCTYPESQ").trim();
                     beanTkt.INVOIRN = rst.getString("INVOIRN").trim();
                     beanTkt.TRANSTYPE = rst.getString("TRANSTYPE").trim();
-                    beanTkt.descVOID = rst.getString("VOID").trim();
                     beanTkt.STVAL = rst.getString("STVAL").trim();
                     if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
                         beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
@@ -3425,12 +3404,9 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
-                    beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
-                    beanTkt.SIREFNBR = rst.getString("SIREFNBR").trim();
+                    beanTkt.SDATE = rst.getString("SDATE").trim();
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                     beanTkt.QTYTKT = rst.getInt("QTYTKT");
-                    beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
-                    beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
 
                     beanTkt.FCOMPL = rst.getString("FCOMPL").trim();
                     if (hmDescFCOMPL.containsKey(rst.getString("FCOMPL").trim())) {
@@ -3439,11 +3415,8 @@ public class ReconciliationPaymentDAO {
                         beanTkt.descFCOMPL = rst.getString("FCOMPL").trim();
                     }
 
-                    beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
-                    beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
-                    beanTkt.SELLERID = rst.getString("SELLERID").trim();
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                    beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
+                    beanTkt.TICKET = rst.getString("TICKET").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     beanTkt.DES_SMERCHANT = rst.getString("DES_SMERCHANT").trim();
                     if (beanTkt.SMERCHID.equals("9353227755")) {
@@ -3454,15 +3427,10 @@ public class ReconciliationPaymentDAO {
                         beanTkt.DES_SMERCHANT = "TABLET";
                     }
 
-                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
-
                     beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
-                    beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
-                    beanTkt.DISCAMOUNI = this.mantenerSigno(beanTkt.DISCAMOUN, rst.getDouble("DISCAMOUNI"));
 
                     beanTkt.TRANSDATE = rst.getString("TRANSDATE");
-                    beanTkt.TRANSID = rst.getString("TRANSID");
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC");
                     beanTkt.INSTANBR = rst.getString("INSTANBR");
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
@@ -3470,49 +3438,12 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.ZONA = rst.getString("ZONA");
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY");
-
-                    beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
-
-                    beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
-                    beanTkt.DISCAMOUNC = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUNC"));
-                    beanTkt.DISCAMOUIC = this.mantenerSigno(beanTkt.DISCAMOUNC, rst.getDouble("DISCAMOUIC"));
-
-                    beanTkt.FINSAMOUC = rst.getDouble("FINSAMOUC");
-                    beanTkt.SINSAMOUC = rst.getDouble("SINSAMOUC");
-
-                    beanTkt.RATESFEE = rst.getDouble("RATESFEE");
-                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
-                    if (rst.getDouble("DISCRATEI") < 0) {
-                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
-                    } else {
-                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
-                    }
-                    beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
-                    beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
-                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
-                    beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
-                    beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
-                    beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
-                    if (rst.getDouble("DISCRATEIC") < 0) {
-                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
-                    } else {
-                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
-                    }
-
-                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
-                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
-                    beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
-                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
-                    beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
+           
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
-                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;
-                    beanTkt.DISCAMOUN_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUN_TOTAL, DISCAMOUN_TOTAL);
-                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUN_TOTAL, DISCAMOUNI_TOTAL);
-                    beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
-                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUNC_TOTAL, DISCAMOUNC_TOTAL);
-                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
+                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;                    
 
                     beanTkt.CERROR = rst.getString("CERROR").trim();
+                    beanTkt.FVOID = rst.getString("FVOID").trim();
 
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
@@ -3764,12 +3695,12 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(5, filter.PCURRENCY.trim());
             cstmt01.setString(6, filter.AXPAYNBR.trim());
             cstmt01.setString(7, filter.SMERCHID.trim());
-            cstmt01.setString(8, filter.BSUMDATE.trim());
+            cstmt01.setString(8, filter.SDATE.trim());
             cstmt01.setString(9, filter.SCARDN.trim());
             cstmt01.setString(10, filter.SAUTHOC.trim());
             cstmt01.setString(11, filter.IDITEMS.trim());
             cstmt01.setString(12, filter.IDITEMT.trim());
-            cstmt01.setString(13, filter.ISREFNBR.trim());
+            cstmt01.setString(13, filter.TICKET.trim());
             cstmt01.setString(14, filter.AREFNBR.trim());
             cstmt01.setString(15, filter.TDOC.trim());
 
@@ -3778,67 +3709,83 @@ public class ReconciliationPaymentDAO {
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn.CCUST = rs01.getString("CCUST");
+                objRtn.AREFNBR = rs01.getString("AREFNBR").trim(); //LLAVE PRINCIPAL
                 objRtn.PRDA = rs01.getString("PRDA").trim();
-                objRtn.RECTYPE = rs01.getString("RECTYPE").trim();
+                objRtn.PROCTYPE = rs01.getString("PROCTYPE").trim();
                 objRtn.PMERCHID = rs01.getString("PMERCHID").trim();
-                objRtn.STYPECD = rs01.getString("STYPECD").trim();
-                objRtn.AXPAYNBR = rs01.getString("AXPAYNBR").trim();
-                objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
-                objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
-                objRtn.ZONA = rs01.getString("ZONA").trim();
-                objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
-
                 objRtn.SMERCHID = rs01.getString("SMERCHID").trim();
-                objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
-                objRtn.AXPRODAT = rs01.getString("AXPRODAT").trim();
-                objRtn.SIREFNBR = rs01.getString("SIREFNBR").trim();
-                objRtn.INVOIRN = rs01.getString("INVOIRN").trim();
-                objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
-                objRtn.IDITEMS = rs01.getString("IDITEMS").trim();
-                objRtn.IDITEMT = rs01.getString("IDITEMT").trim();
-                objRtn.STVAL = rs01.getString("STVAL").trim();
-                if (hmDescEstados.containsKey(rs01.getString("STVAL").trim())) {
-                    objRtn.descSTVAL = hmDescEstados.get(rs01.getString("STVAL").trim()).toString();
-                } else {
-                    objRtn.descSTVAL = rs01.getString("STVAL").trim();
-                }
-                objRtn.QTYTKT = rs01.getInt("QTYTKT");
-
-                objRtn.STCONL = rs01.getString("STCONL").trim();
-                if (hmDescSTCONL.containsKey(rs01.getString("STCONL").trim())) {
-                    objRtn.descSTCONL = hmDescSTCONL.get(rs01.getString("STCONL").trim()).toString();
-                } else {
-                    objRtn.descSTCONL = rs01.getString("STCONL").trim();
-                }
-
-                objRtn.FREGLA = rs01.getString("FREGLA").trim();
-                if (hmDescReglas.containsKey(rs01.getString("FREGLA").trim())) {
-                    objRtn.descFREGLA = hmDescReglas.get(rs01.getString("FREGLA").trim()).toString();
-                } else {
-                    objRtn.descFREGLA = rs01.getString("FREGLA").trim();
-                }
-
-                objRtn.PASSED_DAYS = rs01.getString("PASSED_DAYS").trim();
-
-                objRtn.FCONTL = rs01.getString("FCONTL").trim();
-                objRtn.IDCONL = rs01.getString("IDCONL").trim();
-
+                objRtn.DES_PMERCHANT = rs01.getString("DES_PMERCHANT").trim();
+                objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
+                objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
+                objRtn.PROCTYPESQ = rs01.getString("PROCTYPESQ").trim();
+                objRtn.INSTANBR = rs01.getString("INSTANBR");
+                objRtn.NBRINSTA = rs01.getInt("NBRINSTA");
+                objRtn.INVOIRN = rs01.getString("INVOIRN").trim();                
                 objRtn.FCOMPL = rs01.getString("FCOMPL").trim();
                 if (hmDescFCOMPL.containsKey(rs01.getString("FCOMPL").trim())) {
                     objRtn.descFCOMPL = hmDescFCOMPL.get(rs01.getString("FCOMPL").trim()).toString();
                 } else {
                     objRtn.descFCOMPL = rs01.getString("FCOMPL").trim();
+                }                
+                objRtn.FCONTL = rs01.getString("FCONTL").trim();
+                objRtn.IDCONL = rs01.getString("IDCONL").trim();
+                objRtn.STCONL = rs01.getString("STCONL").trim();
+                if (hmDescSTCONL.containsKey(rs01.getString("STCONL").trim())) {
+                    objRtn.descSTCONL = hmDescSTCONL.get(rs01.getString("STCONL").trim()).toString();
+                } else {
+                    objRtn.descSTCONL = rs01.getString("STCONL").trim();
+                }                
+                objRtn.CERRORHST = rs01.getString("CERRORHST");                
+                objRtn.CERROR = rs01.getString("CERROR");
+                objRtn.DES_CERROR = rs01.getString("DES_CERROR").trim();
+                if ("".equals(objRtn.CERROR.trim())) {
+                    objRtn.DES_CERROR = "";
                 }
-
-                objRtn.AREFNBR = rs01.getString("AREFNBR").trim();
-                objRtn.TRANSTYPE = rs01.getString("TRANSTYPE").trim();
+                objRtn.CERROIN = rs01.getString("CERROIN");
+                objRtn.DES_CERROIN = rs01.getString("DES_CERROIN").trim();
+                if ("".equals(objRtn.CERROIN.trim())) {
+                    objRtn.DES_CERROIN = "";
+                }                
+                objRtn.FSELEC = rs01.getString("FSELEC");
+                if ("".equals(objRtn.FSELEC.trim())) {
+                    objRtn.FSELEC = "Not loaded";
+                } else {
+                    objRtn.FSELEC = "Loaded";
+                }                
+                objRtn.SDATE = rs01.getString("SDATE").trim();
+                objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
+                objRtn.PASSED_DAYS = rs01.getString("PASSED_DAYS").trim();
+                objRtn.SCARDN = rs01.getString("SCARDN").trim();
+                objRtn.TRANSDATE = rs01.getString("TRANSDATE").trim();
+                objRtn.TICKET = rs01.getString("TICKET").trim();
+                objRtn.SPNR = rs01.getString("SPNR").trim();
+                objRtn.SAUTHOC = rs01.getString("SAUTHOC");                
+                objRtn.STVAL = rs01.getString("STVAL").trim();
+                if (hmDescEstados.containsKey(rs01.getString("STVAL").trim())) {
+                    objRtn.descSTVAL = hmDescEstados.get(rs01.getString("STVAL").trim()).toString();
+                } else {
+                    objRtn.descSTVAL = rs01.getString("STVAL").trim();
+                }                
+                objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
+                objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();                
+                objRtn.QTYTKT = rs01.getInt("QTYTKT");                
+                objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
+                objRtn.TGROSAMPAY = rs01.getDouble("TGROSAMPAY");                
+                objRtn.FREGLA = rs01.getString("FREGLA").trim();
+                if (hmDescReglas.containsKey(rs01.getString("FREGLA").trim())) {
+                    objRtn.descFREGLA = hmDescReglas.get(rs01.getString("FREGLA").trim()).toString();
+                } else {
+                    objRtn.descFREGLA = rs01.getString("FREGLA").trim();
+                }                
                 objRtn.TDOC = rs01.getString("TDOC").trim();
                 if (hmDescTDOC.containsKey(rs01.getString("TDOC").trim())) {
                     objRtn.descTDOC = hmDescTDOC.get(rs01.getString("TDOC").trim()).toString();
                 } else {
                     objRtn.descTDOC = rs01.getString("TDOC").trim();
                 }
-                objRtn.descVOID = rs01.getString("VOID").trim();
+                objRtn.TRANSTYPE = rs01.getString("TRANSTYPE").trim();
+                objRtn.descVOID = rs01.getString("FVOID").trim();
+                objRtn.SVFOPS = rs01.getDouble("SVFOPS");
                 objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
                 if (rs01.getString("FREVERSA").equals("0")) {
                     objRtn.descFREVERSA = "Processed Reverse";
@@ -3855,60 +3802,11 @@ public class ReconciliationPaymentDAO {
                 if (rs01.getString("FADM").equals("1")) {
                     objRtn.descFADM = "ADM generado";
                 }
-                objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
-                objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
-                objRtn.SPNR = rs01.getString("SPNR").trim();
-                objRtn.SELLERID = rs01.getString("SELLERID").trim();
-                objRtn.SCARDN = rs01.getString("SCARDN").trim();
-                objRtn.ISREFNBR = rs01.getString("TICKET1").trim();
-                objRtn.TICKET = rs01.getString("TICKET1").trim();
-                objRtn.DES_MERCHANT = rs01.getString("DES_MERCHANT").trim();
-                objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
-                objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
-
-                objRtn.GROSAMOUN = rs01.getDouble("GROSAMOUN");
-                objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
-                objRtn.TGROSAMPAY = rs01.getDouble("TGROSAMPAY");
-                objRtn.SVFOPS = rs01.getDouble("SVFOPS");
-
+                
                 objRtn.DIFF_AMOUNT = objRtn.TGROSAMPAY - objRtn.SVFOPS;
-
-                objRtn.TRANSDATE = rs01.getString("TRANSDATE");
-                objRtn.TRANSID = rs01.getString("TRANSID");
-                objRtn.SAUTHOC = rs01.getString("SAUTHOC");
-                objRtn.INSTANBR = rs01.getString("INSTANBR");
-                objRtn.NBRINSTA = rs01.getInt("NBRINSTA");
-
-                objRtn.GROSAMOUNC = rs01.getDouble("GROSAMOUNC");
-                objRtn.TGROSAMOUC = rs01.getDouble("TGROSAMOUC");
-                objRtn.FINSAMOUC = rs01.getDouble("FINSAMOUC");
-                objRtn.SINSAMOUC = rs01.getDouble("SINSAMOUC");
-
-                objRtn.CERRORHST = rs01.getString("CERRORHST");
-                objRtn.CERROR = rs01.getString("CERROR");
-                objRtn.DES_CERROR = rs01.getString("DES_CERROR");
-                if ("".equals(objRtn.CERROR.trim())) {
-                    objRtn.DES_CERROR = "";
-                }
-
-                objRtn.CERROIN = rs01.getString("CERROIN");
-                objRtn.DES_CERROIN = rs01.getString("DES_CERROIN");
-                if ("".equals(objRtn.CERROIN.trim())) {
-                    objRtn.DES_CERROIN = "";
-                }
-
-                objRtn.CODADJU = rs01.getString("CODADJU");
-                objRtn.DES_CODADJU = rs01.getString("DES_CODADJU");
-                if ("".equals(objRtn.CODADJU.trim())) {
-                    objRtn.DES_CODADJU = "";
-                }
-
-                objRtn.FSELEC = rs01.getString("FSELEC");
-                if ("".equals(objRtn.FSELEC.trim())) {
-                    objRtn.FSELEC = "Not loaded";
-                } else {
-                    objRtn.FSELEC = "Loaded";
-                }
+                objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
+                objRtn.DES_CODADJU = rs01.getString("DES_CODADJU").trim();
+                objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
 
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
@@ -4029,16 +3927,16 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(3, filter.PMERCHID.trim());
             cstmt01.setString(4, filter.PAYDATE.trim());
             cstmt01.setString(5, filter.PCURRENCY.trim());
-            cstmt01.setString(6, filter.AXPAYNBR.trim());
+            cstmt01.setString(6, filter.PROCTYPE.trim());
             cstmt01.setString(7, filter.SMERCHID.trim());
-            cstmt01.setString(8, filter.BSUMDATE.trim());
+            cstmt01.setString(8, filter.SDATE.trim());
             cstmt01.setString(9, filter.SCARDN.trim());
             cstmt01.setString(10, filter.SAUTHOC.trim());
             cstmt01.setString(11, filter.IDITEMS.trim());
             cstmt01.setString(12, filter.IDITEMT.trim());
             cstmt01.setString(13, filter.SPNR.trim());
-            cstmt01.setString(14, filter.ISREFNBR.trim());
-            cstmt01.setDouble(15, filter.TGROSAMOUN);
+            cstmt01.setString(14, filter.TICKET.trim());
+            cstmt01.setDouble(15, filter.TGROSAMPAY);
             cstmt01.setString(16, filter.CERROR.trim());
             cstmt01.setInt(17, lstSendManual.size());
             cstmt01.setString(18, filter.ADJ_TYPE.trim());
@@ -4063,9 +3961,9 @@ public class ReconciliationPaymentDAO {
                     cstmt01.setString(4, filter.IDITEMT.trim());
                     cstmt01.setString(5, filter.PMERCHID.trim());
                     cstmt01.setString(6, filter.PAYDATE.trim());
-                    cstmt01.setString(7, filter.AXPAYNBR.trim());
-                    cstmt01.setString(8, filter.BSUMDATE.trim());
-                    cstmt01.setString(9, filter.ISREFNBR.trim());
+                    cstmt01.setString(7, filter.PROCTYPE.trim());
+                    cstmt01.setString(8, filter.SDATE.trim());
+                    cstmt01.setString(9, filter.TICKET.trim());
 
                     cstmt01.setString(10, beanDet.A1531NREF.trim());
                     cstmt01.setString(11, beanDet.A1531CAPL.trim());
@@ -4186,7 +4084,7 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.PRDA.trim());
             cstmt01.setString(3, filter.PAYDATE.trim());
-            cstmt01.setString(4, filter.BSUMDATE.trim());
+            cstmt01.setString(4, filter.SDATE.trim());
             cstmt01.setString(5, filter.AREFNBR.trim());
             cstmt01.setString(6, filter.TDOC.trim());
             cstmt01.setString(7, filter.CERROR.trim());
@@ -4664,10 +4562,9 @@ public class ReconciliationPaymentDAO {
         String IN_FECVTA_TO = "";
 
         if (filter.INSTANBR.trim().equals("0")) {
-            IN_FECVTA = filter.BSUMDATE.trim();
+            IN_FECVTA = filter.SDATE.trim();
         } else {
-            //IN_FECVTA = filter.TRANSDATE.trim();
-            IN_FECVTA = filter.BSUMDATE.trim();
+            IN_FECVTA = filter.TRANSDATE.trim();
         }
 
         if (filter.TDOC.trim().equals("R")) {
@@ -4691,7 +4588,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(4, IN_FECVTA);
             cstmt.setString(5, IN_FECVTA_TO);
             cstmt.setString(6, IN_FECVTA_FROM);
-            cstmt.setString(7, filter.ISREFNBR.trim());
+            cstmt.setString(7, filter.TICKET.trim());
             cstmt.setString(8, filter.SMERCHID.trim());
             cstmt.setString(9, filter.SPNR.trim());
             cstmt.execute();
@@ -4734,20 +4631,6 @@ public class ReconciliationPaymentDAO {
                 lstInfo.add(beanRec);
             }
             rst.close();
-
-            /*
-            for (int i = 0; i < lstInfo.size(); i++) {
-                String pnr2 = "";
-                String pnr1 = lstInfo.get(i).A720PNR;
-                try {
-                    pnr2 = lstInfo.get(i + 1).A720PNR;
-                } catch (Exception e) {
-                }
-                if (pnr2.equals(pnr1)) {
-                    lstInfo.get(i).tot_VFOP = 0.00;
-                }
-            }
-             */
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -4786,13 +4669,13 @@ public class ReconciliationPaymentDAO {
         String IN_FECVTA_FROM = "";
         String IN_FECVTA_TO = "";
 
-        IN_FECVTA = filter.BSUMDATE.trim();
-        IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 1);
-        IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
+        IN_FECVTA = filter.SDATE.trim();
+        IN_FECVTA_FROM = Functions.restXDaystoDate(filter.SDATE.trim(), 1);
+        IN_FECVTA_TO = Functions.restXDaystoDate(filter.SDATE.trim(), -1);
 
         if (filter.TDOC.trim().equals("R")) {
-            IN_FECVTA_FROM = Functions.restXDaystoDate(filter.BSUMDATE.trim(), 365);
-            IN_FECVTA_TO = Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1);
+            IN_FECVTA_FROM = Functions.restXDaystoDate(filter.SDATE.trim(), 365);
+            IN_FECVTA_TO = Functions.restXDaystoDate(filter.SDATE.trim(), -1);
 
             SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04957(?,?,?,?,?,?,?,?,?)}";
         } else {

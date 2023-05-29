@@ -130,6 +130,7 @@ public class A4331Filter extends A4331 {
     public String IN_IDITEMT = "";
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
+    public String DES_PMERCHANT = "";
     public String DES_CERROR = "";
     public String DES_CERROIN = "";
     public String FVOID = "";
@@ -299,7 +300,6 @@ public class A4331Filter extends A4331 {
     public String UPGRATYPE = "";
     public String FARECLASS = "";
     public String CURRPARTN = "";
-    public String SDATE = "";
     public String STIME = "";
     public String SCARCOD = "";
     

@@ -15,6 +15,7 @@ public class A4331 {
     public String PRDA = "";
     public String TDOC = "";
     public String RECTYPE = "";
+    public String PROCTYPE = "";
     public String MERCHID = "";
     public String STYPECD = "";
     public String AXPAYNBR = "";
