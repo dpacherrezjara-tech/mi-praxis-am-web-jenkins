@@ -438,6 +438,7 @@ public class A4337Filter extends A4337 {
     public String CODE = "";
     public String NAME = "";
     public String IN_CURRENCY = "";
+    public String IN_PROCTYPE = "";
     public String IN_FVOID = "";
     public long lngQPEND = 0;
     public long lngQCOMPS = 0;

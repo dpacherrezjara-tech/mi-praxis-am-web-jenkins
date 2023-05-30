@@ -228,6 +228,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                         this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                         this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                         this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
+                        this.beanDetailTar.IN_PROCTYPE = win.getValue('cmbPROCTYPE');
                         console.log(this.beanDetailTar);
                         this.searchDetTARJETA(this.beanDetailTar);
                     } else {
@@ -762,6 +763,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                     this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                     this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
                     this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
+                    this.beanDetailTar.IN_PROCTYPE = win.getValue('cmbPROCTYPE');
                     console.log(this.beanDetailTar);
                     this.searchDetTARJETA(this.beanDetailTar);
                 } else {
@@ -831,6 +833,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
                 this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                 this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
                 this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
+                this.beanDetailTar.IN_PROCTYPE = win.getValue('cmbPROCTYPE');
                 console.log(this.beanDetailTar);
 
                 if (win.getValue('txtAUTHNBR').trim().length === 6) {
@@ -896,6 +899,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
             this.bean.IN_CURRENCY = win.getValue('cmbCURRENCY');
 //            this.bean.IN_MERCHN = win.getValue('txtMERCHN').trim();
             this.bean.IN_AUTHNBR = win.getValue('txtAUTHNBR').trim();
+            this.bean.IN_PROCTYPE = win.getValue('cmbPROCTYPE');
             //            if(vskPrincipal.selectedChild == boxCharts){
             //                    with(boxSearchFilter){visible = false; includeInLayout = false}
             //                    imgFilter.toolTip = (boxSearchFilter.visible == true) ? 'Hidden filter' : 'Display filter';
@@ -1020,6 +1024,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPaymentTicket.Reconcili
         win.setValue('txtTicket', '');
         win.setValue('cmbSource', '');
         win.setValue('txtPNR', '');
+        win.setValue('cmbPROCTYPE', '');        
     },
 //    btnQuery_click: function (obj, e) {
 //        var beanQuery = {};

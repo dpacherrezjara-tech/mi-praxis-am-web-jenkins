@@ -563,6 +563,34 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentTicketForm.Filters', {
                             hiddenLabel: false,
                             value: '',
                         },
+                        {xtype: 'tbspacer', width: 12},
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Proc. Type',
+                            id: prototype.id + '-cmbPROCTYPE',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"],
+                                    ["AMEX", "Amex"],
+                                    ["FIRSTD00", "First Data"],
+                                    ["PRISMA", "Prisma"],
+                                    ["WP00", "WorldPay"],
+                                    ["GETMEX00", "GetNetMex"],
+                                    ["ATCAN00", "Atcan"],
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 75,
+                            width: 250,
+                            hiddenLabel: false,
+                            value: '',
+                        },
                     ]
                 }
             ]

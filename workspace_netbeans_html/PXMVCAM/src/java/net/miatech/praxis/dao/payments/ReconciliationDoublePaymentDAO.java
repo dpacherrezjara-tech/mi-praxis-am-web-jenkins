@@ -800,23 +800,15 @@ public class ReconciliationDoublePaymentDAO {
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn.CCUST = rs01.getString("CCUST");
-                objRtn.PRDA = rs01.getString("PRDA").trim();
-                objRtn.RECTYPE = rs01.getString("RECTYPE").trim();
-                objRtn.PMERCHID = rs01.getString("PMERCHID").trim();
-                objRtn.STYPECD = rs01.getString("STYPECD").trim();
-                objRtn.AXPAYNBR = rs01.getString("AXPAYNBR").trim();
+                objRtn.PRDA = rs01.getString("PRDA").trim();                
+                objRtn.PMERCHID = rs01.getString("PMERCHID").trim();                
                 objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
-                objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
-                objRtn.ZONA = rs01.getString("ZONA").trim();
+                objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();                
                 objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
-
                 objRtn.SMERCHID = rs01.getString("SMERCHID").trim();
-                objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
-                objRtn.AXPRODAT = rs01.getString("AXPRODAT").trim();
-                objRtn.SIREFNBR = rs01.getString("SIREFNBR").trim();
+                objRtn.SDATE = rs01.getString("SDATE").trim();
                 objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
-                objRtn.IDITEMS = rs01.getString("IDITEMS").trim();
-                objRtn.IDITEMT = rs01.getString("IDITEMT").trim();
+
                 objRtn.STVAL = rs01.getString("STVAL").trim();
                 if (hmDescEstados.containsKey(rs01.getString("STVAL").trim())) {
                     objRtn.descSTVAL = hmDescEstados.get(rs01.getString("STVAL").trim()).toString();
@@ -858,7 +850,7 @@ public class ReconciliationDoublePaymentDAO {
                 } else {
                     objRtn.descTDOC = rs01.getString("TDOC").trim();
                 }
-                objRtn.descVOID = rs01.getString("VOID").trim();
+                objRtn.descVOID = rs01.getString("FVOID").trim();
                 objRtn.FREVERSA = rs01.getString("FREVERSA").trim();
                 if (rs01.getString("FREVERSA").equals("0")) {
                     objRtn.descFREVERSA = "Processed Reverse";
@@ -886,33 +878,22 @@ public class ReconciliationDoublePaymentDAO {
                 objRtn.RFOPERB = rs01.getString("RFOPERB").trim();
                 objRtn.RFDATE = rs01.getString("RFDATE").trim();
                 objRtn.RFAUDIT = rs01.getString("RFAUDIT").trim();
-
-                objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
-                objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
-                objRtn.SPNR = rs01.getString("SPNR").trim();
-                objRtn.SELLERID = rs01.getString("SELLERID").trim();
+                objRtn.INVOIRN = rs01.getString("INVOIRN").trim();
+                objRtn.SPNR = rs01.getString("SPNR").trim();                
                 objRtn.SCARDN = rs01.getString("SCARDN").trim();
-                objRtn.ISREFNBR = rs01.getString("ISREFNBR").trim();
-                objRtn.DES_MERCHANT = rs01.getString("DES_MERCHANT").trim();
+                objRtn.TICKET = rs01.getString("TICKET").trim();
+                objRtn.DES_PMERCHANT = rs01.getString("DES_PMERCHANT").trim();
                 objRtn.DES_SMERCHANT = rs01.getString("DES_SMERCHANT").trim();
                 objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
 
-                objRtn.GROSAMOUN = rs01.getDouble("GROSAMOUN");
-                objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
+                objRtn.TGROSAMPAY = rs01.getDouble("TGROSAMPAY");
                 objRtn.SVFOPS = rs01.getDouble("SVFOPS");
-
-                objRtn.DIFF_AMOUNT = objRtn.TGROSAMOUN - objRtn.SVFOPS;
+                objRtn.DIFF_AMOUNT = objRtn.TGROSAMPAY - objRtn.SVFOPS;
 
                 objRtn.TRANSDATE = rs01.getString("TRANSDATE");
-                objRtn.TRANSID = rs01.getString("TRANSID");
                 objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 objRtn.INSTANBR = rs01.getString("INSTANBR");
                 objRtn.NBRINSTA = rs01.getInt("NBRINSTA");
-
-                objRtn.GROSAMOUNC = rs01.getDouble("GROSAMOUNC");
-                objRtn.TGROSAMOUC = rs01.getDouble("TGROSAMOUC");
-                objRtn.FINSAMOUC = rs01.getDouble("FINSAMOUC");
-                objRtn.SINSAMOUC = rs01.getDouble("SINSAMOUC");
 
                 objRtn.CERRORHST = rs01.getString("CERRORHST");
                 objRtn.CERROR = rs01.getString("CERROR");
