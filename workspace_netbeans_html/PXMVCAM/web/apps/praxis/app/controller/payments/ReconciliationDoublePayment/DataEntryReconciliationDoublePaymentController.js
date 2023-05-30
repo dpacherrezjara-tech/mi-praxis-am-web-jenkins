@@ -67,8 +67,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
 
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
-        this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
-        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtSDATE', this.beanResult.SDATE);
+        this.setValue('de-txtPMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
         this.setValue('de-txtIDITEMS', this.beanResult.IDITEMS);
         this.setValue('de-txtIDITEMT', this.beanResult.IDITEMT);
-        this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
+        this.setValue('de-txtTICKET', this.beanResult.TICKET);
         this.setValue('de-txtSPNR', this.beanResult.SPNR);
         this.setValue('de-txtTRANSDATE', this.beanResult.TRANSDATE);
         this.setValue('txtCERRORHST', this.beanResult.CERRORHST);
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         this.setValue('de-txtTDOC', this.beanResult.descTDOC);
         this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
-        this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
+        this.setValue('de-txtTGROSAMPAY', Ext.util.Format.number(this.beanResult.TGROSAMPAY, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
 
@@ -131,8 +131,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
 
         beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
         beanTemp.PRDA = this.getValue("de-txtPRDA");
-        beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
-        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.SDATE = this.getValue("de-txtSDATE");
+        beanTemp.PMERCHID = this.getValue("de-txtPMERCHID");
         beanTemp.SMERCHID = this.getValue("de-txtSMERCHID");
         beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.AREFNBR = this.beanResult.AREFNBR;
         beanTemp.SPNR = this.getValue("de-txtSPNR");
-        beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
+        beanTemp.TICKET = this.getValue("de-txtTICKET");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
 
         beanTemp.RFDATE = this.getValue("de-txtRFDATE");
@@ -178,11 +178,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
         this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
-        this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
+        this.beanSettlementTktsDetail.TICKET = this.bean.TICKET;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
-        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_TGROSAMPAY = this.bean.TGROSAMPAY;
         this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
-        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
+        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.SDATE;
         this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
         this.beanSettlementTktsDetail.IN_FREGLA = this.bean.FREGLA;
         this.beanSettlementTktsDetail.IN_SCARDN = this.bean.SCARDN;
@@ -217,11 +217,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DataEntry
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
         this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
-        this.beanSettlementTktsDetail.ISREFNBR = this.bean.ISREFNBR;
+        this.beanSettlementTktsDetail.TICKET = this.bean.TICKET;
         this.beanSettlementTktsDetail.IN_PCURRENCY = this.bean.PCURRENCY;
-        this.beanSettlementTktsDetail.IN_TGROSAMOUN = this.bean.TGROSAMOUN;
+        this.beanSettlementTktsDetail.IN_TGROSAMPAY = this.bean.TGROSAMPAY;
         this.beanSettlementTktsDetail.IN_descSTVAL = this.bean.descSTVAL;
-        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.BSUMDATE;
+        this.beanSettlementTktsDetail.IN_TRANSDATE = this.bean.SDATE;
         this.beanSettlementTktsDetail.IN_AXPRODAT = this.bean.AXPRODAT;
         this.beanSettlementTktsDetail.IN_FREGLA = this.bean.FREGLA;
         this.beanSettlementTktsDetail.IN_SCARDN = this.bean.SCARDN;
