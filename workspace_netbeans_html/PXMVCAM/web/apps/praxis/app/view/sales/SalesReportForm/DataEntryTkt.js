@@ -2384,7 +2384,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                                                     listeners: {
                                                         click: 'onBalance'
                                                     }
-                                                }/*,
+                                                }, /*,
                                                  {
                                                  text: '<strong style="color:white;">Taxes-TUAS<strong>',
                                                  id: prototype.idSale + '-det-btnTUAS',
@@ -2394,6 +2394,16 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                                                  click: 'onTaxes'
                                                  }
                                                  }*/
+                                                {
+                                                    text: '<strong style="color:white;">FOP VOID<strong>',
+                                                    id: prototype.idSale + '-det-btnFOPVoid',
+                                                    cls: 'x-btn-sent',
+                                                    overCls: 'x-btn-sent-over',
+                                                    hidden: true,
+                                                    listeners: {
+                                                        click: 'onFopVoid'
+                                                    }
+                                                }
                                             ]
                                         }
                                     ]

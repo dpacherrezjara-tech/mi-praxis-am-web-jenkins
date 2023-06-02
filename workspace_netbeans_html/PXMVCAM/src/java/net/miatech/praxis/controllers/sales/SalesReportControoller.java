@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,6 +47,7 @@ import net.miatech.beans.S0001A714Filter;
 import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
+import net.miatech.beans.SQP04874Filter;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
@@ -69,10 +71,13 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -2055,4 +2060,22 @@ public class SalesReportControoller extends BaseController {
 
         return lst;
     }*/
+    
+    @RequestMapping(value = "loadVoidFop")
+    public ResponseEntity<?> loadVoidFOP(@RequestParam Map<String, Object> params){
+        logic = new SalesReportLogic();
+        List<SQP04874Filter> res = new ArrayList<>();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            Gson gson = new Gson();
+            SQP04874Filter filter = gson.fromJson(gson.toJson(params), SQP04874Filter.class);
+            res = logic.loadSQP04874Filter(filter);
+            if (!res.isEmpty()) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            throw new IllegalArgumentException("No existe Data");
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

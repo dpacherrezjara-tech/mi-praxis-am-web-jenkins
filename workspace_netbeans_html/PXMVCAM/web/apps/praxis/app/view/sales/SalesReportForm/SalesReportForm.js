@@ -13,6 +13,7 @@ prototype.idRfndFareCalc = 'SalesReportFormRfndFareCalc';
 prototype.idAdm = 'SalesReportFormAdm';
 prototype.iderr = 'DataEntryError';
 prototype.ideterr = 'DataDetailEntryError';
+prototype.idVoidFOP = 'SalesReportFormFopVoid';
 prototype.url = CONTEXTPATH + '/SalesReport';
 
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.SalesReportForm', {

@@ -495,6 +495,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                 Ext.getCmp(prototype.idRfnd + '-btnADD').hide();
                 Ext.getCmp(prototype.idRfnd + '-btnADDEmd').hide();
             }
+            if(file.A713TDOC==='VOID'){
+                Ext.getCmp(prototype.idRfnd + '-det-btnFopVOID').show();
+            }
             meDET.llenarGrillaRFND(lstRFNDGrilla);
 
             var IN_TIPOCAP = meDET.modo==='R'?'A':Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
@@ -2320,6 +2323,46 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                     }});
                 }
             });
+        }
+    },
+    onFopVoid:function(obj){
+        let me = this;
+        let record = me.view.params.rec.data;
+        let lblDocumento = Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().trim();
+        const {A713CIA,DOCUMENTO,A713SEQ,A713GRUPO,A713TDOC} = record;
+        let stVoid =A713TDOC;
+        let objReq = {
+            AIRLINE:'139',
+            CIA:A713CIA,
+            FORMA:DOCUMENTO.substring(0,4),
+            SERIE:DOCUMENTO.substring(4,10),
+            SEQ:A713SEQ,
+            GRUPO:A713GRUPO,
+            TIPO:'RFND'
+        };
+        if (Ext.getCmp(prototype.idRfnd + '-det-lblCia').getValue().length !== 3) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Cia', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblCia');
+                }
+            });
+            return;
+        }
+        if (Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().length !== 10) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Document', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblDocumento');
+                }
+            });
+            return;
+        }
+        if(stVoid === 'VOID'&& lblDocumento !== ''){
+            let win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid({
+                params: {
+                    objReq: objReq
+                }
+            });
+            win.show();
         }
     }
 });
