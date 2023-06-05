@@ -1063,27 +1063,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Adjustment', dataIndex: 'DIFF_PADJAMOUN', width: 85,
-                                                                listeners: {
-                                                                    //
-                                                                },
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    //if (record.data.DIFF_PADJAMOUN <= -1) {
-                                                                    if (record.data.DIFF_PADJAMOUN === 0) {
-                                                                        metaData.style = "text-align:right;background-color:#f7f7f5;";
-                                                                    } else {
-                                                                        metaData.style = "text-align:right;background-color:#fc8686;";
-                                                                    }
-                                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return value;
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totDIFF_PADJAMOUN, '0,000.00') + '<b>';
-                                                                }
-                                                            },
-                                                            {
                                                                 text: 'VAT', dataIndex: 'DIFF_PTAXAMOU', width: 75,
                                                                 listeners: {
                                                                     //                                                    click: 'onGridDetBankS'
