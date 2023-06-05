@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
     requires: [
         'Ext.Praxis.controller.sales.SalesReport.DataEntryTktController',
         'Ext.Praxis.view.screens.CtrlDeliveryOrigForm',
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid',
         //'Ext.Praxis.view.program.ProFacsimilForm.Facsimil',
         'Ext.Praxis.view.widgets.facsimil',
         'Ext.Praxis.view.widgets.prorrate'
