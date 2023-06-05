@@ -24,13 +24,17 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.utils.Functions;
+import static net.miatech.utils.Functions.getFechaActual;
+import static net.miatech.utils.Functions.getHoraActual;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
@@ -194,6 +198,26 @@ public class ProReportClarification {
 
         return success;
 
+    }
+    
+    public void LogR(String Mensa){
+        try{
+        
+            File file = new File("\\\\WSFILE\\Documentos\\PAYMENT-CONTROL\\Log\\Log.txt");
+        // Si el archivo no existe es creado
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        FileWriter fw = new FileWriter(file, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(Mensa + "\n");
+        bw.close();
+        }
+        catch(Exception e)
+        {
+        
+        }
+        
     }
 
     public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion, String RUTA_DOWNLOAD) {
@@ -522,6 +546,7 @@ public class ProReportClarification {
 
         } catch (Exception e) {
             e.printStackTrace();
+            LogR("Exception createReportPDF_CCW: " + getFechaActual() + " - Hora : " + getHoraActual() + " Exception: " + e.getMessage());
             Log log = LogFactory.getLog("ProReportClarification");
             log.error("Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
             logError.error("Data Request By Bank (createReportPDF_CCW) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
