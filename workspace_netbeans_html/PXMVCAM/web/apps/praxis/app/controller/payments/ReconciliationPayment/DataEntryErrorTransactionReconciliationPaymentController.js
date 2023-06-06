@@ -491,7 +491,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         } else {
             //console.log(this.beanResult.FREVERSA);
             //var txtMsjInsert = this.validacionInsert();
-            if (this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1') {
+            if ( (this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1') && this.beanResult.IDCONL.trim() !== '' ) {
                 global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
             } else {
                 var txtMsjDesglose = this.validacionDesglose();
