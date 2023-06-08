@@ -94,22 +94,22 @@ public class PostbillingController extends BaseController {
             logic = new PostbillingLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            int limit = Integer.parseInt(request.getParameter("limit").toString());
-            int start = Integer.parseInt(request.getParameter("start").toString());
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            int start = Integer.parseInt(request.getParameter("start"));
 
-            int pExcel = Integer.parseInt(request.getParameter("pexcel").toString());
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
             Boolean bExcel = pExcel == 1 ? true : false;
 
-            filter.IN_OPTION = request.getParameter("IN_OPTION").toString().trim();
-            filter.IN_CIA = request.getParameter("IN_CIA").toString().trim();
-            filter.IN_DOCUMET = request.getParameter("IN_DOCUMET").toString().trim();
-            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").toString().trim();
-            filter.IN_DATETO = request.getParameter("IN_DATETO").toString().trim();
-            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
-            filter.IN_STATUS = request.getParameter("IN_STATUS").toString().trim();
-            filter.IN_USER = request.getParameter("IN_USER").toString().trim();
-            filter.IN_IATA = request.getParameter("IN_IATA").toString().trim();
-            filter.IN_TRNCU = request.getParameter("IN_TRNCU").toString().trim();
+            filter.IN_OPTION = request.getParameter("IN_OPTION").trim();
+            filter.IN_CIA = request.getParameter("IN_CIA").trim();
+            filter.IN_DOCUMET = request.getParameter("IN_DOCUMET").trim();
+            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").trim();
+            filter.IN_DATETO = request.getParameter("IN_DATETO").trim();
+            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").trim();
+            filter.IN_STATUS = request.getParameter("IN_STATUS").trim();
+            filter.IN_USER = request.getParameter("IN_USER").trim();
+            filter.IN_IATA = request.getParameter("IN_IATA").trim();
+            filter.IN_TRNCU = request.getParameter("IN_TRNCU").trim();
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -342,6 +342,10 @@ public class PostbillingController extends BaseController {
         String CAMPO = "";
         String result = "";
         String archivo = "";
+        boolean result2 = false;
+        File archivo1;
+        File archivo2 = null;
+        File archivo3 = null;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -371,6 +375,27 @@ public class PostbillingController extends BaseController {
             result = logic.insertTracing(listenvio);
             if (result.equals("RECORD INSERTED")) {
                 result = "The record was saved successfully.";
+                // para achivos 1
+                archivo1 = new File(file.getOriginalFilename());
+                file.transferTo(archivo1);
+                // para achivos 2
+                if (!file2.getOriginalFilename().equals("")) {
+                    archivo2 = new File(file2.getOriginalFilename());
+                    file2.transferTo(archivo2);
+                }
+                // para achivos 3
+                if (!file3.getOriginalFilename().equals("")) {
+                    archivo3 = new File(file3.getOriginalFilename());
+                    file3.transferTo(archivo3);
+                }
+
+                result2 = upload_s3(CAMPO, archivo1, archivo2, archivo3);
+                if (result2) {
+                    result = "The record was saved successfully.";
+                } else {
+                    result = "An error ocurred when trying to upload the file.";
+                }
+                /*
                 if (!A3537ARCHV.equals("")) {
                     byte[] bytes = file.getBytes();
                     result = upload(bytes, CAMPO, A3537ARCHV);
@@ -389,6 +414,7 @@ public class PostbillingController extends BaseController {
                 if (archivo.equals("1")) {
                     result = upload_s3(CAMPO);
                 }
+                 */
             } else {
                 result = "An error ocurred when trying to upload the file.";
             }
@@ -405,13 +431,26 @@ public class PostbillingController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    public boolean upload_s3(String IN_CNXPA, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "POSTBILLING/WEB" + "/" + IN_CNXPA + "/" + Functions.getFechaActual() + "/";
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
+
+        return res;
+
+    }
+
+    /*
     public String upload_s3(String IN_CNXPA) throws SQLException, Exception {
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_PATH", "\\\\10.0.0.87\\amaudit\\POSTBILLING\\WEB\\" + IN_CNXPA + "\\" + Functions.getFechaActual());
@@ -429,7 +468,7 @@ public class PostbillingController extends BaseController {
         return error_msg;
 
     }
-
+     */
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
     String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {

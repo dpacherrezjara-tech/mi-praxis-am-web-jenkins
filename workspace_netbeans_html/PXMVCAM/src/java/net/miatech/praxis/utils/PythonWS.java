@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,6 +17,7 @@ import net.miatech.praxis.classes.CurrentSession;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
@@ -89,8 +92,44 @@ public class PythonWS {
                 .asJsonAsync();
 
         HttpResponse<JsonNode> postResponse = postFuture.get();
-       Object obj = postResponse.getBody().getObject();//.getJSONArray("files"); //getString("files");
+        Object obj = postResponse.getBody().getObject();//.getJSONArray("files"); //getString("files");
         return obj;
+    }
+
+    public @ResponseBody
+    boolean uploadFilesPython(String endpoint, String ciente, String remote_path, File File1, File File2, File File3) throws InterruptedException, ExecutionException, JSONException, UnirestException {
+        boolean retorno = false;
+         JSONObject myObject = null;
+        Unirest.setTimeouts(3600000, 3600000);
+        if(File3 != null) {
+            HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
+                .field("client", ciente)
+                .field("remote_path", remote_path)
+                .field("file", File1)
+                .field("file", File2)
+                .field("file", File3)
+                .asString();           
+             myObject = new JSONObject(response.getBody());
+        }else if(File2!= null){
+            HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
+                .field("client", ciente)
+                .field("remote_path", remote_path)
+                .field("file", File1)
+                .field("file", File2)
+                .asString();           
+             myObject = new JSONObject(response.getBody());
+        }else{
+            HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
+                .field("client", ciente)
+                .field("remote_path", remote_path)
+                .field("file", File1)
+                .asString();           
+             myObject = new JSONObject(response.getBody());
+        }
+        
+        //  myObject.get("message");
+        retorno = (boolean) myObject.get("success");
+        return retorno;
     }
 
 }

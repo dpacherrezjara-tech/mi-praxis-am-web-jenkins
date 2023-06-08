@@ -65,7 +65,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
     private DisputemanagementMyarcFormLogic logic;
     @Autowired
     private PythonWS pws;
-    
+
     @RequestMapping(value = "SearchReportMyarc")
     public @ResponseBody
     String SearchReportMyarc(ModelMap map, HttpServletRequest request) {
@@ -214,8 +214,9 @@ public class DisputemanagementMyarcFormController extends BaseController {
         A4137Filter filter = new A4137Filter();
         A4137Filter listenvio = new A4137Filter();
         String VL_ARCHI = "";
-        String result2 = "";
+        boolean result2 = false;
         String result = "";
+        File archivo;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -233,12 +234,18 @@ public class DisputemanagementMyarcFormController extends BaseController {
             listenvio.IN_TRNCU = filter.IN_TRNCU;
             listenvio.IN_NUMBERADM = filter.IN_NUMBERADM;
             listenvio.IN_ARCHV = NAME_ARCHV;
-            if (!VL_ARCHI.equals("")) {
-                byte[] bytes = file.getBytes();
-                //result = upload(bytes, filter.IN_PREME, filter.IN_ANIO);
-                result = logic.insertTracing(listenvio);
-            } else {
-                result = logic.insertTracing(listenvio);
+            result = logic.insertTracing(listenvio);
+            if (result.equals("Proceso Culminado") && !NAME_ARCHV.equals("")) {
+                archivo = new File(file.getOriginalFilename());
+                file.transferTo(archivo);
+                result2 = upload_s3(listenvio.IN_CNXPA, archivo);
+                if (result2) {
+                    result = "The record was saved successfully.";
+                } else { 
+                    result = "An error ocurred when trying to upload the file.";
+                }
+                //byte[] bytes = file.getBytes();
+                //result = upload(bytes, filter.IN_PREME, filter.IN_ANIO);    
             }
 
             map.put("success", true);
@@ -253,6 +260,22 @@ public class DisputemanagementMyarcFormController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    public boolean upload_s3(String nrocnxpa, File archiv) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "MYARC/WEB" + "/" + nrocnxpa + "/" + Functions.getFechaActual() + "/";
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, null, null);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
+
+        return res;
+
+    }
+
+    /*
     public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -285,7 +308,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
 
         return mensaje;
     }
-    
+     */
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
     String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
@@ -294,13 +317,12 @@ public class DisputemanagementMyarcFormController extends BaseController {
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
             String urlREST = "";
-            if(request.getParameter("IN_TIPO").trim().equals("AGENCY") ){
-                urlREST= "MYARC/ROBOT/" + "" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim()+ "/" + request.getParameter("IN_DATE").trim() ;
-            }else{
-                urlREST= "MYARC/WEB/" + "" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim()+ "/" + request.getParameter("IN_DATE").trim() ;
+            if (request.getParameter("IN_TIPO").trim().equals("AGENCY")) {
+                urlREST = "MYARC/ROBOT/" + "" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim() + "/" + request.getParameter("IN_DATE").trim();
+            } else {
+                urlREST = "MYARC/WEB/" + "" + request.getParameter("IN_CNXPA").trim() + "/" + request.getParameter("IN_DATE").trim();
             }
-                   
-            
+
             HashMap bodyData = new HashMap<>();
             bodyData.put("client", "am");
             bodyData.put("type", "VISOR");
@@ -309,11 +331,12 @@ public class DisputemanagementMyarcFormController extends BaseController {
             res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
-          throw new SpringException(e);
+            throw new SpringException(e);
         }
 
         return new Gson().toJson(res);
     }
+
     /*
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
@@ -350,8 +373,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    */
-
+     */
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {

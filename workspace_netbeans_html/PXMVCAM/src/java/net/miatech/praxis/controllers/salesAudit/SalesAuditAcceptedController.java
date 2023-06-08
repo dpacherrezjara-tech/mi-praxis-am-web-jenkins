@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.FACSIMILFilter;
@@ -54,6 +55,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,6 +64,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import net.miatech.praxis.utils.PythonWS;
 
 //</editor-fold>
 /**
@@ -79,6 +83,8 @@ public class SalesAuditAcceptedController extends BaseController {
     private FACSIMILFilter filter2;
     private FacsimilDAO facsimilDAO;
     private MasterDAO masterDAO;
+    @Autowired
+    private PythonWS pws;
     //private ProrrateoNewLogic prorrateoNewLogic;
 
     @RequestMapping(value = "obtainDataCombo")
@@ -277,7 +283,7 @@ public class SalesAuditAcceptedController extends BaseController {
             List<A1672Filter> lstItinerary = logic.lstItinerary(filter);
             //para el devlivery
             //masterDAO.setSession(this.serverSession.getServerSession());
-           // hmCiudades = masterDAO.loadCiudadesHash();
+            // hmCiudades = masterDAO.loadCiudadesHash();
             filter2.TDNR = cliente.CCUST + "" + filter.VP_FRMSRIE;
             filter2.COUNTRY = filter.A1672PAIVT;
             filter2.AGTN = filter.A1672AGENT;
@@ -559,7 +565,7 @@ public class SalesAuditAcceptedController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             listaData = logic.searchIDFILE(filter);
             //para el devlivery
-           // masterDAO.setSession(this.serverSession.getServerSession());
+            // masterDAO.setSession(this.serverSession.getServerSession());
             //hmCiudades = masterDAO.loadCiudadesHash();
             filter2.TDNR = filter.VP_FRMSRIE;
             filter2.COUNTRY = filter.A1672PAIVT;
@@ -567,7 +573,7 @@ public class SalesAuditAcceptedController extends BaseController {
             filter2.FUENTE = filter.A1672FUENT;
             filter2.IDFILE = listaData;
             facsimilDAO.setSession(this.serverSession.getServerSession());
-            
+
             if (filter.A1672FUENT.equals("BSP")) {
                 beanFaximil = facsimilDAO.loadBSPFacsimilProrate(filter2, hmAeropuertos);
             }
@@ -577,7 +583,6 @@ public class SalesAuditAcceptedController extends BaseController {
             if (filter.A1672FUENT.equals("ASR")) {
                 beanFaximil = facsimilDAO.loadASRFacsimilProrate(filter2, hmAeropuertos);
             }
-            
 
             map.put("success", true);
             map.put("lstFaximil", beanFaximil);
@@ -596,7 +601,9 @@ public class SalesAuditAcceptedController extends BaseController {
     String marcarRev(ModelMap map, @RequestParam("file") MultipartFile file, HttpServletRequest request) {
         SQP00989Filter filter = new SQP00989Filter();
         ArrayList<SQP00989Filter> lstSelectedTkts = new ArrayList<SQP00989Filter>();
-        String result2 = "";
+        //String result2 = "";
+        boolean result2 = false;
+        File archivo1;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -632,10 +639,19 @@ public class SalesAuditAcceptedController extends BaseController {
             if (result.equals("Operation was successful.")) {
                 result = "The record was saved successfully.";
                 if (!A1672ARCHV.equals("")) {
-                    byte[] bytes = file.getBytes();
+                    // para achivos 1
+                    archivo1 = new File(file.getOriginalFilename());
+                    file.transferTo(archivo1);
+                    //byte[] bytes = file.getBytes();
                     for (SQP00989Filter obj : lstSelectedTkts) {
-                        result2 = upload(bytes, obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
-                        result2 = upload_s3(obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
+                        result2 = upload_s3(obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, archivo1, null, null);
+                        if (result2) {
+                            result = "The record was saved successfully.";
+                        } else {
+                            result = "An error ocurred when trying to upload the file.";
+                        }
+                        //result2 = upload(bytes, obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
+                        //result2 = upload_s3(obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
                     }
                 }
                 /*if (filter.A1672FUENT.equals("ASR")) {
@@ -682,6 +698,7 @@ public class SalesAuditAcceptedController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    /*
     public String upload(byte[] bytes, String TKT, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -699,10 +716,7 @@ public class SalesAuditAcceptedController extends BaseController {
             }
             File dir2 = new File(directory, Functions.getFechaActual());
             dir2.mkdir();
-            /* if (!Files.exists(dir)) {
-             Files.createDirectory(dir);
-             }*/
-
+            
             String strArchivo = rutaMemo + "\\" + Functions.getFechaActual() + "\\" + nomArchivo;
             File archivo = new File(strArchivo);
             FileOutputStream fs = new FileOutputStream(archivo);
@@ -719,7 +733,7 @@ public class SalesAuditAcceptedController extends BaseController {
 
         return mensaje;
     }
-
+     */
     public String upload_s3_correo() throws SQLException, Exception {
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
@@ -740,13 +754,25 @@ public class SalesAuditAcceptedController extends BaseController {
 
     }
 
+    public boolean upload_s3(String IN_TICKET, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "AMAUDIT/TKT" + "/" + IN_TICKET + "/" + Functions.getFechaActual() + "/";
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
+
+        return res;
+
+    }
+
+    /*
     public String upload_s3(String TKT, String nomArchivo) throws SQLException, Exception {
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
-
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_PATH", "\\\\10.0.0.87\\AMAUDIT\\TKT\\" + TKT + "\\" + Functions.getFechaActual());
@@ -764,7 +790,7 @@ public class SalesAuditAcceptedController extends BaseController {
         return error_msg;
 
     }
-
+     */
     @RequestMapping(value = "Group")
     public @ResponseBody
     String Group(ModelMap map, HttpServletRequest request) {

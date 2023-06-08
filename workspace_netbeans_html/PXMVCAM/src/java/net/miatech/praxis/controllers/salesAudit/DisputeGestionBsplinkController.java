@@ -6,13 +6,11 @@
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
-import static com.mashape.unirest.http.HttpClientHelper.request;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,9 +24,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static jxl.biff.BaseCellFeatures.logger;
 import net.miatech.beans.SaleAudit.SQP00911Filter;
-import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.SaleAudit.A2553;
 import net.miatech.praxis.classes.ProMail;
 import net.miatech.praxis.controllers.BaseController;
@@ -54,13 +50,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import org.json.JSONObject;
 
 /**
  *
@@ -330,21 +326,25 @@ public class DisputeGestionBsplinkController extends BaseController {
 
     @RequestMapping(value = "insertTracingFile", method = RequestMethod.POST)
     public @ResponseBody
-    String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
+    String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file1, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
         A2553 filter = new A2553();
         A2553 listenvio = new A2553();
         String VL_ARCHI = "";
         String result2 = "";
+        boolean result = false;
+        File archivo1;
+        File archivo2 = null;
+        File archivo3 = null;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             //ADMReportLogic logic = new ADMReportLogic();
             DisputeGestionBsplinkLogic logic = new DisputeGestionBsplinkLogic();
             logic.setSession(this.serverSession.getServerSession());
-            String A2553ARCHV = file.getOriginalFilename();
+            String A2553ARCHV = file1.getOriginalFilename();
             String A2553ARCHV2 = file2.getOriginalFilename();
             String A2553ARCHV3 = file3.getOriginalFilename();
-
+            //
             listenvio.A2553TRNCU = filter.A2553TRNCU;
             listenvio.A2553STAT = filter.A2553STAT;
             listenvio.A2553NMEMO = filter.A2553NMEMO;
@@ -357,12 +357,39 @@ public class DisputeGestionBsplinkController extends BaseController {
             listenvio.A2553CNXPA = filter.A2553CNXPA;
             listenvio.A2553FOLIO = "";
 
+            result2 = logic.insertTracing(listenvio);
+            if (result2.equals("RECORD INSERTED")) {
+                // para achivos 1
+                archivo1 = new File(file1.getOriginalFilename());
+                file1.transferTo(archivo1);
+                // para achivos 2
+                if (!file2.getOriginalFilename().equals("")) {
+                    archivo2 = new File(file2.getOriginalFilename());
+                    file2.transferTo(archivo2);
+                }
+                // para achivos 3
+                if (!file3.getOriginalFilename().equals("")) {
+                    archivo3 = new File(file3.getOriginalFilename());
+                    file3.transferTo(archivo3);
+                }
+
+                result = upload_s3(listenvio, archivo1, archivo2, archivo3);
+                if (result) {
+                    result2 = "The record was saved successfully.";
+                } else {
+                    result2 = "An error ocurred when trying to upload the file.";
+                }
+            } else {
+                result2 = "An error ocurred when trying to upload the file.";
+            }
+
+            /*  
             String result = logic.insertTracing(listenvio);
             if (result.equals("RECORD INSERTED")) {
                 result = "The record was saved successfully.";
                 if (!A2553ARCHV.equals("")) {
-                    byte[] bytes = file.getBytes();
-                    result = upload(bytes, filter.A2553CNXPA, A2553ARCHV);
+                   // byte[] bytes = file.getBytes();
+                   // result = upload(bytes, filter.A2553CNXPA, A2553ARCHV);
                     VL_ARCHI = "1";
                 }
                 if (!A2553ARCHV2.equals("")) {
@@ -381,9 +408,9 @@ public class DisputeGestionBsplinkController extends BaseController {
             } else {
                 result = "An error ocurred when trying to upload the file.";
             }
-
+             */
             map.put("success", true);
-            map.put("result", result);
+            map.put("result", result2);
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -394,31 +421,68 @@ public class DisputeGestionBsplinkController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public String upload_s3(String IN_CNXPA) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+    /*
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
+    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
+        try {
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "DISPUTAS/WEB/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+            
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
 
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
-        Unirest.setTimeouts(3600000, 3600000);
-        HashMap bodyData = new HashMap<>();
-        bodyData.put("IN_PATH", "\\\\10.0.0.87\\amaudit\\DISPUTAS\\WEB\\" + IN_CNXPA + "\\" + Functions.getFechaActual());
-        bodyData.put("IN_PREFIX", "DISPUTAS/WEB/");
-        bodyData.put("IN_DATE", Functions.getFechaActual());
+        return new Gson().toJson(res);
+    }
+     */
+    public boolean upload_s3(A2553 filter, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "DISPUTAS/WEB" + "/" + filter.A2553CNXPA + "/" + Functions.getFechaActual() + "/";
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
 
-        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/upload_s3/")
-                .header("content-type", "application/json")
-                .header("cache-control", "no-cache")
-                .body(new Gson().toJson(bodyData))
-                .asJson();
-
-        String error_msg = response.getBody().getObject().get("error_msg").toString();
-
-        return error_msg;
+        return res;
 
     }
 
+    /*
+    public String upload_s3A(A2553 filter,File archiv,File archiv2,File archiv3) throws SQLException, Exception {
+        //String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String v1_urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString() + "" + "/api/util/s3_upload_file";
+        //String urlREST = "DISPUTAS/WEB/"+""+ request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+        String urlREST = "lremicio_test/";
+        String filePath = "D:\\UCV\\Maestria\\matriz_riesgos.xlsx"; //
+        Unirest.setTimeouts(0, 0);
+        HttpResponse<String> response = Unirest.post("http://localhost:8185/api/util/s3_upload_file")
+                .field("client", "am")
+                .field("remote_path", "lremicio_test/")
+                .field("file", archiv) 
+                .asString();
+        
+        JSONObject myObject;
+        myObject = new JSONObject(response.getBody());
+        
+        myObject.get("message");
+        myObject.get("success");
+        return null;
+
+    }
+     */
     @RequestMapping(value = "insertTracing")
     public @ResponseBody
     String insertTracing(ModelMap map, HttpServletRequest request) {
@@ -455,7 +519,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             if (request.getParameter("IN_TIPO").trim().equals("USRBSP")) {
                 urlREST = "DISPUTAS/ROBOT" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
             } else {
-                urlREST = "DISPUTAS/WEB" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+                urlREST = "DISPUTAS/WEB" + "/" + request.getParameter("IN_CNXPA").trim() + "/" + request.getParameter("IN_DATE").trim();
             }
 
             HashMap bodyData = new HashMap<>();
