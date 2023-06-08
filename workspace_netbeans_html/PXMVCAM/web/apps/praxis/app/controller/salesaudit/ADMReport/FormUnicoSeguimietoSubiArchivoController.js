@@ -414,6 +414,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReport.FormUnicoSeguimietoSubiAr
             Ext.Msg.alert('.: PRAXIS :.', 'Select Status');
             return;
         }
+        if(ComboStatus===null){
+            Ext.Msg.alert('.: PRAXIS :.', 'Select Status');
+            return;
+        }
+        
         if (Ext.getCmp(prototype.id5 + '-Argument').getValue() === '') {
             Ext.MessageBox.alert('PRAXIS', "Enter issue reason", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')

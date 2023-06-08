@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
     IN_PREME: '',
     IN_DOCUMENT: '',
     IN_TIPO: '',
+    IN_CNXPA:'',
     init: function (view) {
         var me = this;
     },
@@ -41,18 +42,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
 
 
         me.IN_DATE = rec.data.A4138FREGI;
-        me.IN_TIPO = rec.data.A4138TYPE
+        me.IN_TIPO = rec.data.A4138TYPE;
         me.IN_ANIO = me.view.params.anio;
         me.IN_PREME = me.view.params.preme;
         me.IN_DOCUMENT = me.view.params.nmemo;
+        me.IN_CNXPA = me.view.params.CNXPA; 
 
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
         me.beanTMP.IN_DATE = me.IN_DATE;
         me.beanTMP.IN_ANIO = me.IN_ANIO;
         me.beanTMP.IN_PREME = me.IN_PREME;
-        me.beanTMP.IN_PREME = me.IN_PREME;
         me.beanTMP.IN_TIPO = me.IN_TIPO;
+        me.beanTMP.IN_CNXPA = me.IN_CNXPA;
          
         var panel = Ext.getCmp(prototype.idDisputeFileViewerMyarc + '-panel-tree');
         panel.removeAll();

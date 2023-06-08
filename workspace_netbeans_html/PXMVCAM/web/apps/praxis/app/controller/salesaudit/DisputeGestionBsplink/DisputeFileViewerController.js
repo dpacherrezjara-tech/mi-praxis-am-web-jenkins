@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeFileVi
     IN_COUNTRY: '',
     IN_DOCUMENT: '',
     IN_TIPO: '',
+    IN_CNXPA: '',
     init: function (view) {
         var me = this;
     },
@@ -38,11 +39,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeFileVi
         rec = me.view.params.rec;
         //data,nmemo
 
-
         me.IN_DATE = rec.data.A2553FREGI;
         me.IN_TIPO = rec.data.A2553REGIS;
         me.IN_COUNTRY = rec.data.A2553PAIS;
         me.IN_DOCUMENT = me.view.params.nmemo;
+        me.IN_CNXPA = me.view.params.CNXPA;
 
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
@@ -50,6 +51,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeFileVi
         me.beanTMP.IN_COUNTRY = me.IN_COUNTRY;
         me.beanTMP.IN_DOCUMENT = me.IN_DOCUMENT;
         me.beanTMP.IN_TIPO = me.IN_TIPO;
+        me.beanTMP.IN_CNXPA = me.IN_CNXPA;
 
 
         var panel = Ext.getCmp(prototype.id03 + '-panel-tree');
