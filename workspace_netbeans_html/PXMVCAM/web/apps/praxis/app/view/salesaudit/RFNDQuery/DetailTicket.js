@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 880,
-    width: 1170,
+    width: 1220,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -758,7 +758,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                                 afterrender: 'OnLoadGridAfterrender'
                             }
                         },
-                        {xtype: 'tbspacer', width: 100},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'grid',
                             id: prototype.idDetailTicket + '-gridRazonesTkt',
@@ -804,6 +804,38 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 150,
                             width: 440
+                        },
+                        {
+                            xtype: 'grid',
+                            id: prototype.idDetailTicket + '-gridRemarcks',
+                             height: 150,
+                            width: 300,
+                            columnLines: true,
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'Date', dataIndex: 'A3649FREGI', align: 'center', width: 70, sortable: false},
+                                    {text: 'Description', dataIndex: 'A3649ERROR', width: 220, align: 'left',
+                                        listeners: {
+                                            click: 'metadata_detalle'
+                                        },
+                                        renderer: function (value, metadata) {
+                                            metadata.tdAttr = 'data-qtip="' + value + '"';
+                                            return value;
+                                        }
+                                    }/*,
+                                    {
+                                        text: 'File',
+                                        dataIndex: 'A3649ARCHI',
+                                         width: 80,
+                                        renderer: 'OnColumnAuditorRenderer'
+                                    }*/
+                                ]
+                            }
                         }
                     ]
                 },

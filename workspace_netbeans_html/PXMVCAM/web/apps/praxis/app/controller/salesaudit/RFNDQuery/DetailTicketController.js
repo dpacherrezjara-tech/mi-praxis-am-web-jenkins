@@ -115,6 +115,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENTQUERY').getStore().removeAll();
                 Ext.getCmp(prototype.idDetailTicket + '-gridRazonesTkt').getStore().removeAll();
                 Ext.getCmp(prototype.idDetailTicket + '-gridRazonesTkt').getStore().loadData(res.lst_RAZON);
+                // para los remark
+                Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks').getStore().removeAll();
+                Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks').getStore().loadData(res.lsta_REMARCK);
                 //usos cupon
                 Ext.getCmp(prototype.idDetailTicket + '-gridDataStatus').getStore().removeAll();
                 Ext.getCmp(prototype.idDetailTicket + '-gridDataStatus').getStore().loadData(res.lsta_USOS);
@@ -451,13 +454,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             //Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(VL_A3648XMDAQ);
             //Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(VL_A3648XMDA);
         }
-
         if (Ext.String.trim(rec.get('A3648ARCHI')) !== '') {
             Ext.getCmp(prototype.idDetailTicket + '-txtImageView').show();
         } else {
             Ext.getCmp(prototype.idDetailTicket + '-txtImageView').hide();
         }
-        //
 
 
 
@@ -481,6 +482,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var grid05 = Ext.getCmp(prototype.idDetailTicket + '-gridTaxes');
         var grid06 = Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENTQUERY');
         var grid07 = Ext.getCmp(prototype.idDetailTicket + '-gridDataStatus');
+        var grid08 = Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks');
+
 
         var store01 = Ext.create('Ext.data.Store', {
             storeId: prototype.idDetailTicket + '-store-grid01'
@@ -503,6 +506,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var store07 = Ext.create('Ext.data.Store', {
             storeId: prototype.idDetailTicket + '-store-grid07'
         });
+        var store08 = Ext.create('Ext.data.Store', {
+            storeId: prototype.idDetailTicket + '-store-grid08'
+        });
 
         grid01.setStore(store01);
         grid02.setStore(store02);
@@ -511,7 +517,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         grid05.setStore(store05);
         grid06.setStore(store06);
         grid07.setStore(store07);
+        grid08.setStore(store08);
 
+    },
+    metadata_detalle: function (column, e, row, column, x, rowData) {
+        var data = x.record.data;
+         Ext.getCmp(prototype.idDetailTicket + '-txtRemarks').setValue(data.A3649ERROR);
     },
     onAddFopClick: function (rec) {
         var me = this;
@@ -884,10 +895,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
 
     },
-    metadata_detalle: function (column, e, row, column, x, rowData) {
-        var data = x.record.data;
-        Ext.getCmp(prototype.idDetailTicket + '-Disputa').setValue(data.A2553DESCR);
-    },
     metadata_razon: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
         Ext.getCmp(prototype.idDetailTicket + '-Disputa').setValue(data.A3537NCONX);
@@ -1130,7 +1137,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 bvalida = false;
                 return;
             }
-            
+
             if (Ext.String.trim(txtEqmda) === Ext.String.trim(txtmda)) {
                 Ext.Msg.alert('.: PRAXIS :.', 'Currencies must be different');
                 bvalida = false;
@@ -1192,7 +1199,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     var grid08 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
                     var regscpn = grid08.getStore().getCount();
                     for (var x = 0; x < regscpn; x++) {
-                        if (CmbTRFND === 'T') {
+                        if (CmbTRFND === 'T' && Ext.String.trim(txttrnc) === 'SALE') {
                             if (!cbox1 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '1') {
                                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
                                 bvalida = false;
@@ -1245,7 +1252,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         }
 
                     }
-                    if (CmbTRFND !== 'T') {
+                    if (CmbTRFND !== 'T' && Ext.String.trim(txttrnc) === 'SALE') {
                         vl_total = (vl_cant - vl_cantcpn);
                         if (vl_total === 0) {
                             Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of total refund');
@@ -1718,23 +1725,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         return '<span onclick="Ext.getCmp(prototype.idDetailTicket + \'-win\').getController().onWinFileViewerClick(' + rowIndex + ');">' + archivo + '</span>'
     },
     onWinFileViewerClick: function (rowIndex) {
-        var grid = Ext.getCmp(prototype.idDetailTicket + '-gridDispuRazon');
+        var grid = Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        var nmemo = '';
-        if (rec.data.A3537TYPE === 'AM') {
-            if (Ext.getCmp(prototype.idDetailTicket + '-txtconxp').getValue() !== '') {
-                nmemo = Ext.getCmp(prototype.idDetailTicket + '-txtconxp').getValue();
-            } else {
-                nmemo = Ext.getCmp(prototype.idDetailTicket + '-txtpreme').getValue();
+        var me = this;
+        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.RFNDDIRFileViewer({
+            params: {
+                rec: rec
             }
-        } else {
-            nmemo = Ext.getCmp(prototype.idDetailTicket + '-nmemo').getValue();
-        }
-        var DisputeFileViewer = Ext.create('Ext.Praxis.view.salesaudit.QueryPostbilling.PostbillingFileViewer', {id: 'PostbillingFileViewer'});
-        var controller = DisputeFileViewer.getController();
-        controller.getFilesDirectory(rec.data, nmemo, Ext.getCmp(prototype.idDetailTicket + '-country').getValue(''), this.urlWin01);
-        DisputeFileViewer.show();
+        });
+        win.show();
+
     },
     onWinFormRazonesClick: function () {
         var me = this;
