@@ -654,7 +654,7 @@ public class RFNDQueryDAO {
         ResultSet rs07 = null;
         ResultSet rs08 = null;
 
-        String SQLCLL01 = "{CALL PXRFNDESP.SQP03105new(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXRFNDESP.SQP03105(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
