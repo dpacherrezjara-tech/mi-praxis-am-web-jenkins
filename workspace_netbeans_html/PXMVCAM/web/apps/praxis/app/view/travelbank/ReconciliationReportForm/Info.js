@@ -42,9 +42,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
-                            width: prototype.widthGrid,
-                            //width: 900,
-//                             width: '100vw',
+                            width: 900,
                             height: 510,
                             columnLines: true,
                             margin: 3,
@@ -96,16 +94,16 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Info', {
                                         }
                                     },
                                     {
-                                        text: 'Detail',
+                                        text: 'Account<br>statement',
                                         sortable: false,
                                         xtype: 'actioncolumn',
                                         //width: 60,
                                         align: 'center',
                                         items: [
                                             {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'View detail',
-                                                handler: 'onEditClick'
+                                                iconCls: 'prx-icon-image-file',
+                                                tooltip: 'View Account Statament',
+                                                handler: 'onDetailAccountStatamentClick'
                                             }
                                         ]
                                     }

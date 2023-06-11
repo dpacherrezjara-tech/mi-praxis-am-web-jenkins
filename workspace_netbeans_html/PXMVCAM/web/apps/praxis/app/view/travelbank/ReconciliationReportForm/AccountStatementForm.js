@@ -1,14 +1,14 @@
-Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransaccionesForm', {
+Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.AccountStatementForm', {
     extend: 'Ext.window.Window',
-    alias: 'widget.DetalleTransaccionesForm',
-    controller: 'DetalleTransaccionesController',
+    alias: 'widget.AccountStatementForm',
+    controller: 'AccountStatementController',
     requires: [
-        'Ext.Praxis.controller.travelbank.ReconciliationReport.DetalleTransaccionesController',
-        'Ext.Praxis.view.travelbank.ReconciliationReportForm.InfoTransaction'
+        'Ext.Praxis.controller.travelbank.ReconciliationReport.AccountStatementController',
+        'Ext.Praxis.view.travelbank.ReconciliationReportForm.InfoEstadoCuenta'
     ],
-    title: 'Transaction details',
+    title: 'Account statatement detail',
     header: true,
-    width: 945,
+    width: 1020,
     height: 650,
     border: false,
     resizable: false,
@@ -21,7 +21,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
     items: [
         {
             xtype: 'form',
-            id: prototype.id2 + '-formDataEntry',
+            id: prototype.id3 + '-formDataEntry',
             defaults: {
                 style: 'margin: 3px;',
                 border: false
@@ -37,6 +37,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
                             margin: '2 2 2 2',
                             border: true,
                             padding: 2,
+                            width: '100%',
                             items: [
                                 {
                                     xtype: 'panel',
@@ -46,7 +47,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id2 + '-NCTA',
+                                            id: prototype.id3 + '-NCTA',
                                             fieldLabel: 'Account Number', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 125, fieldStyle: 'text-align:center;font-size:12px',
                                             readOnly: true,
@@ -54,19 +55,11 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id2 + '-CRDID',
-                                            fieldLabel: 'Credit ID', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 100, fieldStyle: 'text-align:center;font-size:14px;font-weight:bold;',
-                                            readOnly: true,
-                                            width: 245
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id2 + '-MDA',
+                                            id: prototype.id3 + '-MDA',
                                             fieldLabel: 'Currency:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 80, fieldStyle: 'text-align:center;font-size:12px',
+                                            labelWidth: 90, fieldStyle: 'text-align:center;font-size:12px',
                                             readOnly: true,
-                                            width: 135
+                                            width: 145
                                         }
                                     ]
                                 },
@@ -77,64 +70,62 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
                                     border: false,
                                     items: [
                                         {
-                                            xtype: 'textfield',
-                                            id: prototype.id2 + '-SERV',
-                                            fieldLabel: 'Service Code', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 125, fieldStyle: 'text-align:center;font-size:12px',
-                                            readOnly: true,
-                                            width: 280
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id2 + '-FEMIS',
-                                            fieldLabel: 'Issue Date:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 100, fieldStyle: 'text-align:center;font-size:12px',
-                                            readOnly: true,
-                                            width: 190
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id2 + '-EXPDT',
-                                            fieldLabel: 'Expire Date:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 100, fieldStyle: 'text-align:center;font-size:12px',
-                                            readOnly: true,
-                                            width: 190
-                                        },
-                                        {
                                             xtype: 'panel',
                                             width: '100%',
-                                            margin: '2 2 2 2',
+                                            //margin: '2 2 2 2',
                                             border: false,
-                                            padding: 2,
+                                            //padding: 2,
                                             layout: {
-                                                type: 'vbox',
-                                                pack: 'end'
+                                                type: 'hbox'
                                             },
                                             items: [
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id2 + '-AORIG',
-                                                    fieldLabel: 'Original Amount:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                                    labelWidth: 125, fieldStyle: 'text-align:right;font-size:14px;',
-                                                    readOnly: true,
-                                                    width: 245
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id2 + '-AUSAD',
-                                                    fieldLabel: 'Usage Amount:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                                    labelWidth: 125, fieldStyle: 'text-align:right;font-size:14px;color:red',
-                                                    readOnly: true,
-                                                    width: 245
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id2 + '-ABALR',
-                                                    fieldLabel: 'Balance Remaining:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                                    id: prototype.id3 + '-SALDO',
+                                                    fieldLabel: 'Balance:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                                     labelWidth: 125, fieldStyle: 'text-align:right;font-size:14px;color:green;font-weight:bold;',
                                                     readOnly: true,
                                                     width: 245
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    id: prototype.id3 + '-SALRV',
+                                                    fieldLabel: 'Balance Revenue:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                                    labelWidth: 125, fieldStyle: 'text-align:right;font-size:14px;color:green;font-weight:bold;',
+                                                    readOnly: true,
+                                                    width: 245
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    id: prototype.id3 + '-SALPE',
+                                                    fieldLabel: 'Balance Pesos:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                                    labelWidth: 125, fieldStyle: 'text-align:right;font-size:14px;color:green;font-weight:bold;',
+                                                    readOnly: true,
+                                                    width: 245
+                                                },
+                                                {
+                                                    xtype: 'panel',
+                                                    //padding: '2px',
+                                                    width: 200,
+                                                    border: false,
+                                                    layout: {
+                                                        type: 'hbox',
+                                                        pack: 'end'
+                                                    },
+                                                    items: [
+                                                        {
+                                                            xtype: 'button',
+                                                            id: prototype.id3 + '-btnExcel',
+                                                            iconCls: 'prx-icon-excel',
+                                                            tooltip: 'Export to Excel',   
+                                                            text:'Download',
+                                                            listeners: {
+                                                                //click: 'btnExcel_click'
+                                                            }
+                                                        }
+                                                    ]
                                                 }
+
                                             ]
                                         }
                                     ]
@@ -145,13 +136,13 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
                             xtype: 'panel',
                             layout: 'column',
                             margin: '1 0 1 0',
-                            padding: 4,
                             border: false,
+                            padding: 4,
                             items: [
                                 {
                                     region: 'center',
-                                    id: prototype.id2 + '-contentInfo',
-                                    xtype: prototype.id2 + '-infoTransaction'
+                                    id: prototype.id3 + '-contentInfo',
+                                    xtype: prototype.id3 + '-infoEstadoCuenta'
                                 }
                             ]
                         }
@@ -174,7 +165,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.DetalleTransacci
             items: [
                 {
                     text: 'Close',
-                    id: prototype.id2 + '-btn-cancel',
+                    id: prototype.id3 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

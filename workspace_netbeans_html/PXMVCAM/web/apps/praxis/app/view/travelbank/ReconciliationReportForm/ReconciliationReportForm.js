@@ -3,11 +3,13 @@
 prototype.id = 'ReconciliationReportForm';
 prototype.id1 = 'ReconciliationReportFormDetail';
 prototype.id2 = 'DetalleTransaccionesForm';
+prototype.id3 = 'AccountStatementForm_';
 
 prototype.url = CONTEXTPATH+'/ReconciliationReport';
 prototype.url2 = CONTEXTPATH + '/TransaccionBalance';
+prototype.url3 = CONTEXTPATH + '/AccountStatement';
 
-prototype.widthContenedor = 1300;//910
+prototype.widthContenedor = 1300; 
 prototype.widthGrid = 1200;
 // </editor-fold>
 

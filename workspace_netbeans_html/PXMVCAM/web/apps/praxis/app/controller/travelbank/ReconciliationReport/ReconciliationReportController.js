@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
         }
     },
 
-    // <editor-fold defaultstate="collapsed" desc="Info">
+    // <editor-fold defaultstate="collapsed" desc="Detalle de transacciones-Credit ID">
     onEditClick: function (grid, rowIndex) {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
@@ -75,7 +75,22 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
         }).show();
     },
     // </editor-fold>
-
+    // 
+    // <editor-fold defaultstate="collapsed" desc="Estado de cuenta">
+    onDetailAccountStatamentClick: function (grid, rowIndex) {
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);                
+        rec = rec === null || rec === undefined ? {} : rec;
+        Ext.create('Ext.Praxis.view.travelbank.ReconciliationReportForm.AccountStatementForm', {
+            id: 'ReconciliationReportForm_AccountStatementForm',
+            params: {
+                action: 'U',
+                rec: rec
+            }
+        }).show();
+    },
+     // </editor-fold>
+    
     setGrid: function (op) {
         var panel = Ext.getCmp(prototype.id + '-centerC-panel01');
         panel.removeAll();
