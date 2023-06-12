@@ -14,7 +14,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
     IN_PREME: '',
     IN_ANIO: '',
     IN_FOLIO: '',
-    IN_TICKET: '',
 
     init: function (view) {
         var me = this;
@@ -38,17 +37,29 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
 
         var me = this;
         var rec = me.view.params.rec;
-
         this.IN_PREME = rec.get('A3648PREME');
         this.IN_ANIO = rec.get('A3648ANIO');
         this.IN_FOLIO = rec.get('A3648FOLIO');
         this.IN_TICKET = rec.get('A3648TICKET');
+        this.IN_DATE = '';
+
+        /*this.IN_PREME = rec.get('A3649PREME');
+         this.IN_ANIO = rec.get('A3649ANIO');
+         this.IN_FOLIO = rec.get('A3649FLAG');
+         this.IN_DATE = rec.get('A3649FREGI');
+         if (rec.get('A3649CORRL') === '01') {
+         this.IN_DATE = '';
+         }
+         this.IN_DATE = '';
+         */
+        //this.IN_TICKET = rec.get('A3648TICKET');
 
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
         me.beanTMP.IN_PREME = this.IN_PREME;
         me.beanTMP.IN_ANIO = this.IN_ANIO;
         me.beanTMP.IN_FOLIO = this.IN_FOLIO;
+        me.beanTMP.IN_DATE = this.IN_DATE;
 
         var panel = Ext.getCmp(prototype.idRFNDDIRFileViewer + '-panel-tree');
         panel.removeAll();

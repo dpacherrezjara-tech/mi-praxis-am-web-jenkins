@@ -61,6 +61,7 @@ public class A3647Filter extends A3647 {
     public List<A3653> lst_Card = new ArrayList<A3653>(0);
     public List<A3654> LIS_COUPNS = new ArrayList<A3654>(0);
     public List<A3655> LIS_HISTORY = new ArrayList<A3655>(0);
+    public List<A3649> lst_REMARCK = new ArrayList<A3649>(0);
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
