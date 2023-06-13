@@ -792,51 +792,84 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "SearchRFNDPDI")
     public @ResponseBody
-    String SearchRFNDPDI(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
-
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-
+    String SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
         A3389Filter filter = new A3389Filter();
+        
+        //IN_DOCUMENT = "2887320996";
         try {
-            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
             String IN_DOCUMENT = filter.IN_DOCUMET;
-            //IN_DOCUMENT = "2522497772";
+            
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            System.out.println(v1_urlREST);
+            String urlREST = "BsplinkRFND/PDI/" +("IN_DOCUMENT").trim();
+            System.out.println(urlREST);
 
-            /*
-             Se establece tiempo límite de conexión por 60 min
-             */
-            Unirest.setTimeouts(3600000, 3600000);
-
-            /*
-             Preparando parámetros para enviar por body
-             */
             HashMap bodyData = new HashMap<>();
-            bodyData.put("document", IN_DOCUMENT);
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+            System.out.println(bodyData);
 
-            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/pdi/")
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
-
-            String body = response.getBody().getObject().get("filetext").toString();
-
-            map.put("success", true);
-            map.put("data", body);
-
-        } catch (SQLException e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
         } catch (Exception e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
+          throw new SpringException(e);
         }
 
-        return new Gson().toJson(map);
+        return new Gson().toJson(res);
     }
+    
+    //    @RequestMapping(value = "SearchRFNDPDI")
+//    public @ResponseBody
+//    String SearchRFNDPDI(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
+//
+//        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+//        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+//
+//        A3389Filter filter = new A3389Filter();
+//        try {
+//            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+//            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+//
+//            String IN_DOCUMENT = filter.IN_DOCUMET;
+//            //IN_DOCUMENT = "2522497772";
+//
+//            /*
+//             Se establece tiempo límite de conexión por 60 min
+//             */
+//            Unirest.setTimeouts(3600000, 3600000);
+//
+//            /*
+//             Preparando parámetros para enviar por body
+//             */
+//            HashMap bodyData = new HashMap<>();
+//            bodyData.put("document", IN_DOCUMENT);
+//
+//            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/pdi/")
+//                    .header("content-type", "application/json")
+//                    .header("cache-control", "no-cache")
+//                    .body(new Gson().toJson(bodyData))
+//                    .asJson();
+//
+//            String body = response.getBody().getObject().get("filetext").toString();
+//
+//            map.put("success", true);
+//            map.put("data", body);
+//
+//        } catch (SQLException e) {
+//            map.put("success", false);
+//            map.put("sesion", SESSION_CONTROL);
+//        } catch (Exception e) {
+//            map.put("success", false);
+//            map.put("sesion", SESSION_CONTROL);
+//        }
+//
+//        return new Gson().toJson(map);
+//    }
+    
 
     @RequestMapping(value = "ProcesaMantenimiento")
     public @ResponseBody
