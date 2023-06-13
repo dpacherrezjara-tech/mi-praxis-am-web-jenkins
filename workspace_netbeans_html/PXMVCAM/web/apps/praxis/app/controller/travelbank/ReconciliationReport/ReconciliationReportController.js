@@ -7,12 +7,9 @@
 
 Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.ReconciliationReportController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.ReconciliationReportController',
-    // <editor-fold defaultstate="collapsed" desc="Variables Globales">
-    fecha: new Date(),
+    alias: 'controller.ReconciliationReportController',        
     searchParams: {},
-    _path: '',
-    // </editor-fold>
+    _path: '',    
     init: function ( ) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
         //prototype.id = 'FilesIssuesUsesForm';
@@ -278,8 +275,10 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
                 me.searchParams.VP_NCTA = Ext.getCmp(prototype.id + '-NCTA').getValue();
                 me.searchParams.VP_MONED = Ext.getCmp(prototype.id + '-MDA').getValue();
                 me.searchParams.VP_CRDID = Ext.getCmp(prototype.id + '-CreditID').getValue();
-                me.searchParams.VP_DESDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
-                me.searchParams.VP_HASTA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');                
+                if(Ext.getCmp(prototype.id + '-Fechas_chk').getValue()){
+                    me.searchParams.VP_DESDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+                    me.searchParams.VP_HASTA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+                }                                
                 me.searchParams.VP_SERVC = ''; //Ext.getCmp(prototype.id + '-MDA').getValue();                
                 me.searchParams.VP_STAT = Ext.getCmp(prototype.id + '-SALDOS_chk').getValue() ? 1 : 0;
                 me.searchParams.VP_LSTA = ''; // Ext.getCmp(prototype.id + '-LSTA_chk').getValue() ? 1 : 0;
@@ -368,5 +367,6 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
             this.btnSearch_click();
         }
     }
+    
     // </editor-fold>
 });

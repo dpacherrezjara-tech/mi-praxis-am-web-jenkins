@@ -62,10 +62,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.InfoDetail', {
                                         }
                                     },
                                     {
-                                        text: 'Account BT', dataIndex: 'A4467CUENT', width: 150, locked: true
-                                    },
-                                    {
-                                        text: 'Curr.', dataIndex: 'A4467MONED', width: 50, locked: true
+                                        text: 'Travel Bank<br>Account number', dataIndex: 'A4467CUENT', width: 150, locked: true
                                     },
                                     {
                                         text: 'Credit ID', dataIndex: 'A4467CRDID', width: 90, locked: true
@@ -107,85 +104,98 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.InfoDetail', {
                                             else {
                                                 html2 = '<img src="resources/img/semaforo/Circle_Red.png" title="Difference Precontabilidad" >';
                                             }
-                                            
-                                            return html + ' ' + html2 ;
+
+                                            return html + ' ' + html2;
                                         }
                                     },
                                     {
-                                        text: 'Original<br>Amount', dataIndex: 'A4467AORIG', width: 110, align: 'right',
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            //metaData.style = 'font-weight:bold;color:green;';
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
+                                        text: 'Curr.', dataIndex: 'A4467MONED', width: 50, locked: true
                                     },
                                     {
-                                        text: 'Usage<br>Amount', dataIndex: 'A4467AUSAD', width: 110, align: 'right',
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            metaData.style = 'font-weight:bold;color:red;';
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        text: 'Balance<br>Remaining', dataIndex: 'A4467ABALR', width: 110, align: 'right',
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            //metaData.style = 'font-weight:bold;color:green;';
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        text: 'Amount Revenue',
+                                        text: 'Amounts Travel bank',
                                         columns: [
                                             {
-                                                text: 'Original<br>Amount', dataIndex: 'A4467AORRV', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
+                                                text: 'Local amounts',
+                                                columns: [
+                                                    {
+                                                        text: 'Original<br>Amount', dataIndex: 'A4467AORIG', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount<br>Used', dataIndex: 'A4467AUSAD', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            metaData.style = 'font-weight:bold;color:red;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Remaining<br>Balance', dataIndex: 'A4467ABALR', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
-                                                text: 'Usage<br>Amount', dataIndex: 'A4467AUSRV', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    metaData.style = 'font-weight:bold;color:red;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
+                                                text: 'Revenue amounts',
+                                                columns: [
+                                                    {
+                                                        text: 'Original<br>Amount', dataIndex: 'A4467AORRV', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount<br>Used', dataIndex: 'A4467AUSRV', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            metaData.style = 'font-weight:bold;color:red;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Remaining<br>Balance', dataIndex: 'A4467ABLRV', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
-                                                text: 'Balance<br>Remaining', dataIndex: 'A4467ABLRV', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
+                                                text: 'Amounts in pesos',
+                                                columns: [
+                                                    {
+                                                        text: 'Original<br>Amount', dataIndex: 'A4467AORMX', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount<br>Used', dataIndex: 'A4467AUSMX', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Remaining<br>Balance', dataIndex: 'A4467ABLMX', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
                                     {
-                                        text: 'Amount Pesos',
-                                        columns: [
-                                            {
-                                                text: 'Original<br>Amount', dataIndex: 'A4467AORMX', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
-                                            },
-                                            {
-                                                text: 'Usage<br>Amount', dataIndex: 'A4467AUSMX', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
-                                            },
-                                            {
-                                                text: 'Balance<br>Remaining', dataIndex: 'A4467ABLMX', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        text: 'Liability Detail',
+                                        text: 'Liability detail(SABRE)',
                                         columns: [
                                             {
                                                 text: 'Original<br>Amount', dataIndex: 'A4467LVORG', width: 110, align: 'right',
@@ -195,7 +205,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.InfoDetail', {
                                                 }
                                             },
                                             {
-                                                text: 'Balance<br>Remaining', dataIndex: 'A4467LBALR', width: 110, align: 'right',
+                                                text: 'Remaining<br>Balance', dataIndex: 'A4467LBALR', width: 110, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     // metaData.style = 'font-weight:bold;color:green;';
                                                     return Ext.util.Format.number(value, '0,000.00');
@@ -204,28 +214,85 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.InfoDetail', {
                                         ]
                                     },
                                     {
-                                        text: 'Pre contabilidad(Oracle)',
+                                        text: 'Pre Contabilidad(Oracle)',
                                         columns: [
                                             {
-                                                text: 'Original<br>Amount', dataIndex: 'A4467PORGA', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
+                                                text: 'Local amounts',
+                                                columns: [
+                                                    {
+                                                        text: 'Original<br>Amount', dataIndex: 'A4467PORGA', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount<br>Used', dataIndex: 'A4467PUSAD', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            metaData.style = 'font-weight:bold;color:red;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Remaining<br>Balance', dataIndex: 'A4467PBALR', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
-                                                text: 'Usage<br>Amount', dataIndex: 'A4467PUSAD', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    metaData.style = 'font-weight:bold;color:red;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
+                                                text: 'Revenue amounts',
+                                                columns: [
+                                                    {
+                                                        text: 'Original<br>Amount', dataIndex: 'A4467PORRV', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount<br>Used', dataIndex: 'A4467PUSRV', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            metaData.style = 'font-weight:bold;color:red;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Remaining<br>Balance', dataIndex: 'A4467PBLRV', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
-                                                text: 'Balance<br>Remaining', dataIndex: 'A4467PBALR', width: 110, align: 'right',
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    // metaData.style = 'font-weight:bold;color:green;';
-                                                    return Ext.util.Format.number(value, '0,000.00');
-                                                }
+                                                text: 'Amount in Pesos',
+                                                columns: [
+                                                    {
+                                                        text: 'Original<br>Amount', dataIndex: 'A4467PORMX', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount<br>Used', dataIndex: 'A4467PUSMX', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Remaining<br>Balance', dataIndex: 'A4467PBLMX', width: 110, align: 'right',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                            // metaData.style = 'font-weight:bold;color:green;';
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }

@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                             value: "1",
                                             //listConfig: {maxHeight: 111},
                                             enableKeyEvents: true,
-                                            padding: '4 0',
+                                            padding: '2 0',
                                             listeners: {
                                                 change: 'onMostrarFiltrosChange'
                                             }
@@ -88,20 +88,41 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                     margin: '3 0',
                                     defaults: {
                                         anchor: '100%',
-                                        padding: '4 0'
+                                        padding: '2 0'
                                     },
                                     items: [
                                         {
+                                            xtype: 'checkboxfield',
+                                            id: prototype.id + '-Fechas_chk',
+                                            checked: false,
+                                            padding: '4px 2px 0px 10px',
+                                            boxLabel: 'Date Issue',
+                                            labelStyle: 'font-weight: bold;',
+                                            enableKeyEvents: true,
+                                            listeners: {
+                                                change: function (obj, newValue, oldValue, eOpts) {
+                                                    if (newValue) {
+                                                        Ext.getCmp(prototype.id + '-fecha1').setDisabled(false);
+                                                        Ext.getCmp(prototype.id + '-fecha2').setDisabled(false);
+                                                        Ext.getCmp(prototype.id + '-fecha1').focus();
+                                                    } else {
+                                                        Ext.getCmp(prototype.id + '-fecha1').setDisabled(true);
+                                                        Ext.getCmp(prototype.id + '-fecha2').setDisabled(true);
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
                                             xtype: 'datefield',
-                                            id: prototype.id + '-fecha1',
-                                            fieldLabel: 'Issue date', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            id: prototype.id + '-fecha1', disabled: true,
+                                            //fieldLabel: 'Date Issue', 
+                                            labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 125,
-                                            width: 180,
+                                            width: 80,
                                             height: 26,
                                             format: 'Ymd',
-                                            //formatText: '',
                                             //invalidText: 'Type the date in the format: YYYY/MM/DD',
-                                            value: '20221001',
+                                            value: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -121,8 +142,9 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                         {
                                             xtype: 'datefield',
                                             id: prototype.id + '-fecha2',
-                                            fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 30,
-                                            width: 125,
+                                            fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                            labelWidth: 20, disabled: true,
+                                            width: 100,
                                             height: 26,
                                             format: 'Ymd', value: new Date(),
                                             minValue: new Date(1990, 00, 01),
@@ -131,11 +153,11 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 8,
-                                            padding: '2 0 0 10 ',
+                                            padding: '2 0 0 2', //10
                                             listeners: {
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-
+                                                        Ext.getCmp(prototype.id + '-NCTA').focus();
                                                     }
                                                 }
                                             }
@@ -160,7 +182,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-NCTA',
-                                            fieldLabel: 'Account Number', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                            fieldLabel: 'Account Nbr', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 110,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
@@ -171,11 +193,16 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                             value: '',
                                             //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                // keypress: 'onTxtFilterKeypress'
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-MDA').focus();
+                                                    }
+                                                }
                                             }
                                         }
                                     ]
-                                },                                
+                                },
                                 // </editor-fold>                                 
                                 // <editor-fold defaultstate="collapsed" desc="Moneda">
                                 {
@@ -201,9 +228,12 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                             maxLength: 3,
                                             width: 130,
                                             height: 26,
-                                            //maskRe: /[0-9]/,                                            
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-CreditID').focus();
+                                                    }
+                                                }
                                             }
                                         }
                                     ]
@@ -230,26 +260,24 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 13,
+                                            maxLength: 10,
                                             width: 170,
                                             height: 26,
                                             maskRe: /[0-9]/,
-                                            value: '',
-                                            //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                keypress: 'onTextKeypress'
                                             }
                                         }
                                     ]
                                 },
                                 // </editor-fold>  
-                                // <editor-fold defaultstate="collapsed" desc="Estado SALDO">
+                                // <editor-fold defaultstate="collapsed" desc="Estado Saldo">
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-BoxEstadoSaldo',
                                     border: false,
                                     hidden: false,
-                                    layout: 'hbox',
+                                    layout: 'vbox',
                                     bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
                                     defaults: {
@@ -261,12 +289,26 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Filters', {
                                             xtype: 'checkboxfield',
                                             id: prototype.id + '-SALDOS_chk',
                                             checked: true,
-                                            //readOnly: true,
-                                            //hidden: true,
                                             padding: '0px 0px 0px 10px',
                                             boxLabel: 'Balance greater than 0',
                                             labelStyle: 'font-weight: bold;'
                                         }
+//                                        {
+//                                            xtype: 'checkboxfield',
+//                                            id: prototype.id + '-LIABI_chk',
+//                                            checked: false,
+//                                            padding: '0px 0px 0px 10px',
+//                                            boxLabel: 'Diff. Liability',
+//                                            labelStyle: 'font-weight: bold;'
+//                                        },
+//                                        {
+//                                            xtype: 'checkboxfield',
+//                                            id: prototype.id + '-PRECON_chk',
+//                                            checked: false,
+//                                            padding: '0px 0px 0px 10px',
+//                                            boxLabel: 'Diff. Pre contabilidad',
+//                                            labelStyle: 'font-weight: bold;'
+//                                        }
                                     ]
                                 }
                                 // </editor-fold> 
