@@ -179,8 +179,9 @@ public class TaxDetailController extends BaseController {
         bodyData.put("domain", context);
         bodyData.put("IN_USER", usr);
         bodyData.put("IN_PWD", pass);
-
-        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/taxdetail/report001/")
+        
+//        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/taxdetail/report001/")        
+        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/tax-detail/taxdetail")
                 .header("content-type", "application/json")
                 .header("cache-control", "no-cache")
                 .body(new Gson().toJson(bodyData))
