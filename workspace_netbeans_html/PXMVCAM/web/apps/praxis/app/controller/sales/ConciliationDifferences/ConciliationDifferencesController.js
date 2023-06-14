@@ -556,11 +556,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
                     var a = document.createElement('a');
                     a.href = url;
                     a.download = fileName;
-                    a.addEventListener('click', () => {
-                        // Eliminar el elemento después de la descarga
-                        document.body.removeChild(a);
-                    });
                     a.click();
+                    a.remove();
                     panel.unmask();
                 });
             } else {
