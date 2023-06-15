@@ -10,7 +10,9 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     fecha: new Date(),
     dateFrom: '',
     dateTo: '',
+    bean: '',
     searchParams: {},
+    searchParams_M: {},
     params: {},
     me: '',
     setContext: function() {
@@ -52,18 +54,16 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             },
             '#InputsControlForm-btn-pag-last': {
                 click: this.pagLast
-            }
+            },
 
             //-----------------Eventos Especificos -------------------
-            ,
             '#InputsControlForm-cmbDateFromYear': {
                 afterrender: this.afterRenderYear,
                 select: this.selectComboFromYear
             },
             '#InputsControlForm-cmbDateToYear': {
                 afterrender: this.afterRenderYear
-            }
-            ,
+            },
             '#InputsControlForm-cmbDateFromMonth': {
                 afterrender: this.afterRenderMonth,
                 select: this.selectComboFromMonth
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         this.setStoreData();
         Ext.getCmp(prototype.id + '-pie').hide();
         Ext.getCmp(prototype.id + '-contentFilter3').hide();
-        this.btnSearch_click();
+//        this.btnSearch_click();
 
     },
     // ---------- Eventos de consistencia de los combos---------------
@@ -112,12 +112,10 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
         comboToYear.bindStore(storeComboDataYear);
         comboToYear.setValue(obj.getValue());
-    }
-    ,
+    },
     selectComboYear: function(obj) {
         //this.btnSearch_click();
-    }
-    ,
+    },
     selectComboFromMonth: function(obj) {
 
         var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
@@ -134,8 +132,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 comboFromMonth.setValue(obj.getValue());
             }
         }
-    }
-    ,
+    },
     selectComboFromDay: function(obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
@@ -174,7 +171,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 ["ODS", "ODS"],
                 //["OCR", "OCR"],
                 ["EMD", "EMD"],
-                ["EMDN", "EMD Delta"],
+//                ["EMDN", "EMD Delta"],
                 ["VCR", "VCR"],
                 ["VCRJ", "VCRJ"],
                 ["ISR", "TCN (ISR)"]
@@ -184,6 +181,65 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
             ]}));
         cmbSource.setValue('SSIM');
+        
+//        var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+//        var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
+//        var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+//        var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+//        var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
+//        var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+//
+//
+//        if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
+//            dayFrom.setValue('');
+//            dayTo.setValue('');
+//        } else {
+//            if (dayTo.getValue() === null || dayTo.getValue() === '') {
+//                dayTo.setValue(31);
+//            }
+//        }
+//        
+//        me.bean = {}
+//        me.bean.IN_FECHA_FROM = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
+//        me.bean.IN_FECHA_TO = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
+//        
+////        console.log(me.bean);
+//
+//        
+//        var programas = new Array()
+//        Ext.Ajax.request({
+//            url: prototype.url + '/obtainDataCombo',
+//            method: 'POST',
+//            timeout: 60000000,
+//            params: {beanString: JSON.stringify(me.bean)},
+//            success: function (response, options) {
+//                var res = Ext.JSON.decode(response.responseText);
+//                if (res.success) {
+//                    
+//                    var lstProgramas = res.lstProgramas;
+//                    programas.push({FUENTE: 'All'});
+//                    
+//                    lstProgramas.forEach(function callback(currentValue, index, array) {
+//                        programas.push({FUENTE : currentValue.FUENTE});
+//                    });
+//                    
+//                    var storeData = Ext.create('Ext.data.Store', {
+//                        data: programas,
+//                        autoLoad: true,
+//                        fields: ['code', 'name']
+//                    });
+//
+//                    Ext.getCmp(prototype.id + '-cmbPrograma').bindStore(storeData);
+//                    Ext.getCmp(prototype.id + '-cmbPrograma').setValue('All');
+//                    
+//                } else {
+//                    global.Msg({msg: res.sesion});
+//                }
+//            },
+//            failure: function (response, opts) {
+//                console.log('server-side failure with status code ' + response.status);
+//            }
+//        });
 
     },
     changeCmbView: function(obj) {
@@ -203,8 +259,9 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     },
     changeCmbSource: function(obj) {
         this.btnSearch_click();
-    }
-    ,
+    },
+    /*
+    
     btnSearch_click: function(obj, e) {
         console.log("Boton Search");
         var view = Ext.getCmp(prototype.id + '-cmbView').getValue();
@@ -253,6 +310,212 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         global.clear();
 
     },
+    
+    */
+    
+    setFormatParameterNew: function() {
+        
+        me.bean = {}
+        
+        var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
+        var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+
+
+        if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
+            dayFrom.setValue('');
+            dayTo.setValue('');
+        } else {
+            if (dayTo.getValue() === null || dayTo.getValue() === '') {
+                dayTo.setValue(31);
+            }
+        }
+        
+        me.bean.IN_FECHA_FROM = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
+        me.bean.IN_FECHA_TO = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
+        
+        me.bean.IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+        me.bean.MENSA = Ext.getCmp(prototype.id + '-cmbPrograma').getValue();
+        
+        me.bean.IN_TIPOFECHA = 1;
+        
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            bean: me.bean,
+            beanString: beanString
+        };
+        
+        console.log(searchParams);
+        
+    },
+    btnSearch_click: function(obj, e) {
+        
+        this.setFormatParameterNew();
+        
+        var chkLOG = Ext.getCmp(prototype.id + '-chkLOG').getValue();
+        var cmbView = Ext.getCmp(prototype.id + '-cmbView').getValue();
+        var cmbSource = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+        var cmbPrograma = Ext.getCmp(prototype.id + '-cmbPrograma').getValue();
+        
+        if(cmbPrograma === 'All'){
+            cmbPrograma = '';
+        }
+                
+        if(chkLOG){
+            me.bean.MENSA = cmbPrograma;
+            
+            var beanString = JSON.stringify(me.bean);
+            searchParams = {
+                bean: me.bean,
+                beanString: beanString
+            };
+
+            console.log(searchParams);
+            
+            this.searchLOGSA1910(me.bean);
+        }else{
+            me.bean.MENSA = '';
+            if(cmbView === 'D'){
+                if(cmbSource ===' OCR'){
+//                    this.searchA1686_OCR(me.bean);
+                }else{
+                    this.searchA1686(me.bean);
+                }
+            }else{
+                Ext.getCmp(prototype.id + '-contentFilter3').show();
+                Ext.getCmp(prototype.id + '-contentFilter').hide();
+                this.setCalendar();
+            }
+        }
+        
+
+        global.clear();
+
+    },
+    searchA1686: function(obj, val) {
+        this.hideAllGrid();
+        Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
+        console.log(searchParams);
+        searchParams_M = searchParams;
+        
+        Ext.Ajax.request({
+            url: prototype.url + '/searchA1686',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataMainA1686').mask('Loading...'),
+            params: searchParams,
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataMainA1686').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                
+                if(res.User === 'SAP01T' || res.User === 'SAP43T' || res.User === 'SAP48T' || res.User === 'SAP07T' || res.User === 'SAP12T' || res.User === 'SAP52T'
+                || res.User === 'ADM2T' || res.User === 'OPER2T' || res.User === 'OPER3T' || res.User === 'OPER6T' || res.User === 'OPER7T' || res.User === 'OPER9T'){
+                    Ext.getCmp(prototype.id + '-chkLOG').show();
+                }else{
+                    Ext.getCmp(prototype.id + '-chkLOG').hide();
+                }
+                
+                var data = res.data;
+                
+                if(data.length === 0){
+                    global.Msg({msg: 'Data not found.'});
+                    Ext.getCmp(prototype.id + '-gridDataMainA1686').hide();
+                } else {
+                    Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
+                    var storeData = Ext.create('Ext.data.Store', {
+                        data: data,
+                        autoLoad: true
+                    });
+
+                    Ext.getCmp(prototype.id + '-gridDataMainA1686').bindStore(storeData);
+                }
+
+//                if (obj.data.length === 0) {
+//                    global.Msg({msg: 'Data not found.'});
+//                }else{
+//
+//                    var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+//                    console.log(fuente);
+//
+//                    if(fuente === 'ODS'){
+//                        Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
+//                    }else{
+//                        Ext.getCmp(prototype.id + '-errorMain').setText('Error');
+//                    }
+//                }
+            }
+        });
+        
+    
+    /*
+        var storeMainA1686 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
+            proxy: {
+                url: prototype.url + '/searchA1686'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var foot = Ext.getCmp(prototype.id + '-pie');
+//                    pag.hide();
+//                    foot.hide();
+                    console.log(obj);
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    }else{
+                        
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Error');
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMainA1686').bindStore(storeMainA1686);
+    */
+
+    },
+    
+    searchLOGSA1910: function(obj, val) {
+        win.lblUser_toolTip("Estructura: A1910");
+        this.hideAllGrid();
+        Ext.getCmp(prototype.id + '-gridDataLOG').show();
+
+        var storeMainA1686 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
+            proxy: {
+                url: prototype.url + '/searchLOGSA1910'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    }else{
+                        
+//                        console.log(obj.data);
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataLOG').bindStore(storeMainA1686);
+
+    },
+    
     setFormatParameter: function() {
 
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
@@ -286,12 +549,6 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             source: source.getValue()
         };
 
-        console.log("DateFrom : " + this.dateFrom);
-        console.log("DateTo : " + this.dateTo);
-        console.log("View : " + view.getValue());
-        console.log("Source : " + source.getValue());
-
-
     },
     setGridDataMainA1686: function(obj, val) {
         this.setFormatParameter();
@@ -319,7 +576,6 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         });
                     }else{
                         var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
-                        console.log(fuente);
                         
                         if(fuente === 'ODS'){
                             Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
@@ -461,8 +717,6 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     }else{
                         
                         var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
-                        console.log(fuente);
-                        console.log(obj.data);
                         
                         if(fuente === 'ODS'){
                             Ext.getCmp(prototype.id + '-id_error').setText('Duplicate');
@@ -502,7 +756,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     var foot = Ext.getCmp(prototype.id + '-pie');
                     pag.hide();
                     foot.hide();
-
+                    
+                    var cmbSource = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                    console.log(cmbSource);
+                    if (cmbSource === 'ISR'){
+                        Ext.getCmp(prototype.id + '-flightDate').setText('Processing <br> Date');
+                    } else {
+                        Ext.getCmp(prototype.id + '-flightDate').setText('Flight <br> Date');
+                    }
+                    
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
@@ -567,8 +829,6 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     pag.hide();
                     foot.hide();
                     
-                    console.log(obj.data);
-
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
@@ -1209,10 +1469,16 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var boxA1419 = Ext.getCmp(prototype.id + '-panelGridDataA1419');
 
         if (!boxMainA1686.hidden) {
-            global.getFile(prototype.url + '/GetXLSXA1686?tipoFecha=' + searchParams.tipoFecha
-                    + '&dateFrom=' + searchParams.dateFrom
-                    + '&dateTo=' + searchParams.dateTo
-                    + '&source=' + searchParams.source);
+            
+            console.log('waaaaaa');
+            console.log(searchParams_M);
+            
+            global.getFile(prototype.url + '/GetXLSXA1686?beanString=' + searchParams_M.beanString);
+            
+//            global.getFile(prototype.url + '/GetXLSXA1686?tipoFecha=' + searchParams.tipoFecha
+//                    + '&dateFrom=' + searchParams.dateFrom
+//                    + '&dateTo=' + searchParams.dateTo
+//                    + '&source=' + searchParams.source);
         }
         if (!boxA1686ProcDateData.hidden) {
             global.getFile(prototype.url + '/GetXLSXProcDate?IN_TIPOFECHA=' + params.IN_TIPOFECHA
@@ -1319,6 +1585,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var boxErrorVCRJ = Ext.getCmp(prototype.id + '-gridDataErrorVCRJ');
         var boxA1690 = Ext.getCmp(prototype.id + '-panelGridDataA1690');
         var boxA2735 = Ext.getCmp(prototype.id + '-gridDataA2735');
+//        var boxLogA1910 = Ext.getCmp(prototype.id + '-gridDataLOG');
 
         var boxA1687 = Ext.getCmp(prototype.id + '-panelGridDataA1687');
         var boxA1688 = Ext.getCmp(prototype.id + '-panelGridDataA1688');
@@ -1395,6 +1662,12 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             boxMainEMDDelta.show();
             return;
         }
+//        if (!boxLogA1910.hidden) {
+//
+//            this.hideAllGrid();
+//            boxMainA1686.show();
+//            return;
+//        }
 
     },
     hideAllGrid: function() {
@@ -1415,6 +1688,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         Ext.getCmp(prototype.id + '-panelGridDataA1690').hide();
         Ext.getCmp(prototype.id + '-gridDataMainEMDDelta').hide();
         Ext.getCmp(prototype.id + '-gridDataA2735').hide();
+        Ext.getCmp(prototype.id + '-gridDataLOG').hide();
 
     }
     ,
@@ -1441,5 +1715,81 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var pag = Ext.getCmp(prototype.id + '-paggin');
         var pagData = pag.getPageData();
         pag.moveLast();
+    },
+    
+    ChangechkLOG: function(checkboxfield, newValue, oldValue, eOpts) {
+        
+        if(newValue){
+            Ext.getCmp(prototype.id + '-cmbPrograma').show();
+            this.obtainDataCombo();
+        }else{
+            Ext.getCmp(prototype.id + '-cmbPrograma').hide();
+            this.btnSearch_click();
+        }
+        
+    },
+    
+    obtainDataCombo: function(){
+        
+        var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
+        var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+
+
+        if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
+            dayFrom.setValue('');
+            dayTo.setValue('');
+        } else {
+            if (dayTo.getValue() === null || dayTo.getValue() === '') {
+                dayTo.setValue(31);
+            }
+        }
+        
+        me.bean = {}
+        me.bean.IN_FECHA_FROM = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
+        me.bean.IN_FECHA_TO = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
+        
+        var programas = new Array()
+        Ext.Ajax.request({
+            url: prototype.url + '/obtainDataCombo',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(me.bean)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    
+                    var lstProgramas = res.lstProgramas;
+                    programas.push({FUENTE: 'All'});
+                    
+                    lstProgramas.forEach(function callback(currentValue, index, array) {
+                        programas.push({FUENTE : currentValue.FUENTE});
+                    });
+                    
+                    var storeData = Ext.create('Ext.data.Store', {
+                        data: programas,
+                        autoLoad: true,
+                        fields: ['code', 'name']
+                    });
+
+                    Ext.getCmp(prototype.id + '-cmbPrograma').bindStore(storeData);
+                    Ext.getCmp(prototype.id + '-cmbPrograma').setValue('All');
+                    
+                } else {
+                    global.Msg({msg: res.sesion});
+                }
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+        
+        this.btnSearch_click();
+        
     }
+    
+    
 });
