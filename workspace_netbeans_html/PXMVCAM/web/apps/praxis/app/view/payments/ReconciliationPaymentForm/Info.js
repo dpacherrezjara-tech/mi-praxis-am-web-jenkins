@@ -46,6 +46,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 align: 'center'
                             },
                             items: [
+                                //<editor-fold defaultstate="collapsed" desc="Summary">
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMainSummary',
@@ -537,6 +538,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                         ]
                                     }
                                 }
+                                //</editor-fold>
                             ]
                         },
                         {
@@ -552,6 +554,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 align: 'center'
                             },
                             items: [
+                                
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridData',
@@ -3471,16 +3474,32 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 100,
+                                                text: 'Serv. Fee', 
+                                                //dataIndex: 'SERVICFEEP', 
+                                                width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    const {TRANSTYPE,SERVICFEEP,ADJUSMENTP} = record.data;
+                                                    if(TRANSTYPE==='ADJU'){
+                                                        value = ADJUSMENTP;
+                                                    }else{
+                                                        value = SERVICFEEP;
+                                                    }
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
                                             {
-                                                text: 'Acceleration <br> Amount', dataIndex: 'ACCEAMOU', width: 100,
+                                                text: 'Acceleration <br> Amount', 
+                                                //dataIndex: 'ACCEAMOU', 
+                                                width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    const {TRANSTYPE,SERVICFEEP,ACCEAMOU} = record.data;
+                                                    if(TRANSTYPE!=='ADJU' && TRANSTYPE!=='CHBK'){
+                                                        value = SERVICFEEP;
+                                                    }else{
+                                                        value = ACCEAMOU;
+                                                    }
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
@@ -3732,8 +3751,16 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 100,
+                                                text: 'Serv. Fee', 
+                                                //dataIndex: 'SERVICFEEP', 
+                                                width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    const {TRANSTYPE,SERVICFEEP,ADJUSMENTP} = record.data;
+                                                    if(TRANSTYPE==='ADJU'){
+                                                        value = ADJUSMENTP;
+                                                    }else{
+                                                        value = SERVICFEEP;
+                                                    }
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
@@ -3741,12 +3768,21 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
+                                                    metaData.tdAttr = 'data-qtip="Total Adjusment: '+ data.totADJUSMENTP +'"';
                                                     return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {
-                                                text: 'Acceleration <br> Amount', dataIndex: 'ACCEAMOU', width: 100,
+                                                text: 'Acceleration <br> Amount', 
+                                                //dataIndex: 'ACCEAMOU', 
+                                                width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    const {TRANSTYPE,SERVICFEEP,ACCEAMOU} = record.data;
+                                                    if(TRANSTYPE!=='ADJU' && TRANSTYPE!=='CHBK'){
+                                                        value = SERVICFEEP;
+                                                    }else{
+                                                        value = ACCEAMOU;
+                                                    }
                                                     metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
@@ -4082,8 +4118,16 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         },
                                                     },
                                                     {
-                                                        text: 'Serv. Fee', dataIndex: 'SERVICFEEP', width: 90,
+                                                        text: 'Serv. Fee', 
+                                                        //dataIndex: 'SERVICFEEP', 
+                                                        width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            const {TRANSTYPE,SERVICFEEP,ADJUSMENTP} = record.data;
+                                                            if(TRANSTYPE==='ADJU'){
+                                                                value = ADJUSMENTP;
+                                                            }else{
+                                                                value = SERVICFEEP;
+                                                            }
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
@@ -4091,12 +4135,24 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
+                                                            var sfee = Ext.util.Format.number(data.totSERVICFEEP, '0,000.00');
+                                                            var adju = Ext.util.Format.number(data.totADJUSMENTP, '0,000.00');
+                                                            var qtip = `Total Serv. Fee: ${sfee}<br> Total Adjusment: ${adju}`;
+                                                            metaData.tdAttr = 'data-qtip="'+ qtip +'"';
+                                                            return '<b>' + sfee + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'Accel.<br>Amount', dataIndex: 'ACCEAMOU', width: 90,
+                                                        text: 'Accel.<br>Amount', 
+                                                        //dataIndex: 'ACCEAMOU', 
+                                                        width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            const {TRANSTYPE,SERVICFEEP,ACCEAMOU} = record.data;
+                                                            if(TRANSTYPE!=='ADJU' && TRANSTYPE!=='CHBK'){
+                                                                value = SERVICFEEP;
+                                                            }else{
+                                                                value = ACCEAMOU;
+                                                            }
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;

@@ -322,6 +322,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                 ["WP00", "WorldPay"],
                 ["GETMEX00", "GetNetMex"],
                 ["ATCAN00", "Atcan"],
+                ["BANORTE00","Banorte"]
             ]
         }));
         cmbProT.setValue("");
