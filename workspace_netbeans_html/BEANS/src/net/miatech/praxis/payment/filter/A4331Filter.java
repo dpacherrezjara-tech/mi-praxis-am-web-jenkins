@@ -307,4 +307,8 @@ public class A4331Filter extends A4331 {
 
     public Pagination page = new Pagination();
     
+    public double ADJUSMENTP = 0.00;
+    public double totADJUSMENTP = 0.00;
+    public String PWREF="";
+    
 }

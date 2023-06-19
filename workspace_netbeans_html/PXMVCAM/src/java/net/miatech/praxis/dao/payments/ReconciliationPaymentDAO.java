@@ -2088,6 +2088,7 @@ public class ReconciliationPaymentDAO {
                 beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                 beanTkt.DISCRATE_IMPORT = rst.getDouble("RATECOMBA");
                 beanTkt.DISCRATE_IVA = rst.getDouble("RATEIVABA");
+                beanTkt.ADJUSMENTP =rst.getDouble("ADJUSMENTP");
                 //beanTkt.CERROR = rst.getString("CERROR").trim();
 
                 /*if (beanTkt.CERROR.equals("")) {
@@ -2141,7 +2142,7 @@ public class ReconciliationPaymentDAO {
         Connection cnx = null;
 
         double totSFEEAMOU = 0, totIVACOM12 = 0, totOVERCOM12P = 0, totIVACOM12_CB = 0, totNETAMOUN = 0, totNETAMOUNC = 0, totTGROSAMPAY = 0,
-                totACCEAMOU = 0, totTGROSAMPAY_CB = 0, totSFEEAMOU_CB = 0, totSERVICFEEP = 0;
+                totACCEAMOU = 0, totTGROSAMPAY_CB = 0, totSFEEAMOU_CB = 0, totSERVICFEEP = 0, totADJUSMENTP = 0;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -2186,6 +2187,7 @@ public class ReconciliationPaymentDAO {
                 totACCEAMOU = rst.getDouble("ACCEAMOU");
                 totTGROSAMPAY_CB = rst.getDouble("TGROSAMPAY_CB");
                 totSFEEAMOU_CB = rst.getDouble("SFEEAMOU_CB");
+                totADJUSMENTP = rst.getDouble("ADJUSMENTP");
             }
             rst.close();
 //
@@ -2235,6 +2237,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
+                    
+                    beanTkt.ADJUSMENTP =rst.getDouble("ADJUSMENTP");
 
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
@@ -2259,6 +2263,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.totSFEEAMOU_CB = totSFEEAMOU_CB;
                     beanTkt.totSERVICFEEP = totSERVICFEEP;
                     beanTkt.totTGROSAMPAY_CB = totTGROSAMPAY_CB;
+                    beanTkt.totADJUSMENTP = totADJUSMENTP;
 
                     lstTkts.add(beanTkt);
                 }
@@ -2350,6 +2355,7 @@ public class ReconciliationPaymentDAO {
         double VATCOMMSIC_TOTAL = 0;
         double totSFEEAMOU_CB = 0;
         double SVFOPS_TOTAL = 0;
+        double totADJUSMENTP = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -2423,6 +2429,7 @@ public class ReconciliationPaymentDAO {
 
                 //totNETAMOUN = totTGROSAMPAY - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSERVICFEEP - totACCEAMOU - totTGROSAMPAY_CB - totSFEEAMOU - totIVACOM12_CB - totTAXAMOUN_AD - totSFEEAMOU_CB;
                 totNETOPAY = rst.getDouble("totNETOPAY");
+                totADJUSMENTP = rst.getDouble("totADJUSMENTP");
             }
             rst.close();
 
@@ -2562,6 +2569,9 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    
+                    beanTkt.ADJUSMENTP = rst.getDouble("ADJUSMENTP");
+                    beanTkt.PWREF = rst.getString("PWREF");
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMPAY = totTGROSAMPAY;
@@ -2577,6 +2587,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.totNETOPAY = totNETOPAY;
                     beanTkt.totDISCAMOSC = totDISCAMOSC;
                     beanTkt.totTGROSAMPAY_CB = totTGROSAMPAY_CB;
+                    beanTkt.totADJUSMENTP = totADJUSMENTP;
 
                     beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
                     beanTkt.TGROSAMOUC_TOTAL = TGROSAMOUC_TOTAL;
