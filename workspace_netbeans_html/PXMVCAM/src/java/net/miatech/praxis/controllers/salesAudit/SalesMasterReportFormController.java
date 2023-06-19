@@ -589,6 +589,7 @@ public class SalesMasterReportFormController extends BaseController {
              */
             HashMap bodyData = new HashMap<>();
             bodyData.put("VP_OPCION", Integer.parseInt(request.getParameter("VP_FILTER")));
+            bodyData.put("VP_CCUST", "139");
             bodyData.put("VP_CIA", request.getParameter("VP_CIA").trim());
             bodyData.put("VP_FRMSRIE", request.getParameter("VP_FRMSRIE").trim());
             bodyData.put("VP_SEQ", request.getParameter("VP_SEQ").trim());
@@ -613,7 +614,7 @@ public class SalesMasterReportFormController extends BaseController {
             bodyData.put("IN_USER", usr);
             bodyData.put("IN_PWD", pass);
 
-            Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/salesaudit/export_data_txt/")
+            Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/sales-master-report/salesmasterreport")
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .body(new Gson().toJson(bodyData))
@@ -661,6 +662,7 @@ public class SalesMasterReportFormController extends BaseController {
          */
         HashMap bodyData = new HashMap<>();
         bodyData.put("VP_OPCION", Integer.parseInt(request.getParameter("VP_FILTER")));
+        bodyData.put("VP_CCUST", "139");
         bodyData.put("VP_CIA", request.getParameter("VP_CIA").trim());
         bodyData.put("VP_FRMSRIE", request.getParameter("VP_FRMSRIE").trim());
         bodyData.put("VP_SEQ", request.getParameter("VP_SEQ").trim());
@@ -684,8 +686,10 @@ public class SalesMasterReportFormController extends BaseController {
         bodyData.put("domain", context);
         bodyData.put("IN_USER", usr);
         bodyData.put("IN_PWD", pass);
+        
+        System.out.println(bodyData);
 
-        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/salesaudit/export_data_txt/")
+        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/sales-master-report/salesmasterreport")
                 .header("content-type", "application/json")
                 .header("cache-control", "no-cache")
                 .body(new Gson().toJson(bodyData))
