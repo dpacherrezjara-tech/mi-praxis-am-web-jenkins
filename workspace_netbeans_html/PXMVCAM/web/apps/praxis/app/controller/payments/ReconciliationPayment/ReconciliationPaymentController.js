@@ -2392,7 +2392,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     onViewPNR: function (a, b, c, d, e, rowData) {
 
 //        var rec = grid.getStore().getAt(rowIndex);
-        rowData.data.PNR = rowData.data.INVORNBR;
+        const {INVORNBR,PROCTYPESQ} = rowData.data;
+        if(PROCTYPESQ==='BANORTE00'){
+            return;
+        }
+        rowData.data.PNR = INVORNBR;
         this.winDataEntry('', rowData);
     },
     winDataEntry: function (action, rec) {

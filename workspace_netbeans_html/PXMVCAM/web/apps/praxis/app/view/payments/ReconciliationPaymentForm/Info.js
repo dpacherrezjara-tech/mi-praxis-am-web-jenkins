@@ -3352,6 +3352,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 }
                             ]
                         },
+                        //<editor-fold defaultstate="collapsed" desc="Settlement1">
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxMainSettlement',
@@ -3575,6 +3576,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 }
                             ]
                         },
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="Settlement2">
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxSettlement',
@@ -3893,6 +3896,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 }
                             ]
                         },
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="Settlement3">
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxDetSettlement',
@@ -4038,6 +4043,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     click: 'onViewPNR'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    const {PROCTYPESQ,PWREF} = record.data;
+                                                    if(PROCTYPESQ === 'BANORTE00'){
+                                                        value = PWREF;
+                                                    }
                                                     metaData.style = "text-align:center;";
 //                                                            value = '<br>' + value + '<br>';
                                                     return '<a href="#payments-reconciliation-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
@@ -4511,6 +4520,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 }
                             ]
                         },
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="SettlementTkt">
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxDetailTktSettlement',
@@ -5115,6 +5126,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                 }
                             ]
                         },
+                        //</editor-fold>
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxSummaryTransactionError',

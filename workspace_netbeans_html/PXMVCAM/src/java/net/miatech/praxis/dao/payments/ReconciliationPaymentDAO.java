@@ -2571,6 +2571,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     
                     beanTkt.ADJUSMENTP = rst.getDouble("ADJUSMENTP");
+                    beanTkt.PWREF = rst.getString("PWREF");
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMPAY = totTGROSAMPAY;
