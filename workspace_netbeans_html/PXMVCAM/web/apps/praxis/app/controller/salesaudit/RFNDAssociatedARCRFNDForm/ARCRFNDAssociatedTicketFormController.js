@@ -726,6 +726,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                                 if (res.data === 'RECORD DELETED') {
                                     vp_icon = 1;
                                     grid.getStore().removeAt(rowIndex);
+                                    me.onSumaTaxGrid();
                                 }
                                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
                                     }});
@@ -733,8 +734,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         });
                     } else {
                         grid.getStore().removeAt(rowIndex);
+                        me.onSumaTaxGrid();
                     }
-                    me.onSumaTaxGrid();
+
                 }
             }
         });
@@ -998,7 +1000,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         var vl_type = Ext.getCmp(prototype.idARCDetailTicket + '-txttidoc').getValue();
         var txtConto = Ext.getCmp(prototype.idARCDetailTicket + '-CmbConto').getValue();
         var CmbTRFND = Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').getValue();
-        var txtCorreo = Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').getValue(); 
+        var txtCorreo = Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').getValue();
         var vl_Showcoupons = Ext.getCmp(prototype.idARCDetailTicket + '-txtShowcoupons').getValue();
         var grid04 = Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes');
         var reg4 = grid04.getStore().getCount();
@@ -1048,7 +1050,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             bvalida = false;
             return;
         }
-        if(txtCorreo=== ''){
+        if (txtCorreo === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'You must enter the E-mail');
             bvalida = false;
             return;
@@ -1496,7 +1498,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idARCDetailTicket + '-CmbConto').getValue();
                         me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').getValue();
                         me.beanTMP.IN_MARCA = checkApply;
-                         me.beanTMP.IN_EMAIL = Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').getValue();
+                        me.beanTMP.IN_EMAIL = Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').getValue();
                         //me.beanTMP.IN_MARCA = Ext.getCmp( prototype.idARCDetailTicket + '-Combochangestatus').getValue();
                         var cbox1 = Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn1').getValue();
                         var cbox2 = Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn2').getValue();
@@ -1751,6 +1753,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                 monto = grid01.getStore().getAt(i).get('A4364TXMIA');
                 Total += parseFloat(monto);
             }
+            //console.log(Total);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue(Ext.util.Format.number(Total, '0,000.00'));
             me.onTotalRFND();
         }
