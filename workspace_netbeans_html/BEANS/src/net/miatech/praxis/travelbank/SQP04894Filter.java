@@ -21,6 +21,7 @@ public class SQP04894Filter {
     public String VP_CREDID = "";
 
     public String XAIRLIN = "";
+    public String XNCTA= "";
     public String XCREDID = "";
     public String XFILE = "";
     public String XSRVCC = "";  

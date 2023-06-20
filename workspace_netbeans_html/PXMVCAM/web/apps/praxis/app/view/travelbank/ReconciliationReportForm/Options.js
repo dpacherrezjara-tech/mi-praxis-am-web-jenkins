@@ -96,12 +96,12 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Options', {
                             }
                         },
                         {
-                            xtype: 'button', hidden:true, /* por ahora NO */
-                            id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel',
+                            xtype:'button',
+                            id: prototype.id + '-btnTexto',
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Exportar a texto plano',
                             listeners: {
-                                click: 'btnExcel_click'
+                                click: 'imgTexto_clickHandler'
                             }
                         },
                         {
@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.view.travelbank.ReconciliationReportForm.Options', {
                             }
                         },
                         {
-                            xtype: 'button', disabled:true,
+                            xtype: 'button', hidden:true,
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
                             tooltip: 'New',

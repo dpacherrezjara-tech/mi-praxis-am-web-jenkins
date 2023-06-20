@@ -38,12 +38,27 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                         align: 'center'
                     },
                     items: [
+                        {
+                            xtype: 'panel',
+                            padding: '2px',
+                            layout: {
+                                type: 'hbox',
+                                pack: 'end'
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield', width: 250, id: prototype.id + '-balance', readOnly: true,
+                                    fieldLabel: 'Balance:', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:14px;', value: '0.00'
+                                }
+                            ]
+                        },
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
                             //width: prototype.widthGrid,
-                            width: 1150,
+                            width: 1200,
                             // width: '100vw',
                             height: 510,
                             columnLines: true,
@@ -55,20 +70,13 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                     align: 'center'
                                 },
                                 items: [
-//                                    {
-//                                        text: 'Edit',
-//                                        sortable: false,
-//                                        xtype: 'actioncolumn',
-//                                        width: 60,
-//                                        align: 'center',
-//                                        items: [
-//                                            {
-//                                                iconCls: 'prx-icon-edit',
-//                                                tooltip: 'Edit',
-//                                                handler: 'onEditClick'
-//                                            }
-//                                        ]
-//                                    },
+                                    {
+                                        text: 'Account Number', dataIndex: 'XNCTA', width: 120,
+                                        renderer: function (value, metaData) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
                                     {
                                         text: 'File', dataIndex: 'XFILE', width: 70,
                                         renderer: function (value, metaData) {
@@ -77,7 +85,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                         }
                                     },
                                     {
-                                        text: 'Transacction', dataIndex: 'XTRANSACTION', width: 80
+                                        text: 'Transaction', dataIndex: 'XTRANSACTION', width: 80
                                     },
                                      {
                                         text: 'H/S<br>Type', dataIndex: 'XTYPEI', width: 60
@@ -86,7 +94,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                         text: 'Credit<br>Code', dataIndex: 'XSRVCC', width: 60
                                     },                                    
                                     {
-                                        text: 'Credit ID', dataIndex: 'XCREDID', width: 90
+                                        text: 'Transaction<br>ID', dataIndex: 'XCREDID', width: 90
                                     },
                                     {
                                         text: 'Date', dataIndex: 'XDATE', width: 80,
@@ -103,7 +111,7 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                         }
                                     },
                                     {
-                                        text: 'Credit<br>ID Ref.', dataIndex: 'XIDISR', width: 90,
+                                        text: 'Credit<br>ID', dataIndex: 'XIDISR', width: 90,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;
@@ -151,21 +159,21 @@ Ext.define('Ext.Praxis.view.travelbank.TransaccionBalanceForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                             ;
                                         }
-                                    },
-                                    {
-                                        text: 'Ind.', dataIndex: 'XFLAG1', width: 50,
-                                        renderer: function (value, metaData) {
-                                            metaData.style = "text-align:center;";
-                                            return value; //Ext.util.Format.number(value, '0.000000');;
-                                        }
-                                    },
-                                    {
-                                        text: 'Error', dataIndex: 'XERROR', width: 60,
-                                        renderer: function (value, metaData) {
-                                            metaData.style = "text-align:center;";
-                                            return value; //Ext.util.Format.number(value, '0.000000');;
-                                        }
                                     }
+//                                    {
+//                                        text: 'Ind.', dataIndex: 'XFLAG1', width: 50,
+//                                        renderer: function (value, metaData) {
+//                                            metaData.style = "text-align:center;";
+//                                            return value; //Ext.util.Format.number(value, '0.000000');;
+//                                        }
+//                                    },
+//                                    {
+//                                        text: 'Error', dataIndex: 'XERROR', width: 60,
+//                                        renderer: function (value, metaData) {
+//                                            metaData.style = "text-align:center;";
+//                                            return value; //Ext.util.Format.number(value, '0.000000');;
+//                                        }
+//                                    }
 //                                    {
 //                                        text: 'Crd. ID<br>Reinst. ', dataIndex: 'XIDRIN', width: 90,
 //                                        renderer: function (value, metaData) {

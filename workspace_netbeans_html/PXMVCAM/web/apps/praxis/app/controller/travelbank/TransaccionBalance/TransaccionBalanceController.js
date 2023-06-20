@@ -216,6 +216,18 @@ Ext.define('Ext.Praxis.controller.travelbank.TransaccionBalance.TransaccionBalan
                     // </editor-fold>
                     if (obj.data.length === 0) {
                         Ext.Msg.show({title: '.:PRAXIS:.', msg: 'Data not found', buttons: Ext.Msg.OK, icon: Ext.Msg.WARNING, fn: false});
+                    }else
+                    {
+                        //total saldo
+                        let vl_balance = 0;
+                         obj.data.items.forEach(
+                            function (row) {
+                                //console.log(currentValue);
+                                vl_balance = vl_balance + parseFloat(row.data.XVALUE);
+                            }
+                        ); 
+                         
+                        Ext.getCmp(prototype.id + '-balance').setValue(Ext.util.Format.number(vl_balance, '0,000.00'));
                     }
                 }
             }

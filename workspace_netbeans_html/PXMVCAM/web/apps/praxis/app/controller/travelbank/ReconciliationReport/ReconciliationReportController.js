@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
     extend: 'Ext.app.ViewController',
     alias: 'controller.ReconciliationReportController',        
     searchParams: {},
-    _path: '',    
+    donwloadParams: {},
     init: function ( ) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
         //prototype.id = 'FilesIssuesUsesForm';
@@ -284,26 +284,15 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
                 me.searchParams.VP_LSTA = ''; // Ext.getCmp(prototype.id + '-LSTA_chk').getValue() ? 1 : 0;
                 me.searchParams.VP_PSTA = ''; //Ext.getCmp(prototype.id + '-PSTA_chk').getValue() ? 1 : 0;
                 break;
-        }
-        
-        // <editor-fold defaultstate="collapsed" desc="asignación para EXCEL" >
-//        _path = prototype.url + '/getXLSX?' +
-//                'VP_DESDE=' + me.searchParams.VP_DESDE + '&' +
-//                'VP_HASTA=' + me.searchParams.VP_HASTA + '&' +
-//                'VP_IDFIL1=' + me.searchParams.VP_IDFIL1 + '&' +
-//                'VP_IDFIL2=' + me.searchParams.VP_IDFIL2 + '&' +
-//                'VP_IDISS=' + me.searchParams.VP_IDISS;
-        // </editor-fold>
+        }        
     },
     // </editor-fold>
-
-      
-
-    exportExcel: function () {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            global.getFile(_path);
-        }
-    },
+    
+//    exportExcel: function () {
+//        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+//            global.getFile(_path);
+//        }
+//    },
     limpiarFiltros: function () {
         //        // <editor-fold defaultstate="collapsed" desc="Clear Combo Date">
         //        Ext.getCmp(prototype.id+'-cmbDatePeriodFrom').setValue('');
@@ -324,6 +313,32 @@ Ext.define('Ext.Praxis.controller.travelbank.ReconciliationReport.Reconciliation
         //        Ext.getCmp(prototype.id+'-boxDateFilter').hide();
         //        Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
         //        // </editor-fold>
+    },
+    imgTexto_clickHandler: function(obj, e) {
+        
+        var strOpcion = this.getValue('cmbfiltro');
+        
+        var val_url = 'downloadText';
+        var str_msg = 'Download Plain Text File ?';        	                
+        if (strOpcion === '2' ){
+            val_url = 'downloadText_2';
+        }       
+        
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',            
+            msg: str_msg,
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                                            
+                    global.getFile(prototype.url + '/' + val_url +'?beanString='+encodeURI(JSON.stringify(this.searchParams)));
+                }
+            }
+        });
+        
+        
     },
 
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
