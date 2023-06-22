@@ -13,19 +13,25 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import net.miatech.beans.A1691Filter;
+import java.util.Map;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
-import static net.miatech.praxis.dao.program.ProMasterTicketDAO.pasarGarbageCollector;
-import net.miatech.praxis.payment.filter.A2280Filter;
+import net.miatech.praxis.payment.A4451MP;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
+import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  *
@@ -33,11 +39,11 @@ import org.apache.log4j.Logger;
  */
 public class ReconciliationPaymentDAO {
 
+    //<editor-fold defaultstate="collapsed" desc="Variables">
     private IServerSession session;
-    private CallableStatement cs = null;
-    private ResultSet rst = null;
-    private Connection cnx = null;
     private static final Logger logError = Logger.getLogger("errorLog");
+    private SimpleJdbcCall jdbcCall;
+//</editor-fold>
 
     public ReconciliationPaymentDAO() {
     }
@@ -54,7 +60,20 @@ public class ReconciliationPaymentDAO {
 
     public void setSession(IServerSession ss) {
         session = ss;
+        this.setJdbcCall(ss);
     }
+
+    //<editor-fold defaultstate="collapsed" desc="Stored Procedure Calls">
+    private void setJdbcCall(IServerSession ss) {
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(ss.getCNXIBMDB2().getIBMDB2Connection(), false));
+            this.jdbcCall = new SimpleJdbcCall(jdbcTemplate);
+            System.out.println("Conexion JDBC Creada. ");
+        } catch (Exception e) {
+            System.out.println("Error al crear conexion JDBC: " + e.getMessage());
+        }
+    }
+    //</editor-fold>
 
     public List<A4113Filter> loadPX606SQP04692(A4113Filter filter) throws SQLException, Exception {
 
@@ -2088,7 +2107,7 @@ public class ReconciliationPaymentDAO {
                 beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                 beanTkt.DISCRATE_IMPORT = rst.getDouble("RATECOMBA");
                 beanTkt.DISCRATE_IVA = rst.getDouble("RATEIVABA");
-                beanTkt.ADJUSMENTP =rst.getDouble("ADJUSMENTP");
+                beanTkt.ADJUSMENTP = rst.getDouble("ADJUSMENTP");
                 //beanTkt.CERROR = rst.getString("CERROR").trim();
 
                 /*if (beanTkt.CERROR.equals("")) {
@@ -2237,8 +2256,8 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
-                    
-                    beanTkt.ADJUSMENTP =rst.getDouble("ADJUSMENTP");
+
+                    beanTkt.ADJUSMENTP = rst.getDouble("ADJUSMENTP");
 
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
@@ -2483,6 +2502,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                     beanTkt.TGROSAMPAY = rst.getDouble("TGROSAMPAY");
 
+                    beanTkt.TGROSAMPAY_CB = rst.getDouble("TGROSAMPAY_CB");
                     beanTkt.SFEEAMOU_CB = rst.getDouble("SFEEAMOU_CB");
                     beanTkt.IVACOM12_CB = rst.getDouble("IVACOM12_CB");
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
@@ -2569,7 +2589,7 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.ZONA = rst.getString("ZONA").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
-                    
+
                     beanTkt.ADJUSMENTP = rst.getDouble("ADJUSMENTP");
                     beanTkt.PWREF = rst.getString("PWREF");
 
@@ -3385,7 +3405,7 @@ public class ReconciliationPaymentDAO {
                     beanTkt.DATE = rst.getString("DATE").trim();
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
-                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();                    
+                    beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
@@ -3449,9 +3469,9 @@ public class ReconciliationPaymentDAO {
 
                     beanTkt.ZONA = rst.getString("ZONA");
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY");
-           
+
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
-                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;                    
+                    beanTkt.totTGROSAMPAY = totTGROSAMPAY;
 
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     beanTkt.FVOID = rst.getString("FVOID").trim();
@@ -3731,13 +3751,13 @@ public class ReconciliationPaymentDAO {
                 objRtn.PROCTYPESQ = rs01.getString("PROCTYPESQ").trim();
                 objRtn.INSTANBR = rs01.getString("INSTANBR");
                 objRtn.NBRINSTA = rs01.getInt("NBRINSTA");
-                objRtn.INVOIRN = rs01.getString("INVOIRN").trim();                
+                objRtn.INVOIRN = rs01.getString("INVOIRN").trim();
                 objRtn.FCOMPL = rs01.getString("FCOMPL").trim();
                 if (hmDescFCOMPL.containsKey(rs01.getString("FCOMPL").trim())) {
                     objRtn.descFCOMPL = hmDescFCOMPL.get(rs01.getString("FCOMPL").trim()).toString();
                 } else {
                     objRtn.descFCOMPL = rs01.getString("FCOMPL").trim();
-                }                
+                }
                 objRtn.FCONTL = rs01.getString("FCONTL").trim();
                 objRtn.IDCONL = rs01.getString("IDCONL").trim();
                 objRtn.STCONL = rs01.getString("STCONL").trim();
@@ -3745,8 +3765,8 @@ public class ReconciliationPaymentDAO {
                     objRtn.descSTCONL = hmDescSTCONL.get(rs01.getString("STCONL").trim()).toString();
                 } else {
                     objRtn.descSTCONL = rs01.getString("STCONL").trim();
-                }                
-                objRtn.CERRORHST = rs01.getString("CERRORHST");                
+                }
+                objRtn.CERRORHST = rs01.getString("CERRORHST");
                 objRtn.CERROR = rs01.getString("CERROR");
                 objRtn.DES_CERROR = rs01.getString("DES_CERROR").trim();
                 if ("".equals(objRtn.CERROR.trim())) {
@@ -3756,13 +3776,13 @@ public class ReconciliationPaymentDAO {
                 objRtn.DES_CERROIN = rs01.getString("DES_CERROIN").trim();
                 if ("".equals(objRtn.CERROIN.trim())) {
                     objRtn.DES_CERROIN = "";
-                }                
+                }
                 objRtn.FSELEC = rs01.getString("FSELEC");
                 if ("".equals(objRtn.FSELEC.trim())) {
                     objRtn.FSELEC = "Not loaded";
                 } else {
                     objRtn.FSELEC = "Loaded";
-                }                
+                }
                 objRtn.SDATE = rs01.getString("SDATE").trim();
                 objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
                 objRtn.PASSED_DAYS = rs01.getString("PASSED_DAYS").trim();
@@ -3770,24 +3790,24 @@ public class ReconciliationPaymentDAO {
                 objRtn.TRANSDATE = rs01.getString("TRANSDATE").trim();
                 objRtn.TICKET = rs01.getString("TICKET").trim();
                 objRtn.SPNR = rs01.getString("SPNR").trim();
-                objRtn.SAUTHOC = rs01.getString("SAUTHOC");                
+                objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 objRtn.STVAL = rs01.getString("STVAL").trim();
                 if (hmDescEstados.containsKey(rs01.getString("STVAL").trim())) {
                     objRtn.descSTVAL = hmDescEstados.get(rs01.getString("STVAL").trim()).toString();
                 } else {
                     objRtn.descSTVAL = rs01.getString("STVAL").trim();
-                }                
+                }
                 objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
-                objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();                
-                objRtn.QTYTKT = rs01.getInt("QTYTKT");                
+                objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
+                objRtn.QTYTKT = rs01.getInt("QTYTKT");
                 objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
-                objRtn.TGROSAMPAY = rs01.getDouble("TGROSAMPAY");                
+                objRtn.TGROSAMPAY = rs01.getDouble("TGROSAMPAY");
                 objRtn.FREGLA = rs01.getString("FREGLA").trim();
                 if (hmDescReglas.containsKey(rs01.getString("FREGLA").trim())) {
                     objRtn.descFREGLA = hmDescReglas.get(rs01.getString("FREGLA").trim()).toString();
                 } else {
                     objRtn.descFREGLA = rs01.getString("FREGLA").trim();
-                }                
+                }
                 objRtn.TDOC = rs01.getString("TDOC").trim();
                 if (hmDescTDOC.containsKey(rs01.getString("TDOC").trim())) {
                     objRtn.descTDOC = hmDescTDOC.get(rs01.getString("TDOC").trim()).toString();
@@ -3813,7 +3833,7 @@ public class ReconciliationPaymentDAO {
                 if (rs01.getString("FADM").equals("1")) {
                     objRtn.descFADM = "ADM generado";
                 }
-                
+
                 objRtn.DIFF_AMOUNT = objRtn.TGROSAMPAY - objRtn.SVFOPS;
                 objRtn.OBSERV_BPO = rs01.getString("OBSERV_BPO").trim();
                 objRtn.DES_CODADJU = rs01.getString("DES_CODADJU").trim();
@@ -5225,5 +5245,21 @@ public class ReconciliationPaymentDAO {
         }
 
         return msj;
+    }
+
+    public SQP05004Filter loadSQP05004Filter(SQP05004Filter filter){
+        SQP05004Filter response = new SQP05004Filter();
+        try {
+            SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                    .withProcedureName("SQP05004")
+                    .returningResultSet("result", 
+                            new BeanPropertyRowMapper<>(A4451MP.class));
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            Map<String, Object> spRes = spCall.execute(params);
+            response.setLst((List<A4451MP>) spRes.get("result"));
+        } catch (Exception e) {
+            System.out.println("Error en Procedure SQP05004: " + e.getMessage());
+        }
+        return response;
     }
 }
