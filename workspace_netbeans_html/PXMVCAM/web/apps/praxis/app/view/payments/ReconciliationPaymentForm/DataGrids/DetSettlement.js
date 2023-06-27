@@ -235,7 +235,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.DetSett
                                     if (TRANSTYPE === 'ADJU') {
                                         value = ADJUSMENTP;
                                     } else {
-                                        value = SERVICFEEP;
+                                        value = 0;
                                     }
                                     metaData.style = "text-align:right;background-color:#B2DAFA;";
                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -244,11 +244,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.DetSett
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                    var sfee = Ext.util.Format.number(data.totSERVICFEEP, '0,000.00');
+                                    //var sfee = Ext.util.Format.number(data.totSERVICFEEP, '0,000.00');
                                     var adju = Ext.util.Format.number(data.totADJUSMENTP, '0,000.00');
-                                    var qtip = `Total Serv. Fee: ${sfee}<br> Total Adjusment: ${adju}`;
-                                    metaData.tdAttr = 'data-qtip="' + qtip + '"';
-                                    return '<b>' + sfee + '<b>';
+                                    //var qtip = `Total Serv. Fee: ${sfee}<br> Total Adjusment: ${adju}`;
+                                    //metaData.tdAttr = 'data-qtip="' + adju + '"';
+                                    return '<b>' + adju + '<b>';
                                 }
                             },
                             {
@@ -260,7 +260,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.DetSett
                                     if (TRANSTYPE !== 'ADJU' && TRANSTYPE !== 'CHBK') {
                                         value = SERVICFEEP;
                                     } else {
-                                        value = ACCEAMOU;
+                                        value = 0;
                                     }
                                     metaData.style = "text-align:right;background-color:#B2DAFA;";
                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -269,7 +269,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.DetSett
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                    return '<b>' + Ext.util.Format.number(data.totACCEAMOU, '0,000.00') + '<b>';
+                                    return '<b>' + Ext.util.Format.number(data.totSERVICFEEP, '0,000.00') + '<b>';
                                 }
                             },
                             {
