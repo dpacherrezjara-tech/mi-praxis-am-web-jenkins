@@ -60,7 +60,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -8975,7 +8974,7 @@ public class ReconciliationPaymentController extends BaseController {
     //Listado de Codigos de error Reconciliation Settlement
     @RequestMapping(value = "getErrorCodesRecSett",method = RequestMethod.POST)
     public @ResponseBody
-    String getErrorCodesRecSett(@RequestBody Map<String,Object> body) {
+    String getErrorCodesRecSett(@RequestBody Map<String,String> body) {
         System.out.println("-------------- ReconciliationPayment : getErrorCodesRecSett-------------");
         Map<String,Object> map = new HashMap<>();
         map.put("success", true);
@@ -8986,19 +8985,18 @@ public class ReconciliationPaymentController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public List<A4331Filter> getListGetErrorCodesRecSett(Map<String,Object> body, Boolean bExcel) {
+    public List<A4331Filter> getListGetErrorCodesRecSett(Map<String,String> body, Boolean bExcel) {
 
         List<A4331Filter> lst = new ArrayList<>(0);
         A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
-        String beanString = "";
 
         try {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            beanString = body.get("beanString").toString();
-            filter = gson.fromJson(beanString, A4331Filter.class);
+            //beanString = gson.toJson(body.get("beanString"));
+            filter = gson.fromJson(body.get("beanString"), A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -9179,7 +9177,7 @@ public class ReconciliationPaymentController extends BaseController {
 
     @RequestMapping(value = "getCountries",method = RequestMethod.POST)
     public @ResponseBody
-    String getCountries(@RequestBody Map<String,Object> body) {
+    String getCountries(@RequestBody Map<String,String> body) {
         System.out.println("-------------- ReconciliationPayment : getCountries-------------");
         Map<String,Object> map = new HashMap<>();
         map.put("success", true);
@@ -9190,19 +9188,17 @@ public class ReconciliationPaymentController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public List<A4331Filter> getListCountries(Map<String,Object> body, Boolean bExcel) {
+    public List<A4331Filter> getListCountries(Map<String,String> body, Boolean bExcel) {
 
         List<A4331Filter> lst = new ArrayList<>(0);
         A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
-        String beanString = "";
 
         try {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            beanString = body.get("beanString").toString();
-            filter = gson.fromJson(beanString, A4331Filter.class);
+            filter = gson.fromJson(body.get("beanString"), A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
