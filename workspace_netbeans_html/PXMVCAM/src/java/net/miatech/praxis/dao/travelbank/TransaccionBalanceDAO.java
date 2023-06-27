@@ -78,6 +78,7 @@ public class TransaccionBalanceDAO {
             while (rs01.next()) {
                 objRtn = new SQP04894Filter();
                 objRtn.XAIRLIN = rs01.getString("XAIRLIN");
+                objRtn.XNCTA = rs01.getString("XNCTA");
                 objRtn.XCREDID = rs01.getString("XCREDID");
                 objRtn.XFILE = rs01.getString("XFILE");
                 objRtn.XSRVCC = rs01.getString("XSRVCC");    
