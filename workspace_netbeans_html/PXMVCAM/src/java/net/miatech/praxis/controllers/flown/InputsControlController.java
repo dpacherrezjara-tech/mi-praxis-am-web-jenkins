@@ -1422,10 +1422,10 @@ public class InputsControlController extends BaseController {
                 Cell rcell4 = row.createCell(4);
 
                 rcell0.setCellValue(listaData.get(vi).Nbr);
-                rcell1.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).strFormatDate.trim());
                 rcell2.setCellValue(listaData.get(vi).TRNN);
-                rcell3.setCellValue(listaData.get(vi).CCIA);
-                rcell4.setCellValue(listaData.get(vi).EMDDATA);
+                rcell3.setCellValue(listaData.get(vi).CCIA.trim());
+                rcell4.setCellValue(listaData.get(vi).EMDDATA.trim());
 
                 rcell0.setCellStyle(bodyStyle);
                 rcell1.setCellStyle(bodyStyle);
