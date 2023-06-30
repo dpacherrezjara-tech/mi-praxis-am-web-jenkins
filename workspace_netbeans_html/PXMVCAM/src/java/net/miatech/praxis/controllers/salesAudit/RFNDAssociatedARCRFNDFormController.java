@@ -878,9 +878,10 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                     JsonObject gsonObj = obj.getAsJsonObject();
                     conttax = (conttax + 1);
                     if (conttax == 1) {
-                        taxes = gsonObj.get("A4364PREME").getAsString() + "$" + gsonObj.get("A4364ANIO").getAsString() + "$" + gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble() + "$" + gsonObj.get("A4364TXAGE").getAsDouble();
+                        //taxes = gsonObj.get("A4364PREME").getAsString() + "$" + gsonObj.get("A4364ANIO").getAsString() + "$" + gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble() + "$" + gsonObj.get("A4364TXAGE").getAsDouble();
+                        taxes = gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble() + "$" + gsonObj.get("A4364TXAGE").getAsDouble();
                     } else {
-                        taxes = taxes + "|" + gsonObj.get("A4364PREME").getAsString() + "$" + gsonObj.get("A4364ANIO").getAsString() + "$" + gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble() + "$" + gsonObj.get("A4364TXAGE").getAsDouble();
+                        taxes = taxes + "|" + gsonObj.get("A4364CDTAX").getAsString() + "$" + gsonObj.get("A4364CORRL").getAsString() + "$" + gsonObj.get("A4364APFC").getAsString() + "$" + gsonObj.get("A4364MONED").getAsString() + "$" + gsonObj.get("A4364TXMIA").getAsDouble() + "$" + gsonObj.get("A4364TXAGE").getAsDouble();
                     }
 
                 }
@@ -891,9 +892,9 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                     if (gsonObj.get("A4365TYPE").getAsString().equals("AE")) {
                         contfop = (contfop + 1);
                         if (contfop == 0) {
-                            fop = gsonObj.get("A4365PREME").getAsString() + "$" + gsonObj.get("A4365ANIO").getAsString() + "$" + gsonObj.get("A4365CORRL").getAsString() + "$" + gsonObj.get("A4365CFOP").getAsString() + "$" + gsonObj.get("A4365TYCAR").getAsString() + "$" + gsonObj.get("A4365NTARJ").getAsString() + "$" + gsonObj.get("A4365FEXP").getAsString() + "$" + gsonObj.get("A4365CAPL").getAsString() + "$" + gsonObj.get("A4365TYPE").getAsString() + "$" + gsonObj.get("A4365TOTAL").getAsDouble();
+                            fop = gsonObj.get("A4365CORRL").getAsString() + "$" + gsonObj.get("A4365CFOP").getAsString() + "$" + gsonObj.get("A4365TYCAR").getAsString() + "$" + gsonObj.get("A4365NTARJ").getAsString() + "$" + gsonObj.get("A4365FEXP").getAsString() + "$" + gsonObj.get("A4365CAPL").getAsString() + "$" + gsonObj.get("A4365TYPE").getAsString() + "$" + gsonObj.get("A4365TOTAL").getAsDouble();
                         } else {
-                            fop = fop + "|" + gsonObj.get("A4365PREME").getAsString() + "$" + gsonObj.get("A4365ANIO").getAsString() + "$" + gsonObj.get("A4365CORRL").getAsString() + "$" + gsonObj.get("A4365CFOP").getAsString() + "$" + gsonObj.get("A4365TYCAR").getAsString() + "$" + gsonObj.get("A4365NTARJ").getAsString() + "$" + gsonObj.get("A4365FEXP").getAsString() + "$" + gsonObj.get("A4365CAPL").getAsString() + "$" + gsonObj.get("A4365TYPE").getAsString() + "$" + gsonObj.get("A4365TOTAL").getAsDouble();
+                            fop = fop + "|" + gsonObj.get("A4365CORRL").getAsString() + "$" + gsonObj.get("A4365CFOP").getAsString() + "$" + gsonObj.get("A4365TYCAR").getAsString() + "$" + gsonObj.get("A4365NTARJ").getAsString() + "$" + gsonObj.get("A4365FEXP").getAsString() + "$" + gsonObj.get("A4365CAPL").getAsString() + "$" + gsonObj.get("A4365TYPE").getAsString() + "$" + gsonObj.get("A4365TOTAL").getAsDouble();
                         }
                     }
                 }
@@ -906,9 +907,9 @@ public class RFNDAssociatedARCRFNDFormController extends BaseController {
                 JsonObject gsonObj = obj.getAsJsonObject();
                 contrazon = (contrazon + 1);
                 if (contrazon == 1) {
-                    razones = gsonObj.get("A4362CODE").getAsString() + "$" + gsonObj.get("A4362ERROR").getAsString() + "$" + gsonObj.get("A4362TYPE").getAsString() + "$" + gsonObj.get("A4362CORRL").getAsString() + "$" + gsonObj.get("A4362PREME").getAsString() + "$" + gsonObj.get("A4362ANIO").getAsString() + "$" + gsonObj.get("A4362FAMIL").getAsString();
+                    razones = gsonObj.get("A4362CODE").getAsString() + "$" + gsonObj.get("A4362ERROR").getAsString() + "$" + gsonObj.get("A4362TYPE").getAsString() + "$" + gsonObj.get("A4362CORRL").getAsString() + "$" + gsonObj.get("A4362FAMIL").getAsString();
                 } else {
-                    razones = razones + "|" + gsonObj.get("A4362CODE").getAsString() + "$" + gsonObj.get("A4362ERROR").getAsString() + "$" + gsonObj.get("A4362TYPE").getAsString() + "$" + gsonObj.get("A4362CORRL").getAsString() + "$" + gsonObj.get("A4362PREME").getAsString() + "$" + gsonObj.get("A4362ANIO").getAsString() + "$" + gsonObj.get("A4362FAMIL").getAsString();
+                    razones = razones + "|" + gsonObj.get("A4362CODE").getAsString() + "$" + gsonObj.get("A4362ERROR").getAsString() + "$" + gsonObj.get("A4362TYPE").getAsString() + "$" + gsonObj.get("A4362CORRL").getAsString() + "$" + gsonObj.get("A4362FAMIL").getAsString();
                 }
 
             }
