@@ -366,7 +366,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                             series: [{
                                                     type: 'bar3d',
                                                     stacked: false,
-                                                    title: ['Sales', 'Emd','New', 'Flown'],
+                                                    title: ['Sales', 'Emd', 'New', 'Flown'],
                                                     xField: 'strFormatDate',
                                                     yField: ['QTKTS1', 'QTKTEN', 'QTKTNEW', 'QTKTFLOW'],
                                                     colors: ['#6DC36D', '#E7D40A', '#E36B2C', '#109DFA'],
@@ -451,7 +451,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                             series: [{
                                                     type: 'bar3d',
                                                     stacked: false,
-                                                    title: ['Sales', 'Emd','New', 'Flown'],
+                                                    title: ['Sales', 'Emd', 'New', 'Flown'],
                                                     xField: 'strFormatDate',
                                                     yField: ['AMOUNT1', 'AMOUNTEN', 'AMOUNTNEW', 'AMOUNTFLOW'],
                                                     colors: ['#6DC36D', '#E7D40A', '#E36B2C', '#109DFA'],
@@ -475,7 +475,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                                 data = 'New';
                                                             } else if (ctx.field === 'AMOUNTFLOW') {
                                                                 data = 'Flown';
-                                                            } 
+                                                            }
                                                             toolTip.setHtml('<b>' + 'Amount ' + data + ' ' + date + ' : ' + Ext.util.Format.number(record.get(ctx.field), '0,00') + ' USD' + '</b>');
                                                         }
                                                     },
@@ -942,6 +942,329 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 7, height: 10},
+                            ]
+                        },
+                        // --------------------------   GRID LOG DATA---------------------
+                        //-----------------------------------------------------------------
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridDataLog',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            border: false,
+                            height: 700,
+                            width: 1125,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataLog',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    border: false,
+                                    height: 345,
+                                    width: 900,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Process<br>Date', dataIndex: 'strFormatDate', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Total',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Qty', dataIndex: 'QTY', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Amount', dataIndex: 'SVFOPUSD', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOPUSD, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Bank Notification',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Aclarations', dataIndex: 'ACLARAC', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totACLARAC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'ChargeBack',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Qty', dataIndex: 'CHGBACK', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totCHGBACK, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'USD', dataIndex: 'CHGBACK_AMT', width: 100,
+                                                                listeners: {
+                                                                    click: 'onGridDetTicketLogChar'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totCHGBACK_AMT, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Reverse ChargeBack',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Qty', dataIndex: 'REVERSE', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totREVERSE, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'USD', dataIndex: 'REVERSE_AMT', width: 100,
+                                                                listeners: {
+                                                                    click: 'onGridDetTicketLogRChar'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totREVERSE_AMT, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Other', dataIndex: 'OTHER', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totOTHER, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridDataDetTicketLog',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            border: false,
+                            height: 700,
+                            width: 1350,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataDetTicketLog',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    border: false,
+                                    height: 680,
+                                    width: 1230,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Ticket', dataIndex: 'strTicket', width: 120,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Sale<br>Date', dataIndex: 'strFormatDate1', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Bank<br>Date', dataIndex: 'strFormatDate2', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Bank<br>Code', dataIndex: 'CODEBANK', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Card<br>Code', dataIndex: 'SCARCOD', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Card Number', dataIndex: 'CARDNBR', width: 160,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Auth', dataIndex: 'AUTHNBR', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Curr.', dataIndex: 'MFOP', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Amount', dataIndex: 'VFOP', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+//                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                    var data = Ext.getCmp(prototype.id + '-gridDataDetTicketLog').getStore().getData().items[0].data;
+//                                                    metaData.style = 'text-align:right; margin-right:3px ';
+//                                                    return '<b>' + Ext.util.Format.number(data.totVFOP, '0,000.00') + '<b>';
+//                                                }
+                                            },
+                                            {text: 'Status Cpn',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: '1', dataIndex: 'strDescUsoCpn1', width: 30,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: '2', dataIndex: 'strDescUsoCpn2', width: 30,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: '3', dataIndex: 'strDescUsoCpn3', width: 30,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: '4', dataIndex: 'strDescUsoCpn4', width: 30,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                            return value;
+                                                        },
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Passenger', dataIndex: 'PAX', width: 250,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                },
+                                            },
+                                        ]
+                                    }
+                                },
                             ]
                         },
                     ]

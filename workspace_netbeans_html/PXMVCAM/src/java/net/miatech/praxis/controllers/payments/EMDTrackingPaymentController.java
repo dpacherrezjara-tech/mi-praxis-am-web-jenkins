@@ -108,7 +108,7 @@ public class EMDTrackingPaymentController extends BaseController {
     @RequestMapping(value = "searchDetail")
     public @ResponseBody
     String searchDetail(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- EMDTrackingPayment : Search-------------");
+        System.out.println("-------------- EMDTrackingPayment : searchDetail-------------");
         map.put("success", true);
         List<A3757Filter> lst = this.searchDetail(request, false);
         System.out.println("Total : " + lst.size());
@@ -156,7 +156,7 @@ public class EMDTrackingPaymentController extends BaseController {
     @RequestMapping(value = "searchTicket")
     public @ResponseBody
     String searchTicket(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- EMDTrackingPayment : Search-------------");
+        System.out.println("-------------- EMDTrackingPayment : searchTicket-------------");
         map.put("success", true);
         List<A3757Filter> lst = this.searchTicket(request, false);
         System.out.println("Total : " + lst.size());
@@ -204,7 +204,7 @@ public class EMDTrackingPaymentController extends BaseController {
     @RequestMapping(value = "searchLog")
     public @ResponseBody
     String searchLog(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- EMDTrackingPayment : Search-------------");
+        System.out.println("-------------- EMDTrackingPayment : searchLog-------------");
         map.put("success", true);
         List<A3757Filter> lst = this.searchLog(request, false);
         System.out.println("Total : " + lst.size());
@@ -252,7 +252,7 @@ public class EMDTrackingPaymentController extends BaseController {
     @RequestMapping(value = "searchTicketLog")
     public @ResponseBody
     String searchTicketLog(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- EMDTrackingPayment : Search-------------");
+        System.out.println("-------------- EMDTrackingPayment : searchTicketLog-------------");
         map.put("success", true);
         List<A2331Filter> lst = this.searchTicketLog(request, false);
         System.out.println("Total : " + lst.size());

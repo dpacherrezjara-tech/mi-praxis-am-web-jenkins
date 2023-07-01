@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
     childs: '5',
     bean: '',
     beanEMD: {},
+    beanLog: {},
     beanEMDTicket: {},
     paginActual: '',
     drillDown: [],
@@ -18,6 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
     paramsDetail: {},
     paramsDetailEMD: {},
     paramsDetailEMDTicket: {},
+    paramsDetailTicketLog: {},
     dataObtain: {},
     init: function (view) {
         me = this;
@@ -101,7 +103,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         if (eOpts.getKey() === 13) {
             if (txtTicket.trim().length === 13 || txtTicket.trim().length === 0) {
                 this.btnSearch_click();
-            } else  {
+            } else {
                 global.Msg({msg: 'Ticket Number must contain 13 digits.'});
             }
         }
@@ -190,11 +192,21 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
     setFormatParameter: function () {
 
         me.bean = {};
-//        if ($(Ext.getCmp(prototype.id + '-chkLog_Click')).prop('checked')) {
-//            me.bean.IN_WARNING = 'Y';
-//        } else {
-//            me.bean.IN_WARNING = 'N';
-//        }
+        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+
+        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+
+        console.log(me.bean);
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
+    setFormatParameter2: function () {
+
+        me.bean = {};
         me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
 
@@ -208,22 +220,34 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         };
     },
     btnSearch_click: function (obj, e) {
-        this.setFormatParameter();
-        if (Ext.getCmp(prototype.id + '-txtTICKET').getValue().trim() !== '') {
-            console.log('1');
-            me.drillDown.push(me.panelActual);
-            me.panelActual = '-panelGridDataDetEMDTicket';
-            global.selectedChild(me.childs, prototype.id + me.panelActual);
-            this.beanEMDTicket.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-            console.log(this.beanEMDTicket);
 
-            me.paramsDetailEMDTicket.beanString = JSON.stringify(this.beanEMDTicket);
-            this.setGridDataDetEMDTicket();
-        } else {
+        if ($(Ext.getCmp(prototype.id + '-chkLog')).prop('checked')) {
+            this.setFormatParameter2();
             Ext.getCmp(prototype.id + '-pie').setVisible(false);
+            Ext.getCmp(prototype.id + '-txtTICKET').setVisible(false);
             console.log('es vacío');
-            this.setGridData();
+            this.setGridDataLog();
+
+        } else {
+            Ext.getCmp(prototype.id + '-txtTICKET').setVisible(true);
+            this.setFormatParameter();
+            if (Ext.getCmp(prototype.id + '-txtTICKET').getValue().trim() !== '') {
+                console.log('1');
+                me.drillDown.push(me.panelActual);
+                me.panelActual = '-panelGridDataDetEMDTicket';
+                global.selectedChild(me.childs, prototype.id + me.panelActual);
+                this.beanEMDTicket.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                console.log(this.beanEMDTicket);
+
+                me.paramsDetailEMDTicket.beanString = JSON.stringify(this.beanEMDTicket);
+                this.setGridDataDetEMDTicket();
+            } else {
+                Ext.getCmp(prototype.id + '-pie').setVisible(false);
+                console.log('es vacío');
+                this.setGridData();
+            }
         }
+
 
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
@@ -284,6 +308,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanEMD.DSALES = rowData.data.DSALES;
+        this.beanEMD.strFormatDate = rowData.data.strFormatDate;
         console.log(this.beanEMD);
 
         me.paramsDetailEMD.beanString = JSON.stringify(this.beanEMD);
@@ -305,20 +330,21 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                 }, listeners: {
                     beforeload: function (obj) {
                         obj.proxy.extraParams = me.paramsDetailEMD;
-
                     },
-                    load: function (obj) {
-//                        console.log(obj.data);
-//                        var pag = Ext.getCmp(prototype.id + '-paggin2');
-//                        var pagData = pag.getPageData();
-//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                        if (obj.data.length === 0) {
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        }
+                    load: function (obj, obj2, success, response, obj5) {
+                        var res = Ext.JSON.decode(response._response.responseText);
+                        console.log(res.data);
+                        if (res.success) {
+                            if (obj.data.length > 0) {
+                                var obj = obj.data.items[0].data;
+                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Sale Date ' + obj.strFormatDate + '</center>');
+
+
+                            } else {
+                                global.Msg({msg: 'Data not found'});
+                            }
+                        } else
+                            global.clear();
                     }
                 }
             });
@@ -326,7 +352,6 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 //            console.log(storeGridDatas);
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataDetEMD').bindStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
         }
     },
     // </editor-fold>
@@ -337,6 +362,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanEMDTicket.DSALES = rowData.data.DSALES;
+        this.beanEMDTicket.strFormatDate2 = rowData.data.strFormatDate2;
         console.log(this.beanEMDTicket);
 
         me.paramsDetailEMDTicket.beanString = JSON.stringify(this.beanEMDTicket);
@@ -360,13 +386,58 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                         obj.proxy.extraParams = me.paramsDetailEMDTicket;
 
                     },
-                    load: function (obj) {
-//                        console.log(obj.data);
-                        var pag = Ext.getCmp(prototype.id + '-paggin3');
+                    load: function (obj, obj2, success, response, obj5) {
+                        
+                        var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        var res = Ext.JSON.decode(response._response.responseText);
+                        console.log(res.data);
+                        if (res.success) {
+                            if (obj.data.length > 0) {
+                                var obj = obj.data.items[0].data;
+                                Ext.getCmp(prototype.id + '-panelGridDataDetEMDTicket').setTitle('<center style="font-size:12px;"> Sale Date ' + obj.strFormatDate22 + '</center>');
+
+
+                            } else {
+                                global.Msg({msg: 'Data not found'});
+                            }
+                        } else
+                            global.clear();
+                    }
+                }
+            });
+
+//            console.log(storeGridDatas);
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataDetEMDTicket').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        }
+    },
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="setGridDataLog">
+    setGridDataLog: function () {
+        win.lblUser_toolTip("Estructura: A3757 A2331");
+        me.panelActual = '-panelGridDataLog';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+//        me.setWidthPie();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchLog'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams
+                    },
+                    load: function (obj) {
+
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -375,11 +446,89 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                     }
                 }
             });
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataLog').bindStore(storeGridDatas);
+        }
+    },
+    // </editor-fold>
+    onGridDetTicketLogChar: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataDetTicketLog';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanLog.FECR = rowData.data.DCREATION;
+        this.beanLog.TDOC = '2';
+        console.log(this.beanEMD);
+
+        me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
+        this.setGridDataDetTicketLog();
+    },
+    onGridDetTicketLogRChar: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataDetTicketLog';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanLog.FECR = rowData.data.DCREATION;
+        this.beanLog.TDOC = '3';
+        console.log(this.beanEMD);
+
+        me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
+        this.setGridDataDetTicketLog();
+    },
+    // <editor-fold defaultstate="collapsed" desc="setGridDataDetTicketLog">
+    setGridDataDetTicketLog: function () {
+        win.lblUser_toolTip("Estructura: A3757 A2331");
+        me.panelActual = '-panelGridDataDetTicketLog';
+        me.setWidthPie();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchTicketLog'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsDetailTicketLog;
+
+                    },
+                    load: function (obj, obj2, success, response, obj5) {
+                        
+                        var pag = Ext.getCmp(prototype.id + '-paggin2');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        var res = Ext.JSON.decode(response._response.responseText);
+                        console.log(res.data);
+                        if (res.success) {
+                            if (obj.data.length > 0) {
+                                var obj = obj.data.items[0].data;
+                                var tipo = '';
+                                if(obj.TDOC === '2'){
+                                    tipo = 'ChargeBack';
+                                }else if(obj.TDOC === '3'){
+                                    tipo = 'Reverse ChargeBack';
+                                }
+                                Ext.getCmp(prototype.id + '-panelGridDataDetTicketLog').setTitle('<center style="font-size:12px;"> Create Date ' + obj.strFormatDate + ' - ' + tipo + '</center>');
+
+
+                            } else {
+                                global.Msg({msg: 'Data not found'});
+                            }
+                        } else
+                            global.clear();
+                    }
+                }
+            });
 //            console.log(storeGridDatas);
             global.clear();
-            Ext.getCmp(prototype.id + '-gridDataDetEMDTicket').bindStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridDataDetTicketLog').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
         }
     },
     // </editor-fold>
@@ -504,9 +653,9 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 
         this.setFormatParameter();
         switch (me.panelActual) {
-            case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
-                break;
+//            case  '-panelGridData':
+//                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+//                break;
             default:
                 global.Msg(
                         {msg: 'Under Construction'
@@ -549,7 +698,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
     },
     setWidthPie: function () {
         console.log(me.panelActual);
-        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridDataDetEMD' || me.panelActual === '-panelGridDataDetEMDTicket') {
+        if (me.panelActual === '-panelGridDataDetEMDTicket' || me.panelActual === '-panelGridDataDetTicketLog') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -560,14 +709,11 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
     getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
-//            case  '-panelGridData':
-//                me.pagginActual = '-paggin';
-//                break;
-//            case  '-panelGridDataDetEMD':
-//                me.pagginActual = '-paggin2';
-//                break;
             case  '-panelGridDataDetEMDTicket':
-                me.pagginActual = '-paggin3';
+                me.pagginActual = '-paggin';
+                break;
+            case  '-panelGridDataDetTicketLog':
+                me.pagginActual = '-paggin2';
                 break;
         }
     },

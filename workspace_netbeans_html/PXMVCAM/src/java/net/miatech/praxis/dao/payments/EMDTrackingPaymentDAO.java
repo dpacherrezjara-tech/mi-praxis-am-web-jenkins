@@ -326,6 +326,7 @@ public class EMDTrackingPaymentDAO {
                 while (rst.next()) {
 
                     bean = new A3757Filter();
+                    bean.strFormatDate22 = filter.strFormatDate2;
                     bean.DSALES = rst.getString("FVTA");
                     bean.strFormatDate2 = Functions.getMonthConvert(bean.DSALES);
                     bean.CCIAA  = rst.getString("CCIAA");
@@ -573,6 +574,7 @@ public class EMDTrackingPaymentDAO {
 
                     bean = new A2331Filter();
                     bean.FECR = filter.FECR;
+                    bean.TDOC = filter.TDOC;
                     bean.strFormatDate = Functions.getMonthConvert(bean.FECR);
                     bean.CCIA  = rst.getString("CCIA");
                     bean.FORMA = rst.getString("FORMA");
@@ -600,7 +602,7 @@ public class EMDTrackingPaymentDAO {
                     bean.strDescUsoCpnF4 = (String) hm.get(bean.strDescUsoCpn4);
                     bean.PAX  = rst.getString("PAX");
                     
-                    
+                    bean.totVFOP  = VFOP;
                     //Totales
                     
                     bean.page.PAGNUM = filter.page.PAGNUM;

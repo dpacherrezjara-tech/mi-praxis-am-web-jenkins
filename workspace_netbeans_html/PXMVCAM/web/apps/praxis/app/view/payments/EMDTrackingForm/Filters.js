@@ -28,10 +28,10 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Filters', {
             items: [
                 {
                     xtype: 'label',
-                    html: '<strong style="color:#000;">Sale Date:</strong>',
+                    html: '<strong style="color:#000;">Sale Date</strong>',
                     align: 'left',
                     fieldStyle: 'text-align: left;',
-                    padding: '8px 20px 0px 5px',
+                    padding: '8px 5px 0px 15px',
                     hidden: false
                 },
                 {
@@ -106,21 +106,17 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
-                {xtype: 'tbspacer', width: 20},
-                {
-                    xtype: 'label',
-                    text: 'Ticket:',
-                    padding: '8px 1px 2px 1px',
-                    width: 40,
-                },
+//                {xtype: 'tbspacer', width: 20},
                 {
                     xtype: 'textfield',
+                    fieldLabel: 'Ticket:',
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
                     maskRe: /[0-9]/,
                     maxLength: 15,
-                    width: 120,
+                    labelWidth: 60,
+                    width: 180,
                     enableKeyEvents: true,
                     listeners: {
                         keypress: 'filterTicketEMD'
@@ -135,7 +131,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Filters', {
                     inputValue: '0',
                     checked: false,
                     listeners: {
-                        change: 'chkLog_Click'
+                        change: 'btnSearch_click'
                     }
                 }
             ]
