@@ -1134,7 +1134,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                             padding: '1',
                             border: false,
                             height: 700,
-                            width: 1350,
+                            width: 1235,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
