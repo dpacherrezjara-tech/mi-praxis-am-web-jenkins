@@ -151,17 +151,29 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Filters', {
                         },
                         {
                             xtype: 'label',
-                            html: '<strong style="color:#000;">Billing:</strong>',
+                            html: '<strong style="color:#000;">Billing Date:</strong>',
                             align: 'left',
                             fieldStyle: 'text-align: left;',
                             padding: '11px 7px 8px 10px'
                         },
                         {
                             xtype: 'datefield',
-                            format: 'Y/m/d',
-                            fieldLabel: 'Date<strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
+                            format: 'Y/m',
+                            fieldLabel: 'From<strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
                             anchor: '100%',
-                            id: prototype.id + '-txtDateBilling',
+                            id: prototype.id + '-txtDateBillingFrom',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 160,
+                            labelWidth: 60
+                        },
+                                                {
+                            xtype: 'datefield',
+                            format: 'Y/m',
+                            fieldLabel: 'To<strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateBillingTo',
                             fieldStyle: 'text-align:center',
                             maskRe: /[0-9/]/,
                             enforceMaxLength: true,

@@ -57,7 +57,8 @@ public class AccountedAmountsInvoicedDAO {
         ResultSet rs01 = null;
         String SQLCLL01;
 
-        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00865(?,?,?,?,?,?,?,?,?,?)}";
+        //SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00865(?,?,?,?,?,?,?,?,?,?)}";
+        SQLCLL01 = "{CALL LIBSAP50.SQP00865(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -68,35 +69,44 @@ public class AccountedAmountsInvoicedDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(6, Types.INTEGER);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
-            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+            cstmt01.registerOutParameter(14, Types.INTEGER);
+            cstmt01.registerOutParameter(15, Types.INTEGER);
+            cstmt01.registerOutParameter(16, Types.INTEGER);
 
             cstmt01.setString(1, filter.IN_A2559CCUST);
             cstmt01.setString(2, filter.IN_FINI);
             cstmt01.setString(3, filter.IN_FFIN);
             cstmt01.setString(4, filter.IN_PARAM);
             cstmt01.setString(5, filter.IN_FLAG);
-            cstmt01.setInt(6, PAGINIT);
-            cstmt01.setInt(7, totRowsPag);
-            cstmt01.setInt(8, totRows);
-            cstmt01.setInt(9, filter.page.TOTROW);
-            cstmt01.setString(10, filter.IN_A2559MODO);
+            
+            cstmt01.setString(6, filter.IN_FLOWN_FINI);
+            cstmt01.setString(7, filter.IN_FLOWN_FFIN);
+            cstmt01.setString(8, filter.IN_FLIGHT_FINI);
+            cstmt01.setString(9, filter.IN_FLIGHT_FFIN);
+            cstmt01.setString(10, filter.IN_BILLING_DATEFINI);
+            cstmt01.setString(11, filter.IN_BILLING_DATEFFIN);
+            cstmt01.setString(12, filter.IN_PERIOD);
+            
+            cstmt01.setInt(13, PAGINIT);
+            cstmt01.setInt(14, totRowsPag);
+            cstmt01.setInt(15, totRows);
+            cstmt01.setInt(16, filter.page.TOTROW);
+            cstmt01.setString(17, filter.IN_A2559MODO);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(13);
+            filter.page.PAGROW = cstmt01.getInt(14);
+            filter.page.TOTPAG = cstmt01.getInt(15);
+            filter.page.TOTROW = cstmt01.getInt(16);
 
-            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(6)) {
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(14)) {
                 totRows = filter.page.TOTROW;
                 totPAGS = filter.page.TOTPAG;
             } else {
                 try {
-                    totRows = cstmt01.getInt(8);
+                    totRows = cstmt01.getInt(16);
                     int total = (int) (totRows / 20);
                     int resto = (totRows % 20);
 
