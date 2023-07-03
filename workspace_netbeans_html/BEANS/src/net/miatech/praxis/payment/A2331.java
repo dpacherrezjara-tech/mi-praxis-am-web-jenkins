@@ -45,6 +45,7 @@ public class A2331 {
     public String STUSO = "";
     public String MFOP = "";
     public double VFOP = 0;
+	public double totVFOP = 0;
 
     public String FSELEC = "";
     public String FECSELEC = "";
