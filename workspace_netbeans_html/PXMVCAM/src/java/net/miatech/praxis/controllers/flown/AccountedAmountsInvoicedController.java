@@ -92,6 +92,13 @@ public class AccountedAmountsInvoicedController extends BaseController {
             filter.IN_A2559MODO = request.getParameter("IN_A2559MODO");
             filter.IN_PARAM = request.getParameter("IN_PARAM");
             filter.IN_FLAG = request.getParameter("IN_FLAG");
+            filter.IN_FLOWN_FINI = request.getParameter("IN_FLOWN_FINI");
+            filter.IN_FLOWN_FFIN = request.getParameter("IN_FLOWN_FFIN");
+            filter.IN_FLIGHT_FINI = request.getParameter("IN_FLIGHT_FINI");
+            filter.IN_FLIGHT_FFIN = request.getParameter("IN_FLIGHT_FFIN");
+            filter.IN_BILLING_DATEFINI = request.getParameter("IN_BILLING_DATEFINI");
+            filter.IN_BILLING_DATEFFIN = request.getParameter("IN_BILLING_DATEFFIN");
+            filter.IN_PERIOD = request.getParameter("IN_PERIOD");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
