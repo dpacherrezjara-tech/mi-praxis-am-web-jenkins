@@ -363,6 +363,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanEMDTicket.DSALES = rowData.data.DSALES;
+        this.beanEMDTicket.strFormatDate2 = rowData.data.strFormatDate2;
         this.beanEMDTicket.IN_TKT = "";
         console.log(this.beanEMDTicket);
 
