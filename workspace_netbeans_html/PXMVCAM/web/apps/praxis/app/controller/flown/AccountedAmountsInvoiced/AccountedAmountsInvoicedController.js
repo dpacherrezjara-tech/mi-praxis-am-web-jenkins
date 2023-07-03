@@ -60,6 +60,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
     },
     setStoreData: function() {
         var cbxType = Ext.getCmp(prototype.id + '-cbxType');
+        var cbxPeriod = Ext.getCmp(prototype.id + '-cbxPeriod');
+        var cbxFlag = Ext.getCmp(prototype.id + '-cbxFlag');
         cbxType.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: true,
             fields: ['code', 'name'],
@@ -68,6 +70,24 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
                 ["2", "Differences"]
             ]}));
         cbxType.setValue("1");
+        cbxPeriod.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: true,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "01"],
+                ["2", "02"],
+                ["3", "03"],
+                ["4", "04"]
+            ]}));
+        cbxPeriod.setValue("1");
+        cbxFlag.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: true,
+            fields: ['code', 'name'],
+            data: [
+                ["Y", "Yes"],
+                ["N", "No"]
+            ]}));
+        cbxFlag.setValue("N");
     },
     btnSearch_click: function(obj, e) {
         this.setGridData(obj, e);
@@ -77,6 +97,13 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
         var IN_FINI = Ext.getCmp(prototype.id + '-txtDateFrom').getValue();
         var IN_FFIN = Ext.getCmp(prototype.id + '-txtDateTo').getValue();
         var IN_A2559MODO = Ext.getCmp(prototype.id + '-cbxType').getValue();
+        var IN_FLOWN_FINI = Ext.getCmp(prototype.id + '-txtDateFlownFrom').getValue();
+        var IN_FLOWN_FFIN = Ext.getCmp(prototype.id + '-txtDateFlownTo').getValue();
+        var IN_FLIGHT_FINI = Ext.getCmp(prototype.id + '-txtDateFlightFrom').getValue();
+        var IN_FLIGHT_FFIN = Ext.getCmp(prototype.id + '-txtDateFlightTo').getValue();
+        var IN_BILLING_DATE = Ext.getCmp(prototype.id + '-txtDateBilling').getValue();
+        var IN_PERIOD = Ext.getCmp(prototype.id + '-cbxPeriod').getValue();
+        var IN_FLAG = Ext.getCmp(prototype.id + '-cbxFlag').getValue();
         var IN_PARAM;
 
         IN_FFIN = Ext.util.Format.date(IN_FFIN, 'Ymd');
@@ -86,14 +113,26 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
             IN_A2559CCUST: IN_A2559CCUST,
             IN_FINI: IN_FINI,
             IN_FFIN: IN_FFIN,
+            IN_FLOWN_FINI: IN_FLOWN_FINI,
+            IN_FLOWN_FFIN: IN_FLOWN_FFIN,
+            IN_FLIGHT_FINI: IN_FLIGHT_FINI,
+            IN_FLIGHT_FFIN: IN_FLIGHT_FFIN,
+            IN_BILLING_DATE: IN_BILLING_DATE,
             IN_A2559MODO: IN_A2559MODO,
+            IN_PERIOD: IN_PERIOD,
+            IN_FLAG: IN_FLAG,
             IN_PARAM: IN_PARAM
         };
         console.log("-------------Parametros enviados-----------");
         console.log("IN_A2559CCUST : " + searchParams.IN_A2559CCUST);
         console.log("IN_FINI : " + searchParams.IN_FINI);
         console.log("IN_FFIN : " + searchParams.IN_FFIN);
+        console.log("IN_FLOWN_FINI : " + searchParams.IN_FLOWN_FINI);
+        console.log("IN_FLOWN_FFIN : " + searchParams.IN_FLOWN_FFIN);
+        console.log("IN_FLIGHT_FINI : " + searchParams.IN_FLIGHT_FINI);
+        console.log("IN_FLIGHT_FFIN : " + searchParams.IN_FLIGHT_FFIN);
         console.log("IN_A2559MODO : " + searchParams.IN_A2559MODO);
+        console.log("IN_FLAG : " + searchParams.IN_FLAG);
         console.log("IN_PARAM : " + searchParams.IN_PARAM);
         console.log("-------------------------------------------");
     },

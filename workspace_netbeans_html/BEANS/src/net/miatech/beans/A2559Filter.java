@@ -23,5 +23,15 @@ public class A2559Filter extends A2559{
     public Double A2559DTAX = 0.0;
     public Double A2559DISC = 0.0;
     
+    public String A2559FCOIC = "";
+    public String A2559TUSO = "";
+    public Double A2559YQ = 0.0;
+    public Double A2559TCAMB = 0.0;
+    public Double A2559FYQ = 0.00;
+    public Double A2559TCAMF = 0.00;
+    public Double DFQ = 0.0;
+    public Double DCAMB = 0.0;
+    public String IN_FLAG = "";
+    
     public Pagination page = new Pagination();
 }
