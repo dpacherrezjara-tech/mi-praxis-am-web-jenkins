@@ -22,6 +22,7 @@ public class A3757Filter extends  A3757{
     public String strFormatDate = "";
     public String strFormatDate1 = "";
     public String strFormatDate2 = "";
+    public String strFormatDate22 = "";
     public String strFormatDate3 = "";
     public String strFormatDate4 = "";
     public String strFormatDate5 = "";
