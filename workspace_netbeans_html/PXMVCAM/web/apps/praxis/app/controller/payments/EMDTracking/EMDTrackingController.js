@@ -237,6 +237,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                 me.panelActual = '-panelGridDataDetEMDTicket';
                 global.selectedChild(me.childs, prototype.id + me.panelActual);
                 this.beanEMDTicket.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                this.beanEMDTicket.DSALES = "";
                 console.log(this.beanEMDTicket);
 
                 me.paramsDetailEMDTicket.beanString = JSON.stringify(this.beanEMDTicket);
@@ -362,7 +363,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanEMDTicket.DSALES = rowData.data.DSALES;
-        this.beanEMDTicket.strFormatDate2 = rowData.data.strFormatDate2;
+        this.beanEMDTicket.IN_TKT = "";
         console.log(this.beanEMDTicket);
 
         me.paramsDetailEMDTicket.beanString = JSON.stringify(this.beanEMDTicket);
@@ -602,7 +603,12 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         }).show();
     },
     btnBack_click: function (obj, e) {
-
+        
+        if (me.panelActual === '-panelGridDataLog') {
+            console.log('prueba');
+            $(Ext.getCmp(prototype.id + '-chkLog')).prop("disabled",true);
+        }
+        
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);
