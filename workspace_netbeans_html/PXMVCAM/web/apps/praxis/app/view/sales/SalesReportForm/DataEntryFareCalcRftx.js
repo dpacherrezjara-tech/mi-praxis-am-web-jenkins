@@ -1,3 +1,6 @@
+/*
+ * @Dvicente
+ */
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryFareCalcRftx',

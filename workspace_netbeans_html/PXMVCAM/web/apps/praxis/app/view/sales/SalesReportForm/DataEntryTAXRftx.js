@@ -1,3 +1,6 @@
+/*
+ * @Dvicente
+ */
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryTAXRftx',

@@ -5,10 +5,6 @@ prototype.widthContenedor = 1366;
 prototype.heightContenedor = 768;
 prototype.idRfnd = 'SalesReportFormRfnd';
 prototype.idSale = 'SalesReportFormSale';
-prototype.idRftx = 'SalesReportFormRftx';
-prototype.idRftxFOP = 'SalesReportFormRftxFOP';
-prototype.idRftxTAX = 'SalesReportFormRftxTAX';
-prototype.idRftxFareCalc = 'SalesReportFormRftxFareCalc';
 prototype.idRfndFOP = 'SalesReportFormRfndFOP';
 prototype.idRfndTAX = 'SalesReportFormRfndTAX';
 prototype.idRfndTAXCOMM = 'SalesReportFormRfndTAXCOMM';
@@ -17,8 +13,12 @@ prototype.idRfndFareCalc = 'SalesReportFormRfndFareCalc';
 prototype.idAdm = 'SalesReportFormAdm';
 prototype.iderr = 'DataEntryError';
 prototype.ideterr = 'DataDetailEntryError';
-prototype.url = CONTEXTPATH + '/SalesReport';
+prototype.idRftx = 'SalesReportFormRftx';
+prototype.idRftxFOP = 'SalesReportFormRftxFOP';
+prototype.idRftxTAX = 'SalesReportFormRftxTAX';
+prototype.idRftxFareCalc = 'SalesReportFormRftxFareCalc';
 prototype.idVoidFOP = 'SalesReportFormFopVoid';
+prototype.url = CONTEXTPATH + '/SalesReport';
 
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.SalesReportForm', {
     extend: 'Ext.form.Panel',
