@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.sales;
 import com.google.gson.JsonArray;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -37,6 +38,13 @@ import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
 import net.miatech.praxis.A005;
 import net.miatech.praxis.A1772;
+import net.miatech.praxis.Sales.filters.PX036S01A4374Filter;
+import net.miatech.praxis.Sales.filters.PX036S01A4375Filter;
+import net.miatech.praxis.Sales.filters.PX036S01A4376Filter;
+import net.miatech.praxis.Sales.filters.PX036S02A4376Filter;
+import net.miatech.praxis.Sales.filters.S0001A4373Filter;
+import net.miatech.praxis.Sales.filters.S0001A4373TOTFilter;
+import net.miatech.praxis.Sales.filters.SQP04747Filter;
 import net.miatech.praxis.dao.sales.SalesReportDAO;
 
 /**
@@ -247,4 +255,36 @@ public class SalesReportLogic {
     public List<SQP04874Filter> loadSQP04874Filter(SQP04874Filter filter) throws Exception {
         return salesReportDAO.loadSQP04874Filter(filter);
     }
+    
+    public List<SQP04747Filter> loadSQP04747(SQP04747Filter filter) throws SQLException, Exception{
+        return salesReportDAO.loadSQP04747(filter);
+    }
+    
+    public List<S0001A4373Filter> loadS0001A4373(S0001A4373Filter filter) throws Exception{
+        return salesReportDAO.loadS0001A4373(filter);
+    }
+    
+    public List<PX036S01A4374Filter> loadPX036S01A4374(PX036S01A4374Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4374(filter);
+    }
+    
+    public List<PX036S01A4375Filter> loadPX036S01A4375(PX036S01A4375Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4375(filter);
+    }
+    
+    public S0001A4373TOTFilter loadS0001A4373TOT(S0001A4373TOTFilter filter) throws Exception {
+        return salesReportDAO.loadS0001A4373TOT(filter);
+    }
+    
+    public List<PX036S01A4376Filter> loadPX036S01A4376Filter(PX036S01A4376Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4376Filter(filter);
+    }
+    
+    public List<PX036S02A4376Filter> loadRftxReferences (PX036S02A4376Filter filter)throws Exception{
+        return salesReportDAO.loadRftxReferences(filter);
+    }
+    
+     public Map<String,String> loadTicketFinder(Map<String,String> filter)throws Exception{
+         return salesReportDAO.loadTicketFinder(filter);
+     }
 }

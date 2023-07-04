@@ -65,6 +65,7 @@ public class BPOProductionDAO {
                 objRtn01.QTY_SALE = rs01.getInt("QTY_SALE");
                 objRtn01.QTY_EXCH = rs01.getInt("QTY_EXCH");
                 objRtn01.QTY_RFND = rs01.getInt("QTY_RFND");
+                objRtn01.QTY_RFTX = rs01.getInt("QTY_RFTX");
                 objRtn01.QTY_MEMO = rs01.getInt("QTY_MEMO");
                 objRtn01.QTY_OK_IC = rs01.getInt("QTY_OK_IC");
                 objRtn01.QTY_ERR_IC = rs01.getInt("QTY_ERR_IC");
@@ -82,7 +83,7 @@ public class BPOProductionDAO {
             Integer vi = 0, vj = 0, vk = 0;
             String fecha = "";
             
-            int QTY_GROUP = 0, QTY_DOCUM = 0, QTY_SALE = 0, QTY_EXCH = 0, QTY_RFND = 0, QTY_MEMO = 0;
+            int QTY_GROUP = 0, QTY_DOCUM = 0, QTY_SALE = 0, QTY_EXCH = 0, QTY_RFND = 0, QTY_RFTX = 0, QTY_MEMO = 0;
             int QTY_OK_IC = 0, QTY_ERR_IC = 0, QTY_TOT_ER_SP = 0, QTY_ERR_SP = 0, QTY_OK_SP = 0;
             int QTY_GRUP_CER = 0, QTY_GRUP_ABI = 0, QTY_CONT = 0;
             for(vi = 0; vi < len; ++vi){
@@ -91,7 +92,7 @@ public class BPOProductionDAO {
                     fecha = lstRtn.get(vi).FECHA_PROC;
                     
                     vk = 0;
-                    QTY_GROUP = 0; QTY_DOCUM = 0; QTY_SALE = 0; QTY_EXCH = 0; QTY_RFND = 0;
+                    QTY_GROUP = 0; QTY_DOCUM = 0; QTY_SALE = 0; QTY_EXCH = 0; QTY_RFND = 0; QTY_RFTX = 0;
                     QTY_MEMO = 0; QTY_OK_IC = 0; QTY_ERR_IC = 0; QTY_TOT_ER_SP = 0; QTY_ERR_SP = 0;
                     QTY_OK_SP = 0; QTY_GRUP_CER = 0; QTY_GRUP_ABI = 0; QTY_CONT = 0;
                     for(vj = 0; vj < len; ++vj){
@@ -106,6 +107,7 @@ public class BPOProductionDAO {
                             objRtn02.QTY_SALE = lstRtn.get(vj).QTY_SALE;
                             objRtn02.QTY_EXCH = lstRtn.get(vj).QTY_EXCH;
                             objRtn02.QTY_RFND = lstRtn.get(vj).QTY_RFND;
+                            objRtn02.QTY_RFTX = lstRtn.get(vj).QTY_RFTX;
                             objRtn02.QTY_MEMO = lstRtn.get(vj).QTY_MEMO;
                             objRtn02.QTY_OK_IC = lstRtn.get(vj).QTY_OK_IC;
                             objRtn02.QTY_ERR_IC = lstRtn.get(vj).QTY_ERR_IC;
@@ -121,6 +123,7 @@ public class BPOProductionDAO {
                             QTY_SALE+= objRtn02.QTY_SALE;
                             QTY_EXCH+= objRtn02.QTY_EXCH;
                             QTY_RFND+= objRtn02.QTY_RFND;
+                            QTY_RFTX+= objRtn02.QTY_RFTX;
                             QTY_MEMO+= objRtn02.QTY_MEMO;
                             QTY_OK_IC+= objRtn02.QTY_OK_IC;
                             QTY_ERR_IC+= objRtn02.QTY_ERR_IC;
@@ -144,6 +147,7 @@ public class BPOProductionDAO {
                     objRtn02.QTY_SALE = QTY_SALE;
                     objRtn02.QTY_EXCH = QTY_EXCH;
                     objRtn02.QTY_RFND = QTY_RFND;
+                    objRtn02.QTY_RFTX = QTY_RFTX;
                     objRtn02.QTY_MEMO = QTY_MEMO;
                     objRtn02.QTY_OK_IC = QTY_OK_IC;
                     objRtn02.QTY_ERR_IC = QTY_ERR_IC;
