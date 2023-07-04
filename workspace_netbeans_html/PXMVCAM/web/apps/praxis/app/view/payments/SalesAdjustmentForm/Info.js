@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAdjustment',
-                                    width: 1770,
+                                    width: 1760,
                                     columnLines: true,
 //                                    features: [{
 //                                            ftype: 'summary',
@@ -161,7 +161,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'ID<br>Tran.', dataIndex: 'IDITEMT', width: 60,
+                                                    {text: 'ID<br>Tran.', dataIndex: 'IDITEMT', width: 60, hidden: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
@@ -197,6 +197,7 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                     },
                                                     {
                                                         text: 'Installment',
+                                                        hidden: true,
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -527,12 +528,12 @@ Ext.define('Ext.Praxis.view.payments.SalesAdjustmentForm.Info', {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center',
-                                                    hidden:true
+                                                    //hidden:true
                                                 },
                                                 columns: [
                                                     {text: 'Code', dataIndex: 'CERROR', width: 45},
                                                     {
-                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 210,
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left";
                                                             return value;

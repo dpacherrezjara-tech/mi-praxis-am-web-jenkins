@@ -165,13 +165,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         {
                             xtype: 'radiogroup',
                             id: prototype.id + '-radiogroupType',
-                            width: 810,
+                            width: 950,
                             items: [
                                 {boxLabel: '<b style="color:#148D28;">Summary</b>', inputValue: 'SU', name: 'rbgType'},
                                 {boxLabel: '<b style="color:#148D28;">Settlement</b>', inputValue: 'SE', name: 'rbgType'},
                                 {boxLabel: '<b style="color:#148D28;">Adjustment Queue</b>', inputValue: 'AD', name: 'rbgType'},
                                 {boxLabel: '<b style="color:#148D28;">Transact. Queue Error</b>', inputValue: 'ER', name: 'rbgType', checked: true},
                                 {boxLabel: '<b style="color:#148D28;">Change Payment</b>', inputValue: 'CP', name: 'rbgType'},
+                                {boxLabel: '<b style="color:#148D28;">Complement Plusgrade</b>', inputValue: 'PL', name: 'rbgType'},
                             ],
                             listeners: {
                                 change: 'rbChangeType'
@@ -539,7 +540,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 5},
+//                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'checkboxfield',
                             hidden: true,
@@ -552,7 +553,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'chkWarning_Click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+//                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbErrorCode',
@@ -565,7 +566,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
                             labelWidth: 100,
-                            width: 350,
+                            width: 320,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
@@ -583,19 +584,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 250,
+                            labelWidth: 80,
+                            width: 210,
                             hidden: false,
                             listeners: {
                                 change: 'btnSearch_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             text: 'PNR:',
                             padding: '8px 1px 2px 1px',
-                            width: 50
+                            width: 30
                         },
                         {
                             xtype: 'textfield',
@@ -610,7 +611,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             text: 'Credit Card:',
@@ -649,12 +650,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             text: 'Auth:',
                             padding: '8px 1px 2px 1px',
-                            width: 50,
+                            width: 35,
                         },
                         {
                             xtype: 'textfield',
@@ -681,7 +682,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 100,
+                            labelWidth: 70,
                             width: 200,
                             hiddenLabel: false,
                             value: '',
@@ -694,7 +695,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             xtype: 'checkboxfield',
                             hidden: false,
                             id: prototype.id + '-chkVoid',
-                            width: 50,
+                            width: 40,
                             boxLabel: 'Void',
                             inputValue: '0',
                             padding: '5px 0px 0px 20px',
@@ -735,8 +736,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             editable: true,
                             emptyText: 'All',
                             //maxLength: 3,
-                            labelWidth: 80,
-                            width: 140,
+                            labelWidth: 60,
+                            width: 120,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                //change: 'rbChangeType'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status:',
+                            id: prototype.id + '-cmbSTVALErr',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 60,
+                            width: 215,
                             hiddenLabel: false,
                             value: '',
                             listeners: {
@@ -857,6 +878,128 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             width: 100,
                             enableKeyEvents: true,
                             
+                        },
+                    ]
+                },
+                {
+                    xtype: 'form',
+                    padding: '2px 5px 1px 5px',
+                    id: prototype.id + '-filterComplementPLUS',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    margin: '0 0 0 40px',
+                    hidden: true,
+                    layout: 'column',
+                    defaults: {
+//                labelStyle: 'font-weight:bold;',
+                        fieldStyle: 'text-align: center;',
+                        padding: '5px 1px 5px 1px',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items: [
+                        {xtype: 'tbspacer', width: 100},
+                        {
+                            xtype: 'label',
+                            text: 'Ticket Number:',
+                            padding: '8px 1px 2px 1px',
+                            width: 100
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id+'-txtTicket_PL',     
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,     
+                            maskRe: /[0-9]/,      
+//                            maxLength: 13,
+                            width: 123,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'Credit Card:',
+                            padding: '8px 1px 2px 1px',
+                            width: 70
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC1_PL',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 80,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {
+                            xtype: 'label',
+                            text: '******',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC2_PL',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 4,
+                            width: 60,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'label',
+                            text: 'Auth:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50,
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtAuth_PL',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '8px 1px 2px 1px',
+                            width: 30
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPNR_PL',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9a-zA-Z]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
                         },
                     ]
                 }

@@ -21,6 +21,7 @@ public class A4117 {
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
+    public String PMERCHID = "";
     public String IDITEMS = "";
     
     public String SMERCHID = "";

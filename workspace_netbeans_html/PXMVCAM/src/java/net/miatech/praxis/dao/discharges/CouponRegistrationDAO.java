@@ -12,10 +12,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX549S01A1747Filter;
+import net.miatech.beans.SQP04905Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  *
@@ -52,30 +59,31 @@ public class CouponRegistrationDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL SQP03891(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL SQP03891(?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.setInt(1, filter.IN_OPCION);
-            cstmt01.setString(2, filter.IN_FECHAFROM);
-            cstmt01.setString(3, filter.IN_FECHATO);
-            cstmt01.setString(4, filter.IN_TKT);
+            cstmt01.setString(2, filter.IN_TIPOC);
+            cstmt01.setString(3, filter.IN_FECHAFROM);
+            cstmt01.setString(4, filter.IN_FECHATO);
+            cstmt01.setString(5, filter.IN_TKT);
             //param pagin
-            cstmt01.setInt(5, filter.page.PAGNUM);
-            cstmt01.setInt(6, filter.page.PAGROW);
-            cstmt01.setInt(7, filter.page.TOTPAG);
-            cstmt01.setInt(8, filter.page.TOTROW);
+            cstmt01.setInt(6, filter.page.PAGNUM);
+            cstmt01.setInt(7, filter.page.PAGROW);
+            cstmt01.setInt(8, filter.page.TOTPAG);
+            cstmt01.setInt(9, filter.page.TOTROW);
             cstmt01.execute();
             // Recupera paginacion SQL
-            filter.page.PAGNUM = cstmt01.getInt(5);
-            filter.page.PAGROW = cstmt01.getInt(6);
-            filter.page.TOTPAG = cstmt01.getInt(7);
-            filter.page.TOTROW = cstmt01.getInt(8);
+            filter.page.PAGNUM = cstmt01.getInt(6);
+            filter.page.PAGROW = cstmt01.getInt(7);
+            filter.page.TOTPAG = cstmt01.getInt(8);
+            filter.page.TOTROW = cstmt01.getInt(9);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -131,5 +139,26 @@ public class CouponRegistrationDAO {
         }
         return lstRtn;
     }
-
+    
+    public List<SQP04905Filter> loadSQP04905Filter(SQP04905Filter filter)throws Exception{
+        List<SQP04905Filter> lst = new ArrayList<>();
+        try{
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(cnx,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04905")
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04905Filter.class));
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("TFECHA", filter.getTFECHA());
+            params.addValue("FINICIO", filter.getFINICIO());
+            params.addValue("FFIN", filter.getFFIN());
+            params.addValue("TIPO", filter.getTIPO());
+            Map<String,Object> obj = jdbcCall.execute(params);
+            lst = (List<SQP04905Filter>) obj.get("result");
+        }catch(Exception ex){
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + ex.getMessage(), ex);
+        }
+        return lst;
+    }
 }

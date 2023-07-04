@@ -17,6 +17,11 @@ prototype.idRfndFareCalc = 'SalesReportFormRfndFareCalc';
 prototype.idAdm = 'SalesReportFormAdm';
 prototype.iderr = 'DataEntryError';
 prototype.ideterr = 'DataDetailEntryError';
+prototype.idRftx = 'SalesReportFormRftx';
+prototype.idRftxFOP = 'SalesReportFormRftxFOP';
+prototype.idRftxTAX = 'SalesReportFormRftxTAX';
+prototype.idRftxFareCalc = 'SalesReportFormRftxFareCalc';
+prototype.idVoidFOP = 'SalesReportFormFopVoid';
 prototype.url = CONTEXTPATH + '/SalesReport';
 prototype.idVoidFOP = 'SalesReportFormFopVoid';
 

@@ -102,7 +102,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-panelBpo').show();
                     if (this.bean.STVAL === '0') {
                         Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
-                    }                    
+                    }
                 }
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -256,10 +256,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.SCOUNTRY = this.getValue("de-txtCountry");
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             beanTemp.TGROSAMOUN = 0;
         }
@@ -294,7 +295,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data)
         }
 
-        //console.log(beanTemp);
+        console.log(beanTemp);
 
     },
     getData: function () {
@@ -332,6 +333,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -369,6 +372,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
@@ -549,7 +554,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     meDE.lstBlocked = [];
                     meDE.lstAdjustment = [];
                     meDE.flag_bporev = false;
-                    
+
                     Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
                             Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
                             );
@@ -632,7 +637,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
-            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replaceAll(',', ''));
         } else {
             monto_venta = 0;
         }
@@ -878,9 +883,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
-                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
-                        global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
+                        if (res.lstInfo[0].A1531TTARJ !== 'AX') {
+                            global.Msg({msg: 'Credit Card Is not AMEX'});
+                        }
                         for (var i = 0; i < res.lstInfo.length; i++) {
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
@@ -888,7 +894,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 flag_blocked = true;
                             } else {
                                 for (var j = 0; j < meDE.lstSendManual.length; j++) {
-                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT) {
+                                    if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT && meDE.lstSendManual[j].A1531VFOP === res.lstInfo[i].A1531VFOP) {
                                         flag_dupli = true;
                                     }
                                 }
@@ -922,9 +928,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     insertTKT: function (store_gridInfoScan, objTKT) {
         if (objTKT.A1531CFOP !== 'CC') {
             global.Msg({msg: 'Is not Credit Card'});
-        } else if (objTKT.A1531TTARJ !== 'AX') {
-            global.Msg({msg: 'Credit Card Is not AMEX'});
         } else {
+            if (objTKT.A1531TTARJ !== 'AX') {
+                global.Msg({msg: 'Credit Card Is not AMEX'});
+            }
             for (var i = 0; i < store_gridInfoScan.data.length; i++) {
                 if (store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
                         store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
@@ -1174,9 +1181,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
-                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
-                        global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
+                        if (res.lstInfo[0].A1531TTARJ !== 'AX') {
+                            global.Msg({msg: 'Credit Card Is not AMEX'});
+                        }
                         for (var i = 0; i < res.lstInfo.length; i++) {
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
@@ -1323,7 +1331,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             }
         });
     },
-    closeBpoRev_keyDownHandler: function(){
+    closeBpoRev_keyDownHandler: function () {
         this.flag_bporev = false;
         Ext.getCmp(prototype.id + '-panelScanCard').show();
         Ext.getCmp(prototype.id + '-panelBpoObserv').hide();

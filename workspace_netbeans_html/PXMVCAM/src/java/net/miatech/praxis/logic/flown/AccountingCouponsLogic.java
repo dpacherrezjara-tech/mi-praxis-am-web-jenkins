@@ -21,15 +21,7 @@ public class AccountingCouponsLogic {
         objDAO.setSession(ss);
     }
 
-    public List<A3084Filter> loadSQP01807(A3084Filter filter) throws SQLException, Exception {
-        return objDAO.loadSQP01807(filter);
-    }
-
-    public List<A3084Filter> loadSQP01808(A3084Filter filter) throws SQLException, Exception {
-        return objDAO.loadSQP01808(filter);
-    }
-
-    public List<A3084Filter> loadAccountingCoupons_COBOL(A3084Filter filter, HashMap<String, String> hmAeropuertos) throws SQLException, Exception {
-        return objDAO.loadAccountingCoupons_COBOL(filter, hmAeropuertos);
+    public List<A3084Filter> loadSQP04611(A3084Filter filter) throws SQLException, Exception {
+        return objDAO.loadSQP04611(filter);
     }
 }

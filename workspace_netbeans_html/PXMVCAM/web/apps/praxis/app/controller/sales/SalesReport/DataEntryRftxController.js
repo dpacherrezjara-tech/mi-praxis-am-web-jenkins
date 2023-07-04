@@ -1,11 +1,6 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*
+ * @Dvicente
  */
-
-/* global Promise, global */
-
 Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.idRftx + '-dataEntryRftxController',

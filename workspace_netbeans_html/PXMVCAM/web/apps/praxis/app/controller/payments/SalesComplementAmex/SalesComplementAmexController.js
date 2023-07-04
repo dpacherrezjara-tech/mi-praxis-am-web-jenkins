@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     fileName: '',
     reg99: 0,
     me: '',
+    params: {},
     searchParams: {},
     paramsDetail: {},
     paramsDetailPGTkt: {},
@@ -151,6 +152,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
         me.bean.IN_MERCHIDL = Ext.getCmp(prototype.id + '-cmbFindByLigas').getValue();
         me.bean.IN_MERCHIDT = Ext.getCmp(prototype.id + '-cmbFindByTablet').getValue();
+        me.bean.IN_OPERATNBR = Ext.getCmp(prototype.id + '-txtOPERATNBR').getValue();
         console.log(me.bean.IN_COMPLTYPE);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -212,7 +214,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         Ext.getCmp(prototype.id + '-cmbFindByLigas').setVisible(false);
         Ext.getCmp(prototype.id + '-cmbFindByTablet').setVisible(false);
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+        //me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/search'
@@ -299,7 +301,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         win.lblUser_toolTip("Estructura: A4166");
         me.panelActual = '-panelGridDataLiga';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+        //me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchLiga'
@@ -337,7 +339,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         win.lblUser_toolTip("Estructura: A4166");
         me.panelActual = '-panelGridDataTablet';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+        //me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchTablet'
@@ -529,7 +531,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
             }
         } else {
-            global.showMenu();
+            if (this.params.back === undefined) {
+                global.showMenu();
+            } else {
+                win.backPrograma(this.params.back);
+            }
         }
     },
     btnClear_click: function (obj, e) {
@@ -537,8 +543,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
 //        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
 //        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');   
-          Ext.getCmp(prototype.id + '-cmbFindByLigas').setValue('');
-          Ext.getCmp(prototype.id + '-cmbFindByTablet').setValue('');
+        Ext.getCmp(prototype.id + '-cmbFindByLigas').setValue('');
+        Ext.getCmp(prototype.id + '-cmbFindByTablet').setValue('');
     },
     btnExcel_click: function (obj, e) {
 
@@ -701,6 +707,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
+    },
+    startDisplay: function () {
+        //Ext.getCmp(prototype.id + '-txtPNR').setValue();
+        console.log(this.params)
+
+        Ext.getCmp(prototype.id + '-txtOPERATNBR').setValue(this.params.bean.INVORNBR);
+
+        Ext.getCmp(prototype.id + '-radiogroupTypeX').suspendEvents(false);
+        Ext.getCmp(prototype.id + '-radiogroupTypeXPlusgrade').setValue(false);
+        Ext.getCmp(prototype.id + '-radiogroupTypeXLigas').setValue(true);
+        Ext.getCmp(prototype.id + '-radiogroupTypeXTablet').setValue(false);
+        Ext.getCmp(prototype.id + '-radiogroupTypeX').resumeEvents();
+
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
+
+        if (selectedValue === 'L') {
+            this.btnSearch_click();
+        }
+    },
+    copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        navigator.clipboard.writeText(rowData.data.PNR.trim());
+        global.Msg({
+            msg: 'SPNR Copied to clipboard!: ' + rowData.data.PNR.trim()
+        });
     }
 
 }

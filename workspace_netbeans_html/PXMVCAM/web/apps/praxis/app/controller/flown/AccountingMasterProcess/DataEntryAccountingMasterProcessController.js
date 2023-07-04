@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id + '-dataEntryController',
     url: CONTEXTPATH + '/AccountingMasterProcess',
+    PERML: 'N',
     p: {},
     dataentryParams: {},
     aux: false,
@@ -41,6 +42,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 break;
         }
         global.AccessControlMaganer();
+        console.log('PERML');
+        console.log(userAccess);
+        console.log(optionSelect);
+        $.each(userAccess, function(x, y) {
+            if (y.NPROG === optionSelect.nprog) {                
+                PERML = y.PERML;
+                console.log('Access:'+PERML);
+            }
+        });
+        this.controlConsistency();
     }
     ,
     setStoreData: function() {
@@ -87,7 +98,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                         fn: function(btn) {
                             if (btn === 'yes') {
                                 this.p.action = "I";
-                                this.crud();
+                                this.validation();
                             }
                         }
                     });
@@ -144,10 +155,54 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 break;            
         }                  
     },
-    crud: function() {
+    validation: function() {
         var rec = this.p.rec;
         var strOption = this.p.action;
+        var me = this;
         //console.log('opcion : ' + strOption);
+        Ext.Ajax.request({
+            url: this.url + '/validation',
+            method: 'POST',
+            timeout: 60000000,
+            params: this.getDataEntryValues(strOption),
+            success: function(response) {
+                var res = Ext.JSON.decode(response.responseText);
+                var result = res.data;
+                var val_flown = result.IN_FLOWN;
+                var val_emd = result.IN_EMD;
+                if (val_flown === 0){
+                    /*Ext.Msg.show({
+                        title: '.:Flown Validation:.',
+                        msg: 'Flown Valuation is pendinng'
+                    });*/
+                    Ext.Msg.alert('.:Flown Validation:.','Flown Valuation is pending');
+                } else{
+                    if(val_emd === 0){
+                        Ext.Msg.show({
+                            title: '.:PRAXIS:.',
+                            msg: 'EMDs Valuation is pending. Are you sure to insert ?',
+                            buttons: Ext.MessageBox.YESNO,
+                            scope: me,
+                            icon: Ext.MessageBox.QUESTION,
+                            modal: true,
+                            fn: function(btn) {
+                                if (btn === 'yes') {
+                                    me.p.action = "I";
+                                    me.crud();                                    
+                                }
+                            }
+                        });
+                    } else {
+                        me.p.action = "I";
+                        me.crud();                        
+                    }
+                }
+            }
+        });
+    },
+    crud: function(){
+        var rec = this.p.rec;
+        var strOption = this.p.action;
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
@@ -197,6 +252,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         });
     }
     ,
+    //<editor-fold defaultstate="collapsed" desc="controlLight">
+    controlConsistency: function () {
+        
+        if(PERML === 'Y'){
+            console.log('opcion PERML: ' + PERML);
+            console.log(Ext.getCmp(prototype.id + '-de-chkConsistencia'));
+            Ext.getCmp(prototype.id + '-de-chkConsistencia').setValue(true);            
+            Ext.getCmp(prototype.id + '-de-chkConsistencia').disable();            
+        }
+    },
+    // </editor-fold>
     getDataEntryValues: function(strOption) {
 
         var A1955MODUL = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();

@@ -1255,7 +1255,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Merchant ID', dataIndex: 'MERCHID', width: 90,
+                                            {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 90,
                                                 listeners: {
 //                                                            click: 'onGridDetPricing'
                                                 },
@@ -1434,7 +1434,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant ID', dataIndex: 'MERCHID', width: 90,
+                                                    {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 90,
                                                         listeners: {
                                                             click: 'onGridDetTransaction'
                                                         },
@@ -1847,7 +1847,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant ID', dataIndex: 'MERCHID', width: 100,
+                                                    {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 100,
                                                         listeners: {
                                                             click: 'onGridDetPricing'
                                                         },
@@ -2315,7 +2315,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant ID', dataIndex: 'MERCHID', width: 100,
+                                                    {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;";
@@ -2783,7 +2783,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant ID', dataIndex: 'MERCHID', width: 90,
+                                                    {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 90,
                                                         listeners: {
 //                                                            click: 'onGridDetPricing'
                                                         },
@@ -3629,7 +3629,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Id', dataIndex: 'MERCHID', width: 90,
+                                                        text: 'Id', dataIndex: 'PMERCHID', width: 90,
                                                         listeners: {
                                                             click: 'onGridDetSettMerchant'
                                                         },
@@ -5430,7 +5430,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant ID', dataIndex: 'MERCHID', width: 80,
+                                                    {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;";
@@ -6497,7 +6497,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Merchant ID', dataIndex: 'MERCHID', width: 80,
+                                            {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:center;";

@@ -212,6 +212,7 @@ public class EMDDetailController extends BaseController {
                         + item.Fare + delim
                         + item.IVA + delim
                         + item.others_taxes + delim
+                        + item.Commission + delim
                         + item.Total + delim
                         + item.FECCONT + delim
                         + item.ACOUNTID + delim

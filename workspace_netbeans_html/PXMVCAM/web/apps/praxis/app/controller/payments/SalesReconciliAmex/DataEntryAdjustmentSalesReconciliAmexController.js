@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
     dataObtain: {},
     lstSendManual: [],
     beanSettlementTktsDetail: {},
-    paramsDetailDEDetTktSettlement : {},
+    paramsDetailDEDetTktSettlement: {},
     beanStringGrid: {},
     sumAmount: 0,
     init: function (view) {
@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
         this.setValue('txtHOCR', this.beanResult.HOCR);
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
-        this.setValue('txtHOUP', this.beanResult.HOUP);        
+        this.setValue('txtHOUP', this.beanResult.HOUP);
     },
     obtainData: function () {
     },
@@ -129,10 +129,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
             }
         });
     },
-
     getDataGrid: function () {
         this.beanSettlementTktsDetail = {},
-        this.beanSettlementTktsDetail.DATE = this.bean.DATE;
+                this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
         this.beanSettlementTktsDetail.MERCHID = this.bean.MERCHID;
         this.beanSettlementTktsDetail.SPNR = this.bean.SPNR;
@@ -147,8 +146,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
+        this.beanSettlementTktsDetail.AREFNBR = this.beanResult.AREFNBR;
+        this.beanSettlementTktsDetail.TDOC = this.beanResult.TDOC;
         meAD.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
-        
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktSettlement'
@@ -219,7 +220,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
     onCancelClick: function (btn) {
         this.view.close();
     },
-
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
     MaintenanceA4116: function (beanTemp) {
 //        console.log(beanTemp);
@@ -289,7 +289,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
             }
         });
     },
-
     validacionInsert: function () {
         var msjResult = '';
         if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtISREFNBR") === '') {

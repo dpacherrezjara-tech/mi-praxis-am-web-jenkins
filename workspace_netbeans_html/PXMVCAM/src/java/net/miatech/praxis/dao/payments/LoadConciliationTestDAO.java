@@ -212,7 +212,7 @@ public class LoadConciliationTestDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4164Filter> loadPX584SQP04730(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
@@ -318,7 +318,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.IN_MERCHN = filter.IN_MERCHN.trim();
                     beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
-                    
+
                     beanTkt.lngQSALES = rst.getLong("QSALES");
                     beanTkt.lngQMATCH = rst.getLong("QMATCH");
                     beanTkt.lngQMANUAL = rst.getLong("QMANUAL");
@@ -335,15 +335,15 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQLIGEA = rst.getLong("QLIGEA");
                     beanTkt.lngQLIGEM = rst.getLong("QLIGEM");
                     beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
-                    
+
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
-                    
+
                     //Void
                     beanTkt.lngQVSALES = rst.getLong("QVSALES");
                     beanTkt.lngQVMATCH = rst.getLong("QVMATCH");
                     beanTkt.lngQVMANUAL = rst.getLong("QVMANUAL");
                     beanTkt.lngQVPEND = rst.getLong("QVPEND");
-                
+
                     beanTkt.lngTotQSALES = lngTotQSALES;
                     beanTkt.lngTotQMATCH = lngTotQMATCH;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
@@ -375,7 +375,7 @@ public class LoadConciliationTestDAO {
                     lstTkts.add(beanTkt);
                 }
                 rst.close();
-           // }
+                // }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -519,6 +519,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -561,7 +562,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         //beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -586,8 +587,8 @@ public class LoadConciliationTestDAO {
                             beanTkt.strPEM = "SALES";
                         }
                         beanTkt.RFIC = rst.getString("RFIC").trim();
-                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();                        
-                        
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();
+
                         if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
                             beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
                         } else {
@@ -622,7 +623,7 @@ public class LoadConciliationTestDAO {
                         } else if (rst.getString("FTE").trim().equals("M")) {
                             beanTkt.strSORIG = "Manual";
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             beanTkt.SDATEL = rst.getString("SDATEL").trim();
                             beanTkt.SFLOAD = rst.getString("SFLOAD").trim();
@@ -635,8 +636,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.STCNTR = rst.getString("STCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
                             beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                            beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARS").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
@@ -663,9 +666,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
                             beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
-                            beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                            beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
@@ -806,8 +810,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.STCNTR = rst.getString("STCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                        beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -914,7 +920,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.TDOC = rst.getString("TDOC").trim();
                         beanTkt.TRNCU = rst.getString("TRNCU").trim();
                         beanTkt.SEQ = rst.getString("SEQ").trim();
-                        beanTkt.RFIS1 = rst.getString("RFIS1").trim(); 
+                        beanTkt.RFIS1 = rst.getString("RFIS1").trim();
                         if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
@@ -952,9 +958,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                         beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
-                        beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                        beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("AINVN").trim();
@@ -1090,6 +1097,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -1150,7 +1158,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strYearFrom = filter.strYearFrom.trim();
@@ -1189,7 +1197,7 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.CERROR = rst.getString("CERROR").trim();
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             beanTkt.SDATEL = rst.getString("SDATEL").trim();
                             beanTkt.SFLOAD = rst.getString("SFLOAD").trim();
@@ -1202,8 +1210,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.STCNTR = rst.getString("STCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
                             beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                            beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARS").trim();
                             beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                             beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -1221,9 +1231,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
                             beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
-                            beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                            beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                             beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                             beanTkt.SINVN = rst.getString("AINVN").trim();
@@ -1279,7 +1290,7 @@ public class LoadConciliationTestDAO {
                             beanTkt.strTitulo = "Sales Date : ";
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
-                                + beanTkt.SCARCOD + " : " + beanTkt.strDescCard /* + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** " */ ;
+                                + beanTkt.SCARCOD + " : " + beanTkt.strDescCard /* + " **" + hmDescEstados.get(rst.getString("STVAL").trim()).toString() + "** " */;
 
                         if (rst.getString("FVOID").trim().equals("V")) {
                             beanTkt.strFlagStat = "Void";
@@ -1347,8 +1358,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.STCNTR = rst.getString("STCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                        beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("SINVN").trim();
                         beanTkt.SIDATE = rst.getString("SIDATE").trim();
@@ -1474,9 +1487,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                         beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
-                        beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                        beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("AINVN").trim();
                         beanTkt.SIDATE = rst.getString("AIDATE").trim();
@@ -1612,6 +1626,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
@@ -1651,7 +1666,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         //beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -1690,7 +1705,7 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.CERROR = rst.getString("CERROR").trim();
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             /*beanTkt.FTE = rst.getString("FTE").trim();
                              if (rst.getString("FTE").trim().equals("A")) {
@@ -1711,8 +1726,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.STCNTR = rst.getString("STCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
                             beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                            beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARS").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
@@ -1739,9 +1756,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
                             beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
-                            beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                            beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
@@ -1876,8 +1894,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.STCNTR = rst.getString("STCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                        beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -2015,9 +2035,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                         beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
-                        beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                        beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("AINVN").trim();
@@ -2306,7 +2327,7 @@ public class LoadConciliationTestDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4164Filter> loadPX584SQP04731(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
@@ -2448,13 +2469,13 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
-                    
+
                     //Void
                     beanTkt.lngQVSALES = rst.getLong("QVSALES");
                     beanTkt.lngQVMATCH = rst.getLong("QVMATCH");
                     beanTkt.lngQVMANUAL = rst.getLong("QVMANUAL");
                     beanTkt.lngQVPEND = rst.getLong("QVPEND");
-                   
+
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
                     beanTkt.lngTotQSOSP = lngTotQSOSP;
@@ -2465,7 +2486,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQTOTBK = lngTotQWSET + lngTotQACEP + lngTotQRECH + lngTotQSOSP + lngTotQTHTEF;
 
                     beanTkt.lngTotQPAID = lngTotQPAID;
-                    
+
                     beanTkt.lngQPEND = rst.getLong("QPEND");
                     beanTkt.lngQCOMPS = rst.getLong("QCOMPS");
                     beanTkt.lngQCOMPM = rst.getLong("QCOMPM");
@@ -2480,7 +2501,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQLIGEM = rst.getLong("QLIGEM");
                     beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
-                
+
                     beanTkt.lngTotQPEND = lngTotQPEND;
                     beanTkt.lngTotQCOMPS = lngTotQCOMPS;
                     beanTkt.lngTotQCOMPM = lngTotQCOMPM;
@@ -2500,7 +2521,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQVMATCH = lngTotQVMATCH;
                     beanTkt.lngTotQVMANUAL = lngTotQVMANUAL;
                     beanTkt.lngTotQVPEND = lngTotQVPEND;
-                    
+
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;
@@ -2700,7 +2721,7 @@ public class LoadConciliationTestDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4164Filter> loadPX584SQP04732(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
@@ -2813,13 +2834,13 @@ public class LoadConciliationTestDAO {
                     beanTkt.strDescCard = rst.getString("NAMECAR").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     beanTkt.strDescCountry = rst.getString("NAME").trim();
-                    
+
                     beanTkt.lngQMATCH = rst.getLong("QMATCH");
                     beanTkt.lngQSALES = rst.getLong("QSALES");
                     beanTkt.lngQACCB = rst.getLong("QACCB");
                     beanTkt.lngQDIFF = rst.getLong("QDIFF");
                     beanTkt.lngQMANUAL = rst.getLong("QMANUAL");
-                    
+
                     //Void
                     beanTkt.lngQVSALES = rst.getLong("QVSALES");
                     beanTkt.lngQVMATCH = rst.getLong("QVMATCH");
@@ -2854,7 +2875,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQTOTBK = lngTotQWSET + lngTotQACEP + lngTotQRECH + lngTotQSOSP + lngTotQTHTEF;
 
                     beanTkt.lngTotQPAID = lngTotQPAID;
-                    
+
                     beanTkt.lngQPEND = rst.getLong("QPEND");
                     beanTkt.lngQCOMPS = rst.getLong("QCOMPS");
                     beanTkt.lngQCOMPM = rst.getLong("QCOMPM");
@@ -2868,9 +2889,9 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQLIGEA = rst.getLong("QLIGEA");
                     beanTkt.lngQLIGEM = rst.getLong("QLIGEM");
                     beanTkt.lngQLIGEP = beanTkt.lngQLIGEA - beanTkt.lngQLIGEM;
-                    
+
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QMANUAL") + rst.getLong("QSALES");
-                
+
                     beanTkt.lngTotQPEND = lngTotQPEND;
                     beanTkt.lngTotQCOMPS = lngTotQCOMPS;
                     beanTkt.lngTotQCOMPM = lngTotQCOMPM;
@@ -2889,8 +2910,8 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQVSALES = lngTotQVSALES;
                     beanTkt.lngTotQVMATCH = lngTotQVMATCH;
                     beanTkt.lngTotQVMANUAL = lngTotQVMANUAL;
-                    beanTkt.lngTotQVPEND = lngTotQVPEND;                    
-                    
+                    beanTkt.lngTotQVPEND = lngTotQVPEND;
+
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;
@@ -2986,7 +3007,7 @@ public class LoadConciliationTestDAO {
                 lngTotQSALES = rst.getLong("QSALES");
                 lngTotQACCB = rst.getLong("QACCB");
                 lngTotQDIFF = rst.getLong("QDIFF");
-                lngTotQMANUAL = rst.getLong("QMANUAL");                
+                lngTotQMANUAL = rst.getLong("QMANUAL");
                 lngTotQACEP = rst.getLong("QACEP");
                 lngTotQRECH = rst.getLong("QRECH");
                 lngTotQSOSP = rst.getLong("QSOSP");
@@ -2996,7 +3017,7 @@ public class LoadConciliationTestDAO {
                 //VOID
                 lngTotQVOID = rst.getLong("QVOID");
                 lngTotQVOIDMATCH = rst.getLong("QVOIDMATCH");
-                lngTotQVOIDMANUAL = rst.getLong("QVOIDMANUAL"); 
+                lngTotQVOIDMANUAL = rst.getLong("QVOIDMANUAL");
                 lngTotQVOIDSALES = rst.getLong("QVOIDSALES");
             }
             rst.close();
@@ -3032,7 +3053,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQSALES = rst.getLong("QSALES");
                     beanTkt.lngQACCB = rst.getLong("QACCB");
                     beanTkt.lngQDIFF = rst.getLong("QDIFF");
-                    beanTkt.lngQMANUAL = rst.getLong("QMANUAL");                    
+                    beanTkt.lngQMANUAL = rst.getLong("QMANUAL");
                     beanTkt.lngQTOTSAL = rst.getLong("QMATCH") + rst.getLong("QSALES")
                             + rst.getLong("QACCB") + rst.getLong("QDIFF") + rst.getLong("QMANUAL");
 
@@ -3040,12 +3061,12 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQRECH = rst.getLong("QRECH");
                     beanTkt.lngQSOSP = rst.getLong("QSOSP");
                     beanTkt.lngQTHTEF = rst.getLong("QTHTEF");
-                    
+
                     //VOID
                     beanTkt.lngQVOID = rst.getLong("QVOID");
                     beanTkt.lngQVOIDMATCH = rst.getLong("QVOIDMATCH");
                     beanTkt.lngQVOIDMANUAL = rst.getLong("QVOIDMANUAL");
-                    beanTkt.lngQVOIDSALES = rst.getLong("QVOIDSALES");                                        
+                    beanTkt.lngQVOIDSALES = rst.getLong("QVOIDSALES");
                     //Sin Settlement
                     /*beanTkt.lngQTOTWS = beanTkt.lngQTOTSAL - (rst.getLong("QACEP")
                      + rst.getLong("QRECH") + rst.getLong("QSOSP"));*/
@@ -3058,7 +3079,7 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngTotQSALES = lngTotQSALES;
                     beanTkt.lngTotQACCB = lngTotQACCB;
                     beanTkt.lngTotQDIFF = lngTotQDIFF;
-                    beanTkt.lngTotQMANUAL = lngTotQMANUAL;                    
+                    beanTkt.lngTotQMANUAL = lngTotQMANUAL;
                     beanTkt.lngTotQTOTSAL = lngTotQMATCH + lngTotQSALES + lngTotQACCB + lngTotQDIFF + lngTotQMANUAL;
                     beanTkt.lngTotQACEP = lngTotQACEP;
                     beanTkt.lngTotQRECH = lngTotQRECH;
@@ -3127,6 +3148,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -3193,7 +3215,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") || !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -3252,7 +3274,7 @@ public class LoadConciliationTestDAO {
                         } else if (rst.getString("FTE").trim().equals("M")) {
                             beanTkt.strSORIG = "Manual";
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             //COMENTADO A PEDIDO DE ENS 20160119
                             /*beanTkt.FTE = rst.getString("FTE").trim();
@@ -3278,13 +3300,10 @@ public class LoadConciliationTestDAO {
                                 beanTkt.strMoneda = rst.getString("MONEDAS").trim();
                             }
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
-                            if (!rst.getString("STVAL").trim().equals("2")) {
-                                beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                                beanTkt.strSCARDN = rst.getString("ACARDN").trim();
-                            } else {
-                                beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                                beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
-                            }
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                             beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -3314,9 +3333,10 @@ public class LoadConciliationTestDAO {
                             } else {
                                 beanTkt.strMoneda = rst.getString("MONEDAA").trim();
                             }
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
-                            beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                            beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
+                            beanTkt.AVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                             beanTkt.SINVN = rst.getString("AINVN").trim();
@@ -3475,8 +3495,10 @@ public class LoadConciliationTestDAO {
                             beanTkt.strMoneda = rst.getString("MONEDAS").trim();
                         }
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                        beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -3632,9 +3654,10 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.strMoneda = rst.getString("MONEDAA").trim();
                         }
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
-                        beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                        beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("AINVN").trim();
@@ -3675,7 +3698,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.dblTotAVFOP = dblTotAVFOP;
                         //TEF
                         beanTkt.TDATE = rst.getString("TDATE").trim();
-                        
+
                         beanTkt.RFIS1 = rst.getString("RFIS1").trim();
 
                         try {
@@ -3973,17 +3996,21 @@ public class LoadConciliationTestDAO {
                 filter.STVAL = "4";
             } else if (filter.STVAL.trim().equals("Match Manual")) {
                 filter.STVAL = "5";
+            } else if (filter.STVAL.trim().equals("Stand By")) {
+                filter.STVAL = "6";
             }
         }
-
+        int USOScant = 0;
         /*if (!filter.STVAL.equals("2")) {
          filter.APAYMENT = filter.SPAYMENT;
          filter.SPAYMENT = "";
          }*/
         CallableStatement cstmt = null;
+        CallableStatement cstmt_usos = null;
         ResultSet rst = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04348(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SPRUT01556(?)}";
 
         Connection cnx = null;
         try {
@@ -4016,17 +4043,31 @@ public class LoadConciliationTestDAO {
                 beanTkt.CCIA = rst.getString("CCIA").trim();
                 beanTkt.FORMA = rst.getString("FORMA").trim();
                 beanTkt.SERIE = rst.getString("SERIE").trim();
-                
-                beanTkt.OBSERV = rst.getString("OBSERV").trim();
+
+                beanTkt.OBSERV = rst.getString("OBSERV").trim(); //Viene del A4174 es la obs del ajuste
+                beanTkt.OBSERV_ADJ = rst.getString("OBSERV").trim(); //Viene del A4174 es la obs del ajuste
                 beanTkt.SVFOP_ADJ = rst.getDouble("SVFOP_ADJ");
+                beanTkt.DESC_TYPE_ADJ = rst.getString("desCERROR").trim();//Tipo de ajuste
 
                 beanTkt.TDOC = rst.getString("TDOC").trim();
                 beanTkt.SEQ = rst.getString("SEQ").trim();
+                beanTkt.CORRL = rst.getString("CORRL").trim();
                 beanTkt.STVAL = rst.getString("STVAL").trim();
                 beanTkt.FTE = rst.getString("FTE").trim();
                 beanTkt.DATEC = rst.getString("DATEC").trim();
                 beanTkt.FADYEN = rst.getString("FADYEN").trim();
 
+                cstmt_usos = cnx.prepareCall(SQLCLL02);
+                cstmt_usos.registerOutParameter(1, Types.VARCHAR);
+                cstmt_usos.setString(1, beanTkt.CCIA + beanTkt.FORMA + beanTkt.SERIE);
+                cstmt_usos.execute();
+                beanTkt.USOS = cstmt_usos.getString(1);
+                cstmt_usos.close();
+                beanTkt.USOS1 = beanTkt.USOS.substring(16, 17);
+                beanTkt.USOS2 = beanTkt.USOS.substring(17, 18);
+                beanTkt.USOS3 = beanTkt.USOS.substring(18, 19);
+                beanTkt.USOS4 = beanTkt.USOS.substring(19, 20);
+                
                 //SALES
                 beanTkt.SDATEL = rst.getString("SDATEL").trim();
                 beanTkt.SFLOAD = rst.getString("SFLOAD").trim();
@@ -4044,7 +4085,10 @@ public class LoadConciliationTestDAO {
                 beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                 beanTkt.SVFOP = rst.getDouble("SVFOP");
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                beanTkt.strSCARDN = rst.getString("SCARDN").trim();
+                beanTkt.ACARDN = rst.getString("ACARDN").trim();
+                beanTkt.strACARDN = rst.getString("ACARDN").trim();
                 beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -4115,14 +4159,14 @@ public class LoadConciliationTestDAO {
                 beanTkt.FNOBANK = rst.getString("FNOBANK").trim();
                 beanTkt.DATEC2 = rst.getString("DATEC2").trim();
                 beanTkt.DATEC3 = rst.getString("DATEC3").trim();
-                
-                if (rst.getString("FVOID").trim().equals("V")) {
-                            beanTkt.strFlagStat = "Void";
 
-                        } else if (rst.getString("FLAGC").trim().equals("C")) {
-                            beanTkt.strFlagStat = "CNJ";
-                        }
-                
+                if (rst.getString("FVOID").trim().equals("V")) {
+                    beanTkt.strFlagStat = "Void";
+
+                } else if (rst.getString("FLAGC").trim().equals("C")) {
+                    beanTkt.strFlagStat = "CNJ";
+                }
+
                 beanTkt.USCR = rst.getString("USCR").trim();
                 beanTkt.FECR = rst.getString("FECR").trim();
                 beanTkt.HOCR = rst.getString("HOCR").trim();
@@ -4173,6 +4217,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         if (!filter.IN_STVAL.equals("2")) {
             filter.APAYMENT = filter.SPAYMENT;
@@ -4243,7 +4288,8 @@ public class LoadConciliationTestDAO {
                 beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                 beanTkt.SVFOP = rst.getDouble("SVFOP");
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.SINVN = rst.getString("SINVN").trim();
                 beanTkt.SIDATE = rst.getString("SIDATE").trim();
@@ -4452,6 +4498,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -4594,7 +4641,7 @@ public class LoadConciliationTestDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4164Filter> loadPX584SQP04349(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
@@ -4693,7 +4740,7 @@ public class LoadConciliationTestDAO {
 
         return lstTkts;
     }
-   
+
     public List<A4164Filter> loadPX584SQP04341(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
@@ -4714,6 +4761,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04341(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -4882,6 +4930,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04342(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -5043,6 +5092,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -5157,6 +5207,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Stand By");
 
         HashMap<String, String> hmDescCompl = new HashMap<String, String>();
         hmDescCompl.put("", "");
@@ -5226,7 +5277,7 @@ public class LoadConciliationTestDAO {
                 while (rst.next()) {
 
                     //PRESENTACION SEGUN ESTADO
-                    if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
+                    if (!rst.getString("STVAL").trim().equals("4")) {
                         beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
@@ -5282,7 +5333,7 @@ public class LoadConciliationTestDAO {
                         } else if (rst.getString("FTE").trim().equals("M")) {
                             beanTkt.strSORIG = "Manual";
                         }
-                        if (rst.getString("STVAL").trim().equals("2")) {
+                        if (rst.getString("STVAL").trim().equals("2") || rst.getString("STVAL").trim().equals("6")) {
                             //SALES
                             /*beanTkt.FTE = rst.getString("FTE").trim();
                              if (rst.getString("FTE").trim().equals("A")) {
@@ -5310,7 +5361,7 @@ public class LoadConciliationTestDAO {
                                 beanTkt.valVFOP = 2;
                             }
                             beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                            beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARS").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
@@ -5345,8 +5396,8 @@ public class LoadConciliationTestDAO {
                             } else {
                                 beanTkt.valVFOP = 2;
                             }
-                            beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                            beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                            beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                            beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
@@ -5510,7 +5561,8 @@ public class LoadConciliationTestDAO {
                         }
                         ;
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
-                        beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("SINVN").trim();
@@ -5666,9 +5718,10 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                         beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                         beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                        beanTkt.SVFOP = rst.getDouble("AVFOP");
-                        beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                        beanTkt.strSCARDN = rst.getString("ACARDN").trim();
+                        beanTkt.SVFOP = rst.getDouble("SVFOP");
+                        beanTkt.AVFOP = rst.getDouble("AVFOP");
+                        beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                        beanTkt.strSCARDN = rst.getString("SCARDN").trim();
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                         beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
                         beanTkt.SINVN = rst.getString("AINVN").trim();
@@ -5786,7 +5839,7 @@ public class LoadConciliationTestDAO {
 
         return hmResultado;
     }
-    
+
     public List<A4164Filter> loadPX584SQP04604(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
@@ -5846,7 +5899,7 @@ public class LoadConciliationTestDAO {
 
         return lstTkts;
     }
-    
+
     public String loadPX584SQP04752(A4164Filter filter) throws SQLException, Exception {
 
         CallableStatement cstmt01 = null;
@@ -5869,6 +5922,62 @@ public class LoadConciliationTestDAO {
             cstmt01.setString(6, session.getUserView().getUserInfo().USR);
             cstmt01.setString(7, Functions.getFechaActual());
             cstmt01.setString(8, Functions.getHoraActual());
+
+            cstmt01.execute();
+
+        } catch (Exception e) {
+            msj = e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX584SQP04755(A4164Filter filter) throws SQLException, Exception {
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        //lstSendManual
+
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04755(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.CCIA.trim());
+            cstmt01.setString(3, filter.FORMA.trim());
+            cstmt01.setString(4, filter.SERIE.trim());
+            cstmt01.setString(5, filter.SDATE.trim());
+            cstmt01.setString(6, filter.TDOC.trim());
+            cstmt01.setString(7, filter.CORRL.trim());
+            cstmt01.setString(8, filter.SEQ.trim());
+            cstmt01.setString(9, filter.OBSERV_ADJ.trim());
+            cstmt01.setString(10, filter.TYPE_ADJ.trim());
+            cstmt01.setString(11, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(12, Functions.getFechaActual());
+            cstmt01.setString(13, Functions.getHoraActual());
 
             cstmt01.execute();
 

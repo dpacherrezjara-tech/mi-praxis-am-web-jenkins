@@ -174,7 +174,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     ["2", "Sales without Reconciliation"],
                                     ["3", "Reconciliation without Sales"],
                                     ["4", "Match with Differences"],
-                                    ["5", "Match Manual"]
+                                    ["5", "Match Manual"],
+                                    ["6", "Stand By"]
                                 ]
                             }),
                             fieldStyle: 'color:#074066;',
@@ -464,6 +465,50 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     maxLength: 4,
                                     readOnly: true,
                                     width: 80
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Coupons',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 10',
+                                    padding: '4 0',
+                                    width: 90,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS1',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS3',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-2-txtUSOS4',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 4,
+                                    readOnly: true,
+                                    width: 20
                                 }
                             ]
                         },
@@ -1028,6 +1073,49 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     width: 100
                                 },
                             ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'column',
+                            margin: '0 0 4 0',
+                            border: false,
+                            bodyStyle: 'background: #E5ECEF',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'Adj. Type',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 10',
+                                    padding: '4 0',
+                                    width: 120,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESC_TYPE_ADJ',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    readOnly: true,
+                                    width: 140
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: 'Adj. Obs.',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    margin: '0 0 0 15',
+                                    padding: '4 0',
+                                    width: 120,
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtOBSERV_ADJ',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    readOnly: true,
+                                    width: 290
+                                },
+                            ]
                         }
                     ]
                 },
@@ -1401,6 +1489,105 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                         },
                     ]
                 },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-panelAdj',
+                    layout: 'hbox',
+                    hidden: true,
+                    border: false,
+                    bodyStyle: 'background:#E5ECEF;',
+                    items: [
+                        {
+                            xtype: 'label',
+                            text: 'Adjustment',
+                            textAlign: 'center',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            margin: '4 4 4 4',
+                            width: 70
+                        },
+                        {xtype: 'tbspacer', width: 2},
+                        {
+                            xtype: 'button',
+                            width: 25,
+                            id: prototype.id + '-openBpoAdj',
+                            //margin: '4 4 4 4',
+                            //iconCls: 'prx-icon-add',
+                            icon: 'resources/img/botones/facsimil.png',
+                            tooltip: 'BPO Adj.',
+                            listeners: {
+                                click: 'bpoAdj_keyDownHandler'
+                            }
+
+                        },
+                        {xtype: 'tbspacer', width: 2},
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-closeBpoAdj',
+                            hidden: true,
+                            width: 25,
+                            //margin: '4 4 4 4',
+                            //iconCls: 'prx-icon-add',
+                            icon: 'resources/img/botones/cancel.png',
+                            tooltip: 'Close BPO Adj.',
+                            listeners: {
+                                click: 'closeBpoAdj_keyDownHandler'
+                            }
+
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-panelBpoAdj',
+                    layout: 'hbox',
+                    hidden: true,
+                    border: false,
+                    //margin: '0 2 0 2',
+                    bodyStyle: 'background:#E5ECEF;',
+                    items: [
+                        {
+                            xtype: 'label',
+                            text: 'Adjustment Type',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            margin: '4 4 4 4',
+                            width: 120
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbBpoADJTYPE',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            fieldStyle: 'text-align:left;',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            width: 180,
+                            labelWidth: 10,
+                            hidden: false,
+                            hiddenLabel: false
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'BPO Adjustment',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            margin: '4 4 4 4',
+                            width: 120
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-de-txtBpoADJ-RO',
+                            style: 'font-weight:bold;color:#0B333C;',
+                            fieldStyle: 'text-align:left;',
+                            enforceMaxLength: true,
+                            readOnly: false,
+                            maxLength: 50,
+                            width: 320,
+                        },
+                    ]
+                },
                 //<editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'fieldset',
@@ -1572,15 +1759,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                     listeners: {
                         click: 'onUpdateClick'
                     }
-                }, 
+                },
                 {xtype: 'tbspacer', width: 15},
                 {
-                    text: 'Update',
+                    text: 'Update Rev',
                     id: prototype.id + '-2-btnUpdateBpoRev',
                     hidden: true,
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onUpdateClickBpoRev'
+                    }
+                },
+                {xtype: 'tbspacer', width: 15},
+                {
+                    text: 'Update Adj',
+                    id: prototype.id + '-2-btnUpdateBpoAdj',
+                    hidden: true,
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateClickBpoAdj'
                     }
                 },
                 {xtype: 'tbspacer', width: 15},

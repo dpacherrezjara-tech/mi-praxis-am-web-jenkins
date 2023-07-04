@@ -887,7 +887,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552TAX20 = 0;
 
                         } else if (fileA2552.A2552BASE.equals("AP")) {
-                            fileA2552.A2552PAVTA = getCellValue(currentRow.getCell(0));
+                            fileA2552.A2552PAVTA = getCellValue(currentRow.getCell(7));
                             if (fileA2552.A2552PAVTA.equals("")) {
                                 result = "Country required";
                                 break;
@@ -896,7 +896,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "THE COUNTRY MUST BE 2 CHARACTERES" + fileA2552.A2552PAVTA;
                                 break;
                             }
-                            fileA2552.A2552IATA = getCellValue(currentRow.getCell(1));
+                            fileA2552.A2552IATA = getCellValue(currentRow.getCell(4));
                             if (fileA2552.A2552IATA.equals("")) {
                                 result = "Iata required";
                                 break;
@@ -905,18 +905,42 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "THE IATA MUST BE 8 CHARACTERES" + fileA2552.A2552IATA;
                                 break;
                             }
-                            if (!getCellValue(currentRow.getCell(2)).equals("")) {
-                                fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(2)));
+                            if (!getCellValue(currentRow.getCell(9)).equals("")) {
+                                fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
                             } else {
                                 fileA2552.A2552COMI = 0;
                             }
-                            if (!getCellValue(currentRow.getCell(3)).equals("")) {
-                                fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(3)));
+                            if (!getCellValue(currentRow.getCell(10)).equals("")) {
+                                fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
                             } else {
                                 fileA2552.A2552TAXCM = 0;
                             }
-                            if (!getCellValue(currentRow.getCell(4)).equals("")) {
-                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(4)));
+                            // retenciones 
+                            if (!getCellValue(currentRow.getCell(11)).equals("")) {
+                                fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                            } else {
+                                fileA2552.A2552PROVI = 0;
+                            }
+                            if (!getCellValue(currentRow.getCell(12)).equals("")) {
+                                fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                            } else {
+                                fileA2552.A2552PROVI2 = 0;
+                            }
+                            if (!getCellValue(currentRow.getCell(13)).equals("")) {
+                                fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                            } else {
+                                fileA2552.A2552PROVI3 = 0;
+                            }
+                            
+                            if (!getCellValue(currentRow.getCell(14)).equals("")) {
+                                fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                            } else {
+                                fileA2552.A2552PROVI4 = 0;
+                            }
+                            // fin                           
+                            
+                            if (!getCellValue(currentRow.getCell(15)).equals("")) {
+                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
@@ -924,7 +948,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "Amount must be greater or less than zero";
                                 break;
                             }
-                            fileA2552.A2552CUR = getCellValue(currentRow.getCell(5));
+                            fileA2552.A2552CUR = getCellValue(currentRow.getCell(8));
                             if (fileA2552.A2552CUR.equals("")) {
                                 result = "Currency required";
                                 break;
@@ -933,7 +957,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "THE Currency MUST BE 3 CHARACTERES" + fileA2552.A2552CUR;
                                 break;
                             }
-                            fileA2552.A2552TRNCO = getCellValue(currentRow.getCell(6));
+                            fileA2552.A2552TRNCO = getCellValue(currentRow.getCell(1));
                             if (fileA2552.A2552TRNCO.equals("")) {
                                 result = "Transaction required TRNCO";
                                 break;
@@ -942,7 +966,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "THE Transaction MUST BE 3 CHARACTERES" + fileA2552.A2552TRNCO;
                                 break;
                             }
-                            fileA2552.A2552TKT = getCellValue(currentRow.getCell(7));
+                            fileA2552.A2552TKT = getCellValue(currentRow.getCell(16));
                             if (fileA2552.A2552TKT.equals("")) {
                                 result = "TICKET required";
                                 break;
@@ -951,15 +975,21 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "THE TICKET MUST BE 13 CHARACTERES CIA-FORMA-SERIE " + fileA2552.A2552TKT;
                                 break;
                             }
-                            fileA2552.A2552RAZONLIB = getCellValue(currentRow.getCell(8));
-                            if (!fileA2552.A2552RAZONLIB.equals("")) {
+                            fileA2552.A2552RAZONLIB ="";// getCellValue(currentRow.getCell(3));
+                            /*if (!fileA2552.A2552RAZONLIB.equals("")) {
                                 if (fileA2552.A2552RAZONLIB.length() > 135) {
                                     result = "You must enter a reason 135 CHARACTERES" + fileA2552.A2552TKT;
                                     break;
                                 }
+                            }*/
+                            fileA2552.A2552CODRAZON =""; //getCellValue(currentRow.getCell(9));
+                            fileA2552.A2552PERIODO = getCellValue(currentRow.getCell(3));
+                            if (fileA2552.A2552PERIODO.equals("")) {
+                                result = "PERIOD required";
+                                break;
                             }
-                            fileA2552.A2552CODRAZON = getCellValue(currentRow.getCell(9));
-                            fileA2552.A2552FUENT = getCellValue(currentRow.getCell(10));
+                            
+                            fileA2552.A2552FUENT = getCellValue(currentRow.getCell(6));
                             if (fileA2552.A2552FUENT.equals("")) {
                                 result = "Fuente required";
                                 break;
@@ -972,7 +1002,12 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             /**
                              * final del proceso
                              */
-                            fileA2552.A2552PERIODO = "";
+                            //fileA2552.A2552PERIODO = "";
+                            fileA2552.A2552PERIODO = fileA2552.A2552PERIODO.trim();
+                            String[] parts = fileA2552.A2552PERIODO.split(",");
+                            fileA2552.A2552CODRAZON = parts[0];
+                            fileA2552.A2552PERIODO = parts[1];
+                            
                             fileA2552.A2552SFUEN = "";
                             fileA2552.A2552ITINE = "";
                             fileA2552.A2552FBRI1 = "";

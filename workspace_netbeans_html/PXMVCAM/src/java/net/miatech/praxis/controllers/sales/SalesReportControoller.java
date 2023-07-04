@@ -6,6 +6,8 @@
 package net.miatech.praxis.controllers.sales;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.ByteArrayInputStream;
@@ -24,6 +26,7 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//import jdk.nashorn.internal.parser.JSONParser;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -35,30 +38,30 @@ import net.miatech.beans.PX036S01A1732Filter;
 import net.miatech.beans.PX036S01A1733Filter;
 import net.miatech.beans.PX036S01A1734Filter;
 import net.miatech.beans.PX036S01A1735Filter;
-import net.miatech.beans.PX036S01A4374Filter;
-import net.miatech.beans.PX036S01A4375Filter;
-import net.miatech.beans.PX036S01A4376Filter;
-import net.miatech.beans.PX036S02A4376Filter;
 import net.miatech.beans.PX038S01A1724Filter;
 import net.miatech.beans.PX038S02A713Filter;
 import net.miatech.beans.PX038S02A714Filter;
 import net.miatech.beans.PX038S02A720Filter;
 import net.miatech.beans.S0001A1530Filter;
 import net.miatech.beans.S0001A1730Filter;
-import net.miatech.beans.S0001A4373Filter;
-import net.miatech.beans.S0001A4373TOTFilter;
 import net.miatech.beans.S0001A713Filter;
 import net.miatech.beans.S0001A714Filter;
 import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
-import net.miatech.beans.SQP04747Filter;
 import net.miatech.beans.SQP04874Filter;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
 import net.miatech.praxis.A005;
 import net.miatech.praxis.A1772;
+import net.miatech.praxis.Sales.filters.PX036S01A4374Filter;
+import net.miatech.praxis.Sales.filters.PX036S01A4375Filter;
+import net.miatech.praxis.Sales.filters.PX036S01A4376Filter;
+import net.miatech.praxis.Sales.filters.PX036S02A4376Filter;
+import net.miatech.praxis.Sales.filters.S0001A4373Filter;
+import net.miatech.praxis.Sales.filters.S0001A4373TOTFilter;
+import net.miatech.praxis.Sales.filters.SQP04747Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.SalesReportLogic;
@@ -75,8 +78,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -516,7 +518,7 @@ public class SalesReportControoller extends BaseController {
 
         return new Gson().toJson(map);
     }
-
+    
     @RequestMapping(value = "loadA005")
     public @ResponseBody
     String loadA005(ModelMap map, HttpServletRequest request) {
@@ -1986,7 +1988,7 @@ public class SalesReportControoller extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-
+    
     @RequestMapping(value = "ProcesaInsertFareCalcRfnd")
     public @ResponseBody
     String ProcesaInsertFareCalcRfnd(ModelMap map, HttpServletRequest request) {
@@ -1996,7 +1998,7 @@ public class SalesReportControoller extends BaseController {
 
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
+            
             logic = new SalesReportLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.ProcesaInsertFareCalcRfnd(filter);
@@ -2068,6 +2070,25 @@ public class SalesReportControoller extends BaseController {
 
         return lst;
     }*/
+    
+    @RequestMapping(value = "loadVoidFop")
+    public ResponseEntity<?> loadVoidFOP(@RequestParam Map<String, Object> params){
+        logic = new SalesReportLogic();
+        List<SQP04874Filter> res = new ArrayList<>();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            Gson gson = new Gson();
+            SQP04874Filter filter = gson.fromJson(gson.toJson(params), SQP04874Filter.class);
+            res = logic.loadSQP04874Filter(filter);
+            if (!res.isEmpty()) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            throw new IllegalArgumentException("No existe Data");
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
     @RequestMapping(value = "loadRftx")
     public @ResponseBody
     String loadRftx(ModelMap map, HttpServletRequest request) {
@@ -2335,23 +2356,4 @@ public class SalesReportControoller extends BaseController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
-    @RequestMapping(value = "loadVoidFop")
-    public ResponseEntity<?> loadVoidFOP(@RequestParam Map<String, Object> params){
-        logic = new SalesReportLogic();
-        List<SQP04874Filter> res = new ArrayList<>();
-        try {
-            logic.setSession(this.serverSession.getServerSession());
-            Gson gson = new Gson();
-            SQP04874Filter filter = gson.fromJson(gson.toJson(params), SQP04874Filter.class);
-            res = logic.loadSQP04874Filter(filter);
-            if (!res.isEmpty()) {
-                return new ResponseEntity<>(res, HttpStatus.OK);
-            }
-            throw new IllegalArgumentException("No existe Data");
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-    
 }

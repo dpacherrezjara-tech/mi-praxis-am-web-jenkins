@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
     beanUpdate: {},
     bean: {},
     bean2: {},
+    bean3: {},
 
     /**
      * Constructor
@@ -63,6 +64,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
 
         //return Ext.util.Format.number(value, '0,000');
     },
+    onColumnNotIntegerRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        if (value !== 0) {
+            metaData.style = "background-color: #f1c97d !important";
+            //Ext.util.Format.number(value, '0,000.00');
+        }
+        return value;
+
+        //return Ext.util.Format.number(value, '0,000');
+    },
     onColumnAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "background:#D5F4D5 !important";
         return Ext.util.Format.number(value, '0,000.00');
@@ -76,7 +86,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         var txtCia = Ext.getCmp(prototype.idRFNDQuery + '-txtCia');
         var txtFrmaSerie = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie');
         var txtfolio = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio');
-        if (obj.getValue() === "2" || obj.getValue() === "4") {
+        if (obj.getValue() === "2" || obj.getValue() === "4" || obj.getValue() === "5") {
             txtFilterDateFrom.show();
             txtFilterDateTo.show();
             txtCia.hide();
@@ -124,10 +134,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
+                {"code": "4", "name": "AUTHORISED - REJECTED / DATE"},
+                {"code": "5", "name": "CAPTURED BY ROBOT"},
                 {"code": "1", "name": "FOLIO"},
                 {"code": "2", "name": "SYSTEM DATE"},
-                {"code": "3", "name": "TICKET"},
-                {"code": "4", "name": "AUTHORISED - REJECTED / DATE"}
+                {"code": "3", "name": "TICKET"}
+
             ]
         }));
 
@@ -268,6 +280,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         //if (me.bean2.length > 0) {
         me.exportExcel(prototype.url01 + '/getXLSX2?beanString=' + encodeURI(JSON.stringify(me.bean2)));
         //}
+    },
+    onSearchkey: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onSearchClick();
+        }
+
     },
     onSearchClick: function (obj, e) {
         var me = this;
@@ -456,13 +474,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
-    onRendererColumnTYPE: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        switch (String(record.get('A4076TYPE'))) {
-            case 'MA':
-                value = 'LAYOUT DETAIL';
+    onRendererColumnProcess: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(record.get('A3648PROCE'))) {
+            case 'D':
+                value = 'DETAIL';
                 break;
-            case 'GP':
-                value = 'LAYOUT TOTAL';
+            case 'T':
+                value = 'TOTAL';
                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
@@ -670,6 +688,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
             Ext.getCmp(prototype.idRFNDQuery + '-tbspacer2').hide();
         }
     },
+    onTextKeypress: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickBtnSearch();
+        }
+
+    },
     onClickBtnSearch: function () {
         var me = this;
         var txtTKT = Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').getValue();
@@ -695,9 +719,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         if (me.bean2.IN_PREME !== undefined) {
 
             me.bean3.IN_PREME = me.bean2.IN_PREME;
+            me.bean3.IN_ANIO = me.bean2.IN_ANIO;
             me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
             me.bean3.IN_USER = me.bean2.IN_USER;
-            me.bean3.IN_TICKET = txtTKT;
+            me.bean3.IN_TKT = txtTKT;
             me.bean3.IN_IATA = txtIata;
 
             Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();

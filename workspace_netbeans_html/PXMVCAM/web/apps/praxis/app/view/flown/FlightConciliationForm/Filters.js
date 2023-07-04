@@ -432,7 +432,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 fields: ['code', 'name'],
                                 data: [
                                     ["", "All"], ["0", "Not Found"], ["1", "Found"],
-                                    ["2", "Found but not matching coupon"],["4","No Revenue(Employes/Oth)"],["5", "Manual"]
+                                    ["2", "Found but not matching coupon"],["4","No Revenue(Employes/Oth)"],["5", "Manual"],["6", "BPO Found"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -452,7 +452,27 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 750 },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype: 'label',
+                            id: prototype.id + '-labelScanTicket',
+                            html: 'Scan Tickets',
+                            hidden: true,
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '7px 7px 6px 0px'
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnScanTicket',
+                            iconCls: 'prx-icon-update',
+                            tooltip: 'Scan Tickets',
+                            hidden: true,
+                            listeners: {
+                                click: 'btnScanTicket_clickHandler'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 650 },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',

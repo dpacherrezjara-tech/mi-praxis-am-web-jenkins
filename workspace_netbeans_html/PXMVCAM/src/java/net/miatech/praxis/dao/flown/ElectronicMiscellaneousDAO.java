@@ -325,6 +325,8 @@ public class ElectronicMiscellaneousDAO {
                 beanCons.DES_RECODE = rst.getString("DESC_RECODE");
                 beanCons.MDACP = rst.getString("MDACP");
                 beanCons.NPLANE = rst.getString("NPLANE");
+                beanCons.SEQRO = rst.getString("SEQRO");
+                beanCons.SEQ = rst.getString("SEQ");
 
                 beanCons.VTAX = rst.getDouble("VTAX");
                 beanCons.VCPMX = rst.getDouble("VCPMX");
@@ -417,6 +419,7 @@ public class ElectronicMiscellaneousDAO {
                 objRtn.SERIE = rs01.getString("SERIE").trim();
                 objRtn.CUPON = rs01.getString("CUPON").trim();
                 objRtn.SEQRO = rs01.getString("SEQRO").trim();
+                objRtn.SEQ = rs01.getString("SEQ").trim();
 //                if (objRtn.SEQRO.equals("00")) {
 //                    objRtn.SEQRO = "";
 //                }
@@ -620,7 +623,7 @@ public class ElectronicMiscellaneousDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PX135S06A1818(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PX135S06A1818(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -632,6 +635,7 @@ public class ElectronicMiscellaneousDAO {
             cstmt01.setString(3, filter.FORMA.trim());
             cstmt01.setString(4, filter.SERIE.trim());
             cstmt01.setString(5, filter.CUPON.trim());
+            cstmt01.setString(6, filter.SEQ.trim());
 
             cstmt01.execute();
 

@@ -24,6 +24,7 @@ public class A3648Filter extends A3648 {
     public String IN_FORMA = "";
     public String IN_SERIE = "";
     public String IN_SEQ = "";
+    public String IN_PROCESS= "";
     public String IN_FOLIO = "";
     public String IN_IATA = "";
     public String IN_PREME = "";

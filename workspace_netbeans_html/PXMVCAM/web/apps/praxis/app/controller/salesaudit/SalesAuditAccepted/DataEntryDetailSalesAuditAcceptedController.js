@@ -497,7 +497,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         var win = new Ext.Praxis.view.screens.CtrlDeliveryAudiForm({
             params: {
                 TDNR: rec.get('A1672CIA') + "" + rec.get('A1672FORMA') + "" + rec.get('A1672SERIE'),
-                FTE: rec.get('A1672FUENT')
+                FTE: rec.get('A1672FUENT'),
+                IDFIL: rec.get('A1672IDFIL'),
+                TRNCU: Ext.getCmp(prototype.id1 + '-txtTrnx').getValue()
             }
         });
         win.show();

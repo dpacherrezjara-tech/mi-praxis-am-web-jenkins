@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainAcountTransact',
                                     height: 'auto',
-                                    width: 1310,
+                                    width: 900,
                                     hidden: false,
                                     columnLines: true,
                                     features: [{
@@ -68,7 +68,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Payment <br> Date ', dataIndex: 'strFormatDate', width: 120,
+                                            {text: '', dataIndex: 'strFormatDate', width: 120,
+                                                id: prototype.id + '-strFormatDate',
                                                 listeners: {
                                                     click: 'onGridDetByDay'
                                                 },
@@ -79,7 +80,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
-                                            {text: 'Currency', dataIndex: 'PCURRENCY', width: 80,
+                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -93,7 +94,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Accounted', dataIndex: 'TGROSAMOUN_ACCOUNTED', width: 100,
+                                                    {text: 'Accounted', dataIndex: 'TGROSAMOUN_ACCOUNTED', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#42f59e";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -117,7 +118,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totQTY_ACCOUNTED, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'To Debug', dataIndex: 'TGROSAMOUN_TO_DEBUG', width: 100,
+                                                    {text: 'Pending', dataIndex: 'TGROSAMOUN_PENDING', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#FFBF00";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -126,10 +127,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_TO_DEBUG, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_PENDING, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Qty To Debug', dataIndex: 'QTY_TO_DEBUG', width: 120,
+                                                    {text: 'Qty Pending', dataIndex: 'QTY_PENDING', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#FFBF00";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -138,10 +139,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totQTY_TO_DEBUG, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_PENDING, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Total', dataIndex: 'TGROSAMOUN', width: 100,
+                                                    {text: 'Total', dataIndex: 'TGROSAMOUN', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#68EAFB";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -169,6 +170,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Transaction AMEX',
+                                                hidden: true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -203,6 +205,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Differences',
+                                                hidden: true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -263,6 +266,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-boxChart',
+                                    hidden: true,
                                     border: false,
                                     margin: '5 0 5 20',
                                     layout: {
@@ -309,7 +313,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                 {
                                                     type: 'numeric3d',
                                                     position: 'left',
-                                                    fields: ['TGROSAMOUN_ACCOUNTED', 'TGROSAMOUN_TO_DEBUG'],
+                                                    fields: ['TGROSAMOUN_ACCOUNTED', 'TGROSAMOUN_PENDING'],
                                                     minimum: 0,
                                                     grid: true,
                                                     title: '',
@@ -339,8 +343,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     type: 'bar3d',
                                                     stacked: false,
                                                     xField: 'strFormatDate',
-                                                    yField: ['TGROSAMOUN_ACCOUNTED', 'TGROSAMOUN_TO_DEBUG'],
-                                                    title: ['Accounted', 'To Debug'],
+                                                    yField: ['TGROSAMOUN_ACCOUNTED', 'TGROSAMOUN_PENDING'],
+                                                    title: ['Accounted', 'Pending'],
                                                     colors: ['#42f59e', '#FFBF00'],
                                                     highlight: true,
                                                     style: {
@@ -349,7 +353,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         maxBarWidth: 1200
                                                     },
                                                     label: {
-                                                        field: ['TGROSAMOUN_ACCOUNTED', 'TGROSAMOUN_TO_DEBUG'],
+                                                        field: ['TGROSAMOUN_ACCOUNTED', 'TGROSAMOUN_PENDING'],
 //                                                            display: 'insideEnd',
                                                         /*display: 'outside',
                                                          calloutLine: {
@@ -370,8 +374,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             var label = '';
                                                             if (ctx.field === 'TGROSAMOUN_ACCOUNTED') {
                                                                 label = 'Accounted';
-                                                            } else if (ctx.field === 'TGROSAMOUN_TO_DEBUG') {
-                                                                label = 'To Debug';
+                                                            } else if (ctx.field === 'TGROSAMOUN_PENDING') {
+                                                                label = 'Pending';
                                                             }
                                                             toolTip.setHtml(label + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                         }
@@ -406,7 +410,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                 {
                                                     type: 'numeric3d',
                                                     position: 'left',
-                                                    fields: ['QTY_ACCOUNTED', 'QTY_TO_DEBUG'],
+                                                    fields: ['QTY_ACCOUNTED', 'QTY_PENDING'],
                                                     minimum: 0,
                                                     grid: true,
                                                     title: '',
@@ -436,8 +440,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     type: 'bar3d',
                                                     stacked: false,
                                                     xField: 'strFormatDate',
-                                                    yField: ['QTY_ACCOUNTED', 'QTY_TO_DEBUG'],
-                                                    title: ['Accounted', 'To Debug'],
+                                                    yField: ['QTY_ACCOUNTED', 'QTY_PENDING'],
+                                                    title: ['Accounted', 'Pending'],
                                                     colors: ['#42f59e', '#FFBF00'],
                                                     highlight: true,
                                                     style: {
@@ -446,7 +450,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         maxBarWidth: 1200
                                                     },
                                                     label: {
-                                                        field: ['QTY_ACCOUNTED', 'QTY_TO_DEBUG'],
+                                                        field: ['QTY_ACCOUNTED', 'QTY_PENDING'],
 //                                                            display: 'insideEnd',
                                                         /*display: 'outside',
                                                          calloutLine: {
@@ -467,8 +471,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             var label = '';
                                                             if (ctx.field === 'QTY_ACCOUNTED') {
                                                                 label = 'Accounted';
-                                                            } else if (ctx.field === 'QTY_TO_DEBUG') {
-                                                                label = 'To Debug';
+                                                            } else if (ctx.field === 'QTY_PENDING') {
+                                                                label = 'Pending';
                                                             }
                                                             toolTip.setHtml(label + ' Tickets: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                         }
@@ -487,7 +491,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 'auto',
+                            //height: 'auto',
                             width: 1310,
                             layout: {
                                 type: 'vbox',
@@ -495,16 +499,24 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                             },
                             items: [
                                 {
-                                    xtype: 'grid',
+                                    xtype: 'treepanel',
                                     id: prototype.id + '-gridMainDataByDay',
-                                    height: 'auto',
-                                    width: 1310,
-                                    hidden: false,
+                                    height: 550,
+                                    width: 1034,
+                                    reserveScrollbar: true,
+                                    useArrows: true,
+                                    rootVisible: false,
+                                    multiSelect: true,
                                     columnLines: true,
+                                    rowLines: true,
                                     features: [{
-                                            ftype: 'summary',
-                                            dock: 'bottom'
+//                                        dock: 'bottom',
+                                            ftype: 'summary'
                                         }],
+                                    plugins: {
+                                        ptype: 'cellediting',
+                                        clicksToEdit: 1
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -512,18 +524,27 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Payment <br> Date ', dataIndex: 'PAYDATE', width: 120,
+                                            {text: '',
+                                                id: prototype.id + '-strFormatDate0',
+                                                xtype: 'treecolumn',
+                                                dataIndex: 'strFormatDate', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: '', dataIndex: 'strFormatDate1', width: 120,
+                                                id: prototype.id + '-strFormatDate1',
                                                 listeners: {
                                                     click: 'onGridDetByDate'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
                                                     metaData.style = "text-align:center;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
-                                            {text: 'Currency', dataIndex: 'PCURRENCY', width: 80,
+                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -537,7 +558,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Accounted', dataIndex: 'TGROSAMOUN_ACCOUNTED', width: 100,
+                                                    {text: 'Accounted', dataIndex: 'TGROSAMOUN_ACCOUNTED', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#42f59e";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -564,7 +585,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totQTY_ACCOUNTED, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'To Debug', dataIndex: 'TGROSAMOUN_TO_DEBUG', width: 100,
+                                                    {text: 'Pending', dataIndex: 'TGROSAMOUN_PENDING', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#FFBF00";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -573,12 +594,12 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_TO_DEBUG, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_PENDING, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Qty To Debug', dataIndex: 'QTY_TO_DEBUG', width: 120,
+                                                    {text: 'Qty Pending', dataIndex: 'QTY_PENDING', width: 120,
                                                         listeners: {
-                                                            click: 'onGridDetByDebug'
+                                                            click: 'onGridDetByPending'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#FFBF00";
@@ -588,10 +609,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totQTY_TO_DEBUG, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_PENDING, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Total', dataIndex: 'TGROSAMOUN', width: 100,
+                                                    {text: 'Total', dataIndex: 'TGROSAMOUN', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#68EAFB";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -617,99 +638,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {
-                                                text: 'Transaction AMEX',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Total Amount', dataIndex: 'TGROSAMOUN_ALL', width: 120,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#88FF89";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_ALL, '0,000.00') + '<b>';
-                                                        }
-                                                    },
-                                                    {text: 'Qty Total', dataIndex: 'QTY_ALL', width: 100,
-                                                        listeners: {
-                                                            click: 'onGridDetByDate'
-                                                        },
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#88FF89";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totQTY_ALL, '0,000') + '<b>';
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Differences',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Amount', dataIndex: 'TGROSAMOUN_DIFF', width: 120,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#F0FF88";
-                                                            if (value < 0) {
-                                                                value = Ext.util.Format.number(value, '0,000.00');
-                                                                return '<a style="color:#cb0519;">' + value + '</a>';
-                                                            } else {
-                                                                value = Ext.util.Format.number(value, '0,000.00');
-                                                                return '<a style="color:#057ECB;">' + value + '</a>';
-                                                            }
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = 'text-align:right; margin-right:3px ;';
-                                                            if (value < 0) {
-                                                                var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
-                                                                return '<b style="color:#cb0519>' + Ext.util.Format.number(data.totTGROSAMOUN_DIFF, '0,000.00') + '<b>';
-                                                            } else {
-                                                                var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
-                                                                return '<b >' + Ext.util.Format.number(data.totTGROSAMOUN_DIFF, '0,000.00') + '<b>';
-                                                            }
-                                                        }
-                                                    },
-                                                    {text: 'Qty', dataIndex: 'QTY_DIFF', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (value < 0) {
-                                                                metaData.style = "text-align:right; color:#cb0519;background-color:#F0FF88";
-                                                                value = Ext.util.Format.number(value, '0,000');
-                                                                return value;
-                                                            } else {
-                                                                metaData.style = "text-align:right;background-color:#F0FF88";
-                                                                value = Ext.util.Format.number(value, '0,000');
-                                                                return value;
-                                                            }
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            if (value < 0) {
-                                                                var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
-                                                                metaData.style = 'text-align:right; margin-right:3px ;color:#cb0519';
-                                                                return '<b>' + Ext.util.Format.number(data.totQTY_DIFF, '0,000') + '<b>';
-                                                            } else {
-                                                                var data = Ext.getCmp(prototype.id + '-gridMainDataByDay').getStore().getData().items[0].data;
-                                                                metaData.style = 'text-align:right; margin-right:3px ;';
-                                                                return '<b>' + Ext.util.Format.number(data.totQTY_DIFF, '0,000') + '<b>';
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     }
                                 },
@@ -746,19 +674,20 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Payment <br> Date', dataIndex: 'PAYDATE', width: 100,
+                                            {text: '', dataIndex: 'strFormatDate', width:70,
+                                                id: prototype.id + '-strFormatDate3',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Document Type', dataIndex: 'TDOC', width: 100,
+                                            {text: 'Document<br>Type', dataIndex: 'TDOC', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Status', dataIndex: 'descSTVAL', width: 100,
+                                            {text: 'Status', dataIndex: 'descSTVAL', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -772,7 +701,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'ID', dataIndex: 'IDCONL', width: 100,                                                        
+                                                    {text: 'ID', dataIndex: 'IDCONL', width: 330,
                                                         listeners: {
                                                             click: 'onGridDetByAccounting'
                                                         },
@@ -782,13 +711,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'Date', dataIndex: 'FCONTL', width: 100,
+                                                    {text: 'Date', dataIndex: 'FCONTL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#c0f0af";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Status', dataIndex: 'descSTCONL', width: 120,
+                                                    {text: 'Status', dataIndex: 'descSTCONL', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#c0f0af";
                                                             return value;
@@ -810,7 +739,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Auth.', dataIndex: 'SAUTHOC', width: 80,
+                                                    {text: 'Auth.', dataIndex: 'SAUTHOC', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
@@ -818,19 +747,20 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'BSUMDATE', width: 80,
+                                            {text: '', dataIndex: 'strFormatDate1', width: 70,
+                                                id: prototype.id + '-strFormatDate4',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Currency', dataIndex: 'PCURRENCY', width: 100,
+                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 100,
+                                            {text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     if (data.SVFOPS === data.TGROSAMOUN) {
@@ -847,7 +777,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     return '<b>' + Ext.util.Format.number(data.SVFOPS_TOTAL, '0,000.00') + '<b>';
                                                 }
                                             },
-                                            {text: 'Transaction<br>Amount ', dataIndex: 'TGROSAMOUN', width: 100,
+                                            {text: 'Transaction<br>Amount ', dataIndex: 'TGROSAMOUN', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -859,13 +789,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Qty.<br>Tkts', dataIndex: 'QTYTKT', width: 60,
+                                            {text: 'Qty.<br>Tkts', dataIndex: 'QTYTKT', width: 50,
                                                 listeners: {
                                                     click: 'onGridDetByQty'
                                                 },
@@ -906,7 +836,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Rule', dataIndex: 'descFREGLA', width: 80,
+                                            {text: 'Rule', dataIndex: 'descFREGLA', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -1072,13 +1002,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     },
                                                     {text: 'Id', dataIndex: 'IDCON', width: 270,
                                                         /*listeners: {
-                                                            click: 'onGridDetByAccounting'
-                                                        },*/
+                                                         click: 'onGridDetByAccounting'
+                                                         },*/
                                                         /*renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            value = '<b>' + value + '</b>';
-                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                        }*/
+                                                         value = '<b>' + value + '</b>';
+                                                         metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                         return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                         }*/
                                                     }
                                                 ]
                                             },
@@ -1125,7 +1055,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainDataByAccounting',
-                                    height: 'auto',
+                                    height: 550,
                                     width: 1680,
                                     hidden: false,
                                     columnLines: true,
@@ -1140,7 +1070,23 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Mode', dataIndex: 'A4183MODO', width: 60,
+                                            {text: 'Ticket', dataIndex: 'A4183TICKET', width: 120,
+                                                listeners: {
+                                                    click: 'viewTKTconSEQ'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    var data = record.data;
+                                                    if (data.A4183SEQ === '001') {
+                                                        this.a = value;
+                                                        value = '<b>' + value + '</b>';
+                                                        return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    } else {
+                                                        return value;
+                                                    }
+                                                }
+                                            },
+                                            {text: 'Mode', dataIndex: 'A4183MODO', width: 50,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     var data = record.data;
@@ -1195,7 +1141,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
-                                            {text: 'CPN', dataIndex: 'A4183CUPON', width: 60,
+                                            {text: 'CPN', dataIndex: 'A4183CUPON', width: 50,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -1229,7 +1175,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Account Number', dataIndex: 'A4183CUENT', width: 280,
+                                            {text: 'Account Number', dataIndex: 'A4183CUENT', width: 240,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -1243,7 +1189,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Cur', dataIndex: 'A4183CUR', width: 80,
+                                                    {text: 'Cur', dataIndex: 'A4183CUR', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
@@ -1276,6 +1222,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Revenue Amount',
+                                                hidden:true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1312,19 +1259,19 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Client', dataIndex: 'A4183COPE', width: 80,
+                                            {text: 'Client', dataIndex: 'A4183COPE', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Provider', dataIndex: 'A4183PROV', width: 80,
+                                            {text: 'Provider', dataIndex: 'A4183PROV', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Jornal <br> Entry', dataIndex: 'A4183IDCON', width: 80,
+                                            {text: 'Jornal <br> Entry', dataIndex: 'A4183IDCON', width: 240,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
