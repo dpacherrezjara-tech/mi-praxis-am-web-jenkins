@@ -389,7 +389,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 
                     },
                     load: function (obj, obj2, success, response, obj5) {
-                        
+
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -498,7 +498,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 
                     },
                     load: function (obj, obj2, success, response, obj5) {
-                        
+
                         var pag = Ext.getCmp(prototype.id + '-paggin2');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -511,9 +511,9 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                             if (obj.data.length > 0) {
                                 var obj = obj.data.items[0].data;
                                 var tipo = '';
-                                if(obj.TDOC === '2'){
+                                if (obj.TDOC === '2') {
                                     tipo = 'ChargeBack';
-                                }else if(obj.TDOC === '3'){
+                                } else if (obj.TDOC === '3') {
                                     tipo = 'Reverse ChargeBack';
                                 }
                                 Ext.getCmp(prototype.id + '-panelGridDataDetTicketLog').setTitle('<center style="font-size:12px;"> Create Date ' + obj.strFormatDate + ' - ' + tipo + '</center>');
@@ -604,12 +604,12 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         }).show();
     },
     btnBack_click: function (obj, e) {
-        
+
         if (me.panelActual === '-panelGridDataLog') {
             console.log('prueba');
-            $(Ext.getCmp(prototype.id + '-chkLog')).prop("disabled",true);
+            $(Ext.getCmp(prototype.id + '-chkLog')).prop("disabled", true);
         }
-        
+
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -660,9 +660,21 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 
         this.setFormatParameter();
         switch (me.panelActual) {
-//            case  '-panelGridData':
-//                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
-//                break;
+            case  '-panelGridData':
+                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataDetEMD':
+                global.getFile(prototype.url + '/getXLSXDetail?beanString=' + me.paramsDetailEMD.beanString);
+                break;
+            case  '-panelGridDataDetEMDTicket':
+                global.getFile(prototype.url + '/getXLSXDetailTicket?beanString=' + me.paramsDetailEMDTicket.beanString);
+                break;
+            case  '-panelGridDataLog':
+                global.getFile(prototype.url + '/getXLSXLog?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataDetTicketLog':
+                global.getFile(prototype.url + '/getXLSXTicketLog?beanString=' + me.paramsDetailTicketLog.beanString);
+                break;
             default:
                 global.Msg(
                         {msg: 'Under Construction'
