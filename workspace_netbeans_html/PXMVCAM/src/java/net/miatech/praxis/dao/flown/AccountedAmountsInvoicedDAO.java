@@ -57,8 +57,7 @@ public class AccountedAmountsInvoicedDAO {
         ResultSet rs01 = null;
         String SQLCLL01;
 
-        //SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00865(?,?,?,?,?,?,?,?,?,?)}";
-        SQLCLL01 = "{CALL LIBSAP50.SQP00865(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00865(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
