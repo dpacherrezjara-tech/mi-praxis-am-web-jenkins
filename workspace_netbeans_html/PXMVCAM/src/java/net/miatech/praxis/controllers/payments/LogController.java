@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.praxis.Sales.A4373;
+import net.miatech.praxis.Sales.A4373Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.logic.payments.LoadPaymentLogic;
 import net.miatech.praxis.payment.filter.A2289Filter;
@@ -70,7 +71,7 @@ public class LogController extends BaseController {
     String searchRFTX(ModelMap map, HttpServletRequest request) {   
         
         //A2289Filter filter = new A2289Filter();
-        A4373 filter = new A4373 ();
+        A4373Filter filter = new A4373Filter ();
         
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ViewCommController :  searchRFTX");
@@ -87,7 +88,7 @@ public class LogController extends BaseController {
 
             LoadPaymentLogic logic = new LoadPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4373> listaData = logic.loadSQP04826(filter);
+            List<A4373Filter> listaData = logic.loadSQP04826(filter);
 
             map.put("success", true);
             map.put("data", listaData);

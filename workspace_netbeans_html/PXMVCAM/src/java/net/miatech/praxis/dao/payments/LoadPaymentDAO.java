@@ -12,6 +12,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.Sales.A4373;
+import net.miatech.praxis.Sales.A4373Filter;
 //import net.miatech.praxis.payment.A2289;
 import net.miatech.praxis.payment.filter.A2289Filter;
 import net.miatech.praxis.payment.filter.A4168Filter;
@@ -211,9 +212,9 @@ public class LoadPaymentDAO {
     }
     
     /*NUEVO RFTX*/
-    public List<A4373> loadSQP04826(A4373 filter) throws SQLException, Exception {
-        List<A4373> list = new ArrayList<A4373>();
-        A4373 objRtn;
+    public List<A4373Filter> loadSQP04826(A4373Filter filter) throws SQLException, Exception {
+        List<A4373Filter> list = new ArrayList<A4373Filter>();
+        A4373Filter objRtn;
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
 
@@ -250,7 +251,7 @@ public class LoadPaymentDAO {
                         
                 while (rs01.next()) {
 
-                    objRtn = new A4373();
+                    objRtn = new A4373Filter();
                     
                     objRtn.TICKET = rs01.getString("A4373CIA").trim() + " " + rs01.getString("A4373FORMA").trim() + " " + rs01.getString("A4373SERIE").trim();
                     objRtn.A4373CIA = rs01.getString("A4373CIA").trim() ;
