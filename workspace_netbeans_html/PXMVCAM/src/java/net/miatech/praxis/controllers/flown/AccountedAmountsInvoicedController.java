@@ -124,8 +124,8 @@ public class AccountedAmountsInvoicedController extends BaseController {
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Accounting Amount Vs Invoice : getXLSX");
-        String fileNameDownload = String.format("Accounting Amount Vs Invoice - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Accounted amounts vs invoiced amounts : getXLSX");
+        String fileNameDownload = String.format("Accounted amounts vs invoiced amounts - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
 
             Workbook workbook;
@@ -136,7 +136,7 @@ public class AccountedAmountsInvoicedController extends BaseController {
 
             workbook = new XSSFWorkbook();
 
-            Sheet sheet = workbook.createSheet("Accounting Amount Vs Invoice");
+            Sheet sheet = workbook.createSheet("Accounted amounts vs invoiced amounts");
 
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
