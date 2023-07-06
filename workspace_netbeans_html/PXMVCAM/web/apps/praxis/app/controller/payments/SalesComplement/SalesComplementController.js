@@ -267,7 +267,47 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
     },
     onClickExcelBtn: function (obj) {
         alert('Funcion en Construccion');
+    },
+    onChangeFechaBtn: function(obj) {
+        const me = this;
+        let combo2 = null;
+        let valor1 = obj.getValue();
+        const opts = {
+            'cmbDateFromMonth': ()=> {
+                combo2 = me.getCmp({id:'-cmbDateToMonth'});
+                combo2.setValue(obj.getValue());
+            },
+            'cmbDateToMonth': () => {
+                combo2 = me.getCmp({id:'-cmbDateFromMonth'});
+                let valor2 = combo2.getValue();
+                if(valor1>=valor2&&valor2!==''){
+                    return;
+                }
+                combo2.setValue(obj.getValue());
+            },
+            'cmbDateFromYear': () => {
+                combo2 = me.getCmp({id:'-cmbDateToYear'});
+                combo2.setValue(obj.getValue());
+            },
+            'cmbDateToYear': () => {
+                combo2 = me.getCmp({id:'-cmbDateFromYear'});
+                let valor2 = combo2.getValue();
+                if(valor1>=valor2&&valor2!==''){
+                    return;
+                }
+                combo2.setValue(obj.getValue());
+            }
+        };
+        
+        opts[obj.id.split('-').at(-1)]();
+        //console.log(obj.getValue());
+    },
+    //<editor-fold defaultstate="collapsed" desc="Utilitarios">
+    getCmp:function({id}){
+        return Ext.getCmp(prototype.id + id);
     }
+    //</editor-fold>
+
 });
 
 

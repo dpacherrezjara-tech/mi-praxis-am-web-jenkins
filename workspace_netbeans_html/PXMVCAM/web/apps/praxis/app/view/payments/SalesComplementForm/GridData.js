@@ -882,10 +882,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
         me.mask('Loading Data...');
         const storeOpts = {
             'P': () => {
+                win.lblUser_toolTip("Estructura: A4453");
                 //<editor-fold defaultstate="collapsed" desc="plusgrade store">
                 let plusgradeStore = Ext.create('Ext.data.Store', {
                     storeId: prototype.id + `-plusgrade-store`,
                     loadMask: true,
+                    pageSize: 20,
                     proxy: {
                         type: 'ajax',
                         enablePaging: true,
@@ -919,10 +921,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                 };
             },
             'L': () => {
+                win.lblUser_toolTip("Estructura: A4455");
                 //<editor-fold defaultstate="collapsed" desc="ligas store">
                 let ligasStore = Ext.create('Ext.data.Store', {
                     storeId: prototype.id + `-ligas-store`,
                     loadMask: true,
+                    pageSize: 20,
                     proxy: {
                         type: 'ajax',
                         enablePaging: true,
@@ -957,10 +961,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                 };
             },
             'T': () => {
+                win.lblUser_toolTip("Estructura: A4455");
                 //<editor-fold defaultstate="collapsed" desc="tablet store">
                 let tabletStore = Ext.create('Ext.data.Store', {
                     storeId: prototype.id + `-tablet-store`,
                     loadMask: true,
+                    pageSize: 20,
                     proxy: {
                         type: 'ajax',
                         enablePaging: true,
