@@ -77,7 +77,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 60,
                             width: 150,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners:{
+                                change:'onChangeFechaBtn'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -94,7 +97,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             width: 70,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners:{
+                                change:'onChangeFechaBtn'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -113,7 +119,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 60,
                             width: 150,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners:{
+                                change:'onChangeFechaBtn'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -130,7 +139,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             width: 70,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners:{
+                                change:'onChangeFechaBtn'
+                            }
                         },
                         {
                             xtype: 'combo',
