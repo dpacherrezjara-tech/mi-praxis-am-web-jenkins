@@ -204,13 +204,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
 
-        if (this.beanResult.SMERCHID === '9353227755') {
-            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
-        } else if (this.beanResult.SMERCHID === '8133735688') {
-            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
-        } else if (this.beanResult.SMERCHID === '9352724851') {
-            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
-        }
+//        if (this.beanResult.SMERCHID === '9353227755') {
+//            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
+//        } else if (this.beanResult.SMERCHID === '8133735688') {
+//            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+//        } else if (this.beanResult.SMERCHID === '9352724851') {
+//            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+//        }
+        this.setValue('de-txtSMERCHID', this.beanResult.SALES_MERCH_ID);
 
         this.setValue('de-txtBpoOBSERV-RO', this.beanResult.OBSERV_BPO);
         this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
@@ -404,6 +405,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     },
     getDataGrid: function (beanGrid) {
         var beanStringGrid = JSON.stringify(beanGrid);
+        //console.log('Bean String',beanStringGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionError',
             method: 'POST',

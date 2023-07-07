@@ -145,11 +145,20 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.MainErr
                                     return value;
                                 }
                             },
-                            {text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'INVOIRN', width: 95,
+                            {text: 'Invoice<br>Refer. Number<br>PNR', 
+                                dataIndex: 'INVOIRN', 
+                                width: 95,
                                 listeners: {
                                     click: 'onViewPNR'
                                 },
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    //const
+                                    const {PROCTYPESQ,PWREF} = record.data;
+                                    //console.log(PROCTYPESQ,PWREF);
+                                    if(PROCTYPESQ === 'BANORTE00'){
+                                        value = PWREF;
+                                    }
+                                    //console.log(record.data.PWREF);
                                     metaData.style = "text-align:left;background-color:#FCF6DC";
                                     return '<a href="#payments-reconciliation-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                 }

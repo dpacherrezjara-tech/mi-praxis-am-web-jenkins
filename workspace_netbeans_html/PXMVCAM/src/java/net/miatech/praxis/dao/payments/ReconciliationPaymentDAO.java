@@ -3482,6 +3482,8 @@ public class ReconciliationPaymentDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
+                    
+                    beanTkt.PWREF = rst.getString("PWREF");
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -3839,6 +3841,9 @@ public class ReconciliationPaymentDAO {
                 objRtn.DES_CODADJU = rs01.getString("DES_CODADJU").trim();
                 objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
 
+                //Campo descripcion de Complemento
+                objRtn.SALES_MERCH_ID = rs01.getString("SALES_MERCH_ID");
+                
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = rs01.getString("HOCR");
