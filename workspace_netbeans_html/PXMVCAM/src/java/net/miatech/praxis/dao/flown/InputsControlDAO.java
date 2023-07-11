@@ -690,7 +690,7 @@ public class InputsControlDAO {
             cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
-
+            
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.FECHA.trim());
             cstmt01.setInt(3, filter.page.PAGNUM);
