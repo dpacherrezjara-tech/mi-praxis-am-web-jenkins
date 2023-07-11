@@ -80,8 +80,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 //Coupons
                 Ext.getCmp(prototype.id + '-coupons_sales').show();
-                Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(1030);
-                Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(1035);
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(1070);
+                Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(1075);
 
                 if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
                     Ext.getCmp(prototype.id + '-btn-update').hide();
@@ -91,8 +91,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     Ext.getCmp(prototype.id + '-gridColumnDelete').hide();
                     //Ext.getCmp(prototype.id + '-gridColumnFill').hide();
                     Ext.getCmp(prototype.id + '-gridColumnAdj').hide();
-                    Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(930);
-                    Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(935);
+                    Ext.getCmp(prototype.id + '-gridDataInfoScan').setWidth(970);
+                    Ext.getCmp(prototype.id + '-panelDataInfoScan').setWidth(975);
                     if (this.bean.STVAL === '5') {
                         Ext.getCmp(prototype.id + '-labelReverse').show();
                         Ext.getCmp(prototype.id + '-btnReverse').show();
@@ -148,6 +148,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }).show();
     },
     mostrarData: function () {
+        
+         if(this.beanResult.TDOC === 'S'){
+//            this.setTitle()('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
+            Ext.getCmp(prototype.id + '-lblSMERCHID').setText('Sales Merchant ID');
+            Ext.getCmp(prototype.id + '-lblCERROR').setText('Sett. vs Sales');
+            Ext.getCmp(prototype.id + '-lblInfo').setText('Sales Information');
+            Ext.getCmp(prototype.id + '-lblBSUMDATE1').setText('Sales Date');
+            Ext.getCmp(prototype.id + '-lblSVFOPS1').setText('Sales Amount');
+            Ext.getCmp(prototype.id + '-lblSDATESEARCH').setText('Sales Date');
+            
+            Ext.getCmp(prototype.id + '-lbltot_VFOP1').setText('Sales<br>Amount');
+            Ext.getCmp(prototype.id + '-lblA720FECVTA1').setText('Sales<br>Date');
+            Ext.getCmp(prototype.id + '-lbltot_VFOP2').setText('Sales<br>Amount');
+            Ext.getCmp(prototype.id + '-lblA720FECVTA2').setText('Sales<br>Date');
+            Ext.getCmp(prototype.id + '-lbltot_VFOPB').setText('Sales<br>Amount');
+            Ext.getCmp(prototype.id + '-lblA720FECVTA3').setText('Sales<br>Date');
+        }else{
+            Ext.getCmp(prototype.id + '-lblSMERCHID').setText('Refund Merchant ID');
+            Ext.getCmp(prototype.id + '-lblCERROR').setText('Sett. vs Refund');
+            Ext.getCmp(prototype.id + '-lblInfo').setText('Refund Information');
+            Ext.getCmp(prototype.id + '-lblBSUMDATE1').setText('Refund Date');
+            Ext.getCmp(prototype.id + '-lblSVFOPS1').setText('Refund Amount');
+            Ext.getCmp(prototype.id + '-lblSDATESEARCH').setText('Refund Date');
+            
+            Ext.getCmp(prototype.id + '-lbltot_VFOP1').setText('Refund<br>Amount');
+            Ext.getCmp(prototype.id + '-lblA720FECVTA1').setText('Refund<br>Date');
+            Ext.getCmp(prototype.id + '-lbltot_VFOP2').setText('Refund<br>Amount');
+            Ext.getCmp(prototype.id + '-lblA720FECVTA2').setText('Refund<br>Date');
+            Ext.getCmp(prototype.id + '-lbltot_VFOPB').setText('Refund<br>Amount');
+            Ext.getCmp(prototype.id + '-lblA720FECVTA3').setText('Refund<br>Date');
+        }
 
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
@@ -203,7 +234,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
         } else if (this.beanResult.SMERCHID === '8133735688') {
             this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '9592174866') {
+            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
         } else if (this.beanResult.SMERCHID === '9352724851') {
+            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+        } else if (this.beanResult.SMERCHID === '8264209750') {
             this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
         }
 
@@ -1112,30 +1147,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
     },
     addAdjustment_keyDownHandler: function () {
-        if (this.sumAmount === this.bean.TGROSAMOUN) {
-            global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+
+        if (this.getValue('de-txtISREFNBR').trim() === '' && this.getValue('de-txtSPNR').trim() == '') {
+            global.Msg({msg: 'Please fill the Ticket and PNR fields'});
         } else {
-            this.lstAdjustment = [];
-            Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
-            Ext.getCmp(prototype.id + '-panelADJ').show();
-            //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
-            var rec = Object.create(this.bean);
-            rec.A1531VFOP = rec.TGROSAMOUN;
-            rec.tot_VFOP = rec.TGROSAMOUN;
-            rec.A720AGENTE = $('#menuUser').text();
-            rec.CERROR = '01';
-            rec.A1531TTARJ = 'AX';
-            rec.A1531NREF = rec.SCARDN;
-            rec.A1531CAPL = rec.SAUTHOC;
-            rec.A720FECVTA = rec.BSUMDATE;
-            rec.A720PNR = rec.SPNR;
-            rec.A1531TKT = rec.ISREFNBR;
-            this.lstAdjustment.push(rec);
-            Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-                    Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
-                    );
-            this.calcularMontos();
-            this.helpByCreditCardForAdjustment();
+            if (this.sumAmount === this.bean.TGROSAMOUN) {
+                global.Msg({msg: 'The sum amount is equal to transaction amount.'});
+            } else {
+                this.lstAdjustment = [];
+                Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
+                Ext.getCmp(prototype.id + '-panelADJ').show();
+                //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
+                var rec = Object.create(this.bean);
+                rec.A1531VFOP = rec.TGROSAMOUN;
+                rec.tot_VFOP = rec.TGROSAMOUN;
+                rec.A720AGENTE = $('#menuUser').text();
+                rec.CERROR = '01';
+                rec.A1531TTARJ = 'AX';
+                rec.A1531NREF = rec.SCARDN;
+                rec.A1531CAPL = rec.SAUTHOC;
+                rec.A1531MFOP = rec.SCURRENCY;
+                rec.A720FECVTA = rec.BSUMDATE;
+                rec.A720PNR = this.getValue('de-txtSPNR').trim(); //rec.SPNR;
+                rec.A1531TKT = this.getValue('de-txtISREFNBR').trim(); //rec.ISREFNBR;
+                this.lstAdjustment.push(rec);
+                Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
+                        Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
+                        );
+                this.calcularMontos();
+                this.helpByCreditCardForAdjustment();
+            }
         }
     },
     helpByCreditCardForAdjustment: function () {

@@ -32,7 +32,7 @@ import net.miatech.praxis.logic.payments.ReconciliationPaymentLogic;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
-import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
 import net.miatech.beans.SQP00697Filter;
@@ -264,17 +264,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchDetTransaction-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListTransaction(request, false);
+        List<A4331Filter> lst = this.getListTransaction(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListTransaction(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListTransaction(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -283,7 +283,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -314,17 +314,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchDiffTransaction-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListDiffTransaction(request, false);
+        List<A4331Filter> lst = this.getListDiffTransaction(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListDiffTransaction(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListDiffTransaction(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -333,7 +333,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -447,17 +447,17 @@ public class ReconciliationPaymentController extends BaseController {
     String searchMainSettlement(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- ReconciliationPayment : searchMainSettlement-------------");
         map.put("success", true);
-        List<A4116Filter> lst = this.getListMainSettlement(request, false);
+        List<A4331Filter> lst = this.getListMainSettlement(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListMainSettlement(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListMainSettlement(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -466,7 +466,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -546,17 +546,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchSettlement-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListSettlement(request, false);
+        List<A4331Filter> lst = this.getListSettlement(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListSettlement(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListSettlement(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -565,7 +565,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -646,17 +646,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchDetSettlement-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListDetSettlement(request, false);
+        List<A4331Filter> lst = this.getListDetSettlement(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListDetSettlement(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListDetSettlement(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -665,7 +665,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -696,17 +696,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchMsiTracking-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListMsiTracking(request, false);
+        List<A4331Filter> lst = this.getListMsiTracking(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListMsiTracking(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListMsiTracking(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -715,7 +715,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -733,7 +733,7 @@ public class ReconciliationPaymentController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX606SQP04463(filter);
+            lst = logic.loadPX606SQP04828(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -746,17 +746,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchChangePayment-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListChangePayment(request, false);
+        List<A4331Filter> lst = this.getListChangePayment(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListChangePayment(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListChangePayment(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -765,7 +765,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -798,17 +798,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchDetTktSettlement-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListDetTktSettlement(request, false);
+        List<A4331Filter> lst = this.getListDetTktSettlement(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListDetTktSettlement(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListDetTktSettlement(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -817,7 +817,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -843,24 +843,24 @@ public class ReconciliationPaymentController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetTktChargeback")
     public @ResponseBody
     String searchDetTktChargeback(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- ReconciliationPayment : searchDetTktChargeback-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListDetTktChargeback(request, false);
+        List<A4331Filter> lst = this.getListDetTktChargeback(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListDetTktChargeback(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListDetTktChargeback(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -869,7 +869,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -902,17 +902,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchErrorTransaction-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListErrorTransaction(request, false);
+        List<A4331Filter> lst = this.getListErrorTransaction(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListErrorTransaction(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListErrorTransaction(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -921,7 +921,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -952,17 +952,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchSummaryTransactionError-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListSummaryTransactionError(request, false);
+        List<A4331Filter> lst = this.getListSummaryTransactionError(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListSummaryTransactionError(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListSummaryTransactionError(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -971,7 +971,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -1028,12 +1028,12 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- Sales Reconciliation by AMEX : searchTransactionErrorDetail-------------");
 
         Gson gson = new Gson();
-        A4116Filter filter = new A4116Filter();
-        A4116Filter result = new A4116Filter();
-        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+        A4331Filter filter = new A4331Filter();
+        A4331Filter result = new A4331Filter();
+        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4116Filter.class);
+        filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationPaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
@@ -1055,12 +1055,12 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- Sales Reconciliation by AMEX : gridTransactionError-------------");
 
         Gson gson = new Gson();
-        A4116Filter filter = new A4116Filter();
-        A4116Filter result = new A4116Filter();
-        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+        A4331Filter filter = new A4331Filter();
+        A4331Filter result = new A4331Filter();
+        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4116Filter.class);
+        filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationPaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
@@ -1082,12 +1082,12 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- Sales Reconciliation by AMEX : gridTransactionErrorByTKT-------------");
 
         Gson gson = new Gson();
-        A4116Filter filter = new A4116Filter();
-        A4116Filter result = new A4116Filter();
-        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+        A4331Filter filter = new A4331Filter();
+        A4331Filter result = new A4331Filter();
+        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4116Filter.class);
+        filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationPaymentLogic();
         logic.setSession(this.serverSession.getServerSession());
@@ -1110,11 +1110,11 @@ public class ReconciliationPaymentController extends BaseController {
         String msj = "";
         try {
             Gson gson = new Gson();
-            A4116Filter filter = new A4116Filter();
-            A4116Filter result = new A4116Filter();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
 
             String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
@@ -1147,16 +1147,127 @@ public class ReconciliationPaymentController extends BaseController {
         String msj = "";
         try {
             Gson gson = new Gson();
-            A4116Filter filter = new A4116Filter();
-            A4116Filter result = new A4116Filter();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
 
             String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             msj = logic.loadPX606SQP04723(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "BpoRevTransaction")
+    public @ResponseBody
+    String BpoRevTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : BpoRevTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX606SQP04846(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "updateTdocTransaction")
+    public @ResponseBody
+    String updateTdocTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : updateTdocTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX606SQP04960(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "ReverseTransaction")
+    public @ResponseBody
+    String ReverseTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : ReverseTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX606SQP04847(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1184,16 +1295,16 @@ public class ReconciliationPaymentController extends BaseController {
         String msj = "";
         try {
             Gson gson = new Gson();
-            A4116Filter filter = new A4116Filter();
-            A4116Filter result = new A4116Filter();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
 
             String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX606SQP04469(filter);
+            msj = logic.loadPX606SQP04848(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1213,24 +1324,24 @@ public class ReconciliationPaymentController extends BaseController {
         map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
-    
-        @RequestMapping(value = "ReverseTransaction")
+
+    @RequestMapping(value = "MaintenanceManualMsi")
     public @ResponseBody
-    String ReverseTransaction(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Sales Reconciliation by AMEX : ReverseTransaction-------------");
+    String MaintenanceManualMsi(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceManualMsi-------------");
         String msj = "";
         try {
             Gson gson = new Gson();
-            A4116Filter filter = new A4116Filter();
-            A4116Filter result = new A4116Filter();
+            A4331Filter filter = new A4331Filter();
+            A4331Filter result = new A4331Filter();
 
             String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            msj = logic.loadPX606SQP04728(filter);
+            msj = logic.loadPX606SQP04849(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -1292,8 +1403,7 @@ public class ReconciliationPaymentController extends BaseController {
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle bodyStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
             headerFont.setColor(IndexedColors.BLACK.getIndex());
@@ -1310,19 +1420,6 @@ public class ReconciliationPaymentController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
-            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
-            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFont(headerFont);
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1331,11 +1428,19 @@ public class ReconciliationPaymentController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(255, 111, 111)));
-            bodyStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+
+            String label_date = "";
+            //listaData.get(vi).IN_DATE
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date = "Payment";
+                } else {
+                    label_date = "Processing";
+                }
+            }
             // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
@@ -1366,7 +1471,7 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH1_23 = row1.createCell(23);
             Cell CH1_24 = row1.createCell(24);
 
-            CH1_0.setCellValue("Payment");
+            CH1_0.setCellValue(label_date);
             CH1_1.setCellValue("Zone");
             CH1_2.setCellValue("Country");
             CH1_3.setCellValue("Curr");
@@ -1641,8 +1746,8 @@ public class ReconciliationPaymentController extends BaseController {
                 rcell3.setCellValue(listaData.get(vi).PCURRENCY);
                 rcell4.setCellValue(listaData.get(vi).PGROSAMOU);
                 rcell5.setCellValue(listaData.get(vi).PDISCAMOU);
-                rcell6.setCellValue(listaData.get(vi).PSFEEAMOU);
-                rcell7.setCellValue(listaData.get(vi).PADJAMOUN);
+                rcell6.setCellValue(listaData.get(vi).SERVICFEEP);
+                rcell7.setCellValue(listaData.get(vi).ADJUSMENTP);
                 rcell8.setCellValue(listaData.get(vi).PTAXAMOU);
                 rcell9.setCellValue(listaData.get(vi).ODBALAMOU);
                 rcell10.setCellValue(listaData.get(vi).PNETAMOU);
@@ -1663,109 +1768,7 @@ public class ReconciliationPaymentController extends BaseController {
                 iter.next();
                 ++vi;
                 ++vj;
-
-                if (rcell18.getNumericCellValue() <= -1) {
-                    rcell18.setCellStyle(bodyStyle);
-                }
-                if (rcell19.getNumericCellValue() <= -1) {
-                    rcell19.setCellStyle(bodyStyle);
-                }
-                if (rcell20.getNumericCellValue() <= -1) {
-                    rcell20.setCellStyle(bodyStyle);
-                }
-                if (rcell21.getNumericCellValue() <= -1) {
-                    rcell21.setCellStyle(bodyStyle);
-                }
-                if (rcell22.getNumericCellValue() <= -1) {
-                    rcell22.setCellStyle(bodyStyle);
-                }
-                if (rcell23.getNumericCellValue() <= -1) {
-                    rcell23.setCellStyle(bodyStyle);
-                }
-                if (rcell24.getNumericCellValue() <= -1) {
-                    rcell24.setCellStyle(bodyStyle);
-                }
             }
-
-            // ======  Nivel de TOTALES ==========
-            Row rowTotal = sheet.createRow(vj);
-            Cell CH1_0_T = rowTotal.createCell(0);
-            Cell CH1_1_T = rowTotal.createCell(1);
-            Cell CH1_2_T = rowTotal.createCell(2);
-            Cell CH1_3_T = rowTotal.createCell(3);
-            Cell CH1_4_T = rowTotal.createCell(4);
-            Cell CH1_5_T = rowTotal.createCell(5);
-            Cell CH1_6_T = rowTotal.createCell(6);
-            Cell CH1_7_T = rowTotal.createCell(7);
-            Cell CH1_8_T = rowTotal.createCell(8);
-            Cell CH1_9_T = rowTotal.createCell(9);
-            Cell CH1_10_T = rowTotal.createCell(10);
-            Cell CH1_11_T = rowTotal.createCell(11);
-            Cell CH1_12_T = rowTotal.createCell(12);
-            Cell CH1_13_T = rowTotal.createCell(13);
-            Cell CH1_14_T = rowTotal.createCell(14);
-            Cell CH1_15_T = rowTotal.createCell(15);
-            Cell CH1_16_T = rowTotal.createCell(16);
-            Cell CH1_17_T = rowTotal.createCell(17);
-            Cell CH1_18_T = rowTotal.createCell(18);
-            Cell CH1_19_T = rowTotal.createCell(19);
-            Cell CH1_20_T = rowTotal.createCell(20);
-            Cell CH1_21_T = rowTotal.createCell(21);
-            Cell CH1_22_T = rowTotal.createCell(22);
-            Cell CH1_23_T = rowTotal.createCell(23);
-            Cell CH1_24_T = rowTotal.createCell(24);
-
-            CH1_0_T.setCellValue("");
-            CH1_1_T.setCellValue("");
-            CH1_2_T.setCellValue("");
-            CH1_3_T.setCellValue("");
-            CH1_4_T.setCellValue(listaData.get(0).totPGROSAMOU);
-            CH1_5_T.setCellValue(listaData.get(0).totPDISCAMOU);
-            CH1_6_T.setCellValue(listaData.get(0).totPSFEEAMOU);
-            CH1_7_T.setCellValue(listaData.get(0).totPADJAMOUN);
-            CH1_8_T.setCellValue(listaData.get(0).totPTAXAMOU);
-            CH1_9_T.setCellValue(listaData.get(0).totODBALAMOU);
-            CH1_10_T.setCellValue(listaData.get(0).totPNETAMOU);
-            CH1_11_T.setCellValue(listaData.get(0).totGROSAMOUNC);
-            CH1_12_T.setCellValue(listaData.get(0).totDISCAMOUNC);
-            CH1_13_T.setCellValue(listaData.get(0).totSFEEAMOUNC);
-            CH1_14_T.setCellValue(listaData.get(0).totADJAMOUNC);
-            CH1_15_T.setCellValue(listaData.get(0).totTAXAMOUNC);
-            CH1_16_T.setCellValue(listaData.get(0).totODBALAMOUC);
-            CH1_17_T.setCellValue(listaData.get(0).totNETAMOUNC);
-            CH1_18_T.setCellValue(listaData.get(0).totDIFF_PGROSAMOU);
-            CH1_19_T.setCellValue(listaData.get(0).totDIFF_PDISCAMOU);
-            CH1_20_T.setCellValue(listaData.get(0).totDIFF_PSFEEAMOU);
-            CH1_21_T.setCellValue(listaData.get(0).totDIFF_PADJAMOUN);
-            CH1_22_T.setCellValue(listaData.get(0).totDIFF_PTAXAMOU);
-            CH1_23_T.setCellValue(listaData.get(0).totDIFF_ODBALAMOU);
-            CH1_24_T.setCellValue(listaData.get(0).totDIFF_PNETAMOU);
-
-            CH1_0_T.setCellStyle(totalStyle);
-            CH1_1_T.setCellStyle(totalStyle);
-            CH1_2_T.setCellStyle(totalStyle);
-            CH1_3_T.setCellStyle(totalStyle);
-            CH1_4_T.setCellStyle(totalStyle);
-            CH1_5_T.setCellStyle(totalStyle);
-            CH1_6_T.setCellStyle(totalStyle);
-            CH1_7_T.setCellStyle(totalStyle);
-            CH1_8_T.setCellStyle(totalStyle);
-            CH1_9_T.setCellStyle(totalStyle);
-            CH1_10_T.setCellStyle(totalStyle);
-            CH1_11_T.setCellStyle(totalStyle);
-            CH1_12_T.setCellStyle(totalStyle);
-            CH1_13_T.setCellStyle(totalStyle);
-            CH1_14_T.setCellStyle(totalStyle);
-            CH1_15_T.setCellStyle(totalStyle);
-            CH1_16_T.setCellStyle(totalStyle);
-            CH1_17_T.setCellStyle(totalStyle);
-            CH1_18_T.setCellStyle(totalStyle);
-            CH1_19_T.setCellStyle(totalStyle);
-            CH1_20_T.setCellStyle(totalStyle);
-            CH1_21_T.setCellStyle(totalStyle);
-            CH1_22_T.setCellStyle(totalStyle);
-            CH1_23_T.setCellStyle(totalStyle);
-            CH1_24_T.setCellStyle(totalStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -1812,7 +1815,7 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("Report : getXLSX");
         String fileNameDownload = String.format("Summary Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
-            String date = "";
+            String label_date = "";
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A4113Filter> listaData = this.getList(request, true);
@@ -1820,8 +1823,7 @@ public class ReconciliationPaymentController extends BaseController {
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle bodyStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
             headerFont.setColor(IndexedColors.BLACK.getIndex());
@@ -1838,19 +1840,6 @@ public class ReconciliationPaymentController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
-            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
-            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFont(headerFont);
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1859,12 +1848,17 @@ public class ReconciliationPaymentController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(255, 111, 111)));
-            bodyStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date = "Payment";
+                } else {
+                    label_date = "Processing";
+                }
+            }
             // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
@@ -1898,48 +1892,36 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH1_26 = row1.createCell(26);
             Cell CH1_27 = row1.createCell(27);
             Cell CH1_28 = row1.createCell(28);
-            Cell CH1_29 = row1.createCell(29);
-            Cell CH1_30 = row1.createCell(30);
-            Cell CH1_31 = row1.createCell(31);
-            Cell CH1_32 = row1.createCell(32);
-            Cell CH1_33 = row1.createCell(33);
 
-            date = listaData.get(0).IN_DATE.equals("PAYDATE") ? "Payment" : "Processing";
-
-            CH1_0.setCellValue(date);
-            CH1_1.setCellValue("Payment");
-            CH1_2.setCellValue("AX Number");
-            CH1_3.setCellValue("Status");
-            CH1_4.setCellValue("Zone");
-            CH1_5.setCellValue("Country");
-            CH1_6.setCellValue("Curr");
-            CH1_7.setCellValue("Summary");
+            CH1_0.setCellValue(label_date);
+            CH1_1.setCellValue("Status");
+            CH1_2.setCellValue("Zone");
+            CH1_3.setCellValue("Country");
+            CH1_4.setCellValue("Curr");
+            CH1_5.setCellValue("Summary");
+            CH1_6.setCellValue("");
+            CH1_7.setCellValue("");
             CH1_8.setCellValue("");
             CH1_9.setCellValue("");
             CH1_10.setCellValue("");
             CH1_11.setCellValue("");
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
-            CH1_14.setCellValue("");
+            CH1_14.setCellValue("Result Reconciliation Summary vs Submission");
             CH1_15.setCellValue("");
             CH1_16.setCellValue("");
-            CH1_17.setCellValue("Result Reconciliation Summary vs Submission");
+            CH1_17.setCellValue("");
             CH1_18.setCellValue("");
             CH1_19.setCellValue("");
             CH1_20.setCellValue("");
             CH1_21.setCellValue("");
             CH1_22.setCellValue("");
-            CH1_23.setCellValue("");
+            CH1_23.setCellValue("Differences");
             CH1_24.setCellValue("");
             CH1_25.setCellValue("");
             CH1_26.setCellValue("");
-            CH1_27.setCellValue("Differences");
+            CH1_27.setCellValue("");
             CH1_28.setCellValue("");
-            CH1_29.setCellValue("");
-            CH1_30.setCellValue("");
-            CH1_31.setCellValue("");
-            CH1_32.setCellValue("");
-            CH1_33.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1970,11 +1952,6 @@ public class ReconciliationPaymentController extends BaseController {
             CH1_26.setCellStyle(headerStyle);
             CH1_27.setCellStyle(headerStyle);
             CH1_28.setCellStyle(headerStyle);
-            CH1_29.setCellStyle(headerStyle);
-            CH1_30.setCellStyle(headerStyle);
-            CH1_31.setCellStyle(headerStyle);
-            CH1_32.setCellStyle(headerStyle);
-            CH1_33.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -2012,46 +1989,36 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH2_26 = row2.createCell(26);
             Cell CH2_27 = row2.createCell(27);
             Cell CH2_28 = row2.createCell(28);
-            Cell CH2_29 = row2.createCell(29);
-            Cell CH2_30 = row2.createCell(30);
-            Cell CH2_31 = row2.createCell(31);
-            Cell CH2_32 = row2.createCell(32);
-            Cell CH2_33 = row2.createCell(33);
 
             CH2_0.setCellValue("Date");
-            CH2_1.setCellValue("Merchant ID");
+            CH2_1.setCellValue("");
             CH2_2.setCellValue("");
             CH2_3.setCellValue("");
             CH2_4.setCellValue("");
-            CH2_5.setCellValue("");
-            CH2_6.setCellValue("");
-            CH2_7.setCellValue("GROSS");
-            CH2_8.setCellValue("Discount");
+            CH2_5.setCellValue("GROSS");
+            CH2_6.setCellValue("Discount");
+            CH2_7.setCellValue("");
+            CH2_8.setCellValue("");
             CH2_9.setCellValue("");
             CH2_10.setCellValue("");
             CH2_11.setCellValue("");
             CH2_12.setCellValue("");
-            CH2_13.setCellValue("");
-            CH2_14.setCellValue("");
-            CH2_15.setCellValue("");
-            CH2_16.setCellValue("NET");
-            CH2_17.setCellValue("GROSS");
-            CH2_18.setCellValue("Discount");
+            CH2_13.setCellValue("Net");
+            CH2_14.setCellValue("GROSS");
+            CH2_15.setCellValue("Discount");
+            CH2_16.setCellValue("");
+            CH2_17.setCellValue("");
+            CH2_18.setCellValue("");
             CH2_19.setCellValue("");
             CH2_20.setCellValue("");
             CH2_21.setCellValue("");
-            CH2_22.setCellValue("");
-            CH2_23.setCellValue("");
-            CH2_24.setCellValue("");
+            CH2_22.setCellValue("Net");
+            CH2_23.setCellValue("GROSS");
+            CH2_24.setCellValue("Discount");
             CH2_25.setCellValue("");
-            CH2_26.setCellValue("NET");
-            CH2_27.setCellValue("GROSS");
-            CH2_28.setCellValue("Discount");
-            CH2_29.setCellValue("");
-            CH2_30.setCellValue("");
-            CH2_31.setCellValue("");
-            CH2_32.setCellValue("");
-            CH2_33.setCellValue("Net");
+            CH2_26.setCellValue("");
+            CH2_27.setCellValue("");
+            CH2_28.setCellValue("Net");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2082,11 +2049,6 @@ public class ReconciliationPaymentController extends BaseController {
             CH2_26.setCellStyle(headerStyle);
             CH2_27.setCellStyle(headerStyle);
             CH2_28.setCellStyle(headerStyle);
-            CH2_29.setCellStyle(headerStyle);
-            CH2_30.setCellStyle(headerStyle);
-            CH2_31.setCellStyle(headerStyle);
-            CH2_32.setCellStyle(headerStyle);
-            CH2_33.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -2124,11 +2086,6 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH3_26 = row3.createCell(26);
             Cell CH3_27 = row3.createCell(27);
             Cell CH3_28 = row3.createCell(28);
-            Cell CH3_29 = row3.createCell(29);
-            Cell CH3_30 = row3.createCell(30);
-            Cell CH3_31 = row3.createCell(31);
-            Cell CH3_32 = row3.createCell(32);
-            Cell CH3_33 = row3.createCell(33);
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -2136,34 +2093,29 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_3.setCellValue("");
             CH3_4.setCellValue("");
             CH3_5.setCellValue("");
-            CH3_6.setCellValue("");
-            CH3_7.setCellValue("");
-            CH3_8.setCellValue("Pay Rate");
-            CH3_9.setCellValue("Sale Rate");
-            CH3_10.setCellValue("Commission");
-            CH3_11.setCellValue("Serv. Fee");
-            CH3_12.setCellValue("Adjustment");
-            CH3_13.setCellValue("VAT Rate");
-            CH3_14.setCellValue("VAT");
-            CH3_15.setCellValue("Op. Debit");
-            CH3_16.setCellValue("");
-            CH3_17.setCellValue("");
-            CH3_18.setCellValue("Pay Rate");
-            CH3_19.setCellValue("Sale Rate");
-            CH3_20.setCellValue("Commission");
-            CH3_21.setCellValue("Serv. Fee");
-            CH3_22.setCellValue("Adjustment");
-            CH3_23.setCellValue("VAT Rate");
-            CH3_24.setCellValue("VAT");
-            CH3_25.setCellValue("Op. Debit");
-            CH3_26.setCellValue("");
-            CH3_27.setCellValue("");
-            CH3_28.setCellValue("Commission");
-            CH3_29.setCellValue("Serv. Fee");
-            CH3_30.setCellValue("Adjustment");
-            CH3_31.setCellValue("VAT");
-            CH3_32.setCellValue("Op. Debit");
-            CH3_33.setCellValue("");
+            CH3_6.setCellValue("Pay Rate");
+            CH3_7.setCellValue("Sale Rate");
+            CH3_8.setCellValue("Commission");
+            CH3_9.setCellValue("Serv. Fee");
+            CH3_10.setCellValue("Adjustment");
+            CH3_11.setCellValue("VAT Rate");
+            CH3_12.setCellValue("VAT");
+            CH3_13.setCellValue("Op. Debit");
+            CH3_14.setCellValue("");
+            CH3_15.setCellValue("Pay Rate");
+            CH3_16.setCellValue("Sale Rate");
+            CH3_17.setCellValue("Commission");
+            CH3_18.setCellValue("Serv. Fee");
+            CH3_19.setCellValue("Adjustment");
+            CH3_20.setCellValue("VAT Rate");
+            CH3_21.setCellValue("VAT");
+            CH3_22.setCellValue("Op. Debit");
+            CH3_23.setCellValue("");
+            CH3_24.setCellValue("Commission");
+            CH3_25.setCellValue("Serv. Fee");
+            CH3_26.setCellValue("VAT");
+            CH3_27.setCellValue("Op. Debit");
+            CH3_28.setCellValue("");
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -2194,34 +2146,29 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_26.setCellStyle(headerStyle);
             CH3_27.setCellStyle(headerStyle);
             CH3_28.setCellStyle(headerStyle);
-            CH3_29.setCellStyle(headerStyle);
-            CH3_30.setCellStyle(headerStyle);
-            CH3_31.setCellStyle(headerStyle);
-            CH3_32.setCellStyle(headerStyle);
-            CH3_33.setCellStyle(headerStyle);
 
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)         
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 26, 26));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 27, 27));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 33, 33));
 
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 16));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 26));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 27, 33));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 28, 28));
 
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 15));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 18, 25));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 28, 32));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 28));
+
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 15, 21));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 24, 27));
 
             ++vj;
             //============================================
@@ -2257,181 +2204,40 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell26 = row1.createCell(26);
                 Cell rcell27 = row1.createCell(27);
                 Cell rcell28 = row1.createCell(28);
-                Cell rcell29 = row1.createCell(29);
-                Cell rcell30 = row1.createCell(30);
-                Cell rcell31 = row1.createCell(31);
-                Cell rcell32 = row1.createCell(32);
-                Cell rcell33 = row1.createCell(33);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
-                rcell1.setCellValue(listaData.get(vi).PMERCHID);
-                rcell2.setCellValue(listaData.get(vi).AXPAYNBR);
-                rcell3.setCellValue(listaData.get(vi).desCERROR);
-                rcell4.setCellValue(listaData.get(vi).ZONA);
-                rcell5.setCellValue(listaData.get(vi).SCOUNTRY);
-                rcell6.setCellValue(listaData.get(vi).PCURRENCY);
-                rcell7.setCellValue(listaData.get(vi).PGROSAMOU);
-                rcell8.setCellValue(listaData.get(vi).RATECOMBA + "%");
-                rcell9.setCellValue(listaData.get(vi).RATECOMSM + "%");
-                rcell10.setCellValue(listaData.get(vi).PDISCAMOU);
-                rcell11.setCellValue(listaData.get(vi).PSFEEAMOU);
-                rcell12.setCellValue(listaData.get(vi).PADJAMOUN);
-                rcell13.setCellValue(listaData.get(vi).RATEIVABA + "%");
-                rcell14.setCellValue(listaData.get(vi).PTAXAMOU);
-                rcell15.setCellValue(listaData.get(vi).ODBALAMOU);
-                rcell16.setCellValue(listaData.get(vi).PNETAMOU);
-                rcell17.setCellValue(listaData.get(vi).GROSAMOUNC);
-                rcell18.setCellValue(listaData.get(vi).RATECOMBAC + "%");
-                rcell19.setCellValue(listaData.get(vi).RATECOMSMC + "%");
-                rcell20.setCellValue(listaData.get(vi).DISCAMOUNC);
-                rcell21.setCellValue(listaData.get(vi).SFEEAMOUNC);
-                rcell22.setCellValue(listaData.get(vi).ADJAMOUNC);
-                rcell23.setCellValue(listaData.get(vi).RATEIVABAC + "%");
-                rcell24.setCellValue(listaData.get(vi).TAXAMOUNC);
-                rcell25.setCellValue(listaData.get(vi).ODBALAMOUC);
-                rcell26.setCellValue(listaData.get(vi).NETAMOUNC);
-                rcell27.setCellValue(listaData.get(vi).DIFF_PGROSAMOU);
-                rcell28.setCellValue(listaData.get(vi).DIFF_PDISCAMOU);
-                rcell29.setCellValue(listaData.get(vi).DIFF_PSFEEAMOU);
-                rcell30.setCellValue(listaData.get(vi).DIFF_PADJAMOUN);
-                rcell31.setCellValue(listaData.get(vi).DIFF_PTAXAMOU);
-                rcell32.setCellValue(listaData.get(vi).DIFF_ODBALAMOU);
-                rcell33.setCellValue(listaData.get(vi).DIFF_PNETAMOU);
-
-                if (listaData.get(vi).CERROR.equals("01")) {
-                    rcell3.setCellStyle(bodyStyle);
-                }
-                if (rcell27.getNumericCellValue() <= -1) {
-                    rcell27.setCellStyle(bodyStyle);
-                }
-                if (rcell28.getNumericCellValue() <= -1) {
-                    rcell28.setCellStyle(bodyStyle);
-                }
-                if (rcell29.getNumericCellValue() <= -1) {
-                    rcell29.setCellStyle(bodyStyle);
-                }
-                if (rcell30.getNumericCellValue() <= -1) {
-                    rcell30.setCellStyle(bodyStyle);
-                }
-                if (rcell31.getNumericCellValue() <= -1) {
-                    rcell31.setCellStyle(bodyStyle);
-                }
-                if (rcell32.getNumericCellValue() <= -1) {
-                    rcell32.setCellStyle(bodyStyle);
-                }
-                if (rcell33.getNumericCellValue() <= -1) {
-                    rcell33.setCellStyle(bodyStyle);
-                }
+                rcell1.setCellValue(listaData.get(vi).desCERROR);
+                rcell2.setCellValue(listaData.get(vi).ZONA);
+                rcell3.setCellValue(listaData.get(vi).SCOUNTRY);
+                rcell4.setCellValue(listaData.get(vi).PCURRENCY);
+                rcell5.setCellValue(listaData.get(vi).PGROSAMOU);
+                rcell6.setCellValue(listaData.get(vi).RATECOMBA);
+                rcell7.setCellValue(listaData.get(vi).RATECOMSM);
+                rcell8.setCellValue(listaData.get(vi).PDISCAMOU);
+                rcell9.setCellValue(listaData.get(vi).SERVICFEEP);
+                rcell10.setCellValue(listaData.get(vi).RATEIVABA);
+                rcell11.setCellValue(listaData.get(vi).PTAXAMOU);
+                rcell12.setCellValue(listaData.get(vi).ODBALAMOU);
+                rcell13.setCellValue(listaData.get(vi).PNETAMOU);
+                rcell14.setCellValue(listaData.get(vi).GROSAMOUNC);
+                rcell15.setCellValue(listaData.get(vi).RATECOMBAC);
+                rcell16.setCellValue(listaData.get(vi).RATECOMSMC);
+                rcell17.setCellValue(listaData.get(vi).DISCAMOUNC);
+                rcell18.setCellValue(listaData.get(vi).SFEEAMOUNC);
+                rcell19.setCellValue(listaData.get(vi).RATEIVABAC);
+                rcell20.setCellValue(listaData.get(vi).TAXAMOUNC);
+                rcell21.setCellValue(listaData.get(vi).ODBALAMOUC);
+                rcell22.setCellValue(listaData.get(vi).NETAMOUNC);
+                rcell23.setCellValue(listaData.get(vi).DIFF_PGROSAMOU);
+                rcell24.setCellValue(listaData.get(vi).DIFF_PDISCAMOU);
+                rcell25.setCellValue(listaData.get(vi).DIFF_PSFEEAMOU);
+                rcell26.setCellValue(listaData.get(vi).DIFF_PTAXAMOU);
+                rcell27.setCellValue(listaData.get(vi).DIFF_ODBALAMOU);
+                rcell28.setCellValue(listaData.get(vi).DIFF_PNETAMOU);
                 iter.next();
                 ++vi;
                 ++vj;
             }
-
-            Row rowTotal = sheet.createRow(vj);
-            Cell CH1_0_T = rowTotal.createCell(0);
-            Cell CH1_1_T = rowTotal.createCell(1);
-            Cell CH1_2_T = rowTotal.createCell(2);
-            Cell CH1_3_T = rowTotal.createCell(3);
-            Cell CH1_4_T = rowTotal.createCell(4);
-            Cell CH1_5_T = rowTotal.createCell(5);
-            Cell CH1_6_T = rowTotal.createCell(6);
-            Cell CH1_7_T = rowTotal.createCell(7);
-            Cell CH1_8_T = rowTotal.createCell(8);
-            Cell CH1_9_T = rowTotal.createCell(9);
-            Cell CH1_10_T = rowTotal.createCell(10);
-            Cell CH1_11_T = rowTotal.createCell(11);
-            Cell CH1_12_T = rowTotal.createCell(12);
-            Cell CH1_13_T = rowTotal.createCell(13);
-            Cell CH1_14_T = rowTotal.createCell(14);
-            Cell CH1_15_T = rowTotal.createCell(15);
-            Cell CH1_16_T = rowTotal.createCell(16);
-            Cell CH1_17_T = rowTotal.createCell(17);
-            Cell CH1_18_T = rowTotal.createCell(18);
-            Cell CH1_19_T = rowTotal.createCell(19);
-            Cell CH1_20_T = rowTotal.createCell(20);
-            Cell CH1_21_T = rowTotal.createCell(21);
-            Cell CH1_22_T = rowTotal.createCell(22);
-            Cell CH1_23_T = rowTotal.createCell(23);
-            Cell CH1_24_T = rowTotal.createCell(24);
-            Cell CH1_25_T = rowTotal.createCell(25);
-            Cell CH1_26_T = rowTotal.createCell(26);
-            Cell CH1_27_T = rowTotal.createCell(27);
-            Cell CH1_28_T = rowTotal.createCell(28);
-            Cell CH1_29_T = rowTotal.createCell(29);
-            Cell CH1_30_T = rowTotal.createCell(30);
-            Cell CH1_31_T = rowTotal.createCell(31);
-            Cell CH1_32_T = rowTotal.createCell(32);
-            Cell CH1_33_T = rowTotal.createCell(33);
-
-            CH1_0_T.setCellValue("");
-            CH1_1_T.setCellValue("");
-            CH1_2_T.setCellValue("");
-            CH1_3_T.setCellValue("");
-            CH1_4_T.setCellValue("");
-            CH1_5_T.setCellValue("");
-            CH1_6_T.setCellValue("");
-            CH1_7_T.setCellValue(listaData.get(0).totPGROSAMOU);
-            CH1_8_T.setCellValue("");
-            CH1_9_T.setCellValue("");
-            CH1_10_T.setCellValue(listaData.get(0).totPDISCAMOU);
-            CH1_11_T.setCellValue(listaData.get(0).totPSFEEAMOU);
-            CH1_12_T.setCellValue(listaData.get(0).totPADJAMOUN);
-            CH1_13_T.setCellValue("");
-            CH1_14_T.setCellValue(listaData.get(0).totPTAXAMOU);
-            CH1_15_T.setCellValue(listaData.get(0).totODBALAMOU);
-            CH1_16_T.setCellValue(listaData.get(0).totPNETAMOU);
-            CH1_17_T.setCellValue(listaData.get(0).totGROSAMOUNC);
-            CH1_18_T.setCellValue("");
-            CH1_19_T.setCellValue("");
-            CH1_20_T.setCellValue(listaData.get(0).totDISCAMOUNC);
-            CH1_21_T.setCellValue(listaData.get(0).totSFEEAMOUNC);
-            CH1_22_T.setCellValue(listaData.get(0).totADJAMOUNC);
-            CH1_23_T.setCellValue("");
-            CH1_24_T.setCellValue(listaData.get(0).totTAXAMOUNC);
-            CH1_25_T.setCellValue(listaData.get(0).totODBALAMOUC);
-            CH1_26_T.setCellValue(listaData.get(0).totNETAMOUNC);
-            CH1_27_T.setCellValue(listaData.get(0).totDIFF_PGROSAMOU);
-            CH1_28_T.setCellValue(listaData.get(0).totDIFF_PDISCAMOU);
-            CH1_29_T.setCellValue(listaData.get(0).totDIFF_PSFEEAMOU);
-            CH1_30_T.setCellValue(listaData.get(0).totDIFF_PADJAMOUN);
-            CH1_31_T.setCellValue(listaData.get(0).totDIFF_PTAXAMOU);
-            CH1_32_T.setCellValue(listaData.get(0).totDIFF_ODBALAMOU);
-            CH1_33_T.setCellValue(listaData.get(0).totDIFF_PNETAMOU);
-
-            CH1_0_T.setCellStyle(totalStyle);
-            CH1_1_T.setCellStyle(totalStyle);
-            CH1_2_T.setCellStyle(totalStyle);
-            CH1_3_T.setCellStyle(totalStyle);
-            CH1_4_T.setCellStyle(totalStyle);
-            CH1_5_T.setCellStyle(totalStyle);
-            CH1_6_T.setCellStyle(totalStyle);
-            CH1_7_T.setCellStyle(totalStyle);
-            CH1_8_T.setCellStyle(totalStyle);
-            CH1_9_T.setCellStyle(totalStyle);
-            CH1_10_T.setCellStyle(totalStyle);
-            CH1_11_T.setCellStyle(totalStyle);
-            CH1_12_T.setCellStyle(totalStyle);
-            CH1_13_T.setCellStyle(totalStyle);
-            CH1_14_T.setCellStyle(totalStyle);
-            CH1_15_T.setCellStyle(totalStyle);
-            CH1_16_T.setCellStyle(totalStyle);
-            CH1_17_T.setCellStyle(totalStyle);
-            CH1_18_T.setCellStyle(totalStyle);
-            CH1_19_T.setCellStyle(totalStyle);
-            CH1_20_T.setCellStyle(totalStyle);
-            CH1_21_T.setCellStyle(totalStyle);
-            CH1_22_T.setCellStyle(totalStyle);
-            CH1_23_T.setCellStyle(totalStyle);
-            CH1_24_T.setCellStyle(totalStyle);
-            CH1_25_T.setCellStyle(totalStyle);
-            CH1_26_T.setCellStyle(totalStyle);
-            CH1_27_T.setCellStyle(totalStyle);
-            CH1_28_T.setCellStyle(totalStyle);
-            CH1_29_T.setCellStyle(totalStyle);
-            CH1_30_T.setCellStyle(totalStyle);
-            CH1_31_T.setCellStyle(totalStyle);
-            CH1_32_T.setCellStyle(totalStyle);
-            CH1_33_T.setCellStyle(totalStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -2462,11 +2268,6 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.autoSizeColumn(26, true);
             sheet.autoSizeColumn(27, true);
             sheet.autoSizeColumn(28, true);
-            sheet.autoSizeColumn(29, true);
-            sheet.autoSizeColumn(30, true);
-            sheet.autoSizeColumn(31, true);
-            sheet.autoSizeColumn(32, true);
-            sheet.autoSizeColumn(33, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -3269,7 +3070,7 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListTransaction(request, true);
+            List<A4331Filter> listaData = this.getListTransaction(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
@@ -4300,7 +4101,7 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListMainSettlement(request, true);
+            List<A4331Filter> listaData = this.getListMainSettlement(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
@@ -4335,6 +4136,15 @@ public class ReconciliationPaymentController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            String label_date = "";
+            //listaData.get(vi).IN_DATE
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date = "Payment";
+                } else {
+                    label_date = "Processing";
+                }
+            }
             // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
@@ -4356,7 +4166,7 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH1_14 = row1.createCell(14);
             Cell CH1_15 = row1.createCell(15);
 
-            CH1_0.setCellValue("Payment");
+            CH1_0.setCellValue(label_date);
             CH1_1.setCellValue("Zone");
             CH1_2.setCellValue("Country");
             CH1_3.setCellValue("Currency");
@@ -4489,15 +4299,15 @@ public class ReconciliationPaymentController extends BaseController {
                 rcell1.setCellValue(listaData.get(vi).ZONA);
                 rcell2.setCellValue(listaData.get(vi).SCOUNTRY);
                 rcell3.setCellValue(listaData.get(vi).PCURRENCY);
-                rcell4.setCellValue(listaData.get(vi).TGROSAMOUN);
-                rcell5.setCellValue(listaData.get(vi).DISCAMOUN_IMPORT);
-                rcell6.setCellValue(listaData.get(vi).DISCAMOUN_IVA);
-                rcell7.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell4.setCellValue(listaData.get(vi).TGROSAMPAY);
+                rcell5.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell6.setCellValue(listaData.get(vi).IVACOM12);
+                rcell7.setCellValue(listaData.get(vi).SERVICFEEP);
                 rcell8.setCellValue(listaData.get(vi).ACCEAMOU);
-                rcell9.setCellValue(listaData.get(vi).TAXAMOUN_AD);
-                rcell10.setCellValue(listaData.get(vi).GROSAMOUN);
-                rcell11.setCellValue(listaData.get(vi).DISCAMOUN);
-                rcell12.setCellValue(listaData.get(vi).TAXAMOUN_CB);
+                rcell9.setCellValue(listaData.get(vi).OVERCOM12P);
+                rcell10.setCellValue(listaData.get(vi).TGROSAMPAY_CB);
+                rcell11.setCellValue(listaData.get(vi).SFEEAMOU_CB);
+                rcell12.setCellValue(listaData.get(vi).IVACOM12_CB);
                 rcell13.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell14.setCellValue(listaData.get(vi).PCURRENCY);
                 rcell15.setCellValue(listaData.get(vi).NETAMOUNC);
@@ -4544,7 +4354,7 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListSettlement(request, true);
+            List<A4331Filter> listaData = this.getListSettlement(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
@@ -4593,6 +4403,15 @@ public class ReconciliationPaymentController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            String label_date = "";
+            //listaData.get(vi).IN_DATE
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date = "Payment";
+                } else {
+                    label_date = "Processing";
+                }
+            }
             // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
@@ -4619,7 +4438,7 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH1_19 = row1.createCell(19);
             Cell CH1_20 = row1.createCell(20);
 
-            CH1_0.setCellValue("Payment");
+            CH1_0.setCellValue(label_date);
             CH1_1.setCellValue("Merchant");
             CH1_2.setCellValue("Status");
             CH1_3.setCellValue("Zone");
@@ -4794,18 +4613,18 @@ public class ReconciliationPaymentController extends BaseController {
                 rcell3.setCellValue(listaData.get(vi).ZONA);
                 rcell4.setCellValue(listaData.get(vi).SCOUNTRY);
                 rcell5.setCellValue(listaData.get(vi).PCURRENCY);
-                rcell6.setCellValue(listaData.get(vi).TGROSAMOUN);
+                rcell6.setCellValue(listaData.get(vi).TGROSAMPAY);
                 rcell7.setCellValue(listaData.get(vi).DISCRATE_IMPORT);
-                rcell8.setCellValue(listaData.get(vi).RATECOMSM);
-                rcell9.setCellValue(listaData.get(vi).DISCAMOUN_IMPORT);
-                rcell10.setCellValue(listaData.get(vi).DISCRATE_IVA);
-                rcell11.setCellValue(listaData.get(vi).DISCAMOUN_IVA);
-                rcell12.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell8.setCellValue(listaData.get(vi).DISCRATE);
+                rcell9.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell10.setCellValue(listaData.get(vi).DISCRATEI);
+                rcell11.setCellValue(listaData.get(vi).IVACOM12);
+                rcell12.setCellValue(listaData.get(vi).SERVICFEEP);
                 rcell13.setCellValue(listaData.get(vi).ACCEAMOU);
-                rcell14.setCellValue(listaData.get(vi).TAXAMOUN_AD);
-                rcell15.setCellValue(listaData.get(vi).GROSAMOUN);
-                rcell16.setCellValue(listaData.get(vi).DISCAMOUN);
-                rcell17.setCellValue(listaData.get(vi).TAXAMOUN_CB);
+                rcell14.setCellValue(listaData.get(vi).OVERCOM12P);
+                rcell15.setCellValue(listaData.get(vi).TGROSAMPAY_CB);
+                rcell16.setCellValue(listaData.get(vi).SFEEAMOU_CB);
+                rcell17.setCellValue(listaData.get(vi).IVACOM12_CB);
                 rcell18.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell19.setCellValue(listaData.get(vi).PCURRENCY);
                 rcell20.setCellValue(listaData.get(vi).NETAMOUNC);
@@ -4846,18 +4665,18 @@ public class ReconciliationPaymentController extends BaseController {
             CH1_3_T.setCellValue("");
             CH1_4_T.setCellValue("");
             CH1_5_T.setCellValue("");
-            CH1_6_T.setCellValue(listaData.get(0).totTGROSAMOUN);
+            CH1_6_T.setCellValue(listaData.get(0).totTGROSAMPAY);
             CH1_7_T.setCellValue("");
             CH1_8_T.setCellValue("");
-            CH1_9_T.setCellValue(listaData.get(0).totDISCAMOUN_IMPORT);
+            CH1_9_T.setCellValue(listaData.get(0).totSFEEAMOU);
             CH1_10_T.setCellValue("");
-            CH1_11_T.setCellValue(listaData.get(0).totDISCAMOUN_IVA);
-            CH1_12_T.setCellValue(listaData.get(0).totSFEEAMOU);
+            CH1_11_T.setCellValue(listaData.get(0).totIVACOM12);
+            CH1_12_T.setCellValue(listaData.get(0).totSERVICFEEP);
             CH1_13_T.setCellValue(listaData.get(0).totACCEAMOU);
-            CH1_14_T.setCellValue(listaData.get(0).totTAXAMOUN_AD);
-            CH1_15_T.setCellValue(listaData.get(0).totGROSAMOUN);
-            CH1_16_T.setCellValue(listaData.get(0).totDISCAMOUN);
-            CH1_17_T.setCellValue(listaData.get(0).totTAXAMOUN_CB);
+            CH1_14_T.setCellValue(listaData.get(0).totOVERCOM12P);
+            CH1_15_T.setCellValue(listaData.get(0).totTGROSAMPAY_CB);
+            CH1_16_T.setCellValue(listaData.get(0).totSFEEAMOU_CB);
+            CH1_17_T.setCellValue(listaData.get(0).totIVACOM12_CB);
             CH1_18_T.setCellValue(listaData.get(0).totNETAMOUN);
             CH1_19_T.setCellValue("");
             CH1_20_T.setCellValue(listaData.get(0).totNETAMOUNC);
@@ -4927,13 +4746,12 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListDetSettlement(request, true);
+            List<A4331Filter> listaData = this.getListDetSettlement(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle bodyStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
             headerFont.setColor(IndexedColors.BLACK.getIndex());
@@ -4950,19 +4768,6 @@ public class ReconciliationPaymentController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
-            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
-            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFont(headerFont);
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -4971,11 +4776,18 @@ public class ReconciliationPaymentController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(255, 111, 111)));
-            bodyStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            String label_date = "";
+            //listaData.get(vi).IN_DATE
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date = "Payment";
+                } else {
+                    label_date = "Processing";
+                }
+            }
             // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
@@ -5028,57 +4840,55 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH1_45 = row1.createCell(45);
             Cell CH1_46 = row1.createCell(46);
             Cell CH1_47 = row1.createCell(47);
-            Cell CH1_48 = row1.createCell(48);
 
-            CH1_0.setCellValue("Payment");
+            CH1_0.setCellValue(label_date);
             CH1_1.setCellValue("Sales");
             CH1_2.setCellValue("Diff.");
             CH1_3.setCellValue("Status");
             CH1_4.setCellValue("");
             CH1_5.setCellValue("Zone");
             CH1_6.setCellValue("Country");
-            CH1_7.setCellValue("Transaction");
-            CH1_8.setCellValue("Qty Tkts");
-            CH1_9.setCellValue("Invoice Refer.Number PNR");
-            CH1_10.setCellValue("PNR");
-            CH1_11.setCellValue("Document Type");
-            CH1_12.setCellValue("Indust.Speci.Ref.Nbr");
-            CH1_13.setCellValue("Card Number");
-            CH1_14.setCellValue("Auth.");
-            CH1_15.setCellValue("Installment Plan");
-            CH1_16.setCellValue("Installment Number");
-            CH1_17.setCellValue("Sales Amount");
-            CH1_18.setCellValue("Transaction Amount");
-            CH1_19.setCellValue("MSI");
+            CH1_7.setCellValue("Qty Tkts");
+            CH1_8.setCellValue("Invoice Refer.Number PNR");
+            CH1_9.setCellValue("PNR");
+            CH1_10.setCellValue("Document Type");
+            CH1_11.setCellValue("Indust.Speci.Ref.Nbr");
+            CH1_12.setCellValue("Card Number");
+            CH1_13.setCellValue("Auth.");
+            CH1_14.setCellValue("Installment Plan");
+            CH1_15.setCellValue("Installment Number");
+            CH1_16.setCellValue("Sales Amount");
+            CH1_17.setCellValue("Transaction Amount");
+            CH1_18.setCellValue("MSI");
+            CH1_19.setCellValue("");
             CH1_20.setCellValue("");
             CH1_21.setCellValue("");
             CH1_22.setCellValue("");
-            CH1_23.setCellValue("");
-            CH1_24.setCellValue("Commission Base");
+            CH1_23.setCellValue("Commission Base");
+            CH1_24.setCellValue("");
             CH1_25.setCellValue("");
             CH1_26.setCellValue("");
-            CH1_27.setCellValue("");
-            CH1_28.setCellValue("Result Reconciliation Transaction");
+            CH1_27.setCellValue("Result Reconciliation Transaction");
+            CH1_28.setCellValue("");
             CH1_29.setCellValue("");
             CH1_30.setCellValue("");
             CH1_31.setCellValue("");
             CH1_32.setCellValue("");
             CH1_33.setCellValue("");
             CH1_34.setCellValue("");
-            CH1_35.setCellValue("");
-            CH1_36.setCellValue("Chargeback");
+            CH1_35.setCellValue("Chargeback");
+            CH1_36.setCellValue("");
             CH1_37.setCellValue("");
             CH1_38.setCellValue("");
             CH1_39.setCellValue("");
             CH1_40.setCellValue("");
             CH1_41.setCellValue("");
             CH1_42.setCellValue("");
-            CH1_43.setCellValue("");
-            CH1_44.setCellValue("Net Amount to Recive AM");
-            CH1_45.setCellValue("Currency Settlement");
-            CH1_46.setCellValue("Calculated Commission");
-            CH1_47.setCellValue("Rule");
-            CH1_48.setCellValue("Flag Complement");
+            CH1_43.setCellValue("Net Amount to Recive AM");
+            CH1_44.setCellValue("Currency Settlement");
+            CH1_45.setCellValue("Calculated Commission");
+            CH1_46.setCellValue("Rule");
+            CH1_47.setCellValue("Flag Complement");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -5128,17 +4938,17 @@ public class ReconciliationPaymentController extends BaseController {
             CH1_45.setCellStyle(headerStyle);
             CH1_46.setCellStyle(headerStyle);
             CH1_47.setCellStyle(headerStyle);
-            CH1_48.setCellStyle(headerStyle);
 
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)            
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 26));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 27, 34));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 35, 42));
+
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 23));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 27));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 28, 35));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 36, 43));
-
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 10, 10));
@@ -5148,12 +4958,12 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 16, 16));
-
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 17, 17));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 43, 43));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 44, 44));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 45, 45));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 46, 46));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 47, 47));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 48, 48));
 
             ++vj;
             //============================================
@@ -5208,7 +5018,6 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH2_45 = row2.createCell(45);
             Cell CH2_46 = row2.createCell(46);
             Cell CH2_47 = row2.createCell(47);
-            Cell CH2_48 = row2.createCell(48);
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Date");
@@ -5217,7 +5026,7 @@ public class ReconciliationPaymentController extends BaseController {
             CH2_4.setCellValue("Settlement vs Sales");
             CH2_5.setCellValue("");
             CH2_6.setCellValue("");
-            CH2_7.setCellValue("Type");
+            CH2_7.setCellValue("");
             CH2_8.setCellValue("");
             CH2_9.setCellValue("");
             CH2_10.setCellValue("");
@@ -5228,37 +5037,36 @@ public class ReconciliationPaymentController extends BaseController {
             CH2_15.setCellValue("");
             CH2_16.setCellValue("");
             CH2_17.setCellValue("");
-            CH2_18.setCellValue("");
-            CH2_19.setCellValue("Rate Comm.");
-            CH2_20.setCellValue("Serv.Fee");
-            CH2_21.setCellValue("Accel.Amount");
-            CH2_22.setCellValue("Total Comm.");
-            CH2_23.setCellValue("VAT COMM 1 2");
-            CH2_24.setCellValue("Discount Rate");
-            CH2_25.setCellValue("Discount Amount");
-            CH2_26.setCellValue("Discount Rate VAT");
-            CH2_27.setCellValue("Discount Amount VAT");
-            CH2_28.setCellValue("Transaction Amount");
-            CH2_29.setCellValue("MSI");
+            CH2_18.setCellValue("Rate Comm.");
+            CH2_19.setCellValue("Serv.Fee");
+            CH2_20.setCellValue("Accel.Amount");
+            CH2_21.setCellValue("Total Comm.");
+            CH2_22.setCellValue("VAT COMM 1 2");
+            CH2_23.setCellValue("Discount Rate");
+            CH2_24.setCellValue("Discount Amount");
+            CH2_25.setCellValue("Discount Rate VAT");
+            CH2_26.setCellValue("Discount Amount VAT");
+            CH2_27.setCellValue("Transaction Amount");
+            CH2_28.setCellValue("MSI");
+            CH2_29.setCellValue("");
             CH2_30.setCellValue("");
-            CH2_31.setCellValue("");
-            CH2_32.setCellValue("Commission Base");
+            CH2_31.setCellValue("Commission Base");
+            CH2_32.setCellValue("");
             CH2_33.setCellValue("");
             CH2_34.setCellValue("");
-            CH2_35.setCellValue("");
-            CH2_36.setCellValue("Number");
-            CH2_37.setCellValue("Reason Code");
-            CH2_38.setCellValue("Description");
-            CH2_39.setCellValue("Merch. Loc.");
-            CH2_40.setCellValue("Seller ID");
-            CH2_41.setCellValue("Amount");
-            CH2_42.setCellValue("Commission");
-            CH2_43.setCellValue("VAT");
+            CH2_35.setCellValue("Number");
+            CH2_36.setCellValue("Reason Code");
+            CH2_37.setCellValue("Description");
+            CH2_38.setCellValue("Merch. Loc.");
+            CH2_39.setCellValue("Seller ID");
+            CH2_40.setCellValue("Amount");
+            CH2_41.setCellValue("Commission");
+            CH2_42.setCellValue("VAT");
+            CH2_43.setCellValue("");
             CH2_44.setCellValue("");
             CH2_45.setCellValue("");
             CH2_46.setCellValue("");
             CH2_47.setCellValue("");
-            CH2_48.setCellValue("");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -5308,7 +5116,6 @@ public class ReconciliationPaymentController extends BaseController {
             CH2_45.setCellStyle(headerStyle);
             CH2_46.setCellStyle(headerStyle);
             CH2_47.setCellStyle(headerStyle);
-            CH2_48.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
@@ -5316,8 +5123,7 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
-
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 20, 20));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 21, 21));
@@ -5327,11 +5133,11 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 25, 25));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 26, 26));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 27, 27));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 28, 28));
 
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 29, 31));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 32, 35));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 28, 30));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 31, 34));
 
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 35, 35));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 36, 36));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 37, 37));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 38, 38));
@@ -5339,7 +5145,6 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 40, 40));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 41, 41));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 42, 42));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 43, 43));
             ++vj;
             //============================================
 
@@ -5393,7 +5198,6 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH3_45 = row3.createCell(45);
             Cell CH3_46 = row3.createCell(46);
             Cell CH3_47 = row3.createCell(47);
-            Cell CH3_48 = row3.createCell(48);
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -5423,14 +5227,14 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_25.setCellValue("");
             CH3_26.setCellValue("");
             CH3_27.setCellValue("");
-            CH3_28.setCellValue("");
-            CH3_29.setCellValue("Rate Comm.");
-            CH3_30.setCellValue("Total Comm.");
-            CH3_31.setCellValue("VAT COMM 1 2");
-            CH3_32.setCellValue("Discount Rate Comm.");
-            CH3_33.setCellValue("Discount Amount Comm.");
-            CH3_34.setCellValue("Discount Rate VAT");
-            CH3_35.setCellValue("Discount Amount VAT");
+            CH3_28.setCellValue("Rate Comm.");
+            CH3_29.setCellValue("Total Comm.");
+            CH3_30.setCellValue("VAT COMM 1 2");
+            CH3_31.setCellValue("Discount Rate Comm.");
+            CH3_32.setCellValue("Discount Amount Comm.");
+            CH3_33.setCellValue("Discount Rate VAT");
+            CH3_34.setCellValue("Discount Amount VAT");
+            CH3_35.setCellValue("");
             CH3_36.setCellValue("");
             CH3_37.setCellValue("");
             CH3_38.setCellValue("");
@@ -5443,7 +5247,6 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_45.setCellValue("");
             CH3_46.setCellValue("");
             CH3_47.setCellValue("");
-            CH3_48.setCellValue("");
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -5493,16 +5296,15 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_45.setCellStyle(headerStyle);
             CH3_46.setCellStyle(headerStyle);
             CH3_47.setCellStyle(headerStyle);
-            CH3_48.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 29, 29));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 30, 30));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 31, 31));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 32, 32));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 33, 33));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 34, 34));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 35, 35));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 29, 29));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 30, 30));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 31, 31));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 32, 32));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 33, 33));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 34, 34));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 35, 35));
             ++vj;
             //============================================
 
@@ -5556,7 +5358,6 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell45 = row1.createCell(45);
                 Cell rcell46 = row1.createCell(46);
                 Cell rcell47 = row1.createCell(47);
-                Cell rcell48 = row1.createCell(48);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).TRANSDATE);
@@ -5565,209 +5366,51 @@ public class ReconciliationPaymentController extends BaseController {
                 rcell4.setCellValue(listaData.get(vi).descSTVAL);
                 rcell5.setCellValue(listaData.get(vi).ZONA);
                 rcell6.setCellValue(listaData.get(vi).SCOUNTRY);
-                rcell7.setCellValue(listaData.get(vi).RECTYPE);
-                rcell8.setCellValue(listaData.get(vi).QTYTKT);
-                rcell9.setCellValue(listaData.get(vi).INVORNBR);
-                rcell10.setCellValue(listaData.get(vi).SPNR);
-                rcell11.setCellValue(listaData.get(vi).descTDOC);
-                rcell12.setCellValue(listaData.get(vi).ISREFNBR);
-                rcell13.setCellValue(listaData.get(vi).SCARDN);
-                rcell14.setCellValue(listaData.get(vi).SAUTHOC);
-                rcell15.setCellValue(listaData.get(vi).NBRINSTA);
-                rcell16.setCellValue(listaData.get(vi).INSTANBR);
-                rcell17.setCellValue(listaData.get(vi).SVFOPS);
-                rcell18.setCellValue(listaData.get(vi).TGROSAMOUN);
-                rcell19.setCellValue(listaData.get(vi).RATESFEE);
-                rcell20.setCellValue(listaData.get(vi).SFEEAMOU);
-                rcell21.setCellValue(listaData.get(vi).ACCEAMOU);
-                rcell22.setCellValue(listaData.get(vi).ACCEAMOUC);
-                rcell23.setCellValue(listaData.get(vi).IVACOM12);
-                rcell24.setCellValue(listaData.get(vi).DISCRATE);
-                rcell25.setCellValue(listaData.get(vi).DISCAMOUN);
-                rcell26.setCellValue(listaData.get(vi).DISCRATEI);
-                rcell27.setCellValue(listaData.get(vi).DISCAMOUNI);
-                rcell28.setCellValue(listaData.get(vi).TGROSAMOUC);
-                rcell29.setCellValue(listaData.get(vi).RATESFEEC);
-                rcell30.setCellValue(listaData.get(vi).SFEEAMOUC);
-                rcell31.setCellValue(listaData.get(vi).VATCOMMSIC);
-                rcell32.setCellValue(listaData.get(vi).DISCRATEC);
-                rcell33.setCellValue(listaData.get(vi).DISCAMOUNC);
-                rcell34.setCellValue(listaData.get(vi).DISCRATEIC);
-                rcell35.setCellValue(listaData.get(vi).DISCAMOUIC);
-                rcell36.setCellValue(listaData.get(vi).CHADJNBR);
-                rcell37.setCellValue(listaData.get(vi).CHAADJCOD);
-                rcell38.setCellValue(listaData.get(vi).CHAADJDES);
-                rcell39.setCellValue(listaData.get(vi).LMERCHID);
-                rcell40.setCellValue(listaData.get(vi).SELLERID);
-                rcell41.setCellValue(listaData.get(vi).GROSAMOUN_CB);
-                rcell42.setCellValue(listaData.get(vi).DISCAMOUN_CB);
-                rcell43.setCellValue(listaData.get(vi).TAXAMOUN_CB);
-                rcell44.setCellValue(listaData.get(vi).NETAMOUN);
-                rcell45.setCellValue(listaData.get(vi).IN_PCURRENCY);
-                rcell46.setCellValue(listaData.get(vi).DISCAMOSC);
-                rcell47.setCellValue(listaData.get(vi).descFREGLA);
-                rcell48.setCellValue(listaData.get(vi).descFCOMPL);
-
-                if (listaData.get(vi).CERROIN.equals("")) {
-                    //nadine
-                } else {
-                    rcell3.setCellStyle(bodyStyle);
-                }
+                rcell7.setCellValue(listaData.get(vi).QTYTKT);
+                rcell8.setCellValue(listaData.get(vi).INVOIRN);
+                rcell9.setCellValue(listaData.get(vi).SPNR);
+                rcell10.setCellValue(listaData.get(vi).TRANSTYPE);
+                rcell11.setCellValue(listaData.get(vi).ISREFNBR);
+                rcell12.setCellValue(listaData.get(vi).SCARDN);
+                rcell13.setCellValue(listaData.get(vi).SAUTHOC);
+                rcell14.setCellValue(listaData.get(vi).NBRINSTA);
+                rcell15.setCellValue(listaData.get(vi).INSTANBR);
+                rcell16.setCellValue(listaData.get(vi).SVFOPS);
+                rcell17.setCellValue(listaData.get(vi).TGROSAMPAY);
+                rcell18.setCellValue(listaData.get(vi).SFEERATE);
+                rcell19.setCellValue(listaData.get(vi).SERVICFEEP);
+                rcell20.setCellValue(listaData.get(vi).ACCEAMOU);
+                rcell21.setCellValue(listaData.get(vi).ACCEAMOUC);
+                rcell22.setCellValue(listaData.get(vi).OVERCOM12P);
+                rcell23.setCellValue(listaData.get(vi).DISCRATE);
+                rcell24.setCellValue(listaData.get(vi).SFEEAMOU);
+                rcell25.setCellValue(listaData.get(vi).DISCRATEI);
+                rcell26.setCellValue(listaData.get(vi).IVACOM12);
+                rcell27.setCellValue(listaData.get(vi).TGROSAMOUC);
+                rcell28.setCellValue(listaData.get(vi).RATESFEEC);
+                rcell29.setCellValue(listaData.get(vi).SFEEAMOUC);
+                rcell30.setCellValue(listaData.get(vi).VATCOMMSIC);
+                rcell31.setCellValue(listaData.get(vi).DISCRATEC);
+                rcell32.setCellValue(listaData.get(vi).DISCAMOUNC);
+                rcell33.setCellValue(listaData.get(vi).DISCRATEIC);
+                rcell34.setCellValue(listaData.get(vi).DISCAMOUIC);
+                rcell35.setCellValue(listaData.get(vi).CHGBNUM);
+                rcell36.setCellValue(listaData.get(vi).CODCHGBACK);
+                rcell37.setCellValue(listaData.get(vi).CHAADJDES);
+                rcell38.setCellValue(listaData.get(vi).LMERCHID);
+                rcell39.setCellValue(listaData.get(vi).SELLERID);
+                rcell40.setCellValue(listaData.get(vi).TGROSAMPAY_CB);
+                rcell41.setCellValue(listaData.get(vi).SFEEAMOU_CB);
+                rcell42.setCellValue(listaData.get(vi).IVACOM12_CB);
+                rcell43.setCellValue(listaData.get(vi).NETOPAY);
+                rcell44.setCellValue(listaData.get(vi).IN_PCURRENCY);
+                rcell45.setCellValue(listaData.get(vi).DISCAMOSC);
+                rcell46.setCellValue(listaData.get(vi).descFREGLA);
+                rcell47.setCellValue(listaData.get(vi).descFCOMPL);
                 iter.next();
                 ++vi;
                 ++vj;
             }
-
-            Row rowTotal = sheet.createRow(vj);
-            Cell CH1_0_T = rowTotal.createCell(0);
-            Cell CH1_1_T = rowTotal.createCell(1);
-            Cell CH1_2_T = rowTotal.createCell(2);
-            Cell CH1_3_T = rowTotal.createCell(3);
-            Cell CH1_4_T = rowTotal.createCell(4);
-            Cell CH1_5_T = rowTotal.createCell(5);
-            Cell CH1_6_T = rowTotal.createCell(6);
-            Cell CH1_7_T = rowTotal.createCell(7);
-            Cell CH1_8_T = rowTotal.createCell(8);
-            Cell CH1_9_T = rowTotal.createCell(9);
-            Cell CH1_10_T = rowTotal.createCell(10);
-            Cell CH1_11_T = rowTotal.createCell(11);
-            Cell CH1_12_T = rowTotal.createCell(12);
-            Cell CH1_13_T = rowTotal.createCell(13);
-            Cell CH1_14_T = rowTotal.createCell(14);
-            Cell CH1_15_T = rowTotal.createCell(15);
-            Cell CH1_16_T = rowTotal.createCell(16);
-            Cell CH1_17_T = rowTotal.createCell(17);
-            Cell CH1_18_T = rowTotal.createCell(18);
-            Cell CH1_19_T = rowTotal.createCell(19);
-            Cell CH1_20_T = rowTotal.createCell(20);
-            Cell CH1_21_T = rowTotal.createCell(21);
-            Cell CH1_22_T = rowTotal.createCell(22);
-            Cell CH1_23_T = rowTotal.createCell(23);
-            Cell CH1_24_T = rowTotal.createCell(24);
-            Cell CH1_25_T = rowTotal.createCell(25);
-            Cell CH1_26_T = rowTotal.createCell(26);
-            Cell CH1_27_T = rowTotal.createCell(27);
-            Cell CH1_28_T = rowTotal.createCell(28);
-            Cell CH1_29_T = rowTotal.createCell(29);
-            Cell CH1_30_T = rowTotal.createCell(30);
-            Cell CH1_31_T = rowTotal.createCell(31);
-            Cell CH1_32_T = rowTotal.createCell(32);
-            Cell CH1_33_T = rowTotal.createCell(33);
-            Cell CH1_34_T = rowTotal.createCell(34);
-            Cell CH1_35_T = rowTotal.createCell(35);
-            Cell CH1_36_T = rowTotal.createCell(36);
-            Cell CH1_37_T = rowTotal.createCell(37);
-            Cell CH1_38_T = rowTotal.createCell(38);
-            Cell CH1_39_T = rowTotal.createCell(39);
-            Cell CH1_40_T = rowTotal.createCell(40);
-            Cell CH1_41_T = rowTotal.createCell(41);
-            Cell CH1_42_T = rowTotal.createCell(42);
-            Cell CH1_43_T = rowTotal.createCell(43);
-            Cell CH1_44_T = rowTotal.createCell(44);
-            Cell CH1_45_T = rowTotal.createCell(45);
-            Cell CH1_46_T = rowTotal.createCell(46);
-            Cell CH1_47_T = rowTotal.createCell(47);
-            Cell CH1_48_T = rowTotal.createCell(48);
-
-            CH1_0_T.setCellValue("");
-            CH1_1_T.setCellValue("");
-            CH1_2_T.setCellValue("");
-            CH1_3_T.setCellValue("");
-            CH1_4_T.setCellValue("");
-            CH1_5_T.setCellValue("");
-            CH1_6_T.setCellValue("");
-            CH1_7_T.setCellValue("");
-            CH1_8_T.setCellValue("");
-            CH1_9_T.setCellValue("");
-            CH1_10_T.setCellValue("");
-            CH1_11_T.setCellValue("");
-            CH1_12_T.setCellValue("");
-            CH1_13_T.setCellValue("");
-            CH1_14_T.setCellValue("");
-            CH1_15_T.setCellValue("");
-            CH1_16_T.setCellValue("");
-            CH1_17_T.setCellValue(listaData.get(0).SVFOPS_TOTAL);
-            CH1_18_T.setCellValue(listaData.get(0).totTGROSAMOUN);
-            CH1_19_T.setCellValue("");
-            CH1_20_T.setCellValue(listaData.get(0).totSFEEAMOU);
-            CH1_21_T.setCellValue(listaData.get(0).totACCEAMOU);
-            CH1_22_T.setCellValue(listaData.get(0).ACCEAMOUC_TOTAL);
-            CH1_23_T.setCellValue(listaData.get(0).totIVACOM12);
-            CH1_24_T.setCellValue("");
-            CH1_25_T.setCellValue(listaData.get(0).totDISCAMOUN);
-            CH1_26_T.setCellValue("");
-            CH1_27_T.setCellValue(listaData.get(0).DISCAMOUNI_TOTAL);
-            CH1_28_T.setCellValue(listaData.get(0).TGROSAMOUC_TOTAL);
-            CH1_29_T.setCellValue("");
-            CH1_30_T.setCellValue(listaData.get(0).SFEEAMOUC_TOTAL);
-            CH1_31_T.setCellValue(listaData.get(0).VATCOMMSIC_TOTAL);
-            CH1_32_T.setCellValue("");
-            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUNC_TOTAL);
-            CH1_34_T.setCellValue("");
-            CH1_35_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL);
-            CH1_36_T.setCellValue("");
-            CH1_37_T.setCellValue("");
-            CH1_38_T.setCellValue("");
-            CH1_39_T.setCellValue("");
-            CH1_40_T.setCellValue("");
-            CH1_41_T.setCellValue(listaData.get(0).totGROSAMOUN_CB);
-            CH1_42_T.setCellValue(listaData.get(0).DISCAMOUN_CB_TOTAL);
-            CH1_43_T.setCellValue(listaData.get(0).totTAXAMOUN_CB);
-            CH1_44_T.setCellValue(listaData.get(0).totNETAMOUN);
-            CH1_45_T.setCellValue("");
-            CH1_46_T.setCellValue(listaData.get(0).totDISCAMOSC);
-            CH1_47_T.setCellValue("");
-            CH1_48_T.setCellValue("");
-
-            CH1_0_T.setCellStyle(totalStyle);
-            CH1_1_T.setCellStyle(totalStyle);
-            CH1_2_T.setCellStyle(totalStyle);
-            CH1_3_T.setCellStyle(totalStyle);
-            CH1_4_T.setCellStyle(totalStyle);
-            CH1_5_T.setCellStyle(totalStyle);
-            CH1_6_T.setCellStyle(totalStyle);
-            CH1_7_T.setCellStyle(totalStyle);
-            CH1_8_T.setCellStyle(totalStyle);
-            CH1_9_T.setCellStyle(totalStyle);
-            CH1_10_T.setCellStyle(totalStyle);
-            CH1_11_T.setCellStyle(totalStyle);
-            CH1_12_T.setCellStyle(totalStyle);
-            CH1_13_T.setCellStyle(totalStyle);
-            CH1_14_T.setCellStyle(totalStyle);
-            CH1_15_T.setCellStyle(totalStyle);
-            CH1_16_T.setCellStyle(totalStyle);
-            CH1_17_T.setCellStyle(totalStyle);
-            CH1_18_T.setCellStyle(totalStyle);
-            CH1_19_T.setCellStyle(totalStyle);
-            CH1_20_T.setCellStyle(totalStyle);
-            CH1_21_T.setCellStyle(totalStyle);
-            CH1_22_T.setCellStyle(totalStyle);
-            CH1_23_T.setCellStyle(totalStyle);
-            CH1_24_T.setCellStyle(totalStyle);
-            CH1_25_T.setCellStyle(totalStyle);
-            CH1_26_T.setCellStyle(totalStyle);
-            CH1_27_T.setCellStyle(totalStyle);
-            CH1_28_T.setCellStyle(totalStyle);
-            CH1_29_T.setCellStyle(totalStyle);
-            CH1_30_T.setCellStyle(totalStyle);
-            CH1_31_T.setCellStyle(totalStyle);
-            CH1_32_T.setCellStyle(totalStyle);
-            CH1_33_T.setCellStyle(totalStyle);
-            CH1_34_T.setCellStyle(totalStyle);
-            CH1_35_T.setCellStyle(totalStyle);
-            CH1_36_T.setCellStyle(totalStyle);
-            CH1_37_T.setCellStyle(totalStyle);
-            CH1_38_T.setCellStyle(totalStyle);
-            CH1_39_T.setCellStyle(totalStyle);
-            CH1_40_T.setCellStyle(totalStyle);
-            CH1_41_T.setCellStyle(totalStyle);
-            CH1_42_T.setCellStyle(totalStyle);
-            CH1_43_T.setCellStyle(totalStyle);
-            CH1_44_T.setCellStyle(totalStyle);
-            CH1_45_T.setCellStyle(totalStyle);
-            CH1_46_T.setCellStyle(totalStyle);
-            CH1_47_T.setCellStyle(totalStyle);
-            CH1_48_T.setCellStyle(totalStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -5817,7 +5460,6 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.autoSizeColumn(45, true);
             sheet.autoSizeColumn(46, true);
             sheet.autoSizeColumn(47, true);
-            sheet.autoSizeColumn(48, true);
 
             //============================================
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -5840,7 +5482,7 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListDetTktSettlement(request, true);
+            List<A4331Filter> listaData = this.getListDetTktSettlement(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
@@ -6577,12 +6219,11 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListErrorTransaction(request, true);
+            List<A4331Filter> listaData = this.getListErrorTransaction(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
@@ -6600,19 +6241,6 @@ public class ReconciliationPaymentController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
-            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
-            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
-            totalStyle.setFont(headerFont);
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -6624,6 +6252,19 @@ public class ReconciliationPaymentController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            
+            String label_date_1 = "";
+            String label_date_2 = "";
+
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date_1 = "Payment";
+                    label_date_2 = "Processing";
+                } else {
+                    label_date_1 = "Processing";
+                    label_date_2 = "Payment";
+                }
+            }
             // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
@@ -6651,16 +6292,17 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH1_20 = row1.createCell(20);
             Cell CH1_21 = row1.createCell(21);
             Cell CH1_22 = row1.createCell(22);
+            Cell CH1_23 = row1.createCell(23);
 
-            CH1_0.setCellValue("Payment");
-            CH1_1.setCellValue("Procesing");
+            CH1_0.setCellValue(label_date_1);
+            CH1_1.setCellValue(label_date_2);
             CH1_2.setCellValue("Zone");
             CH1_3.setCellValue("Country");
             CH1_4.setCellValue("Payment");
             CH1_5.setCellValue("Status");
             CH1_6.setCellValue("Document Type");
-            CH1_7.setCellValue("Transaction");
-            CH1_8.setCellValue("");
+            CH1_7.setCellValue("Void");
+            CH1_8.setCellValue("Transaction");
             CH1_9.setCellValue("");
             CH1_10.setCellValue("");
             CH1_11.setCellValue("");
@@ -6670,11 +6312,12 @@ public class ReconciliationPaymentController extends BaseController {
             CH1_15.setCellValue("");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
-            CH1_18.setCellValue("Curr.");
-            CH1_19.setCellValue("Transaction Amount");
-            CH1_20.setCellValue("Qty Tkts");
-            CH1_21.setCellValue("Error");
-            CH1_22.setCellValue("");
+            CH1_18.setCellValue("");
+            CH1_19.setCellValue("Curr.");
+            CH1_20.setCellValue("Transaction Amount");
+            CH1_21.setCellValue("Qty Tkts");
+            CH1_22.setCellValue("Error");
+            CH1_23.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -6699,19 +6342,19 @@ public class ReconciliationPaymentController extends BaseController {
             CH1_20.setCellStyle(headerStyle);
             CH1_21.setCellStyle(headerStyle);
             CH1_22.setCellStyle(headerStyle);
+            CH1_23.setCellStyle(headerStyle);
 
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 17));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 18, 18));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 20, 20));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 21, 21));
+            
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 18));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
             ++vj;
             //============================================
 
@@ -6740,6 +6383,7 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH2_20 = row2.createCell(20);
             Cell CH2_21 = row2.createCell(21);
             Cell CH2_22 = row2.createCell(22);
+            Cell CH2_23 = row2.createCell(23);
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Date");
@@ -6748,22 +6392,23 @@ public class ReconciliationPaymentController extends BaseController {
             CH2_4.setCellValue("Merchant ID");
             CH2_5.setCellValue("Settlement vs Sales");
             CH2_6.setCellValue("");
-            CH2_7.setCellValue("Sales Merchant ID");
-            CH2_8.setCellValue("Description");
-            CH2_9.setCellValue("ID tran.");
-            CH2_10.setCellValue("Invoice Refer. Number PNR");
-            CH2_11.setCellValue("PNR");
-            CH2_12.setCellValue("Indust.Speci.Ref.Nbr TKT");
-            CH2_13.setCellValue("Installment");
-            CH2_14.setCellValue("");
-            CH2_15.setCellValue("Card Account Number");
-            CH2_16.setCellValue("Approval Code");
-            CH2_17.setCellValue("Sales Date");
-            CH2_18.setCellValue("");
+            CH2_7.setCellValue("");
+            CH2_8.setCellValue("Sales Merchant ID");
+            CH2_9.setCellValue("Description");
+            CH2_10.setCellValue("ID Tran.");
+            CH2_11.setCellValue("Invoice Ref. Nbr. PNR");
+            CH2_12.setCellValue("PNR");
+            CH2_13.setCellValue("Indust. Speci. Ref. Nbr. TKT");
+            CH2_14.setCellValue("Installment");
+            CH2_15.setCellValue("");
+            CH2_16.setCellValue("Card Account Number");
+            CH2_17.setCellValue("Approval Code");
+            CH2_18.setCellValue("Sales Date");
             CH2_19.setCellValue("");
             CH2_20.setCellValue("");
-            CH2_21.setCellValue("Code");
-            CH2_22.setCellValue("Description");
+            CH2_21.setCellValue("");
+            CH2_22.setCellValue("Code");
+            CH2_23.setCellValue("Description");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -6788,24 +6433,28 @@ public class ReconciliationPaymentController extends BaseController {
             CH2_20.setCellStyle(headerStyle);
             CH2_21.setCellStyle(headerStyle);
             CH2_22.setCellStyle(headerStyle);
+            CH2_23.setCellStyle(headerStyle);
 
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 14));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 13, 13));
+            
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
+            
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
-
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
+            
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 15));
             ++vj;
             //============================================
 
@@ -6834,6 +6483,7 @@ public class ReconciliationPaymentController extends BaseController {
             Cell CH3_20 = row3.createCell(20);
             Cell CH3_21 = row3.createCell(21);
             Cell CH3_22 = row3.createCell(22);
+            Cell CH3_23 = row3.createCell(23);
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -6848,9 +6498,9 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_10.setCellValue("");
             CH3_11.setCellValue("");
             CH3_12.setCellValue("");
-            CH3_13.setCellValue("Plan");
-            CH3_14.setCellValue("Number");
-            CH3_15.setCellValue("");
+            CH3_13.setCellValue("");
+            CH3_14.setCellValue("Plan");
+            CH3_15.setCellValue("Number");
             CH3_16.setCellValue("");
             CH3_17.setCellValue("");
             CH3_18.setCellValue("");
@@ -6858,6 +6508,7 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_20.setCellValue("");
             CH3_21.setCellValue("");
             CH3_22.setCellValue("");
+            CH3_23.setCellValue("");
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -6882,9 +6533,10 @@ public class ReconciliationPaymentController extends BaseController {
             CH3_20.setCellStyle(headerStyle);
             CH3_21.setCellStyle(headerStyle);
             CH3_22.setCellStyle(headerStyle);
+            CH3_23.setCellStyle(headerStyle);
 
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 13, 13));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
             //============================================
 
@@ -6913,110 +6565,36 @@ public class ReconciliationPaymentController extends BaseController {
                 Cell rcell20 = row1.createCell(20);
                 Cell rcell21 = row1.createCell(21);
                 Cell rcell22 = row1.createCell(22);
+                Cell rcell23 = row1.createCell(23);
 
-                rcell0.setCellValue(listaData.get(vi).DATE);
-                rcell1.setCellValue(listaData.get(vi).DATE);
+                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).strFormatDate2);
                 rcell2.setCellValue(listaData.get(vi).ZONA);
                 rcell3.setCellValue(listaData.get(vi).SCOUNTRY);
                 rcell4.setCellValue(listaData.get(vi).PMERCHID);
                 rcell5.setCellValue(listaData.get(vi).descSTVAL);
-                rcell6.setCellValue(listaData.get(vi).descTDOC);
-                rcell7.setCellValue(listaData.get(vi).SMERCHID);
-                rcell8.setCellValue(listaData.get(vi).DES_SMERCHANT);
-                rcell9.setCellValue(listaData.get(vi).IDITEMT);
-                rcell10.setCellValue(listaData.get(vi).INVORNBR);
-                rcell11.setCellValue(listaData.get(vi).SPNR);
-                rcell12.setCellValue(listaData.get(vi).ISREFNBR);
-                rcell13.setCellValue(listaData.get(vi).NBRINSTA);
-                rcell14.setCellValue(listaData.get(vi).INSTANBR);
-                rcell15.setCellValue(listaData.get(vi).SCARDN);
-                rcell16.setCellValue(listaData.get(vi).SAUTHOC);
-                rcell17.setCellValue(listaData.get(vi).BSUMDATE);
-                rcell18.setCellValue(listaData.get(vi).SCURRENCY);
-                rcell19.setCellValue(listaData.get(vi).TGROSAMOUN);
-                rcell20.setCellValue(listaData.get(vi).QTYTKT);
-                rcell21.setCellValue(listaData.get(vi).CERROR);
-                rcell22.setCellValue(listaData.get(vi).DES_CERROR);
-//                if (listaData.get(vi).CERROR.equals("01")) {
-//                    rcell3.setCellStyle(bodyStyle);
-//                }
+                rcell6.setCellValue(listaData.get(vi).TRANSTYPE);
+                rcell7.setCellValue(listaData.get(vi).FVOID);
+                rcell8.setCellValue(listaData.get(vi).SMERCHID);
+                rcell9.setCellValue(listaData.get(vi).DES_SMERCHANT);
+                rcell10.setCellValue(listaData.get(vi).IDITEMT);
+                rcell11.setCellValue(listaData.get(vi).INVOIRN);
+                rcell12.setCellValue(listaData.get(vi).SPNR);
+                rcell13.setCellValue(listaData.get(vi).TICKET);
+                rcell14.setCellValue(listaData.get(vi).NBRINSTA);
+                rcell15.setCellValue(listaData.get(vi).INSTANBR);
+                rcell16.setCellValue(listaData.get(vi).SCARDN);
+                rcell17.setCellValue(listaData.get(vi).SAUTHOC);
+                rcell18.setCellValue(listaData.get(vi).SDATE);
+                rcell19.setCellValue(listaData.get(vi).SCURRENCY);
+                rcell20.setCellValue(listaData.get(vi).TGROSAMPAY);
+                rcell21.setCellValue(listaData.get(vi).QTYTKT);
+                rcell22.setCellValue(listaData.get(vi).CERROR);
+                rcell23.setCellValue(listaData.get(vi).DES_CERROR);
                 iter.next();
                 ++vi;
                 ++vj;
             }
-
-            Row rowTotal = sheet.createRow(vj);
-            Cell CH1_0_T = rowTotal.createCell(0);
-            Cell CH1_1_T = rowTotal.createCell(1);
-            Cell CH1_2_T = rowTotal.createCell(2);
-            Cell CH1_3_T = rowTotal.createCell(3);
-            Cell CH1_4_T = rowTotal.createCell(4);
-            Cell CH1_5_T = rowTotal.createCell(5);
-            Cell CH1_6_T = rowTotal.createCell(6);
-            Cell CH1_7_T = rowTotal.createCell(7);
-            Cell CH1_8_T = rowTotal.createCell(8);
-            Cell CH1_9_T = rowTotal.createCell(9);
-            Cell CH1_10_T = rowTotal.createCell(10);
-            Cell CH1_11_T = rowTotal.createCell(11);
-            Cell CH1_12_T = rowTotal.createCell(12);
-            Cell CH1_13_T = rowTotal.createCell(13);
-            Cell CH1_14_T = rowTotal.createCell(14);
-            Cell CH1_15_T = rowTotal.createCell(15);
-            Cell CH1_16_T = rowTotal.createCell(16);
-            Cell CH1_17_T = rowTotal.createCell(17);
-            Cell CH1_18_T = rowTotal.createCell(18);
-            Cell CH1_19_T = rowTotal.createCell(19);
-            Cell CH1_20_T = rowTotal.createCell(20);
-            Cell CH1_21_T = rowTotal.createCell(21);
-            Cell CH1_22_T = rowTotal.createCell(22);
-
-            CH1_0_T.setCellValue("");
-            CH1_1_T.setCellValue("");
-            CH1_2_T.setCellValue("");
-            CH1_3_T.setCellValue("");
-            CH1_4_T.setCellValue("");
-            CH1_5_T.setCellValue("");
-            CH1_6_T.setCellValue("");
-            CH1_7_T.setCellValue("");
-            CH1_8_T.setCellValue("");
-            CH1_9_T.setCellValue("");
-            CH1_10_T.setCellValue("");
-            CH1_11_T.setCellValue("");
-            CH1_12_T.setCellValue("");
-            CH1_13_T.setCellValue("");
-            CH1_14_T.setCellValue("");
-            CH1_15_T.setCellValue("");
-            CH1_16_T.setCellValue("");
-            CH1_17_T.setCellValue("");
-            CH1_18_T.setCellValue("");
-            CH1_19_T.setCellValue(listaData.get(0).TGROSAMOUN_TOTAL);
-            CH1_20_T.setCellValue("");
-            CH1_21_T.setCellValue("");
-            CH1_22_T.setCellValue("");
-
-            CH1_0_T.setCellStyle(totalStyle);
-            CH1_1_T.setCellStyle(totalStyle);
-            CH1_2_T.setCellStyle(totalStyle);
-            CH1_3_T.setCellStyle(totalStyle);
-            CH1_4_T.setCellStyle(totalStyle);
-            CH1_5_T.setCellStyle(totalStyle);
-            CH1_6_T.setCellStyle(totalStyle);
-            CH1_7_T.setCellStyle(totalStyle);
-            CH1_8_T.setCellStyle(totalStyle);
-            CH1_9_T.setCellStyle(totalStyle);
-            CH1_10_T.setCellStyle(totalStyle);
-            CH1_11_T.setCellStyle(totalStyle);
-            CH1_12_T.setCellStyle(totalStyle);
-            CH1_13_T.setCellStyle(totalStyle);
-            CH1_14_T.setCellStyle(totalStyle);
-            CH1_15_T.setCellStyle(totalStyle);
-            CH1_16_T.setCellStyle(totalStyle);
-            CH1_17_T.setCellStyle(totalStyle);
-            CH1_18_T.setCellStyle(totalStyle);
-            CH1_19_T.setCellStyle(totalStyle);
-            CH1_20_T.setCellStyle(totalStyle);
-            CH1_21_T.setCellStyle(totalStyle);
-            CH1_22_T.setCellStyle(totalStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -7038,11 +6616,13 @@ public class ReconciliationPaymentController extends BaseController {
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true);
             sheet.autoSizeColumn(19, true);
+            sheet.autoSizeColumn(20, true);
             sheet.autoSizeColumn(21, true);
             sheet.autoSizeColumn(22, true);
+            sheet.autoSizeColumn(23, true);
 
             //============================================
-            response.setContentType("application/vnd.openxml");
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
             FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
@@ -7486,7 +7066,7 @@ public class ReconciliationPaymentController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4116Filter> listaData = this.getListChangePayment(request, true);
+            List<A4331Filter> listaData = this.getListChangePayment(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
@@ -7760,6 +7340,266 @@ public class ReconciliationPaymentController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "getXLSXSummaryErrorTransactiont")
+    public @ResponseBody
+    void getXLSXSummaryErrorTransactiont(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Report : Summary Error Transaction");
+        String fileNameDownload = String.format("Report Summary Error Transaction " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<A4331Filter> listaData = this.getListSummaryTransactionError(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+
+            String label_date = "";
+            //listaData.get(vi).IN_DATE
+            if (listaData.size() > 0) {
+                if (listaData.get(0).IN_DATE.trim().equals("PAYDATE")) {
+                    label_date = "Payment";
+                } else {
+                    label_date = "Processing";
+                }
+            }
+            // ====== CREANDO TITULOS ======================================
+
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+            Cell CH1_6 = row1.createCell(6);
+            Cell CH1_7 = row1.createCell(7);
+            Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
+
+            CH1_0.setCellValue(label_date);
+            CH1_1.setCellValue("Total General");
+            CH1_2.setCellValue("");
+            CH1_3.setCellValue("");
+            CH1_4.setCellValue("Transaction - No Complement");
+            CH1_5.setCellValue("");
+            CH1_6.setCellValue("Complements");
+            CH1_7.setCellValue("");
+            CH1_8.setCellValue("");
+            CH1_9.setCellValue("");
+            CH1_10.setCellValue("");
+            CH1_11.setCellValue("");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+            CH1_6.setCellStyle(headerStyle);
+            CH1_7.setCellStyle(headerStyle);
+            CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 11));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+            Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("Match");
+            CH2_2.setCellValue("Pending");
+            CH2_3.setCellValue("%");
+            CH2_4.setCellValue("Match");
+            CH2_5.setCellValue("Pending");
+            CH2_6.setCellValue("Plusgrade");
+            CH2_7.setCellValue("");
+            CH2_8.setCellValue("Tablet");
+            CH2_9.setCellValue("");
+            CH2_10.setCellValue("Ligas");
+            CH2_11.setCellValue("");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+            CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
+
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 7));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 11));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 3 ==========
+            Row row3 = sheet.createRow(vj);
+            Cell CH3_0 = row3.createCell(0);
+            Cell CH3_1 = row3.createCell(1);
+            Cell CH3_2 = row3.createCell(2);
+            Cell CH3_3 = row3.createCell(3);
+            Cell CH3_4 = row3.createCell(4);
+            Cell CH3_5 = row3.createCell(5);
+            Cell CH3_6 = row3.createCell(6);
+            Cell CH3_7 = row3.createCell(7);
+            Cell CH3_8 = row3.createCell(8);
+            Cell CH3_9 = row3.createCell(9);
+            Cell CH3_10 = row3.createCell(10);
+            Cell CH3_11 = row3.createCell(11);
+
+            CH3_0.setCellValue("");
+            CH3_1.setCellValue("");
+            CH3_2.setCellValue("");
+            CH3_3.setCellValue("");
+            CH3_4.setCellValue("");
+            CH3_5.setCellValue("");
+            CH3_6.setCellValue("Match");
+            CH3_7.setCellValue("Pending");
+            CH3_8.setCellValue("Match");
+            CH3_9.setCellValue("Pending");
+            CH3_10.setCellValue("Match");
+            CH3_11.setCellValue("Pending");
+
+            CH3_0.setCellStyle(headerStyle);
+            CH3_1.setCellStyle(headerStyle);
+            CH3_2.setCellStyle(headerStyle);
+            CH3_3.setCellStyle(headerStyle);
+            CH3_4.setCellStyle(headerStyle);
+            CH3_5.setCellStyle(headerStyle);
+            CH3_6.setCellStyle(headerStyle);
+            CH3_7.setCellStyle(headerStyle);
+            CH3_8.setCellStyle(headerStyle);
+            CH3_9.setCellStyle(headerStyle);
+            CH3_10.setCellStyle(headerStyle);
+            CH3_11.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+                Cell rcell6 = row1.createCell(6);
+                Cell rcell7 = row1.createCell(7);
+                Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
+
+                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).TGM);
+                rcell2.setCellValue(listaData.get(vi).TGP);
+                rcell3.setCellValue(listaData.get(vi).PENDING_PERCENTAGE);
+                rcell4.setCellValue(listaData.get(vi).TNCM);
+                rcell5.setCellValue(listaData.get(vi).TNCP);
+                rcell6.setCellValue(listaData.get(vi).CPLM);
+                rcell7.setCellValue(listaData.get(vi).CPLP);
+                rcell8.setCellValue(listaData.get(vi).CTAM);
+                rcell9.setCellValue(listaData.get(vi).CTAP);
+                rcell10.setCellValue(listaData.get(vi).CLIM);
+                rcell11.setCellValue(listaData.get(vi).CLIP);
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+
     @RequestMapping(value = "/getTXTSettlementDetail")
     public @ResponseBody
     void getTXTSettlementDetail(HttpServletRequest request, HttpServletResponse response) {
@@ -7800,7 +7640,7 @@ public class ReconciliationPaymentController extends BaseController {
         try {
 
             File file = File.createTempFile(fileNameDownload, ".txt");
-            List<A4116Filter> lst = this.getListDetSettlement(request, true);
+            List<A4331Filter> lst = this.getListDetSettlement(request, true);
             System.out.println("Tamaño de lista devuelta : " + lst.size());
 
             PrintWriter writer = new PrintWriter(file, "UTF-8");
@@ -7876,17 +7716,16 @@ public class ReconciliationPaymentController extends BaseController {
         //Data.DATE, Data.AXPAYNBR, Data.PMERCHID, Data.PCURRENCY, Data.DIFF_PNETAMOU_STRING
         ProMail proMail = new ProMail();
 
-        List<A4116Filter> lstEmails = this.getListEmails();
+        List<A4331Filter> lstEmails = this.getListEmails();
 
         List<String> receptores = new ArrayList<>();
 
-        for (int i = 0; i < lstEmails.size(); i++){
+        for (int i = 0; i < lstEmails.size(); i++) {
             receptores.add(lstEmails.get(i).EMAIL);
         }
-        
+
         //receptores.add("rtoledo@aeromexico.com");
         //receptores.add("rpichardor@aeromexico.com");
-
         List<String> Ccpy = new ArrayList<>();
         //Ccpy.add("ctarazona@miatech.net");
 
@@ -7926,7 +7765,7 @@ public class ReconciliationPaymentController extends BaseController {
         mensaje = mensaje + "\n" + "<span style=\"color:#0C343D;font-size:11.5pt;font-family:Open Sans,sans-serif;\">Medios de pago</span><br>";
         //mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
         //mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
-        
+
         String correoMask = "amaclaracionescontracargos@miatech.net";
 
         List<String> archivos = new ArrayList<>();
@@ -8468,7 +8307,7 @@ public class ReconciliationPaymentController extends BaseController {
         boolean iboolean;
         //Data.DATE, Data.AXPAYNBR, Data.PMERCHID, Data.PCURRENCY, Data.DIFF_PNETAMOU_STRING
         ProMail proMail = new ProMail();
-        
+
         int sizeList = 0;
 
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
@@ -8477,17 +8316,16 @@ public class ReconciliationPaymentController extends BaseController {
         DecimalFormat formatea = new DecimalFormat("#,###.##", simbolo);
         double a = 0;
 
-        List<A4116Filter> lstEmails = this.getListEmails();
+        List<A4331Filter> lstEmails = this.getListEmails();
 
         List<String> receptores = new ArrayList<>();
 
-        for (int i = 0; i < lstEmails.size(); i++){
+        for (int i = 0; i < lstEmails.size(); i++) {
             receptores.add(lstEmails.get(i).EMAIL);
         }
-        
+
         //receptores.add("rtoledo@aeromexico.com");
         //receptores.add("rpichardor@aeromexico.com");
-
         List<String> Ccpy = new ArrayList<>();
         //Ccpy.add("ctarazona@miatech.net");
         String asunto = "Debit Memo";
@@ -8528,7 +8366,7 @@ public class ReconciliationPaymentController extends BaseController {
         mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
         mensaje = mensaje + "\n" + "<table style=\"width:100%\">";
         mensaje = mensaje + "\n" + "<tr>    <th>Payment Date</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Zone</th>    <th>Country</th>    <th>Currency</th>    <th>Amount</th>    </tr>";
-                
+
         DecimalFormat df = new DecimalFormat("#,###,##0");
         DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
@@ -8536,7 +8374,7 @@ public class ReconciliationPaymentController extends BaseController {
         otherSymbols.setGroupingSeparator(',');
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
-        
+
         if (listaData.size() > 20) {
             sizeList = 20;
         } else {
@@ -9083,17 +8921,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : getErrorCodes-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListGetErrorCodes(request, false);
+        List<A4331Filter> lst = this.getListGetErrorCodes(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListGetErrorCodes(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListGetErrorCodes(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -9102,7 +8940,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -9135,17 +8973,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : getErrorCodesRecSett-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListGetErrorCodesRecSett(request, false);
+        List<A4331Filter> lst = this.getListGetErrorCodesRecSett(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListGetErrorCodesRecSett(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListGetErrorCodesRecSett(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -9154,7 +8992,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -9186,17 +9024,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : getZonas-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListGetZonas(request, false);
+        List<A4331Filter> lst = this.getListGetZonas(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListGetZonas(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListGetZonas(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -9205,7 +9043,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -9237,17 +9075,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : getPaises-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListGetPaises(request, false);
+        List<A4331Filter> lst = this.getListGetPaises(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListGetPaises(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListGetPaises(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -9256,7 +9094,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -9288,17 +9126,17 @@ public class ReconciliationPaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : getAdjustmentCodes-------------");
 
         map.put("success", true);
-        List<A4116Filter> lst = this.getListGetAdjustmentCodes(request, false);
+        List<A4331Filter> lst = this.getListGetAdjustmentCodes(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4116Filter> getListGetAdjustmentCodes(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331Filter> getListGetAdjustmentCodes(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -9307,7 +9145,7 @@ public class ReconciliationPaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4116Filter.class);
+            filter = gson.fromJson(beanString, A4331Filter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -9333,10 +9171,61 @@ public class ReconciliationPaymentController extends BaseController {
 
     }
 
-    public List<A4116Filter> getListEmails() {
+    @RequestMapping(value = "getCountries")
+    public @ResponseBody
+    String getCountries(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ReconciliationPayment : getCountries-------------");
 
-        List<A4116Filter> lst = new ArrayList<>(0);
-        A4116Filter filter = new A4116Filter();
+        map.put("success", true);
+        List<A4331Filter> lst = this.getListCountries(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4331Filter> getListCountries(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4331Filter.class);
+
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX606SQP04959(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+
+    }
+
+    public List<A4331Filter> getListEmails() {
+
+        List<A4331Filter> lst = new ArrayList<>(0);
+        A4331Filter filter = new A4331Filter();
 
         try {
             logic = new ReconciliationPaymentLogic();

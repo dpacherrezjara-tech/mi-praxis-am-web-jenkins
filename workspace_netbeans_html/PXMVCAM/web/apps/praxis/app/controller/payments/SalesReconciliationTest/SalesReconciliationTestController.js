@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
         me = this;
         prototypeProgram.view = 'payments-sales-reconciliation-test-form';
         prototypeProgram.nprog = 'PX00000584';
-        prototypeProgram.title = 'Sales Reconciliation by Ticket Test';
+        prototypeProgram.title = 'Sales Reconciliation by Ticket';
         prototypeProgram.modulo = '';
     },
     afterRender: function () {
@@ -227,6 +227,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         this.beanDetailTar.IN_CARDN2 = win.getValue('txtCard2');
                         this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                         this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
+                        this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
                         console.log(this.beanDetailTar);
                         this.searchDetTARJETA(this.beanDetailTar);
                     } else {
@@ -759,6 +760,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                     this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                     this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                     this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
+                    this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
                     console.log(this.beanDetailTar);
                     this.searchDetTARJETA(this.beanDetailTar);
                 } else {
@@ -825,6 +827,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                 this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                 this.beanDetailTar.IN_FCOMPL = win.getValue('cmbFCOMPL');
                 this.beanDetailTar.IN_CURRENCY = win.getValue('cmbCURRENCY');
+                this.beanDetailTar.IN_STVAL = win.getValue('cmbSTVAL');
                 console.log(this.beanDetailTar);
 
                 if (win.getValue('txtAUTHNBR').trim().length === 6) {

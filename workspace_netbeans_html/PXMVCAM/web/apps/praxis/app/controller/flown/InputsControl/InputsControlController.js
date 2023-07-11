@@ -412,8 +412,8 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 
-                if(res.User === 'SAP01' || res.User === 'SAP43' || res.User === 'SAP48' || res.User === 'SAP07' || res.User === 'SAP12'
-                || res.User === 'ADM2' || res.User === 'OPER2' || res.User === 'OPER3' || res.User === 'OPER6' || res.User === 'OPER7' || res.User === 'OPER9'){
+                if(res.User === 'SAP01T' || res.User === 'SAP43T' || res.User === 'SAP48T' || res.User === 'SAP07T' || res.User === 'SAP12T' || res.User === 'SAP52T'
+                || res.User === 'ADM2T' || res.User === 'OPER2T' || res.User === 'OPER3T' || res.User === 'OPER6T' || res.User === 'OPER7T' || res.User === 'OPER9T'){
                     Ext.getCmp(prototype.id + '-chkLOG').show();
                 }else{
                     Ext.getCmp(prototype.id + '-chkLOG').hide();

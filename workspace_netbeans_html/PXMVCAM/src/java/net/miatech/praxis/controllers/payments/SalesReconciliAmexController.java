@@ -791,7 +791,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchComplementPlusgrade")
     public @ResponseBody
     String searchComplementPlusgrade(ModelMap map, HttpServletRequest request) {
@@ -843,7 +843,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchComPlusgrade")
     public @ResponseBody
     String searchComPlusgrade(ModelMap map, HttpServletRequest request) {
@@ -1298,6 +1298,43 @@ public class SalesReconciliAmexController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             msj = logic.loadPX570SQP04469(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "MaintenanceManualMsi")
+    public @ResponseBody
+    String MaintenanceManualMsi(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceManualMsi-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4116Filter filter = new A4116Filter();
+            A4116Filter result = new A4116Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX570SQP04827(filter);
             map.put("result", result);
 
             if (msj.equals("")) {
@@ -7900,7 +7937,7 @@ public class SalesReconciliAmexController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "getXLSXMainComplementPlusgrade")
     public @ResponseBody
     void getXLSXMainComplementPlusgrade(HttpServletRequest request, HttpServletResponse response) {
@@ -8091,7 +8128,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_4_T.setCellValue(listaData.get(0).TOTQTYTKT_P);
             CH1_5_T.setCellValue("");
             CH1_6_T.setCellValue(listaData.get(0).TOTAMOUNTOFF_P);
-            
+
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
             CH1_2_T.setCellStyle(totalStyle);
@@ -8120,7 +8157,7 @@ public class SalesReconciliAmexController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "getXLSXComplementPlusgrade")
     public @ResponseBody
     void getXLSXComplementPlusgrade(HttpServletRequest request, HttpServletResponse response) {
@@ -8324,7 +8361,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_13_T.setCellValue("");
             CH1_14_T.setCellValue("");
             CH1_15_T.setCellValue("");
-            
+
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
             CH1_2_T.setCellStyle(totalStyle);

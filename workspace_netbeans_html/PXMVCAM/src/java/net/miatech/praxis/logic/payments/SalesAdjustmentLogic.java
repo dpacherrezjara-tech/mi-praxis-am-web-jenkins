@@ -2,6 +2,7 @@ package net.miatech.praxis.logic.payments;
 
 import java.sql.SQLException;
 import java.util.List;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesAdjustmentDAO;
 import net.miatech.praxis.payment.filter.A4116Filter;
@@ -33,6 +34,10 @@ public class SalesAdjustmentLogic {
 
     public String loadPX599SQP04542(A4116Filter filter) throws SQLException, Exception {
         return SalesAdjustmentDAO.loadPX599SQP04542(filter);
+    }
+    
+    public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
+        return SalesAdjustmentDAO.loadSQP00697(filter);
     }
 
 }

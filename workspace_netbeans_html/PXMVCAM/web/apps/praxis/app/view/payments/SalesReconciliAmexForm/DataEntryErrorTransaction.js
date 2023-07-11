@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
         'Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTransactionSalesReconciliAmexController'
     ],
     controller: 'DataEntryErrorTransactionSalesReconciliAmexController',
-    title: 'Sales Transaction DataEntry',
+    title: 'Transaction DataEntry',
     header: true,
 //    height: 650,
     width: 1075,
@@ -113,6 +113,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-lblSMERCHID',
                                     text: 'Sales Merchant ID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -445,6 +446,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-lblCERROR',
                                     text: 'Sett. vs Sales',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -480,6 +482,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                         },
                         {
                             xtype: 'label',
+                            id: prototype.id + '-lblInfo',
                             text: 'Sales Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
@@ -498,6 +501,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-lblBSUMDATE1',
                                     text: 'Sales Date',
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -786,6 +790,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-lblSVFOPS1',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Sales Amount',
                                     width: 120
@@ -1129,6 +1134,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-lblSDATESEARCH',
                                     text: 'Sales Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -1307,7 +1313,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 956,
+                            width: 1006,
                             height: 270,
                             hidden: false,
                             autoScroll: true,
@@ -1317,7 +1323,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 897,
+                                    width: 987,
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1420,6 +1426,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 //                                                    return value;
 //                                                }
 //                                            },
+                                            {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
@@ -1428,7 +1442,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id + '-lbltot_VFOP1',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1436,7 +1450,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id + '-lblA720FECVTA1',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1662,7 +1676,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAdjustment',
-                                    width: 897,
+                                    width: 937,
                                     height: 60,
                                     hidden: true,
                                     columnLines: true,
@@ -1736,6 +1750,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 //                                                    return value;
 //                                                }
 //                                            },
+                                            {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
                                             {header: 'Amount', dataIndex: 'A1531VFOP', width: 70, xtype: 'gridcolumn',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#F0FA8F";
@@ -1765,7 +1787,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 },
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70, id: prototype.id + '-lbltot_VFOP2',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1773,7 +1795,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61, id: prototype.id + '-lblA720FECVTA2',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1857,7 +1879,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfoBlocked',
                             layout: 'vbox',
                             border: false,
-                            width: 870,
+                            width: 910,
                             height: 245,
                             hidden: true,
                             bodyStyle: 'background:#E5ECEF;',
@@ -1866,7 +1888,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoBlocked',
-                                    width: 852,
+                                    width: 892,
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
@@ -1938,6 +1960,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
+                                            {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
+                                                editor: {xtype: 'textfield', editable: false},
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
@@ -1946,7 +1976,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 80, id: prototype.id + '-lbltot_VFOPB',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1954,7 +1984,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 70, id: prototype.id + '-lblA720FECVTA3',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 

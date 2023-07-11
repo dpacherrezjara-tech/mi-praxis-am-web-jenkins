@@ -542,6 +542,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             listeners:{
                             }
                         },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Status',
+                            id: prototype.id + '-cmbSTVAL',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"], ["1", "Match"], ["2", "Sales w/o Reconciliation"], ["3", "Reconciliation w/o Sales"],
+                                    ["4", "Match with Differences"], ["5", "Match Manual"], ["6", "Stand By"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 40,
+                            width: 200,
+                            hiddenLabel: false,
+                            value: '',
+                        },
                     ]
                 }
             ]

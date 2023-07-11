@@ -2880,11 +2880,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         console.log(rec);
-        if (rec.data.TDOC === "S") {
-            this.winDataEntryError('U', rec, all, rowIndex);
-        } else {
-            this.winDataEntryErrorRefund('U', rec, all, rowIndex);
-        }
+        this.winDataEntryError('U', rec, all, rowIndex);
     },
     winDataEntryError: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
@@ -2900,30 +2896,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }).show();
     },
-    winDataEntryErrorRefund: function (action, rec, all, rowIndex) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;
-
-        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransactionRefund', {
-            id: prototype.id + '-dataEntryErrorRefund',
-            params: {
-                action: action,
-                rec: rec,
-                all: all,
-                rowIndex: rowIndex
-            }
-        }).show();
-    },
+//    winDataEntryErrorRefund: function (action, rec, all, rowIndex) {
+//        action = action === null || action === undefined ? 'U' : action;
+//        rec = rec === null || rec === undefined ? {} : rec;
+//
+//        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransactionRefund', {
+//            id: prototype.id + '-dataEntryErrorRefund',
+//            params: {
+//                action: action,
+//                rec: rec,
+//                all: all,
+//                rowIndex: rowIndex
+//            }
+//        }).show();
+//    },
     onEditClickSettlement: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
-        if (rec.data.RECTYPE !== 'CHARGEBACK') {
-            this.winDataEntrySettlement('U', rec);
-        }
-        if (rec.data.RECTYPE === 'CHARGEBACK') {
-            this.winDataEntryChargeback('U', rec);
-        }
-
+//        if (rec.data.RECTYPE !== 'CHARGEBACK') {
+//            this.winDataEntrySettlement('U', rec);
+//        }
+//        if (rec.data.RECTYPE === 'CHARGEBACK') {
+//            this.winDataEntryChargeback('U', rec);
+//        }
+        this.winDataEntryError('U', rec, all, rowIndex);
     },
     winDataEntrySettlement: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -3115,8 +3111,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     onComplementDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
-        if (rowData.data.DES_SMERCHANT.trim() === 'LIGAS') {
+        if (rowData.data.DES_SMERCHANT.trim() === 'LIGAS' || rowData.data.DES_SMERCHANT.trim() === 'TABLET') {
             var INVORNBR = rowData.data.INVORNBR;
+            var DES_SMERCHANT = rowData.data.DES_SMERCHANT;
 
             prototypeProgram.view = 'payments-sales-reconcili-amex-form';
             prototypeProgram.nprog = 'PX00000570';
@@ -3126,6 +3123,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             var beanComplementToAMEX = {};
 
             beanComplementToAMEX.INVORNBR = INVORNBR;
+            beanComplementToAMEX.DES_SMERCHANT = DES_SMERCHANT.trim();
 
             console.log(beanComplementToAMEX);
 

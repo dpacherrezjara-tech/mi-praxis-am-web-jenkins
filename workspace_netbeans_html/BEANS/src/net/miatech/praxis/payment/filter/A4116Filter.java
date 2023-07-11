@@ -218,6 +218,7 @@ public class A4116Filter extends A4116 {
     public String A1531CAPL = "";
     public String A1531CFOP = "";
     public String A1531TTARJ = "";
+    public String A1531MFOP = "";
     public String USOS = "";
     public double A1531VFOP = 0.0;    
     public double tot_VFOP = 0.0;
@@ -255,6 +256,13 @@ public class A4116Filter extends A4116 {
     public String IN_PROCTYPE = "";
     public String IN_SCURRENCY = "";
     public String IN_TKT = "";
+    //Msi Manual
+    public String AREFNBR1 = "";
+    public String AREFNBR2 = "";
+    public String AREFNBR3 = "";
+    public String TDOC1 = "";
+    public String TDOC2 = "";
+    public String TDOC3 = "";
     
     public String IN_STVAL_ERR = "";
     public String strFormatDate1 = "";
@@ -284,6 +292,7 @@ public class A4116Filter extends A4116 {
     public String SDATE = "";
     public String STIME = "";
     public String SCARCOD = "";
+    public String IN_MERCH_ERR = "";
     
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 

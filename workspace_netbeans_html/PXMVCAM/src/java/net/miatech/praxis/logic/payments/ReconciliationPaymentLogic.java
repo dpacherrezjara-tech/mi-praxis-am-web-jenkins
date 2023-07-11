@@ -15,6 +15,7 @@ import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
 import net.miatech.praxis.payment.filter.A4124Filter;
@@ -51,11 +52,11 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04269(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04270(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04270(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04270(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04471(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04471(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04471(filter);
     }
 
@@ -71,7 +72,7 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04376(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04695(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04695(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04695(filter);
     }
 
@@ -79,19 +80,19 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04571(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04694(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04694(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04694(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04721(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04721(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04721(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04698(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04698(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04698(filter);
     }
     
-    public List<A4116Filter> loadPX606SQP04619(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04619(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04619(filter);
     }
 
@@ -99,15 +100,15 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadSQP00697(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04697(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04697(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04697(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04696(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04696(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04696(filter);
     }
 
-    public A4116Filter loadPX606SQP04720(A4116Filter filter) throws SQLException, Exception {
+    public A4331Filter loadPX606SQP04720(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04720(filter);
     }
 
@@ -115,60 +116,76 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04466(filter);
     }
 
-    public String loadPX606SQP04360(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04360(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04360(filter);
     }
 
-    public String loadPX606SQP04723(A4116Filter filter) throws SQLException, Exception {
+    public String loadPX606SQP04723(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04723(filter);
     }
     
-    public String loadPX606SQP04728(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04728(filter);
+    public String loadPX606SQP04846(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04846(filter);
+    }
+    
+    public String loadPX606SQP04960(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04960(filter);
     }
 
-    public String loadPX606SQP04469(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04469(filter);
+    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04847(filter);
+    }
+    
+    public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04848(filter);
+    }
+    
+    public String loadPX606SQP04849(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04849(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04420(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04420(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04420(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04414(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04414(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04414(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04465(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04465(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04465(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04569(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04569(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04569(filter);
     }
     
-    public List<A4116Filter> loadPX606SQP04617(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04617(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04617(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04570(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04570(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04570(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04722(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04722(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04722(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04754(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04754(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04754(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04463(A4116Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04463(filter);
+    public List<A4331Filter> loadPX606SQP04828(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04828(filter);
     }
 
-    public List<A4116Filter> loadPX606SQP04470(A4116Filter filter) throws SQLException, Exception {
+    public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04470(filter);
+    }
+    
+    public List<A4331Filter> loadPX606SQP04959(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04959(filter);
     }
     //-----------------------------------------------------------------------------------------
 }
