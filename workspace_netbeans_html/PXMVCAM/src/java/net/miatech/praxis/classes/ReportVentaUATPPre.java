@@ -172,13 +172,13 @@ public class ReportVentaUATPPre {
         PosX1 = PosX1 + 25;
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ruta", subFont_1)), PosX1, PYi, 0);
 
-        PosX1 = PosX1 + 140;
+        PosX1 = PosX1 + 90; //140
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UUID", subFont_1)), PosX1, PYi, 0);
 
-        PosX1 = PosX1 + 120;
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UUID ANT", subFont_1)), PosX1, PYi, 0);
+        PosX1 = PosX1 + 150; //120
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UUID Anticipo", subFont_1)), PosX1, PYi, 0);
 
-        PosX1 = PosX1 + 150;
+        PosX1 = PosX1 + 170; //150
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Mda.", subFont_1)), PosX1, PYi, 0);
 
         PosX1 = PosX1 + 46;
@@ -198,15 +198,15 @@ public class ReportVentaUATPPre {
         String Line03 = "";
         //cada linea debe ser menor a "wcolumn" posiciones      
         for (int i = 0; i < ttl_arrg; i++) {
-            Line01_ = Line01_ + cadena_nombre[i] + " ";;
+            Line01_ = Line01_ + cadena_nombre[i] + " ";
             if (Line01_.length() < wcolumn) {
                 Line01 = Line01 + cadena_nombre[i] + " ";
             } else {
-                Line02_ = Line02_ + cadena_nombre[i] + " ";;
+                Line02_ = Line02_ + cadena_nombre[i] + " ";
                 if (Line02_.length() < wcolumn) {
-                    Line02 = Line02 + cadena_nombre[i] + " ";;
+                    Line02 = Line02 + cadena_nombre[i] + " ";
                 } else {
-                    Line03 = Line03 + cadena_nombre[i] + " ";;
+                    Line03 = Line03 + cadena_nombre[i] + " ";
                 }
             }
         }
@@ -244,7 +244,7 @@ public class ReportVentaUATPPre {
             int PosX2;
             //int PosXd;
             int PosX3;
-            int PosX4;
+            //int PosX4;
             int PosX5;
             int PosX6;
             int PosX7;
@@ -410,21 +410,21 @@ public class ReportVentaUATPPre {
             PosX6 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ruta", subFont_1)), PosX1, PYi, 0);
 
-            PosX1 = PosX1 + 140; //100
+            PosX1 = PosX1 + 90; //100
             PosX7 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UUID", subFont_1)), PosX1, PYi, 0);
 
-            PosX1 = PosX1 + 120;
+            PosX1 = PosX1 + 150; //120
             PosX8 = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UUID ANT.", subFont_1)), PosX1, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("UUID Anticipo", subFont_1)), PosX1, PYi, 0);
 
-            PosX1 = PosX1 + 150; //38   
+            PosX1 = PosX1 + 170; //150   
             PosX14 = PosX1;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Mda.", subFont_1)), PosX1, PYi, 0);
 
-            PosX1 = PosX1 + 46;
+            PosX1 = PosX1 + 46; //46
             PosX15 = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total", subFont_1)), PosX1, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("Total", subFont_1)), PosX1, PYi, 0);
             
             
             PYi = PYi - (Hlng + 8);
