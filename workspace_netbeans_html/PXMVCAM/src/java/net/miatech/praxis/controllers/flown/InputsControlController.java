@@ -1421,7 +1421,7 @@ public class InputsControlController extends BaseController {
                 Cell rcell3 = row.createCell(3);
                 Cell rcell4 = row.createCell(4);
 
-                rcell0.setCellValue(listaData.get(vi).Nbr);
+                rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).strFormatDate);
                 rcell2.setCellValue(listaData.get(vi).TRNN);
                 rcell3.setCellValue(listaData.get(vi).CCIA);
