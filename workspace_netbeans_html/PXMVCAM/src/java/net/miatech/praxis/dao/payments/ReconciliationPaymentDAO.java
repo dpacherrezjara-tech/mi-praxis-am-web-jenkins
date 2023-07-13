@@ -4606,11 +4606,11 @@ public class ReconciliationPaymentDAO {
         if (filter.TDOC.trim().equals("R")) {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 365);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04958(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04958(?,?,?,?,?,?,?,?,?,?)}";
         } else {
             IN_FECVTA_FROM = Functions.restXDaystoDate(IN_FECVTA, 1);
             IN_FECVTA_TO = Functions.restXDaystoDate(IN_FECVTA, -1);
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04722(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04722(?,?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -4627,6 +4627,7 @@ public class ReconciliationPaymentDAO {
             cstmt.setString(7, filter.TICKET.trim());
             cstmt.setString(8, filter.SMERCHID.trim());
             cstmt.setString(9, filter.SPNR.trim());
+            cstmt.setString(10, filter.FCOMPL.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();

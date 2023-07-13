@@ -1268,8 +1268,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         });
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        var strTkt = rowData.data.ISREFNBR;
-
+        var obj = rowData.data;
         prototypeProgram.view = 'payments-reconciliation-payment-form';
         prototypeProgram.nprog = 'PX00000606';
         prototypeProgram.title = 'Reconciliation Payment';
@@ -1277,11 +1276,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
 
         var beanProMasterTicket = {};
 
-        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
-        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        beanProMasterTicket.IN_CIA = obj.A1531CIA;
+        beanProMasterTicket.IN_FORMA = obj.A1531FORMA;
+        beanProMasterTicket.IN_SERIE = obj.A1531SERIE;
 
-        console.log(beanProMasterTicket);
+        console.log('Iniciando View Ticket: ',beanProMasterTicket);
         Ext.getCmp(prototype.id + '-dataEntryError').close();
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
