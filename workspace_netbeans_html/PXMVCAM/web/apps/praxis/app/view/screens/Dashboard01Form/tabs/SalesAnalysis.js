@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridData',
-                                    width: 1412,
+                                    width: 1302,
                                     columnLines: true,
                                     margin: "5 0 0 0",
                                     //                                    features: [{
@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        text: 'Cpns', dataIndex: 'CUPONS', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -132,7 +132,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'AVG', dataIndex: 'TARIFA', width: 60,
+                                                        text: 'AVG', dataIndex: 'TARIFA', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Cpns', dataIndex: 'CUPONS_ON', width: 100,
+                                                        text: 'Cpns', dataIndex: 'CUPONS_ON', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -202,7 +202,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Cpns', dataIndex: 'CUPONS_OFF', width: 100,
+                                                        text: 'Cpns', dataIndex: 'CUPONS_OFF', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -253,7 +253,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Cpns', dataIndex: 'QCPNS0', width: 100,
+                                                        text: 'Cpns', dataIndex: 'QCPNS0', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#b6d8ee;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -261,7 +261,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'USD', dataIndex: 'AMOUNT0', width: 100,
+                                                        text: 'USD', dataIndex: 'AMOUNT0', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#b6d8ee;";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -287,7 +287,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Comment', dataIndex: 'COMENTARIO', width: 110}
+                                                    {text: 'Comment', dataIndex: 'COMENTARIO', width: 80}
                                                 ]
                                             }
                                         ]
@@ -296,7 +296,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-summaryMain',
-                                    width: 1412,
+                                    width: 1302,
                                     align: 'left',
                                     margin: '0 0 0 0 ',
                                     layout: {
@@ -313,23 +313,23 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     },
                                     items: [
                                         {width: 100},
-                                        {width: 100, id: prototype.id + '-lblTotalCpns'},
+                                        {width: 80, id: prototype.id + '-lblTotalCpns'},
                                         {width: 100, id: prototype.id + '-lblTotalAmount'},
-                                        {width: 60, id: prototype.id + '-totAVG'},
-                                        {width: 100, id: prototype.id + '-lblTotalCpnON'},
+                                        {width: 70, id: prototype.id + '-totAVG'},
+                                        {width: 80, id: prototype.id + '-lblTotalCpnON'},
                                         {width: 50, id: prototype.id + '-lblTotalCpnONPerc'},
                                         {width: 100, id: prototype.id + '-lblTotalAmountON'},
                                         {width: 50, id: prototype.id + '-lblTotalAmountONPerc'},
                                         {width: 60, id: prototype.id + '-lblTotalAvgON'},
-                                        {width: 100, id: prototype.id + '-lblTotalCpnOFF'},
+                                        {width: 80, id: prototype.id + '-lblTotalCpnOFF'},
                                         {width: 50, id: prototype.id + '-lblTotalCpnOFFPerc'},
                                         {width: 100, id: prototype.id + '-lblTotalAmountOFF'},
                                         {width: 50, id: prototype.id + '-lblTotalAmountOFFPerc'},
                                         {width: 60, id: prototype.id + '-lblTotalAvgOFF'},
-                                        {width: 100, id: prototype.id + '-lblTotalQCPNSNR'},
-                                        {width: 100, id: prototype.id + '-lblTotalAMOUNTNR'},
+                                        {width: 80, id: prototype.id + '-lblTotalQCPNSNR'},
+                                        {width: 90, id: prototype.id + '-lblTotalAMOUNTNR'},
                                         {width: 20},
-                                        {width: 110}
+                                        {width: 80}
                                     ]
                                 }
                             ]

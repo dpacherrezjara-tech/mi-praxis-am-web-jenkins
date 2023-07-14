@@ -240,7 +240,16 @@ public class DashboardFilter {
     public long TOTAL_QTKTS0 = 0;
     public long TOTAL_QCPNS0 = 0;
     public double TOTAL_AMOUNT0 = 0;
-
+    
+    public double totQTYCPN = 0;
+    public double totQTYON = 0;
+    public double totQTYOFF = 0;
+    public double totQTYFL = 0;
+    public double totAMOCPN = 0;
+    public double totAMOON = 0;
+    public double totAMOOFF = 0;
+    public double totAMOFL = 0;
+    
     public long QTKTS5 = 0;
     public long QCPNS5 = 0;
     public double AMOUNT5 = 0;

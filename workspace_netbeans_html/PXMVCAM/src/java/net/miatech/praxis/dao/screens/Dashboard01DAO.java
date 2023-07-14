@@ -77,7 +77,8 @@ public class Dashboard01DAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs00 = null, rs01 = null, rs02 = null, rs03 = null, rs04 = null;
-
+        double totQTYCPN = 0, totQTYON = 0,totQTYOFF = 0,totQTYFL = 0;
+        double totAMOCPN = 0, totAMOON = 0,totAMOOFF = 0,totAMOFL = 0;
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".S0001P0001(?,?,?,?,?)}";
         Connection cnx = null;
 
@@ -100,7 +101,7 @@ public class Dashboard01DAO {
                 objRtn.AMOUNTF = rs00.getDouble("AMOUNTF");
                 objRtn.TOTAL_CUPONS_PERCENTF = rs00.getDouble("TOTAL_COUPON_FLOWN_PER");
                 objRtn.TOTAL_AMOUNT = rs00.getDouble("TOTAL_AMOUNT");
-                objRtn.TOTAL_CUPONS = rs00.getInt("TOTAL_CUPONS");
+                objRtn.TOTAL_CUPONS = rs00.getInt("TOTAL_CUPONS");               
                 objRtn.totAVG = rs00.getDouble("TOTAL_AMOUNT") / rs00.getInt("TOTAL_CUPONS");
                 objRtn.TOTAL_AMOUNT_OFF = rs00.getDouble("TOTAL_AMOUNT_OFF");
                 objRtn.TOTAL_AMOUNT_ON = rs00.getDouble("TOTAL_AMOUNT_ON");
@@ -116,6 +117,15 @@ public class Dashboard01DAO {
                 objRtn.CUPONS_OFF_PERCENT = rs00.getDouble("CUPONS_OFF_PERCENT");
                 objRtn.CUPONS_ON_PERCENT = rs00.getDouble("CUPONS_ON_PERCENT");
                 lstSalesByMonthTotals.add(objRtn);
+                
+                totQTYCPN = objRtn.TOTAL_CUPONS;
+                totQTYON = objRtn.TOTAL_CUPONS_ON;
+                totQTYOFF = objRtn.TOTAL_CUPONS_OFF;
+                totQTYFL += objRtn.QCPNSF;
+                totAMOCPN = objRtn.TOTAL_AMOUNT;
+                totAMOON = objRtn.TOTAL_AMOUNT_ON;
+                totAMOOFF = objRtn.TOTAL_AMOUNT_OFF;
+                totAMOFL += objRtn.AMOUNTF;
             }
             if (cstmt01.getMoreResults()) {
                 rs01 = cstmt01.getResultSet();
@@ -147,7 +157,16 @@ public class Dashboard01DAO {
                     objRtn.AMOUNT_ON_AVG_RATE = rs01.getDouble("AMOUNT_ON_AVG_RATE");
                     objRtn.AMOUNT0 = rs01.getDouble("AMOUNTNR");
                     objRtn.QCPNS0 = rs01.getInt("CUPONSNR");
-
+                    
+                    objRtn.totQTYCPN = totQTYCPN;
+                    objRtn.totQTYON = totQTYON;
+                    objRtn.totQTYOFF = totQTYOFF;
+                    objRtn.totQTYFL = totQTYFL;
+                    objRtn.totAMOCPN = totAMOCPN;
+                    objRtn.totAMOON = totAMOON;
+                    objRtn.totAMOOFF = totAMOOFF;
+                    objRtn.totAMOFL = totAMOFL;
+                
                     flag = rs01.getString("FLAG");
                     objRtn.FLAG = flag.substring(0, 1);
                     objRtn.COMENTARIO = flag.substring(1);
