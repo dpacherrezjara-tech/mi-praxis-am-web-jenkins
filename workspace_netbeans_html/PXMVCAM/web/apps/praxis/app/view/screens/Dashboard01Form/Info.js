@@ -127,6 +127,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-tabScrRefund',
+                            hidden:true,
                             title: 'Spa Profitability',
                             layout: {
                                 type: 'vbox',
@@ -146,6 +147,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-ByIATA_tab',
+                            hidden:true,
                             title: 'Sales By IATAs',
                             layout: {
                                 type: 'vbox',

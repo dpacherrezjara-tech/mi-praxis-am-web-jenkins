@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                 padding: '6 0 6 0'
                             },
                             items: [
-                                {xtype: 'tbspacer', width: 20},
+                                {xtype: 'tbspacer', width: 70},
                                 {
                                     xtype: 'label',
                                     html: '<strong style="color:#000;">Select By : </strong>',

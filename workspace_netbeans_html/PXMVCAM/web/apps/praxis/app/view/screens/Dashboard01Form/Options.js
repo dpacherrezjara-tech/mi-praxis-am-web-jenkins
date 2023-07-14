@@ -7,6 +7,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
         //pack: 'end'
     },
     items: [
+        {xtype: 'tbspacer', width: 76},
         {
             xtype: 'panel',
             border: true,
@@ -15,6 +16,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                 {
                     xtype: 'toolbar',
                     items: [
+//                        {xtype: 'tbspacer', width: 100},
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnSearch_2',
@@ -83,7 +85,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                 }
             ]
         },
-        {xtype: 'tbspacer', width: 1230},
+        {xtype: 'tbspacer', width: 1081},
         {
             xtype: 'panel',
             id: prototype.id + '-boxPaginacion',
@@ -277,6 +279,16 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         }
                     ]
                 }
+            ]
+        },
+        {
+            xtype: 'panel',
+            id: prototype.id + '-espaciado',
+            hidden: false,
+            width: 100,
+            border: false,
+            items: [
+                //ANCHO FLUCTUABLE PARA NO OCULTAR EL OPTIONS
             ]
         },
         {xtype: 'tbspacer', width: 20},
