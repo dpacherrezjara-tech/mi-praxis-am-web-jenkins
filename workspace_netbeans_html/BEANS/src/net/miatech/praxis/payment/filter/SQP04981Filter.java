@@ -21,6 +21,7 @@ public class SQP04981Filter extends CustomPageImpl{
     private String IN_SAUTHOC;
     private String IN_MERCHID;
     private String IN_OPERATNBR;
+    private String IN_COUNTRY;
     
     transient List<A4454Filter> result = new ArrayList<>();
 
@@ -119,7 +120,13 @@ public class SQP04981Filter extends CustomPageImpl{
     public void setResult(List<A4454Filter> result) {
         this.result = result;
     }
-    
-    
+
+    public String getIN_COUNTRY() {
+        return IN_COUNTRY;
+    }
+
+    public void setIN_COUNTRY(String IN_COUNTRY) {
+        this.IN_COUNTRY = IN_COUNTRY;
+    }
     
 }

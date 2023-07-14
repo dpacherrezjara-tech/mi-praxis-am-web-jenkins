@@ -2720,6 +2720,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
     },
+    btnRefreshFilters : function(){
+        this.obtainData();
+    },
     /*     
      * Funciones para la paginacion     
      */

@@ -12,6 +12,8 @@ import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.classes.CurrentSession;
 import static net.miatech.praxis.dao.payments.SalesComplementAmexDAO.pasarGarbageCollector;
 import net.miatech.praxis.logic.payments.SalesComplementLogic;
+import net.miatech.praxis.payment.A3152MP;
+import net.miatech.praxis.payment.A4451MP;
 import net.miatech.praxis.payment.filter.A4453Filter;
 import net.miatech.praxis.payment.filter.A4454Filter;
 import net.miatech.praxis.payment.filter.A4455Filter;
@@ -19,6 +21,7 @@ import net.miatech.praxis.payment.filter.SQP04979Filter;
 import net.miatech.praxis.payment.filter.SQP04980Filter;
 import net.miatech.praxis.payment.filter.SQP04981Filter;
 import net.miatech.praxis.payment.filter.SQP04982Filter;
+import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -213,6 +216,31 @@ public class SalesComplementDAO implements SalesComplementLogic {
             System.out.println("Error: " + e.getMessage());
         }
         return lstRtn;
+    }
+
+    @Override
+    public SQP05004Filter getSQP05004Filter(SQP05004Filter filter) throws Exception {
+        JdbcTemplate jdbcTemplate = this.getConnection();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05004")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4451MP.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        filter.setLst((List<A4451MP>) jdbcCall.execute(params).get("result"));
+        filter.setKEY1("AC");
+        //agrega lista de complementos
+        params = new BeanPropertySqlParameterSource(filter);
+        filter.getLst().addAll((List<A4451MP>) jdbcCall.execute(params).get("result"));
+        return filter;
+    }
+
+    @Override
+    public List<A3152MP> getPaises() throws Exception {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
+                .withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05016")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152MP.class));
+        return ((List<A3152MP>) jdbcCall.execute().get("result"));
     }
 
 }

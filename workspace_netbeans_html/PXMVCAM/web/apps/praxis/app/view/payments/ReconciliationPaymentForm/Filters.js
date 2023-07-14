@@ -713,7 +713,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             displayField: 'name',
                             readOnly: false,
                             editable: false,
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            caseSensitive: true,
                             emptyText: 'All',
+                            anchor: '100%',
                             //maxLength: 3,
                             labelWidth: 40,
                             width: 95,
@@ -753,6 +757,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             width: 110,
                             hiddenLabel: false,
                             value: '',
+                            anchor: '100%',
                             listeners: {                                
                                 //change: 'obtenerPaisesErr'
                             }
@@ -773,6 +778,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             width: 130,
                             hiddenLabel: false,
                             value: '',
+                            anchor: '100%',
                             listeners: {
                                 //change: 'rbChangeType'
                             }
@@ -791,6 +797,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             labelWidth: 75,
                             width: 270,
                             hidden: false,
+                            anchor: '100%',
                             listeners: {
                                 change: 'btnSearch_click'
                             }
@@ -809,6 +816,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                             labelWidth: 85,
                             width: 180,
                             hidden: false,
+                            anchor: '100%',
                             listeners: {
                                 //change: 'btnSearch_click'
                             }
