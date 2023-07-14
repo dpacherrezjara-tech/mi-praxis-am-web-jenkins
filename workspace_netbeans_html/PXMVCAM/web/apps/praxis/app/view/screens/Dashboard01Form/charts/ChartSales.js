@@ -3833,32 +3833,32 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
-//                                                            return '';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '';
+                                                        }
                                                     },
                                                     {text: 'Amount', dataIndex: 'AMOUNT', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right";
                                                             return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
-//                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {text: 'Coupons', dataIndex: 'CUPONS', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right";
                                                             return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
-//                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
                                                     }
                                                 ]
                                             }
