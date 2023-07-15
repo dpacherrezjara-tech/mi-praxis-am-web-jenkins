@@ -729,7 +729,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             axes: [{
                                                     type: 'numeric3d',
                                                     position: 'left',
-                                                    fields: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALE'],
+//                                                    fields: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALE'],
+                                                    fields: ['SALE'],
                                                     grid: true,
                                                     title: '',
                                                     //title: 'Millions of USD',
@@ -757,10 +758,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             series: [{
                                                     type: 'bar3d',
                                                     stacked: false,
-                                                    title: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALES'],
+//                                                    title: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALES'],
+                                                    title: ['SALES'],
                                                     xField: 'mes',
-                                                    yField: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALE'],
-                                                    colors: ['#ff9900', '#0066ff', '#CC0000', '#ffff99', '#339933'],
+//                                                    yField: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALE'],
+                                                    yField: [ 'SALE'],
+//                                                    colors: ['#ff9900', '#0066ff', '#CC0000', '#ffff99', '#339933'],
+                                                    colors: ['#0066ff'],
                                                     highlight: true,
                                                     style: {
                                                         inGroupGapWidth: -7,
@@ -834,7 +838,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridData_boxChart2',
-                                            width: 402,
+                                            width: 422,
                                             height: 203,
                                             columnLines: true,
                                             margin: "5 0 0 0",
@@ -857,7 +861,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
+                                                            metaData.style = 'text-align:right; margin-right:3px';
                                                             return '';
                                                         }
                                                     },
@@ -868,7 +872,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridData_boxChart2').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
+                                                            metaData.style = 'text-align:right; margin-right:3px';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
                                                         }
                                                     },
@@ -879,19 +883,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridData_boxChart2').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
+                                                            metaData.style = 'text-align:right; margin-right:3px';
                                                             return '<b>' + '100%' + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Amount', dataIndex: 'AMOUNT', width: 90,
+                                                    {text: 'Amount', dataIndex: 'AMOUNT', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right";
-                                                            value = '<b>' + value + '</b>';
-                                                            return value;
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridData_boxChart2').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
+                                                            metaData.style = 'text-align:right; margin-right:3px';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
                                                         }
                                                     },
@@ -902,7 +905,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridData_boxChart2').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
+                                                            metaData.style = 'text-align:right; margin-right:3px';
                                                             return '<b>' + '100%' + '<b>';
                                                         }
                                                     }
@@ -3830,32 +3833,32 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
-//                                                            return '';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '';
+                                                        }
                                                     },
                                                     {text: 'Amount', dataIndex: 'AMOUNT', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right";
                                                             return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
-//                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {text: 'Coupons', dataIndex: 'CUPONS', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right";
                                                             return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px;background:#52CC7A';
-//                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -4650,11 +4653,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['itemhighlight'],
-                                                    legend: {
-                                                        docked: 'bottom',
-                                                        background: '#E3EAEF',
-                                                        background: '#99CCFF',
-                                                    },
+//                                                    legend: {
+//                                                        docked: 'bottom',
+//                                                        background: '#E3EAEF',
+//                                                        background: '#99CCFF',
+//                                                    },
                                                     axes: [
                                                         {
                                                             type: 'numeric3d',
@@ -4690,7 +4693,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             type: 'bar3d',
                                                             stacked: false,
                                                             title: ['Sales', 'Flown'],
-                                                            yField: ['AMOUNT', 'AMOUNTF'],
+                                                            yField: ['AMOUNTF', 'AMOUNT'],
                                                             xField: 'strDescription',
                                                             //highlight: true,
                                                             style: {
