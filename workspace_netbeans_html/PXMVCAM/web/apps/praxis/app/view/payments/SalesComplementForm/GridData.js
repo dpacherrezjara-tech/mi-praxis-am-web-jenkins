@@ -794,7 +794,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                                 ]
                             },
                             {
-                                text: 'PNR', dataIndex: 'PNR', width: 80,
+                                text: 'PNR', dataIndex: 'pnr', width: 80,
                                 listeners: {
                                     click: 'onViewPNR'
                                 }, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -921,7 +921,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                 };
             },
             'L': () => {
-                win.lblUser_toolTip("Estructura: A4455");
+                win.lblUser_toolTip("Estructura: A4454");
                 //<editor-fold defaultstate="collapsed" desc="ligas store">
                 let ligasStore = Ext.create('Ext.data.Store', {
                     storeId: prototype.id + `-ligas-store`,
@@ -961,7 +961,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                 };
             },
             'T': () => {
-                win.lblUser_toolTip("Estructura: A4455");
+                win.lblUser_toolTip("Estructura: A4454");
                 //<editor-fold defaultstate="collapsed" desc="tablet store">
                 let tabletStore = Ext.create('Ext.data.Store', {
                     storeId: prototype.id + `-tablet-store`,

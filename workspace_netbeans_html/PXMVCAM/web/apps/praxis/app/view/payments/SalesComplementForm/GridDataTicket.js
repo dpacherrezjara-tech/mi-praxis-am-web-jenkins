@@ -107,11 +107,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridDataTicket', {
                             {
                                 text: 'Ticket', dataIndex: 'tkt', flex: 1,
                                 listeners: {
-                                    click: 'gridData_DetVIEWTKT_clickHandler'
-                                }, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    click: 'onClickSearchTicket'
+                                }, 
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center;text-decoration:underline;color:#057ECB;cursor:pointer";
                                     value = '<b>' + value + '</b>';
-                                    metaData.style = "text-align:center;";
-                                    return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                    return value;
                                 }
                             },
                             {

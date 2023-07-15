@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
         {
             xtype: 'panel',
             border: false,
+            id: prototype.id + '-panelFilters',
             bodyStyle: 'background: transparent',
             height: 'auto',
             margin: '0 0 0 0 ',
@@ -46,12 +47,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             hidden: false,
                             valueField: 'code', displayField: 'name',
                             value: "SDATE",
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["SDATE", "Sale Date"]
-                                ]
-                            }),
                             labelWidth: 100,
                             width: 100,
                             anchor: '100%',
@@ -85,6 +80,26 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbDateFromMonth',
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            editable: false,
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            caseSensitive: true,
+                            hidden: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            width: 70,
+                            anchor: '100%',
+                            listeners:{
+                                change:'onChangeFechaBtn'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbDateFromDay',
                             labelAlign: 'right',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -146,13 +161,27 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         },
                         {
                             xtype: 'combo',
+                            id: prototype.id + '-cmbDateToDay',
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            editable: false,
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            caseSensitive: true,
+                            hidden: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            width: 70,
+                            anchor: '100%',
+                            listeners:{
+                                change:'onChangeFechaBtn'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
                             id: prototype.id + '-cmbFindByFAMEX',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["X", "All"], ["", "Pending"], ["1", "Match"]
-                                ]
-                            }),
                             queryMode: 'local',
                             allowBlank: true,
                             forceSelection: true,
@@ -160,7 +189,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            value: "X",
                             fieldLabel: 'Complements vs AMEX',
                             labelWidth: 150,
                             labelAlign: 'right',
@@ -174,12 +202,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbFindBySTVAL',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["X", "All"], ["", "Pending"], ["1", "Match"], ["2", "Accounted"]
-                                ]
-                            }),
                             queryMode: 'local',
                             allowBlank: true,
                             forceSelection: true,
@@ -187,7 +209,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            value: "X",
                             fieldLabel: 'Complements vs Sales',
                             labelWidth: 150,
                             labelAlign: 'right',
@@ -279,6 +300,27 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 15},
                         {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFindByCountry',
+                            queryMode: 'local',
+                            allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            //editable: false,
+                            fieldLabel: 'Country',
+                            labelWidth: 50,
+                            labelAlign: 'right',
+                            width: 230,
+                            typeAhead: true,
+                            valueField: 'code', 
+                            displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all'
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
                             xtype: 'label',
                             id: prototype.id + '-lblOPERATNBR',
                             text: 'Op. Nbr.:',
@@ -364,15 +406,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbFindByLigas',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "All"],  
-                                    ["8133735688", "Ligas - 8133735688"], 
-                                    ["9592174866", "Ligas - 9592174866"]
-                                ]
-                            }),
+                            id: prototype.id + '-cmbFindByPlusgrade',
                             queryMode: 'local',
                             allowBlank: true,
                             forceSelection: true,
@@ -380,14 +414,34 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            value: "",
                             fieldLabel: 'Sales Merchant',
                             labelWidth: 100,
                             labelAlign: 'right',
-                            //hidden: false,
                             width: 230,
                             typeAhead: true,
-                            valueField: 'code', displayField: 'name',
+                            valueField: 'a4451key3', 
+                            displayField: 'a4451desc2',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            hidden:true
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFindByLigas',
+                            queryMode: 'local',
+                            allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            fieldLabel: 'Sales Merchant',
+                            labelWidth: 100,
+                            labelAlign: 'right',
+                            width: 230,
+                            typeAhead: true,
+                            valueField: 'a4451key3', 
+                            displayField: 'a4451desc2',
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             hidden:true
@@ -395,14 +449,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbFindByTablet',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "All"], 
-                                    ["9352724851", "Tablet - 9352724851"], 
-                                    ["8264209750", "Tablet - 8264209750"]
-                                ]
-                            }),
                             queryMode: 'local',
                             allowBlank: true,
                             forceSelection: true,
@@ -410,14 +456,13 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            value: "",
                             fieldLabel: 'Sales Merchant',
                             labelWidth: 100,
                             labelAlign: 'right',
                             //hidden: false,
                             width: 230,
                             typeAhead: true,
-                            valueField: 'code', displayField: 'name',
+                            valueField: 'a4451key3', displayField: 'a4451desc2',
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             hidden:true
