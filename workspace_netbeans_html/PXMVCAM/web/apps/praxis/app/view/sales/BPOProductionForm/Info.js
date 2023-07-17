@@ -54,13 +54,13 @@ Ext.define('Ext.Praxis.view.sales.BPOProductionForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Processing<br>date', dataIndex: 'FECHA_PROC', width: 90
+                                                text: 'Processing<br>Date', dataIndex: 'FECHA_PROC', width: 80
                                             },
                                             {
                                                 text: 'Source', dataIndex: 'FUENTE', width: 80
                                             },
                                             {
-                                                text: 'Total<br>Groups', dataIndex: 'QTY_GROUP', width: 65,
+                                                text: 'Total<br>Groups', dataIndex: 'QTY_GROUP', width: 60,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -95,6 +95,13 @@ Ext.define('Ext.Praxis.view.sales.BPOProductionForm.Info', {
                                                 }
                                             },
                                             {
+                                                text: 'Qty<br>Rftx', dataIndex: 'QTY_RFTX', width: 65,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                }
+                                            },
+                                            {
                                                 text: 'Qty<br>Memo', dataIndex: 'QTY_MEMO', width: 60,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
@@ -102,14 +109,14 @@ Ext.define('Ext.Praxis.view.sales.BPOProductionForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'IC<br>Pending', dataIndex: 'QTY_ERR_IC', width: 75,
+                                                text: 'IC<br>Pending', dataIndex: 'QTY_ERR_IC', width: 65,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 }
                                             },
                                             {
-                                                text: 'IC OK', dataIndex: 'QTY_OK_IC', width: 60,
+                                                text: 'IC OK', dataIndex: 'QTY_OK_IC', width: 55,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -123,14 +130,14 @@ Ext.define('Ext.Praxis.view.sales.BPOProductionForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Total<br>Errors', dataIndex: 'QTY_TOT_ER_SP', width: 65,
+                                                text: 'Total<br>Errors', dataIndex: 'QTY_TOT_ER_SP', width: 60,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 }
                                             },
                                             {
-                                                text: 'SP<br>Pending', dataIndex: 'QTY_ERR_SP', width: 70,
+                                                text: 'SP<br>Pending', dataIndex: 'QTY_ERR_SP', width: 65,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -151,21 +158,21 @@ Ext.define('Ext.Praxis.view.sales.BPOProductionForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Groups<br>Closed', dataIndex: 'QTY_GRUP_CER', width: 70,
+                                                text: 'Groups<br>Closed', dataIndex: 'QTY_GRUP_CER', width: 65,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 }
                                             },
                                             {
-                                                text: 'Groups<br>Open', dataIndex: 'QTY_GRUP_ABI', width: 70,
+                                                text: 'Groups<br>Open', dataIndex: 'QTY_GRUP_ABI', width: 65,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 }
                                             },
                                             {
-                                                text: 'Groups<br>Posted', dataIndex: 'QTY_CONT', width: 70,
+                                                text: 'Groups<br>Posted', dataIndex: 'QTY_CONT', width: 65,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return Ext.util.Format.number(value, '0,000');
