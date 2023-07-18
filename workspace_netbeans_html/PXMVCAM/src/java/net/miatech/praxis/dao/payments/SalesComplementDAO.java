@@ -231,6 +231,10 @@ public class SalesComplementDAO implements SalesComplementLogic {
         //agrega lista de complementos
         params = new BeanPropertySqlParameterSource(filter);
         filter.getLst().addAll((List<A4451MP>) jdbcCall.execute(params).get("result"));
+        //agrega lista de tarjetas de filtro de tarjetas
+        filter.setKEY1("CC");
+        params = new BeanPropertySqlParameterSource(filter);
+        filter.getLst().addAll((List<A4451MP>) jdbcCall.execute(params).get("result"));
         return filter;
     }
 
