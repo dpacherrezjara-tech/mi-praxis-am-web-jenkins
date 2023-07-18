@@ -1355,7 +1355,7 @@ public class InputsControlController extends BaseController {
             workbook = new XSSFWorkbook();
 
             Sheet sheet = workbook.createSheet("InputControl");
-            sheet.setColumnWidth(4, 50000);
+//            sheet.setColumnWidth(4, 50000);
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -1425,6 +1425,7 @@ public class InputsControlController extends BaseController {
                 rcell1.setCellValue(listaData.get(vi).strFormatDate);
                 rcell2.setCellValue(listaData.get(vi).TRNN);
                 rcell3.setCellValue(listaData.get(vi).CCIA);
+                listaData.get(vi).EMDDATA = listaData.get(vi).EMDDATA.replaceAll("  ","");
                 rcell4.setCellValue(listaData.get(vi).EMDDATA);
 
                 rcell0.setCellStyle(bodyStyle);
@@ -1442,7 +1443,7 @@ public class InputsControlController extends BaseController {
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
-//            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(4, true);
 
             /**
              * fileNameDownload = Nombre de descarga
