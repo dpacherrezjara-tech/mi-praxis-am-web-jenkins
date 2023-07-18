@@ -44,16 +44,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             cmb.setValue(value);
             cmb.resumeEvents();
         };
-        const setComboStore = ({id, value, data, key}) => {
+        const setComboStore = ({id, value, data, key, display}) => {
             const cmb = me.getCmp({id: id});
-            let allRecord = {};
-            allRecord['a4451desc2'] = 'All';
-            allRecord['a4451key3'] = value;
-            let store = me.createStore({data: data.filter(x => x.a4451key2.trim() === key)});
-            store.insert(0, allRecord);
+            let store = me.createComboStore({data: data.filter(x => x.a4451key2.trim() === key), 
+                valueField:'a4451key3', 
+                displayField:display});
             cmb.suspendEvents(false);
             cmb.bindStore(store);
-            cmb.setValue('');
+            cmb.setValue(value);
             cmb.resumeEvents();
         };
         //</editor-fold>
@@ -79,10 +77,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         setComboArrayStore({id: '-cmbFecFiltro', value: 'SDATE', data: dataCmb, key: 'CMBDATE'});
         setComboArrayStore({id: '-cmbFindByFAMEX', value: 'X', data: dataCmb, key: 'CMBCVA'});
         setComboArrayStore({id: '-cmbFindBySTVAL', value: 'X', data: dataCmb, key: 'CMBCVS'});
+        setComboStore({id: '-cmbFindByCreditCard', value: '', data: dataCmb, key: 'CMBTARJ',display:'a4451desc1'});
 
-        setComboStore({id: '-cmbFindByPlusgrade', value: '', data: dataCmb, key: 'MERCHPLUS'});
-        setComboStore({id: '-cmbFindByLigas', value: '', data: dataCmb, key: 'MERCHLIG'});
-        setComboStore({id: '-cmbFindByTablet', value: '', data: dataCmb, key: 'MERCHTAB'});
+        setComboStore({id: '-cmbFindByPlusgrade', value: '', data: dataCmb, key: 'MERCHPLUS',display:'a4451desc2'});
+        setComboStore({id: '-cmbFindByLigas', value: '', data: dataCmb, key: 'MERCHLIG',display:'a4451desc2'});
+        setComboStore({id: '-cmbFindByTablet', value: '', data: dataCmb, key: 'MERCHTAB',display:'a4451desc2'});
         
         
         const cmbPaises = me.getCmp({id:'-cmbFindByCountry'});
@@ -124,7 +123,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                 cmbLigas = me.getCmp({id:'-cmbFindByLigas'}),
                 cmbTablet = me.getCmp({id:'-cmbFindByTablet'}),
                 cmbPlusgrade = me.getCmp({id:'-cmbFindByPlusgrade'}),
-                cmbPais = me.getCmp({id:'-cmbFindByCountry'});
+                cmbPais = me.getCmp({id:'-cmbFindByCountry'}),
+                cmbCardt = me.getCmp({id:'-cmbFindByCreditCard'});
 
         //filters value
         let ccust = '139',
@@ -147,7 +147,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                 fligas = cmbLigas.getValue(),
                 ftablet = cmbTablet.getValue(),
                 fplusgrade = cmbPlusgrade.getValue(),
-                pais = cmbPais.getValue();
+                pais = cmbPais.getValue(),
+                ttarjeta = cmbCardt.getValue();
         if (cc1 !== '' && cc2 !== '') {
             cc = `${cc1}%${cc2}%`;
         }
@@ -166,7 +167,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     IN_SCARDN: cc,
                     IN_SAUTHOC: auth,
                     IN_MERCHID: fplusgrade,
-                    IN_COUNTRY: pais
+                    IN_COUNTRY: pais,
+                    IN_TCARD: ttarjeta
                 };
                 console.log(me.searchParams);
                 me.searchUrl = me.url + '/getPlusgradeInfo';
@@ -185,7 +187,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     IN_SAUTHOC: auth,
                     IN_MERCHID: fligas,
                     IN_OPERATNBR: openbr,
-                    IN_COUNTRY: pais
+                    IN_COUNTRY: pais,
+                    IN_TCARD: ttarjeta
                 };
                 console.log(me.searchParams);
                 me.searchUrl = me.url + '/getLigasInfo';
@@ -204,7 +207,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     IN_SAUTHOC: auth,
                     IN_MERCHID: ftablet,
                     IN_OPERATNBR: openbr,
-                    IN_COUNTRY: pais
+                    IN_COUNTRY: pais,
+                    IN_TCARD: ttarjeta
                 };
                 console.log(me.searchParams);
                 me.searchUrl = me.url + '/getTabletsInfo';
