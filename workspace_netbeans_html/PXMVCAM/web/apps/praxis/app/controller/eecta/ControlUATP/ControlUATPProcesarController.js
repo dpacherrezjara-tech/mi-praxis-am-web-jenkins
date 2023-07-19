@@ -30,8 +30,6 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
         if(vl_OP02)VL_PROCESO = 'REPT';
         if(vl_OP03)VL_PROCESO = 'EECC'; 
         
-        var VL_FACTURAR = "Y";
-        
         var VL_ACTION = strOption;  
         var VL_FECHA1 = '';
         var VL_FECHA2 = '';
@@ -54,8 +52,7 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
             VP_FDATE2:VL_FECHA2,
             VP_FEJEC:VP_FEJEC,
             VP_CDCLI:VP_CDCLI,
-            VP_PROCESO:VL_PROCESO,
-            VP_FACTURAR:VL_FACTURAR
+            VP_PROCESO:VL_PROCESO
         };
     },    
     onSaveClick: function (btn) {
@@ -110,14 +107,15 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
                 Ext.getCmp(prototype.id02 + '-ControlUATPProcesarForm').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: objRtn.dbException.SQLCODE,
+                    icon: 1,
                     fn: function () {
                         //culmino PROCESO   
                         if(params.VP_PROCESO==='UATP')
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});   
                         var elem = document.getElementById('ControlUATPProcesarForm_Msg');
                         elem.innerHTML = objRtn.dbException.MESSAGE;                        
-                        //me.onCancelClick();                           
+                        //me.onCancelClick();   
+                        
                     }
                 });
             }

@@ -276,6 +276,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
                 objRtn.A4363FCOTI = rs01.getString("A4363FCOTI");
                 objRtn.A4363HCOTI = rs01.getString("A4363HCOTI");
                 objRtn.A4363TRNCO = rs01.getString("A4363TRNCO");
+                objRtn.A4363EMAIL = rs01.getString("A4361EMAIL");
                 // MONTOS
                 objRtn.A4363STARF = rs01.getDouble("A4363STARF");
                 objRtn.A4363STARQ = rs01.getDouble("A4363STARQ");
@@ -298,6 +299,9 @@ public class RFNDAssociatedARCRFNDFormDAO {
                 objRtn.A4363COMID = rs01.getDouble("A4363COMID");
                 objRtn.A4363SCOMD = rs01.getDouble("A4363SCOMD");
                 objRtn.A4363TOTAD = rs01.getDouble("A4363TOTAD");
+                objRtn.A4363PENCT = rs01.getDouble("A4363PENCT");
+                objRtn.A4363IVACT = rs01.getDouble("A4363IVACT");
+                objRtn.A4363TOTCT = rs01.getDouble("A4363TOTCT");
 
                 lstRtn.add(objRtn);
             }
@@ -704,7 +708,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
         String STR_RESULT = "";
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXRFNDESP.SQP04738(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXRFNDESP.SQP04738(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             String SQLCLL02 = "{CALL PXRFNDESP.SQP04739(?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
@@ -738,6 +742,7 @@ public class RFNDAssociatedARCRFNDFormDAO {
             cs.setString("IN_CPN8", filter.IN_CPN8);
             cs.setString("IN_TRFND", filter.IN_TRFND);
             cs.setDouble("IN_PENALTY", filter.IN_PENALTY);
+            cs.setString("IN_EMAIL", filter.IN_EMAIL);
             cs.setString("IN_LSTATaxes", lstaTaxes);
             cs.setString("IN_LSTARazones", lstaRazones);
             cs.setString("IN_LSTAfop", lstafop);

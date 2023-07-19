@@ -39,7 +39,6 @@ public class A3957 {
     public String A3957STSPG = "";
     public String A3957TIPPG = "";
     public double A3957TOTAP = 0.00;
-    public double A3957TAJUS = 0.00;
     public double A3957SALDP = 0.00;
          
 }

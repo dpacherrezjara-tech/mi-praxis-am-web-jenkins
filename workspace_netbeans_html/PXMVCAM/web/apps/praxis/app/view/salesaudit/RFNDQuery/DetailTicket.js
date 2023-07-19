@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 880,
-    width: 1090,
+    width: 1220,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -127,13 +127,10 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             labelWidth: 40,
                             labelAlign: 'right',
                             emptyText: '',
-                            listConfig: {
-                                minWidth: 100
-                            },
                             listeners: {
                                 afterrender: 'onCmbStatusAfterRender'
                             }
-                        }
+                        },
                     ]
                 },
                 {
@@ -164,12 +161,13 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtRemarks',
-                            fieldLabel: 'Remarks',
-                            labelWidth: 50,
+                            id: prototype.idDetailTicket + '-txtAuthorise',
+                            fieldLabel: 'Autho/Reje date',
+                            labelWidth: 100,
+                            width: 180,
                             value: 'xxxxxx',
                             readOnly: true,
-                            width: 350
+                            fieldStyle: 'font-weight: bold; color: blue;'
                         },
                         {
                             xtype: 'button', hidden: true,
@@ -179,7 +177,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             listeners: {
                                 click: 'onImageViewClick'
                             }
-                        },
+                        }
                     ]
                 },
                 {
@@ -230,6 +228,16 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             }
 
                             //iconCls: 'prx-icon-104-ticket'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idDetailTicket + '-txtCase',
+                            fieldLabel: 'SF Case',
+                            labelWidth: 50,
+                            width: 130,
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            labelAlign: 'right'
                         }
 
                     ]
@@ -384,15 +392,18 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             width: 900
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtCase',
-                            fieldLabel: 'SF Case',
-                            labelWidth: 50,
-                            width: 150,
-                            value: 'xxxxxx',
+                            xtype: 'textarea',
+                            id: prototype.idDetailTicket + '-txtRemarks',
+                            //fieldLabel:'Remarks',
+                            labelWidth:50,
+                            grow: true,
                             readOnly: true,
-                            labelAlign: 'right'
+                            //anchor    : '100%',
+                            flex: 1,
+                            height: '100%'
                         }
+
+
 
                     ]
                 },
@@ -672,7 +683,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             height: 200,
                             width: 570
                         }
-
                     ]
                 },
                 {
@@ -748,7 +758,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                                 afterrender: 'OnLoadGridAfterrender'
                             }
                         },
-                        {xtype: 'tbspacer', width: 100},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'grid',
                             id: prototype.idDetailTicket + '-gridRazonesTkt',
@@ -794,6 +804,38 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 150,
                             width: 440
+                        },
+                        {
+                            xtype: 'grid',
+                            id: prototype.idDetailTicket + '-gridRemarcks',
+                             height: 150,
+                            width: 300,
+                            columnLines: true,
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'Date', dataIndex: 'A3649FREGI', align: 'center', width: 70, sortable: false},
+                                    {text: 'Description', dataIndex: 'A3649ERROR', width: 220, align: 'left',
+                                        listeners: {
+                                            click: 'metadata_detalle'
+                                        },
+                                        renderer: function (value, metadata) {
+                                            metadata.tdAttr = 'data-qtip="' + value + '"';
+                                            return value;
+                                        }
+                                    }/*,
+                                    {
+                                        text: 'File',
+                                        dataIndex: 'A3649ARCHI',
+                                         width: 80,
+                                        renderer: 'OnColumnAuditorRenderer'
+                                    }*/
+                                ]
+                            }
                         }
                     ]
                 },
@@ -901,6 +943,25 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             readOnly: true,
                             listeners: {
                                 change: 'onchange'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 40},
+                        {
+                            xtype: 'combo',
+                            id: prototype.idDetailTicket + '-ComboProcess',
+                            fieldLabel: 'Process',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 200,
+                            labelWidth: 50,
+                            labelAlign: 'left',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            listeners: {
+                                afterrender: 'onCmbStatusAfterRender'
                             }
                         }
 

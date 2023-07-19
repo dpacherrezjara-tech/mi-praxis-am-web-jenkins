@@ -1396,8 +1396,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                         meEntryTick.afterRender();
                     }
                 } else
-                    global.Msg({msg: res.sesion});
+                    var msj = res.msjOption;
+                    global.Msg({msg: msj});
                 global.clear();
+               
             },
             failure: function (response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();

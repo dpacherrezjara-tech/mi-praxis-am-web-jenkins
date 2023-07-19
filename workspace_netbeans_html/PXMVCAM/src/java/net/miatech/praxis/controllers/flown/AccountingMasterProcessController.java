@@ -275,6 +275,33 @@ public class AccountingMasterProcessController extends BaseController {
 
         return new Gson().toJson(m);
     }
+    
+    @RequestMapping(value = "validation")
+    public @ResponseBody
+    String validation(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        A1955Filter listaData;
+        A1955Filter filter = new A1955Filter();
+        try {
+
+            filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO").trim();
+            
+            logic = new AccountingMasterProcessLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            listaData = logic.accountValidation(filter);
+            
+            map.put("success", true);            
+            map.put("data", listaData);
+
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        }
+
+        return new Gson().toJson(map);
+    }
      
     @RequestMapping(value = "/searchReversa")
     public @ResponseBody

@@ -567,8 +567,23 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
             day = 1;
             
             var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
-            panelmes.suspendLayout  = true;
+            panelmes.suspendLayout = true;
             for (var n = init; n < fin; n++) {
+//                if (n % 7 === 1) {
+//                    colorFlag = '#D6D6D6';
+//                } else {
+//                    if (i % 2 !== 0) {
+//                        colorFlag = '#65C3E5';
+//                    } else {
+//                        colorFlag = '#2e6bf4';
+//                    }
+//                }
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
+//                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
+                
+                    
                     
                     if(n === init){
                         for (var c = 1; c < init; c++) {
@@ -581,7 +596,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                     var fday = (day < 10 ? '0' : '') + day;
                     var v_id = 'lbl'+anio+''+mes+''+ fday ;
                     var v_label = new Ext.form.Label({
-                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000'
+                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000',backgroundColor:colorFlag
                                     });
                     panelmes.add( v_label);
                 
@@ -589,7 +604,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                 day++;
             }
         }
-        console.log('Termina Creacion');
+        console.log('termina cracion-----------****');
         Ext.getCmp(prototype.id +'panel05').suspendLayout = false;
         Ext.getCmp(prototype.id +'panel05').updateLayout();
     },
@@ -691,7 +706,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         var beanDeliv = rowData.data;
         beanDeliv.IN_FECRFILE = rowData.data.strFormatDate.replaceAll('-','');
         switch (columnNum) {
-            case 4:
+            case 1:
                 beanDeliv.IN_ERROR = '';
                 break;
             case 9:

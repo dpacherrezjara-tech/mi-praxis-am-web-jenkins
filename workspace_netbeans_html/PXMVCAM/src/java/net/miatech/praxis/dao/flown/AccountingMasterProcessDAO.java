@@ -222,6 +222,55 @@ public class AccountingMasterProcessDAO {
         return STR_RESULT;
     }
       
+    public A1955Filter accountValidation(A1955Filter filter) throws SQLException, Exception {
+        
+        A1955Filter objRtn = new A1955Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        
+        String SQLCLL01 = "{CALL PRAXIS.SQP04896(?,?,?,?)}";
+
+        Connection cnx = null;
+        
+        try {            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();           
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            
+            cstmt01.registerOutParameter(3, Types.INTEGER);
+            cstmt01.registerOutParameter(4, Types.INTEGER);
+            
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_PROCESO);
+            cstmt01.setInt(3, 0);
+            cstmt01.setInt(4, 0);
+            cstmt01.execute();
+            
+            objRtn.IN_FLOWN = cstmt01.getInt(3);
+            objRtn.IN_EMD = cstmt01.getInt(4);
+            /*rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {                
+                objRtn.IN_FLOWN = rs01.getString("IN_FLOWN").trim();                
+                objRtn.IN_EMD = rs01.getString("IN_EMD").trim();              
+            } */ 
+            
+         }catch(Exception ex){
+             String str = ex.getMessage();
+             str = "";
+         }finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+         
+         return objRtn;
+         
+    }
+      
     public String accountMaintancePendingFlown(A1955Filter filter, String strOption) throws SQLException, Exception  {
         String strSQL;
         String STR_RESULT = "";

@@ -1,9 +1,6 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*
+ * @Dvicente
  */
-
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
     extend: 'Ext.window.Window',
     alias: 'widget.' + prototype.idRftx + '-dataEntryRftx',
@@ -13,6 +10,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryFareCalcRftx',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRftx',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPRftx',
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid',
         'Ext.Praxis.view.widgets.facsimil'
     ],
     title: 'Transaction Information',
@@ -267,6 +265,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                     maxLength: 8,
                                                                     enforceMaxLength: 8,
                                                                     width: 110,
+                                                                    readOnly: true,
                                                                     listeners: {
                                                                         blur: 'onBlurValueIata'
                                                                     }
@@ -280,6 +279,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                     defaults: {
                                                                         xtype: 'textfield',
                                                                         margin: '0 0 0 0',
+                                                                        readOnly: true,
                                                                         fieldStyle: 'text-align:left;',
                                                                         labelSeparator: ''
                                                                     },
@@ -441,7 +441,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     text: 'Issue Date:'
                                                                                 },
                                                                                 {
-                                                                                    text:'Issue City:'
+                                                                                    text: 'Issue City:'
                                                                                 },
                                                                                 {
                                                                                     text: 'Unauthorized:'
@@ -506,23 +506,47 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     ]
                                                                                 },
                                                                                 {
-                                                                                    id: prototype.idRftx + '-det-lblIssueDate',
-                                                                                    xtype: 'textfield',
+                                                                                    xtype: 'panel',
+                                                                                    layout: 'hbox',
                                                                                     margin: '1',
-                                                                                    fieldStyle: 'text-align:left;',
-                                                                                    labelSeparator: '',
-                                                                                    fieldLabel: '',
-                                                                                    maxLength: 8,
-                                                                                    enforceMaxLength: 8,
-                                                                                    readOnly: true,
-                                                                                    maskRe: /[0-9]/,
-                                                                                    width: 65,
-                                                                                    listeners: {
-                                                                                        blur: 'onBlurValueFecha'
-                                                                                    }
+                                                                                    border: false,
+                                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                                    defaults: {
+                                                                                        xtype: 'textfield',
+                                                                                        margin: '1',
+                                                                                        fieldStyle: 'text-align:left;',
+                                                                                        labelStyle: 'font-weight:bold;font-size:11px;',
+                                                                                        labelSeparator: ''
+                                                                                    },
+                                                                                    items: [
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblIssueDate',
+                                                                                            readOnly: true,
+                                                                                            width: 65,
+                                                                                            listeners: {
+                                                                                                blur: 'onBlurValueFecha'
+                                                                                            }
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblSaleDate',
+                                                                                            fieldLabel: 'Sale Date:',
+                                                                                            readOnly: true,
+                                                                                            width: 130,
+                                                                                            labelWidth:60
+                                                                                        },
+                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {
+                                                                                            id: prototype.idRftx + '-det-lblSaleSeq',
+                                                                                            fieldLabel: 'Sale Seq:',
+                                                                                            readOnly: true,
+                                                                                            width: 86,
+                                                                                            labelWidth:55
+                                                                                        }
+                                                                                    ]
                                                                                 },
                                                                                 {
-                                                                                     xtype: 'panel',
+                                                                                    xtype: 'panel',
                                                                                     layout: 'hbox',
                                                                                     margin: '1',
                                                                                     border: false,
@@ -533,7 +557,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                         fieldStyle: 'text-align:left;',
                                                                                         labelSeparator: ''
                                                                                     },
-                                                                                    items:[
+                                                                                    items: [
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblIssueCity',
                                                                                             width: 37,
@@ -584,6 +608,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     fieldStyle: 'text-align:left;',
                                                                                     labelSeparator: '',
                                                                                     fieldLabel: '',
+                                                                                    readOnly: true,
                                                                                     width: 260
                                                                                 },
                                                                                 {
@@ -593,6 +618,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                     fieldStyle: 'text-align:left;',
                                                                                     labelSeparator: '',
                                                                                     fieldLabel: '',
+                                                                                    readOnly: true,
                                                                                     width: 260
                                                                                 },
                                                                                 {
@@ -606,7 +632,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                         xtype: 'textfield',
                                                                                         fieldStyle: 'text-align:left;',
                                                                                         labelSeparator: '',
-                                                                                        width: 12
+                                                                                        width: 18
                                                                                     },
                                                                                     items: [
                                                                                         {
@@ -620,34 +646,35 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             },
                                                                                             width: 70
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-1',
                                                                                             margin: '1',
                                                                                             maxLength: 1,
                                                                                             enforceMaxLength: 1
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             xtype: 'label',
                                                                                             id: prototype.idRftx + '-det-lblTicket2',
@@ -660,6 +687,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             width: 70,
                                                                                             hidden: true
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-2',
                                                                                             margin: '1',
@@ -667,7 +695,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-2',
                                                                                             margin: '1',
@@ -675,7 +703,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-2',
                                                                                             margin: '1',
@@ -683,7 +711,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-2',
                                                                                             margin: '1',
@@ -691,7 +719,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5}
+                                                                                        {xtype: 'tbspacer', width: 3}
                                                                                     ]
                                                                                 },
                                                                                 {
@@ -705,7 +733,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                         xtype: 'textfield',
                                                                                         fieldStyle: 'text-align:left;',
                                                                                         labelSeparator: '',
-                                                                                        width: 12
+                                                                                        width: 18
                                                                                     },
                                                                                     items: [
                                                                                         {
@@ -720,6 +748,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             width: 70,
                                                                                             hidden: true
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-3',
                                                                                             margin: '1',
@@ -727,7 +756,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-3',
                                                                                             margin: '1',
@@ -735,7 +764,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-3',
                                                                                             margin: '1',
@@ -743,7 +772,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-3',
                                                                                             margin: '1',
@@ -751,7 +780,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             xtype: 'label',
                                                                                             id: prototype.idRftx + '-det-lblTicket4',
@@ -764,6 +793,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             width: 70,
                                                                                             hidden: true
                                                                                         },
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup01-4',
                                                                                             margin: '1',
@@ -771,7 +801,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup02-4',
                                                                                             margin: '1',
@@ -779,7 +809,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup03-4',
                                                                                             margin: '1',
@@ -787,7 +817,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5},
+                                                                                        {xtype: 'tbspacer', width: 3},
                                                                                         {
                                                                                             id: prototype.idRftx + '-det-lblCup04-4',
                                                                                             margin: '1',
@@ -795,7 +825,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                                             enforceMaxLength: 1,
                                                                                             hidden: true
                                                                                         },
-                                                                                        {xtype: 'tbspacer', width: 5}
+                                                                                        {xtype: 'tbspacer', width: 3}
                                                                                     ]
                                                                                 }
 
@@ -822,363 +852,422 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                     margin: '1 1 1 1',
                                     border: false,
                                     items: [
-                                        //<editor-fold defaultstate="collapsed" desc="FOP">
                                         {
-                                            xtype: 'fieldset',
-                                            title: '<b style="font-size:12px">Form of Payment<b/>',
+                                            xtype: 'panel',
                                             bodyStyle: 'background: #E5ECEF',
-                                            margin: '1 5 0 0',
-                                            width: 335,
-                                            height: 160,
-                                            defaults: {
-                                                border: false
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'stretch'
                                             },
-                                            //border: true,
+                                            margin: '1 1 1 1',
+                                            border: false,
                                             items: [
+                                                //<editor-fold defaultstate="collapsed" desc="FOP">
                                                 {
-                                                    xtype: 'panel',
+                                                    xtype: 'fieldset',
+                                                    title: '<b style="font-size:12px">Form of Payment<b/>',
                                                     bodyStyle: 'background: #E5ECEF',
-                                                    layout: 'vbox',
-                                                    margin: '1 1 1 1',
+                                                    margin: '1 5 0 0',
+                                                    width: 335,
+                                                    height: 160,
+                                                    defaults: {
+                                                        border: false
+                                                    },
+                                                    //border: true,
                                                     items: [
                                                         {
                                                             xtype: 'panel',
                                                             bodyStyle: 'background: #E5ECEF',
-                                                            layout: 'hbox',
+                                                            layout: 'vbox',
+                                                            id: prototype.idRftx + '-panel-Fop',
                                                             margin: '1 1 1 1',
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                style: 'font-weight:bold;',
-                                                                width: 35,
-                                                                margin: '1',
-                                                                padding: '1px 2px 0px 2px'
-                                                            },
                                                             items: [
                                                                 {
-                                                                    text: 'Code'
+                                                                    xtype: 'panel',
+                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                    layout: 'hbox',
+                                                                    margin: '1 1 1 1',
+                                                                    defaults: {
+                                                                        xtype: 'label',
+                                                                        style: 'font-weight:bold;',
+                                                                        width: 35,
+                                                                        margin: '1',
+                                                                        padding: '1px 2px 0px 2px'
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            text: 'Code'
+                                                                        },
+                                                                        {
+                                                                            text: 'Type'
+                                                                        },
+                                                                        {
+                                                                            text: 'Ref. Number',
+                                                                            width: 100
+                                                                        },
+                                                                        {
+                                                                            text: 'Curr'
+                                                                        },
+                                                                        {
+                                                                            text: 'Amount',
+                                                                            width: 75
+                                                                        }
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    text: 'Type'
+                                                                    xtype: 'panel',
+                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                    layout: 'hbox',
+                                                                    margin: '1 1 1 1',
+                                                                    defaults: {
+                                                                        xtype: 'label',
+                                                                        readOnly: true,
+                                                                        width: 30
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            width: 0
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFOPCode1',
+                                                                            maxLength: 2,
+                                                                            enforceMaxLength: 2,
+                                                                            maskRe: /[a-zA-Z]/,
+                                                                            fieldStyle: 'text-align:left;',
+                                                                            listeners: {
+                                                                                change: 'onUpperValue',
+                                                                                blur: 'onTipoRenderer'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblCardType1',
+                                                                            maxLength: 2,
+                                                                            enforceMaxLength: 2,
+                                                                            maskRe: /[a-zA-Z]/,
+                                                                            fieldStyle: 'text-align:left;',
+                                                                            listeners: {
+                                                                                change: 'onUpperValue'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblRefNumber1',
+                                                                            width: 105,
+                                                                            maxLength: 19,
+                                                                            enforceMaxLength: 19,
+                                                                            maskRe: /[xX0-9*]/,
+                                                                            fieldStyle: 'text-align:left;font-style: italic;font-size: 10.3px;',
+                                                                            listeners: {
+                                                                                change: 'onUpperValue'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFOPCur1',
+                                                                            maxLength: 3,
+                                                                            enforceMaxLength: 3,
+                                                                            maskRe: /[a-zA-Z]/,
+                                                                            fieldStyle: 'text-align:left;',
+                                                                            listeners: {
+                                                                                //change: 'onUpperValue'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFOP1',
+                                                                            width: 70,
+                                                                            labelwidth: 0,
+                                                                            maxLength: 13,
+                                                                            enforceMaxLength: 13,
+                                                                            maskRe: /^-?[0-9]*(\.[0-9]{0,2})?$/,
+                                                                            fieldStyle: 'text-align:right;',
+                                                                            listeners: {
+                                                                                blur: 'onAmountRenderer'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFEXP1',
+                                                                            hidden: true
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblCAPL1',
+                                                                            hidden: true
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblCORRLFOP1',
+                                                                            hidden: true
+                                                                        }
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    text: 'Ref. Number',
-                                                                    width: 100
+                                                                    xtype: 'panel',
+                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                    layout: 'hbox',
+                                                                    margin: '1 1 1 1',
+                                                                    defaults: {
+                                                                        xtype: 'label',
+                                                                        readOnly: true,
+                                                                        width: 30
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            width: 0
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFOPCode2',
+                                                                            maxLength: 2,
+                                                                            enforceMaxLength: 2,
+                                                                            maskRe: /[a-zA-Z]/,
+                                                                            fieldStyle: 'text-align:left;',
+                                                                            listeners: {
+                                                                                change: 'onUpperValue',
+                                                                                blur: 'onTipoRenderer'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblCardType2',
+                                                                            maxLength: 2,
+                                                                            enforceMaxLength: 2,
+                                                                            maskRe: /[a-zA-Z]/,
+                                                                            fieldStyle: 'text-align:left;',
+                                                                            listeners: {
+                                                                                change: 'onUpperValue'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblRefNumber2',
+                                                                            width: 105,
+                                                                            maxLength: 19,
+                                                                            enforceMaxLength: 19,
+                                                                            maskRe: /[xX0-9*]/,
+                                                                            fieldStyle: 'text-align:left;font-style: italic;font-size: 10.3px;',
+                                                                            listeners: {
+                                                                                change: 'onUpperValue'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFOPCur2',
+                                                                            maxLength: 3,
+                                                                            enforceMaxLength: 3,
+                                                                            maskRe: /[a-zA-Z]/,
+                                                                            fieldStyle: 'text-align:left;',
+                                                                            listeners: {
+                                                                                //change: 'onUpperValue'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFOP2',
+                                                                            width: 70,
+                                                                            labelwidth: 0,
+                                                                            maxLength: 13,
+                                                                            enforceMaxLength: 13,
+                                                                            maskRe: /^-?[0-9]*(\.[0-9]{0,2})?$/,
+                                                                            fieldStyle: 'text-align:right;',
+                                                                            listeners: {
+                                                                                blur: 'onAmountRenderer'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblFEXP2',
+                                                                            hidden: true
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblCAPL2',
+                                                                            hidden: true
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.idRftx + '-det-lblCORRLFOP2',
+                                                                            hidden: true
+                                                                        }
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    text: 'Curr'
+                                                                    xtype: 'panel',
+                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                    layout: 'hbox',
+                                                                    margin: '1 1 1 1',
+                                                                    defaults: {
+                                                                        xtype: 'label',
+                                                                        style: 'font-weight:bold',
+                                                                        width: 50
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            xtype: 'tbspacer',
+                                                                            width: 130
+                                                                        },
+                                                                        {
+                                                                            text: 'Other:'
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            readOnly: true,
+                                                                            id: prototype.idRftx + '-det-lblFopOtherCur',
+                                                                            width: 30
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            readOnly: true,
+                                                                            id: prototype.idRftx + '-det-lblFOPOther',
+                                                                            width: 70,
+                                                                            fieldStyle: 'text-align:right;'
+                                                                        },
+                                                                        {
+                                                                            xtype: 'button',
+                                                                            id: prototype.idRftx + '-det-btnSearch',
+                                                                            style: 'background:#E5ECEF',
+                                                                            iconCls: 'prx-icon-search',
+                                                                            border: false,
+                                                                            tooltip: 'Search FOP',
+                                                                            width: 30,
+                                                                            listeners: {
+                                                                                click: 'onClickSearchFOP'
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    text: 'Amount',
-                                                                    width: 75
+                                                                    xtype: 'panel',
+                                                                    bodyStyle: 'background: #E5ECEF',
+                                                                    layout: 'hbox',
+                                                                    margin: '1 1 1 1',
+                                                                    defaults: {
+                                                                        xtype: 'label',
+                                                                        style: 'font-weight:bold',
+                                                                        width: 30
+                                                                    },
+                                                                    items: [
+                                                                        {
+                                                                            width: 0
+                                                                        },
+                                                                        {
+                                                                            width: 130
+                                                                        },
+                                                                        {
+                                                                            text: 'Total:',
+                                                                            width: 50
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            readOnly: true,
+                                                                            id: prototype.idRftx + '-det-lblFOPCur'
+                                                                        },
+                                                                        {
+                                                                            width: 5
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            readOnly: true,
+                                                                            id: prototype.idRftx + '-det-lblFOP',
+                                                                            width: 70,
+                                                                            labelwidth: 0,
+                                                                            fieldStyle: 'text-align:right;'
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    xtype: 'label',
+                                                                    id: prototype.idRftx + '-det-lblUnbalance',
+                                                                    text: 'Ticket is Unbalance',
+                                                                    hidden: true,
+                                                                    width: 220,
+                                                                    style: {
+                                                                        background: '#FFA07A'
+                                                                    }
                                                                 }
                                                             ]
-                                                        },
+                                                        }
+                                                    ]
+                                                },
+                                                //</editor-fold>
+
+                                                {
+                                                    xtype: 'panel',
+                                                    bodyStyle: 'background: #E5ECEF',
+                                                    layout: {
+                                                        type: 'hbox'
+                                                    },
+                                                    margin: '1 1 1 1',
+                                                    border: false,
+                                                    items: [
                                                         {
-                                                            xtype: 'panel',
-                                                            bodyStyle: 'background: #E5ECEF',
-                                                            layout: 'hbox',
-                                                            margin: '1 1 1 1',
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                width: 30
-                                                            },
-                                                            items: [
-                                                                {
-                                                                    width: 0
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFOPCode1',
-                                                                    maxLength: 2,
-                                                                    enforceMaxLength: 2,
-                                                                    maskRe: /[a-zA-Z]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        change: 'onUpperValue',
-                                                                        blur: 'onTipoRenderer'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblCardType1',
-                                                                    maxLength: 2,
-                                                                    enforceMaxLength: 2,
-                                                                    maskRe: /[a-zA-Z]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        change: 'onUpperValue'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblRefNumber1',
-                                                                    width: 105,
-                                                                    maxLength: 19,
-                                                                    enforceMaxLength: 19,
-                                                                    maskRe: /[xX0-9*]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        change: 'onUpperValue'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFOPCur1',
-                                                                    readOnly: true,
-                                                                    maxLength: 3,
-                                                                    enforceMaxLength: 3,
-                                                                    maskRe: /[a-zA-Z]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        //change: 'onUpperValue'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFOP1',
-                                                                    width: 70,
-                                                                    labelwidth: 0,
-                                                                    maxLength: 13,
-                                                                    enforceMaxLength: 13,
-                                                                    maskRe: /^-?[0-9]*(\.[0-9]{0,2})?$/,
-                                                                    fieldStyle: 'text-align:right;',
-                                                                    listeners: {
-                                                                        blur: 'onAmountRenderer'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFEXP1',
-                                                                    hidden: true
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblCAPL1',
-                                                                    hidden: true
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblCORRLFOP1',
-                                                                    hidden: true
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            xtype: 'panel',
-                                                            bodyStyle: 'background: #E5ECEF',
-                                                            layout: 'hbox',
-                                                            margin: '1 1 1 1',
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                width: 30
-                                                            },
-                                                            items: [
-                                                                {
-                                                                    width: 0
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFOPCode2',
-                                                                    maxLength: 2,
-                                                                    enforceMaxLength: 2,
-                                                                    maskRe: /[a-zA-Z]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        change: 'onUpperValue',
-                                                                        blur: 'onTipoRenderer'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblCardType2',
-                                                                    maxLength: 2,
-                                                                    enforceMaxLength: 2,
-                                                                    maskRe: /[a-zA-Z]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        change: 'onUpperValue'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblRefNumber2',
-                                                                    width: 105,
-                                                                    maxLength: 19,
-                                                                    enforceMaxLength: 19,
-                                                                    maskRe: /[xX0-9*]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        change: 'onUpperValue'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFOPCur2',
-                                                                    readOnly: true,
-                                                                    maxLength: 3,
-                                                                    enforceMaxLength: 3,
-                                                                    maskRe: /[a-zA-Z]/,
-                                                                    fieldStyle: 'text-align:left;',
-                                                                    listeners: {
-                                                                        //change: 'onUpperValue'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFOP2',
-                                                                    width: 70,
-                                                                    labelwidth: 0,
-                                                                    maxLength: 13,
-                                                                    enforceMaxLength: 13,
-                                                                    maskRe: /^-?[0-9]*(\.[0-9]{0,2})?$/,
-                                                                    fieldStyle: 'text-align:right;',
-                                                                    listeners: {
-                                                                        blur: 'onAmountRenderer'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblFEXP2',
-                                                                    hidden: true
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblCAPL2',
-                                                                    hidden: true
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    id: prototype.idRftx + '-det-lblCORRLFOP2',
-                                                                    hidden: true
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            xtype: 'panel',
-                                                            bodyStyle: 'background: #E5ECEF',
-                                                            layout: 'hbox',
-                                                            margin: '1 1 1 1',
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                style: 'font-weight:bold',
-                                                                width: 50
-                                                            },
-                                                            items: [
-                                                                {
-                                                                    xtype: 'tbspacer',
-                                                                    width: 130
-                                                                },
-                                                                {
-                                                                    text: 'Other:'
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    readOnly: true,
-                                                                    id: prototype.idRftx + '-det-lblFopOtherCur',
-                                                                    width: 30
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    readOnly: true,
-                                                                    id: prototype.idRftx + '-det-lblFOPOther',
-                                                                    width: 70,
-                                                                    fieldStyle: 'text-align:right;'
-                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: prototype.idRftx + '-det-btnSearch',
-                                                                    style: 'background:#E5ECEF',
-                                                                    iconCls: 'prx-icon-search',
-                                                                    border: false,
-                                                                    tooltip: 'Search FOP',
-                                                                    width: 30,
-                                                                    listeners: {
-                                                                        click: 'onClickSearchFOP'
-                                                                    }
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            xtype: 'panel',
-                                                            bodyStyle: 'background: #E5ECEF',
-                                                            layout: 'hbox',
-                                                            margin: '1 1 1 1',
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                style: 'font-weight:bold',
-                                                                width: 30
-                                                            },
-                                                            items: [
-                                                                {
-                                                                    width: 0
-                                                                },
-                                                                {
-                                                                    width: 130
-                                                                },
-                                                                {
-                                                                    text: 'Total:',
-                                                                    width: 50
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    readOnly: true,
-                                                                    id: prototype.idRftx + '-det-lblFOPCur'
-                                                                },
-                                                                {
-                                                                    width: 5
-                                                                },
-                                                                {
-                                                                    xtype: 'textfield',
-                                                                    readOnly: true,
-                                                                    id: prototype.idRftx + '-det-lblFOP',
-                                                                    width: 70,
-                                                                    labelwidth: 0,
-                                                                    fieldStyle: 'text-align:right;'
-                                                                }
-                                                            ]
+                                                            xtype: 'button',
+                                                            text: '<strong style="color:white;">FOP VOID<strong>',
+                                                            //ui: 'round',
+                                                            id: prototype.idRftx + '-det-btnFopVOID',
+                                                            scale: 'medium',
+                                                            margin: '9 0 0 6', //TBRL
+                                                            maxWidth: 85,
+                                                            height: 30,
+                                                            hidden: true,
+                                                            cls: 'x-btn-sent',
+                                                            overCls: 'x-btn-sent-over',
+                                                            listeners: {
+                                                                click: 'onFopVoid'
+                                                            }
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.idRftx + '-det-lblUnbalance',
-                                                            text: 'Ticket is Unbalance',
-                                                            hidden: true,
-                                                            width: 220,
+                                                            id: prototype.idRftx + '-lblErrorDesc',
+                                                            flex: 1,
+                                                            height: 20,
+                                                            margin: '9 0 0 6',
+                                                            padding: '5',
                                                             style: {
-                                                                background: '#FFA07A'
-                                                            }
+                                                                background: '#DF8E46',
+                                                                color: '#080808',
+                                                                fontStyle: 'italic',
+                                                                fontSize: '10px',
+                                                                fontWeight: 'bold'
+                                                            },
+                                                            hidden: true
+                                                                    //text:'VR0032 - CUPON MAL COBRADO'
                                                         }
                                                     ]
                                                 }
                                             ]
                                         },
-                                        //</editor-fold>
+                                        //<editor-fold defaultstate="collapsed" desc="TAXES">
                                         // PANEL 3_2 Tax / Fee
                                         {
                                             xtype: 'fieldset',
@@ -1196,6 +1285,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                     xtype: 'panel',
                                                     bodyStyle: 'background: #E5ECEF',
                                                     layout: 'vbox',
+                                                    id: prototype.idRftx + '-panel-Tax',
                                                     margin: '1 1 1 1',
                                                     items: [
                                                         {
@@ -1235,6 +1325,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1260,7 +1351,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur1',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1308,6 +1398,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1333,7 +1424,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur2',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1381,6 +1471,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1406,7 +1497,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur3',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1454,6 +1544,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                             defaults: {
                                                                 xtype: 'label',
                                                                 style: 'font-weight:bold',
+                                                                readOnly: true,
                                                                 width: 30
                                                             },
                                                             items: [
@@ -1479,7 +1570,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                                 {
                                                                     xtype: 'textfield',
                                                                     id: prototype.idRftx + '-det-lblTAXCur4',
-                                                                    readOnly: true,
                                                                     maxLength: 3,
                                                                     enforceMaxLength: 3,
                                                                     maskRe: /[a-zA-Z]/,
@@ -1600,8 +1690,9 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
 
                                             ]
                                         }
+                                        //</editor-fold>
                                     ]
-                                }
+                                },
                             ],
                             dockedItems: [
                                 {
@@ -1640,8 +1731,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                             style: {
                                                 paddingTop: '5px',
                                                 paddingBottom: '5px',
-                                                marginRight:'7px',
-                                                marginLeft:'3px'
+                                                marginRight: '7px',
+                                                marginLeft: '3px'
                                             },
                                             border: true,
                                             layout: {
@@ -1667,7 +1758,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                     margin: 1,
                                                     width: 150,
                                                     fieldLabel: 'Crt by',
-                                                    fieldStyle:'color:#37A25C;font-weight:bold;text-align: center;'
+                                                    fieldStyle: 'color:#37A25C;font-weight:bold;text-align: center;'
                                                 },
                                                 {
                                                     id: prototype.idRftx + '-usr-dateCreated',
@@ -1675,7 +1766,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                     margin: 1,
                                                     width: 140,
                                                     fieldLabel: 'Crt Date',
-                                                    fieldStyle:'color:#37A25C;font-weight:bold;'
+                                                    fieldStyle: 'color:#37A25C;font-weight:bold;'
                                                 },
                                                 {
                                                     id: prototype.idRftx + '-usr-userUpdated',
@@ -1683,18 +1774,18 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRftx', {
                                                     margin: 1,
                                                     width: 150,
                                                     fieldLabel: 'Upd by',
-                                                    fieldStyle:'color:#2664C4;font-weight:bold;text-align: center;'
+                                                    fieldStyle: 'color:#2664C4;font-weight:bold;text-align: center;'
                                                 },
                                                 {
                                                     id: prototype.idRftx + '-usr-dateUpdated',
                                                     value: '',
                                                     margin: 1,
                                                     fieldLabel: 'Upd Date',
-                                                    fieldStyle:'color:#2664C4;font-weight:bold;',
+                                                    fieldStyle: 'color:#2664C4;font-weight:bold;',
                                                     width: 140,
                                                     labelWidth: 63
                                                 },
-                                                {xtype:'tbspacer',width:10}
+                                                {xtype: 'tbspacer', width: 10}
                                             ]
                                         }
                                     ]

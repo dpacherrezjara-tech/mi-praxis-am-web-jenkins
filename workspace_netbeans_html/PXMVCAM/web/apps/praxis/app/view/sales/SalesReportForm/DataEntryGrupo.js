@@ -3,13 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-let store = Ext.create('Ext.data.Store', {
-    storeId: 'storeGrupo',
-    page : {
-        start: 0,
-        limit: 20
-    }
-});
 
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
     extend: 'Ext.window.Window',
@@ -730,7 +723,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1140,
-                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -1006,7 +998,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1060,
-                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -1284,7 +1275,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1060,
-                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {
@@ -1562,7 +1552,6 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryGrupo', {
                                             bodyStyle: 'background: #E5ECEF',
                                             height: 550,
                                             width: 1040,
-                                            store: store,
                                             columnLines: true,
                                             resizable: false,
                                             columns: {

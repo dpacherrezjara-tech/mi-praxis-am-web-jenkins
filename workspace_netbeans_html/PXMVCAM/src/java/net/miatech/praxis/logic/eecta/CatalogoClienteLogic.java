@@ -19,8 +19,6 @@ import net.miatech.praxis.eecta.SQP03960Filter;
 import net.miatech.praxis.eecta.SQP04006Filter;
 import net.miatech.praxis.eecta.SQP04038Filter;
 import net.miatech.praxis.eecta.SQP04039Filter;
-import net.miatech.praxis.eecta.SQP04198Filter;
-import net.miatech.praxis.eecta.SQP04199Filter;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -74,12 +72,6 @@ public class CatalogoClienteLogic {
     }
     public SQP04039Filter setSQP04039Filter(SQP04039Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04039Filter(filter);
-    }
-    public List<SQP04198Filter> getSQP04198Filter(SQP04198Filter filter) throws SQLException, Exception {
-        return objDAO.getSQP04198Filter(filter);
-    }
-    public SQP04199Filter setSQP04199Filter(SQP04199Filter filter) throws SQLException, Exception {
-        return objDAO.setSQP04199Filter(filter);
     }
     
     

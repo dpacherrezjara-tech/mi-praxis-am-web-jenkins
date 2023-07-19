@@ -157,7 +157,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 {"code": "DI", "name": "VENTA DIRECTA"}
             ]
         }));
-
+        
         CmboADMAssoci.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECT"},
@@ -214,7 +214,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 CmboADMAssoci.setValue('');
                 break;
             case 'ACM':
-                CmboADMAssoci.show();
+                 CmboADMAssoci.show();
                 CmboType1.hide();
                 CmboType2.show();
                 CmboType3.hide();
@@ -231,7 +231,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 CmboType2.hide();
                 CmboType3.show();
                 CmboType4.hide();
-                CmboADMAssoci.show();
+                 CmboADMAssoci.show();
                 CmboType5.hide();
                 CmboType1.setValue('');
                 CmboType2.setValue('');
@@ -244,7 +244,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 CmboType2.hide();
                 CmboType3.hide();
                 CmboType4.show();
-                CmboADMAssoci.show();
+                 CmboADMAssoci.show();
                 CmboType5.hide();
                 CmboType1.setValue('');
                 CmboType2.setValue('');
@@ -273,7 +273,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 CmboType3.hide();
                 CmboType4.hide();
                 CmboType5.hide();
-                CmboADMAssoci.hide();
+                 CmboADMAssoci.hide();
                 CmboType1.setValue('');
                 CmboType2.setValue('');
                 CmboType3.setValue('');
@@ -458,7 +458,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         Ext.getCmp(prototype.id01 + '-txtIata').setValue(res.lst_dataIni[0].A2548IATA);
                         Ext.getCmp(prototype.id01 + '-txtAgencia').setValue(res.lst_dataIni[0].AGENCY);
                         Ext.getCmp(prototype.id01 + '-txtAdrres').setValue(res.lst_dataIni[0].DIRAGENCY);
-                        //Ext.getCmp(prototype.id01 + '-txtCTA').setValue(Ext.String.trim(res.lst_dataIni[0].A2548CTAC));
+                        Ext.getCmp(prototype.id01 + '-txtCTA').setValue(Ext.String.trim(res.lst_dataIni[0].A2548CTAC));
                         Ext.getCmp(prototype.id01 + '-ComboArea').setValue(Ext.String.trim(res.lst_dataIni[0].A2548AREA));
                         Ext.getCmp(prototype.id01 + '-txtCargo').setValue('');
                         Ext.getCmp(prototype.id01 + '-txtIvaCargo').setValue('');
@@ -807,15 +807,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         });
         win.show();
     },
-
-    /*NUEVA FUNCION*/
-    OnAddCta: function () {
-        var me = this;
-        var win = new Ext.Praxis.view.salesaudit.ADMManualForm.AccountingCTA({
-        });
-        win.show();
-    },
-
     OnRazonRemove: function (grid, rowIndex, colIndex) {
         global.Msg({
             msg: 'DELETE RAZON?',
@@ -845,7 +836,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         });
         win.show();
     },
-
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
@@ -860,7 +850,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         }
     },
     onChkCargoApli: function () {
-        this.onSumaTaxGrid();
+         this.onSumaTaxGrid();
     },
     onCmbTypeStatusChange: function () {
         var me = this;
@@ -874,13 +864,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var CmboType2 = Ext.getCmp(prototype.id01 + '-CmboType2').getValue();
         var CmboType3 = Ext.getCmp(prototype.id01 + '-CmboType3').getValue();
         var CmboType4 = Ext.getCmp(prototype.id01 + '-CmboType4').getValue();
-        var CmboType5 = Ext.getCmp(prototype.id01 + '-CmboType5').getValue();
+        var CmboType5 = Ext.getCmp(prototype.id01 + '-CmboType5').getValue();        
         ////
         if (me.type !== '') {
             if (me.type === '5' || me.type === '6' || me.type === '7' || me.type === '10' || me.type === '13' || me.type === 'ACM' || me.type === 'NTC') {
-                CmboTypes = 'ACM';
-            } else {
-                CmboTypes = 'ADM';
+                CmboTypes='ACM';
+            }else{
+                 CmboTypes='ADM';
             }
         }
 
@@ -898,7 +888,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         if (CmboTransaction === 'NTD') {
             if (CmboType3 !== '') {
                 CmboType = 'ACM';
-            }
+            }            
 
         }
         if (CmboTransaction === 'NTC') {
@@ -909,29 +899,29 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         }
         if (CmboTransaction === 'EXCH' || CmboTransaction === 'RFND' || CmboTransaction === 'SALE') {
             if (CmboType5 !== '') {
-                if (CmboType5 === '7') {
-                    CmboType = 'ACM';
+                if(CmboType5==='7'){
+                    CmboType='ACM';
                 }
-                if (CmboType5 === '8') {
-                    CmboType = 'ADM';
+                if(CmboType5==='8'){
+                    CmboType='ADM';
                 }
-                if (CmboType5 === '9') {
-                    CmboType = 'ADM';
+                if(CmboType5==='9'){
+                    CmboType='ADM';
                 }
-                if (CmboType5 === '10') {
-                    CmboType = 'ACM';
+                if(CmboType5==='10'){
+                    CmboType='ACM';
                 }
-                if (CmboType5 === 'NTD') {
-                    CmboType = 'ADM';
+                if(CmboType5==='NTD'){
+                    CmboType='ADM';
                 }
-                if (CmboType5 === 'NTC') {
-                    CmboType = 'ACM';
+                if(CmboType5==='NTC'){
+                    CmboType='ACM';
                 }
             }
 
         }
         me.type = CmboType;
-
+        
         var txtFAREAero = Ext.getCmp(prototype.id01 + '-txtFAREAero').getValue().replace(new RegExp(',', 'g'), '');
         var txtFAREAGENT = Ext.getCmp(prototype.id01 + '-txtFAREAGENT').getValue().replace(new RegExp(',', 'g'), '');
         var txtFAREDIFE = Ext.getCmp(prototype.id01 + '-txtFAREDIFE').getValue().replace(new RegExp(',', 'g'), '');
@@ -950,7 +940,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         //
         if (CmboTypes !== '') {
             if (CmboType !== CmboTypes || CmboType !== CmboTypes || CmboType !== CmboTypes || CmboType !== CmboTypes || CmboType !== CmboTypes || CmboType !== CmboTypes || CmboType !== CmboTypes) {
-                if (CmboType === 'ACM') {
+                if (CmboType === 'ACM' ) {
                     //montos para las ACMS
                     Ext.getCmp(prototype.id01 + '-txtFAREAero').setReadOnly(true);
                     Ext.getCmp(prototype.id01 + '-txtFAREAGENT').setReadOnly(false);
@@ -1088,14 +1078,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var txtFrmaSerie = Ext.getCmp(prototype.id01 + '-txtFrmaSerie').getValue();
         var txtFDate = Ext.getCmp(prototype.id01 + '-txtFDate').getValue();
         var txtIata = Ext.getCmp(prototype.id01 + '-txtIata').getValue();
-        //var txtCTA = Ext.getCmp(prototype.id01 + '-txtCTA').getValue();
+        var txtCTA = Ext.getCmp(prototype.id01 + '-txtCTA').getValue();
         var ComboArea = Ext.getCmp(prototype.id01 + '-ComboArea').getValue();
         var ComboSource = Ext.getCmp(prototype.id01 + '-ComboSource').getValue();
         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
-        if(ComboSource===null){
-            ComboSource='';
-        }
 
         var grid03 = Ext.getCmp(prototype.id01 + '-gridrazon');
         var regs = grid03.getStore().getCount();
@@ -1104,11 +1091,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
             Ext.Msg.alert('.: PRAXIS :.', 'Select Transaction');
             bvalida = false;
         }
-        if (CmboTransaction === 'ADM' || CmboTransaction === 'ACM' || CmboTransaction === 'NTC' || CmboTransaction === 'NTD') {
-            if (CmboADMAssoci === '') {
+        if (CmboTransaction === 'ADM' || CmboTransaction === 'ACM' || CmboTransaction === 'NTC' ||  CmboTransaction === 'NTD') {
+            if(CmboADMAssoci===''){
                 Ext.Msg.alert('.: PRAXIS :.', 'Select Status ADM Associated');
                 bvalida = false;
-            }
+            }            
         }
         if (CmboType1 === '' && CmboType2 === '' && CmboType3 === '' && CmboType4 === '' && CmboType5 === '' && CmboType5 === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select Type');
@@ -1162,13 +1149,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 }
             }
         }
-        /*if (txtCTA !== '') {
+        if (txtCTA !== '') {
             if (txtCTA.length !== 29) {
                 Ext.Msg.alert('.: PRAXIS :.', 'La CTA debe tener 29 caracteres');
                 bvalida = false;
             }
 
-        }*/
+        }
         if (ComboArea === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select Area');
             bvalida = false;
@@ -1291,18 +1278,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         var txtFDate = Ext.getCmp(prototype.id01 + '-txtFDate').getRawValue();
                         var txtADMAssoci = Ext.getCmp(prototype.id01 + '-txtADMAssoci').getValue();
                         var txtIata = Ext.getCmp(prototype.id01 + '-txtIata').getValue();
-                        //almacenar la cuenta CTA
-                        //var txtCTA = Ext.getCmp(prototype.id01 + '-txtCTA').getValue();
-                        var txtA1740CIA = Ext.getCmp(prototype.id01 + '-txtA1740CIA').getValue();
-                        var txtA1740UNIDA = Ext.getCmp(prototype.id01 + '-txtA1740UNIDA').getValue();
-                        var txtA1740CECOS = Ext.getCmp(prototype.id01 + '-txtA1740CECOS').getValue();
-                        var txtA1740UBICA = Ext.getCmp(prototype.id01 + '-txtA1740UBICA').getValue();
-                        var txtA1740CTA = Ext.getCmp(prototype.id01 + '-txtA1740CTA').getValue();
-                        var txtA1740SCTA = Ext.getCmp(prototype.id01 + '-txtA1740SCTA').getValue();
-                        var txtA1740EQUI = Ext.getCmp(prototype.id01 + '-txtA1740EQUI').getValue();
-                        var txtA1740ICIA = Ext.getCmp(prototype.id01 + '-txtA1740ICIA').getValue();
-                        var txtClient = Ext.getCmp(prototype.id01 + '-txtClient').getValue();
-                        
+                        var txtCTA = Ext.getCmp(prototype.id01 + '-txtCTA').getValue();
                         var txtExchange = Ext.getCmp(prototype.id01 + '-txtExchange').getValue();
                         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
                         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
@@ -1348,7 +1324,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         //if (CmboTransaction !== 'ADM' && CmboTransaction !== 'ACM' && CmboTransaction !== 'NTC' && CmboTransaction !== 'NTD') {
                         var gridtax = Ext.getCmp(prototype.id01 + '-gridtaxAGENT');
                         gridtax.store.data.each(function (rec) {
-                            lstTaxes.push({"A1673MONED": rec.data.A1673MONED, "A1673CDTAX": rec.data.A1673CDTAX, "A1673TXMIA": rec.data.A1673TXMIA, "A1673CDATO": rec.data.A1673CDATO});
+                            lstTaxes.push({"A1673MONED": rec.data.A1673MONED, "A1673CDTAX": rec.data.A1673CDTAX, "A1673TXMIA": rec.data.A1673TXMIA,"A1673CDATO": rec.data.A1673CDATO});
                         });
                         //}
                         if (txtCountry === 'MX') {
@@ -1370,25 +1346,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         me.beanGuardar.A2548FVTA = txtFDate;
                         me.beanGuardar.A2548IATA = txtIata;
                         me.beanGuardar.A2548NMEMO = txtADMAssoci;
-                        me.beanGuardar.A2548CTAC ='';// txtCTA;
+                        me.beanGuardar.A2548CTAC = txtCTA;
                         me.beanGuardar.A2548TVTA = VL_TVTA;
                         me.beanGuardar.A2548OBSER = txtObservation;
                         me.beanGuardar.A2548ASOCI = CmboADMAssoci;
-                        
-                        /*Para la CTA*/
-                        me.beanGuardar.A2548CIA = txtA1740CIA;
-                        me.beanGuardar.A2548UNID = txtA1740UNIDA;
-                        me.beanGuardar.A2548CECO = txtA1740CECOS;
-                        me.beanGuardar.A2548UBICA = txtA1740UBICA;
-                        me.beanGuardar.A2548CUENT = txtA1740CTA;
-                        me.beanGuardar.A2548SUBCU = txtA1740SCTA;
-                        me.beanGuardar.A2548EQUI = txtA1740EQUI;
-                        me.beanGuardar.A2548ICIA = txtA1740ICIA;
-                        me.beanGuardar.A2548CLIE = txtClient;
 
 
                         me.beanGuardar.A2548TARIF = txtFAREAero === '' ? 0 : txtFAREAero;
-
+                        
                         me.beanGuardar.A2548TARIA = txtFAREAGENT === '' ? 0 : txtFAREAGENT;
                         me.beanGuardar.A2548TARID = txtFAREDIFE === '' ? 0 : txtFAREDIFE;
 
@@ -1416,7 +1381,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         me.beanGuardar.A2548TCARD = txtSubTotalCharge === '' ? 0 : txtSubTotalCharge;
                         me.beanGuardar.A2548TTAMD = txtSubTotalChargeIva === '' ? 0 : txtSubTotalChargeIva;
                         me.beanGuardar.A2548NETO = txtTotal === '' ? 0 : txtTotal;
-
+                        
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.id01 + '-form'), {
                             msg: 'Please Wait....'
                         });

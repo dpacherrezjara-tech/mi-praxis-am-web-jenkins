@@ -355,7 +355,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                             width: 850,
                             height: 80,
                             grow: true,
-                            maxLength: 300,
+                            maxLength: 2000,
                             enforceMaxLength: true,
                             name: 'Argument',
                             fieldLabel: 'Argument'

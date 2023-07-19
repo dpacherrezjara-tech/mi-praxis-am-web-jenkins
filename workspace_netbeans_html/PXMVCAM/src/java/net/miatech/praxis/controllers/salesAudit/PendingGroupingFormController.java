@@ -91,6 +91,7 @@ public class PendingGroupingFormController extends BaseController {
             filter.VP_TKT = request.getParameter("VP_TKT");
             filter.VP_SEQ = request.getParameter("VP_SEQ");
             filter.VP_COXPADRE = request.getParameter("VP_COXPADRE");
+            filter.VP_TRNCU = request.getParameter("VP_TRNCU");
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -162,7 +163,7 @@ public class PendingGroupingFormController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12,CH_13;
 
             row = sheet.createRow(vj);
 
@@ -179,6 +180,7 @@ public class PendingGroupingFormController extends BaseController {
             CH_10 = row.createCell(10);
             CH_11 = row.createCell(11);
             CH_12 = row.createCell(12);
+            CH_13 = row.createCell(13);
 
             CH_00.setCellValue("System Date");
             CH_01.setCellValue("Processing Date");
@@ -193,6 +195,7 @@ public class PendingGroupingFormController extends BaseController {
             CH_10.setCellValue("Grouping");
             CH_11.setCellValue("Processed");
             CH_12.setCellValue("Status");
+            CH_13.setCellValue("Transaction");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -207,6 +210,7 @@ public class PendingGroupingFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -221,6 +225,7 @@ public class PendingGroupingFormController extends BaseController {
             CH_10.setCellStyle(headerStyle);
             CH_11.setCellStyle(headerStyle);
             CH_12.setCellStyle(headerStyle);
+            CH_13.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -240,6 +245,7 @@ public class PendingGroupingFormController extends BaseController {
                 CH_10 = row.createCell(10);
                 CH_11 = row.createCell(11);
                 CH_12 = row.createCell(12);
+                CH_13 = row.createCell(13);
 
                 CH_00.setCellValue(lst.get(vi).A3329FREGI);
                 CH_01.setCellValue(lst.get(vi).A3329FPROC);
@@ -254,6 +260,7 @@ public class PendingGroupingFormController extends BaseController {
                 CH_10.setCellValue(lst.get(vi).A3329CNXPA);
                 CH_11.setCellValue(lst.get(vi).A3329FLAG);
                 CH_12.setCellValue(lst.get(vi).A3329STATU);
+                CH_13.setCellValue(lst.get(vi).A3329TRNCU);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -268,6 +275,7 @@ public class PendingGroupingFormController extends BaseController {
                 CH_10.setCellStyle(bodyStyle);
                 CH_11.setCellStyle(bodyStyle);
                 CH_12.setCellStyle(bodyStyle);
+                CH_13.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;

@@ -307,22 +307,13 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryLog', {
                                                 },
                                                 {
                                                     xtype: 'button',
-                                                    id: prototype.id+'-2-btnSearchNewLog',
-                                                    icon: 'resources/img/botones/log.png',
-                                                    tooltip: 'Search New Log',
-                                                    listeners: {
-                                                        click: 'imgSearchNewLog_clickHandler'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
                                                     id: prototype.id+'-2-btnExcel',
                                                     iconCls: 'prx-icon-excel',
                                                     tooltip: 'Export to Excel',
                                                     listeners: {
                                                         click: 'imgExcel_clickHandler'
                                                     }
-                                                },                                                
+                                                },
                                                 {
                                                     xtype: 'button',
                                                     id: prototype.id+'-2-btnClear',
@@ -504,7 +495,6 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryLog', {
                                             },
                                             {
                                                 text: 'FOP ACCB',
-                                                id: prototype.id+'-2-columnFOP',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,

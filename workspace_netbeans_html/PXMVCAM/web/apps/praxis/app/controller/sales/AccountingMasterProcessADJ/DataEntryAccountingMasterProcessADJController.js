@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
         
         switch (strModulo) {
             case 'PADJMA':
-            case 'PMASSIVE':
+            case 'PADJMV':
             case '':
                 Ext.getCmp(prototype.id+'-boxFecha').show();
                 Ext.getCmp(prototype.id+'-boxCaducos').hide();                
@@ -81,7 +81,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
         Ext.getCmp(prototype.id+'-cbxModulo').setReadOnly(true);
         
         switch (rec.get('A1955MODUL')) {
-            case 'PADJMA': case "PMASSIVE" :  
+            case 'PADJMA': case "PADJMV" :  
                 Ext.getCmp(prototype.id+'-boxFecha').show();
                 //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
                 Ext.getCmp(prototype.id+'-boxCaducos').hide();
@@ -106,8 +106,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
             switch (this.getValue('cbxModulo')) {
                 case "PSALES" : 
                 case "PCADUCOS" : 
-                case "PADJMA" :
-                case "PMASSIVE":    
+                case "PADJMA" : 
                     Ext.Msg.show({
                         title: '.:PRAXIS:.',
                         msg: 'Are you sure to insert ?',
@@ -161,7 +160,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
                 this.setReverse(this.p.rec);
                 break;
-            case "PCADUCOS" : case "PADJMA" : case "PMASSIVE" :
+            case "PCADUCOS" : case "PADJMA" : 
                 Ext.Msg.show({
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to delete ?',
@@ -208,7 +207,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
             return false;
         } else {
             switch (cbxModulo) {
-                case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" : case "PMASSIVE" :                           
+                case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
                     if (this.getValue('txtProcessDate')==='' || this.getValue('txtProcessDate') === null) {
                         this.msjAlert='Enter correct data';
                         return false;
@@ -351,7 +350,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
         var A1955MODUL = this.getValue('cbxModulo');
         
         switch (this.getValue('cbxModulo')) {
-            case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" : case "PMASSIVE" :
+            case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
                 IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtProcessDate').getValue(), 'Ymd');
                 break;
             /*case "PAPINT" : case "PARINT" :

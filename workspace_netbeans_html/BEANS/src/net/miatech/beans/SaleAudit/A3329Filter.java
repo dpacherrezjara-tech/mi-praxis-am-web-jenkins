@@ -28,6 +28,7 @@ public class A3329Filter extends A3329{
     public String VP_DESPCRI= "";
     public String VP_TKT= "";
     public String VP_SEQ= "";
+    public String VP_TRNCU= "";
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
 

@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.CreditCardForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1460,
+                                        width: 1400,
                                         align: 'center'
                                     },
                                     items: [
@@ -70,13 +70,13 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.CreditCardForm', {
                                         {
                                             xtype: 'panel',
                                             height: 600,
-                                            width: 1460,
+                                            width: 1400,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1460,
+                                                    width: 1400,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

@@ -46,11 +46,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setReadOnly(true);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyrobot').setReadOnly(true);
                 Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').setReadOnly(true);
+                var me = this;
+                rec = me.view.params.rec;
+                if (Ext.String.trim(rec.get('A3648FLAG')) === 'F') {
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').show();
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setValue(rec.get('A3648PROCE'));
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(true);
+
+                } else {
+                    Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').hide();
+                }
+
+                //Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(true);
                 //Ext.getCmp(prototype.idDetailTicket + '-win').setHeight(Ext.getCmp(prototype.idDetailTicket + '-win').getHeight() - 200);
                 break;
             case 'FORMPENDIRFND':
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyBPO').setReadOnly(false);
                 Ext.getCmp(prototype.idDetailTicket + '-checkApplyrobot').setReadOnly(false);
+                Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').setReadOnly(false);
                 if (String(this.view.params.qtytkt) > 1) {
                     //txtadd.show();
                     CbtStatus.show();
@@ -102,6 +115,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENTQUERY').getStore().removeAll();
                 Ext.getCmp(prototype.idDetailTicket + '-gridRazonesTkt').getStore().removeAll();
                 Ext.getCmp(prototype.idDetailTicket + '-gridRazonesTkt').getStore().loadData(res.lst_RAZON);
+                // para los remark
+                Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks').getStore().removeAll();
+                Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks').getStore().loadData(res.lsta_REMARCK);
                 //usos cupon
                 Ext.getCmp(prototype.idDetailTicket + '-gridDataStatus').getStore().removeAll();
                 Ext.getCmp(prototype.idDetailTicket + '-gridDataStatus').getStore().loadData(res.lsta_USOS);
@@ -284,6 +300,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalEqFareAm').setReadOnly(false);
         }
 
+
+
+        Ext.getCmp(prototype.idDetailTicket + '-txtAuthorise').setValue(rec.get('A3648FAUTO'));
         Ext.getCmp(prototype.idDetailTicket + '-txtfolio').setValue(rec.get('A3648FOLIO'));
         Ext.getCmp(prototype.idDetailTicket + '-txttkt').setValue(rec.get('A3648TICKET'));
         Ext.getCmp(prototype.idDetailTicket + '-txttidoc').setValue(rec.get('A3648STDOC'));
@@ -322,6 +341,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
         Ext.getCmp(prototype.idDetailTicket + '-txtiata').setValue(rec.get('A3648SIATA'));
         Ext.getCmp(prototype.idDetailTicket + '-txtCOUNTRY').setValue(rec.get('A3648SPVTA'));
+
         var vl_A3648FLAG = '';
         switch (Ext.String.trim(rec.get('A3648FLAG'))) {
             case 'E':
@@ -434,13 +454,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             //Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').setValue(VL_A3648XMDAQ);
             //Ext.getCmp(prototype.idDetailTicket + '-txtmda').setValue(VL_A3648XMDA);
         }
-
         if (Ext.String.trim(rec.get('A3648ARCHI')) !== '') {
             Ext.getCmp(prototype.idDetailTicket + '-txtImageView').show();
         } else {
             Ext.getCmp(prototype.idDetailTicket + '-txtImageView').hide();
         }
-        //
 
 
 
@@ -464,6 +482,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var grid05 = Ext.getCmp(prototype.idDetailTicket + '-gridTaxes');
         var grid06 = Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENTQUERY');
         var grid07 = Ext.getCmp(prototype.idDetailTicket + '-gridDataStatus');
+        var grid08 = Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks');
+
 
         var store01 = Ext.create('Ext.data.Store', {
             storeId: prototype.idDetailTicket + '-store-grid01'
@@ -486,6 +506,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var store07 = Ext.create('Ext.data.Store', {
             storeId: prototype.idDetailTicket + '-store-grid07'
         });
+        var store08 = Ext.create('Ext.data.Store', {
+            storeId: prototype.idDetailTicket + '-store-grid08'
+        });
 
         grid01.setStore(store01);
         grid02.setStore(store02);
@@ -494,7 +517,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         grid05.setStore(store05);
         grid06.setStore(store06);
         grid07.setStore(store07);
+        grid08.setStore(store08);
 
+    },
+    metadata_detalle: function (column, e, row, column, x, rowData) {
+        var data = x.record.data;
+         Ext.getCmp(prototype.idDetailTicket + '-txtRemarks').setValue(data.A3649ERROR);
     },
     onAddFopClick: function (rec) {
         var me = this;
@@ -614,6 +642,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var ComboEstatus = Ext.getCmp(prototype.idDetailTicket + '-ComboStatus');
         var CmbConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto');
         var CmbTRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND');
+        var CmbProcess = Ext.getCmp(prototype.idDetailTicket + '-ComboProcess');
+
         ComboEstatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECT"},
@@ -633,6 +663,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "P", "name": "PARTIAL"},
+                {"code": "T", "name": "TOTAL"}
+            ]
+        }));
+        CmbProcess.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "SELECT"},
+                {"code": "D", "name": "DETAILED"},
                 {"code": "T", "name": "TOTAL"}
             ]
         }));
@@ -858,10 +895,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
 
     },
-    metadata_detalle: function (column, e, row, column, x, rowData) {
-        var data = x.record.data;
-        Ext.getCmp(prototype.idDetailTicket + '-Disputa').setValue(data.A2553DESCR);
-    },
     metadata_razon: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
         Ext.getCmp(prototype.idDetailTicket + '-Disputa').setValue(data.A3537NCONX);
@@ -1001,11 +1034,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var vl_type = Ext.getCmp(prototype.idDetailTicket + '-txttidoc').getValue();
         var txtConto = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
         var CmbTRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
+        var txttrnc = Ext.getCmp(prototype.idDetailTicket + '-txttrnc').getValue();
         var vl_Showcoupons = Ext.getCmp(prototype.idDetailTicket + '-txtShowcoupons').getValue();
+        var ComboProcess = Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').getValue();
         var grid04 = Ext.getCmp(prototype.idDetailTicket + '-gridTaxes');
         var reg4 = grid04.getStore().getCount();
         var gridPAYMENT = Ext.getCmp(prototype.idDetailTicket + '-gridPAYMENT');
         var reg5 = gridPAYMENT.getStore().getCount();
+        // para las monedas 
+        var txtmda = Ext.getCmp(prototype.idDetailTicket + '-txtmda').getValue();
+        var txtEqmda = Ext.getCmp(prototype.idDetailTicket + '-txtEqmda').getValue();
+        var txtmoneda = '';
+        if (txtmda === null) {
+            txtmda = '';
+        }
+        if (txtEqmda === null) {
+            txtEqmda = '';
+        }
+        if (Ext.String.trim(txtmda) !== '') {
+            txtmoneda = Ext.String.trim(txtmda);
+        }
         //diferencia tarifa
         if (Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue() === null) {
             Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').setValue(0);
@@ -1029,15 +1077,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         var txtTotal = Ext.getCmp(prototype.idDetailTicket + '-txtTotal').getValue().replace(new RegExp(',', 'g'), '');
         var txtTotalXml = Ext.getCmp(prototype.idDetailTicket + '-txtTotalXml').getValue().replace(new RegExp(',', 'g'), '');
         var txtTotalram = Ext.getCmp(prototype.idDetailTicket + '-txtTotalram').getValue().replace(new RegExp(',', 'g'), '');
-
+        // para validar la tarifa equiva
+        var txtTotalEqFareAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalEqFareAm').getValue();
+        var txtTotalFareAm = Ext.getCmp(prototype.idDetailTicket + '-txtTotalFareAm').getValue();
         // diferencia de total a rfnd
         if (parseFloat(txtTotal) !== 0) {
             totaldif = (txtTotalram - txtTotal);
-            if (totaldif !== 0) {
+            if (totaldif > txtTotalram) {
                 if (parseFloat(txtTotalXml) !== 0 && parseFloat(txtTotalram) !== 0) {
                     totaldif = (txtTotalram - txtTotalXml);
                 }
             }
+
         } else {
             totaldif = (txtTotalram - txtTotalXml);
         }
@@ -1058,12 +1109,48 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
             return;
         }
         if (vl_STATUS === 'F') {
-            if (totaldif > 0) {
-                Ext.Msg.alert('.: PRAXIS :.', 'The amount of the RFND must not be greater than the Ticket');
+            if (Ext.String.trim(txttrnc) !== 'EXCH') {
+                if (totaldif > 0) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'The amount of the RFND must not be greater than the Ticket');
+                    bvalida = false;
+                    return;
+                }
+            }
+            if (txtTotalFareAm !== 0 && Ext.String.trim(txtmda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the fare currency');
                 bvalida = false;
                 return;
             }
-            if (CmbTRFND > 0) {
+            if (txtTotalFareAm === 0 && txtTotalEqFareAm !== 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the amount fare');
+                bvalida = false;
+                return;
+            }
+
+            if (txtTotalEqFareAm !== 0 && Ext.String.trim(txtEqmda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the currency Eq.');
+                bvalida = false;
+                return;
+            }
+            if (txtTotalEqFareAm === 0 && Ext.String.trim(txtEqmda).length !== 0 && txtTotalFareAm !== 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the Fare Eq.');
+                bvalida = false;
+                return;
+            }
+
+            if (Ext.String.trim(txtEqmda) === Ext.String.trim(txtmda)) {
+                Ext.Msg.alert('.: PRAXIS :.', 'Currencies must be different');
+                bvalida = false;
+                return;
+            }
+
+            if (Ext.String.trim(txtmoneda).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must enter the currency');
+                bvalida = false;
+                return;
+            }
+
+            if (Ext.String.trim(CmbTRFND).length === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of RFND');
                 bvalida = false;
                 return;
@@ -1072,6 +1159,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                 Ext.Msg.alert('.: PRAXIS :.', 'You must enter the amount to RFND');
                 bvalida = false;
                 return;
+            }
+            if (Ext.String.trim(ComboProcess).length === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'Select the capture process for the Miatech BPO Robot');
+                bvalida = false;
+                return;
+            } else {
+                if (Ext.String.trim(txttrnc).length > 0) {
+                    if (Ext.String.trim(txttrnc) === 'EXCH' && Ext.String.trim(ComboProcess) === 'T') {
+                        Ext.Msg.alert('.: PRAXIS :.', 'For the EXCH transaction you have to select the DETAILED process');
+                        bvalida = false;
+                        return;
+                    }
+                }
+
             }
             if (Ext.String.trim(txtConto).length === 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'Enter if the ticket is a C set or is a Start I');
@@ -1098,7 +1199,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     var grid08 = Ext.getCmp(prototype.idDetailTicket + '-gridCPN');
                     var regscpn = grid08.getStore().getCount();
                     for (var x = 0; x < regscpn; x++) {
-                        if (CmbTRFND === 'T') {
+                        if (CmbTRFND === 'T' && Ext.String.trim(txttrnc) === 'SALE') {
                             if (!cbox1 && Ext.String.trim(grid08.getStore().getAt(x).get('A3654CPN')) === '1') {
                                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of partial refund');
                                 bvalida = false;
@@ -1151,13 +1252,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         }
 
                     }
-                    if (CmbTRFND !== 'T') {
+                    if (CmbTRFND !== 'T' && Ext.String.trim(txttrnc) === 'SALE') {
                         vl_total = (vl_cant - vl_cantcpn);
                         if (vl_total === 0) {
                             Ext.Msg.alert('.: PRAXIS :.', 'You must select the type of total refund');
                             bvalida = false;
                             return;
-                        }                        
+                        }
                     }
 
 
@@ -1482,6 +1583,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idDetailTicket + '-CmbConto').getValue();
                         me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idDetailTicket + '-CmbTRFND').getValue();
                         me.beanTMP.IN_MARCA = checkApply;
+                        me.beanTMP.IN_PROCESS = Ext.getCmp(prototype.idDetailTicket + '-ComboProcess').getValue();
+
                         //me.beanTMP.IN_MARCA = Ext.getCmp(prototype.idDetailTicket + '-Combochangestatus').getValue();
                         var cbox1 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn1').getValue();
                         var cbox2 = Ext.getCmp(prototype.idDetailTicket + '-txtCpn2').getValue();
@@ -1622,23 +1725,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
         return '<span onclick="Ext.getCmp(prototype.idDetailTicket + \'-win\').getController().onWinFileViewerClick(' + rowIndex + ');">' + archivo + '</span>'
     },
     onWinFileViewerClick: function (rowIndex) {
-        var grid = Ext.getCmp(prototype.idDetailTicket + '-gridDispuRazon');
+        var grid = Ext.getCmp(prototype.idDetailTicket + '-gridRemarcks');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        var nmemo = '';
-        if (rec.data.A3537TYPE === 'AM') {
-            if (Ext.getCmp(prototype.idDetailTicket + '-txtconxp').getValue() !== '') {
-                nmemo = Ext.getCmp(prototype.idDetailTicket + '-txtconxp').getValue();
-            } else {
-                nmemo = Ext.getCmp(prototype.idDetailTicket + '-txtpreme').getValue();
+        var me = this;
+        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.RFNDDIRFileViewer({
+            params: {
+                rec: rec
             }
-        } else {
-            nmemo = Ext.getCmp(prototype.idDetailTicket + '-nmemo').getValue();
-        }
-        var DisputeFileViewer = Ext.create('Ext.Praxis.view.salesaudit.QueryPostbilling.PostbillingFileViewer', {id: 'PostbillingFileViewer'});
-        var controller = DisputeFileViewer.getController();
-        controller.getFilesDirectory(rec.data, nmemo, Ext.getCmp(prototype.idDetailTicket + '-country').getValue(''), this.urlWin01);
-        DisputeFileViewer.show();
+        });
+        win.show();
+
     },
     onWinFormRazonesClick: function () {
         var me = this;

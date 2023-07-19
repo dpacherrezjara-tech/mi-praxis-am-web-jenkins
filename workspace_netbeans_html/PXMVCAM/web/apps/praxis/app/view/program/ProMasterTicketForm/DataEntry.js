@@ -590,6 +590,9 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         }
                                                     },
                                                     {
+                                                        text: 'Void', dataIndex: 'A720TKVOID', width: 40
+                                                    },
+                                                    {
                                                         xtype: 'actioncolumn',
                                                         text: 'Edit',
                                                         width: 39,

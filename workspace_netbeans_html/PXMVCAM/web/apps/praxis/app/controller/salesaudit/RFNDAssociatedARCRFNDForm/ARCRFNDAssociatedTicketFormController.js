@@ -273,6 +273,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             Ext.getCmp(prototype.idARCDetailTicket + '-txtEqmda').setReadOnly(true);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtmda').setReadOnly(true);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').setReadOnly(true);
+            Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').setReadOnly(true);
 
         } else {
             Ext.getCmp(prototype.idARCDetailTicket + '-txtRazonesadd').show();
@@ -281,6 +282,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
             Ext.getCmp(prototype.idARCDetailTicket + '-txtEqmda').setReadOnly(false);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtmda').setReadOnly(false);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalEqFareAm').setReadOnly(false);
+            Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').setReadOnly(false);
         }
 
         Ext.getCmp(prototype.idARCDetailTicket + '-txtiata').setValue(rec.get('A4361IATA'));
@@ -296,6 +298,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').setValue(Ext.String.trim(rec.get('A4363TRFND')));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtAplicable').setValue(Ext.String.trim(rec.get('A3401STATU')));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtRazon').setValue(Ext.String.trim(rec.get('A3401RAAG')));
+        Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').setValue(Ext.String.trim(rec.get('A4363EMAIL')));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtEndorse').setValue(rec.get('A4363XENDR'));
         var tip = Ext.create('Ext.tip.ToolTip', {
             target: prototype.idARCDetailTicket + '-txtEndorse',
@@ -381,6 +384,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommission').setValue(Ext.util.Format.number(rec.get('A4363SCOMI'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtCommissionXml').setValue(Ext.util.Format.number(rec.get('A4363XCOMI'), '0,000.00'));
         //penalidad
+        Ext.getCmp(prototype.idARCDetailTicket + '-txtPenaltyXML').setValue(Ext.util.Format.number(rec.get('A4363PENCT'), '0,000.00'));
         Ext.getCmp(prototype.idARCDetailTicket + '-txtPenalty').setValue(Ext.util.Format.number(rec.get('A4363PENAD'), '0,000.00'));
         // total
         Ext.getCmp(prototype.idARCDetailTicket + '-txtTotal').setValue(Ext.util.Format.number(rec.get('A4363STOTL'), '0,000.00'));
@@ -722,6 +726,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                                 if (res.data === 'RECORD DELETED') {
                                     vp_icon = 1;
                                     grid.getStore().removeAt(rowIndex);
+                                    me.onSumaTaxGrid();
                                 }
                                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
                                     }});
@@ -729,8 +734,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         });
                     } else {
                         grid.getStore().removeAt(rowIndex);
+                        me.onSumaTaxGrid();
                     }
-                    me.onSumaTaxGrid();
+
                 }
             }
         });
@@ -994,6 +1000,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
         var vl_type = Ext.getCmp(prototype.idARCDetailTicket + '-txttidoc').getValue();
         var txtConto = Ext.getCmp(prototype.idARCDetailTicket + '-CmbConto').getValue();
         var CmbTRFND = Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').getValue();
+        var txtCorreo = Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').getValue();
         var vl_Showcoupons = Ext.getCmp(prototype.idARCDetailTicket + '-txtShowcoupons').getValue();
         var grid04 = Ext.getCmp(prototype.idARCDetailTicket + '-gridTaxes');
         var reg4 = grid04.getStore().getCount();
@@ -1040,6 +1047,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
 
         if (vl_STATUS === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'You must select the status');
+            bvalida = false;
+            return;
+        }
+        if (txtCorreo === '') {
+            Ext.Msg.alert('.: PRAXIS :.', 'You must enter the E-mail');
             bvalida = false;
             return;
         }
@@ -1486,6 +1498,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                         me.beanTMP.IN_CONJU = Ext.getCmp(prototype.idARCDetailTicket + '-CmbConto').getValue();
                         me.beanTMP.IN_TRFND = Ext.getCmp(prototype.idARCDetailTicket + '-CmbTRFND').getValue();
                         me.beanTMP.IN_MARCA = checkApply;
+                        me.beanTMP.IN_EMAIL = Ext.getCmp(prototype.idARCDetailTicket + '-txtCorreo').getValue();
                         //me.beanTMP.IN_MARCA = Ext.getCmp( prototype.idARCDetailTicket + '-Combochangestatus').getValue();
                         var cbox1 = Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn1').getValue();
                         var cbox2 = Ext.getCmp(prototype.idARCDetailTicket + '-txtCpn2').getValue();
@@ -1740,6 +1753,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                 monto = grid01.getStore().getAt(i).get('A4364TXMIA');
                 Total += parseFloat(monto);
             }
+            //console.log(Total);
             Ext.getCmp(prototype.idARCDetailTicket + '-txtTotalTaxAm').setValue(Ext.util.Format.number(Total, '0,000.00'));
             me.onTotalRFND();
         }

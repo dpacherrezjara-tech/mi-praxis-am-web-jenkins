@@ -17,7 +17,6 @@ import net.miatech.praxis.payment.filter.A2290Filter;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.praxis.payment.filter.A2345Filter;
 import net.miatech.beans.A3676Filter;
-import net.miatech.beans.SQP00697Filter;
 
 public class DataRequestedByDateLogic {
 
@@ -26,26 +25,12 @@ public class DataRequestedByDateLogic {
     public void setSession(IServerSession ss) {
         DataRequestedByDateDAO.setSession(ss);
     }
-
+    
     public List<A2331Filter> loadPX573SQP04266(A2331Filter filter) throws SQLException, Exception {
         return DataRequestedByDateDAO.loadPX573SQP04266(filter);
-    }
-
+    } 
+    
     public List<A3676Filter> loadPX573SQP04276(A3676Filter filter) throws SQLException, Exception {
         return DataRequestedByDateDAO.loadPX573SQP04276(filter);
-    }
-
-    public List<A2331Filter> loadPX573SQP04287(A2331Filter filter) throws SQLException, Exception {
-        return DataRequestedByDateDAO.loadPX573SQP04287(filter);
-    }
-
-    public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
-        return DataRequestedByDateDAO.loadSQP00697(filter);
-    }
-    
-    public List<A2331Filter> SQP04382(A2331Filter filter) throws SQLException, Exception {
-        return DataRequestedByDateDAO.SQP04382(filter);
-    }
-    
-    
+    }        
 }

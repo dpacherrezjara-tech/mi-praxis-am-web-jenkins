@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -43,19 +44,25 @@ import net.miatech.libcust.A005wr;
 import net.miatech.libcust.A051wr;
 import net.miatech.praxis.A005;
 import net.miatech.praxis.A051;
+import net.miatech.praxis.controllers.flown.AccountingCalendarController;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.flown.A1790;
 import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
+import net.miatech.praxis.logic.flown.AccountingCalendarLogic;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -577,6 +584,58 @@ public class Dashboard01Controller extends BaseController {
             }
 
             lst = logic.loadPX109SQP00556ZN(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchFlownByCarrier")
+    public @ResponseBody
+    String searchFlownByCarrier(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchFlownByCarrier-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListSearchFlownByCarrier(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+    
+    public List<A1971Filter> getListSearchFlownByCarrier(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX109SQP00556CA(filter);
 
         } catch (Exception e) {
             throw new SpringException(e);
@@ -3148,4 +3207,941 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
+    
+    @RequestMapping(value = "getXLSXByCarrierQTY")
+    public @ResponseBody
+    void getXLSXByCarrierQTY(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Accounting Calendar  : getXLSXByCarrierQTY");
+
+        String fileNameDownload = String.format("Flown By Carrier - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<A1971Filter> listaData = this.getListSearchFlownByCarrier(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
+            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
+            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vl = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Integer vk = 0;
+            Iterator iter = listaData.iterator();
+            Iterator iter1 = listaData.iterator();
+            // ====== CREANDO TITULOS ======================================
+
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+
+            CH1_0.setCellValue("Flight");
+            CH1_1.setCellValue("TIckets AM");
+            CH1_2.setCellValue("");
+            CH1_3.setCellValue("Tickets OAL");
+            CH1_4.setCellValue("");
+            CH1_5.setCellValue("Total");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("AM");
+            CH2_2.setCellValue("5D");
+            CH2_3.setCellValue("AM");
+            CH2_4.setCellValue("5D");
+            CH2_5.setCellValue("");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+
+                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).AM);
+                rcell2.setCellValue(listaData.get(vi).CINCOD);
+                rcell3.setCellValue(listaData.get(vi).AM_OTRO);
+                rcell4.setCellValue(listaData.get(vi).CINCOD_OTRO);
+                rcell5.setCellValue(listaData.get(vi).TOTAL);
+//                if (listaData.get(vi).CERROR.equals("01")) {
+//                    rcell3.setCellStyle(bodyStyle);
+//                }
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            Row rowTotal = sheet.createRow(vj);
+            Cell CH1_0_T = rowTotal.createCell(0);
+            Cell CH1_1_T = rowTotal.createCell(1);
+            Cell CH1_2_T = rowTotal.createCell(2);
+            Cell CH1_3_T = rowTotal.createCell(3);
+            Cell CH1_4_T = rowTotal.createCell(4);
+            Cell CH1_5_T = rowTotal.createCell(5);
+
+            CH1_0_T.setCellValue("Totales");
+            CH1_1_T.setCellValue(listaData.get(0).totAM);
+            CH1_2_T.setCellValue(listaData.get(0).totCINCOD);
+            CH1_3_T.setCellValue(listaData.get(0).totAM_OTRO);
+            CH1_4_T.setCellValue(listaData.get(0).totCINCOD_OTRO);
+            CH1_5_T.setCellValue(listaData.get(0).totTOTAL);
+
+            CH1_0_T.setCellStyle(totalStyle);
+            CH1_1_T.setCellStyle(totalStyle);
+            CH1_2_T.setCellStyle(totalStyle);
+            CH1_3_T.setCellStyle(totalStyle);
+            CH1_4_T.setCellStyle(totalStyle);
+            CH1_5_T.setCellStyle(totalStyle);
+
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            vk = vj + 3;
+            // ======  Nivel 1 ==========
+            Row row11 = sheet.createRow(vk);
+            Cell CH1_01 = row11.createCell(0);
+            Cell CH1_11 = row11.createCell(1);
+            Cell CH1_21 = row11.createCell(2);
+            Cell CH1_31 = row11.createCell(3);
+            Cell CH1_41 = row11.createCell(4);
+            Cell CH1_51 = row11.createCell(5);
+
+            CH1_01.setCellValue("Poliza");
+            CH1_11.setCellValue("TIckets AM");
+            CH1_21.setCellValue("");
+            CH1_31.setCellValue("Tickets OAL");
+            CH1_41.setCellValue("");
+            CH1_51.setCellValue("Total");
+
+            CH1_01.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+            CH1_21.setCellStyle(headerStyle);
+            CH1_31.setCellStyle(headerStyle);
+            CH1_41.setCellStyle(headerStyle);
+            CH1_51.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 1, 2));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(17, 18, 5, 5));
+            ++vk;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row21 = sheet.createRow(vk);
+            Cell CH2_01 = row21.createCell(0);
+            Cell CH2_11 = row21.createCell(1);
+            Cell CH2_21 = row21.createCell(2);
+            Cell CH2_31 = row21.createCell(3);
+            Cell CH2_41 = row21.createCell(4);
+            Cell CH2_51 = row21.createCell(5);
+
+            CH2_01.setCellValue("Date");
+            CH2_11.setCellValue("AM");
+            CH2_21.setCellValue("5D");
+            CH2_31.setCellValue("AM");
+            CH2_41.setCellValue("5D");
+            CH2_51.setCellValue("");
+
+            CH2_01.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_21.setCellStyle(headerStyle);
+            CH2_31.setCellStyle(headerStyle);
+            CH2_41.setCellStyle(headerStyle);
+            CH2_51.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 4, 4));
+            ++vk;
+            //============================================
+
+            while (iter1.hasNext()) {
+                row11 = sheet.createRow(vk);
+                Cell rcell01 = row11.createCell(0);
+                Cell rcell11 = row11.createCell(1);
+                Cell rcell21 = row11.createCell(2);
+                Cell rcell31 = row11.createCell(3);
+                Cell rcell41 = row11.createCell(4);
+                Cell rcell51 = row11.createCell(5);
+
+                rcell01.setCellValue(listaData.get(vl).strFormatDate0);
+                rcell11.setCellValue(listaData.get(vl).AM0);
+                rcell21.setCellValue(listaData.get(vl).CINCOD0);
+                rcell31.setCellValue(listaData.get(vl).AM_OTRO0);
+                rcell41.setCellValue(listaData.get(vl).CINCOD_OTRO0);
+                rcell51.setCellValue(listaData.get(vl).TOTAL0);
+//                if (listaData.get(vi).CERROR.equals("01")) {
+//                    rcell3.setCellStyle(bodyStyle);
+//                }
+                iter1.next();
+                ++vl;
+                ++vk;
+            }
+
+            Row rowTotal1 = sheet.createRow(vk);
+            Cell CH1_0_T1 = rowTotal1.createCell(0);
+            Cell CH1_1_T1 = rowTotal1.createCell(1);
+            Cell CH1_2_T1 = rowTotal1.createCell(2);
+            Cell CH1_3_T1 = rowTotal1.createCell(3);
+            Cell CH1_4_T1 = rowTotal1.createCell(4);
+            Cell CH1_5_T1 = rowTotal1.createCell(5);
+
+            CH1_0_T1.setCellValue("Totales");
+            CH1_1_T1.setCellValue(listaData.get(0).totAM0);
+            CH1_2_T1.setCellValue(listaData.get(0).totCINCOD0);
+            CH1_3_T1.setCellValue(listaData.get(0).totAM_OTRO0);
+            CH1_4_T1.setCellValue(listaData.get(0).totCINCOD_OTRO0);
+            CH1_5_T1.setCellValue(listaData.get(0).totTOTAL0);
+
+            CH1_0_T1.setCellStyle(totalStyle);
+            CH1_1_T1.setCellStyle(totalStyle);
+            CH1_2_T1.setCellStyle(totalStyle);
+            CH1_3_T1.setCellStyle(totalStyle);
+            CH1_4_T1.setCellStyle(totalStyle);
+            CH1_5_T1.setCellStyle(totalStyle);
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            
+
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    @RequestMapping(value = "getXLSXByCarrierAMO")
+    public @ResponseBody
+    void getXLSXByCarrierAMO(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Accounting Calendar  : getXLSXByCarrierAMO");
+
+        String fileNameDownload = String.format("Flown By Carrier - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<A1971Filter> listaData = this.getListSearchFlownByCarrier(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
+            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
+            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vl = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Integer vk = 0;
+            Iterator iter = listaData.iterator();
+            Iterator iter1 = listaData.iterator();
+            // ====== CREANDO TITULOS ======================================
+
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+
+            CH1_0.setCellValue("Flight");
+            CH1_1.setCellValue("Amount USD AM");
+            CH1_2.setCellValue("");
+            CH1_3.setCellValue("Amount USD OAL");
+            CH1_4.setCellValue("");
+            CH1_5.setCellValue("Total");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("AM");
+            CH2_2.setCellValue("5D");
+            CH2_3.setCellValue("AM");
+            CH2_4.setCellValue("5D");
+            CH2_5.setCellValue("");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+
+                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).AMM);
+                rcell2.setCellValue(listaData.get(vi).CINCODM);
+                rcell3.setCellValue(listaData.get(vi).AM_OTROM);
+                rcell4.setCellValue(listaData.get(vi).CINCOD_OTROM);
+                rcell5.setCellValue(listaData.get(vi).TOTALM);
+//                if (listaData.get(vi).CERROR.equals("01")) {
+//                    rcell3.setCellStyle(bodyStyle);
+//                }
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            Row rowTotal = sheet.createRow(vj);
+            Cell CH1_0_T = rowTotal.createCell(0);
+            Cell CH1_1_T = rowTotal.createCell(1);
+            Cell CH1_2_T = rowTotal.createCell(2);
+            Cell CH1_3_T = rowTotal.createCell(3);
+            Cell CH1_4_T = rowTotal.createCell(4);
+            Cell CH1_5_T = rowTotal.createCell(5);
+
+            CH1_0_T.setCellValue("Totales");
+            CH1_1_T.setCellValue(listaData.get(0).totAMM);
+            CH1_2_T.setCellValue(listaData.get(0).totCINCODM);
+            CH1_3_T.setCellValue(listaData.get(0).totAM_OTROM);
+            CH1_4_T.setCellValue(listaData.get(0).totCINCOD_OTROM);
+            CH1_5_T.setCellValue(listaData.get(0).totTOTALM);
+
+            CH1_0_T.setCellStyle(totalStyle);
+            CH1_1_T.setCellStyle(totalStyle);
+            CH1_2_T.setCellStyle(totalStyle);
+            CH1_3_T.setCellStyle(totalStyle);
+            CH1_4_T.setCellStyle(totalStyle);
+            CH1_5_T.setCellStyle(totalStyle);
+
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+           vk = vj + 3;
+            // ======  Nivel 1 ==========
+            Row row11 = sheet.createRow(vk);
+            Cell CH1_01 = row11.createCell(0);
+            Cell CH1_11 = row11.createCell(1);
+            Cell CH1_21 = row11.createCell(2);
+            Cell CH1_31 = row11.createCell(3);
+            Cell CH1_41 = row11.createCell(4);
+            Cell CH1_51 = row11.createCell(5);
+
+            CH1_01.setCellValue("Poliza");
+            CH1_11.setCellValue("Amount USD AM");
+            CH1_21.setCellValue("");
+            CH1_31.setCellValue("Amount USD OAL");
+            CH1_41.setCellValue("");
+            CH1_51.setCellValue("Total");
+
+            CH1_01.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+            CH1_21.setCellStyle(headerStyle);
+            CH1_31.setCellStyle(headerStyle);
+            CH1_41.setCellStyle(headerStyle);
+            CH1_51.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 1, 2));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(17, 18, 5, 5));
+            ++vk;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row21 = sheet.createRow(vk);
+            Cell CH2_01 = row21.createCell(0);
+            Cell CH2_11 = row21.createCell(1);
+            Cell CH2_21 = row21.createCell(2);
+            Cell CH2_31 = row21.createCell(3);
+            Cell CH2_41 = row21.createCell(4);
+            Cell CH2_51 = row21.createCell(5);
+
+            CH2_01.setCellValue("Date");
+            CH2_11.setCellValue("AM");
+            CH2_21.setCellValue("5D");
+            CH2_31.setCellValue("AM");
+            CH2_41.setCellValue("5D");
+            CH2_51.setCellValue("");
+
+            CH2_01.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_21.setCellStyle(headerStyle);
+            CH2_31.setCellStyle(headerStyle);
+            CH2_41.setCellStyle(headerStyle);
+            CH2_51.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(18, 18, 4, 4));
+            ++vk;
+            //============================================
+
+            while (iter1.hasNext()) {
+                row11 = sheet.createRow(vk);
+                Cell rcell01 = row11.createCell(0);
+                Cell rcell11 = row11.createCell(1);
+                Cell rcell21 = row11.createCell(2);
+                Cell rcell31 = row11.createCell(3);
+                Cell rcell41 = row11.createCell(4);
+                Cell rcell51 = row11.createCell(5);
+
+                rcell01.setCellValue(listaData.get(vl).strFormatDate0);
+                rcell11.setCellValue(listaData.get(vl).AMM0);
+                rcell21.setCellValue(listaData.get(vl).CINCODM0);
+                rcell31.setCellValue(listaData.get(vl).AM_OTROM0);
+                rcell41.setCellValue(listaData.get(vl).CINCOD_OTROM0);
+                rcell51.setCellValue(listaData.get(vl).TOTALM0);
+//                if (listaData.get(vi).CERROR.equals("01")) {
+//                    rcell3.setCellStyle(bodyStyle);
+//                }
+                iter1.next();
+                ++vl;
+                ++vk;
+            }
+
+            Row rowTotal1 = sheet.createRow(vk);
+            Cell CH1_0_T1 = rowTotal1.createCell(0);
+            Cell CH1_1_T1 = rowTotal1.createCell(1);
+            Cell CH1_2_T1 = rowTotal1.createCell(2);
+            Cell CH1_3_T1 = rowTotal1.createCell(3);
+            Cell CH1_4_T1 = rowTotal1.createCell(4);
+            Cell CH1_5_T1 = rowTotal1.createCell(5);
+
+            CH1_0_T1.setCellValue("Totales");
+            CH1_1_T1.setCellValue(listaData.get(0).totAMM0);
+            CH1_2_T1.setCellValue(listaData.get(0).totCINCODM0);
+            CH1_3_T1.setCellValue(listaData.get(0).totAM_OTROM0);
+            CH1_4_T1.setCellValue(listaData.get(0).totCINCOD_OTROM0);
+            CH1_5_T1.setCellValue(listaData.get(0).totTOTALM0);
+
+            CH1_0_T1.setCellStyle(totalStyle);
+            CH1_1_T1.setCellStyle(totalStyle);
+            CH1_2_T1.setCellStyle(totalStyle);
+            CH1_3_T1.setCellStyle(totalStyle);
+            CH1_4_T1.setCellStyle(totalStyle);
+            CH1_5_T1.setCellStyle(totalStyle);
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            
+
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+//    @RequestMapping(value = "getXLSXByMonth")
+//    public @ResponseBody
+//    void getXLSXByMonth(HttpServletRequest request, HttpServletResponse response) {
+//        System.out.println("Accounting Calendar  : getXLSXByMonth");
+//
+//        String fileNameDownload = String.format("Flown By Month - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+//
+//        try {
+//            Workbook workbook;
+//            File file = File.createTempFile(fileNameDownload, ".xlsx");
+//            List<A1971Filter> listaData = this.getListSearchFlownByCarrier(request, true);
+//            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+//            workbook = new XSSFWorkbook();
+//            Sheet sheet = workbook.createSheet("Report");
+//            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle bodyStyle = workbook.createCellStyle();
+//            Font headerFont = workbook.createFont();
+//            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+//            headerFont.setColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+//            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+//            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+//            headerStyle.setFont(headerFont);
+//            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
+//            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+//            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+//            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
+//            totalStyle.setFont(headerFont);
+//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            Integer vi = 0;
+//            Integer vl = 0;
+//            Integer vj = 0; //Almacena el numero de fila
+//            Integer vk = 17;
+//            Iterator iter = listaData.iterator();
+//            Iterator iter1 = listaData.iterator();
+//            // ====== CREANDO TITULOS ======================================
+//
+//            // ======  Nivel 1 ==========
+//            Row row1 = sheet.createRow(vj);
+//            Cell CH1_0 = row1.createCell(0);
+//            Cell CH1_1 = row1.createCell(1);
+//            Cell CH1_2 = row1.createCell(2);
+//            Cell CH1_3 = row1.createCell(3);
+//            Cell CH1_4 = row1.createCell(4);
+//            Cell CH1_5 = row1.createCell(5);
+//            Cell CH1_6 = row1.createCell(6);
+//
+//            CH1_0.setCellValue("Flight");
+//            CH1_1.setCellValue("Cabin");
+//            CH1_2.setCellValue("");
+//            CH1_3.setCellValue("");
+//            CH1_4.setCellValue("");
+//            CH1_5.setCellValue("");
+//            CH1_6.setCellValue("");
+//
+//            CH1_0.setCellStyle(headerStyle);
+//            CH1_1.setCellStyle(headerStyle);
+//            CH1_2.setCellStyle(headerStyle);
+//            CH1_3.setCellStyle(headerStyle);
+//            CH1_4.setCellStyle(headerStyle);
+//            CH1_5.setCellStyle(headerStyle);
+//            CH1_6.setCellStyle(headerStyle);
+//
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 6));
+//            ++vj;
+//            //============================================
+//
+//            // ======  Nivel 2 ==========
+//            Row row2 = sheet.createRow(vj);
+//            Cell CH2_0 = row2.createCell(0);
+//            Cell CH2_1 = row2.createCell(1);
+//            Cell CH2_2 = row2.createCell(2);
+//            Cell CH2_3 = row2.createCell(3);
+//            Cell CH2_4 = row2.createCell(4);
+//            Cell CH2_5 = row2.createCell(5);
+//            Cell CH2_6 = row2.createCell(6);
+//
+//            CH2_0.setCellValue("Date");
+//            CH2_1.setCellValue("Business");
+//            CH2_2.setCellValue("");
+//            CH2_3.setCellValue("Economy");
+//            CH2_4.setCellValue("");
+//            CH2_5.setCellValue("Total");
+//            CH2_6.setCellValue("");
+//
+//            CH2_0.setCellStyle(headerStyle);
+//            CH2_1.setCellStyle(headerStyle);
+//            CH2_2.setCellStyle(headerStyle);
+//            CH2_3.setCellStyle(headerStyle);
+//            CH2_4.setCellStyle(headerStyle);
+//            CH2_5.setCellStyle(headerStyle);
+//
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 2));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 4));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 6));
+//            ++vj;
+//            //============================================
+//            
+//            // ======  Nivel 3 ==========
+//            Row row3 = sheet.createRow(vj);
+//            Cell CH3_0 = row3.createCell(0);
+//            Cell CH3_1 = row3.createCell(1);
+//            Cell CH3_2 = row3.createCell(2);
+//            Cell CH3_3 = row3.createCell(3);
+//            Cell CH3_4 = row3.createCell(4);
+//            Cell CH3_5 = row3.createCell(5);
+//            Cell CH3_6 = row3.createCell(6);
+//
+//            CH3_0.setCellValue("");
+//            CH3_1.setCellValue("Pax");
+//            CH3_2.setCellValue("Value");
+//            CH3_3.setCellValue("Pax");
+//            CH3_4.setCellValue("Value");
+//            CH3_5.setCellValue("Pax");
+//            CH3_6.setCellValue("Value");
+//
+//            CH2_0.setCellStyle(headerStyle);
+//            CH2_1.setCellStyle(headerStyle);
+//            CH2_2.setCellStyle(headerStyle);
+//            CH2_3.setCellStyle(headerStyle);
+//            CH2_4.setCellStyle(headerStyle);
+//            CH2_5.setCellStyle(headerStyle);
+//
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 2));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 4));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 6));
+//            ++vj;
+//            //============================================
+//
+//            while (iter.hasNext()) {
+//                row1 = sheet.createRow(vj);
+//                Cell rcell0 = row1.createCell(0);
+//                Cell rcell1 = row1.createCell(1);
+//                Cell rcell2 = row1.createCell(2);
+//                Cell rcell3 = row1.createCell(3);
+//                Cell rcell4 = row1.createCell(4);
+//                Cell rcell5 = row1.createCell(5);
+//
+//                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+//                rcell1.setCellValue(listaData.get(vi).AM);
+//                rcell2.setCellValue(listaData.get(vi).CINCOD);
+//                rcell3.setCellValue(listaData.get(vi).AM_OTRO);
+//                rcell4.setCellValue(listaData.get(vi).CINCOD_OTRO);
+//                rcell5.setCellValue(listaData.get(vi).TOTAL);
+////                if (listaData.get(vi).CERROR.equals("01")) {
+////                    rcell3.setCellStyle(bodyStyle);
+////                }
+//                iter.next();
+//                ++vi;
+//                ++vj;
+//            }
+//
+//            Row rowTotal = sheet.createRow(vj);
+//            Cell CH1_0_T = rowTotal.createCell(0);
+//            Cell CH1_1_T = rowTotal.createCell(1);
+//            Cell CH1_2_T = rowTotal.createCell(2);
+//            Cell CH1_3_T = rowTotal.createCell(3);
+//            Cell CH1_4_T = rowTotal.createCell(4);
+//            Cell CH1_5_T = rowTotal.createCell(5);
+//
+//            CH1_0_T.setCellValue("Totales");
+//            CH1_1_T.setCellValue(listaData.get(0).totAM);
+//            CH1_2_T.setCellValue(listaData.get(0).totCINCOD);
+//            CH1_3_T.setCellValue(listaData.get(0).totAM_OTRO);
+//            CH1_4_T.setCellValue(listaData.get(0).totCINCOD_OTRO);
+//            CH1_5_T.setCellValue(listaData.get(0).totTOTAL);
+//
+//            CH1_0_T.setCellStyle(totalStyle);
+//            CH1_1_T.setCellStyle(totalStyle);
+//            CH1_2_T.setCellStyle(totalStyle);
+//            CH1_3_T.setCellStyle(totalStyle);
+//            CH1_4_T.setCellStyle(totalStyle);
+//            CH1_5_T.setCellStyle(totalStyle);
+//
+//            //---------------------------------------------------
+//            //---------------------------------------------------
+//            //---------------------------------------------------
+//            //---------------------------------------------------
+//            //---------------------------------------------------
+//           
+//            // ======  Nivel 1 ==========
+//            Row row11 = sheet.createRow(vk);
+//            Cell CH1_01 = row11.createCell(0);
+//            Cell CH1_11 = row11.createCell(1);
+//            Cell CH1_21 = row11.createCell(2);
+//            Cell CH1_31 = row11.createCell(3);
+//            Cell CH1_41 = row11.createCell(4);
+//            Cell CH1_51 = row11.createCell(5);
+//
+//            CH1_01.setCellValue("Poliza");
+//            CH1_11.setCellValue("TIckets AM");
+//            CH1_21.setCellValue("");
+//            CH1_31.setCellValue("Tickets OAL");
+//            CH1_41.setCellValue("");
+//            CH1_51.setCellValue("Total");
+//
+//            CH1_01.setCellStyle(headerStyle);
+//            CH1_11.setCellStyle(headerStyle);
+//            CH1_21.setCellStyle(headerStyle);
+//            CH1_31.setCellStyle(headerStyle);
+//            CH1_41.setCellStyle(headerStyle);
+//            CH1_51.setCellStyle(headerStyle);
+//
+//            sheet.addMergedRegion(new CellRangeAddress(17, 17, 0, 0));
+//            sheet.addMergedRegion(new CellRangeAddress(17, 17, 1, 2));
+//            sheet.addMergedRegion(new CellRangeAddress(17, 17, 3, 4));
+//            sheet.addMergedRegion(new CellRangeAddress(17, 18, 5, 5));
+//            ++vk;
+//            //============================================
+//
+//            // ======  Nivel 2 ==========
+//            Row row21 = sheet.createRow(vk);
+//            Cell CH2_01 = row21.createCell(0);
+//            Cell CH2_11 = row21.createCell(1);
+//            Cell CH2_21 = row21.createCell(2);
+//            Cell CH2_31 = row21.createCell(3);
+//            Cell CH2_41 = row21.createCell(4);
+//            Cell CH2_51 = row21.createCell(5);
+//
+//            CH2_01.setCellValue("Date");
+//            CH2_11.setCellValue("AM");
+//            CH2_21.setCellValue("5D");
+//            CH2_31.setCellValue("AM");
+//            CH2_41.setCellValue("5D");
+//            CH2_51.setCellValue("");
+//
+//            CH2_01.setCellStyle(headerStyle);
+//            CH2_11.setCellStyle(headerStyle);
+//            CH2_21.setCellStyle(headerStyle);
+//            CH2_31.setCellStyle(headerStyle);
+//            CH2_41.setCellStyle(headerStyle);
+//            CH2_51.setCellStyle(headerStyle);
+//
+//            sheet.addMergedRegion(new CellRangeAddress(18, 18, 0, 0));
+//            sheet.addMergedRegion(new CellRangeAddress(18, 18, 1, 1));
+//            sheet.addMergedRegion(new CellRangeAddress(18, 18, 2, 2));
+//            sheet.addMergedRegion(new CellRangeAddress(18, 18, 3, 3));
+//            sheet.addMergedRegion(new CellRangeAddress(18, 18, 4, 4));
+//            ++vk;
+//            //============================================
+//
+//            while (iter1.hasNext()) {
+//                row11 = sheet.createRow(vk);
+//                Cell rcell01 = row11.createCell(0);
+//                Cell rcell11 = row11.createCell(1);
+//                Cell rcell21 = row11.createCell(2);
+//                Cell rcell31 = row11.createCell(3);
+//                Cell rcell41 = row11.createCell(4);
+//                Cell rcell51 = row11.createCell(5);
+//
+//                rcell01.setCellValue(listaData.get(vl).strFormatDate0);
+//                rcell11.setCellValue(listaData.get(vl).AM0);
+//                rcell21.setCellValue(listaData.get(vl).CINCOD0);
+//                rcell31.setCellValue(listaData.get(vl).AM_OTRO0);
+//                rcell41.setCellValue(listaData.get(vl).CINCOD_OTRO0);
+//                rcell51.setCellValue(listaData.get(vl).TOTAL0);
+////                if (listaData.get(vi).CERROR.equals("01")) {
+////                    rcell3.setCellStyle(bodyStyle);
+////                }
+//                iter1.next();
+//                ++vl;
+//                ++vk;
+//            }
+//
+//            Row rowTotal1 = sheet.createRow(vk);
+//            Cell CH1_0_T1 = rowTotal1.createCell(0);
+//            Cell CH1_1_T1 = rowTotal1.createCell(1);
+//            Cell CH1_2_T1 = rowTotal1.createCell(2);
+//            Cell CH1_3_T1 = rowTotal1.createCell(3);
+//            Cell CH1_4_T1 = rowTotal1.createCell(4);
+//            Cell CH1_5_T1 = rowTotal1.createCell(5);
+//
+//            CH1_0_T1.setCellValue("Totales");
+//            CH1_1_T1.setCellValue(listaData.get(0).totAM0);
+//            CH1_2_T1.setCellValue(listaData.get(0).totCINCOD0);
+//            CH1_3_T1.setCellValue(listaData.get(0).totAM_OTRO0);
+//            CH1_4_T1.setCellValue(listaData.get(0).totCINCOD_OTRO0);
+//            CH1_5_T1.setCellValue(listaData.get(0).totTOTAL0);
+//
+//            CH1_0_T1.setCellStyle(totalStyle);
+//            CH1_1_T1.setCellStyle(totalStyle);
+//            CH1_2_T1.setCellStyle(totalStyle);
+//            CH1_3_T1.setCellStyle(totalStyle);
+//            CH1_4_T1.setCellStyle(totalStyle);
+//            CH1_5_T1.setCellStyle(totalStyle);
+//
+//            sheet.autoSizeColumn(0, true);
+//            sheet.autoSizeColumn(1, true);
+//            sheet.autoSizeColumn(2, true);
+//            sheet.autoSizeColumn(3, true);
+//            sheet.autoSizeColumn(4, true);
+//            sheet.autoSizeColumn(5, true);
+//            
+//
+//            //============================================
+//            response.setContentType("application/vnd.openxml");
+//            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+//
+//            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+//            workbook.write(response.getOutputStream());
+//            fos.close();
+//
+//        } catch (IOException e) {
+//            throw new SpringException(e);
+//        }
+//    }
 }

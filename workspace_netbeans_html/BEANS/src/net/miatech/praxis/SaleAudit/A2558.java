@@ -60,7 +60,6 @@ public class A2558 {
     public String A2558HREGI;
     public String ITINERARIO;
     public String A2558NSEQ;
-    public String A2558TIKET;
     //deciamal
     public Double A2558FARE; 
     public Double A2558FRERV;
@@ -71,14 +70,6 @@ public class A2558 {
     //inetger
     public Integer A2558EST;
 
-    public String getA2558TIKET() {
-        return A2558TIKET;
-    }
-
-    public void setA2558TIKET(String A2558TIKET) {
-        this.A2558TIKET = A2558TIKET;
-    }
-    
     public String getITINERARIO() {
         return ITINERARIO;
     }

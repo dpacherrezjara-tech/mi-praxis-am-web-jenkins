@@ -1,3 +1,6 @@
+/*
+ * @Dvicente
+ */
 Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryFareCalcRftxController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryFareCalcRftxController',

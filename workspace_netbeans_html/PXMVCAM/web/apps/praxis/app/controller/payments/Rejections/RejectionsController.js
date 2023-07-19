@@ -102,20 +102,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.RejectionsController', {
 
     },
     obtainData: function() {
-        
-        var cmbSADJUST = Ext.getCmp(prototype.id + '-cmbSADJUST');
-        cmbSADJUST.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["T", "Transaction"],
-            ]
-        }));
-        cmbSADJUST.setValue("");
-        
         this.dataObtain.COUNTRY = 2;
-        this.dataObtain.BANK = 1;
         Ext.Ajax.request({
             url: prototype.urlMaster + '/obtainData',
             method: 'POST',
@@ -128,10 +115,6 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.RejectionsController', {
                             Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
-                    Ext.getCmp(prototype.id + '-cmbBank').bindStore(
-                        Ext.create('Ext.data.Store', {data: res.lstBank, autoLoad: true})
-                    );
-                    Ext.getCmp(prototype.id + '-cmbBank').setValue('');
                     me.btnSearch_click();
                 } else
                     global.Msg({msg: res.sesion});
@@ -143,8 +126,6 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.RejectionsController', {
         me.bean = {};
         me.bean.CODEREJ = Ext.getCmp(prototype.id + '-cmbCode').getValue();
         me.bean.COUNTRY = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
-        me.bean.CODEBANK = Ext.getCmp(prototype.id + '-cmbBank').getValue();
-        me.bean.SADJUST = Ext.getCmp(prototype.id + '-cmbSADJUST').getValue();
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
@@ -248,7 +229,6 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.RejectionsController', {
     btnClear_click: function(obj, e) {
         Ext.getCmp(prototype.id + '-cmbCode').setValue('');
         Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
-        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
 
     },
     btnExcel_click: function(obj, e) {

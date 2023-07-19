@@ -27,6 +27,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         IN_TRANSACTION: '',
         IN_IATA: ''
     },
+    loading: false,
     /**
      * Constructor
      */
@@ -39,13 +40,12 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
     // <editor-fold defaultstate="collapsed" desc="Configuracion y Validaciones">
 
     afterRender: async function () { // global.AccessControlMaganer();
-        let store = Ext.StoreMgr.lookup("storeGrupo");
-        store.removeAll();
         var p = this.view.params;
         this.setStoreData();
         this.getDataInputs();
         let findTkt = this.view.params.findTkt;
         if (findTkt.op === '6') {
+            this.loading = true;
             await this.findTicketToSearch();
         } else {
             this.btnSearch_click();
@@ -198,8 +198,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         }
     },
     onChangeTab: function (obj, current, before) {
-        let store = Ext.StoreMgr.lookup("storeGrupo");
-        store.loadData([], false);
         meDE.paramsDE.IN_OPCION = '1';
         var tabActual = current.id;
         meDE.tabName = tabActual;
@@ -220,7 +218,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                 meDE.tabId = '4';
                 break;
         }
-        this.btnSearch_click();
+        if (!this.loading)
+            this.btnSearch_click();
     },
 // </editor-fold>
 
@@ -279,71 +278,126 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
     },
     setGridData: function (url, grilla, paggin, title) {
         let me = this;
-        let store = Ext.StoreMgr.lookup("storeGrupo");
-        let gridView = Ext.getCmp(grilla).getView();
-        gridView.refresh();
+        let grid = Ext.getCmp(grilla);
+        let page = Ext.getCmp(paggin);
         if (title === 'TOTALS') {
             this.searchDet(url, title);
         } else {
-            fetch(url + '?' + new URLSearchParams(meDE.paramsDE)).then(async res => {
-                gridView.mask('Loading...');
-                await res.json().then(obj => {
-                    if (paggin !== prototype.idGr + '') {
-                        let pag = Ext.getCmp(paggin);
-                        let pagData = pag.getPageData();
-                        //                    Ext.getCmp(prototype.idGr+ '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        //                    Ext.getCmp(prototype.idGr+ '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        //                    Ext.getCmp(prototype.idGr+ '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    }
-
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found.'
-                        });
-                    } else {
-                        let item = obj.data[0];
-                        if (paggin !== prototype.idGr + '') {
-                            Ext.getCmp(meDE.tabName).setTitle(title + ' (' + item.page.TOTROW + '/' + item.QTY_ERROR + ')');
+            me.setGridStore({title: title, grid : grid, paggin: page, url: url});
+        }
+    },
+    //<editor-fold defaultstate="collapsed" desc="Store Grupo">
+    setGridStore: function ( {title, grid, paggin, url}) {
+        const me = this;
+        const opts = {
+            'TKT': () => {
+                let storeTkt = Ext.create('Ext.data.Store', {
+                    storeId: prototype.idGr + '-storeTkt',
+                    proxy: {
+                        type: 'ajax',
+                        url: url,
+                        extraParams: meDE.paramsDE,
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'data' // Si tu respuesta JSON tiene una propiedad 'data', especifícala aquí
                         }
-                        store.getProxy().data = obj.data;
-                        store.page = {
-                            start: 0,
-                            limit: 20,
-                            curpag: item.page.PAGNUM === 0?1:item.page.PAGNUM,
-                            totpag: item.page.TOTPAG
-                        };
-                        //console.log('paginado', store.page);
-                        store.load();
-                    }
+                    },
+                    loadMask: true,
+                    autoLoad: true
                 });
-            }).then(() => {
+                return storeTkt;
+            },
+            'RFND': () => {
+                let storeRfnd = Ext.create('Ext.data.Store', {
+                    storeId: prototype.idGr + '-storeRfnd',
+                    proxy: {
+                        type: 'ajax',
+                        url: url,
+                        extraParams: meDE.paramsDE,
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'data' // Si tu respuesta JSON tiene una propiedad 'data', especifícala aquí
+                        }
+                    },
+                    loadMask: true,
+                    autoLoad: true
+                });
+                return storeRfnd;
+            },
+            'ADM/ACM': () => {
+                let storeAdm = Ext.create('Ext.data.Store', {
+                    storeId: prototype.idGr + '-storeAdms',
+                    proxy: {
+                        type: 'ajax',
+                        url: url,
+                        extraParams: meDE.paramsDE,
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'data' // Si tu respuesta JSON tiene una propiedad 'data', especifícala aquí
+                        }
+                    },
+                    loadMask: true,
+                    autoLoad: true
+                });
+                return storeAdm;
+            },
+            'RFTX': () => {
+                let storeRftx = Ext.create('Ext.data.Store', {
+                    storeId: prototype.idGr + '-storeRftx',
+                    proxy: {
+                        type: 'ajax',
+                        url: url,
+                        extraParams: meDE.paramsDE,
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'data' // Si tu respuesta JSON tiene una propiedad 'data', especifícala aquí
+                        }
+                    },
+                    loadMask: true,
+                    autoLoad: true
+                });
+                return storeRftx;
+            },
+        };
+        const store = opts[title]();
+        store.on('load', function (store, records, successful) {
+            // Acciones personalizadas después de cargar el store
+            if (successful) {
+                // El cargado de datos fue exitoso
+                if(records.length === 0){
+                    global.Msg({
+                        msg:'Not Found'
+                    });
+                    return;
+                }
+                let item = records[0].data;
+                Ext.getCmp(meDE.tabName).setTitle(title + ' (' + item.page.TOTROW + '/' + item.QTY_ERROR + ')');
+                // Agrega aquí cualquier acción adicional que desees realizar después de la carga exitosa
                 let boletobuscado = localStorage.getItem(prototype.id + '-ticket-found');
                 if (boletobuscado) {
-                    Ext.getCmp(prototype.idGr + '-tabMain').mask('Loading...');
+                    Ext.getCmp(prototype.idGr + '-tabMain').mask('Loading Ticket...');
                     const fnAbreTkt = () => {
-                        //let column = gridView.getGridColumns()[12];
-                        if (store.isLoaded()) {
-                            if (store.data.length > 0) {
-                                me.onEditClick(gridView, 0, null);
-                            } else {
-                                global.Msg({msg: 'Data not found'});
-                            }
+                        if (store.data.length > 0) {
+                            me.onEditClick(grid.getView(), 0, null);
+                        } else {
+                            global.Msg({msg: 'Data not found'});
                         }
                         Ext.getCmp(prototype.idGr + '-tabMain').unmask();
                     };
-                    setTimeout(fnAbreTkt, 200);
+                    setTimeout(fnAbreTkt, 800);
                     localStorage.removeItem(prototype.id + '-ticket-found');
                 }
-                global.clear();
-            }).catch(err => console.error('Error al consultar', err)).finally(() => {
-                if (paggin !== prototype.idGr + '') {
-                    Ext.getCmp(paggin).bindStore(store);
-                }
-                Ext.getCmp(grilla).getView().unmask();
-            });
+            } else {
+                // La carga de datos falló
+                global.Msg({msg: 'Error on Load Data'});
+            }
+        });
+        grid.bindStore(store);
+        paggin.bindStore(store);
 
-        }
     },
+    
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDet">
     searchDet: function (url, title) {
         this.beanDet.IN_A1720CCUST = '139';
@@ -981,7 +1035,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         }
     },
     onClickBtnAdd: function (grid, rowIndex, colIndex) {
-        //Ext.getCmp()
         switch (meDE.tabName) {
             case prototype.idGr + '-tabTkt':
                 break;
@@ -1003,68 +1056,25 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         var id = component.id;
         var idNumber = id.charAt(id.length - 1);
         var pag = Ext.getCmp(prototype.idGr + '-de-paggin' + idNumber);
-        this.changePageRequest(id, idNumber, pag.getStore());
-        //pag.moveFirst();
+        pag.moveFirst();
     },
     onClickBtnPagPrevious: function (component) {
         var id = component.id;
         var idNumber = id.charAt(id.length - 1);
         var pag = Ext.getCmp(prototype.idGr + '-de-paggin' + idNumber);
-        this.changePageRequest(id, idNumber, pag.getStore());
-        //pag.movePrevious();
+        pag.movePrevious();
     },
     onClickBtnPagNext: function (component) {
         var id = component.id;
         var idNumber = id.charAt(id.length - 1);
         var pag = Ext.getCmp(prototype.idGr + '-de-paggin' + idNumber);
-        this.changePageRequest(id, idNumber, pag.getStore());
-        //pag.moveNext();
+        pag.moveNext();
     },
     onClickBtnPagLast: function (component) {
         var id = component.id;
         var idNumber = id.charAt(id.length - 1);
         var pag = Ext.getCmp(prototype.idGr + '-de-paggin' + idNumber);
-        this.changePageRequest(id, idNumber, pag.getStore());
-        //pag.moveLast();
-    },
-    changePageRequest: function (id, idNumber, store) {
-        let me = this;
-        let page = store.page;
-        let reqPage = 0;
-        let opcion = '1';
-        switch (id) {
-            case prototype.idGr + '-btn-pag-first' + idNumber:
-                reqPage = 1;
-                break;
-            case prototype.idGr + '-btn-pag-previous' + idNumber:
-                reqPage = page.curpag === 1 ? 1 : page.curpag-1;
-                break;
-            case prototype.idGr + '-btn-pag-next' + idNumber:
-                reqPage = page.curpag === page.totpag ? page.curpag : page.curpag + 1;
-                break;
-            case prototype.idGr + '-btn-pag-last' + idNumber:
-                reqPage = page.totpag;
-                break;
-        }
-        if (Ext.getCmp(prototype.idGr + '-panelFilter' + idNumber).isVisible()) {
-            switch (idNumber) {
-                case '1':
-                    opcion= Ext.getCmp(prototype.idGr + '-de-cmbOptionTKT').getValue();
-                    break;
-                case '2':
-                    opcion= Ext.getCmp(prototype.idGr + '-de-cmbOptionRF').getValue();
-                    break;
-                case '3':
-                    opcion= Ext.getCmp(prototype.idGr + '-de-cmbOptionADM').getValue();
-                    break;
-                case '5':
-                    opcion= Ext.getCmp(prototype.idGr + '-de-cmbOptionRftx').getValue();
-                    break;
-            }
-        }
-        meDE.paramsDE.start = (reqPage-1)*20;
-        meDE.paramsDE.IN_OPCION = opcion;
-        me.btnSearch_click();
+        pag.moveLast();
     },
     onClickBtnFilter: function (component) {
         var id = component.id;
@@ -1072,7 +1082,6 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
         var option = Ext.getCmp(prototype.idGr + '-panelFilter' + idNumber);
         if (option.isVisible()) {
             option.setVisible(false);
-            let store = Ext.StoreMgr.lookup("storeGrupo");
             switch (idNumber) {
                 case '1':
                     Ext.getCmp(prototype.idGr + '-de-txtTKTNumber').setValue("");
@@ -1306,6 +1315,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
                         meDE.paramsDE.IN_OPCION = '2';
                         localStorage.setItem(prototype.id + '-ticket-found', true);
                         this.btnSearch_click();
+                        this.loading = false;
                     });
                 } else {
                     global.Msg({
