@@ -3677,6 +3677,8 @@ public class Dashboard01DAO {
                 bean.strFormatDate = Functions.getMonthConvert6(bean.DSALES);
                 bean.CUPONS_MEX = rst.getInt("CPN_MEX");
                 bean.CUPONS_OTHER = rst.getInt("CPN_OTHER");
+                bean.CPN_ASR_MEX = rst.getInt("CPN_ASR_MEX");
+                bean.CPN_ASR_OTHER = rst.getInt("CPN_ASR_OTHER");
                 bean.CUPONS_ASR = rst.getInt("CPN_ASR");
                 bean.CUPONS_ARC = rst.getInt("CPN_ARC");
 

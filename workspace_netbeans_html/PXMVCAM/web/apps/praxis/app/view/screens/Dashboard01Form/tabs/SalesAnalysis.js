@@ -1341,7 +1341,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAlliances',
-                                    width: 804,
+                                    width: 664,
                                     height: 210,
                                     columnLines: true,
                                     margin: "5 0 0 0",
@@ -1463,6 +1463,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {
                                                 text: 'NON REVENUE',
+                                                hidden:true,
                                                 //                                                id: prototype.id + '-adgSalDate',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -1500,7 +1501,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-summaryAlliances',
-                                    width: 804,
+                                    width: 664,
                                     align: 'left',
                                     margin: '0 0 0 0 ',
                                     layout: {
@@ -1523,8 +1524,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         {width: 60, text: '100%'},
                                         {width: 80, id: prototype.id + '-lblTotalAlAVG'},
                                         {width: 80, id: prototype.id + '-lblTotalPerGral'},
-                                        {width: 70, id: prototype.id + '-lblTotalAL_QCPNSNR'},
-                                        {width: 70, id: prototype.id + '-lblTotalAL_AMOUNTNR'}
+//                                        {width: 70, id: prototype.id + '-lblTotalAL_QCPNSNR'},
+//                                        {width: 70, id: prototype.id + '-lblTotalAL_AMOUNTNR'}
                                     ]
                                 }
                             ]
