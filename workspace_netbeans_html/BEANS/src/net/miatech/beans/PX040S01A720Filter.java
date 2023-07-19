@@ -46,6 +46,7 @@ public class PX040S01A720Filter {
     public List<PX040S01A720ResultSet14> lstResultSet14 = new ArrayList<PX040S01A720ResultSet14>(0);
     public List<PX040S01A720ResultSet15> lstResultSet15 = new ArrayList<PX040S01A720ResultSet15>(0);
     public List<PX040S01A720ResultSet07> lstResultSet16 = new ArrayList<PX040S01A720ResultSet07>(0);
+    public List<PX040S01A720ResultSet22> lstResultSet22 = new ArrayList<PX040S01A720ResultSet22>(0);
     
     public A725 fileA725 = new A725();
     public A1716 fileA1716 = new A1716();
@@ -53,3 +54,4 @@ public class PX040S01A720Filter {
     
     public A1533 fileA1533 = new A1533();
 }
+
