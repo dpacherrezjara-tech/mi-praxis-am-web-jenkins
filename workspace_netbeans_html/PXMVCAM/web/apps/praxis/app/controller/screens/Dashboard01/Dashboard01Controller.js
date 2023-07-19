@@ -84,6 +84,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             '#Dashboard01Form-btnBack_chartSales': {
                 click: this.btnDisplay_click
             },
+            '#Dashboard01Form-btnBack_chartSales1': {
+                click: this.btnDisplay_click
+            },
             '#Dashboard01Form-btnBack_chartInter': {
                 click: this.btnDisplay_click
             },

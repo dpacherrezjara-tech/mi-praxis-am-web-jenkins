@@ -616,8 +616,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 Ext.getCmp(prototype.id + '-lblTotalAlAmount').setText(Ext.util.Format.number(data.AMOUNT_OFF, '0,000'));
                 Ext.getCmp(prototype.id + '-lblTotalAlAVG').setText(Ext.util.Format.number(data.totAVG, '0,000.00'));
                 Ext.getCmp(prototype.id + '-lblTotalPerGral').setText(Ext.util.Format.number(data.Perc4, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAL_QCPNSNR').setText(Ext.util.Format.number(data.CUPONS_OTHER, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAL_AMOUNTNR').setText(Ext.util.Format.number(data.AMOUNT_O, '0,000'));
+//                Ext.getCmp(prototype.id + '-lblTotalAL_QCPNSNR').setText(Ext.util.Format.number(data.CUPONS_OTHER, '0,000'));
+//                Ext.getCmp(prototype.id + '-lblTotalAL_AMOUNTNR').setText(Ext.util.Format.number(data.AMOUNT_O, '0,000'));
 
             }
         });
