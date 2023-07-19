@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                  * */
                 {
                     xtype: 'panel',
-                    margin: '20 0 5 0',
+                    margin: '20 0 4 0',
                     layout: {
                         type: 'hbox',
                         pack: 'center'
@@ -51,15 +51,42 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                             },
                             items: [
                                 {
-                                    xtype: 'panel',
-                                    width: 1060,
+                                    xtype: 'toolbar',
                                     bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
-                                    border: true,
+                                    border: false,
+                                    padding: '4px 7px 4px 20px',
+                                    width: 80,
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnSearch_chartSales1',
+                                            iconCls: 'prx-icon-search',
+                                            tooltip: 'Search',
+                                            listeners: {
+                                                click: 'onClickSearch'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnBack_chartSales1',
+                                            iconCls: 'prx-icon-back',
+                                            tooltip: 'Back',
+                                            listeners: {
+                                                click: 'imgBack_clickHandler'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    width: 1030,
+                                    bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+                                    border: false,
                                     layout: 'column',
                                     defaults: {
                                         labelStyle: 'font-weight:bold;',
                                         fieldStyle: 'text-align: center;',
-                                        padding: '8px 7px 8px 20px',
+                                        padding: '4px 7px 4px 20px',
                                         anchor: '100%'
                                     },
                                     items: [
@@ -76,7 +103,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                 {boxLabel: '<strong style="color:#3399FF" >Countries</b>', name: 'rb', inputValue: 'rbc3', width: 120},
                                                 {boxLabel: '<strong style="color:#3399FF" >Cabin</b>', name: 'rb', inputValue: 'rbc4', width: 120},
                                                 {boxLabel: '<strong style="color:#3399FF" >Agent</b>', name: 'rb', inputValue: 'rbc5', width: 120},
-                                                {xtype: 'tbspacer', width: 110},
+                                                {xtype: 'tbspacer', width: 80},
                                                 {
                                                     xtype: 'checkboxfield',
                                                     id: prototype.id + '-chkUso',
@@ -100,7 +127,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                     xtype: 'panel',
                                     width: 350,
                                     bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
-                                    border: true,
+                                    border: false,
                                     layout: 'column',
                                     defaults: {
                                         labelStyle: 'font-weight:bold;',
@@ -145,7 +172,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                         {xtype: 'tbspacer', width: 4},
                                         {
                                             xtype: 'label',
-                                            html: '<b>To</b>',
+                                            html: '<b>To:</b>',
                                             fieldStyle: 'text-align: center;'
                                         },
                                         {
@@ -165,6 +192,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                 },
                                 {
                                     xtype: 'toolbar',
+                                    bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+                                    border: false,
                                     padding: '4px 7px 4px 20px',
                                     width: 80,
                                     items: [
@@ -1106,7 +1135,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             axes: [{
                                                     type: 'numeric3d',
                                                     position: 'left',
-                                                    fields: ['CUPONS_ARC', 'CUPONS_ASR', 'CUPONS_MEX', 'CUPONS_OTHER'],
+                                                    fields: ['CPN_ASR_MEX','CPN_ASR_OTHER','CUPONS_ARC','CUPONS_OTHER','CUPONS_MEX'],
                                                     grid: true,
                                                     title: '',
                                                     //title: 'Millions of USD',
@@ -1134,10 +1163,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             series: [{
                                                     type: 'bar3d',
                                                     stacked: false,
-                                                    title: ['ARC', 'ASR', 'BSP(Mexico)', 'BSP(Others)'],
+                                                    title: ['ASR(Mexico)','ASR(Other)','ARC','BSP(Others)','BSP(Mexico)'],
                                                     xField: 'strFormatDate',
-                                                    yField: ['CUPONS_ARC', 'CUPONS_ASR', 'CUPONS_MEX', 'CUPONS_OTHER'],
-                                                    colors: ['#CC0000', '#FFBF00', '#A5DF00', '#F6D8CE'],
+                                                    yField: ['CPN_ASR_MEX','CPN_ASR_OTHER','CUPONS_ARC','CUPONS_OTHER','CUPONS_MEX'],
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                     highlight: true,
                                                     style: {
                                                         inGroupGapWidth: -7,
@@ -1151,8 +1180,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             var label = '';
                                                             if (ctx.field === 'CUPONS_ARC') {
                                                                 label = 'ARC';
-                                                            } else if (ctx.field === 'CUPONS_ASR') {
-                                                                label = 'ASR';
+                                                            } else if (ctx.field === 'CPN_ASR_MEX') {
+                                                                label = 'ASR(Mexico)';
+                                                            } else if (ctx.field === 'CPN_ASR_OTHER') {
+                                                                label = 'ASR(Other)';
                                                             } else if (ctx.field === 'CUPONS_MEX') {
                                                                 label = 'BSP(Mexico)';
                                                             } else if (ctx.field === 'CUPONS_OTHER') {
@@ -3811,7 +3842,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridCountrys',
-                                            width: 292,
+                                            width: 352,
                                             height: 340,
                                             columnLines: true,
                                             margin: "5 0 0 0",
@@ -3858,6 +3889,17 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'Perc1', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right";
+                                                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '%</b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCountrys').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '<b>' + '100%' + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -4013,6 +4055,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             id: prototype.id + '-displaySAChart19',
                                             width: 1500,
                                             border: false,
+                                            hidden:true,
                                             height: 350,
                                             background: '#E0F8F7',
                                             captions: {
@@ -4033,7 +4076,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     type: 'numeric3d',
                                                     position: 'left',
 //                                                    fields: ['CUPONS_ARC', 'CUPONS_ASR', 'CUPONS_MEX', 'CUPONS_OTHER'],
-                                                    fields: ['AMOUNT_ON', 'AMOUNT_OFF'],
+                                                    fields: ['AMOUNT_ON', 'AMOUNT_OFF',],
                                                     grid: true,
                                                     title: '',
                                                     //title: 'Millions of USD',

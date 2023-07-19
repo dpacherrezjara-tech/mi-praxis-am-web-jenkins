@@ -114,6 +114,8 @@ public class DashboardFilter {
     public Double CUPONS_ON_PERCENT = 0d;
     public long CUPONS_MEX = 0;
     public long CUPONS_OTHER = 0;
+    public long CPN_ASR_MEX = 0;
+    public long CPN_ASR_OTHER = 0;
     public long CUPONS_ASR = 0;
     public long CUPONS_ARC = 0;
     public long CUPONS_BSP = 0;
