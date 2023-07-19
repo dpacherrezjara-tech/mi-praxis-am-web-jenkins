@@ -13,14 +13,19 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.beans.SQP00796Filter;
+import java.util.Map;
 import net.miatech.beans.SQP00801Filter;
 import net.miatech.beans.SQP00802Filter;
 import net.miatech.beans.SQP00804Filter;
-import net.miatech.beans.SQP00806Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.SQP04749Filter;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  *
@@ -116,6 +121,7 @@ public class InvoiceCommissionConsortiaDAO {
                 objRtn.A2444IVA16 = rs01.getDouble("A2444IVA16");
                 //New
                 objRtn.A2447COD = rs01.getString("A2447COD");
+                objRtn.A2447CHARG = rs01.getDouble("A2447CHARG");
                 objRtn.A2447COMBA = rs01.getDouble("A2447COMBA");
                 objRtn.A2447IVACB = rs01.getDouble("A2447IVACB");
                 /*objRtn.A2447COD2 = rs01.getString("A2447COD2");
@@ -349,4 +355,30 @@ public class InvoiceCommissionConsortiaDAO {
         return mensaje;
    }
    
+    public List<SQP04749Filter> getSQP04749Filter(SQP04749Filter filter)throws Exception{
+        Connection con = null;
+        List<SQP04749Filter> lstObj = new ArrayList<>();
+        try {
+            con = session.getCNXIBMDB2().getIBMDB2Connection();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(con,false));
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withSchemaName("PRAXIS")
+                    .withProcedureName("SQP04749")
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04749Filter.class));
+            MapSqlParameterSource src = new MapSqlParameterSource();
+            src.addValue("IN_CCUST", filter.getIN_CCUST());
+            src.addValue("IN_LOTE", filter.getIN_LOTE());
+            src.addValue("IN_IATA", filter.getIN_AGENT());
+            src.addValue("IN_RFIS", filter.getIN_RFIS());
+            Map<String,Object> obj = jdbcCall.execute(src);
+            lstObj = (List<SQP04749Filter>) obj.get("result");
+        } catch (Exception e) {
+            System.out.println("Error en SQL: " + e.getMessage());
+        } finally {
+            session.getCNXIBMDB2().closeIBMDB2Connection(con);
+            pasarGarbageCollector();
+        }
+        return lstObj;
+        
+    }
 }

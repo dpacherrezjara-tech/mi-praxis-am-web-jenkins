@@ -14,6 +14,7 @@ import net.miatech.beans.SQP00802Filter;
 import net.miatech.beans.SQP00804Filter;
 import net.miatech.beans.SQP00806Filter;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.SQP04749Filter;
 import net.miatech.praxis.dao.sales.InvoiceCommissionConsortiaDAO;
 import net.miatech.praxis.dao.sales.PercentCommissionDAO;
 
@@ -48,5 +49,9 @@ public class InvoiceCommissionConsortiaLogic {
     
     public String subirExcel(ArrayList<SQP00802Filter> filter, String nameFile) throws SQLException, Exception {
         return invoiceCommissionConsortiaDAO.subirExcel(filter, nameFile);
+    }
+    
+    public List<SQP04749Filter> getSQP04749Filter(SQP04749Filter filter) throws Exception{
+        return invoiceCommissionConsortiaDAO.getSQP04749Filter(filter);
     }
 }

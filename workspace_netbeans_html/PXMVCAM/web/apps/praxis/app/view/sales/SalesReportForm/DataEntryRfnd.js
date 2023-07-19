@@ -473,7 +473,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                         }
                                                     ]
                                                 },
-                                                // </editor-fold
+                                                // </editor-fold>
 
                                                 // <editor-fold defaultstate="collapsed" desc="Panel 2">
                                                 {
@@ -715,7 +715,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                                                 }
                                                                             ]
                                                                         },
-                                                                        // </editor-fold
+                                                                        // </editor-fold>
                                                                         //PANEL 2_1 Reference
                                                                         // <editor-fold defaultstate="collapsed" desc="Reference">
                                                                         {

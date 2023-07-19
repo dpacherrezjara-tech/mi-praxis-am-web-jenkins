@@ -667,6 +667,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
         var bean = {};
         bean.TDNR = Ext.getCmp(prototype.idSale + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = meDET.ORIG;//Ext.getCmp(prototype.idSale + '-det-lblSource').getValue().trim().substr(0, 3);
+        bean.SEQTKT = this.view.params.rec.data.A720SEQ;
+        bean.IDFILE = Ext.getCmp(prototype.idSale + '-det-lblFileId').getValue().trim();
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
             bean.A720TKVOID = '';//this.gloA720TKVOID;
             this.searchDelivery(bean);
