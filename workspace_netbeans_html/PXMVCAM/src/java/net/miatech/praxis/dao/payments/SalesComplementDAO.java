@@ -64,11 +64,11 @@ public class SalesComplementDAO implements SalesComplementLogic {
         List<A4453Filter> response = (List<A4453Filter>) obj.get("result");
         for (A4453Filter bean : response) {
             //descSTVAL
-            if (bean.getSTVAL().equals("")) {
+            if (bean.getSTVAL().trim().equals("")) {
                 bean.setDescSTVAL("Pending");
-            } else if (bean.getSTVAL().equals("1")) {
+            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().trim().equals("")) {
                 bean.setDescSTVAL("Match");
-            } else if (bean.getSTVAL().equals("2")) {
+            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().equals("2")) {
                 bean.setDescSTVAL("Accounted");
             }
             //descFAMEXCHG
@@ -101,17 +101,17 @@ public class SalesComplementDAO implements SalesComplementLogic {
         List<A4454Filter> response = (List<A4454Filter>) obj.get("result");
         for (A4454Filter bean : response) {
             //descSTCON
-            if (bean.getSTVAL().equals("")) {
-                bean.setDescSTCON("Pending");
-            } else if (bean.getSTVAL().equals("1")) {
-                bean.setDescSTCON("Match");
-            } else if (bean.getSTVAL().equals("2")) {
-                bean.setDescSTCON("Accounted");
+            if (bean.getSTVAL().trim().equals("")) {
+                bean.setDescSTVAL("Pending");
+            } else if (bean.getSTVAL().equals("1")&& bean.getSTCON().trim().equals("")) {
+                bean.setDescSTVAL("Match");
+            } else if (bean.getSTVAL().equals("1")&& bean.getSTCON().equals("2")) {
+                bean.setDescSTVAL("Accounted");
             }
             //descFAMEX
             if (bean.getFAMEX().trim().equals("")) {
                 bean.setDescFAMEX("Pending");
-            } else if (bean.getFAMEX().equals("1")) {
+            } else if (bean.getFAMEX().equals("2")) {
                 bean.setDescFAMEX("Match");
             }
         }
@@ -133,17 +133,17 @@ public class SalesComplementDAO implements SalesComplementLogic {
         List<A4454Filter> response = (List<A4454Filter>) obj.get("result");
         for (A4454Filter bean : response) {
             //descSTCON
-            if (bean.getSTVAL().equals("")) {
-                bean.setDescSTCON("Pending");
-            } else if (bean.getSTVAL().equals("1")) {
-                bean.setDescSTCON("Match");
-            } else if (bean.getSTVAL().equals("2")) {
-                bean.setDescSTCON("Accounted");
+            if (bean.getSTVAL().trim().equals("")) {
+                bean.setDescSTVAL("Pending");
+            } else if (bean.getSTVAL().equals("1")&& bean.getSTCON().trim().equals("")) {
+                bean.setDescSTVAL("Match");
+            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().equals("2")) {
+                bean.setDescSTVAL("Accounted");
             }
             //descFAMEX
             if (bean.getFAMEX().trim().equals("")) {
                 bean.setDescFAMEX("Pending");
-            } else if (bean.getFAMEX().equals("1")) {
+            } else if (bean.getFAMEX().equals("3")) {
                 bean.setDescFAMEX("Match");
             }
         }
