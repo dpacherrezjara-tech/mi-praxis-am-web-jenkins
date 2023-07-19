@@ -23,6 +23,7 @@ prototype.idRftxTAX = 'SalesReportFormRftxTAX';
 prototype.idRftxFareCalc = 'SalesReportFormRftxFareCalc';
 prototype.idVoidFOP = 'SalesReportFormFopVoid';
 prototype.url = CONTEXTPATH + '/SalesReport';
+prototype.idVoidFOP = 'SalesReportFormFopVoid';
 
 Ext.define('Ext.Praxis.view.sales.SalesReportForm.SalesReportForm', {
     extend: 'Ext.form.Panel',
