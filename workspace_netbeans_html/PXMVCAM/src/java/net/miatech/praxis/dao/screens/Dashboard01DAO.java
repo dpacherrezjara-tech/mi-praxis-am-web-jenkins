@@ -898,7 +898,7 @@ public class Dashboard01DAO {
                         bean.totAVG2 = (bean.TOTAL_CUPONS > 0) ? bean.TOTAL_AMOUNT / bean.TOTAL_CUPONS : 0;
 
                         //Porcentajes Generales
-                        bean.Perc3 = (bean.TOTAL_AMOUNT > 0) ? (bean.AMOUNT * 100) / bean.TOTAL_AMOUNT : 0;
+                        bean.Perc3 = (bean.TOTAL_AMOUNT > 0) ? (bean.AMOUNT * 100) / bean.TOTAL_AMOUNT : 0;  // QUEDA PENDIENTE A REVISAR EL CALCULO "% GENERAL AMOUNT"
                         //TOTALES DETALLE
                         bean.Perc4 = (bean.TOTAL_AMOUNT > 0) ? (AMOUNT * 100) / bean.TOTAL_AMOUNT : 0;
                         //AEROMEXICO

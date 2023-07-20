@@ -1341,7 +1341,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridAlliances',
-                                    width: 664,
+                                    width: 572,
                                     height: 210,
                                     columnLines: true,
                                     margin: "5 0 0 0",
@@ -1447,20 +1447,20 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     }
                                                 ]
                                             },
-                                            {
-                                                text: '% General<br>Amount', dataIndex: 'Perc3', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return '<b>' + value + '</b>';
-                                                },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
-//                                                        }
-                                            },
+//                                            {
+//                                                text: '% General<br>Amount', dataIndex: 'Perc3', width: 80,
+//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    metaData.style = "text-align:right;";
+//                                                    value = Ext.util.Format.number(value, '0,000.00');
+//                                                    return '<b>' + value + '</b>';
+//                                                },
+////                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+////                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
+////                                                            console.log(data);
+////                                                            metaData.style = 'text-align:right; margin-right:3px ';
+////                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
+////                                                        }
+//                                            },
                                             {
                                                 text: 'NON REVENUE',
                                                 hidden:true,
@@ -1501,7 +1501,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-summaryAlliances',
-                                    width: 664,
+                                    width: 572,
                                     align: 'left',
                                     margin: '0 0 0 0 ',
                                     layout: {
@@ -1523,7 +1523,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         {width: 100, id: prototype.id + '-lblTotalAlAmount'},
                                         {width: 60, text: '100%'},
                                         {width: 80, id: prototype.id + '-lblTotalAlAVG'},
-                                        {width: 80, id: prototype.id + '-lblTotalPerGral'},
+//                                        {width: 80, id: prototype.id + '-lblTotalPerGral'},
 //                                        {width: 70, id: prototype.id + '-lblTotalAL_QCPNSNR'},
 //                                        {width: 70, id: prototype.id + '-lblTotalAL_AMOUNTNR'}
                                     ]
@@ -3984,7 +3984,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                     hidden: true,
                     border: true,
 //                            height: 'auto',
-                    width: 1025,
+                    width: 851,
                     margin: '0 0 0 0 ',
                     layout: {
                         type: 'vbox',
@@ -4093,6 +4093,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         }
                                     },
                                     {text: 'NON REVENUE',
+                                        hidden:true,
                                         columns: [
                                             {
                                                 text: 'Cpns', dataIndex: 'QCPNS0', width: 80, align: 'center',
@@ -4135,7 +4136,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                     hidden: true,
                     border: true,
 //                            height: 'auto',
-                    width: 920,
+                    width: 746,
                     margin: '0 0 0 0 ',
                     layout: {
                         type: 'vbox',
@@ -4241,6 +4242,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         }
                                     },
                                     {text: 'NON REVENUE',
+                                        hidden:true,
                                         columns: [
                                             {
                                                 text: 'Cpns', dataIndex: 'QCPNS0', width: 80, align: 'center',
@@ -4283,7 +4285,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                     hidden: true,
                     border: true,
 //                            height: 'auto',
-                    width: 980,
+                    width: 801,
                     margin: '0 0 0 0 ',
                     layout: {
                         type: 'vbox',
@@ -4380,6 +4382,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         }
                                     },
                                     {text: 'NON REVENUE',
+                                        hidden:true,
                                         columns: [
                                             {
                                                 text: 'Cpns', dataIndex: 'QCPNS0', width: 80, align: 'center',
