@@ -191,8 +191,14 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRftxController', {
             Ext.getCmp(prototype.idRftx + '-det-lblSeq').setValue(obj.a4373TRNSQ);
             //panel 2.1
             Ext.getCmp(prototype.idRftx + '-det-lblGroup').setValue(obj.a4373GRUPO);
-            Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(objGrupo.A1530FUENT + '-' + objGrupo.A1530PSVTA);
-            Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(objGrupo.A1530IDFIL);
+            const fuentes = {
+                'S' : 'ASR',
+                'M' : 'MAN',
+                'B' : 'BSP',
+                'A' : 'ARC'
+            };
+            Ext.getCmp(prototype.idRftx + '-det-lblSource').setValue(fuentes[obj.a4373ORIG] + '-' + obj.a4373PAIS);
+            Ext.getCmp(prototype.idRftx + '-det-lblFileId').setValue(obj.a4373IDFIL);
             Ext.getCmp(prototype.idRftx + '-det-lblIssueDate').setValue(obj.a4373FECVT);
             Ext.getCmp(prototype.idRftx + '-det-lblSaleDate').setValue(obj.a4373FTURB);
             Ext.getCmp(prototype.idRftx + '-det-lblSaleSeq').setValue(obj.a4373SEQ);
