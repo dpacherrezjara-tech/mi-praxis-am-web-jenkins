@@ -91,7 +91,8 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionFOB.LoadFileController'
                     Ext.MessageBox.alert('PRAXIS', msj, function (btn, text) {
                         if (btn === 'ok' || btn === 'cancel'){
                             if (SQLCODE==="0") {
-                                Ext.getCmp(prototype.idLoadFileFOB + '-win').close();
+                                //Ext.getCmp(prototype.idLoadFileFOB + '-win').close();
+                                me.view.close();
                             }else{
                                 Ext.create('Ext.Praxis.view.sales.InvoiceCommissionFOBForm.LoadErrorFile', {
                                     id: 'LoadErrorFileInvoiceCommissionFOBForm',
