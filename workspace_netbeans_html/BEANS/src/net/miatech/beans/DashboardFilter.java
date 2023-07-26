@@ -298,6 +298,30 @@ public class DashboardFilter {
     public int QKMS = 0;
     public int QCOMP = 0;
 
+    //By Transaction
+    public long SALETKT = 0;
+    public double SALEUSD = 0;
+    public long EXCHTKT = 0;
+    public double EXCHUSD = 0;
+    public long RFNDTKT = 0;
+    public double RFNDUSD = 0;
+    public long AADMTKT = 0;
+    public double AADMUSD = 0;
+    public long AACMTKT = 0;
+    public double AACMUSD = 0;
+    public double AMOUNT_SALES_PERCENT = 0;
+    
+    public long TOTAL_SALETKT = 0;
+    public double TOTAL_SALEUSD = 0;
+    public long TOTAL_EXCHTKT = 0;
+    public double TOTAL_EXCHUSD = 0;
+    public long TOTAL_RFNDTKT = 0;
+    public double TOTAL_RFNDUSD = 0;
+    public long TOTAL_AADMTKT = 0;
+    public double TOTAL_AADMUSD = 0;
+    public long TOTAL_AACMTKT = 0;
+    public double TOTAL_AACMUSD = 0;
+    
     //totales
     public long totQFBASE = 0;
     public long totCPN_D = 0;
