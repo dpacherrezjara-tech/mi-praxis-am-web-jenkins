@@ -113,6 +113,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateToYear_EMD').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromYear_EXP').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToYear_EXP').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateFromYear_SPA').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateToYear_SPA').bindStore(storeComboDataYear);
 
         var storeComboDataMonth = win.getStoreMonth(true);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
@@ -125,6 +127,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateToMonth_EMD').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth_EXP').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToMonth_EXP').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth_SPA').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth_SPA').bindStore(storeComboDataMonth);
 
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
@@ -151,7 +155,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 ['11', "Routing Type"],
                 ['17', "GDS"],
                 ['18', "Comparison by Years"],
-                ['19', "Comparison by Days"]
+                ['19', "Comparison by Days"],
+                ['20', "Transaction"]
             ]
         }));
         cmbSelectBy.setValue("1");
@@ -220,7 +225,72 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             ]
         }));
         cmbPeriodo.setValue("");
+        
+        var cmbBilling = Ext.getCmp(prototype.id + '-cmbBilling');
+        cmbBilling.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["02", "Fim Simplified"],
+                ["03", "Fim MPA"],
+                ["04", "RM"]
+            ]
+        }));
+        cmbBilling.setValue("");
+        
+        var cmbSource = Ext.getCmp(prototype.id + '-cmbSource');
+        cmbSource.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["01", "01"],
+                ["02", "02"],
+                ["03", "03"],
+                ["04", "04"]
+            ]
+        }));
+        cmbSource.setValue("");
 
+        var cmbDocument = Ext.getCmp(prototype.id + '-cmbDocument');
+        cmbDocument.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "Coupons"],
+                ["2", "Fim Simplified"],
+                ["3", "Fim MPA"],
+                ["4", "RM"]
+            ]
+        }));
+        cmbDocument.setValue("1");
+        
+         var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
+        cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["USD", "USD"],
+                ["EUR", "EUR"],
+                ["MXN", "MXN"],
+            ]
+        }));
+        cmbCurr.setValue("USD");
+        
+        var cmbTOP1 = Ext.getCmp(prototype.id + '-cmbTOP1');
+        cmbTOP1.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["01", "10"],
+                ["02", "20"],
+                ["03", "30"]
+            ]
+        }));
+        cmbTOP1.setValue("");
+        
         this.dataObtain.COUNTRY = 2;
         this.dataObtain.AIRLINE = 2;
         Ext.Ajax.request({
@@ -298,6 +368,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         this.setValue('cmbDateToYear_EXP', new Date().getFullYear());
         this.setValue('cmbDateFromMonth_EXP', '');
         this.setValue('cmbDateToMonth_EXP', '');
+        
+        //SPA
+        this.setValue('cmbDateFromYear_SPA', new Date().getFullYear());
+        this.setValue('cmbDateToYear_SPA', new Date().getFullYear());
+        this.setValue('cmbDateFromMonth_SPA', '');
+        this.setValue('cmbDateToMonth_SPA', '');
 
 //        this.btnSearch_click();
     },
@@ -320,6 +396,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case  prototype.id + '-ScrExpired_tab':
                 this.setValue('cmbDateToYear_EXP', this.getValue("cmbDateFromYear_EXP"));
                 break
+            case  prototype.id + '-SpaProfitability_tab':
+                this.setValue('cmbDateToYear_EXP', this.getValue("cmbDateFromYear_SPA"));
+                break    
         }
 
     },
@@ -341,6 +420,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case  prototype.id + '-ScrExpired_filter':
                 this.setValue('cmbDateToMonth_EXP', this.getValue("cmbDateFromMonth_EXP"));
                 break
+            case  prototype.id + '-SpaProfitability_filter':
+                this.setValue('cmbDateToMonth_SPA', this.getValue("cmbDateFromMonth_SPA"));
+                break    
         }
 
     },
@@ -365,7 +447,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     },
     changeTab_clickHandler: function (name_tab) {
         me.bean = {};
-        console.clear();
+//        console.clear();
         console.log(name_tab);
         
         this.hidePagination_clickHandler();
@@ -374,35 +456,53 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         me.screen_actual = name_tab;
 
         var component = Ext.getCmp(name_tab.replace('_tab', '_screen'));
+        console.log(component);
         var controller = component.getController();
 
         switch (name_tab) {
             case  prototype.id + '-SalesAnalysis_tab':
+                console.log('SALES');
                 Ext.getCmp(prototype.id + '-SalesAnalysis_filter').show();
                 controller.inicio();
                 break;
-
-            case  prototype.id + '-ScrDBIataControl_tab':
-                Ext.getCmp(prototype.id + '-SalesAnalysis_filter').show();
-                break;
-
+            
             case  prototype.id + '-FlownAnalysis_tab':
+                console.log('FLOWN');
                 Ext.getCmp(prototype.id + '-FlownAnalysis_filter').show();
                 controller.inicio();
                 break;
-
+            
             case  prototype.id + '-ScrInterline_tab':
+                console.log('INTERLINE');
                 Ext.getCmp(prototype.id + '-ScrInterline_filter').show();
                 controller.inicio();
                 break;
+                
+            case  prototype.id + '-ScrExpired_tab':
+                console.log('EXPIRED');
+                Ext.getCmp(prototype.id + '-ScrExpired_filter').show();
+                controller.inicio();
+                break;   
+            
+            case  prototype.id + '-SpaProfitability_tab':
+                console.log('SPA');
+                Ext.getCmp(prototype.id + '-SpaProfitability_filter').show();
+                this.showPagination_clickHandler();
+                controller.inicio();
+                break;
+                
+            case  prototype.id + '-ByIATA_tab':
+                console.log('IATA');
+                Ext.getCmp(prototype.id + '-SalesAnalysis_filter').show();
+                controller.inicio();
+                break;    
+                
             case  prototype.id + '-ScrEMD_tab':
+                console.log('EMD');
                 Ext.getCmp(prototype.id + '-ScrEMD_filter').show();
                 controller.inicio();
                 break;
-            case  prototype.id + '-ScrExpired_tab':
-                Ext.getCmp(prototype.id + '-ScrExpired_filter').show();
-                controller.inicio();
-                break;
+              
         }
 
     },
@@ -412,6 +512,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-ScrInterline_filter').hide();
         Ext.getCmp(prototype.id + '-ScrEMD_filter').hide();
         Ext.getCmp(prototype.id + '-ScrExpired_filter').hide();
+        Ext.getCmp(prototype.id + '-SpaProfitability_filter').hide();
     },
     imgSearch_clickHandler: function (obj, e) {
         this.changeTab_clickHandler(Ext.getCmp(prototype.id + '-tabMain').activeTab.id);
@@ -432,7 +533,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                             msg: 'Data not found'
                         });
                     }
-                    global.clear();
+//                    global.clear();
                 }
             }
         });
@@ -481,8 +582,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         } else if (tab_id === prototype.id + '-ScrExpired_tab') {
 
             component = Ext.getCmp(prototype.id + '-ScrExpired_screen');
-        }
+        } else if (tab_id === prototype.id + '-SpaProfitability_tab') {
 
+            component = Ext.getCmp(prototype.id + '-SpaProfitability_screen');
+        }
+        console.log(component);
         var controller = component.getController();
         controller.imgBack_clickHandler();
 
@@ -519,6 +623,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     hidePagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').hide();
         Ext.getCmp(prototype.id + '-lblPagination').hide();
+    },
+    showPagination_clickHandler: function () {
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        Ext.getCmp(prototype.id + '-lblPagination').show();
     },
     btnDisplay_click: function () {
         this.hidePagination_clickHandler();
@@ -629,6 +737,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-boxByFlightProfitability':
                 me.pagginActual = '-paggin_searchByFlightProfitability';
                 break;
+            case '-boxMainDataSpaProfitability':
+                me.pagginActual = '-paggin_searchSPA';
+                break;    
         }      
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">

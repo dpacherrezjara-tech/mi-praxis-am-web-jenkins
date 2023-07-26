@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     beanAllianceDet: {},
     beanAllianceDetPais: {},
     beanAllianceDetAgente: {},
+    beanSalesByTransaction: {},
     beanDetRoutingType: {},
     dataRoute_chart: [],
     dataFareType_chart: [],
@@ -40,6 +41,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     init: function (view) {
         me = this;
         mePie = this;
+        meSales = this;
+        meSales2 = this;
         meCompare = this;
 //        prototype.id = 'Dashboard01Form';
 //        prototype.url = CONTEXTPATH + '/Dashboard01';
@@ -113,7 +116,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     inicio: function () {
 //        this.hidePagination_clickHandler();
         meSales.drillDown = [];
-        console.clear();
+//        console.clear();
         console.log('1-----------------------SalesAnalysisController - INICIOOOOOOOOOOO');
         this.setFormatParameter();
 
@@ -187,6 +190,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 GROUPBY = 'COMPAREDAY';
                 this.loadCompareSaleDay();
                 break;
+            case "20"://BY TRANSACTION
+                GROUPBY = '';
+                this.loadSalesByTransaction();
+                break;    
         }
     },
     setFormatParameter: function () {
@@ -404,7 +411,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridCountryofSale').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
@@ -494,7 +501,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetailbyAgent').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridDetailbyAgentSL').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
@@ -971,7 +978,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetRouting').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetRouting').setStore(storeGridDatas);
@@ -1106,7 +1113,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailGDS').setStore(storeGridDatas);
@@ -1155,7 +1162,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetailGDSAgte').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailGDSAgte').setStore(storeGridDatas);
@@ -1206,7 +1213,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetailGDSTkt').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailGDSTkt').setStore(storeGridDatas);
@@ -1377,7 +1384,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
@@ -1419,7 +1426,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
@@ -1481,7 +1488,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-GridDetAlliances').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-GridDetAlliances').setStore(storeGridDatas);
@@ -1518,7 +1525,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-GridDetPaisAlliances').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-GridDetPaisAlliances').setStore(storeGridDatas);
@@ -1561,7 +1568,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').setStore(storeGridDatas);
@@ -1760,6 +1767,41 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             }
         });
     },
+    loadSalesByTransaction: function () {
+        win.lblUser_toolTip("Estructura: IMF084");
+
+        me.panelActual = '-boxSalesByTransaction';
+        this.showGrid('-boxSalesByTransaction');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadSalesByTransaction'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var Objtemp = obj.data.items[0].data;
+//                        var lblCountry = Ext.getCmp(prototype.id + '-titDetPaisAlliances').text;
+//                        Ext.getCmp(prototype.id + '-titDetAgenteAlliances').setText(lblCountry + ' ' + Objtemp.strDescription5);
+                    }
+                }
+            }
+        });
+//        global.clear();
+        Ext.getCmp(prototype.id + '-GridSalesByTransaction').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-GridSalesByTransaction').setStore(storeGridDatas);
+
+//        this.showPagination_clickHandler();
+//        Ext.getCmp(prototype.id + '-pagginAlliance').bindStore(storeGridDatas);
+    },
     clickDetSales_colHandler: function (param, column, e, row, column, x, rowData) {
 //        console.log(param);
 
@@ -1820,7 +1862,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                     } else {
                         global.Msg({msg: 'Data not found'});
                     }
-                    global.clear();
+//                    global.clear();
                 }
             }
         });
@@ -1876,23 +1918,48 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        console.log('imgBack_clickHandler == ' + me.drillDown);
 
     },
-    imgExcel_clickHandler: function () {
-
-        console.log('excell');
-        console.log(this.searchParams);
-//        console.log(this.paramsCountryCity.beanString);
-        me.dw_excel = true;
-        if (me.boxActual === '-boxMainData') {
-            console.log(Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-            me.goURLpost('searchTest', this.searchParams, Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-        } else if (me.boxActual === '-BoxDDTMCountryofSale') {
-            console.log(Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
-            me.goURLpost('loadDDTpMCountryofSale', this.paramsCountryCity.beanString, Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
-        } else if (me.boxActual === '-BoxGDS') {
-            console.log(Ext.getCmp(prototype.id + '-gridGDS').config.columns);
-            me.goURLpost('loadGDS', this.searchParams.beanString, Ext.getCmp(prototype.id + '-gridGDS').config.columns.items);
-        } else {
-            me.dw_excel = false;
+    imgExcel_clickHandler: function (obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
+    },
+//    exportExcel: function () {
+//
+//        console.log('excell');
+//        this.setFormatParameter();
+//        console.log(this.searchParams);
+//        console.log(meSales.boxActual);
+//        me.dw_excel = true;
+//        if (me.boxActual === '-boxMainData') {
+//            console.log(Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+//            me.goURLpost('searchTest', this.searchParams, Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+//        } else if (me.boxActual === '-BoxDDTMCountryofSale') {
+//            console.log(Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
+//            me.goURLpost('loadDDTpMCountryofSale', this.paramsCountryCity.beanString, Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
+//        } else if (me.boxActual === '-BoxGDS') {
+//            console.log(Ext.getCmp(prototype.id + '-gridGDS').config.columns);
+//            me.goURLpost('loadGDS', this.searchParams.beanString, Ext.getCmp(prototype.id + '-gridGDS').config.columns.items);
+//        } else if (meSales.boxActual === '-boxSalesByTransaction') {
+//            console.log(Ext.getCmp(prototype.id + '-GridSalesByTransaction').config.columns);
+//            meSales2.goURLpost('loadSalesByTransaction',searchParams.beanString, Ext.getCmp(prototype.id + '-GridSalesByTransaction').config.columns.items);
+//        } else {
+//            me.dw_excel = false;
+//        }
+//    },
+    exportExcel: function() {
+        this.setFormatParameter();        
+        if (Ext.getCmp(prototype.id+'-boxSalesByTransaction').isVisible()) {
+            global.getFile(prototype.url + '/getXLSXSalesByTransaction?beanString=' + meFChart.searchParams);
         }
     },
     goURLpost: function (method, parms, columns) {
