@@ -50,6 +50,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.Info', {
                             {text: 'Supplier', width: 250, dataIndex: 'A1806PROVE'},
                             {text: 'Supplier Nbr.', width: 100, dataIndex: 'A1806NUM'},
                             {text: 'Subsidiary', width: 100, dataIndex: 'A1806REFE'},
+                            {text: 'Currency', width: 100, dataIndex: 'A1806MONED'},
                             {text: 'Company', width: 80, dataIndex: 'A1806CIA'},
                             {text: 'Unit', width: 80, dataIndex: 'A1806UNIDA'},
                             {text: 'C. Cost', width: 80, dataIndex: 'A1806CENCO',

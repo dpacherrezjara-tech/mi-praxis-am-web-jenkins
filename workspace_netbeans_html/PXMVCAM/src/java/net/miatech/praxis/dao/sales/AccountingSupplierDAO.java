@@ -61,7 +61,8 @@ public class AccountingSupplierDAO {
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX155S01A1806(?,?,?,?,?,?,?)}";
+            //String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX155S01A1806(?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL LIBSAP50" + ".PX155S01A1806(?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
@@ -120,6 +121,7 @@ public class AccountingSupplierDAO {
                 objRtn.A1806NUM = rs01.getString("A1806NUM");
                 objRtn.A1806REFE = rs01.getString("A1806REFE");
                 objRtn.A1806CIA = rs01.getString("A1806CIA");
+                objRtn.A1806MONED = rs01.getString("A1806MONED");
                 objRtn.A1806UNIDA = rs01.getString("A1806UNIDA");
                 objRtn.A1806CENCO = rs01.getString("A1806CENCO");
                 objRtn.A1806UBICA = rs01.getString("A1806UBICA");
@@ -173,7 +175,8 @@ public class AccountingSupplierDAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX155S07A1806(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
+            //strSQL = "{CALL " + session.getMainLibrary() + ".PX155S07A1806(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL LIBSAP50" + ".PX155S07A1806(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);   
             cs.setString(1, strOption);
             cs.setString(2, filter.A1806CCUST);
@@ -183,7 +186,7 @@ public class AccountingSupplierDAO {
             cs.setString(6, filter.A1806REFE);
             cs.setString(7, filter.A1806CIA);
             cs.setString(8, filter.A1806UNIDA);
-            
+            cs.setString(8, filter.A1806MONED);
             cs.setString(9, filter.A1806CENCO);
             cs.setString(10, filter.A1806UBICA);
             cs.setString(11, filter.A1806CUENT);
@@ -198,6 +201,7 @@ public class AccountingSupplierDAO {
             cs.setString(19, Functions.getHoraActual());
             cs.setString(20, filter.IN_A1806TIPOC_OLD);
             cs.setString(21, filter.IN_A1806NUM_OLD);
+            cs.setString(21, filter.IN_A1806MONED_OLD);
             cs.execute();
             
             rst = cs.getResultSet();
