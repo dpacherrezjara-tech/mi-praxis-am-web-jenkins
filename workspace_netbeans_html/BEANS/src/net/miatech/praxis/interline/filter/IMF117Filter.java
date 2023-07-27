@@ -63,6 +63,22 @@ public class IMF117Filter extends IMF117 {
     public long totPerQCPNST  = 0;
     public double totPperVALORTAX = 0;
     
+    //IATA
+    public String IN_ANIO_FROM = "";
+    public String IN_ANIO_TO = "";
+    public String IN_TIPO = "";
+    public String YEAR = "";
+    public String CODE = "";
+    public String COUNTRY = "";
+    public double SALES = 0;
+    public double NOSALES = 0;
+    public double ALLSALES = 0;
+    public double EFFECTIVITY = 0;
+    public double AMOUNT = 0;
+    public double TOTAL_SALES = 0;
+    public double TOTAL_NOSALES = 0;
+    public double TOTAL_ALLSALES = 0;
+    public double TOTAL_AMOUNT = 0;
     
      public Pagination page = new Pagination();
 }

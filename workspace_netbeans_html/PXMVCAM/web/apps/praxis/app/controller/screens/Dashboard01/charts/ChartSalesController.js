@@ -272,19 +272,30 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                             var amount = 0;
 
                             me.lstTotales = res.lstTotales;
+                            var listaTotalesC = Ext.clone(res.lstTotales);
+                            
+                            for (var i = 0; i < listaTotalesC.length; i++) {
+                                listaTotalesC[i].totQKMS = 100;
+                                var label = listaTotalesC[i].TYPE;
+                                if (label === 'SALE') {
+                                    label = 'SALES';
+                                }
+                                listaTotalesC[i].VENDOR = label + ', ' + Ext.util.Format.number(listaTotalesC[i].Perc2, '0,000') + '%';
+
+                            }
+                            
                             for (var i = 0; i < me.lstTotales.length; i++) {
                                 me.lstTotales[i].totQKMS = 100;
                                 var label = me.lstTotales[i].TYPE;
                                 if (label === 'SALE') {
                                     label = 'SALES';
                                 }
-                                me.lstTotales[i].VENDOR = label + ', ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
-
+                                me.lstTotales[i].VENDOR = label + ', ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000') + '%';
 
                                 // ------------------------------------------------------------------------------------------------------
                                 item_t = me.lstTotales[i];
 
-                                var value = parseFloat(Ext.util.Format.number(item_t.Perc2, '0,000.00'));
+                                var value = parseFloat(Ext.util.Format.number(item_t.Perc2, '0,000'));
                                 if (value > 5) {
                                     lstTot_Temp.push(item_t);
                                 } else {
@@ -293,7 +304,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                                 }
                                 item_t = {};
                             }
-
+                            
                             for (var j = 0; j < lstTot_Temp.length; j++) {
 
                                 item_pie = lstTot_Temp[j];
@@ -304,11 +315,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
 
                                     if (j == lstTot_Temp.length - 1) {
                                         item_pie.Perc2 = amount;
-                                        item_pie.VENDOR = lstTot_Temp[j].TYPE + ', ' + Ext.util.Format.number(amount, '0,000.00') + '%';
+                                        item_pie.VENDOR = lstTot_Temp[j].TYPE + ', ' + Ext.util.Format.number(amount, '0,000') + '%';
                                         lstTot_pie.push(item_pie);
                                     }
                                 } else {
-                                    item_pie.VENDOR = item_pie.TYPE + ', ' + Ext.util.Format.number(item_pie.Perc2, '0,000.00') + '%';
+                                    item_pie.VENDOR = item_pie.TYPE + ', ' + Ext.util.Format.number(item_pie.Perc2, '0,000') + '%';
                                     lstTot_pie.push(item_pie);
                                 }
 
@@ -381,7 +392,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                             });
 
                             var storeDataTotales = Ext.create('Ext.data.Store', {
-                                data: me.lstTotales,
+                                data: listaTotalesC,
                                 autoLoad: true
                             });
                             var storeDataPivot = Ext.create('Ext.data.Store', {

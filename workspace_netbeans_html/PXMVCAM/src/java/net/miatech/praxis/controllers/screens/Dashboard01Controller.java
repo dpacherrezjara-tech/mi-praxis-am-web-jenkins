@@ -44,6 +44,7 @@ import net.miatech.libcust.A005wr;
 import net.miatech.libcust.A051wr;
 import net.miatech.praxis.A005;
 import net.miatech.praxis.A051;
+import net.miatech.praxis.classes.ExportUtil;
 import net.miatech.praxis.controllers.flown.AccountingCalendarController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.flown.A1790;
@@ -917,6 +918,402 @@ public class Dashboard01Controller extends BaseController {
         return new Gson().toJson(map);
     }
 
+//    @RequestMapping(value = "loadSalesByTransaction")
+//    public @ResponseBody
+//    String loadSalesByTransaction(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+//        List<DashboardFilter> lstData;
+//        DashboardFilter filter = new DashboardFilter();
+//        try {
+//            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+//            String beanString = request.getParameter("beanString");
+//            filter = new Gson().fromJson(beanString, filter.getClass());
+//
+//            /*paginacion*/
+//            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+//            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
+//            filter.page.TOTPAG = -1;
+//            filter.page.TOTROW = -1;
+//            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+//                filter.page.PAGROW = -1;
+//                filter.page.PAGNUM = 1;
+//            } else {
+//                filter.page.PAGROW = limit;
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            }
+//            /*paginacion*/
+//
+//            logic = new Dashboard01Logic();
+//            logic.setSession(this.serverSession.getServerSession());
+//            lstData = logic.loadPX109SQP04921(filter);
+//
+//            map.put("success", true);
+//
+//            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+////                String nameExcel = ExportUtil.exportFields(request, response, lstData);
+//                String nameExcel = exportFieldsCompleto(request, response, lstData);
+//                
+//                map.put("nameExcel", nameExcel);
+//            } else {
+//                map.put("data", lstData);
+//                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
+//            }
+//
+//        } catch (SQLException e) {
+//            map.put("success", false);
+//            map.put("sesion", SESSION_CONTROL);
+//            throw new SpringException(e);
+//        } catch (Exception e) {
+//            map.put("success", false);
+//            map.put("sesion", SESSION_CONTROL);
+//            throw new SpringException(e);
+//        }
+//        return new Gson().toJson(map);
+//    }
+    
+    @RequestMapping(value = "loadSalesByTransaction")
+    public @ResponseBody
+    String loadSalesByTransaction(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : loadSalesByTransaction-------------");
+
+        map.put("success", true);
+        List<DashboardFilter> lst = this.getListSalesByTransaction(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+    
+    public List<DashboardFilter> getListSalesByTransaction(HttpServletRequest request, Boolean bExcel) {
+
+        List<DashboardFilter> lst = new ArrayList<>(0);
+        DashboardFilter filter = new DashboardFilter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX109SQP04921(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "getXLSXSalesByTransaction")
+    public @ResponseBody
+    void getXLSXSalesByTransaction(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Dashboard01  : getXLSXSalesByTransaction");
+
+        String fileNameDownload = String.format("Sales By Transaction - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<DashboardFilter> listaData = this.getListSalesByTransaction(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyleSALE = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyleEXCH = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyleRFND = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyleAADM = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyleAACM = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
+            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
+            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFont(headerFont);
+            totalStyleSALE.setFillForegroundColor(new XSSFColor(new java.awt.Color(213, 244, 213)));
+            totalStyleSALE.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyleEXCH.setFillForegroundColor(new XSSFColor(new java.awt.Color(213, 240, 244)));
+            totalStyleEXCH.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyleRFND.setFillForegroundColor(new XSSFColor(new java.awt.Color(244, 213, 213)));
+            totalStyleRFND.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyleAADM.setFillForegroundColor(new XSSFColor(new java.awt.Color(241, 244, 213)));
+            totalStyleAADM.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyleAACM.setFillForegroundColor(new XSSFColor(new java.awt.Color(225, 213, 245)));
+            totalStyleAACM.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0;
+            Iterator iter = listaData.iterator();
+            // ====== CREANDO TITULOS ======================================
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+            Cell CH1_6 = row1.createCell(6);
+            Cell CH1_7 = row1.createCell(7);
+            Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
+
+            CH1_0.setCellValue("Sales");
+            CH1_1.setCellValue("Total SALES");
+            CH1_2.setCellValue("");
+            CH1_3.setCellValue("");
+            CH1_4.setCellValue("Total EXCH");
+            CH1_5.setCellValue("");
+            CH1_6.setCellValue("Total RFND");
+            CH1_7.setCellValue("");
+            CH1_8.setCellValue("Total ADM");
+            CH1_9.setCellValue("");
+            CH1_10.setCellValue("Total ACM");
+            CH1_11.setCellValue("");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+            CH1_6.setCellStyle(headerStyle);
+            CH1_7.setCellStyle(headerStyle);
+            CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 11));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+            Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("Tickets");
+            CH2_2.setCellValue("USD");
+            CH2_3.setCellValue("%");
+            CH2_4.setCellValue("Tickets");
+            CH2_5.setCellValue("USD");
+            CH2_6.setCellValue("Tickets");
+            CH2_7.setCellValue("USD");
+            CH2_8.setCellValue("Tickets");
+            CH2_9.setCellValue("USD");
+            CH2_10.setCellValue("Tickets");
+            CH2_11.setCellValue("USD");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+            CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 11, 11));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+                Cell rcell6 = row1.createCell(6);
+                Cell rcell7 = row1.createCell(7);
+                Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
+
+                rcell0.setCellValue(listaData.get(vi).strFormatDate);
+                rcell1.setCellValue(listaData.get(vi).SALETKT);
+                rcell2.setCellValue(listaData.get(vi).SALEUSD);
+                rcell3.setCellValue(listaData.get(vi).AMOUNT_SALES_PERCENT);
+                rcell4.setCellValue(listaData.get(vi).EXCHTKT);
+                rcell5.setCellValue(listaData.get(vi).EXCHUSD);
+                rcell6.setCellValue(listaData.get(vi).RFNDTKT);
+                rcell7.setCellValue(listaData.get(vi).RFNDUSD);
+                rcell8.setCellValue(listaData.get(vi).AADMTKT);
+                rcell9.setCellValue(listaData.get(vi).AADMUSD);
+                rcell10.setCellValue(listaData.get(vi).AACMTKT);
+                rcell11.setCellValue(listaData.get(vi).AACMUSD);
+//                if (listaData.get(vi).CERROR.equals("01")) {
+//                    rcell3.setCellStyle(bodyStyle);
+//                }
+
+                rcell1.setCellStyle(totalStyleSALE);
+                rcell2.setCellStyle(totalStyleSALE);
+                rcell3.setCellStyle(totalStyleSALE);
+                rcell4.setCellStyle(totalStyleEXCH);
+                rcell5.setCellStyle(totalStyleEXCH);
+                rcell6.setCellStyle(totalStyleRFND);
+                rcell7.setCellStyle(totalStyleRFND);
+                rcell8.setCellStyle(totalStyleAADM);
+                rcell9.setCellStyle(totalStyleAADM);
+                rcell10.setCellStyle(totalStyleAACM);
+                rcell11.setCellStyle(totalStyleAACM);
+    
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            Row rowTotal = sheet.createRow(vj);
+            Cell CH1_0_T = rowTotal.createCell(0);
+            Cell CH1_1_T = rowTotal.createCell(1);
+            Cell CH1_2_T = rowTotal.createCell(2);
+            Cell CH1_3_T = rowTotal.createCell(3);
+            Cell CH1_4_T = rowTotal.createCell(4);
+            Cell CH1_5_T = rowTotal.createCell(5);
+            Cell CH1_6_T = rowTotal.createCell(6);
+            Cell CH1_7_T = rowTotal.createCell(7);
+            Cell CH1_8_T = rowTotal.createCell(8);
+            Cell CH1_9_T = rowTotal.createCell(9);
+            Cell CH1_10_T = rowTotal.createCell(10);
+            Cell CH1_11_T = rowTotal.createCell(11);
+
+            CH1_0_T.setCellValue("Totales");
+            CH1_1_T.setCellValue(listaData.get(0).SALETKT);
+            CH1_2_T.setCellValue(listaData.get(0).SALEUSD);
+            CH1_3_T.setCellValue("100%");
+            CH1_4_T.setCellValue(listaData.get(0).EXCHTKT);
+            CH1_5_T.setCellValue(listaData.get(0).EXCHUSD);
+            CH1_6_T.setCellValue(listaData.get(0).RFNDTKT);
+            CH1_7_T.setCellValue(listaData.get(0).RFNDUSD);
+            CH1_8_T.setCellValue(listaData.get(0).AADMTKT);
+            CH1_9_T.setCellValue(listaData.get(0).AADMUSD);
+            CH1_10_T.setCellValue(listaData.get(0).AACMTKT);
+            CH1_11_T.setCellValue(listaData.get(0).AACMUSD);
+
+            CH1_0_T.setCellStyle(totalStyle);
+            CH1_1_T.setCellStyle(totalStyle);
+            CH1_2_T.setCellStyle(totalStyle);
+            CH1_3_T.setCellStyle(totalStyle);
+            CH1_4_T.setCellStyle(totalStyle);
+            CH1_5_T.setCellStyle(totalStyle);
+            CH1_6_T.setCellStyle(totalStyle);
+            CH1_7_T.setCellStyle(totalStyle);
+            CH1_8_T.setCellStyle(totalStyle);
+            CH1_9_T.setCellStyle(totalStyle);
+            CH1_10_T.setCellStyle(totalStyle);
+            CH1_11_T.setCellStyle(totalStyle);
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
     //******************** Routing Type *******************************************
     @RequestMapping(value = "loadTypeRoute")
     public @ResponseBody
@@ -2158,9 +2555,9 @@ public class Dashboard01Controller extends BaseController {
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
+        int Columnas = 0;
         int nivel = 0;//Fila 0
-
+        
         int q_lvl1 = -1;
         int q_lvl2 = -1;
         int q_lvl3 = -1;
@@ -2370,7 +2767,7 @@ public class Dashboard01Controller extends BaseController {
             if (obj.colFrom == obj.colTo && !obj.dataIndex.trim().equals("")) {
                 System.out.println("*************************** " + obj.colFrom + " " + obj.colTo + " == " + obj.dataIndex);
             }
-
+            Columnas = obj.colFrom;
         }
 
 //        Class clasePrincipal;
@@ -2448,6 +2845,7 @@ public class Dashboard01Controller extends BaseController {
                                 break;
                         }
                         celda.setCellStyle(rowStyle);
+                        
 //                        String valor = String.valueOf(f.get(ob));
 //                        celda.setCellValue(valor);
 
@@ -2459,8 +2857,12 @@ public class Dashboard01Controller extends BaseController {
                     j++;
                 }
             }
+            
         }
-
+        for(int x=0;x< Columnas;x++){
+            pagina.autoSizeColumn(x, true);
+        }
+        
         // Ahora guardaremos el archivo
         try {
 //            // Creamos el flujo de salida de datos,
@@ -2939,6 +3341,551 @@ public class Dashboard01Controller extends BaseController {
     }
     
     
+    /**
+     * *************************************************************************
+     * ************************* SPA PROFITABILITY
+     * *****************************
+     * 
+     * *************************************************************************
+     * *************************************************************************
+     */
+    
+    @RequestMapping(value = "search_SPA")
+    public @ResponseBody
+    String search_SPA(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : search_SPA-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearch_SPA(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearch_SPA(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241S01_D(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchTAGSPA")
+    public @ResponseBody
+    String searchTAGSPA(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchTAGSPA-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchTAGSPA(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchTAGSPA(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241SQP01404(filter);
+            lstData = logic.loadPX241SQP01398(filter, "N");
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchDetTAGSPA")
+    public @ResponseBody
+    String searchDetTAGSPA(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetTAGSPA-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetTAGSPA(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetTAGSPA(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241SQP01493(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchDetail_SPA")
+    public @ResponseBody
+    String searchDetail_SPA(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPA-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetail_SPA(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetail_SPA(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241S02_D(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchDetail_SPANA")
+    public @ResponseBody
+    String searchDetail_SPANA(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANA-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetail_SPANA(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetail_SPANA(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241SQP01253(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchDetail_SPANA_2")
+    public @ResponseBody
+    String searchDetail_SPANA_2(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANA_2-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetail_SPANA_2(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetail_SPANA_2(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241SQP01254(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchTKT")
+    public @ResponseBody
+    String searchTKT(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANA_2-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchTKT(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchTKT(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241S09_D(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchViewGlobal")
+    public @ResponseBody
+    String searchViewGlobal(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANA_2-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchViewGlobal(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchViewGlobal(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+//            lst = logic.(filter);  //ESTA NO VA, SOLO LAS DE ABAJO
+//            lstData1 = logic.loadPX241S03_D(filter);
+//            lstData2 = logic.loadPX241S04_D(filter);
+//            lstData3 = logic.loadPX241S05_D(filter);
+//            lstData4 = logic.loadPX241S06_D(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    
+    @RequestMapping(value = "searchDetailViewGlobal")
+    public @ResponseBody
+    String searchDetailViewGlobal(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANA_2-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetailViewGlobal(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetailViewGlobal(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241S07_D(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchDetailViewGlobal2")
+    public @ResponseBody
+    String searchDetailViewGlobal2(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANA_2-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetailViewGlobal2(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetailViewGlobal2(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241S08_D(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+
     // ***********************************************************************
     // ************************ DRILLDOWN ALL*********************************
     // ***********************************************************************
@@ -3810,6 +4757,64 @@ public class Dashboard01Controller extends BaseController {
         }
     }
     
+    
+    
+    // =========================================================================
+    // ========================== SALES BY IATA ================================
+    // =========================================================================
+    
+    @RequestMapping(value = "searchIATA")
+    public @ResponseBody
+    String searchIATA(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchIATA-------------");
+
+        map.put("success", true);
+        List<IMF117Filter> lst = this.getListIATA(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<IMF117Filter> getListIATA(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF117Filter> lst = new ArrayList<>(0);
+        IMF117Filter filter = new IMF117Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF117Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.SQP02271(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
 //    @RequestMapping(value = "getXLSXByMonth")
 //    public @ResponseBody
 //    void getXLSXByMonth(HttpServletRequest request, HttpServletResponse response) {
@@ -4144,4 +5149,5 @@ public class Dashboard01Controller extends BaseController {
 //            throw new SpringException(e);
 //        }
 //    }
+    
 }
