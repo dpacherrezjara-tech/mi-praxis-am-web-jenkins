@@ -188,11 +188,17 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         let params = {
             KEY1: 'SR'
         };
+        const data = await me.httpGet({url: reqUrl, params: params});
+        //console.log(data);
+        
         const fillComboBox = async ({tipo,id}) => {
-            params.KEY2 = tipo;
-            const data = await me.httpGet({url: reqUrl, params: params});
+            //params.KEY2 = tipo;
+            //const data = await me.httpGet({url: reqUrl, params: params});
             const cmb = Ext.getCmp(prototype.id + id);
-            cmb.bindStore(me.createArrayStore({data: data.lst}));
+            const store = data.lst.filter(x=>x.a4451key2.trim()===tipo);
+            //console.log(store);
+            cmb.bindStore(me.createArrayStore({data: store}));
+            cmb.setValue('');
             return {combo:cmb};
             //cmb.setValue("");
         };
@@ -235,28 +241,22 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             await me.obtainGetCountries();
         };
 
+        fillComboBox({tipo:'CMBPROC',id:'-cmbProT'});
+        fillComboBox({tipo:'CMBSTS',id:'-cmbSTVAL'});
+        fillComboBox({tipo:'CMBSTSER',id:'-cmbSTVALErr'});
+        fillComboBox({tipo:'CMBMDA',id:'-cmbCurr'});
+        fillComboBox({tipo:'CMBSTSCP',id:'-cmbSTVALCP'});
+        fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOC'});
+        fillComboBox({tipo:'CMBTDOC',id:'-cmbSummTDOC'});
+        fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOCCP'});
+        fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOCError'});
+        //fillComboBox({tipo:'CMBRECT',id:'-cmbRecType'});
+        fillComboBox({tipo:'CMBCOMPL',id:'-cmbComplement'});
         await Promise.allSettled([
-            fillComboBox({tipo:'CMBPROC',id:'-cmbProT'}),
-            fillComboBox({tipo:'CMBSTS',id:'-cmbSTVAL'}),
-            fillComboBox({tipo:'CMBSTSER',id:'-cmbSTVALErr'}),
-            fillComboBox({tipo:'CMBMDA',id:'-cmbCurr'}),
-            fillComboBox({tipo:'CMBSTSCP',id:'-cmbSTVALCP'}),
-            fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOC'}),
-            fillComboBox({tipo:'CMBTDOC',id:'-cmbSummTDOC'}),
-            fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOCCP'}),
-            fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOCError'}),
-            fillErrorCodes(),
             fillZones(),
-            //se pusieron al final por ser dependientes de los combos anteriores
-            fillComboBox({tipo:'CMBRECT',id:'-cmbRecType'}),
-            fillComboBox({tipo:'CMBCOMPL',id:'-cmbComplement'})
+            fillErrorCodes()
         ]).then(values => {
-            values.forEach(val => {
-               if(val.status === 'fulfilled'&&val.value){
-                   const cmb = val.value.combo;
-                   cmb.setValue('');
-               } 
-            });
+            me.rbChangeType();
         });
     },
     //</editor-fold>
@@ -297,7 +297,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         let lst = data.map(obj=>{
             return {
                 code:obj.a4451key3.trim(),
-                name:obj.a4451desc1
+                name:obj.a4451desc1.trimEnd()
             };
         });
         return Ext.create('Ext.data.Store', {
@@ -462,7 +462,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
-        me.bean.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
+        //me.bean.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
@@ -574,7 +574,18 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
-                if ((Ext.getCmp(prototype.id + '-cmbZONAsett').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbRecType').getValue() !== '')) {
+                //CAMBIO RECTYPE POR TDOC 20230727
+                if ((
+                        Ext.getCmp(prototype.id + '-cmbZONAsett').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '' || 
+                        Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '')) {
                     this.filterSettlement();
                 } else {
                     this.setGridDataMainSettlement();
@@ -1012,7 +1023,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanFilterSettlement.IN_SCARDN11 = Ext.getCmp(prototype.id + '-txtCC11').getValue();
         this.beanFilterSettlement.IN_SCARDN22 = Ext.getCmp(prototype.id + '-txtCC22').getValue();
         this.beanFilterSettlement.IN_AUTHS = Ext.getCmp(prototype.id + '-txtAuthS').getValue();
-        this.beanFilterSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
+        //this.beanFilterSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         this.beanFilterSettlement.IN_ZONA_SETT = Ext.getCmp(prototype.id + '-cmbZONAsett').getValue();
         this.beanFilterSettlement.IN_SCOUNTRY_SETT = Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').getValue();
         this.beanFilterSettlement.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
@@ -1104,7 +1115,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
-        this.beanSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
+        //this.beanSettlement.IN_RECTYPE = Ext.getCmp(prototype.id + '-cmbRecType').getValue();
         this.beanSettlement.IN_PROCTYPE = rowData.data.IN_PROCTYPE;
 
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
@@ -2379,9 +2390,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
         Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
 
-        Ext.getCmp(prototype.id + '-cmbRecType').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbRecType').setValue('');
-        Ext.getCmp(prototype.id + '-cmbRecType').resumeEvents();
+//        Ext.getCmp(prototype.id + '-cmbRecType').suspendEvents(false);
+//        Ext.getCmp(prototype.id + '-cmbRecType').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbRecType').resumeEvents();
     },
     btnExcel_click: function (obj, e) {
 

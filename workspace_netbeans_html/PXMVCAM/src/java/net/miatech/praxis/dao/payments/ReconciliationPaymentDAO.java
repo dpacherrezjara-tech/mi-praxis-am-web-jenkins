@@ -3951,7 +3951,7 @@ public class ReconciliationPaymentDAO {
         A4331Filter beanDet;
         A4331Filter beanObser;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04723(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04723(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3981,12 +3981,13 @@ public class ReconciliationPaymentDAO {
             cstmt01.setString(21, session.getUserView().getUserInfo().USR);
             cstmt01.setString(22, Functions.getFechaActual());
             cstmt01.setString(23, Functions.getHoraActual());
+            cstmt01.setString(24, filter.PROCTYPESQ.trim());
 
             cstmt01.execute();
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -4020,6 +4021,7 @@ public class ReconciliationPaymentDAO {
                     cstmt01.setString(26, filter.OBSERV.trim());
                     cstmt01.setString(27, filter.AREFNBR.trim());
                     cstmt01.setString(28, filter.TDOC.trim());
+                    cstmt01.setString(29, filter.PROCTYPESQ.trim());
                     if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
                     }
