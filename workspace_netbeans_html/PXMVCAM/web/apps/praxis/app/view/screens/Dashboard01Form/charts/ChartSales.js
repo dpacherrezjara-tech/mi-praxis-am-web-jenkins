@@ -395,7 +395,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridData_boxChart6_Tot',
                                             hidden: true,
-                                            width: 672,
+                                            width: 692,
                                             height: 403,
                                             columnLines: true,
                                             margin: "5 0 0 0",
@@ -445,11 +445,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'Amount <br> USD', dataIndex: 'AMOUNT', width: 90,
+                                                            {text: 'Amount <br> USD', dataIndex: 'AMOUNT', width: 110,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "background:#d5f4d5;text-align:right";
-                                                                    value = '<b>' + value + '</b>';
-                                                                    return value;
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_boxChart6').getStore().getData().items[0].data;
@@ -919,7 +918,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     {text: 'Amount', dataIndex: 'AMOUNT', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center";
-                                                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridData_boxChart2').getStore().getData().items[0].data;
@@ -1189,7 +1188,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             } else if (ctx.field === 'CUPONS_OTHER') {
                                                                 label = 'BSP(Others)';
                                                             }
-                                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                         }
                                                     }
                                                 }]

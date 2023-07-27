@@ -90,6 +90,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     loadFAMonth: function () {
         this.showGrid('-boxMainDataFA');
+        console.log(prototype.url + '/loadFAMonth');
+        console.log(prototype.url + '/loadFAMonth');
+        console.log(prototype.url + '/loadFAMonth');
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/loadFAMonth'
@@ -113,7 +116,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                         }
                     } else
                         global.Msg({msg: res.sesion});
-                    global.clear();
+//                    global.clear();
                 }
             }
         });
@@ -151,7 +154,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridSearchWK').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displayDetWKChart01').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridSearchWK').setStore(storeGridDatas);
@@ -237,7 +240,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridFlownAnalysis').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridFlownAnalysis').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -312,7 +315,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetailData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailData').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -380,7 +383,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridCoupon').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridCoupon').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -478,7 +481,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetailByCabin').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailByCabin').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -563,7 +566,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDataByZone').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByZone').setStore(storeGridDatas);
 
@@ -604,7 +607,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDataByCityPair').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByCityPair').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -639,7 +642,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').setStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
@@ -696,7 +699,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridWKperMonth').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridWKperMonth').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -737,7 +740,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByFlightProfitability').setStore(storeGridDatas);
         this.showPagination_clickHandler();
