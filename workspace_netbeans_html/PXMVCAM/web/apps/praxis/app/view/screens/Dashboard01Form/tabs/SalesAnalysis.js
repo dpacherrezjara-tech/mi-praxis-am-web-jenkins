@@ -6294,6 +6294,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                     xtype: 'panel',
                     id: prototype.id + '-boxSalesByTransaction',
                     width: '100%',
+//                    height: 750,
                     hidden: true,
                     layout: {
                         type: 'vbox',
@@ -6311,7 +6312,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                         {
                             xtype: 'panel',
                             layout: {
-                                type: 'hbox',
+                                type: 'vbox',
 //                                        align: 'center'
                             },
                             items: [
@@ -6319,7 +6320,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     xtype: 'grid',
                                     id: prototype.id + '-GridSalesByTransaction',
                                     width: 1174,
-                                    height: 400,
+                                    height: 'auto',
                                     columnLines: true,
                                     bodyStyle: 'background:#E3EAEF',
                                     margin: "10 0 0 0",
@@ -6380,12 +6381,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     {text: '%', dataIndex: 'AMOUNT_SALES_PERCENT', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#d5f4d5;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000.00')+'%';
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridSalesByTransaction').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + '100%'+ '<b>';
+                                                            return '<b>' + '100%' + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -6516,6 +6517,105 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                         ]
                                     }
+                                },
+                                {
+                                    xtype: 'panel',
+                                    width: 1174,
+                                    bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'polar',
+                                            id: prototype.id + '-donaTransactionTickets',
+                                            width: 400,
+                                            height: 310,
+                                            margin: '15 0 0 0',
+                                            border: true,
+                                            innerPadding: 20,
+                                            background: '#E3EAEF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Tickets',
+                                                    alignTo: 'chart'
+                                                },
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            series: [{
+                                                    type: 'pie',
+                                                    angleField: 'TKT',
+                                                    colors: ['#8ade8a', '#8aadde', '#de8a8a'],
+                                                    donut: 40,
+                                                    label: {
+                                                        field: 'strDescriptionTKT',
+                                                        renderer: function (value, b, callout) {
+//                                                            callout.calloutWidth = 0;
+//                                                            var texto = '';
+//                                                            texto = '' + value.substring(value.indexOf(':') + 1);
+//                                                            return texto;
+                                                        }
+                                                    },
+                                                    highlight: true,
+//                                                    tooltip: {
+//                                                        trackMouse: true,
+//                                                        height: 28,
+//                                                        renderer: function (toolTip, record, ctx) {
+//                                                            toolTip.setHtml('<b> Tickets ' + record.get('strDescription') + ' : ' + Ext.util.Format.number(record.get(ctx.field), '0,000') + ' QTY</b>');
+//                                                        },
+//                                                    },
+                                                }]
+                                        },
+                                        {
+                                            xtype: 'polar',
+                                            id: prototype.id + '-donaTransactionAmount',
+                                            width: 400,
+                                            height: 310,
+//                                            margin: '15 0 0 0',
+                                            margin: '15 0 0 374',
+                                            border: true,
+                                            innerPadding: 20,
+                                            background: '#E3EAEF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Amounts',
+                                                    alignTo: 'chart'
+                                                },
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            series: [{
+                                                    type: 'pie',
+                                                    angleField: 'USD',
+                                                    colors: ['#8ade8a', '#8aadde', '#de8a8a'],
+                                                    donut: 40,
+                                                    label: {
+                                                        field: 'strDescriptionUSD',
+                                                        renderer: function (value, b, callout) {
+//                                                            callout.calloutWidth = 0;
+//                                                            var texto = '';
+//                                                            texto = '' + value.substring(value.indexOf(':') + 1);
+//                                                            return texto;
+                                                        }
+                                                    },
+                                                    highlight: true,
+//                                                    tooltip: {
+//                                                        trackMouse: true,
+//                                                        height: 28,
+//                                                        renderer: function (toolTip, record, ctx) {
+//                                                            toolTip.setHtml('<b> Amount ' + record.get('strDescription') + ' : ' + Ext.util.Format.number(record.get(ctx.field), '0,000') + ' USD</b>');
+//                                                        },
+//                                                    },
+                                                }]
+                                        },
+                                    ]
                                 },
                             ]
                         },

@@ -1788,9 +1788,46 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                             msg: 'Data not found.'
                         });
                     } else {
-//                        var Objtemp = obj.data.items[0].data;
-//                        var lblCountry = Ext.getCmp(prototype.id + '-titDetPaisAlliances').text;
-//                        Ext.getCmp(prototype.id + '-titDetAgenteAlliances').setText(lblCountry + ' ' + Objtemp.strDescription5);
+                        var tickets = obj.data.items[0].data;
+                        var lstTickets = [];
+
+                        var objTicket1 = {};
+                        objTicket1.TKT = tickets.TOTAL_SALETKT;
+                        objTicket1.USD = tickets.TOTAL_SALEUSD;
+                        var descriptionsTKT1 = 'SALES: ' + Ext.util.Format.number(objTicket1.TKT, '0,000') + ' QTY';
+                        var descriptionsUSD1 = 'SALES: ' + Ext.util.Format.number(objTicket1.USD, '0,000') + ' USD';
+                        objTicket1.strDescription = 'SALES';
+                        objTicket1.strDescriptionTKT = descriptionsTKT1;
+                        objTicket1.strDescriptionUSD = descriptionsUSD1;
+                        lstTickets.push(objTicket1);
+                        
+                        var objTicket2 = {};
+                        objTicket2.TKT = tickets.TOTAL_EXCHTKT;
+                        objTicket2.USD = tickets.TOTAL_EXCHUSD;
+                        var descriptionsTKT2 = 'EXCH: ' + Ext.util.Format.number(objTicket2.TKT, '0,000') + ' QTY';
+                        var descriptionsUSD2 = 'EXCH: ' + Ext.util.Format.number(objTicket2.USD, '0,000') + ' USD';
+                        objTicket2.strDescription = 'EXCH';
+                        objTicket2.strDescriptionTKT = descriptionsTKT2;
+                        objTicket2.strDescriptionUSD = descriptionsUSD2;
+                        lstTickets.push(objTicket2);
+                        
+                        var objTicket3 = {};
+                        objTicket3.TKT = tickets.TOTAL_RFNDTKT;
+                        objTicket3.USD = tickets.TOTAL_RFNDUSD;
+                        var descriptionsTKT3 = 'RFND: ' + Ext.util.Format.number(objTicket3.TKT, '0,000') + ' QTY';
+                        var descriptionsUSD3 = 'RFND: ' + Ext.util.Format.number(objTicket3.USD, '0,000') + ' USD';
+                        objTicket3.strDescription = 'RFND';
+                        objTicket3.strDescriptionTKT = descriptionsTKT3;
+                        objTicket3.strDescriptionUSD = descriptionsUSD3;
+                        lstTickets.push(objTicket3);
+                        
+                        var storeGridTickets = Ext.create('Ext.data.Store', {
+                            data: lstTickets,
+                            autoLoad: true
+                        });
+
+                        Ext.getCmp(prototype.id + '-donaTransactionTickets').bindStore(storeGridTickets);
+                        Ext.getCmp(prototype.id + '-donaTransactionAmount').bindStore(storeGridTickets);
                     }
                 }
             }
