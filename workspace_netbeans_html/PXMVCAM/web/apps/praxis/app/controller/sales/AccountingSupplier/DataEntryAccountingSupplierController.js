@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
     lblA1806TIPO: '',
     lblA1806PROVE: '',
     lblA1806NUM: '',
+    lblA1806MONED: '',
     storeCiudades: {},
     storePaises: {},
     /**
