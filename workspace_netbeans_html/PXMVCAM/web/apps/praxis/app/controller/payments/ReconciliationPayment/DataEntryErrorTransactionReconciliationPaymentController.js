@@ -23,26 +23,26 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     status_match: ['1', '5', '6', '7'],
     flag_bporev: false,
     dataObtain: {},
-            // </editor-fold>
-            init: function (view) {
-                prototype.id = 'ReconciliationPaymentForm';
-                prototype.url = CONTEXTPATH + '/ReconciliationPayment';
-                meDE = this;
-                this.lstSendManual = [];
-                this.lstBlocked = [];
-                this.lstAdjustment = [];
-                this.setValue('de-txtSumAmount', this.sumAmount);
-                //this.setValue('de-txtSumAmountBlocked', this.sumAmountBlocked);
+    // </editor-fold>
+    init: function (view) {
+        prototype.id = 'ReconciliationPaymentForm';
+        prototype.url = CONTEXTPATH + '/ReconciliationPayment';
+        meDE = this;
+        this.lstSendManual = [];
+        this.lstBlocked = [];
+        this.lstAdjustment = [];
+        this.setValue('de-txtSumAmount', this.sumAmount);
+        //this.setValue('de-txtSumAmountBlocked', this.sumAmountBlocked);
 
-                Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
-                Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
-                Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
-                Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
-                this.p = this.view.params;
-                this.actionCode = this.p.action;
-                this.bean = this.p.rec.data;
-                console.log(this.bean);
-            },
+        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        this.p = this.view.params;
+        this.actionCode = this.p.action;
+        this.bean = this.p.rec.data;
+        console.log(this.bean);
+    },
     obtainGetAdjustmentCode: function () {
         Ext.Ajax.request({
             url: prototype.url + '/getAdjustmentCodes',
@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         var all = this.p.all;
         var rec;
         var rowIndex = this.p.rowIndex;
-        if (this.p.rowIndex < 19) {            
+        if (this.p.rowIndex < 19) {
             rec = all.getAt(rowIndex + 1);
             console.log("Nueva Transaccion:")
             console.log(rec)
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtPMERCHID', this.beanResult.PMERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
         this.setValue('de-CODADJU', this.beanResult.DES_CODADJU);
-        
+
         if (this.beanResult.TDOC === 'S') {
             Ext.getCmp(prototype.id + '-txtFromDateSDATE').setText('Sales Date');
             Ext.getCmp(prototype.id + '-txtFromDateSMERCHID').setText('Sales Merchant ID');
@@ -250,7 +250,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.SDATE = this.getValue("de-txtSDATE");
         beanTemp.PMERCHID = this.getValue("de-txtPMERCHID");
         beanTemp.SMERCHID = this.beanResult.SMERCHID;
-        beanTemp.PROCTYPE = this.getValue("de-txtPROCTYPE");
+        //beanTemp.PROCTYPE = this.getValue("de-txtPROCTYPE");
         beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
         beanTemp.SCARDN = this.getValue("de-txtSCARDN");
         beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");
@@ -267,6 +267,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
 
         beanTemp.AREFNBR = this.beanResult.AREFNBR;
+        beanTemp.PROCTYPE = this.beanResult.PROCTYPE;
+        beanTemp.PROCTYPESQ = this.beanResult.PROCTYPESQ;
 
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.TICKET = this.getValue("de-txtTICKET");
@@ -314,13 +316,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
+                //console.log(res.result);
                 meDE.beanInfo = res.lstInfo;
                 meDE.mostrarData();
             }
         });
     },
     getBreakdownDataGrid: function () {
-        this.beanSettlementTktsDetail = {};       
+        this.beanSettlementTktsDetail = {};
         this.beanSettlementTktsDetail.DATE = this.bean.DATE;
         this.beanSettlementTktsDetail.IN_DATE = this.bean.IN_DATE;
         this.beanSettlementTktsDetail.PMERCHID = this.bean.PMERCHID;
@@ -493,7 +496,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         } else {
             //console.log(this.beanResult.FREVERSA);
             //var txtMsjInsert = this.validacionInsert();
-            if ( (this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1') && this.beanResult.IDCONL.trim() !== '' ) {
+            if ((this.beanResult.FREVERSA === '1' || this.beanResult.FREVADM === '1') && this.beanResult.IDCONL.trim() !== '') {
                 global.Msg({msg: 'You cannot reconcile this transaction because it has been reversed'});
             } else {
                 var txtMsjDesglose = this.validacionDesglose();
@@ -1132,7 +1135,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
                         Ext.create('Ext.data.Store', {data: this.lstSendManual, autoLoad: true})
                         );
-                
+
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').show();
                 Ext.getCmp(prototype.id + '-panelADJ').show();
                 //var rec = Object.create(grid.getStore().getAt(rowIndex).data);
@@ -1213,7 +1216,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                                 meDE.lstSendManual.push(res.lstInfo[i]);
                             }
                         }
-                        console.log(flag_blocked);                        
+                        console.log(flag_blocked);
                     }
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
@@ -1280,7 +1283,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanProMasterTicket.IN_FORMA = obj.A1531FORMA;
         beanProMasterTicket.IN_SERIE = obj.A1531SERIE;
 
-        console.log('Iniciando View Ticket: ',beanProMasterTicket);
+        console.log('Iniciando View Ticket: ', beanProMasterTicket);
         Ext.getCmp(prototype.id + '-dataEntryError').close();
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
