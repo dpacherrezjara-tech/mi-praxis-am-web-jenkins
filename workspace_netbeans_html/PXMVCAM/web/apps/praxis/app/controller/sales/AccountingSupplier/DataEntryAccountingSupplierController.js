@@ -71,6 +71,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         Ext.getCmp(prototype.id + '-txtA1806NUM').setValue(data.A1806NUM);
         Ext.getCmp(prototype.id + '-txtA1806REFE').setValue(data.A1806REFE);
         Ext.getCmp(prototype.id + '-txtA1806CIA').setValue(data.A1806CIA);
+        Ext.getCmp(prototype.id + '-txtA1806MONED').setValue(data.A1806MONED);
         Ext.getCmp(prototype.id + '-txtA1806UNIDA').setValue(data.A1806UNIDA);
         Ext.getCmp(prototype.id + '-txtA1806CENCO').setValue(data.A1806CENCO);
         Ext.getCmp(prototype.id + '-txtA1806UBICA').setValue(data.A1806UBICA);
@@ -101,6 +102,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         this.lblA1806TIPO = data.A1806TIPOC;
         this.lblA1806PROVE = data.A1806PROVE;
         this.lblA1806NUM = data.A1806NUM;
+        this.lblA1806MONED = data.A1806MONED;
 
 
 
@@ -118,6 +120,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
 
         var A1806CIA = Ext.getCmp(prototype.id + '-txtA1806CIA').getValue().trim();
         var A1806UNIDA = Ext.getCmp(prototype.id + '-txtA1806UNIDA').getValue().trim();
+        var A1806MONED = Ext.getCmp(prototype.id + '-txtA1806MONED').getValue().trim();
         var A1806CENCO = Ext.getCmp(prototype.id + '-txtA1806CENCO').getValue().trim();
         var A1806UBICA = Ext.getCmp(prototype.id + '-txtA1806UBICA').getValue().trim();
         var A1806CUENT = Ext.getCmp(prototype.id + '-txtA1806CUENT').getValue().trim();
@@ -130,6 +133,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         var A1806FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtEndDate').getValue(), 'Ymd').trim();
         var IN_A1806TIPOC_OLD = this.lblA1806TIPO.trim();
         var IN_A1806NUM_OLD = this.lblA1806NUM.trim();
+        var IN_A1806MONED_OLD = this.lblA1806MONED.trim();
 
         if (A1806FINI === '') {
             A1806FINI = '99999999';
@@ -148,6 +152,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             A1806REFE: A1806REFE,
             A1806CIA: A1806CIA,
             A1806UNIDA: A1806UNIDA,
+            A1806MONED: A1806MONED,
             A1806CENCO: A1806CENCO,
             A1806UBICA: A1806UBICA,
             A1806CUENT: A1806CUENT,
@@ -157,8 +162,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             A1806FINI: A1806FINI,
             A1806FFIN: A1806FFIN,
             IN_A1806TIPOC_OLD: IN_A1806TIPOC_OLD,
-            IN_A1806NUM_OLD: IN_A1806NUM_OLD
-
+            IN_A1806NUM_OLD: IN_A1806NUM_OLD,
+            IN_A1806MONED_OLD: IN_A1806MONED_OLD
         };
     },
     onSaveClick: function(btn) {
@@ -191,7 +196,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         var p = this.view.params;
         var strOption = p.action;
         console.log(this.getDataEntryValues(strOption));
-
+        
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
