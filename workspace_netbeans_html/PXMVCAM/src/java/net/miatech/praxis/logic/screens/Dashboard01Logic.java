@@ -16,6 +16,7 @@ import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
+import net.miatech.beans.PX228S01Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libcust.A051wr;
 import net.miatech.praxis.dao.screens.Dashboard01DAO;
@@ -333,5 +334,12 @@ public class Dashboard01Logic {
     public List<IMF117Filter> SQP02271(IMF117Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.SQP02271(filter);
     }
-
+    
+    public List<IMF117Filter> loadPX226S01(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226S01(filter);
+    }
+    
+//    public List<IMF117Filter> loadPX228S01A1890(IMF117Filter filter) throws Exception {
+//        return Dashboard01DAO.loadPX228S01A1890(filter);
+//    }
 }

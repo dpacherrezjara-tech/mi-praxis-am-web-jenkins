@@ -119,7 +119,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        console.clear();
         console.log('1-----------------------SalesAnalysisController - INICIOOOOOOOOOOO');
         this.setFormatParameter();
-
+        Ext.getCmp(prototype.id + '-cmbSalesRelleno').show();
+        Ext.getCmp(prototype.id + '-cmbTNUFilters').hide();
         var opcion = "1";
 
         console.log(gloSelOpt);
@@ -193,7 +194,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             case "20"://BY TRANSACTION
                 GROUPBY = '';
                 this.loadSalesByTransaction();
-                break;    
+                break;
+            case "21"://TNU
+                GROUPBY = '';
+                Ext.getCmp(prototype.id + '-cmbSalesRelleno').hide();
+                Ext.getCmp(prototype.id + '-cmbTNUFilters').show();
+//                this.rbChangeTypeTNU();
+                this.loadTNURE();
+                break;
         }
     },
     setFormatParameter: function () {
@@ -207,7 +215,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-cmbDateToMonth').show();
         Ext.getCmp(prototype.id + '-lblTop').show();
         me.bean.strSelectedBy = gloSelOpt;
-
+        
+        me.bean.IN_PER = Ext.getCmp(prototype.id + '-cmbDateFromYearNTU').getValue()+Ext.getCmp(prototype.id + '-cmbDateFromMonthNTU').getValue();
+        
         if (gloSelOpt === '19') {
             Ext.getCmp(prototype.id + '-cmbDateToYear').hide();
             Ext.getCmp(prototype.id + '-cmbDateToMonth').hide();
@@ -249,7 +259,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         me.bean.IN_PAIS = Ext.getCmp(prototype.id + '-cmbPais').getValue();
         me.bean.IN_TOP = Ext.getCmp(prototype.id + '-cmbTop').getValue();
         me.bean.IN_NR = Ext.getCmp(prototype.id + '-chkRN').getValue();
-
+        
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -258,6 +268,22 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         console.log(searchParams);
 
     },
+//    rbChangeTypeTNU: function(obj, rb_new, rb_old, func) {
+//        this.setFormatParameter();
+//        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeTNU').getValue().rbgType;
+//        console.log(selectedValue);
+//        switch (selectedValue) {
+//            case 'R':
+//                console.log('RESUMEN');
+//                this.loadTNURE();
+//                break;
+//            case 'S':
+//                console.log('VERSUS');
+//                this.loadTNUVS();
+//                break;
+//        }
+//    },
+    
     search: function () {
         console.log('searchParams');
         console.log('searchParams');
@@ -1839,6 +1865,68 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        this.showPagination_clickHandler();
 //        Ext.getCmp(prototype.id + '-pagginAlliance').bindStore(storeGridDatas);
     },
+    loadTNURE: function () {
+        win.lblUser_toolTip("Estructura: ");
+         
+        me.panelActual = '-boxTNURE';
+        this.showGrid('-boxTNURE');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadTNURE'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+                    console.log('hay data');
+                    console.log(obj.data.items[0]);
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridTNURE').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridTNURE').setStore(storeGridDatas);
+    },
+//    loadTNUVS: function () {
+//        win.lblUser_toolTip("Estructura: ");
+//         
+//        me.panelActual = '-boxTNUVS';
+//        this.showGrid('-boxTNUVS');
+//        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+//            proxy: {
+//                url: prototype.url + '/loadTNUVS'
+//            }, listeners: {
+//                beforeload: function (obj) {
+////                    Ext.getBody().mask('Loading...');
+//                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+//                },
+//                load: function (obj) {
+////                    Ext.getBody().unmask('Loading...');
+//                    console.log('hay data');
+//                    console.log(obj.data.items[0]);
+//                    
+//                    if (obj.data.length === 0) {
+//                        global.Msg({
+//                            msg: 'Data not found.'
+//                        });
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+//        });
+//        Ext.getCmp(prototype.id + '-gridTNUVS').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridTNUVS').setStore(storeGridDatas);
+//    },
     clickDetSales_colHandler: function (param, column, e, row, column, x, rowData) {
 //        console.log(param);
 
