@@ -40,6 +40,8 @@ import net.miatech.beans.A1971Filter;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
+import net.miatech.beans.PX228S01Filter;
+import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libcust.A005wr;
 import net.miatech.libcust.A051wr;
 import net.miatech.praxis.A005;
@@ -52,6 +54,7 @@ import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
 import net.miatech.praxis.logic.flown.AccountingCalendarLogic;
+import net.miatech.praxis.logic.tnu.AtlSalesUseMonthlyBalanceLogic;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -918,58 +921,6 @@ public class Dashboard01Controller extends BaseController {
         return new Gson().toJson(map);
     }
 
-//    @RequestMapping(value = "loadSalesByTransaction")
-//    public @ResponseBody
-//    String loadSalesByTransaction(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-//        List<DashboardFilter> lstData;
-//        DashboardFilter filter = new DashboardFilter();
-//        try {
-//            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-//            String beanString = request.getParameter("beanString");
-//            filter = new Gson().fromJson(beanString, filter.getClass());
-//
-//            /*paginacion*/
-//            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-//            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
-//            filter.page.TOTPAG = -1;
-//            filter.page.TOTROW = -1;
-//            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
-//                filter.page.PAGROW = -1;
-//                filter.page.PAGNUM = 1;
-//            } else {
-//                filter.page.PAGROW = limit;
-//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-//            }
-//            /*paginacion*/
-//
-//            logic = new Dashboard01Logic();
-//            logic.setSession(this.serverSession.getServerSession());
-//            lstData = logic.loadPX109SQP04921(filter);
-//
-//            map.put("success", true);
-//
-//            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
-////                String nameExcel = ExportUtil.exportFields(request, response, lstData);
-//                String nameExcel = exportFieldsCompleto(request, response, lstData);
-//                
-//                map.put("nameExcel", nameExcel);
-//            } else {
-//                map.put("data", lstData);
-//                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
-//            }
-//
-//        } catch (SQLException e) {
-//            map.put("success", false);
-//            map.put("sesion", SESSION_CONTROL);
-//            throw new SpringException(e);
-//        } catch (Exception e) {
-//            map.put("success", false);
-//            map.put("sesion", SESSION_CONTROL);
-//            throw new SpringException(e);
-//        }
-//        return new Gson().toJson(map);
-//    }
-    
     @RequestMapping(value = "loadSalesByTransaction")
     public @ResponseBody
     String loadSalesByTransaction(ModelMap map, HttpServletRequest request) {
@@ -4814,6 +4765,130 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
+    
+    @RequestMapping(value = "loadTNURE")
+    public @ResponseBody
+    String loadTNURE(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : loadTNURE-------------");
+
+        map.put("success", true);
+        List<IMF117Filter> lst = this.getListTNURE(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<IMF117Filter> getListTNURE(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF117Filter> lst = new ArrayList<>(0);
+        IMF117Filter filter = new IMF117Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF117Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX226S01(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+//    @RequestMapping(value = "loadTNUVS")
+//    public @ResponseBody
+//    String loadTNUVS(ModelMap map, HttpServletRequest request) {
+//
+//        System.out.println("-------------- Dashboard01 : loadTNUVS-------------");
+//
+//        map.put("success", true);
+//        List<IMF117Filter> lst = this.getListTNUVS(request, false);
+//        System.out.println("Total : " + lst.size());
+//        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+//        map.put("data", lst);
+//        return new Gson().toJson(map);
+//
+//    }
+//
+//    public List<IMF117Filter> getListTNUVS(HttpServletRequest request, Boolean bExcel) {
+//
+//        List<IMF117Filter> lst = new ArrayList<>(0);
+//        IMF117Filter filter = new IMF117Filter();
+//        Gson gson = new Gson();
+//        String beanString = "";
+//
+//        try {
+//            logic = new Dashboard01Logic();
+//            logic.setSession(this.serverSession.getServerSession());
+//
+//            beanString = request.getParameter("beanString");
+//            filter = gson.fromJson(beanString, IMF117Filter.class);
+//            filter.page.TOTROW = -1;
+//            filter.page.START = 0;
+//            filter.page.LIMIT = 0;
+//
+//            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+//
+//            if (!bExcel) {
+//                filter.page.PAGROW = 20;
+//                start = (start != 0 ? start : 0);
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+//                filter.page.PAGROW = -1;
+//                filter.page.PAGNUM = 1;
+//            }
+//
+//            lst = logic.loadPX228S01A1890(filter);
+//
+//        } catch (Exception e) {
+//            throw new SpringException(e);
+//        }
+//        return lst;
+//    }
+//    
+//    @RequestMapping(value = "loadTNU")
+//    public @ResponseBody
+//    String loadTNU(HttpServletRequest request) {
+//        logic = new Dashboard01Logic();
+//        logic.setSession((IServerSession) serverSession.getServerSession());
+//        List<PX228S01Filter> oList = new ArrayList<PX228S01Filter>(0);
+//        PX228S01Filter filter = new PX228S01Filter();                
+//        try {
+//            filter.IN_PER = request.getParameter("IN_PER").toString().trim();
+//            oList = logic.loadPX228S01A1890(filter);
+//        } catch (Exception e) {
+//            throw new SpringException(e);
+//        }
+//        HashMap m = new HashMap();
+//        m.put("success", true);
+//        m.put("total", oList.size());
+//        m.put("data", oList);
+//        return new Gson().toJson(m);
+//    }
     
 //    @RequestMapping(value = "getXLSXByMonth")
 //    public @ResponseBody

@@ -80,5 +80,68 @@ public class IMF117Filter extends IMF117 {
     public double TOTAL_ALLSALES = 0;
     public double TOTAL_AMOUNT = 0;
     
+    //TNU
+    public String IN_PER = "";
+    public String PER = "";
+    public String MES = "";
+    public String MES2 = "";
+    public double SALE = 0;
+    public double ENE = 0;
+    public double FEB = 0;
+    public double MAR = 0;
+    public double ABR = 0;
+    public double MAY = 0;
+    public double JUN = 0;
+    public double JUL = 0;
+    public double AGO = 0;
+    public double SET = 0;
+    public double OCT = 0;
+    public double NOV = 0;
+    public double DIC = 0;
+    public double SALDO = 0;
+    public double LAST = 0;
+    public double POST = 0;
+    
+    public String PERIODO = "";
+    public String ORDEN = "";
+    public String CODIGO = "";
+    public String CONCEPTO = "";
+    public double TOT = 0;
+    
+    public String FVTA = "";
+    public String CURR = "";
+    public double AMTS = 0;
+    public long QCPNV = 0;
+    public double AMTV = 0;
+    public long QCPNE = 0;
+    public double AMTE = 0;
+    public long QCPNR = 0;
+    public double AMTR = 0;
+    public long QCPNI = 0;
+    public double AMTI = 0;
+    public long QCPNC = 0;
+    public double AMTC = 0;
+    public long QCPNM = 0;
+    public double AMTM = 0;
+    public double QCPNP = 0;
+    public double AMTP = 0;
+    
+    public long TOTAL_QCPNS = 0;
+    public double TOTAL_AMTS = 0;
+    public long TOTAL_QCPNV = 0;
+    public double TOTAL_AMTV = 0;
+    public long TOTAL_QCPNE = 0;
+    public double TOTAL_AMTE = 0;
+    public long TOTAL_QCPNR = 0;
+    public double TOTAL_AMTR = 0;
+    public long TOTAL_QCPNI = 0;
+    public double TOTAL_AMTI = 0;
+    public long TOTAL_QCPNC = 0;
+    public double TOTAL_AMTC = 0;
+    public long TOTAL_QCPNM = 0;
+    public double TOTAL_AMTM = 0;
+    public double TOTAL_QCPNP = 0;
+    public double TOTAL_AMTP = 0;
+    
      public Pagination page = new Pagination();
 }

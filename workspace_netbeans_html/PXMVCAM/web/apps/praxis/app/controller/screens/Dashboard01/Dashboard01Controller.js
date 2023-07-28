@@ -115,6 +115,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateToYear_EXP').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromYear_SPA').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToYear_SPA').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateFromYearNTU').bindStore(storeComboDataYear);
 
         var storeComboDataMonth = win.getStoreMonth(true);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
@@ -129,6 +130,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateToMonth_EXP').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth_SPA').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToMonth_SPA').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonthNTU').bindStore(storeComboDataMonth);
 
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
@@ -154,6 +156,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 ['10', "Fare Type"],
                 ['11', "Routing Type"],
                 ['17', "GDS"],
+                ['21', "TNU"],
                 ['18', "Comparison by Years"],
                 ['19', "Comparison by Days"],
                 ['20', "Transaction"]
@@ -335,8 +338,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     afterRender: function () {
         me.screen_actual = prototype.id + '-SalesAnalysis_tab';
         this.setValue('cmbDateFromYear', new Date().getFullYear());
+        this.setValue('cmbDateFromYearNTU', new Date().getFullYear());
         this.setValue('cmbDateToYear', new Date().getFullYear());
         this.setValue('cmbDateFromMonth', '');
+        this.setValue('cmbDateFromMonthNTU', '');
         this.setValue('cmbDateFromDay', '');
         this.setValue('cmbDateToMonth', '');
         this.setValue('cmbDateToDay', '');

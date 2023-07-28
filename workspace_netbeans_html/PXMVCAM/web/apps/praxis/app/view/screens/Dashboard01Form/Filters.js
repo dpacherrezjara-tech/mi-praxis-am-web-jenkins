@@ -69,241 +69,324 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                         change: 'imgSearch_clickHandler'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 30},
-                                // <editor-fold defaultstate="collapsed" desc="Combo Date">
-                                {
-                                    xtype: 'label',
-                                    html: '<strong style="color:#000;">Sales Date</strong>',
-                                    align: 'left',
-                                    fieldStyle: 'text-align: center;',
-                                    padding: '8px 30px 0px 5px',
-                                    hidden: false
-                                },
-//                                {xtype: 'tbspacer', width: 15},
-                                {
-                                    xtype: 'label',
-                                    html: 'From:',
-                                    fieldStyle: 'text-align: center;',
-                                    padding: '8px 7px 8px 0px'
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateFromYear',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    editable: false,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 75,
-                                    typeAhead: true,
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-//                                        focus: function(combo) {
-//                                            combo.expand();
-//                                        },
-                                        change: 'cbxDateFromYear_changeHandler'
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateFromMonth',
-                                    labelAlign: 'right',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    editable: false,
-                                    autoSelect: false,
-                                    forceSelection: true,
-                                    enableKeyEvents: true,
-                                    caseSensitive: false,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 65,
-                                    listeners: {
-//                                        focus: function(combo) {
-//                                            combo.expand();
-//                                        },
-                                        change: 'cbxDateFromMonth_changeHandler'
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateFromDay',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    editable: true,
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 65,
-                                    listConfig: {maxHeight: 111},
-                                    hidden: true,
-                                    listeners: {
-//                                        focus: function(combo) {
-//                                            combo.expand();
-//                                        },
-                                        change: 'cbxDateFromDay_changeHandler'
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 15},
-                                {
-                                    xtype: 'label',
-                                    html: 'To:',
-                                    fieldStyle: 'text-align: center;',
-                                    padding: '8px 7px 8px 0px'
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateToYear',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    editable: false,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 75,
-                                    typeAhead: true,
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-//                                        focus: function(combo) {
-//                                            combo.expand();
-//                                        }
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateToMonth',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    caseSensitive: false,
-                                    forceSelection: true,
-                                    editable: false,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 65,
-                                    listeners: {
-//                                        focus: function(combo) {
-//                                            combo.expand();
-//                                        }
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateToDay',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    editable: true,
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    hidden: true,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 65,
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-//                                        focus: function(combo) {
-//                                            combo.expand();
-//                                        }
-                                    }
-                                },
-                                // </editor-fold>                               
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'Top:',
-                                    id: prototype.id + '-lblTop',
-                                    hidden: true,
-                                    padding: '8px 20px 0px 5px',
-                                    width: 30
-                                },
-                                {xtype: 'tbspacer', width: 25},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbTop',
-                                    queryMode: 'local',
-                                    allowBlank: false,
-                                    forceSelection: true,
-                                    selectOnFocus: true,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    editable: false,
-//                                    listConfig: {maxHeight: 111},
-                                    width: 60,
-                                    typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all',
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'combo',
-                                    fieldLabel: 'Country',
-                                    id: prototype.id + '-cmbPais',
-                                    fieldStyle: 'text-align: left;',
-                                    labelAlign: 'right',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    caseSensitive: true,
-                                    hidden: false,
-                                    valueField: 'A006PAIS',
-                                    displayField: 'A006NOMBRE',
-                                    emptyText: 'All',
-                                    labelWidth: 55,
-                                    width: 270,
-                                    anchor: '100%'
-                                },
                                 {xtype: 'tbspacer', width: 20},
                                 {
-                                    xtype: 'checkboxfield',
-                                    id: prototype.id + '-chkRN',
-                                    width: 130,
-                                    boxLabel: 'NR Analisys',
-                                    inputValue: '1',
-                                    listeners: {
-                                        change: 'btnSearch_click'
-                                    }
+                                    xtype: 'panel',
+                                    id: prototype.id + '-cmbSalesRelleno',
+                                    width: 'auto',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    items: [
+
+                                        // <editor-fold defaultstate="collapsed" desc="Combo Date">
+                                        {
+                                            xtype: 'label',
+                                            html: '<strong style="color:#000;">Sales Date</strong>',
+                                            align: 'left',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 30px 0px 5px',
+                                            hidden: false
+                                        },
+//                                {xtype: 'tbspacer', width: 15},
+                                        {
+                                            xtype: 'label',
+                                            html: 'From:',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 7px 0px 0px'
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromYear',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: false,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 75,
+                                            typeAhead: true,
+                                            listConfig: {maxHeight: 111},
+                                            listeners: {
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
+                                                change: 'cbxDateFromYear_changeHandler'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromMonth',
+                                            labelAlign: 'right',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            editable: false,
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            enableKeyEvents: true,
+                                            caseSensitive: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                            listeners: {
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
+                                                change: 'cbxDateFromMonth_changeHandler'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromDay',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            editable: true,
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                            listConfig: {maxHeight: 111},
+                                            hidden: true,
+                                            listeners: {
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
+                                                change: 'cbxDateFromDay_changeHandler'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 15},
+                                        {
+                                            xtype: 'label',
+                                            html: 'To:',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 7px 0px 0px'
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateToYear',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: false,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 75,
+                                            typeAhead: true,
+                                            listConfig: {maxHeight: 111},
+                                            listeners: {
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateToMonth',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: false,
+                                            forceSelection: true,
+                                            editable: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                            listeners: {
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateToDay',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            editable: true,
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            hidden: true,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                            listConfig: {maxHeight: 111},
+                                            listeners: {
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
+                                            }
+                                        },
+                                        // </editor-fold>                               
+                                        {xtype: 'tbspacer', width: 30},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Top:',
+                                            id: prototype.id + '-lblTop',
+                                            hidden: true,
+                                            padding: '3px 15px 0px 5px',
+                                            width: 30
+                                        },
+                                        {xtype: 'tbspacer', width: 25},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbTop',
+                                            queryMode: 'local',
+                                            allowBlank: false,
+                                            forceSelection: true,
+                                            selectOnFocus: true,
+                                            caseSensitive: false,
+                                            autoSelect: true,
+                                            editable: false,
+//                                    listConfig: {maxHeight: 111},
+                                            width: 60,
+                                            typeAhead: true,
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            enableKeyEvents: true,
+                                            triggerAction: 'all',
+                                        },
+                                        {xtype: 'tbspacer', width: 30},
+                                        {
+                                            xtype: 'combo',
+                                            fieldLabel: 'Country',
+                                            id: prototype.id + '-cmbPais',
+                                            fieldStyle: 'text-align: left;',
+                                            labelAlign: 'right',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'A006PAIS',
+                                            displayField: 'A006NOMBRE',
+                                            emptyText: 'All',
+                                            labelWidth: 55,
+                                            width: 270,
+                                            anchor: '100%'
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'checkboxfield',
+                                            id: prototype.id + '-chkRN',
+                                            width: 130,
+                                            boxLabel: 'NR Analisys',
+                                            inputValue: '1',
+                                            listeners: {
+                                                change: 'btnSearch_click'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 2},
+                                        {
+                                            xtype: 'combo',
+                                            fieldLabel: 'Transaction',
+                                            id: prototype.id + '-cmbTran',
+                                            fieldStyle: 'text-align: left;',
+                                            labelAlign: 'center',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: true,
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            emptyText: 'All',
+                                            labelWidth: 74,
+                                            width: 150,
+                                            anchor: '100%'
+                                        }
+                                    ]
                                 },
-                                {xtype: 'tbspacer', width: 2},
                                 {
-                                    xtype: 'combo',
-                                    fieldLabel: 'Transaction',
-                                    id: prototype.id + '-cmbTran',
-                                    fieldStyle: 'text-align: left;',
-                                    labelAlign: 'center',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    caseSensitive: true,
+                                    xtype: 'panel',
+                                    id: prototype.id + '-cmbTNUFilters',
+                                    width: 'auto',
+                                    layout: 'hbox',
                                     hidden: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    emptyText: 'All',
-                                    labelWidth: 74,
-                                    width: 150,
-                                    anchor: '100%'
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    items: [
+//                                        {
+//                                            xtype: 'numberfield',
+//                                            id: prototype.id + '-periodo',
+//                                            labelWidth: 40,
+//                                            labelAlign: 'right',
+//                                            labelStyle: 'text-align:center',
+//                                            fieldLabel: 'Period',
+//                                            value: new Date().getFullYear(),
+//                                            width: 110,
+//                                            listeners: {
+//                                                specialkey: function (f, e) {
+//                                                    if (e.getKey() === e.ENTER) {
+//                                                        // MonthlyAtlBalance.getSearchStore();
+//                                                    }
+//                                                }
+//                                            }
+//                                        },
+                                        // <editor-fold defaultstate="collapsed" desc="Combo Date">
+                                        {
+                                            xtype: 'label',
+                                            html: 'Sales Date',
+                                            align: 'left',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 10px 0px 5px',
+                                            hidden: false
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromYearNTU',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: false,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 75,
+                                            typeAhead: true,
+                                            listConfig: {maxHeight: 111},
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromMonthNTU',
+                                            labelAlign: 'right',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            hidden:true,
+                                            editable: false,
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            enableKeyEvents: true,
+                                            caseSensitive: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                        },
+                                        // </editor-fold>
+                                        {xtype: 'tbspacer', width: 20},
+                                    ]
                                 }
                             ]
                         }
@@ -1236,7 +1319,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     xtype: 'label',
                                     text: 'Document Type:',
 //                                    hidden: true,
-                                    padding: '8px 10px 0px 5px',
+                                    padding: '8px 5px 0px 5px',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 5},
