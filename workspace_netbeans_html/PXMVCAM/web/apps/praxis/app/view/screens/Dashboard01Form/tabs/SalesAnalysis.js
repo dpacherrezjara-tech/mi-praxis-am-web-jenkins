@@ -6645,7 +6645,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                             id: prototype.id + '-gridTNURE',
                             columnLines: true,
                             autoScroll: true,
-                            width: 1440,
+                            width: 1480,
 //                            width: '100%',
                             //height: 480,
                             height: 400,
@@ -6655,13 +6655,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 }],
                             columns: {
                                 items: [
-                                    {text: 'Sales<br>Date', dataIndex: 'FVTA', width: 70, align: 'center',
+                                    {text: 'Sales<br>Date', dataIndex: 'FVTA', width: 65, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center";
                                             return value;
                                         },
                                     },
-                                    {text: 'Curr', dataIndex: 'CURR', width: 70, align: 'center',
+                                    {text: 'Curr', dataIndex: 'CURR', width: 50, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center";
                                             return value;
@@ -6673,7 +6673,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNS', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNS', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background:#d5f0f4;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6704,7 +6704,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNV', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNV', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background:#d5f4d5;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6735,7 +6735,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNR', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNR', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background:#f4d5d5;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6766,7 +6766,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNE', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNE', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background:#f1f4d5;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6797,7 +6797,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNI', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNI', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6828,7 +6828,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNC', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNC', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6859,7 +6859,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNM', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNM', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background:#e0d5f4;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
@@ -6890,7 +6890,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Coupons', dataIndex: 'QCPNP', width: 72,
+                                            {text: 'Coupons', dataIndex: 'QCPNP', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
