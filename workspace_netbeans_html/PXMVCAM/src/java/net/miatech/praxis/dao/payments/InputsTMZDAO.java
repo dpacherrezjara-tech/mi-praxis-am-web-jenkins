@@ -210,8 +210,10 @@ public class InputsTMZDAO implements InputsTmzLogic {
 
             if (filter.getTIPO().equals("0")) {
                 jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
-            } else {
-                jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4344.class));
+            }else if(filter.getTIPO().equals("1")){
+                jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
+            }else {
+                jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
             }
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("PROCESADOR", filter.getPROCESADOR());
@@ -239,10 +241,14 @@ public class InputsTMZDAO implements InputsTmzLogic {
                     List<A4305> lstReceived = (List<A4305>) obj.get("result");
                     filter.setLstReceived(lstReceived);
                     filter.setTotal(lstReceived.size()>0?filter.getPage().TOTROW:0);
-                } else {
+                }else if (filter.getTIPO().equals("1")){
                     List<A4344> lstLoaded = (List<A4344>) obj.get("result");
                     filter.setLstLoaded(lstLoaded);
                     filter.setTotal(lstLoaded.size()>0?filter.getPage().TOTROW:0);
+                }else {
+                    List<A4305> lstExonerados = (List<A4305>) obj.get("result");
+                    filter.setLstExonerados(lstExonerados);
+                    filter.setTotal(lstExonerados.size()>0?filter.getPage().TOTROW:0);
                 }
                 
             }
