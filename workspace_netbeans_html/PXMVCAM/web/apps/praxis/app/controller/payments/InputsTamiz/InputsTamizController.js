@@ -329,6 +329,34 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         });
         panelPrincipal.add(nuevoPanel);
     },
+    onClickExonerados:function(obj){
+        let data = obj.lastFocused.record.data;
+        let panelPrincipal = Ext.getCmp(prototype.id + '-regionCenterForm01');
+        let curl = prototype.url + '/getDataGridInfo';
+        let procesador = data.procesador.trim().substring(0, 4) === 'AMEX'
+                ? data.proseq.trim() : data.procesador.trim();
+        let searchParamsDetail = {
+            PROCESADOR: procesador,
+            FECHA_FROM: data.prda,
+            TIPO: '2'
+                    //excel:false,
+        };
+        const volverSummary = (id) => {
+            Ext.getCmp(id).destroy();
+            Ext.getCmp(prototype.id + '-regionCenterForm01').items
+                    .items.at(-1).show();
+        };
+        panelPrincipal.items.items.at(-1).hide();
+        let nuevoPanel = Ext.create('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
+            id: prototype.id + '-detailForm-01',
+            searchParams: searchParamsDetail,
+            searchUrl: curl,
+            titleGrid: `${data.nombreproc.trim()} ${data.prda}`,
+            tipoGrid: '2',
+            volverCallback: volverSummary
+        });
+        panelPrincipal.add(nuevoPanel);
+    },
     onClearClick:function(){
         this.fillFiltersStores();
     },

@@ -108,10 +108,15 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                                     click: 'onClickLoaded'
                                 }
                             },
-                            {text: 'Exonerados', dataIndex: 'exonerados', width: 90, align: 'center',
+                            {text: 'Exonerados', width: 90, align: 'center',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
-                                    return value || 0;
+                                    metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
+                                    let loaded = record.get('loaded')||0;
+                                    let received = record.get('received')||0;
+                                    return (received - loaded);
+                                },
+                                listeners: {
+                                    click: 'onClickExonerados'
                                 }
                             },
                             {text: 'Differences', width: 90, align: 'center',
@@ -119,7 +124,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                                     metaData.style = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
                                     let loaded = record.get('loaded')||0;
                                     let received = record.get('received')||0;
-                                    let exonerados = record.get('exonerados')||0;
+                                    let exonerados = (received - loaded);
                                     let resta = (received - loaded) - exonerados;
                                     return resta;
                                 }
