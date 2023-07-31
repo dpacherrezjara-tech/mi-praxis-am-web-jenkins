@@ -33,6 +33,24 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
             //<editor-fold defaultstate="collapsed" desc="Summary Cols">
             {
                 text: 'RN', dataIndex: 'rn', width: 40
+            },
+            {
+                text: 'Proc. Code', dataIndex: 'a4297sourc', flex:1
+            },
+            {
+                text: 'Processing<br>Date', dataIndex: 'a4297fprda', width: 80
+            },
+            {
+                text: 'Load<br>Date', dataIndex: 'a4297fregi', width: 80
+            },
+            {
+                text: 'ID File', dataIndex: 'a4297idfil', width: 80
+            },
+            {
+                text: 'Error Code', dataIndex: 'a4297cderr', width: 80
+            },
+            {
+                text: 'Error<br>Description', dataIndex: 'a4480DES', flex:1
             }
                     //</editor-fold>
         ]
@@ -94,6 +112,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
                         if (!successful) {
                             global.Msg({msg: 'Data not Found'});
                         } else {
+                            //console.log(records);
                             if (records.length === 0) {
                                 global.Msg({msg: 'Data not Found'});
                             }
