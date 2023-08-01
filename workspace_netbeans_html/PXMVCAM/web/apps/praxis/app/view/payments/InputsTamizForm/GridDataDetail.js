@@ -11,7 +11,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
     config: {
         tipoGrid: null,
         searchUrl: null,
-        searchUrl: null,
         titleGrid: null,
         volverCallback: null
     },
@@ -43,13 +42,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 features: [
                     {
                         dock: 'bottom',
-                        ftype: 'summary',
+                        ftype: 'summary'
                     }
                 ],
                 viewConfig: {
                     stripeRows: true,
                     enableTextSelection: true,
-                    markDirty: false,
+                    markDirty: false
                 },
                 columnLines: true,
                 tbar: {
@@ -60,13 +59,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         scale: 'medium'
                     },
                     items: [
-
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel'
-                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btnExcel',
+//                            iconCls: 'prx-icon-excel',
+//                            tooltip: 'Export to Excel'
+//                        },
                         {
                             text: '<strong style="color:white;">Atras<strong>',
                             id: prototype.id + '-det-btn-atras' + tipo,
@@ -79,14 +77,14 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                                     me.volverCallback(me.id);
                                 }
                             }
-                        },
+                        }
                     ]
                 },
                 columns: {
                     defaults: {
                         align: 'center',
                         menuDisabled: true,
-                        sortable: true,
+                        sortable: true
                     },
                     items: [
                         {text: 'Seq', dataIndex: 'rn', width: 50},
@@ -130,12 +128,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         {text: 'Cod. Razon', dataIndex: 'a4305RFIC', width: 100},
                         {text: 'Subc. Razon', dataIndex: 'a4305RFIS', width: 100},
                         {text: 'Agente', dataIndex: 'a4305IATA', width: 120},
-                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100},
+                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100}
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     id: prototype.id + `-${tipo}-paggin01`,
-                    displayInfo: true, // display additional information like "Displaying x of y items"
+                    displayInfo: true // display additional information like "Displaying x of y items"
                 })
             });
         } else if (me.tipoGrid === '1') {
@@ -146,13 +144,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 features: [
                     {
                         dock: 'bottom',
-                        ftype: 'summary',
+                        ftype: 'summary'
                     }
                 ],
                 viewConfig: {
                     stripeRows: true,
                     enableTextSelection: true,
-                    markDirty: false,
+                    markDirty: false
                 },
                 tbar: {
                     layout: {
@@ -181,7 +179,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                                     me.volverCallback(me.id);
                                 }
                             }
-                        },
+                        }
                     ]
                 },
                 columnLines: true,
@@ -189,7 +187,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     defaults: {
                         align: 'center',
                         menuDisabled: true,
-                        sortable: true,
+                        sortable: true
                     },
                     items: [
                         {text: 'RN', dataIndex: 'rn', width: 50},
@@ -200,13 +198,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         },
                         {text: 'Carrier', dataIndex: 'cxrrnum',width:70},
                         {text: 'Max Long', dataIndex: 'tammaxlong',flex:1},
-                        {text: 'Fecha<br>Proceso', dataIndex: 'tradm', width: 120},
+                        {text: 'Fecha<br>Proceso', dataIndex: 'tradm', width: 120}
                         //{text: 'Seq', dataIndex: 'secuencia', width: 60},
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     id: prototype.id + `-${tipo}-paggin01`,
-                    displayInfo: true, // display additional information like "Displaying x of y items"
+                    displayInfo: true // display additional information like "Displaying x of y items"
                 })
             });
         } else {
@@ -217,13 +215,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 features: [
                     {
                         dock: 'bottom',
-                        ftype: 'summary',
+                        ftype: 'summary'
                     }
                 ],
                 viewConfig: {
                     stripeRows: true,
                     enableTextSelection: true,
-                    markDirty: false,
+                    markDirty: false
                 },
                 columnLines: true,
                 tbar: {
@@ -253,14 +251,14 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                                     me.volverCallback(me.id);
                                 }
                             }
-                        },
+                        }
                     ]
                 },
                 columns: {
                     defaults: {
                         align: 'center',
                         menuDisabled: true,
-                        sortable: true,
+                        sortable: true
                     },
                     items: [
                         {text: 'Seq', dataIndex: 'rn', width: 50},
@@ -304,12 +302,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         {text: 'Cod. Razon', dataIndex: 'a4305RFIC', width: 100},
                         {text: 'Subc. Razon', dataIndex: 'a4305RFIS', width: 100},
                         {text: 'Agente', dataIndex: 'a4305IATA', width: 120},
-                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100},
+                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100}
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     id: prototype.id + `-${tipo}-paggin01`,
-                    displayInfo: true, // display additional information like "Displaying x of y items"
+                    displayInfo: true // display additional information like "Displaying x of y items"
                 })
             });
         }
