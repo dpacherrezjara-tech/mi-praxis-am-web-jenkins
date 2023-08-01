@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                                                         },
                                                         {
                                                             id: prototype.id + '-tabCharge',
-                                                            title: 'Charge',
+                                                            title: 'Load',
                                                             itemId:'C'
                                                         }
                                                     ]

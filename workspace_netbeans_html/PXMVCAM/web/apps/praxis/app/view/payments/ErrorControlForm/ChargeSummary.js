@@ -48,9 +48,9 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeSummary', {
                         text: 'Date', dataIndex: 'a4297FPRDA', width: 85
                     },
                     {
-                        text: 'File Type', 
+                        text: 'File Description', 
                         //dataIndex: 'a4451DESC1',
-                        dataIndex: 'a4297SOURC',
+                        dataIndex: 'a4451DESC1',
                         flex: 1,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "font-weight:bold;";

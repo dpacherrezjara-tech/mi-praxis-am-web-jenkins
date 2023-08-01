@@ -64,28 +64,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                                     {text: 'Date', width: 100, flex: 1, dataIndex: 'prda'}
                                 ]
                             },
-                            {text: 'User',
-                                defaults: {
-                                    menuDisabled: true,
-                                    sortable: true,
-                                    align: 'center',
-                                    border: true
-                                },
-                                columns: [
-                                    {text: 'Creator', dataIndex: 'regis', width: 100},
-                                ]
-                            },
-                            {text: 'Generation',
-                                defaults: {
-                                    menuDisabled: true,
-                                    sortable: true,
-                                    align: 'center',
-                                    border: true
-                                },
-                                columns: [
-                                    {text: 'Date', dataIndex: 'fregis', width: 100},
-                                ]
-                            },
+                            {text: 'Load<br>Date', dataIndex: 'fregis', width: 100},
                             {text: 'Source', dataIndex: 'nombreproc', flex: 1},
                             {text: 'Total Records',
                                 defaults: {
@@ -112,7 +91,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                                             click: 'onClickLoaded'
                                         }
                                     },
-                                    {text: 'Exonerados', width: 90, align: 'center',
+                                    {text: 'Exonerated', width: 90, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
                                             let loaded = record.get('loaded') || 0;
