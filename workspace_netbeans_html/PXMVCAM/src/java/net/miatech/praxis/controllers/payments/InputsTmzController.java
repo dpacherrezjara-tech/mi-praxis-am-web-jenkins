@@ -1,15 +1,9 @@
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 import net.miatech.praxis.logic.payments.InputsTmzLogic;
 import net.miatech.praxis.payment.A4305;
 import net.miatech.praxis.payment.A4344;
@@ -20,24 +14,10 @@ import net.miatech.praxis.payment.filter.SQP04974Filter;
 import net.miatech.praxis.payment.filter.SQP04975Filter;
 import net.miatech.praxis.payment.filter.SQP04976Filter;
 import net.miatech.praxis.payment.filter.SQP05033Filter;
-import org.apache.commons.io.FileUtils;
-import org.apache.poi.hssf.record.formula.functions.T;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import net.miatech.praxis.utils.ExportUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,6 +35,9 @@ public class InputsTmzController {
 
     @Autowired
     private InputsTmzLogic logic;
+
+    @Autowired
+    private ExportUtils exportUtils;
 
     //<editor-fold defaultstate="collapsed" desc="convierte obj">
     private <T> T parseObject(Map<String, Object> params, Class<T> clazz)
@@ -174,9 +157,9 @@ public class InputsTmzController {
                 filter.getPage().PAGNUM = 1;
             }
             SQP04976Filter res = logic.getSQP04976Filter(filter);
-            
+
             ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
-            if(filter.getTIPO().equals("0")){
+            if (filter.getTIPO().equals("0")) {
                 List<Object[]> data = new ArrayList<>();
                 Object[] header = new Object[24];
                 header[0] = "Seq";
@@ -204,8 +187,8 @@ public class InputsTmzController {
                 header[22] = "Agente";
                 header[23] = "Pais Venta";
                 data.add(header);
-                
-                for(A4305 obj:res.getLstReceived()){
+
+                for (A4305 obj : res.getLstReceived()) {
                     Object[] row = new Object[24];
                     row[0] = obj.getRN();
                     row[1] = obj.getA4305GRUPO();
@@ -233,8 +216,8 @@ public class InputsTmzController {
                     row[23] = obj.getA4305PAIS();
                     data.add(row);
                 }
-                response = this.createExcel(data, "Received - " + filter.getPROCESADOR() + filter.getFECHA_FROM());
-            }else if(filter.getTIPO().equals("1")){
+                response = exportUtils.createExcel(data, "Received - " + filter.getPROCESADOR() + filter.getFECHA_FROM());
+            } else if (filter.getTIPO().equals("1")) {
                 List<Object[]> data = new ArrayList<>();
                 Object[] header = new Object[5];
                 header[0] = "RN";
@@ -243,8 +226,8 @@ public class InputsTmzController {
                 header[3] = "Max Long";
                 header[4] = "Fecha de Proceso";
                 data.add(header);
-                
-                for(A4344 obj:res.getLstLoaded()){
+
+                for (A4344 obj : res.getLstLoaded()) {
                     Object[] row = new Object[5];
                     row[0] = obj.getRN();
                     row[1] = obj.getPROCESADOR();
@@ -253,8 +236,8 @@ public class InputsTmzController {
                     row[4] = obj.getTRADM();
                     data.add(row);
                 }
-                response = this.createExcel(data, "Loaded - " + filter.getPROCESADOR() + filter.getFECHA_FROM());
-            }else{
+                response = exportUtils.createExcel(data, "Loaded - " + filter.getPROCESADOR() + filter.getFECHA_FROM());
+            } else {
                 List<Object[]> data = new ArrayList<>();
                 Object[] header = new Object[24];
                 header[0] = "Seq";
@@ -282,8 +265,8 @@ public class InputsTmzController {
                 header[22] = "Agente";
                 header[23] = "Pais Venta";
                 data.add(header);
-                
-                for(A4305 obj:res.getLstExonerados()){
+
+                for (A4305 obj : res.getLstExonerados()) {
                     Object[] row = new Object[24];
                     row[0] = obj.getRN();
                     row[1] = obj.getA4305GRUPO();
@@ -311,7 +294,7 @@ public class InputsTmzController {
                     row[23] = obj.getA4305PAIS();
                     data.add(row);
                 }
-                response = this.createExcel(data, "Exonerated - " + filter.getPROCESADOR() + filter.getFECHA_FROM());
+                response = exportUtils.createExcel(data, "Exonerated - " + filter.getPROCESADOR() + filter.getFECHA_FROM());
             }
             return response;
         } catch (Exception e) {
@@ -321,89 +304,213 @@ public class InputsTmzController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity<byte[]> createExcel(List<Object[]> data, String fileName)throws IOException{
-        String fileNameDownload = fileName + ".xlsx";
-        try (SXSSFWorkbook workbook = new SXSSFWorkbook()) {
-            String[] nameArr = fileNameDownload.split("\\.");
-            String prefix = nameArr[0];
-            String suffix = "." + nameArr[1];
-            File file = File.createTempFile(prefix, suffix);
-            Sheet sheet = workbook.createSheet();
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-
-            Row rowHeader = sheet.createRow(0);
-            int cols = 0;
-
-            for (Object obj : data.get(0)) {
-                Cell ch = rowHeader.createCell(cols);
-                ch.setCellValue(obj.toString());
-                cols++;
-            }
-            for (int i = 1; i < data.size(); i++) {
-                Row row = sheet.createRow(i);
-                for (int x = 0; x < data.get(i).length; x++) {
-                    Cell cell = row.createCell(x);
-                    cell.setCellValue(data.get(i)[x].toString());
+    @RequestMapping(value = "downloadComplementInfo")
+    public ResponseEntity<byte[]> downloadComplementInfo(@ModelAttribute SQP05033Filter filter) {
+        try {
+            System.out.println("*************************** Inputs TMZ: downloadProcessorsInfo ****************************");
+            SQP05033Filter res = logic.getSQP05033Filter(filter);
+            ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
+            if (res.getTIPO().equals("R")) {
+                //<editor-fold defaultstate="collapsed" desc="Columnas Received">
+                List<Object[]> data = new ArrayList<>();
+                Object[] header = new Object[7];
+                header[0] = "RN";
+                header[1] = "Processing Date";
+                header[2] = "Complement Type";
+                header[3] = "ID File";
+                header[4] = "SQNR";
+                header[5] = "Record Type";
+                header[6] = "Max Long";
+                data.add(header);
+                for (Map<String, Object> obj : res.getLst()) {
+                    Object[] row = new Object[7];
+                    row[0] = obj.get("RN");
+                    row[1] = obj.get("PRDA");
+                    row[2] = obj.get("CMPLTYPE");
+                    row[3] = obj.get("IDFIL");
+                    row[4] = obj.get("SQNR");
+                    row[5] = obj.get("RECTYPE");
+                    row[6] = obj.get("MAXLONG");
+                    data.add(row);
                 }
+                response = exportUtils.createExcel(data, "Received - " + filter.getCOMPLEMENTO() + filter.getFECHA_FROM());
+                //</editor-fold>
+            } else {
+                //<editor-fold defaultstate="collapsed" desc="Columnas Loaded">
+                List<Object[]> data = new ArrayList<>();
+                if (filter.getCOMPLEMENTO().equals("PLUSG00")) {
+                    //<editor-fold defaultstate="collapsed" desc="Excel Plusgrade">
+                    Object[] header = new Object[39];
+                    header[0] = "RN";
+                    header[1] = "AMOUNTOFF";
+                    header[2] = "AMOUNTOTP";
+                    header[3] = "AMOUNTPAX";
+                    header[4] = "AREFNBR";
+                    header[5] = "AUXDAT";
+                    header[6] = "CCUST";
+                    header[7] = "CERROR";
+                    header[8] = "COUNTRY";
+                    header[9] = "CUROFFER";
+                    header[10] = "CURRPARTN";
+                    header[11] = "DATEUPUTC";
+                    header[12] = "DEPDATE";
+                    header[13] = "DEPTIME";
+                    header[14] = "DEST";
+                    header[15] = "EMDNUMBER";
+                    header[16] = "FARECLASS";
+                    header[17] = "INSUPGRAD";
+                    header[18] = "LIVEAOPEN";
+                    header[19] = "MERCHID";
+                    header[20] = "NEWTKTNBR";
+                    header[21] = "ORIBOOKCL";
+                    header[22] = "ORIG";
+                    header[23] = "PAYTOKEN";
+                    header[24] = "PAYTRANID";
+                    header[25] = "PLUSGRAID";
+                    header[26] = "PNR";
+                    header[27] = "PRDA";
+                    header[28] = "QTYTKT";
+                    header[29] = "SAGENT";
+                    header[30] = "SCARCOD";
+                    header[31] = "SCARDBIN";
+                    header[32] = "SDATE";
+                    header[33] = "SDATES";
+                    header[34] = "TRVFIRSNA";
+                    header[35] = "TRVLASTNA";
+                    header[36] = "UPGRATYPE";
+                    header[37] = "USERTICKE";
+                    header[38] = "USERUPGRA";
+                    data.add(header);
+                    for (Map<String, Object> obj : res.getLst()) {
+                        Object[] row = new Object[39];
+                        row[0] = obj.get("RN");
+                        row[1] = obj.get("AMOUNTOFF");
+                        row[2] = obj.get("AMOUNTOTP");
+                        row[3] = obj.get("AMOUNTPAX");
+                        row[4] = obj.get("AREFNBR");
+                        row[5] = obj.get("AUXDAT");
+                        row[6] = obj.get("CCUST");
+                        row[7] = obj.get("CERROR");
+                        row[8] = obj.get("COUNTRY");
+                        row[9] = obj.get("CUROFFER");
+                        row[10] = obj.get("CURRPARTN");
+                        row[11] = obj.get("DATEUPUTC");
+                        row[12] = obj.get("DEPDATE");
+                        row[13] = obj.get("DEPTIME");
+                        row[14] = obj.get("DEST");
+                        row[15] = obj.get("EMDNUMBER");
+                        row[16] = obj.get("FARECLASS");
+                        row[17] = obj.get("INSUPGRAD");
+                        row[18] = obj.get("LIVEAOPEN");
+                        row[19] = obj.get("MERCHID");
+                        row[20] = obj.get("NEWTKTNBR");
+                        row[21] = obj.get("ORIBOOKCL");
+                        row[22] = obj.get("ORIG");
+                        row[23] = obj.get("PAYTOKEN");
+                        row[24] = obj.get("PAYTRANID");
+                        row[25] = obj.get("PLUSGRAID");
+                        row[26] = obj.get("PNR");
+                        row[27] = obj.get("PRDA");
+                        row[28] = obj.get("QTYTKT");
+                        row[29] = obj.get("SAGENT");
+                        row[30] = obj.get("SCARCOD");
+                        row[31] = obj.get("SCARDBIN");
+                        row[32] = obj.get("SDATE");
+                        row[33] = obj.get("SDATES");
+                        row[34] = obj.get("TRVFIRSNA");
+                        row[35] = obj.get("TRVLASTNA");
+                        row[36] = obj.get("UPGRATYPE");
+                        row[37] = obj.get("USERTICKE");
+                        row[38] = obj.get("USERUPGRA");
+                        data.add(row);
+                    }
+                    //</editor-fold>
+                } else {
+                    //<editor-fold defaultstate="collapsed" desc="Excel Ligas y Tablets">
+                    Object[] header = new Object[33];
+                    header[0] = "RN";
+                    header[1] = "AREFNBR";
+                    header[2] = "BANCOEMI";
+                    header[3] = "CCUST";
+                    header[4] = "CERROR";
+                    header[5] = "CHADJNBR";
+                    header[6] = "COUNTRY";
+                    header[7] = "ESTATUS";
+                    header[8] = "MERCHID";
+                    header[9] = "NAMECARD";
+                    header[10] = "NAMECLIEN";
+                    header[11] = "NAMEMERCH";
+                    header[12] = "OPERATNBR";
+                    header[13] = "PNR";
+                    header[14] = "PRDA";
+                    header[15] = "SAUTHOC";
+                    header[16] = "SCARDN";
+                    header[17] = "SDATE";
+                    header[18] = "SUCURNAME";
+                    header[19] = "SVFOP";
+                    header[20] = "TICKET1";
+                    header[21] = "TICKET2";
+                    header[22] = "TICKET3";
+                    header[23] = "TICKET4";
+                    header[24] = "TICKET5";
+                    header[25] = "TICKET6";
+                    header[26] = "TICKET7";
+                    header[27] = "TICKET8";
+                    header[28] = "TICKET9";
+                    header[29] = "TICKET10";
+                    header[30] = "TIPOCARD";
+                    header[31] = "TIPOPAGO";
+                    header[32] = "TIPOVENTA";
+                    header[32] = "USERCOBRO";
+                    data.add(header);
+                    for (Map<String, Object> obj : res.getLst()) {
+                        Object[] row = new Object[33];
+                        row[0] = obj.get("RN");
+                        row[1] = obj.get("AREFNBR");
+                        row[2] = obj.get("BANCOEMI");
+                        row[3] = obj.get("CCUST");
+                        row[4] = obj.get("CERROR");
+                        row[5] = obj.get("CHADJNBR");
+                        row[6] = obj.get("COUNTRY");
+                        row[7] = obj.get("ESTATUS");
+                        row[8] = obj.get("MERCHID");
+                        row[9] = obj.get("NAMECARD");
+                        row[10] = obj.get("NAMECLIEN");
+                        row[11] = obj.get("NAMEMERCH");
+                        row[12] = obj.get("OPERATNBR");
+                        row[13] = obj.get("PNR");
+                        row[14] = obj.get("PRDA");
+                        row[15] = obj.get("SAUTHOC");
+                        row[16] = obj.get("SCARDN");
+                        row[17] = obj.get("SDATE");
+                        row[18] = obj.get("SUCURNAME");
+                        row[19] = obj.get("SVFOP");
+                        row[20] = obj.get("TICKET1");
+                        row[21] = obj.get("TICKET2");
+                        row[22] = obj.get("TICKET3");
+                        row[23] = obj.get("TICKET4");
+                        row[24] = obj.get("TICKET5");
+                        row[25] = obj.get("TICKET6");
+                        row[26] = obj.get("TICKET7");
+                        row[27] = obj.get("TICKET8");
+                        row[28] = obj.get("TICKET9");
+                        row[29] = obj.get("TICKET10");
+                        row[30] = obj.get("TIPOCARD");
+                        row[31] = obj.get("TIPOPAGO");
+                        row[32] = obj.get("TIPOVENTA");
+                        row[32] = obj.get("USERCOBRO");
+                        data.add(row);
+                    }
+                    //</editor-fold>
+                }
+                response = exportUtils.createExcel(data, "Loaded - " + filter.getCOMPLEMENTO() + filter.getFECHA_FROM());
+                //</editor-fold>
             }
-            
-            for(int c=0;c<cols;c++){
-                sheet.autoSizeColumn(c);
-            }
-            
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-                workbook.write(fos);
-            }
-            
-            //descarga en zip
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ZipOutputStream zos = new ZipOutputStream(baos);
-            
-            ZipEntry entrada1 = new ZipEntry(fileNameDownload);
-            zos.putNextEntry(entrada1);
-            zos.write(FileUtils.readFileToByteArray(file));
-            zos.closeEntry();
-            
-            zos.finish();
-            zos.close();
-            
-            if(file!=null){
-                file.delete();
-            }
-            
-            //respuesta http
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDispositionFormData("attachment", prefix + ".zip");
-            return new ResponseEntity<byte[]>(baos.toByteArray(), headers, HttpStatus.OK);
+            return response;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
 }
