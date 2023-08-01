@@ -10,11 +10,13 @@ import net.miatech.praxis.payment.filter.SQP04972Filter;
 import net.miatech.praxis.payment.filter.SQP04974Filter;
 import net.miatech.praxis.payment.filter.SQP04975Filter;
 import net.miatech.praxis.payment.filter.SQP04976Filter;
+import net.miatech.praxis.payment.filter.SQP05033Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -115,5 +117,15 @@ public class InputsTmzController {
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    } 
+    }
+    
+    @RequestMapping(value = "getDataGridCInfo")
+    public ResponseEntity<?> getDataGridCInfo(@ModelAttribute SQP05033Filter filter){
+        try {
+            System.out.println("*************************** Inputs TMZ: getDataGridCInfo ****************************");
+            return new ResponseEntity<>(logic.getSQP05033Filter(filter),HttpStatus.OK);
+        } catch (Exception e) {
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }
