@@ -453,5 +453,17 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         } else {
             opts.show();
         }
+    },
+    //<editor-fold defaultstate="collapsed" desc="Descarga Exceles">
+    downloadProcessor: function (obj) {
+        let parameters = Object.assign({},obj.up().up().up().searchParams);
+        parameters.excel = true;
+        console.log('Descargando');
+        console.log(parameters);
+//        fetch(prototype.url + '/getDataGridInfo?' + new URLSearchParams(parameters))
+//                .then(async res => {console.log(await res.json())});
+        global.getFile(prototype.url + '/downloadProcessorsInfo?' + new URLSearchParams(parameters));
     }
+    //</editor-fold>
+
 });

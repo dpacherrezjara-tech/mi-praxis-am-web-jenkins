@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
                 text: 'RN', dataIndex: 'rn', width: 40
             },
             {
-                text: 'Proc. Code', dataIndex: 'a4297sourc', flex:1
+                text: 'File Description', dataIndex: 'a4451DESC1', flex:1
             },
             {
                 text: 'Processing<br>Date', dataIndex: 'a4297fprda', width: 80
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
         },
         items: [
             {
-                text: '<strong style="color:white;">Atras<strong>',
+                text: '<strong style="color:white;">Back<strong>',
                 id: prototype.id + '-detArch-btnBack',
                 cls: 'x-btn-sent',
                 width: 100,
@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
                         if (!successful) {
                             global.Msg({msg: 'Data not Found'});
                         } else {
-                            //console.log(records);
+                            console.log(records);
                             if (records.length === 0) {
                                 global.Msg({msg: 'Data not Found'});
                             }

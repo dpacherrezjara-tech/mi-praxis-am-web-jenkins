@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatGrid', {
             },
             {xtype: 'tbspacer', width: 30},
             {
-                text: '<strong style="color:white;">Atras<strong>',
+                text: '<strong style="color:white;">Back<strong>',
                 id: prototype.id + '-det-btnBack',
                 cls: 'x-btn-sent',
                 width: 100,

@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
                         },
                         items: [
                             {
-                                text: '<strong style="color:white;">Atras<strong>',
+                                text: '<strong style="color:white;">Back<strong>',
                                 id: prototype.id + '-det-btn-atras' + tipo,
                                 cls: 'x-btn-sent',
                                 width: 100,
@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
                         },
                         items: [
                             {
-                                text: '<strong style="color:white;">Atras<strong>',
+                                text: '<strong style="color:white;">Back<strong>',
                                 id: prototype.id + '-det-btn-atras' + tipo,
                                 cls: 'x-btn-sent',
                                 width: 100,
@@ -167,6 +167,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
                 }
             },
             autoLoad: true,
+            pageSize:20,
             listeners: {
                 load: function (store, records, successful, operation) {
                     if (!successful) {
@@ -236,6 +237,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
             ];
         }else{
             cols = [
+                {text:'RN',dataIndex:'RN',width:100},
                 {text:'AREFNBR',dataIndex:'AREFNBR',width:100},
                 {text:'BANCOEMI',dataIndex:'AREFNBR',width:100},
                 {text:'CCUST',dataIndex:'CCUST',width:100},

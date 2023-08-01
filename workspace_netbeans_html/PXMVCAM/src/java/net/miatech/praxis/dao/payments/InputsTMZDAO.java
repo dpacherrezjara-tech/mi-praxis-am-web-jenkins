@@ -219,7 +219,7 @@ public class InputsTMZDAO implements InputsTmzLogic {
             if (filter.getTIPO().equals("0")) {
                 jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
             }else if(filter.getTIPO().equals("1")){
-                jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
+                jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4344.class));
             }else {
                 jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
             }
