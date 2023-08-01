@@ -168,7 +168,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         let TIPO = Ext.getCmp(prototype.id + '-cmbFileType').getValue();
 
         let PROCESADOR = Ext.getCmp(prototype.id + '-cmbFUENTE-det-PROC').getValue() || '';
-        console.log(PROCESADOR.trim());
+        //console.log(PROCESADOR.trim());
         searchParamsDetail = {
             FECHA_FROM: IN_FECHA_FROM,
             FECHA_TO: IN_FECHA_TO,

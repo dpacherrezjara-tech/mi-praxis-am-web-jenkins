@@ -206,11 +206,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
     configurarCols: function (grid, store) {
         const me = this;
         if (me.searchParams.TIPO === 'R') {
+            win.lblUser_toolTip("Estructura: A4449 | A4450");
             grid.bindStore(store);
             return;
         }
         let cols = [];
         if (me.searchParams.COMPLEMENTO === 'PLUSG00') {
+            win.lblUser_toolTip("Estructura: 4453");
             cols = [
                 {text: 'RN', dataIndex: 'RN', width: 100},
                 {text: 'AMOUNTOFF', dataIndex: 'AMOUNTOFF', width: 100},
@@ -253,6 +255,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
                 {text: 'USERUPGRA', dataIndex: 'USERUPGRA', width: 100}
             ];
         } else {
+            win.lblUser_toolTip("Estructura: A4454");
             cols = [
                 {text: 'RN', dataIndex: 'RN', width: 100},
                 {text: 'AREFNBR', dataIndex: 'AREFNBR', width: 100},
