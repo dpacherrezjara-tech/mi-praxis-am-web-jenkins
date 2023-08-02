@@ -11,7 +11,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
     config: {
         tipoGrid: null,
         searchUrl: null,
-        searchUrl: null,
         titleGrid: null,
         volverCallback: null
     },
@@ -31,7 +30,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
         }else if(me.tipoGrid === '1'){
             tipo = 'Loaded';
         }else{
-            tipo = 'Exonerados';
+            tipo = 'Exonerated';
         }
         me.title = `${tipo} Detail - ${me.titleGrid}`;
         let panel = null;
@@ -43,13 +42,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 features: [
                     {
                         dock: 'bottom',
-                        ftype: 'summary',
+                        ftype: 'summary'
                     }
                 ],
                 viewConfig: {
                     stripeRows: true,
                     enableTextSelection: true,
-                    markDirty: false,
+                    markDirty: false
                 },
                 columnLines: true,
                 tbar: {
@@ -60,15 +59,17 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         scale: 'medium'
                     },
                     items: [
-
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel'
+                            tooltip: 'Export to Excel',
+                            listeners:{
+                                click:'downloadProcessor'
+                            }
                         },
                         {
-                            text: '<strong style="color:white;">Atras<strong>',
+                            text: '<strong style="color:white;">Back<strong>',
                             id: prototype.id + '-det-btn-atras' + tipo,
                             cls: 'x-btn-sent',
                             width: 100,
@@ -79,14 +80,14 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                                     me.volverCallback(me.id);
                                 }
                             }
-                        },
+                        }
                     ]
                 },
                 columns: {
                     defaults: {
                         align: 'center',
                         menuDisabled: true,
-                        sortable: true,
+                        sortable: true
                     },
                     items: [
                         {text: 'Seq', dataIndex: 'rn', width: 50},
@@ -130,12 +131,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         {text: 'Cod. Razon', dataIndex: 'a4305RFIC', width: 100},
                         {text: 'Subc. Razon', dataIndex: 'a4305RFIS', width: 100},
                         {text: 'Agente', dataIndex: 'a4305IATA', width: 120},
-                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100},
+                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100}
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     id: prototype.id + `-${tipo}-paggin01`,
-                    displayInfo: true, // display additional information like "Displaying x of y items"
+                    displayInfo: true // display additional information like "Displaying x of y items"
                 })
             });
         } else if (me.tipoGrid === '1') {
@@ -146,13 +147,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 features: [
                     {
                         dock: 'bottom',
-                        ftype: 'summary',
+                        ftype: 'summary'
                     }
                 ],
                 viewConfig: {
                     stripeRows: true,
                     enableTextSelection: true,
-                    markDirty: false,
+                    markDirty: false
                 },
                 tbar: {
                     layout: {
@@ -162,15 +163,17 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         scale: 'medium'
                     },
                     items: [
-
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel'
+                            tooltip: 'Export to Excel',
+                            listeners:{
+                                click:'downloadProcessor'
+                            }
                         },
                         {
-                            text: '<strong style="color:white;">Atras<strong>',
+                            text: '<strong style="color:white;">Back<strong>',
                             id: prototype.id + '-det-btn-atras' + tipo,
                             cls: 'x-btn-sent',
                             width: 100,
@@ -181,7 +184,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                                     me.volverCallback(me.id);
                                 }
                             }
-                        },
+                        }
                     ]
                 },
                 columnLines: true,
@@ -189,7 +192,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     defaults: {
                         align: 'center',
                         menuDisabled: true,
-                        sortable: true,
+                        sortable: true
                     },
                     items: [
                         {text: 'RN', dataIndex: 'rn', width: 50},
@@ -200,13 +203,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         },
                         {text: 'Carrier', dataIndex: 'cxrrnum',width:70},
                         {text: 'Max Long', dataIndex: 'tammaxlong',flex:1},
-                        {text: 'Fecha<br>Proceso', dataIndex: 'tradm', width: 120},
+                        {text: 'Fecha<br>Proceso', dataIndex: 'tradm', width: 120}
                         //{text: 'Seq', dataIndex: 'secuencia', width: 60},
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     id: prototype.id + `-${tipo}-paggin01`,
-                    displayInfo: true, // display additional information like "Displaying x of y items"
+                    displayInfo: true // display additional information like "Displaying x of y items"
                 })
             });
         } else {
@@ -217,13 +220,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                 features: [
                     {
                         dock: 'bottom',
-                        ftype: 'summary',
+                        ftype: 'summary'
                     }
                 ],
                 viewConfig: {
                     stripeRows: true,
                     enableTextSelection: true,
-                    markDirty: false,
+                    markDirty: false
                 },
                 columnLines: true,
                 tbar: {
@@ -239,10 +242,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel'
+                            tooltip: 'Export to Excel',
+                            listeners:{
+                                click:'downloadProcessor'
+                            }
                         },
                         {
-                            text: '<strong style="color:white;">Atras<strong>',
+                            text: '<strong style="color:white;">Back<strong>',
                             id: prototype.id + '-det-btn-atras' + tipo,
                             cls: 'x-btn-sent',
                             width: 100,
@@ -253,14 +259,14 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                                     me.volverCallback(me.id);
                                 }
                             }
-                        },
+                        }
                     ]
                 },
                 columns: {
                     defaults: {
                         align: 'center',
                         menuDisabled: true,
-                        sortable: true,
+                        sortable: true
                     },
                     items: [
                         {text: 'Seq', dataIndex: 'rn', width: 50},
@@ -304,12 +310,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                         {text: 'Cod. Razon', dataIndex: 'a4305RFIC', width: 100},
                         {text: 'Subc. Razon', dataIndex: 'a4305RFIS', width: 100},
                         {text: 'Agente', dataIndex: 'a4305IATA', width: 120},
-                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100},
+                        {text: 'Pais<br>Venta', dataIndex: 'a4305PSVTA', width: 100}
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
                     id: prototype.id + `-${tipo}-paggin01`,
-                    displayInfo: true, // display additional information like "Displaying x of y items"
+                    displayInfo: true // display additional information like "Displaying x of y items"
                 })
             });
         }
@@ -325,7 +331,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
         }else if(me.tipoGrid === '1'){
             tipo = 'Loaded';
         }else{
-            tipo = 'Exonerados';
+            tipo = 'Exonerated';
         }
         let data = '';
         if(me.tipoGrid === '0'){
@@ -337,6 +343,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
         }
         //let data = me.tipoGrid === '0' ? 'lstReceived' : 'lstLoaded';
         if (me.tipoGrid === '0') {
+            win.lblUser_toolTip("Estructura: A4305");
             let receivedStore = Ext.create('Ext.data.Store', {
                 storeId: prototype.id + `-detail-${tipo}-store`,
                 loadMask: true,
@@ -353,6 +360,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     }
                 },
                 autoLoad: true,
+                pageSize:20,
                 listeners: {
                     load: function (store, records, successful, operation) {
                         if (!successful) {
@@ -365,6 +373,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
             Ext.getCmp(prototype.id + `-grid-${tipo}01`).bindStore(receivedStore);
             Ext.getCmp(prototype.id + `-${tipo}-paggin01`).bindStore(receivedStore);
         } else if (me.tipoGrid === '1'){
+            win.lblUser_toolTip("Estructura: A4344");
             let loadedStore = Ext.create('Ext.data.Store', {
                 storeId: prototype.id + `-detail-${tipo}-store`,
                 loadMask: true,
@@ -381,6 +390,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     }
                 },
                 autoLoad: true,
+                pageSize:20,
                 listeners: {
                     load: function (store, records, successful, operation) {
                         if (!successful) {
@@ -393,9 +403,11 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
             Ext.getCmp(prototype.id + `-grid-${tipo}01`).bindStore(loadedStore);
             Ext.getCmp(prototype.id + `-${tipo}-paggin01`).bindStore(loadedStore);
         } else {
+            win.lblUser_toolTip("Estructura: A4305");
             let exoStore = Ext.create('Ext.data.Store', {
                 storeId: prototype.id + `-detail-${tipo}-store`,
                 loadMask: true,
+                pageSize:20,
                 proxy: {
                     type: 'ajax',
                     enablePaging: true,
@@ -413,7 +425,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
                     load: function (store, records, successful, operation) {
                         if (!successful) {
                             global.Msg({msg: 'Data not Found'});
-                            //console.log(records);
+                            console.log(records);
                         }
                     }
                 }
