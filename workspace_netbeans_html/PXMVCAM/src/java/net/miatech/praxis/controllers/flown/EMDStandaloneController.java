@@ -109,7 +109,7 @@ public class EMDStandaloneController extends BaseController {
 
         System.out.println("-------------- EMDS : MaintenanceA4479-------------");
         String option;
-        A1817 filter = new A1817();
+        A1817Filter filter = new A1817Filter();
         Gson gson = new Gson();
         String msj = "";
         String beanString = "";
@@ -118,7 +118,7 @@ public class EMDStandaloneController extends BaseController {
 
             option = request.getParameter("option");
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A1817.class);
+            filter = gson.fromJson(beanString, A1817Filter.class);
 
             logic = new EMDStandaloneLogic();
             logic.setSession(this.serverSession.getServerSession());

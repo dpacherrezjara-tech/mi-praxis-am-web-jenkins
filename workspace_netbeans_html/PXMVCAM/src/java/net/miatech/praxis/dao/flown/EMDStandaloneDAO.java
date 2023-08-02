@@ -193,12 +193,12 @@ public class EMDStandaloneDAO {
         return lstTkts;
     }
      
-    public String loadPX529SQP04925(A1817 filter, String option) throws SQLException, Exception {
+    public String loadPX529SQP04925(A1817Filter filter, String option) throws SQLException, Exception {
         String strMsj = "Operation was successful.";
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -207,20 +207,25 @@ public class EMDStandaloneDAO {
 
             cstmt.setString(1, option);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
-//            cstmt.setString(3, filter.TTABLA.trim());
-//            cstmt.setString(4, filter.CODETB.trim());
-//            cstmt.setString(5, filter.CODETBCO.trim());
-//            cstmt.setString(6, filter.DESCRE1.trim());
-//            cstmt.setString(7, filter.DESCRE2.trim());
-//            cstmt.setString(8, filter.TDOC.trim());
-//            cstmt.setString(9, filter.DATINI.trim());
-//            cstmt.setString(10, filter.DATFIN.trim());
-//            cstmt.setInt(11, filter.CANT1);
-//            cstmt.setInt(12, filter.CANT2);
-            cstmt.setString(13, filter.STVAL.trim());
-            cstmt.setString(14, session.getUserView().getUserInfo().USR);
-            cstmt.setString(15, Functions.getFechaActual());
-            cstmt.setString(16, Functions.getHoraActual());
+            cstmt.setString(3, filter.TICKET.trim());
+            cstmt.setString(4, filter.CUPON.trim());
+            cstmt.setString(5, filter.SEQ.trim());
+            cstmt.setString(6, filter.SEQRO.trim());
+            cstmt.setString(7, filter.ORIG.trim());
+            cstmt.setString(8, filter.DEST.trim());
+            cstmt.setString(9, filter.DSALES.trim());
+            cstmt.setString(10, filter.SCOUNTRY.trim());
+            cstmt.setString(11, filter.AGENTE.trim());
+            cstmt.setString(12, filter.RFIC.trim());
+            cstmt.setString(13, filter.RECODE.trim());
+            cstmt.setString(14, filter.DESC_RECODE.trim());
+            cstmt.setString(15, filter.RDATE.trim());
+            cstmt.setString(16, filter.FCONT.trim());
+            cstmt.setString(17, filter.IDCON.trim());
+            cstmt.setString(18, filter.STVAL.trim());
+            cstmt.setString(19, session.getUserView().getUserInfo().USR);
+            cstmt.setString(20, Functions.getFechaActual());
+            cstmt.setString(21, Functions.getHoraActual());
 
             cstmt.execute();
 
