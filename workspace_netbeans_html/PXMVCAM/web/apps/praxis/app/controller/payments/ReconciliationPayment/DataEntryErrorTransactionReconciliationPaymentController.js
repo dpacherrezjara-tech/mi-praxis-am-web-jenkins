@@ -111,6 +111,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
             if (this.p.rec === null) {
                 Ext.getCmp(prototype.id + '-dataEntryError').close();
+                return;
             } else {
                 this.bean = this.p.rec.data;
                 if (this.status_match.indexOf(this.bean.STVAL) >= 0) {
@@ -270,18 +271,20 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.PROCTYPE = this.beanResult.PROCTYPE;
         beanTemp.PROCTYPESQ = this.beanResult.PROCTYPESQ;
 
-        beanTemp.SPNR = this.getValue("de-txtSPNR");
-        beanTemp.TICKET = this.getValue("de-txtTICKET");
+        //beanTemp.SPNR = this.getValue("de-txtSPNR");
+        beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
+        beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
+        //beanTemp.TICKET = this.getValue("de-txtTICKET");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
         beanTemp.OBSERV = this.getValue("de-txtOBSERV");
         beanTemp.lstSendManual = [];
-        //console.log(this.lstSendManual.length);
+        //console.log(this.lstSendManual);
         for (var i = 0; i < this.lstSendManual.length; i++) {
             //console.log(this.lstSendManual[i]);
             if (this.lstSendManual[i].FDESGLOSE > 0 || this.lstSendManual[i].FDUPLIB > 0) {
                 continue
             } else {
-                beanTemp.lstSendManual.push(this.lstSendManual[i])
+                beanTemp.lstSendManual.push(this.lstSendManual[i]);
             }
         }
 
@@ -297,7 +300,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             this.lstAdjustment[i].A720SEQ = gridDataAdjustment.data.items[i].data.A720SEQ;
             this.lstAdjustment[i].A720GRUPO = gridDataAdjustment.data.items[i].data.A720GRUPO;
             this.lstAdjustment[i].STMANUAL = 'Adjustment';
-            beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data)
+            beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data);
         }
 
         //console.log(beanTemp);

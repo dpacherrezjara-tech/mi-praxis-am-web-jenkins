@@ -1477,11 +1477,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 62,
+                                            {text: 'PNR', 
+                                                //dataIndex: 'A720PNR', 
+                                                width: 62,
                                                 editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-
+                                                    if(record.data.A720PNR){
+                                                        value = record.data.A720PNR;
+                                                    }else{
+                                                        value = record.data.SPNR || '';
+                                                    }
                                                     return value;
                                                 }
                                             },
