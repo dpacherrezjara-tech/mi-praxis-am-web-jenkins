@@ -5,6 +5,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.flown.EMDStandaloneDAO;
 import net.miatech.beans.A1817Filter;
+import net.miatech.praxis.flown.A1817;
 
 public class EMDStandaloneLogic {
 
@@ -18,4 +19,7 @@ public class EMDStandaloneLogic {
         return EMDStandaloneDAO.loadPX529SQP04924(filter);
     }
     
+    public String loadPX529SQP04925(A1817 filter, String option) throws SQLException, Exception {
+        return EMDStandaloneDAO.loadPX529SQP04925(filter, option);
+    }
 }

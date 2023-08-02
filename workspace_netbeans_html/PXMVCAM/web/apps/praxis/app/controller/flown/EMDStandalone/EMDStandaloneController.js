@@ -150,11 +150,24 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
+         var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
+        cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["0", "Venta sin Uso"],
+                ["1", "Uso sin Venta"],
+                ["2", "MATCH"]
+            ]
+        }));
+        cmbSTVAL.setValue("");
+
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var strTkt = rowData.data.strTicket;
-
+        
         prototypeProgram.view = 'flown-emd-standalone-form';
         prototypeProgram.nprog = 'PX00000633';
         prototypeProgram.title = 'EMD Standalone';
@@ -163,8 +176,8 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         var beanProMasterTicket = {};
 
         beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
-        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(4, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(8, 6);
 
         console.log(beanProMasterTicket);
 
@@ -175,9 +188,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.bean = {};
         me.bean.IN_DATE_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         me.bean.IN_TIPO = '1';
-
-        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+//        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
 
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
@@ -187,8 +200,28 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         };
     },
     btnSearch_click: function (obj, e) {
-        this.setFormatParameter();
-        this.setGridData();
+
+        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+        if (txtTicket.trim().length > 0) {
+            if (txtTicket.trim().length === 13) {
+                me.bean = {};
+                me.bean.IN_TIPO = '1';
+                me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
+                var beanString = JSON.stringify(me.bean);
+                searchParams = {
+                    beanString: beanString,
+                    bean: me.bean
+                };
+                this.setGridData();
+            } else {
+                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+            }
+        } else {
+            this.setFormatParameter();
+            this.setGridData();
+        }
+
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function (obj, val) {
@@ -300,7 +333,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-
+        console.log(me.lst);
         Ext.create('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
