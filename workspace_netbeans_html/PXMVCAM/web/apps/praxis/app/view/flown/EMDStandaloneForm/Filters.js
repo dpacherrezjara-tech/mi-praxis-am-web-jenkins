@@ -106,24 +106,42 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
-//                {xtype: 'tbspacer', width: 20},
+                {xtype: 'tbspacer', width: 20},
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Ticket:',
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    hidden:true,
+                    hidden:false,
                     maskRe: /[0-9]/,
                     maxLength: 15,
                     labelWidth: 60,
-                    width: 180,
+                    width: 190,
                     enableKeyEvents: true,
                     listeners: {
                         keypress: 'filterTicketEMD'
                     }
                 },
-                {xtype: 'tbspacer', width: 20},
+//                {xtype: 'tbspacer', width: 20},
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'Status:',
+                    id: prototype.id + '-cmbSTVAL',
+                    queryMode: 'local',
+                    triggerAction: 'all',
+                    valueField: 'code',
+                    displayField: 'name',
+                    emptyText: 'All',
+                    //maxLength: 3,
+                    labelWidth: 60,
+                    width: 200,
+                    hiddenLabel: false,
+                    value: '',
+                    listeners: {
+                        change: 'btnSearch_click'
+                    }
+                },
             ]
         }
     ]

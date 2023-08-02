@@ -83,6 +83,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
+                            hidden:true,
                             tooltip: 'New'
                         },
                         {

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +17,7 @@ import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.flown.EMDStandaloneLogic;
 import net.miatech.beans.A1817Filter;
+import net.miatech.praxis.flown.A1817;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -101,6 +103,38 @@ public class EMDStandaloneController extends BaseController {
         return lst;
     }
     
+    @RequestMapping(value = "MaintenanceA4479")
+    public @ResponseBody
+    String MaintenanceA4479(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- EMDS : MaintenanceA4479-------------");
+        String option;
+        A1817 filter = new A1817();
+        Gson gson = new Gson();
+        String msj = "";
+        String beanString = "";
+
+        try {
+
+            option = request.getParameter("option");
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1817.class);
+
+            logic = new EMDStandaloneLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            msj = logic.loadPX529SQP04925(filter, option);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
     //Excels
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody

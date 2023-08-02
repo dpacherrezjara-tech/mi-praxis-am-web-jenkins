@@ -46,18 +46,22 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     mostrarData: function () {
         console.log(meDE.beanResult);
-        this.setValue('de-txtCodeTable', this.beanResult.TTABLA);
-        this.setValue('de-txtCTable', this.beanResult.CODETB);
-        this.copia = this.getValue('de-txtCTable');
-        this.setValue('de-txtCDesc1', this.beanResult.DESCRE1);
-        this.setValue('de-txtCDesc2', this.beanResult.DESCRE2);
-        this.setValue('cmbDoc', this.beanResult.TDOC);
-//        this.setValue('de-txtCant1', this.beanResult.CANT1);
-//        this.setValue('de-txtCant2', this.beanResult.CANT2);
-        this.setValue('de-txtINI', this.beanResult.DATINI);
-        this.setValue('de-txtFIN', this.beanResult.DATFIN);
-        this.setValue('cmbStval', this.beanResult.STVAL);
-
+        this.setValue('de-cmbSTATUS', this.beanResult.STVAL);
+        this.setValue('de-txtTICKET', this.beanResult.CCIA + this.beanResult.FORMA + this.beanResult.SERIE);
+        this.setValue('de-txtCUPON', this.beanResult.CUPON);//Cortar
+        this.setValue('de-txtSEQ', this.beanResult.SEQ);
+        this.setValue('de-txtSEQROL', this.beanResult.SEQRO);
+        this.setValue('de-txtORIG', this.beanResult.ORIG);
+        this.setValue('de-txtDEST', this.beanResult.DEST);
+        this.setValue('de-txtSDATE', this.beanResult.strFormatDate);
+        this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
+        this.setValue('de-txtAGENT', this.beanResult.AGENTE);
+        this.setValue('de-txtRECODE', this.beanResult.RECODE);
+        this.setValue('de-txtFDESCRIP', this.beanResult.DESC_RECODE);
+        this.setValue('de-txtRDATE', this.beanResult.descRDATE);
+        this.setValue('de-txtFCONT', this.beanResult.descFCONT);
+        this.setValue('de-txtIDCON', this.beanResult.IDCON);
+        
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -66,54 +70,37 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('txtHOUP', this.beanResult.HOUP);
     },
     obtainData: function () {
-        var cmbStval = Ext.getCmp(prototype.id + '-cmbStval');
-        cmbStval.bindStore(Ext.create('Ext.data.ArrayStore', {
+        var cmbSTATUS = Ext.getCmp(prototype.id + '-de-cmbSTATUS');
+        cmbSTATUS.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "none"],
-                ["V", "Vigente"],
-                ["A", "Anulado"]
+                ["0", "Venta sin Uso"],
+                ["1", "Uso sin Venta"],
+                ["2", "MATCH"]
             ]
         }));
-        cmbStval.setValue('');
-
-        var cmbDoc = Ext.getCmp(prototype.id + '-cmbDoc');
-        cmbDoc.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "none"],
-                ["S", "Sales"],
-                ["R", "Refund"],
-                ["A", "Adjustment"],
-                ["N", "ADM/NOTA CARGO"]
-            ]
-        }));
-        cmbDoc.setValue('');
+        cmbSTATUS.setValue('');
 
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-        beanTemp.TTABLA = this.getValue("de-txtCodeTable");
-        beanTemp.CODETB = this.getValue("de-txtCTable");
-        beanTemp.CODETBCO = this.copia;
-        beanTemp.DESCRE1 = this.getValue("de-txtCDesc1");
-        beanTemp.DESCRE2 = this.getValue("de-txtCDesc2");
-        beanTemp.TDOC = this.getValue("cmbDoc");
-//        beanTemp.CANT1 = this.getValue("de-txtCant1");
-//        var a =  this.getValue("de-txtCant1");
-//        if( a === ''){
-//            beanTemp.CANT1 = 0;
-//        }
-//        beanTemp.CANT2 = this.getValue("de-txtCant2");
-//        var b =  this.getValue("de-txtCant1");
-//        if( b === ''){
-//            beanTemp.CANT1 = 0;
-//        }
-        beanTemp.DATINI = this.getValue("de-txtINI");
-        beanTemp.DATFIN = this.getValue("de-txtFIN");
-        beanTemp.STVAL = this.getValue("cmbStval");
+        
+        beanTemp.TTABLA = this.getValue("de-cmbSTATUS").trim();
+        beanTemp.TTABLA = this.getValue("de-txtTICKET").trim();
+        beanTemp.TTABLA = this.getValue("de-txtCUPON").trim();
+        beanTemp.TTABLA = this.getValue("de-txtSEQ").trim();
+        beanTemp.TTABLA = this.getValue("de-txtSEQROL").trim();
+        beanTemp.TTABLA = this.getValue("de-txtORIG").trim();
+        beanTemp.TTABLA = this.getValue("de-txtDEST").trim();
+        beanTemp.TTABLA = this.getValue("de-txtSDATE").trim();
+        beanTemp.TTABLA = this.getValue("de-txtCOUNTRY").trim();
+        beanTemp.TTABLA = this.getValue("de-txtAGENT").trim();
+        beanTemp.TTABLA = this.getValue("de-txtRECODE").trim();
+        beanTemp.TTABLA = this.getValue("de-txtFDESCRIP").trim();
+        beanTemp.TTABLA = this.getValue("de-txtRDATE").trim();
+        beanTemp.TTABLA = this.getValue("de-txtFCONT").trim();
+        beanTemp.TTABLA = this.getValue("de-txtIDCON").trim();
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -123,10 +110,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
     },
     getData: function () {
+        meDE.bean.data.IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) +  meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
         var beanString = JSON.stringify(meDE.bean.data);
         console.log(beanString);
         Ext.Ajax.request({
-            url: prototype.url + '/searchCompleteDetail',
+            url: prototype.url + '/search',
             method: 'POST',
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
@@ -134,9 +122,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanResult = res.result;
+                meDE.beanResult = res.data[0];
+                console.log(meDE.beanResult);
                 meDE.mostrarData();
-                console.log(meDE.mostrarData());
             }
         });
     },
@@ -162,7 +150,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         beanTemp.beanString = JSON.stringify(beanTemp);
-                        this.MaintenanceA4169(beanTemp);
+                        this.MaintenanceA4479(beanTemp);
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -189,7 +177,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                                 this.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                this.MaintenanceA4169(beanTemp);
+                                this.MaintenanceA4479(beanTemp);
                             }
                         }
                     });
@@ -199,19 +187,19 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
 
     },
     validateDates: function () {
-        var DATINI = this.getValue("de-txtINI");
-        var DATFIN = this.getValue("de-txtFIN");
-        var msj = '';
-
-        if (DATINI.length === 8 && DATFIN.length === 8) {
-            if (DATFIN < DATINI) {
-                msj = 'Error in dates';
-            }
-        } else {
-            msj = 'Error in date lenghts'
-        }
-
-        return msj;
+//        var DATINI = this.getValue("de-txtINI");
+//        var DATFIN = this.getValue("de-txtFIN");
+//        var msj = '';
+//
+//        if (DATINI.length === 8 && DATFIN.length === 8) {
+//            if (DATFIN < DATINI) {
+//                msj = 'Error in dates';
+//            }
+//        } else {
+//            msj = 'Error in date lenghts'
+//        }
+//
+//        return msj;
     },
     onDeleteClick: function (btn) {
         Ext.Msg.show({
@@ -226,7 +214,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                     var beanTemp = {};
                     beanTemp.option = 'D';
                     beanTemp.beanString = JSON.stringify(meDE.beanResult);
-                    this.MaintenanceA4169(beanTemp);
+                    this.MaintenanceA4479(beanTemp);
                 }
             }
         });
@@ -235,44 +223,45 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.view.close();
     },
     // </editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA4169: function (beanTemp) {
+    //<editor-fold defaultstate="collapsed" desc="MaintenanceA4479">
+    MaintenanceA4479: function (beanTemp) {
 //        console.log(beanTemp);
-        Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA4169',
-            method: 'POST',
-            timeout: 60000000,
-            params: beanTemp,
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-            success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-                console.log(res);
-                if (res.success) {
-                    global.Msg({msg: res.Mensaje});
-                    Ext.getCmp(prototype.id + '-dataEntry').unmask();
-                    Ext.getCmp(prototype.id + '-dataEntry').close();
-                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                } else {
-                    global.Msg({msg: 'An error occurred'});
-                }
-            }
-        });
+//        Ext.Ajax.request({
+//            url: prototype.url + '/MaintenanceA4479',
+//            method: 'POST',
+//            timeout: 60000000,
+//            params: beanTemp,
+//            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+//            success: function (response, opts) {
+//                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+//                var res = Ext.JSON.decode(response.responseText);
+//                console.log(res);
+//                if (res.success) {
+//                    global.Msg({msg: res.Mensaje});
+//                    Ext.getCmp(prototype.id + '-dataEntry').unmask();
+//                    Ext.getCmp(prototype.id + '-dataEntry').close();
+//                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+//                } else {
+//                    global.Msg({msg: 'An error occurred'});
+//                }
+//            }
+//        });
+        global.Msg({msg: 'Under Construction'});
     },
     //</editor-fold>
 
     validacionInsert: function (beanTemp) {
-        var msjResult = '';
-        if (this.getValue("de-txtCodeTable") === '' /* || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' */ || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '') {
-            msjResult = "You must enter the required field.";
-        }
-        return msjResult;
+//        var msjResult = '';
+//        if (this.getValue("de-txtCodeTable") === '' /* || this.getValue("de-txtCant1") === '' || this.getValue("de-txtCant2") === '' */ || this.getValue("de-txtCDesc1") === '' || this.getValue("cmbDoc") === '') {
+//            msjResult = "You must enter the required field.";
+//        }
+//        return msjResult;
     },
     DeshabilitarCampoClave: function () {
-        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
+//        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
     },
     setearCamposClave: function () {
-        Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
+//        Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
         //Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
     },
     Habilitarlbl: function () {

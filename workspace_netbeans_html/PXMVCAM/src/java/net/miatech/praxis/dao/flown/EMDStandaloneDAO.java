@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.beans.A1817Filter;
+import net.miatech.praxis.flown.A1817;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -103,6 +104,7 @@ public class EMDStandaloneDAO {
                 while (rst.next()) {
 
                     bean = new A1817Filter();
+                    bean.IN_TIPO = filter.IN_TIPO.trim();
                     bean.DSALES = rst.getString("FVTA");
                     bean.strFormatDate = Functions.getMonthConvert(bean.DSALES);
                     bean.SCOUNTRY  = rst.getString("PSVVTA");
@@ -145,12 +147,17 @@ public class EMDStandaloneDAO {
                     }else if(bean.STVAL.equals("2")){
                         bean.descSTVAL = "MATCH";
                     }
-//                    bean.VFOP   = rst.getDouble("VFOP");
-                    
                     
                     //Totales
 //                    bean.totVFOP = VFOP;
                     
+                    bean.USCR = rst.getString("USCR");
+                    bean.FECR = rst.getString("FECR");
+                    bean.HOCR = rst.getString("HOCR");
+                    bean.USUP = rst.getString("USUP");
+                    bean.FEUP = rst.getString("FEUP");
+                    bean.HOUP = rst.getString("HOUP");
+
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
                     bean.page.TOTPAG = filter.page.TOTPAG;
@@ -184,5 +191,55 @@ public class EMDStandaloneDAO {
         }
 
         return lstTkts;
+    }
+     
+    public String loadPX529SQP04925(A1817 filter, String option) throws SQLException, Exception {
+        String strMsj = "Operation was successful.";
+
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, option);
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+//            cstmt.setString(3, filter.TTABLA.trim());
+//            cstmt.setString(4, filter.CODETB.trim());
+//            cstmt.setString(5, filter.CODETBCO.trim());
+//            cstmt.setString(6, filter.DESCRE1.trim());
+//            cstmt.setString(7, filter.DESCRE2.trim());
+//            cstmt.setString(8, filter.TDOC.trim());
+//            cstmt.setString(9, filter.DATINI.trim());
+//            cstmt.setString(10, filter.DATFIN.trim());
+//            cstmt.setInt(11, filter.CANT1);
+//            cstmt.setInt(12, filter.CANT2);
+            cstmt.setString(13, filter.STVAL.trim());
+            cstmt.setString(14, session.getUserView().getUserInfo().USR);
+            cstmt.setString(15, Functions.getFechaActual());
+            cstmt.setString(16, Functions.getHoraActual());
+
+            cstmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            strMsj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+
     }
 }
