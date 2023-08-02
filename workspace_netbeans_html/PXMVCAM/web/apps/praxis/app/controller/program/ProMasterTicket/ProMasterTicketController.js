@@ -2224,7 +2224,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             AL: paramsResultSet15.fileA1747.CARR,
                                             FLIGHT : paramsResultSet15.fileA1747.NFLIGHT,
                                             DATE : paramsResultSet15.fileA1747.DFLIGHT,
-                                            REF : paramsResultSet15.fileA1747.TIPOC === '8' ? 'RFTX':paramsResultSet15.fileA1747.TUA,
+                                            //REF : paramsResultSet15.fileA1747.TIPOC === '8' ? 'RFTX':paramsResultSet15.fileA1747.TUA,
+                                            REF : paramsResultSet15.fileA1747.CUPON === '1' ? (paramsResultSet15.fileA1747.A4373CUPN1.trim() === '' ? '':'RFTX') :
+                                              paramsResultSet15.fileA1747.CUPON === '2' ? (paramsResultSet15.fileA1747.A4373CUPN2.trim() === '' ? '':'RFTX') :
+                                              paramsResultSet15.fileA1747.CUPON === '3' ? (paramsResultSet15.fileA1747.A4373CUPN3.trim() === '' ? '':'RFTX') :
+                                              (paramsResultSet15.fileA1747.A4373CUPN4.trim() === '' ? '':'RFTX'),
                                             STAT : 'DISC',
                                             AMOUNT : Ext.util.Format.number(paramsResultSet15.fileA1747.VCPN, '0,000.00'),
                                             CRCY : paramsResultSet15.fileA1747.MDACP,
@@ -2906,7 +2910,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             AL: paramsResultSet15.fileA1747.CARR,
                                             FLIGHT : paramsResultSet15.fileA1747.NFLIGHT,
                                             DATE : paramsResultSet15.fileA1747.DFLIGHT,
-                                            REF : paramsResultSet15.fileA1747.TIPOC === '8' ? 'RFTX':paramsResultSet15.fileA1747.TUA,
+                                            //REF : paramsResultSet15.fileA1747.TIPOC === '8' ? 'RFTX':paramsResultSet15.fileA1747.TUA,
+                                            REF : paramsResultSet15.fileA1747.CUPON === '1' ? (paramsResultSet15.fileA1747.A4373CUPN1.trim() === '' ? '':'RFTX') :
+                                              paramsResultSet15.fileA1747.CUPON === '2' ? (paramsResultSet15.fileA1747.A4373CUPN2.trim() === '' ? '':'RFTX') :
+                                              paramsResultSet15.fileA1747.CUPON === '3' ? (paramsResultSet15.fileA1747.A4373CUPN3.trim() === '' ? '':'RFTX') :
+                                              (paramsResultSet15.fileA1747.A4373CUPN4.trim() === '' ? '':'RFTX'),
                                             STAT : 'DISC',
                                             AMOUNT : Ext.util.Format.number(paramsResultSet15.fileA1747.VCPN, '0,000.00'),
                                             CRCY : paramsResultSet15.fileA1747.MDACP,

@@ -709,6 +709,10 @@ public class ProMasterTicketDAO {
                                                                             objRtn15.fileA1747.MDACP = rs15.getString("MDACP");
                                                                             objRtn15.fileA1747.TIPOC = rs15.getString("TIPOC");
                                                                             objRtn15.fileA1747.TUA = rs15.getString("TUA");
+                                                                            objRtn15.fileA1747.A4373CUPN1 = rs15.getString("A4373CUPN1");
+                                                                            objRtn15.fileA1747.A4373CUPN2 = rs15.getString("A4373CUPN2");
+                                                                            objRtn15.fileA1747.A4373CUPN3 = rs15.getString("A4373CUPN3");
+                                                                            objRtn15.fileA1747.A4373CUPN4 = rs15.getString("A4373CUPN4");
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
