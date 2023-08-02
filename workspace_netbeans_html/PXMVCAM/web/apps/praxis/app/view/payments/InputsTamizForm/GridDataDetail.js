@@ -343,6 +343,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
         }
         //let data = me.tipoGrid === '0' ? 'lstReceived' : 'lstLoaded';
         if (me.tipoGrid === '0') {
+            win.lblUser_toolTip("Estructura: A4305");
             let receivedStore = Ext.create('Ext.data.Store', {
                 storeId: prototype.id + `-detail-${tipo}-store`,
                 loadMask: true,
@@ -372,6 +373,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
             Ext.getCmp(prototype.id + `-grid-${tipo}01`).bindStore(receivedStore);
             Ext.getCmp(prototype.id + `-${tipo}-paggin01`).bindStore(receivedStore);
         } else if (me.tipoGrid === '1'){
+            win.lblUser_toolTip("Estructura: A4344");
             let loadedStore = Ext.create('Ext.data.Store', {
                 storeId: prototype.id + `-detail-${tipo}-store`,
                 loadMask: true,
@@ -401,6 +403,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail', {
             Ext.getCmp(prototype.id + `-grid-${tipo}01`).bindStore(loadedStore);
             Ext.getCmp(prototype.id + `-${tipo}-paggin01`).bindStore(loadedStore);
         } else {
+            win.lblUser_toolTip("Estructura: A4305");
             let exoStore = Ext.create('Ext.data.Store', {
                 storeId: prototype.id + `-detail-${tipo}-store`,
                 loadMask: true,

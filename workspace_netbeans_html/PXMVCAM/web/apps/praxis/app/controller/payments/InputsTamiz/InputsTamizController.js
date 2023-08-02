@@ -168,7 +168,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         let TIPO = Ext.getCmp(prototype.id + '-cmbFileType').getValue();
 
         let PROCESADOR = Ext.getCmp(prototype.id + '-cmbFUENTE-det-PROC').getValue() || '';
-        console.log(PROCESADOR.trim());
+        //console.log(PROCESADOR.trim());
         searchParamsDetail = {
             FECHA_FROM: IN_FECHA_FROM,
             FECHA_TO: IN_FECHA_TO,
@@ -463,6 +463,13 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
 //        fetch(prototype.url + '/getDataGridInfo?' + new URLSearchParams(parameters))
 //                .then(async res => {console.log(await res.json())});
         global.getFile(prototype.url + '/downloadProcessorsInfo?' + new URLSearchParams(parameters));
+    },
+    downloadComplement:function(obj){
+        let parameters = Object.assign({},obj.up().up().up().searchParams);
+        parameters.excel = true;
+        console.log('Descargando');
+        console.log(parameters);
+        global.getFile(prototype.url + '/downloadComplementInfo?' + new URLSearchParams(parameters));
     }
     //</editor-fold>
 
