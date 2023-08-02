@@ -272,7 +272,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            text: 'Reason Code',
+                                            text: 'RFIC',
                                             fontSize: 15,
                                             textAlign: 'center',
                                             paddingLeft: 3,
@@ -282,7 +282,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                         {xtype: 'tbspacer', width: 7},
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-de-txtRECODE',
+                                            id: prototype.id + '-de-txtRFIC',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
                                             width: 100,
@@ -290,10 +290,28 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                         {xtype: 'tbspacer', width: 20},
                                         {
                                             xtype: 'label',
+                                            text: 'Reason Code',
+                                            fontSize: 15,
+                                            textAlign: 'center',
+                                            paddingLeft: 3,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 80,
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtRECODE',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 60,
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'label',
                                             text: 'Free Descrip',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -302,7 +320,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtFDESCRIP',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 345,
+                                            width: 200,
                                         },
                                     ]
                                 },

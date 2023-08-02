@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                 this.setearCamposClave();
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
+//                Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
             case 'U':
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                 this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+//                Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
@@ -56,6 +56,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtSDATE', this.beanResult.strFormatDate);
         this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtAGENT', this.beanResult.AGENTE);
+        this.setValue('de-txtRFIC', this.beanResult.RFIC);
         this.setValue('de-txtRECODE', this.beanResult.RECODE);
         this.setValue('de-txtFDESCRIP', this.beanResult.DESC_RECODE);
         this.setValue('de-txtRDATE', this.beanResult.descRDATE);
@@ -86,21 +87,25 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
         
-        beanTemp.TTABLA = this.getValue("de-cmbSTATUS").trim();
-        beanTemp.TTABLA = this.getValue("de-txtTICKET").trim();
-        beanTemp.TTABLA = this.getValue("de-txtCUPON").trim();
-        beanTemp.TTABLA = this.getValue("de-txtSEQ").trim();
-        beanTemp.TTABLA = this.getValue("de-txtSEQROL").trim();
-        beanTemp.TTABLA = this.getValue("de-txtORIG").trim();
-        beanTemp.TTABLA = this.getValue("de-txtDEST").trim();
-        beanTemp.TTABLA = this.getValue("de-txtSDATE").trim();
-        beanTemp.TTABLA = this.getValue("de-txtCOUNTRY").trim();
-        beanTemp.TTABLA = this.getValue("de-txtAGENT").trim();
-        beanTemp.TTABLA = this.getValue("de-txtRECODE").trim();
-        beanTemp.TTABLA = this.getValue("de-txtFDESCRIP").trim();
-        beanTemp.TTABLA = this.getValue("de-txtRDATE").trim();
-        beanTemp.TTABLA = this.getValue("de-txtFCONT").trim();
-        beanTemp.TTABLA = this.getValue("de-txtIDCON").trim();
+        beanTemp.STVAL = this.getValue("de-cmbSTATUS").trim();
+        beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
+        beanTemp.CUPON = this.getValue("de-txtCUPON").trim();
+        beanTemp.SEQ = this.getValue("de-txtSEQ").trim();
+        beanTemp.SEQRO = this.getValue("de-txtSEQROL").trim();
+        beanTemp.ORIG = this.getValue("de-txtORIG").trim();
+        beanTemp.DEST = this.getValue("de-txtDEST").trim();
+//        beanTemp.SDATE = this.getValue("de-txtSDATE").trim();
+        beanTemp.DSALES = this.beanResult.DSALES;
+        beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
+        beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
+        beanTemp.RFIC = this.getValue("de-txtRFIC").trim();
+        beanTemp.RECODE = this.getValue("de-txtRECODE").trim();
+        beanTemp.DESC_RECODE = this.getValue("de-txtFDESCRIP").trim();
+//        beanTemp.RDATE = this.getValue("de-txtRDATE").trim();
+        beanTemp.RDATE = this.beanResult.RDATE;
+//        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
+        beanTemp.FCONT = this.beanResult.FCONT;
+        beanTemp.IDCON = this.getValue("de-txtIDCON").trim();
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -159,9 +164,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         });
     },
     onUpdateClick: function (btn) {
-        var msj = this.validateDates();
+//        var msj = this.validateDates();
 
-        if (msj === '') {
+//        if (msj === '') {
             Ext.Msg.show(
                     {
                         title: '.:PRAXIS:.',
@@ -181,9 +186,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                             }
                         }
                     });
-        } else {
-            global.Msg({msg: msj});
-        }
+//        } else {
+//            global.Msg({msg: msj});
+//        }
 
     },
     validateDates: function () {
@@ -225,28 +230,28 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA4479">
     MaintenanceA4479: function (beanTemp) {
-//        console.log(beanTemp);
-//        Ext.Ajax.request({
-//            url: prototype.url + '/MaintenanceA4479',
-//            method: 'POST',
-//            timeout: 60000000,
-//            params: beanTemp,
-//            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-//            success: function (response, opts) {
-//                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
-//                var res = Ext.JSON.decode(response.responseText);
-//                console.log(res);
-//                if (res.success) {
-//                    global.Msg({msg: res.Mensaje});
-//                    Ext.getCmp(prototype.id + '-dataEntry').unmask();
-//                    Ext.getCmp(prototype.id + '-dataEntry').close();
-//                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-//                } else {
-//                    global.Msg({msg: 'An error occurred'});
-//                }
-//            }
-//        });
-        global.Msg({msg: 'Under Construction'});
+        console.log(beanTemp);
+        Ext.Ajax.request({
+            url: prototype.url + '/MaintenanceA4479',
+            method: 'POST',
+            timeout: 60000000,
+            params: beanTemp,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                if (res.success) {
+                    global.Msg({msg: res.Mensaje});
+                    Ext.getCmp(prototype.id + '-dataEntry').unmask();
+                    Ext.getCmp(prototype.id + '-dataEntry').close();
+                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                } else {
+                    global.Msg({msg: 'An error occurred'});
+                }
+            }
+        });
+//        global.Msg({msg: 'Under Construction'});
     },
     //</editor-fold>
 
