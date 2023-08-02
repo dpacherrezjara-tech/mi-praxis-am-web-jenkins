@@ -22,6 +22,7 @@ public class A1817 {
     public String CCIA = "";
     public String FORMA = "";
     public String SERIE = "";
+    public String TICKET = "";
     public String CUPON = "";
     public String FFLOW = "";
     public String TOPER = "";
