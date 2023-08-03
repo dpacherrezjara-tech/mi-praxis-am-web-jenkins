@@ -32,15 +32,15 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Options', {
                                 click: 'onClickFilterBtn'
                             }
                         },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel',
-                            listeners: {
-                                click: 'onClickExcelBtn'
-                            }
-                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btnExcel',
+//                            iconCls: 'prx-icon-excel',
+//                            tooltip: 'Export to Excel',
+//                            listeners: {
+//                                click: 'onClickExcelBtn'
+//                            }
+//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnClear',

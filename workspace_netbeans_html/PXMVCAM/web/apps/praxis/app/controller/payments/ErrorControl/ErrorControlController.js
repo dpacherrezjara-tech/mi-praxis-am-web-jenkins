@@ -91,6 +91,23 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
         console.log(params);
         return params;
     },
+    //<editor-fold defaultstate="collapsed" desc="Exceles">
+    downloadFormatSummary:function(obj){
+        const me = this;
+        let params = Object.assign({},me.formatParameters());
+        params.excel = true;
+        console.log(params);
+        global.getFile(`${me.url}/downloadErrorSummary?${new URLSearchParams(params)}`);
+    },
+    downloadLoadSummary:function(obj){
+        const me = this;
+        let params = Object.assign({},me.formatParameters());
+        params.excel = true;
+        console.log(params);
+        global.getFile(`${me.url}/downloadErrorArchSummary?${new URLSearchParams(params)}`);
+    },
+    //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {
         const me = this;

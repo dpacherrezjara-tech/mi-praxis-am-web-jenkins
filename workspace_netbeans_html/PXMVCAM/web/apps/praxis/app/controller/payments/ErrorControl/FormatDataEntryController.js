@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
         const form = Ext.getCmp(prototype.id + '-formatDataEntryForm');
         let creditcard = data.scardn.trimEnd();
         let info = {
-            auth: data.sauthoc,
+            auth: data.sauthoc.trimEnd(),
             ccard1: creditcard.substring(0, 6),
             ccard2: creditcard.substring(creditcard.length - 4),
             mda: data.curoffer,
@@ -90,6 +90,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
             dateu: data.feup
         };
         form.getForm().setValues(info);
+        form.isValid();
         //console.log(form.getForm().getValues());
     },
     reloadGrid: function () {

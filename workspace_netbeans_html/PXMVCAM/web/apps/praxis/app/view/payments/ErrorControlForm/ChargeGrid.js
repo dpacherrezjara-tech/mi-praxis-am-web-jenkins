@@ -5,7 +5,8 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
     alias: 'widget.' + prototype.id + '-chargeGrid',
     config: {
         searchParams: null,
-        searchUrl: null
+        searchUrl: null,
+        url: CONTEXTPATH + '/ErrorControl'
     },
     listeners: {
         afterrender: function (view) {
@@ -15,7 +16,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
     //<editor-fold defaultstate="collapsed" desc="Items">
     title: 'Detail Log Errors',
     titleAlign: 'center',
-    height: 605,
+    height: 625,
     width: 800,
     viewConfig: {
         stripeRows: true,
@@ -63,6 +64,19 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
             scale: 'medium'
         },
         items: [
+            {
+                xtype: 'button',
+                //id: prototype.id + '-btnExcel',
+                //text:'<strong>Excel</strong>',
+                iconCls: 'prx-icon-excel',
+                scale: 'small',
+                tooltip: 'Export to Excel',
+                listeners: {
+                    click: function (obj) {
+                        obj.up().up().downloadGrid();
+                    }
+                }
+            },
             {
                 text: '<strong style="color:white;">Back<strong>',
                 id: prototype.id + '-detArch-btnBack',
@@ -130,5 +144,14 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid', {
             ...searchParams
         };
         return params;
+    },
+    downloadGrid:function(){
+        const me = this;
+        if(me.searchParams){
+           let params = me.formatParams(me.searchParams);
+           params.excel = true;
+           console.log(params);
+           global.getFile(`${me.url}/downloadErrorArchDetail?${new URLSearchParams(params)}`);
+        }
     }
 });
