@@ -82,11 +82,20 @@ public class ExportUtils {
                 cols++;
             }
             
+            for(int c=0;c<cols;c++){
+                sheet.autoSizeColumn(c,false);
+            }
+            
             for (int i = 1; i < data.size(); i++) {
                 Row row = sheet.createRow(i);
                 for (int x = 0; x < data.get(i).length; x++) {
                     Cell cell = row.createCell(x);
                     Object obj = data.get(i)[x];
+                    if(obj==null){
+                        cell.setCellValue("");
+                        cell.setCellStyle(bodyStyle);
+                        continue;
+                    }
                     String dataType = obj.getClass().getSimpleName();
                     switch (dataType) {
                         case "Integer":
@@ -95,6 +104,7 @@ public class ExportUtils {
                             break;
                         case "Double":
                         case "double":
+                        case "BigDecimal":
                             cell.setCellValue(Double.parseDouble(obj.toString()));
                             break;
                         case "Boolean":
@@ -107,10 +117,6 @@ public class ExportUtils {
                     cell.setCellStyle(bodyStyle);
                 }
             }
-
-//            for(int c=0;c<cols;c++){
-//                sheet.autoSizeColumn(c,true);
-//            }
             try (FileOutputStream fos = new FileOutputStream(file)) {
                 workbook.write(fos);
             }
