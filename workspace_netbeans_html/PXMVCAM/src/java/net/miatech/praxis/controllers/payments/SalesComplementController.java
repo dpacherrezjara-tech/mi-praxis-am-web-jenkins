@@ -324,7 +324,7 @@ public class SalesComplementController {
             headers[1] = "Merchant";
             headers[2] = "Processing Date";
             headers[3] = "Diff. Days";
-            headers[4] = "Ligas VS Amex";
+            headers[4] = "Tablet VS Amex";
             headers[5] = "Sales Date";
             headers[6] = "Sale Time";
             headers[7] = "CC Name";
