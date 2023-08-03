@@ -13,11 +13,16 @@ public class A1817 {
     public String CCUST = "";
     public int NAID = 0;
     public String STVAL = "";
+    public String descSTVAL = "";
+    public String IDCON = "";
+    public String FCONT = "";
+    public String descFCONT = "";
     public String TEMD = "";
     // INFORMATION FLIGHT OCR  
     public String CCIA = "";
     public String FORMA = "";
     public String SERIE = "";
+    public String TICKET = "";
     public String CUPON = "";
     public String FFLOW = "";
     public String TOPER = "";

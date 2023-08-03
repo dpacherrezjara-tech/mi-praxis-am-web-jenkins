@@ -411,14 +411,18 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 Ext.getCmp(prototype.id + '-gridDataMainA1686').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
-                
-                if(res.User === 'SAP01T' || res.User === 'SAP43T' || res.User === 'SAP48T' || res.User === 'SAP07T' || res.User === 'SAP12T' || res.User === 'SAP52T'
-                || res.User === 'ADM2T' || res.User === 'OPER2T' || res.User === 'OPER3T' || res.User === 'OPER6T' || res.User === 'OPER7T' || res.User === 'OPER9T'){
+                var user = res.User.substring(0,3);
+                if(user === 'SAP'){
                     Ext.getCmp(prototype.id + '-chkLOG').show();
                 }else{
                     Ext.getCmp(prototype.id + '-chkLOG').hide();
                 }
-                
+//                if(res.User === 'SAP01T' || res.User === 'SAP43T' || res.User === 'SAP48T' || res.User === 'SAP07T' || res.User === 'SAP12T' || res.User === 'SAP52T'
+//                || res.User === 'ADM2T' || res.User === 'OPER2T' || res.User === 'OPER3T' || res.User === 'OPER6T' || res.User === 'OPER7T' || res.User === 'OPER9T'){
+//                    Ext.getCmp(prototype.id + '-chkLOG').show();
+//                }else{
+//                    Ext.getCmp(prototype.id + '-chkLOG').hide();
+//                }
                 var data = res.data;
                 
                 if(data.length === 0){
