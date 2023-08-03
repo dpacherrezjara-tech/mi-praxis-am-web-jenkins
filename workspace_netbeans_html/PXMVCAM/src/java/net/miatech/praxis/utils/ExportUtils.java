@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
@@ -40,7 +41,7 @@ public class ExportUtils {
             String[] nameArr = fileNameDownload.split("\\.");
             String prefix = nameArr[0];
             String suffix = "." + nameArr[1];
-            File file = File.createTempFile(prefix, suffix);
+            File file = File.createTempFile(prefix + UUID.randomUUID(), suffix);
             Sheet sheet = workbook.createSheet();
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
