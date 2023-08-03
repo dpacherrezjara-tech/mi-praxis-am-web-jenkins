@@ -38,9 +38,9 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Filters', {
                             fieldLabel: 'Date',
                             id: prototype.id + '-cmbDate',
                             store: Ext.create('Ext.data.SimpleStore', {
-                                fields: ['code','name'],
+                                fields: ['code', 'name'],
                                 data: [
-                                    ['FPROC','Processing Date']
+                                    ['FPROC', 'Processing Date']
                                 ]
                             }),
                             labelWidth: 100,
@@ -58,10 +58,10 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Filters', {
                             labelWidth: 50,
                             width: 150,
                             id: prototype.id + '-dateFrom',
-                            value:new Date(new Date().getFullYear(), 0, 1),
+                            value: new Date(new Date().getFullYear(), 0, 1),
                             validator: 'validaFecha',
-                            listeners:{
-                                change:'onChangeFechaBtn'
+                            listeners: {
+                                change: 'onChangeFechaBtn'
                             }
                         },
                         {
@@ -73,8 +73,8 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Filters', {
                             id: prototype.id + '-dateTo',
                             value: new Date(),
                             validator: 'validaFecha',
-                            listeners:{
-                                change:'onChangeFechaBtn'
+                            listeners: {
+                                change: 'onChangeFechaBtn'
                             }
                         },
                         {
@@ -98,7 +98,10 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Filters', {
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',
-                            value: ''
+                            value: '',
+                            listeners: {
+                                change: 'onClickSearchBtn'
+                            }
                         },
                     ]
                 }

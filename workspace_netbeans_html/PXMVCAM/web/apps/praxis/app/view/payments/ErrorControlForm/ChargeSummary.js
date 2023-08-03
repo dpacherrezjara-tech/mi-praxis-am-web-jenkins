@@ -6,12 +6,12 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeSummary', {
     requires: [
         'Ext.Praxis.view.payments.ErrorControlForm.ChargeGrid'
     ],
-    height: 605,
+    height: 625,
     width: 1400,
     layout: 'center',
     border: false,
     bodyStyle: 'background: transparent;',
-    margin: '0 10 0 10',
+    //margin: '0 10 0 10',
     config: {
         searchParams: null,
         searchUrl: null
@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeSummary', {
             title: 'Summary Log Errors',
             titleAlign: 'center',
             id: prototype.id + '-gridChargeSummary',
-            height: 605,
+            height: 625,
             width: 605,
             viewConfig: {
                 stripeRows: true,
@@ -87,6 +87,25 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ChargeSummary', {
             bbar: {
                 xtype: 'pagingtoolbar',
                 displayInfo: true
+            },
+            tbar: {
+                layout: {
+                    pack: 'end'
+                },
+                defaults: {
+                    scale: 'medium'
+                },
+                items: [
+                    {
+                        xtype: 'button',
+                        iconCls: 'prx-icon-excel',
+                        scale: 'small',
+                        tooltip: 'Export to Excel',
+                        listeners: {
+                            click: 'downloadLoadSummary'
+                        }
+                    }
+                ]
             }
         }
     ],

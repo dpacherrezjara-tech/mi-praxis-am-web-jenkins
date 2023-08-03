@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: 650,
+                                            height: 670,
                                             width: 1400,
                                             bodyStyle: 'background: transparent',
                                             layout: 'fit',
@@ -70,24 +70,36 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                                                     xtype: 'tabpanel',
                                                     id: prototype.id + '-tabMain',
                                                     width: 1400,
-                                                    height: 650,
+                                                    height: 670,
                                                     anchor: '100%',
                                                     margin: '1 1 1 1',
                                                     autoScroll: true,
                                                     bodyStyle: 'background: transparent',
-                                                    listeners:{
-                                                        tabchange:'onChangeTab'
+                                                    listeners: {
+                                                        tabchange: 'onChangeTab'
                                                     },
-                                                    items:[
+                                                    items: [
                                                         {
                                                             id: prototype.id + '-tabFormat',
                                                             title: 'Format',
-                                                            itemId:'F'
+                                                            itemId: 'F',
+                                                            tabConfig: {
+                                                                flex: 1,
+                                                                style: {
+                                                                    'text-align': 'center'
+                                                                }
+                                                            }
                                                         },
                                                         {
                                                             id: prototype.id + '-tabCharge',
                                                             title: 'Load',
-                                                            itemId:'C'
+                                                            itemId: 'C',
+                                                            tabConfig: {
+                                                                flex: 1,
+                                                                style: {
+                                                                    'text-align': 'center'
+                                                                }
+                                                            }
                                                         }
                                                     ]
                                                 }

@@ -8,7 +8,8 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatGrid', {
     ],
     config: {
         searchParams: null,
-        searchUrl: null
+        searchUrl: null,
+        url: CONTEXTPATH + '/ErrorControl'
     },
     listeners: {
         afterrender: function (view) {
@@ -18,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatGrid', {
     //<editor-fold defaultstate="collapsed" desc="Items">
     title: 'Detail Log Errors',
     titleAlign: 'center',
-    height: 605,
+    height: 625,
     width: 1350,
     viewConfig: {
         stripeRows: true,
@@ -129,48 +130,103 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatGrid', {
         },
         items: [
             {
-                xtype: 'combobox',
-                fieldLabel: 'Status Error',
-                id: prototype.id + '-gd-STERR',
-                store: Ext.create('Ext.data.SimpleStore', {
-                    fields: ['code', 'name'],
-                    data: [
-                        ['', 'All'],
-                        ['0', 'Pending'],
-                        ['1', 'Audited'],
-                        ['2', 'Pending System']
-                    ]
-                }),
-                labelWidth: 70,
-                width: 200,
-                displayField: 'name',
-                valueField: 'code',
-                queryMode: 'local',
-                editable: false,
-                value: ''
+                xtype: 'fieldset',
+                collapsible: true,
+                collapsed: true,
+                title: 'Filters',
+                titleAlign: 'bottom',
+                layout: 'hbox',
+                flex: 1,
+                bodyStyle: 'background: transparent;',
+                border: false,
+                padding: '0 10 0 10',
+                items: [
+                    {
+                        xtype: 'combobox',
+                        fieldLabel: 'Status Error',
+                        id: prototype.id + '-gd-STERR',
+                        store: Ext.create('Ext.data.SimpleStore', {
+                            fields: ['code', 'name'],
+                            data: [
+                                ['', 'All'],
+                                ['0', 'Pending'],
+                                ['1', 'Audited'],
+                                ['2', 'Pending System']
+                            ]
+                        }),
+                        labelWidth: 70,
+                        width: 200,
+                        displayField: 'name',
+                        valueField: 'code',
+                        queryMode: 'local',
+                        editable: false,
+                        value: '',
+                        listeners: {
+                            change: function (obj) {
+                                obj.up().up().up().getData();
+                            }
+                        }
+                    },
+                    {xtype: 'tbspacer', width: 10},
+                    {
+                        xtype: 'combobox',
+                        fieldLabel: 'Status Rev.',
+                        id: prototype.id + '-gd-TIPCO',
+                        store: Ext.create('Ext.data.SimpleStore', {
+                            fields: ['code', 'name'],
+                            data: [
+                                ['', 'All'],
+                                ['A', 'Automatic'],
+                                ['F', 'Forced Match']
+                            ]
+                        }),
+                        labelWidth: 70,
+                        width: 200,
+                        displayField: 'name',
+                        valueField: 'code',
+                        queryMode: 'local',
+                        editable: false,
+                        value: '',
+                        listeners: {
+                            change: function (obj) {
+                                obj.up().up().up().getData();
+                            }
+                        }
+                    },
+                    {xtype: 'tbspacer', width: 10},
+                    {
+
+                        xtype: 'button',
+                        iconCls: 'prx-icon-clear',
+                        tooltip: 'Clear Options',
+                        listeners: {
+                            click: function(obj){
+                                const err = Ext.getCmp(prototype.id + '-gd-STERR');
+                                err.suspendEvents(false);
+                                err.setValue('');
+                                Ext.getCmp(prototype.id + '-gd-TIPCO').setValue('');
+                                err.resumeEvents();
+                                obj.up().up().up().getData();
+                            }
+                        }
+                    }
+                ]
             },
             {xtype: 'tbspacer', width: 10},
             {
-                xtype: 'combobox',
-                fieldLabel: 'Status Rev.',
-                id: prototype.id + '-gd-TIPCO',
-                store: Ext.create('Ext.data.SimpleStore', {
-                    fields: ['code', 'name'],
-                    data: [
-                        ['', 'All'],
-                        ['A', 'Automatic'],
-                        ['F', 'Forced Match']
-                    ]
-                }),
-                labelWidth: 70,
-                width: 200,
-                displayField: 'name',
-                valueField: 'code',
-                queryMode: 'local',
-                editable: false,
-                value: ''
+                xtype: 'button',
+                //id: prototype.id + '-btnExcel',
+                //text:'<strong>Excel</strong>',
+                iconCls: 'prx-icon-excel',
+                scale: 'small',
+                tooltip: 'Export to Excel',
+                listeners: {
+                    click: function (obj) {
+                        obj.up().up().downloadGrid();
+                    }
+                }
             },
-            {xtype: 'tbspacer', width: 30},
+            {xtype: 'tbspacer', width: 5},
             {
                 text: '<strong style="color:white;">Back<strong>',
                 id: prototype.id + '-det-btnBack',
@@ -178,6 +234,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatGrid', {
                 width: 100,
                 scale: 'small',
                 overCls: 'x-btn-sent-over',
+                tooltip: 'Back to Summary',
                 listeners: {
                     click: function (btn) {
                         const panel = btn.up().up().up();
@@ -263,12 +320,21 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatGrid', {
                 VN0002dataEntry.show();
             }
         };
-        if(opts[rec.a4481coder]){
+        if (opts[rec.a4481coder]) {
             opts[rec.a4481coder]();
-        }else{
+        } else {
             global.Msg({
-                msg:'Function not implemented'
+                msg: 'Function not implemented'
             });
+        }
+    },
+    downloadGrid:function(){
+        const me = this;
+        if(me.searchParams){
+           let params = me.formatParams(me.searchParams);
+           params.excel = true;
+           console.log(params);
+           global.getFile(`${me.url}/downloadErrorDetail?${new URLSearchParams(params)}`);
         }
     }
 });
