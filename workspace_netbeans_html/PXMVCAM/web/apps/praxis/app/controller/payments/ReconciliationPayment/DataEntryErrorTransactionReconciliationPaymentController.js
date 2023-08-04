@@ -271,10 +271,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.PROCTYPE = this.beanResult.PROCTYPE;
         beanTemp.PROCTYPESQ = this.beanResult.PROCTYPESQ;
 
-        //beanTemp.SPNR = this.getValue("de-txtSPNR");
-        beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
-        beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
-        //beanTemp.TICKET = this.getValue("de-txtTICKET");
+        beanTemp.SPNR = this.getValue("de-txtSPNR");
+        beanTemp.TICKET = this.getValue("de-txtTICKET");
+        if(beanTemp.SPNR!=='' && beanTemp.TICKET!=='' && this.lstSendManual.length>0){
+            beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
+            beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
+        }
+        
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
         beanTemp.OBSERV = this.getValue("de-txtOBSERV");
         beanTemp.lstSendManual = [];
