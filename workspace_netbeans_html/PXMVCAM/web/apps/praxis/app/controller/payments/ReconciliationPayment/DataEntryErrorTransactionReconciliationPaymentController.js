@@ -271,13 +271,19 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         beanTemp.PROCTYPE = this.beanResult.PROCTYPE;
         beanTemp.PROCTYPESQ = this.beanResult.PROCTYPESQ;
 
-        beanTemp.SPNR = this.getValue("de-txtSPNR");
-        beanTemp.TICKET = this.getValue("de-txtTICKET");
-        if(beanTemp.SPNR!=='' && beanTemp.TICKET!=='' && this.lstSendManual.length>0){
-            beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
-            beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
-        }
+        beanTemp.SPNR = this.getValue("de-txtSPNR").trim();
+        beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
         
+        if (this.lstSendManual.length > 0) {
+            if (beanTemp.SPNR==='' && beanTemp.TICKET === '') {
+                beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
+                beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
+            } else if (beanTemp.TICKET.length > 0 && beanTemp.TICKET.substring(0, 3) === '000'&&beanTemp.SPNR === '') {
+                beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
+                beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
+            }
+        }
+        console.log('Datos de PNR y Ticket: ',beanTemp.SPNR,'-',beanTemp.TICKET);
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
         beanTemp.OBSERV = this.getValue("de-txtOBSERV");
         beanTemp.lstSendManual = [];
