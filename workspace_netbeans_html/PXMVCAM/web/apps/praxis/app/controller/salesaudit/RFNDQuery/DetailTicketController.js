@@ -522,7 +522,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
     },
     metadata_detalle: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
-         Ext.getCmp(prototype.idDetailTicket + '-txtRemarks').setValue(data.A3649ERROR);
+        Ext.getCmp(prototype.idDetailTicket + '-txtRemarks').setValue(data.A3649ERROR);
     },
     onAddFopClick: function (rec) {
         var me = this;
@@ -1496,6 +1496,41 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
 
             }
+            // VALIDAR LA MONEDA DE LA VENTA CONRTRA LA RFND
+            /// mda disto a la Sale
+            var txtmdasalePant = "";
+            var txtmdasale = "";
+            recvta = me.view.params.rec;
+            if (txtmda === null) {
+                txtmda = '';
+            }
+            if (txtEqmda === null) {
+                txtEqmda = '';
+            }
+            if (Ext.String.trim(txtEqmda) !== '') {
+                txtmdasalePant = Ext.String.trim(txtEqmda);
+            } else {
+                txtmdasalePant = Ext.String.trim(txtmda);
+            }
+            //   
+            if (Ext.String.trim(recvta.get('A3648SMDAQ')) !== '') {
+                txtmdasale = Ext.String.trim(recvta.get('A3648SMDAQ'));
+            } else {
+                txtmdasale = Ext.String.trim(recvta.get('A3648SMDA'));
+            }
+            // 
+            if (txtmdasale === '') {
+                if (Ext.String.trim(recvta.get('A3648MDAQD')) !== '') {
+                    txtmdasale = Ext.String.trim(recvta.get('A3648MDAQD'));
+                } else {
+                    txtmdasale = Ext.String.trim(recvta.get('A3648XMDA'));
+                }
+            }
+            if(txtmdasalePant!==txtmdasale) {
+                Ext.Msg.alert('.: PRAXIS :.', 'The currency of sale is different from the RFND');
+                bvalida = false;
+            }
+
         }
         // validacion general
         if (regs === 0) {
