@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         prototype.id = 'EMDStandaloneForm';
         prototype.url = CONTEXTPATH + '/EMDStandalone';
         this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
-        me.panelActual = '-panelGridData';
+        me.panelActual = '-panelGridDataMain';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.obtainData();
 
@@ -218,12 +218,73 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                 global.Msg({msg: 'Ticket Number must contain 13 digits.'});
             }
         } else {
+            Ext.getCmp(prototype.id + '-txtTICKET').hide();
             this.setFormatParameter();
-            this.setGridData();
+            this.setMainData();
+            
         }
 
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
+    setMainData: function (obj, val) {
+        console.log("URL : " + prototype.url + '/searchMain');
+        win.lblUser_toolTip("Estructura: A4479");
+        me.panelActual = '-panelGridDataMain';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountedAmountsInvoiced.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchMain'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams;
+                    },
+                    load: function (obj) {
+//                        var pag = Ext.getCmp(prototype.id + '-paggin');
+//                        var pagData = pag.getPageData();
+//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataMain').bindStore(storeGridDatas);
+//            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        }
+    },
+    onGridData: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        Ext.getCmp(prototype.id + '-txtTICKET').show();
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        
+        me.beanEMD = {};
+        
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_TIPO = '1';
+        console.log(me.beanEMD);
+        var beanString = JSON.stringify(me.beanEMD);
+        paramsDetailEMD = {
+            beanString: beanString,
+            bean: me.beanEMD
+        };
+//        this.beanEMD.strFormatDate = rowData.data.strFormatDate;
+//        console.log(this.beanEMD);
+
+//        me.paramsDetailEMD.beanString = JSON.stringify(this.beanEMD);
+        this.setGridData();
+    },
     setGridData: function (obj, val) {
         console.log("URL : " + prototype.url + '/search');
         win.lblUser_toolTip("Estructura: A4479");
@@ -240,7 +301,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                     url: prototype.url + '/search'
                 }, listeners: {
                     beforeload: function (obj) {
-                        obj.proxy.extraParams = searchParams;
+                        obj.proxy.extraParams = paramsDetailEMD;
                     },
                     load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin');

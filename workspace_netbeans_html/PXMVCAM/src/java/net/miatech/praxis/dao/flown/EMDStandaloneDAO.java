@@ -44,6 +44,127 @@ public class EMDStandaloneDAO {
     //***************************** PX529 **************************************
     //**************************************************************************
     
+    public List<A1817Filter> loadPX529SQP04931(A1817Filter filter) throws SQLException, Exception {
+        
+        List<A1817Filter> lstTkts = new ArrayList<A1817Filter>(0);
+        A1817Filter bean;
+        double VFOP = 0;
+        HashMap hm = new HashMap();
+        hm.put("F","Flown");
+        hm.put("E","Exchange");
+        hm.put("R","Refund");
+        hm.put(" ","Without Use");
+               
+        int TOT_QTYSALED = 0,TOT_QTYUSESD = 0,TOT_QTYSALEP = 0,TOT_QTYUSESP = 0,TOT_QTYEMDAU = 0,TOT_QTYEMDMA = 0,TOT_CONTABIL = 0;
+        
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04931(?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_TIPO);
+            cstmt.setString(3, filter.IN_DATE_FROM);
+            cstmt.setString(4, filter.IN_DATE_TO);
+            cstmt.setString(5, filter.IN_STVAL);
+
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
+            
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                TOT_QTYSALED  = rst.getInt("QTYSALED");
+                TOT_QTYUSESD  = rst.getInt("QTYUSESD");
+                TOT_QTYSALEP  = rst.getInt("QTYSALEP");
+                TOT_QTYUSESP  = rst.getInt("QTYUSESP");
+                TOT_QTYEMDAU  = rst.getInt("QTYEMDAU");
+                TOT_QTYEMDMA  = rst.getInt("QTYEMDMA");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+
+                    bean = new A1817Filter();
+                    bean.IN_TIPO = filter.IN_TIPO.trim();
+                    bean.DFLIGHT = rst.getString("DFLIGHT");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.QTYSALED  = rst.getInt("QTYSALED");
+                    bean.QTYUSESD  = rst.getInt("QTYUSESD");
+                    bean.QTYSALEP  = rst.getInt("QTYSALEP");
+                    bean.QTYUSESP  = rst.getInt("QTYUSESP");
+                    bean.QTYEMDAU  = rst.getInt("QTYEMDAU");
+                    bean.QTYEMDMA  = rst.getInt("QTYEMDMA");
+                    
+                    bean.CONTABIL = bean.QTYSALED + bean.QTYUSESD;
+                    
+                    bean.TOT_QTYSALED  = TOT_QTYSALED;
+                    bean.TOT_QTYUSESD  = TOT_QTYUSESD;
+                    bean.TOT_QTYSALEP  = TOT_QTYSALEP;
+                    bean.TOT_QTYUSESP  = TOT_QTYUSESP;
+                    bean.TOT_QTYEMDAU  = TOT_QTYEMDAU;
+                    bean.TOT_QTYEMDMA  = TOT_QTYEMDMA;
+                    
+                    bean.TOT_CONTABIL = TOT_QTYSALED + TOT_QTYUSESD;
+                    
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+                    
+                    lstTkts.add(bean);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
     public List<A1817Filter> loadPX529SQP04924(A1817Filter filter) throws SQLException, Exception {
         
         List<A1817Filter> lstTkts = new ArrayList<A1817Filter>(0);
@@ -60,36 +181,35 @@ public class EMDStandaloneDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04924(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04924(?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
 
+            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
-            cstmt.registerOutParameter(10, Types.INTEGER);
             
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_TIPO);
-            cstmt.setString(3, filter.IN_DATE_FROM);
-            cstmt.setString(4, filter.IN_DATE_TO);
-            cstmt.setString(5, filter.IN_STVAL);
-            cstmt.setString(6, filter.IN_TICKET);
+            cstmt.setString(3, filter.IN_DATE);
+            cstmt.setString(4, filter.IN_STVAL);
+            cstmt.setString(5, filter.IN_TICKET);
 
-            cstmt.setInt(7, filter.page.PAGNUM);
-            cstmt.setInt(8, filter.page.PAGROW);
-            cstmt.setInt(9, filter.page.TOTPAG);
-            cstmt.setInt(10, filter.page.TOTROW);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
             
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(7);
-            filter.page.PAGROW = cstmt.getInt(8);
-            filter.page.TOTPAG = cstmt.getInt(9);
-            filter.page.TOTROW = cstmt.getInt(10);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
             
             rst = cstmt.getResultSet();
 

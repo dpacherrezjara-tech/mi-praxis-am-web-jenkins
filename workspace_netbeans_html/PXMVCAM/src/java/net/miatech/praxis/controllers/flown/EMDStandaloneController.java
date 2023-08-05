@@ -54,6 +54,54 @@ public class EMDStandaloneController extends BaseController {
         map.put("vp_serverTime", Functions.getHoraActual());
         return "sales/EMDStandalone/form_index";
     }
+    
+    @RequestMapping(value = "searchMain")
+    public @ResponseBody
+    String searchMain(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- EMDStandalone : SearchMain-------------");
+        map.put("success", true);
+        List<A1817Filter> lst = this.getListMain(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A1817Filter> getListMain(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1817Filter> lst = new ArrayList<>(0);
+        A1817Filter filter = new A1817Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new EMDStandaloneLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1817Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX529SQP04931(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
 
     @RequestMapping(value = "search")
     public @ResponseBody

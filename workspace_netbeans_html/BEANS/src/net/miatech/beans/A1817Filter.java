@@ -26,6 +26,7 @@ public class A1817Filter extends A1817 {
     public String FVTA = "";
     public String descFVTA = "";
     public String IN_TIPO = "";
+    public String IN_DATE = "";
     public String IN_DATE_FROM = "";
     public String IN_DATE_TO = "";
     public String IN_STVAL = "";
@@ -69,5 +70,22 @@ public class A1817Filter extends A1817 {
     public long lngQPROC = 0;
     public long lngQCLO = 0;
     public long lngQREC = 0;
+    
+    public int QTYSALED = 0;
+    public int QTYUSESD = 0;
+    public int QTYSALEP = 0;
+    public int QTYUSESP = 0;
+    public int QTYEMDAU = 0;
+    public int QTYEMDMA = 0;
+    public int CONTABIL = 0;
+    
+    public int TOT_QTYSALED = 0;
+    public int TOT_QTYUSESD = 0;
+    public int TOT_QTYSALEP = 0;
+    public int TOT_QTYUSESP = 0;
+    public int TOT_QTYEMDAU = 0;
+    public int TOT_QTYEMDMA = 0;
+    public int TOT_CONTABIL = 0;
+    
     public Pagination page = new Pagination();
 }

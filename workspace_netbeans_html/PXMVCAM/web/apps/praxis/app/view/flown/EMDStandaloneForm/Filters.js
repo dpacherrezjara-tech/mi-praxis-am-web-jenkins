@@ -113,7 +113,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    hidden:false,
+                    hidden:true,
                     maskRe: /[0-9]/,
                     maxLength: 15,
                     labelWidth: 60,
