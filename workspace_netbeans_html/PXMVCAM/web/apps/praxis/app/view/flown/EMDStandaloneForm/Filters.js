@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
             items: [
                 {
                     xtype: 'label',
-                    html: '<strong style="color:#000;">Sale Date</strong>',
+                    html: '<strong style="color:#000;">Search:</strong>',
                     align: 'left',
                     fieldStyle: 'text-align: left;',
                     padding: '8px 5px 0px 15px',
@@ -134,6 +134,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     displayField: 'name',
                     emptyText: 'All',
                     //maxLength: 3,
+                    hidden:true,
                     labelWidth: 60,
                     width: 200,
                     hiddenLabel: false,

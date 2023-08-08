@@ -110,8 +110,8 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
-                    bean.DFLIGHT = rst.getString("DFLIGHT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.FCONT = rst.getString("FCONT");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.FCONT);
                     bean.QTYSALED  = rst.getInt("QTYSALED");
                     bean.QTYUSESD  = rst.getInt("QTYUSESD");
                     bean.QTYSALEP  = rst.getInt("QTYSALEP");
