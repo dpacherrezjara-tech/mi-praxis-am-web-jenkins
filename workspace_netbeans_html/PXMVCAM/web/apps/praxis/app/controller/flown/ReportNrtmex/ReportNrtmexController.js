@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', {
+Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.EMDStandaloneController',
+    alias: 'controller.ReportNrtmexController',
     fecha: new Date(),
     childs: '5',
     bean: '',
@@ -23,68 +23,68 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     dataObtain: {},
     init: function (view) {
         me = this;
-        prototype.id = 'EMDStandaloneForm';
-        prototype.url = CONTEXTPATH + '/EMDStandalone';
+        prototype.id = 'ReportNrtmexForm';
+        prototype.url = CONTEXTPATH + '/ReportNrtmex';
         this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
-        me.panelActual = '-panelGridDataMain';
+        me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.obtainData();
 
         this.control({
 //            //   -------------------Eventos Genericos --------------------
-            '#EMDStandaloneForm-xpanel': {
+            '#ReportNrtmexForm-xpanel': {
                 afterrender: this.xpanel_afterrender
             },
-            '#EMDStandaloneForm-btnSearch': {
+            '#ReportNrtmexForm-btnSearch': {
                 click: this.btnSearch_click
             },
-            '#EMDStandaloneForm-btnClear': {
+            '#ReportNrtmexForm-btnClear': {
                 click: this.btnClear_click
             },
-            '#EMDStandaloneForm-btnExcel': {
+            '#ReportNrtmexForm-btnExcel': {
                 click: this.btnExcel_click
             },
-            '#EMDStandaloneForm-btnFilter': {
+            '#ReportNrtmexForm-btnFilter': {
                 click: this.btnFilter_click
             },
-            '#EMDStandaloneForm-btnAdd': {
+            '#ReportNrtmexForm-btnAdd': {
                 click: this.btnAdd_click
             },
-            '#EMDStandaloneForm-btnEmail': {
+            '#ReportNrtmexForm-btnEmail': {
                 click: this.btnEmail_click
             },
-            '#EMDStandaloneForm-btnBack': {
+            '#ReportNrtmexForm-btnBack': {
                 click: this.btnBack_click
             },
-            '#EMDStandaloneForm-btn-pag-first': {
+            '#ReportNrtmexForm-btn-pag-first': {
                 click: this.pagFirst
             },
-            '#EMDStandaloneForm-btn-pag-previous': {
+            '#ReportNrtmexForm-btn-pag-previous': {
                 click: this.pagPrevious
             },
-            '#EMDStandaloneForm-btn-pag-next': {
+            '#ReportNrtmexForm-btn-pag-next': {
                 click: this.pagNext
             },
-            '#EMDStandaloneForm-btn-pag-last': {
+            '#ReportNrtmexForm-btn-pag-last': {
                 click: this.pagLast
             },
-            '#EMDStandaloneForm-cmbDateFromYear': {
+            '#ReportNrtmexForm-cmbDateFromYear': {
 //                afterrender: this.afterRenderYear,
                 select: this.selectComboFromYear
             },
-            '#EMDStandaloneForm-cmbDateFromMonth': {
+            '#ReportNrtmexForm-cmbDateFromMonth': {
 //                afterrender: this.afterRenderMonth,
                 select: this.selectComboFromMonth
             },
-            '#EMDStandaloneForm-cmbDateToMonth': {
+            '#ReportNrtmexForm-cmbDateToMonth': {
 //                afterrender: this.afterRenderMonth,
                 select: this.selectComboToMonth
             },
-            '#EMDStandaloneForm-cmbDateFromDay': {
+            '#ReportNrtmexForm-cmbDateFromDay': {
 //                afterrender: this.afterRenderYear,
                 select: this.selectComboFromDay
             },
-            '#EMDStandaloneForm-checkSettlement': {
+            '#ReportNrtmexForm-checkSettlement': {
                 change: this.checkEvent
             },
         });
@@ -150,27 +150,27 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
-        var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
-        cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["0", "Venta sin Uso"],
-                ["1", "Uso sin Venta"],
-                ["2", "MATCH"]
-            ]
-        }));
-        cmbSTVAL.setValue("");
+//         var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
+//        cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
+//            autoLoad: false,
+//            fields: ['code', 'name'],
+//            data: [
+//                ["", "All"],
+//                ["0", "Venta sin Uso"],
+//                ["1", "Uso sin Venta"],
+//                ["2", "MATCH"]
+//            ]
+//        }));
+//        cmbSTVAL.setValue("");
 
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var strTkt = rowData.data.strTicket;
-
-        prototypeProgram.view = 'flown-emd-standalone-form';
-        prototypeProgram.nprog = 'PX00000633';
-        prototypeProgram.title = 'EMD Standalone';
+        
+        prototypeProgram.view = 'flown-report-nrtmex-form';
+        prototypeProgram.nprog = 'PX00000634';
+        prototypeProgram.title = 'Report Nrtmex';
         prototypeProgram.modulo = '';
 
         var beanProMasterTicket = {};
@@ -190,7 +190,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
 //        me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         me.bean.IN_TIPO = '1';
-//        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
 
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
@@ -200,40 +200,36 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         };
     },
     btnSearch_click: function (obj, e) {
-        if (me.panelActual === '-panelGridDataMain') {
-            console.log('panelGridDataMain');
+
+//        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+//        if (txtTicket.trim().length > 0) {
+//            if (txtTicket.trim().length === 13) {
+//                me.bean = {};
+//                me.bean.IN_TIPO = '1';
+//                me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+//                me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
+//                var beanString = JSON.stringify(me.bean);
+//                searchParams = {
+//                    beanString: beanString,
+//                    bean: me.bean
+//                };
+//                this.setGridData();
+//            } else {
+//                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+//            }
+//        } else {
+//            Ext.getCmp(prototype.id + '-txtTICKET').hide();
             this.setFormatParameter();
-            this.setMainData();
-        } else {
-            console.log('panelGridData');
-            Ext.getCmp(prototype.id + '-txtTICKET').show();
-            Ext.getCmp(prototype.id + '-cmbSTVAL').show();
-
-            me.bean = {};
-            me.bean.IN_TIPO = '1';
-            me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
-
-            var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-            if (txtTicket.trim().length > 0) {
-                if (txtTicket.trim().length === 13) {
-                    me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-                } else {
-                    global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-                }
-            }
-            var beanString = JSON.stringify(me.bean);
-            searchParams = {
-                beanString: beanString,
-                bean: me.bean
-            };
             this.setGridData();
-        }
+            
+//        }
+
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
-    setMainData: function (obj, val) {
+    setGridData: function (obj, val) {
         console.log("URL : " + prototype.url + '/searchMain');
         win.lblUser_toolTip("Estructura: A4479");
-        me.panelActual = '-panelGridDataMain';
+        me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
         var msj = this.validateFields();
@@ -243,7 +239,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         } else {
             var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountedAmountsInvoiced.GridData', {
                 proxy: {
-                    url: prototype.url + '/searchMain'
+                    url: prototype.url + '/search'
                 }, listeners: {
                     beforeload: function (obj) {
                         obj.proxy.extraParams = searchParams;
@@ -263,70 +259,69 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                 }
             });
             global.clear();
-            Ext.getCmp(prototype.id + '-gridDataMain').bindStore(storeGridDatas);
-//            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-        }
-    },
-    onGridData: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        Ext.getCmp(prototype.id + '-txtTICKET').show();
-        Ext.getCmp(prototype.id + '-cmbSTVAL').show();
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        me.beanEMD = {};
-
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
-        var date = rowData.data.strFormatDate;
-        me.beanEMD.IN_TIPO = '1';
-        console.log(me.beanEMD);
-        var beanString = JSON.stringify(me.beanEMD);
-        paramsDetailEMD = {
-            beanString: beanString,
-            bean: me.beanEMD
-        };
-        this.setGridData(date);
-    },
-    setGridData: function (date) {
-        if(date!==''){
-            Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Sales Date :' + date + '</center>');            
-        }
-        console.log("URL : " + prototype.url + '/search');
-        win.lblUser_toolTip("Estructura: A4479");
-        me.panelActual = '-panelGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountedAmountsInvoiced.GridData', {
-                proxy: {
-                    url: prototype.url + '/search'
-                }, listeners: {
-                    beforeload: function (obj) {
-                        obj.proxy.extraParams = paramsDetailEMD;
-                    },
-                    load: function (obj) {
-                        var pag = Ext.getCmp(prototype.id + '-paggin');
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                        if (obj.data.length === 0) {
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        }
-                    }
-                }
-            });
-            global.clear();
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
+//    onGridData: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+//        Ext.getCmp(prototype.id + '-txtTICKET').show();
+//        me.drillDown.push(me.panelActual);
+//        me.panelActual = '-panelGridData';
+//        global.selectedChild(me.childs, prototype.id + me.panelActual);
+//        
+//        me.beanEMD = {};
+//        
+//        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+//        me.beanEMD.IN_TIPO = '1';
+//        console.log(me.beanEMD);
+//        var beanString = JSON.stringify(me.beanEMD);
+//        paramsDetailEMD = {
+//            beanString: beanString,
+//            bean: me.beanEMD
+//        };
+////        this.beanEMD.strFormatDate = rowData.data.strFormatDate;
+////        console.log(this.beanEMD);
+//
+////        me.paramsDetailEMD.beanString = JSON.stringify(this.beanEMD);
+//        this.setGridData();
+//    },
+//    setGridData: function (obj, val) {
+//        console.log("URL : " + prototype.url + '/search');
+//        win.lblUser_toolTip("Estructura: A4479");
+//        me.panelActual = '-panelGridData';
+//        global.selectedChild(me.childs, prototype.id + me.panelActual);
+//        me.setWidthPie();
+//        var msj = this.validateFields();
+//        if (msj !== '') {
+//            global.Msg({msg: msj
+//            });
+//        } else {
+//            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountedAmountsInvoiced.GridData', {
+//                proxy: {
+//                    url: prototype.url + '/search'
+//                }, listeners: {
+//                    beforeload: function (obj) {
+//                        obj.proxy.extraParams = paramsDetailEMD;
+//                    },
+//                    load: function (obj) {
+//                        var pag = Ext.getCmp(prototype.id + '-paggin');
+//                        var pagData = pag.getPageData();
+//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+//                        if (obj.data.length === 0) {
+//                            global.Msg({
+//                                msg: 'Data not found.'
+//                            });
+//                        }
+//                    }
+//                }
+//            });
+//            global.clear();
+//            Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+//            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+//        }
+//    },
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="setGridDataDetEMD">
@@ -400,7 +395,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         console.log(me.lst);
-        Ext.create('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
+        Ext.create('Ext.Praxis.view.flown.ReportNrtmexForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
                 action: action,

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
-import net.miatech.praxis.logic.flown.EMDStandaloneLogic;
+import net.miatech.praxis.logic.flown.ReportNrtmexLogic;
 import net.miatech.beans.A1817Filter;
 import net.miatech.praxis.flown.A1817;
 import net.miatech.utils.Functions;
@@ -41,72 +41,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Scope("request")
-@RequestMapping("/EMDStandalone")
-public class EMDStandaloneController extends BaseController {
+@RequestMapping("/ReportNrtmex")
+public class ReportNrtmexController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
-    private EMDStandaloneLogic logic;
+    private ReportNrtmexLogic logic;
     private MasterDAO masterDAO;
 
     @RequestMapping(method = RequestMethod.POST)
     public String index(ModelMap map) {
         map.put("vp_serverDate", Functions.getFechaActual());
         map.put("vp_serverTime", Functions.getHoraActual());
-        return "sales/EMDStandalone/form_index";
+        return "sales/ReportNrtmex/form_index";
     }
     
-    @RequestMapping(value = "searchMain")
-    public @ResponseBody
-    String searchMain(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- EMDStandalone : SearchMain-------------");
-        map.put("success", true);
-        List<A1817Filter> lst = this.getListMain(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
-        return new Gson().toJson(map);
-    }
-
-    public List<A1817Filter> getListMain(HttpServletRequest request, Boolean bExcel) {
-
-        List<A1817Filter> lst = new ArrayList<>(0);
-        A1817Filter filter = new A1817Filter();
-        Gson gson = new Gson();
-        String beanString = "";
-
-        try {
-            logic = new EMDStandaloneLogic();
-            logic.setSession(this.serverSession.getServerSession());
-
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A1817Filter.class);
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            lst = logic.loadPX529SQP04931(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
-        return lst;
-    }
-
     @RequestMapping(value = "search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- EMDStandalone : Search-------------");
+        System.out.println("-------------- ReportNrtmex : Search-------------");
         map.put("success", true);
         List<A1817Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
@@ -123,7 +75,7 @@ public class EMDStandaloneController extends BaseController {
         String beanString = "";
 
         try {
-            logic = new EMDStandaloneLogic();
+            logic = new ReportNrtmexLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
@@ -144,45 +96,94 @@ public class EMDStandaloneController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX529SQP04924(filter);
+            lst = logic.loadPX529SQP04932(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
         return lst;
     }
+
+//    @RequestMapping(value = "search")
+//    public @ResponseBody
+//    String search(ModelMap map, HttpServletRequest request) {
+//        System.out.println("-------------- ReportNrtmex : Search-------------");
+//        map.put("success", true);
+//        List<A1817Filter> lst = this.getList(request, false);
+//        System.out.println("Total : " + lst.size());
+//        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+//        map.put("data", lst);
+//        return new Gson().toJson(map);
+//    }
+//
+//    public List<A1817Filter> getList(HttpServletRequest request, Boolean bExcel) {
+//
+//        List<A1817Filter> lst = new ArrayList<>(0);
+//        A1817Filter filter = new A1817Filter();
+//        Gson gson = new Gson();
+//        String beanString = "";
+//
+//        try {
+//            logic = new ReportNrtmexLogic();
+//            logic.setSession(this.serverSession.getServerSession());
+//
+//            beanString = request.getParameter("beanString");
+//            filter = gson.fromJson(beanString, A1817Filter.class);
+//            filter.page.TOTROW = -1;
+//            filter.page.START = 0;
+//            filter.page.LIMIT = 0;
+//
+//            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+//
+//            if (!bExcel) {
+//                filter.page.PAGROW = 20;
+//                start = (start != 0 ? start : 0);
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+//                filter.page.PAGROW = -1;
+//                filter.page.PAGNUM = 1;
+//            }
+//
+//            lst = logic.loadPX529SQP04924(filter);
+//        } catch (Exception e) {
+//            throw new SpringException(e);
+//        }
+//        return lst;
+//    }
     
-    @RequestMapping(value = "MaintenanceA4479")
-    public @ResponseBody
-    String MaintenanceA4479(ModelMap map, HttpServletRequest request) {
-
-        System.out.println("-------------- EMDS : MaintenanceA4479-------------");
-        String option;
-        A1817Filter filter = new A1817Filter();
-        Gson gson = new Gson();
-        String msj = "";
-        String beanString = "";
-
-        try {
-
-            option = request.getParameter("option");
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A1817Filter.class);
-
-            logic = new EMDStandaloneLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            msj = logic.loadPX529SQP04925(filter, option);
-
-            map.put("success", true);
-            map.put("Mensaje", msj);
-        } catch (NumberFormatException ex) {
-            map.put("success", false);
-            map.put("Mensaje", ex.getMessage());
-        } catch (Exception ex) {
-            map.put("success", false);
-            map.put("Mensaje", ex.getMessage());
-        }
-        return new Gson().toJson(map);
-    }
+//    @RequestMapping(value = "MaintenanceA4479")
+//    public @ResponseBody
+//    String MaintenanceA4479(ModelMap map, HttpServletRequest request) {
+//
+//        System.out.println("-------------- EMDS : MaintenanceA4479-------------");
+//        String option;
+//        A1817Filter filter = new A1817Filter();
+//        Gson gson = new Gson();
+//        String msj = "";
+//        String beanString = "";
+//
+//        try {
+//
+//            option = request.getParameter("option");
+//            beanString = request.getParameter("beanString");
+//            filter = gson.fromJson(beanString, A1817Filter.class);
+//
+//            logic = new ReportNrtmexLogic();
+//            logic.setSession(this.serverSession.getServerSession());
+//            msj = logic.loadPX529SQP04925(filter, option);
+//
+//            map.put("success", true);
+//            map.put("Mensaje", msj);
+//        } catch (NumberFormatException ex) {
+//            map.put("success", false);
+//            map.put("Mensaje", ex.getMessage());
+//        } catch (Exception ex) {
+//            map.put("success", false);
+//            map.put("Mensaje", ex.getMessage());
+//        }
+//        return new Gson().toJson(map);
+//    }
+    
     //Excels
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody
