@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     hiddenLabel: false,
                     value: '',
                     listeners: {
-                        change: 'btnSearch_click'
+                        change: 'btnSearch_stval'
                     }
                 },
             ]
