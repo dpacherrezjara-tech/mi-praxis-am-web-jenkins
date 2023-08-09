@@ -1535,7 +1535,7 @@ public class FlightConciliationController extends BaseController {
             Cell cell50, cell51, cell52, cell53, cell54, cell55, cell56;
             Cell cell57, cell58, cell59, cell60, cell61, cell62, cell63;
             Cell cell64, cell65, cell66, cell67, cell68, cell69, cell70;
-            Cell cell71, cell72, cell73, cell74;
+            Cell cell71, cell72, cell73, cell74, cell75;
 
             // <editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
@@ -1565,6 +1565,7 @@ public class FlightConciliationController extends BaseController {
             cell72 = row.createCell(22);
             cell73 = row.createCell(23);
             cell74 = row.createCell(24);
+            cell75 = row.createCell(25);
 
             cell50.setCellValue("SSIM Data");
             cell57.setCellValue("Information PAX ODS");
@@ -1578,6 +1579,7 @@ public class FlightConciliationController extends BaseController {
             cell69.setCellValue("Coupons");
             cell70.setCellValue("Flight Manifest");
             cell73.setCellValue("Coupons");
+            cell75.setCellValue("Tickets");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 10));
@@ -1590,6 +1592,7 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 22));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 25, 25));
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1616,6 +1619,7 @@ public class FlightConciliationController extends BaseController {
             cell72.setCellStyle(headerStyle);
             cell73.setCellStyle(headerStyle);
             cell74.setCellStyle(headerStyle);
+            cell75.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1647,6 +1651,7 @@ public class FlightConciliationController extends BaseController {
             cell72 = row.createCell(22);
             cell73 = row.createCell(23);
             cell74 = row.createCell(24);
+            cell75 = row.createCell(25);
 
             cell50.setCellValue("Flight");
             cell52.setCellValue("Carrier");
@@ -1715,6 +1720,7 @@ public class FlightConciliationController extends BaseController {
             cell72.setCellStyle(headerStyle);
             cell73.setCellStyle(headerStyle);
             cell74.setCellStyle(headerStyle);
+            cell75.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1746,6 +1752,7 @@ public class FlightConciliationController extends BaseController {
             cell72 = row.createCell(22);
             cell73 = row.createCell(23);
             cell74 = row.createCell(24);
+            cell75 = row.createCell(25);
 
             cell50.setCellValue("Date");
             cell51.setCellValue("Number");
@@ -1789,6 +1796,7 @@ public class FlightConciliationController extends BaseController {
             cell72.setCellStyle(headerStyle);
             cell73.setCellStyle(headerStyle);
             cell74.setCellStyle(headerStyle);
+            cell75.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1821,6 +1829,7 @@ public class FlightConciliationController extends BaseController {
                 cell72 = row.createCell(22);
                 cell73 = row.createCell(23);
                 cell74 = row.createCell(24);
+                cell75 = row.createCell(25);
 
                 cell50.setCellValue(listaData.get(vi).strFormatDate);
                 cell51.setCellValue(listaData.get(vi).NFLIGHT);
@@ -1848,6 +1857,7 @@ public class FlightConciliationController extends BaseController {
                 cell72.setCellValue(listaData.get(vi).QCPNFRE);
                 cell73.setCellValue(listaData.get(vi).lngQDIFF);
                 cell74.setCellValue(listaData.get(vi).DESCRIP);
+                cell75.setCellValue(listaData.get(vi).TKTS);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -1874,6 +1884,7 @@ public class FlightConciliationController extends BaseController {
                 cell72.setCellStyle(bodyStyle);
                 cell73.setCellStyle(bodyStyle);
                 cell74.setCellStyle(bodyStyle);
+                cell75.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -1905,6 +1916,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(22, true);
             sheet.autoSizeColumn(23, true);
             sheet.autoSizeColumn(24, true);
+            sheet.autoSizeColumn(25, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
@@ -3781,5 +3793,65 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+//    @RequestMapping(value = "/updateCouponA3729_INF", method = RequestMethod.POST)
+//    public @ResponseBody
+//    String updateCouponA3729_INF(ModelMap map, @RequestParam("excelfile_INF") MultipartFile excelfile_INF, HttpServletRequest request) throws IOException {
 
+    @RequestMapping(value = "updateCommA1816", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateCommA1816(ModelMap map, @RequestParam("excelfile_VLO") MultipartFile excelfile, HttpServletRequest request) {
+        byte[] bytes = null;
+        
+        String coment="",msj="";
+        
+//        
+        Integer cont = 0;
+        try {
+            List<A1691Filter> lstManifiesto = new ArrayList<>(0);
+            A1691Filter obj = new A1691Filter();
+            
+            String filename = excelfile.getOriginalFilename();
+            XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            //HSSFCell cell;
+            while (iterator.hasNext()) {
+                
+                cont++;
+                Row sheet = iterator.next();
+                //Iterator<Cell> cellIterator = currentRow.iterator();
+                if (cont > 3) {
+                    if (sheet.getCell(0) != null) {            
+                        obj = new A1691Filter();                   
+                        obj.DFLIGHT = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString().trim();
+                        obj.DFLIGHT = obj.DFLIGHT.replaceAll("-", "").trim();
+                        obj.NFLIGHT  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString().trim();
+                        obj.CDEPART = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString().trim();
+                        obj.CARRIVA = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString().trim();
+                        obj.COMENT = sheet.getCell(24)== null ? "" : sheet.getCell(24).toString().trim();
+                        
+                        lstManifiesto.add(obj);
+                        
+                    }
+                }
+            }
+                     
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadSQP05035(lstManifiesto);
+            
+            
+            
+            map.put("success", true);
+            map.put("msj", msj);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+            throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
+    }
 }

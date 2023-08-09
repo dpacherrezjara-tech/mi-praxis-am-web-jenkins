@@ -140,4 +140,7 @@ public class FlightConciliationLogic {
         return objDAO.SQP04550(filter);
     }
 
+    public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
+        return objDAO.loadSQP05035(listaTkt);
+    }
 }

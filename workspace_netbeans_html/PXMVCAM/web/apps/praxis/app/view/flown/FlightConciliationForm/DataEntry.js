@@ -704,7 +704,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 50,
+                                    maxLength: 70,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
                                     width: 400,
                                     hidden: false
@@ -714,7 +714,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP2',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 50,
+                                    maxLength: 70,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
                                     width: 400,
                                     hidden: false

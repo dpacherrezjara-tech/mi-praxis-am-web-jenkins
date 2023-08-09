@@ -437,6 +437,7 @@ public class FlightConciliationDAO {
                     beanCons.strSQL = strTipo;
 
                     beanCons.strDescripcion = strDesc;
+                    beanCons.TKTS = rst.getString("TKTS").trim();
                     beanCons.CARRI = rst.getString("CARRI").trim();
                     beanCons.DESCRIP = rst.getString("DESCRIP").trim();
                     beanCons.FCLOFO = rst.getString("FCLOFO");
@@ -544,6 +545,70 @@ public class FlightConciliationDAO {
         return lstCons;
     }
 
+    public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
+        //REALIZA UPDATE COMENTARIOS EN LA TABLA A1816.
+
+        int QTY_UPDATE = 0;
+        String msj ="An Error ocurred";
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP05035(?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            for (int i = 0; i < listaTkt.size(); ++i) {
+
+                A1691Filter item = listaTkt.get(i);
+                try {
+                    cstmt.registerOutParameter(7, Types.INTEGER);
+
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt.setString(2, item.DFLIGHT);
+                    cstmt.setString(3, item.NFLIGHT);
+                    cstmt.setString(4, item.CDEPART);
+                    cstmt.setString(5, item.CARRIVA);
+                    cstmt.setString(6, item.COMENT);
+                    cstmt.setInt(7, 0);
+
+                    cstmt.execute();
+
+                    QTY_UPDATE = QTY_UPDATE +cstmt.getInt(7);
+                    
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            msj = "Se actualizaron "+QTY_UPDATE +" resgistros.";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = e.getMessage();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+    
+    
     public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {
         List<A1691Filter> lstCons = new ArrayList<>(0);
         A1691Filter beanCons;
