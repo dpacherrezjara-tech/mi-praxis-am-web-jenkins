@@ -619,7 +619,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 }
                             ]
                         },
-                        {xtype: 'tbspacer', width: 825},
+                        {xtype: 'tbspacer', width: 665},
                         {
                             xtype: 'label',
                             html: 'Cierre de Vuelo:',
