@@ -23,6 +23,7 @@ public class A1691Filter extends A1691 {
     public String strFormatDate3 = "";
     public String strTitulo = "";
     public String strDescripcion = "";
+    public String strDescripcion2 = "";
     public String strFCLOFO = "";
      public String strDesFCLOFO = "";
     public String strFormatFSENDSS = "";
