@@ -7,9 +7,11 @@ package net.miatech.beans;
 public class A1691Filter2 {
     public String strFormatDate = "";
     public String strTitulo = "";
+    public String TKTS = "";
     public String NFLIGHT = "";
     public String CARRI = "";
     public String DESCRIP = "";
+    public String DESCRIP2 = "";
     public String strDescFFLOW = "";
     public String CDEPART = "";
     public String CARRIVA = "";
