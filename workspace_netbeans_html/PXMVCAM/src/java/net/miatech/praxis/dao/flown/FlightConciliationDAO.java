@@ -1163,7 +1163,7 @@ public class FlightConciliationDAO {
                 }
                 
                 beanCons.FEUP = rst.getString("FEUP").trim();
-                if(!beanCons.FEUP.equals("") && Integer.parseInt(beanCons.FEUP) < 20230809 ){
+                if(!beanCons.FEUP.equals("") && Integer.parseInt(beanCons.FEUP) <= 20230809 ){//A partir del 10 de agost se guardan en campos independientes
                     /*Se guardaba  en un campo el comentario del BPO y de sabre  50/50 */
                     beanCons.strDescripcion = Functions.fillString(beanCons.strDescripcion, 100);
                     beanCons.strDescripcion = beanCons.strDescripcion.substring(0, 50);
