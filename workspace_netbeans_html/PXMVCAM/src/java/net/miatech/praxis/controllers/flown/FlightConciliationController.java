@@ -3814,7 +3814,7 @@ public class FlightConciliationController extends BaseController {
     String updateCommA1816(ModelMap map, @RequestParam("excelfile_VLO") MultipartFile excelfile, HttpServletRequest request) {
         byte[] bytes = null;
         
-        String coment="",msj="";
+        String coment="",msj="No existen registros por actualizar";
         
 //        
         Integer cont = 0;
@@ -3843,7 +3843,9 @@ public class FlightConciliationController extends BaseController {
                         obj.strDescripcion = sheet.getCell(24)== null ? "" : sheet.getCell(24).toString().trim();
                         obj.strDescripcion2 = sheet.getCell(25)== null ? "" : sheet.getCell(25).toString().trim();
                         
-                        lstManifiesto.add(obj);
+                        if(!obj.strDescripcion.trim().equals("")||!obj.strDescripcion2.trim().equals("") ){
+                            lstManifiesto.add(obj);
+                        }
                         
                     }
                 }
@@ -3852,6 +3854,7 @@ public class FlightConciliationController extends BaseController {
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
 
+            
             msj = logic.loadSQP05035(lstManifiesto);
             
             
