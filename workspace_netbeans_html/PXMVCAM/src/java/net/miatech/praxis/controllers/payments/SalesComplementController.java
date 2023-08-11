@@ -179,7 +179,7 @@ public class SalesComplementController {
             headers[9] = "CC Number";
             headers[10] = "CC Auth";
             headers[11] = "Qty Pax";
-            headers[12] = "Currency Partner";
+            headers[12] = "Currency Offer";
             headers[13] = "Total Amount";
             headers[14] = "Total Amount Off";
             headers[15] = "Sales Amount";
@@ -213,7 +213,7 @@ public class SalesComplementController {
                 row[9] = obj.getSCARDN();
                 row[10] = obj.getSAUTHOC();
                 row[11] = obj.getNBROFPAX();
-                row[12] = obj.getCURRPARTN();
+                row[12] = obj.getCUROFFER();
                 row[13] = obj.getSVFOP();
                 row[14] = obj.getAMOUNTOFF();
                 row[15] = obj.getSVFOPS();
