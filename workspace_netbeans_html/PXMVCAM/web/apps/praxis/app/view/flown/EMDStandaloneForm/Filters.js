@@ -113,7 +113,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    hidden:true,
+//                    hidden:true,
                     maskRe: /[0-9]/,
                     maxLength: 15,
                     labelWidth: 60,
@@ -124,25 +124,25 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     }
                 },
 //                {xtype: 'tbspacer', width: 20},
-                {
-                    xtype: 'combo',
-                    fieldLabel: 'Status:',
-                    id: prototype.id + '-cmbSTVAL',
-                    queryMode: 'local',
-                    triggerAction: 'all',
-                    valueField: 'code',
-                    displayField: 'name',
-                    emptyText: 'All',
-                    //maxLength: 3,
-                    hidden:true,
-                    labelWidth: 60,
-                    width: 200,
-                    hiddenLabel: false,
-                    value: '',
-                    listeners: {
-                        change: 'btnSearch_stval'
-                    }
-                },
+//                {
+//                    xtype: 'combo',
+//                    fieldLabel: 'Status:',
+//                    id: prototype.id + '-cmbSTVAL',
+//                    queryMode: 'local',
+//                    triggerAction: 'all',
+//                    valueField: 'code',
+//                    displayField: 'name',
+//                    emptyText: 'All',
+//                    //maxLength: 3,
+//                    hidden:true,
+//                    labelWidth: 60,
+//                    width: 200,
+//                    hiddenLabel: false,
+//                    value: '',
+//                    listeners: {
+//                        change: 'btnSearch_stval'
+//                    }
+//                },
             ]
         }
     ]

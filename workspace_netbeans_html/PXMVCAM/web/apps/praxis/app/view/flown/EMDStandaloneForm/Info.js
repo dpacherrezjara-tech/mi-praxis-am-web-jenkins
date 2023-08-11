@@ -307,9 +307,9 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'RBD', dataIndex: 'CABI', width: 40,
+                                                    {text: 'RBD', dataIndex: 'RBD', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#";
                                                             return value;
                                                         },
                                                     },

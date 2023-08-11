@@ -101,8 +101,39 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     filterTicketEMD: function (e, eOpts) {
         var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
         if (eOpts.getKey() === 13) {
-            if (txtTicket.trim().length === 13 || txtTicket.trim().length === 0) {
-                this.btnSearch_click();
+            if (txtTicket.trim().length === 13) {
+                 if (me.panelActual === '-panelGridDataMain') {
+                     var date = '';
+                     var stval = '';
+                 }else{
+                     var date = me.beanEMD.IN_DATE
+                     var stval = '';
+                 }
+                me.bean = {};
+                me.bean.IN_TIPO = '1';
+                me.bean.IN_DATE = me.beanEMD.IN_DATE;
+                me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
+                
+                var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                if (txtTicket.trim().length > 0) {
+                    if (txtTicket.trim().length === 13) {
+                        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                    } else {
+                        global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+                    }
+                }
+                var beanString = JSON.stringify(me.bean);
+                paramsDetailEMD = {
+                    beanString: beanString,
+                    bean: me.bean
+                };
+                this.setGridData(date, stval);
+                
+            } else if (txtTicket.trim().length === 0) {
+                
+                this.setFormatParameter();
+                this.setMainData();
+                
             } else {
                 global.Msg({msg: 'Ticket Number must contain 13 digits.'});
             }
@@ -150,19 +181,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
-//        var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
-//        cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["0", "Venta sin Uso"],
-//                ["1", "Uso sin Venta"],
-//                ["2", "MATCH"]
-//            ]
-//        }));
-//        cmbSTVAL.setValue("");
-
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -188,9 +206,8 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.bean = {};
         me.bean.IN_DATE_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
-//        me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         me.bean.IN_TIPO = '1';
-//        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
 
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
@@ -201,21 +218,38 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     },
     btnSearch_click: function (obj, e) {
         if (me.panelActual === '-panelGridDataMain') {
-            Ext.getCmp(prototype.id + '-txtTICKET').hide();
-//            Ext.getCmp(prototype.id + '-cmbSTVAL').hide();
             console.log('panelGridDataMain');
-            this.setFormatParameter();
-            this.setMainData();
+
+            var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+            if (txtTicket.trim().length > 0) {
+                if (txtTicket.trim().length === 13) {
+                    me.bean = {};
+                    me.bean.IN_TIPO = '1';
+                    me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                    var date = '';
+                    var stval = '';
+                    var beanString = JSON.stringify(me.bean);
+                    paramsDetailEMD = {
+                        beanString: beanString,
+                        bean: me.bean
+                    };
+
+                    this.setGridData(date, stval);
+                } else {
+                    global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+                }
+            } else {
+                this.setFormatParameter();
+                this.setMainData();
+            }
+
         } else {
             console.log('panelGridData');
-            Ext.getCmp(prototype.id + '-txtTICKET').show();
-//            Ext.getCmp(prototype.id + '-cmbSTVAL').show();
 
             me.bean = {};
             me.bean.IN_TIPO = '1';
-            me.bean.IN_DATE =  me.beanEMD.IN_DATE;
+            me.bean.IN_DATE = me.beanEMD.IN_DATE;
             me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
-//            me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
             var date = me.bean.IN_DATE
             var stval = '';
             var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
@@ -231,7 +265,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                 beanString: beanString,
                 bean: me.bean
             };
-            this.setGridData(date,stval);
+            this.setGridData(date, stval);
         }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
@@ -274,7 +308,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     },
     onGridData: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.getCmp(prototype.id + '-txtTICKET').show();
-//        Ext.getCmp(prototype.id + '-cmbSTVAL').show();
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -296,7 +329,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     //VENTAS
     onGridData1: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.getCmp(prototype.id + '-txtTICKET').show();
-//        Ext.getCmp(prototype.id + '-cmbSTVAL').show();
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -319,7 +351,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     //USOS
     onGridData2: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.getCmp(prototype.id + '-txtTICKET').show();
-//        Ext.getCmp(prototype.id + '-cmbSTVAL').show();
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -342,7 +373,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     //PENDIENTES
     onGridData3: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.getCmp(prototype.id + '-txtTICKET').show();
-//        Ext.getCmp(prototype.id + '-cmbSTVAL').show();
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -369,8 +399,8 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
             } else {
                 Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Sales Date :' + date + '</center>');
             }
-        }else{
-             Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">' + '</center>');
+        } else {
+            Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">' + '</center>');
         }
         console.log("URL : " + prototype.url + '/search');
         win.lblUser_toolTip("Estructura: A4479");
@@ -492,12 +522,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     },
     btnBack_click: function (obj, e) {
 
-        if (me.panelActual === '-panelGridData') {
-            console.log('prueba');
-//            $(Ext.getCmp(prototype.id + '-chkLog')).prop("disabled", true);
-            Ext.getCmp(prototype.id + '-txtTICKET').hide();
-//            Ext.getCmp(prototype.id + '-cmbSTVAL').hide();
-        }
 
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
