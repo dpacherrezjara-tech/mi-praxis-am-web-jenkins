@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 @Scope("session")
 public class ErrorControlDAO implements ErrorControlLogic{
     
-    //<editor-fold defaultstate="collapsed" desc="comment">
+    //<editor-fold defaultstate="collapsed" desc="inject">
     @Autowired
     private CurrentSession session;
 

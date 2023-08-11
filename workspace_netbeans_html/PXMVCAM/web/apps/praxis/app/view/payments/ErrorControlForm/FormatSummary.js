@@ -45,6 +45,11 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatSummary', {
                 items: [
                     //<editor-fold defaultstate="collapsed" desc="Summary Cols">
                     {
+                        text:'RN',
+                        xtype: 'rownumberer', // Agrega la columna de números de fila
+                        width: 40 // Ajusta el ancho de la columna si es necesario
+                    },
+                    {
                         text: 'Date', dataIndex: 'a4481FPROC', width: 85
                     },
                     {
@@ -83,7 +88,8 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatSummary', {
             },
             bbar: {
                 xtype: 'pagingtoolbar',
-                displayInfo: true
+                displayInfo: true,
+                pageSize: 20
             },
             tbar: {
                 layout: {
@@ -119,7 +125,11 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatSummary', {
                 grid.bindStore(Ext.create('Ext.data.Store', {
                     autoLoad: true,
                     data: data.response,
-                    pageSize: 20
+                    pageSize: 20,
+                    proxy: {
+                        type: 'memory',
+                        enablePaging: true
+                    }
                 }));
             }
             grid.unmask();
