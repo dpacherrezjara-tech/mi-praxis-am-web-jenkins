@@ -206,18 +206,19 @@ public class SSIMComplementaryFilesController extends BaseController {
             CH1_02.setCellValue("Flight");
             Cell CH1_03 = row.createCell(3);
             CH1_03.setCellValue("Airport");
-            Cell CH1_04 = row.createCell(5);
-            CH1_04.setCellValue("LEG");
-            Cell CH1_05 = row.createCell(6);
-            CH1_05.setCellValue("Operation");
-            Cell CH1_06 = row.createCell(7);
-            CH1_06.setCellValue("Flag");
-            Cell CH1_07 = row.createCell(8);
-            CH1_07.setCellValue("Daily");
-            Cell CH1_08 = row.createCell(9);
-            CH1_08.setCellValue("Carrier");
-            Cell CH1_09 = row.createCell(10);
-            CH1_09.setCellValue("Hard-Block");
+            Cell CH1_05 = row.createCell(5);
+            CH1_05.setCellValue("LEG");
+            Cell CH1_06 = row.createCell(6);
+            CH1_06.setCellValue("Operation");
+            Cell CH1_07 = row.createCell(7);
+            CH1_07.setCellValue("Flag");
+            Cell CH1_08 = row.createCell(8);
+            CH1_08.setCellValue("Daily");
+            Cell CH1_09 = row.createCell(9);
+            CH1_09.setCellValue("Carrier");
+            Cell CH1_10 = row.createCell(10);
+            CH1_10.setCellValue("Hard-Block");
+            Cell CH1_11 = row.createCell(11);
 
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));//Nbr.
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 1, 1));//Seq.
@@ -234,36 +235,36 @@ public class SSIMComplementaryFilesController extends BaseController {
             CH1_01.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
-            CH1_04.setCellStyle(headerStyle);
             CH1_05.setCellStyle(headerStyle);
             CH1_06.setCellStyle(headerStyle);
             CH1_07.setCellStyle(headerStyle);
             CH1_08.setCellStyle(headerStyle);
             CH1_09.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
             ++vj;
             
             Row row2 = sheet.createRow(vj);
             Cell CH2_00 = row2.createCell(0);
             Cell CH2_01 = row2.createCell(1);
-            Cell CH2_05 = row2.createCell(5);
-            Cell CH2_09 = row2.createCell(9);
-
             Cell CH2_02 = row2.createCell(2);
             CH2_02.setCellValue("Number");
             Cell CH2_03 = row2.createCell(3);
             CH2_03.setCellValue("Departure");
             Cell CH2_04 = row2.createCell(4);
             CH2_04.setCellValue("Arrival");
+            Cell CH2_05 = row2.createCell(5);
             Cell CH2_06 = row2.createCell(6);
             CH2_06.setCellValue("Type");
             Cell CH2_07 = row2.createCell(7);
             CH2_07.setCellValue("SSIM");
             Cell CH2_08 = row2.createCell(8);
             CH2_08.setCellValue("Rate");
+            Cell CH2_09 = row2.createCell(9);
             Cell CH2_10 = row2.createCell(10);
-            CH2_06.setCellValue("Flight");
+            CH2_10.setCellValue("Flight");
             Cell CH2_11 = row2.createCell(11);
-            CH2_07.setCellValue("Carrier");
+            CH2_11.setCellValue("Carrier");
             
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));//Number
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));//Departure
@@ -291,12 +292,34 @@ public class SSIMComplementaryFilesController extends BaseController {
             
             Row row3 = sheet.createRow(vj);
 
-            Cell CH3_00 = row3.createCell(10);
-            CH3_00.setCellValue("Number");
+            Cell CH3_00 = row3.createCell(0);
+            Cell CH3_01 = row3.createCell(1);
+            Cell CH3_02 = row3.createCell(2);
+            Cell CH3_03 = row3.createCell(3);
+            Cell CH3_04 = row3.createCell(4);
+            Cell CH3_05 = row3.createCell(5);
+            Cell CH3_06 = row3.createCell(6);
+            Cell CH3_07 = row3.createCell(7);
+            Cell CH3_08 = row3.createCell(8);
+            Cell CH3_09 = row3.createCell(9);
+            Cell CH3_10 = row3.createCell(10);
+            Cell CH3_11 = row3.createCell(11);
+            CH3_10.setCellValue("Number");
             
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 10, 10));//Number
 
             CH3_00.setCellStyle(headerStyle);
+            CH3_01.setCellStyle(headerStyle);
+            CH3_02.setCellStyle(headerStyle);
+            CH3_03.setCellStyle(headerStyle);
+            CH3_04.setCellStyle(headerStyle);
+            CH3_05.setCellStyle(headerStyle);
+            CH3_06.setCellStyle(headerStyle);
+            CH3_07.setCellStyle(headerStyle);
+            CH3_08.setCellStyle(headerStyle);
+            CH3_09.setCellStyle(headerStyle);
+            CH3_10.setCellStyle(headerStyle);
+            CH3_11.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -335,6 +358,19 @@ public class SSIMComplementaryFilesController extends BaseController {
                 ++vi;
                 ++vj;
             }
+            
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");

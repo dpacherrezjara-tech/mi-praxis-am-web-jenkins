@@ -15,7 +15,7 @@ import net.miatech.praxis.flown.A1817;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
-public class EMDStandaloneDAO {
+public class ReportNrtmexDAO {
 
     private IServerSession session;
     private CallableStatement cs = null;
@@ -23,7 +23,7 @@ public class EMDStandaloneDAO {
     private Connection cnx = null;
     private static final Logger logError = Logger.getLogger("errorLog");
 
-    public EMDStandaloneDAO() {
+    public ReportNrtmexDAO() {
     }
 
     public static void pasarGarbageCollector() {
@@ -32,7 +32,7 @@ public class EMDStandaloneDAO {
         System.gc();
     }
 
-    public EMDStandaloneDAO(IServerSession ss) {
+    public ReportNrtmexDAO(IServerSession ss) {
         session = ss;
     }
 
@@ -41,10 +41,10 @@ public class EMDStandaloneDAO {
     }
 
     //**************************************************************************
-    //***************************** PX529 **************************************
+    //***************************** PX532 **************************************
     //**************************************************************************
     
-    public List<A1817Filter> loadPX529SQP04931(A1817Filter filter) throws SQLException, Exception {
+    public List<A1817Filter> loadPX529SQP04932(A1817Filter filter) throws SQLException, Exception {
         
         List<A1817Filter> lstTkts = new ArrayList<A1817Filter>(0);
         A1817Filter bean;
@@ -55,13 +55,14 @@ public class EMDStandaloneDAO {
         hm.put("R","Refund");
         hm.put(" ","Without Use");
                
-        int TOT_QTYSALED = 0,TOT_QTYUSESD = 0,TOT_QTYSALEP = 0,TOT_QTYUSESP = 0,TOT_QTYEMDAU = 0,TOT_QTYEMDMA = 0,TOT_CONTABIL = 0;
+        double TOT_TAXAMOUNT= 0;
+        int TOT_QTYPAX= 0;
         
         CallableStatement cstmt = null;
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04931(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04932(?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -77,7 +78,7 @@ public class EMDStandaloneDAO {
             cstmt.setString(2, filter.IN_TIPO);
             cstmt.setString(3, filter.IN_DATE_FROM);
             cstmt.setString(4, filter.IN_DATE_TO);
-            cstmt.setString(5, filter.IN_STVAL);
+            cstmt.setString(5, filter.IN_TICKET);
 
             cstmt.setInt(6, filter.page.PAGNUM);
             cstmt.setInt(7, filter.page.PAGROW);
@@ -94,12 +95,8 @@ public class EMDStandaloneDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                TOT_QTYSALED  = rst.getInt("QTYSALED");
-                TOT_QTYUSESD  = rst.getInt("QTYUSESD");
-                TOT_QTYSALEP  = rst.getInt("QTYSALEP");
-                TOT_QTYUSESP  = rst.getInt("QTYUSESP");
-                TOT_QTYEMDAU  = rst.getInt("QTYEMDAU");
-                TOT_QTYEMDMA  = rst.getInt("QTYEMDMA");
+                TOT_TAXAMOUNT  = rst.getDouble("TAXAMOUNT");
+                TOT_QTYPAX  = rst.getInt("QTYPAX");
             }
             rst.close();
 
@@ -110,25 +107,53 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
-                    bean.FCONT = rst.getString("FCONT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.FCONT);
-                    bean.QTYSALED  = rst.getInt("QTYSALED");
-                    bean.QTYUSESD  = rst.getInt("QTYUSESD");
-                    bean.QTYSALEP  = rst.getInt("QTYSALEP");
-                    bean.QTYUSESP  = rst.getInt("QTYUSESP");
-                    bean.QTYEMDAU  = rst.getInt("QTYEMDAU");
-                    bean.QTYEMDMA  = rst.getInt("QTYEMDMA");
+                         
+                    bean.PERIODO = rst.getString("PERIODO");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.PERIODO);
                     
-                    bean.CONTABIL = bean.QTYSALED + bean.QTYUSESD;
+                    bean.CCIA  = rst.getString("CCIA");
+                    bean.FORMA = rst.getString("FORMA");
+                    bean.SERIE = rst.getString("SERIE");
+                    bean.CUPON = rst.getString("CUPON");
+                    bean.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim() + " " + rst.getString("CUPON").trim();
+                    bean.DFLIGHT = rst.getString("DFLIGHT");
+                    bean.strFormatDate2 = Functions.getMonthConvert(bean.DFLIGHT);
                     
-                    bean.TOT_QTYSALED  = TOT_QTYSALED;
-                    bean.TOT_QTYUSESD  = TOT_QTYUSESD;
-                    bean.TOT_QTYSALEP  = TOT_QTYSALEP;
-                    bean.TOT_QTYUSESP  = TOT_QTYUSESP;
-                    bean.TOT_QTYEMDAU  = TOT_QTYEMDAU;
-                    bean.TOT_QTYEMDMA  = TOT_QTYEMDMA;
+                    bean.NFLIGHT  = rst.getString("NFLIGHT");
+                    bean.ORIG  = rst.getString("CDEPART");
+                    bean.DEST  = rst.getString("CARRIVA");
+                    bean.CLASS  = rst.getString("CLASS");
+                    bean.CARR  = rst.getString("CARR");
+                    bean.STOCK  = rst.getString("STOCK");
+                    bean.FPOLIZA  = rst.getString("FPOLIZA");
+                    bean.strFormatDate3 = Functions.getMonthConvert(bean.FPOLIZA);
+                    bean.EQUI  = rst.getString("EQUI");
+                    bean.MATRIC  = rst.getString("MATRIC");
                     
-                    bean.TOT_CONTABIL = TOT_QTYSALED + TOT_QTYUSESD;
+                    bean.QTYPAX  = rst.getInt("QTYPAX");
+                    bean.PERIOP  = rst.getString("PERIOP");
+                    bean.strFormatDate4 = Functions.getMonthConvert(bean.PERIOP);
+                    bean.FCONT  = rst.getString("FCONT");
+                    bean.strFormatDate5 = Functions.getMonthConvert(bean.FCONT);
+                    bean.FBASE  = rst.getString("FBASE");
+                    bean.TPAX  = rst.getString("TPAX");
+                    
+                    //INFORMACION DEL CDD
+                    bean.PAXNAME  = rst.getString("PAXNAME");
+                    bean.PNR  = rst.getString("PNR");
+                    bean.CRPNRL  = rst.getString("CRPNRL");
+                    bean.FNACIM  = rst.getString("FNACIM");
+                    bean.TIDOCT  = rst.getString("TIDOCT");
+                    bean.NDOCIDEN  = rst.getString("NDOCIDEN");
+                    bean.COUNTRY  = rst.getString("COUNTRY");
+                    
+                    bean.TTRANS  = rst.getString("TTRANS");
+                    bean.COMMENTS  = rst.getString("COMMENTS");
+                    bean.TAXAMOUNT  = rst.getDouble("TAXAMOUNT");
+                    bean.RUTA  = rst.getString("RUTA");
+                    //TOTALES
+                    bean.TOT_TAXAMOUNT  = TOT_TAXAMOUNT;
+                    bean.TOT_QTYPAX  = TOT_QTYPAX;
                     
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;

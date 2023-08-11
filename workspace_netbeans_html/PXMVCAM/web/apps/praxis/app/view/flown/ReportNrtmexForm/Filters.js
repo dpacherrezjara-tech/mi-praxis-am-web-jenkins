@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
+Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
     border: true,
@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
             items: [
                 {
                     xtype: 'label',
-                    html: '<strong style="color:#000;">Search:</strong>',
+                    html: '<strong style="color:#000;">Sale Date</strong>',
                     align: 'left',
                     fieldStyle: 'text-align: left;',
                     padding: '8px 5px 0px 15px',
@@ -113,7 +113,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-//                    hidden:true,
+                    hidden:false,
                     maskRe: /[0-9]/,
                     maxLength: 15,
                     labelWidth: 60,
@@ -123,26 +123,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                         keypress: 'filterTicketEMD'
                     }
                 },
-//                {xtype: 'tbspacer', width: 20},
-//                {
-//                    xtype: 'combo',
-//                    fieldLabel: 'Status:',
-//                    id: prototype.id + '-cmbSTVAL',
-//                    queryMode: 'local',
-//                    triggerAction: 'all',
-//                    valueField: 'code',
-//                    displayField: 'name',
-//                    emptyText: 'All',
-//                    //maxLength: 3,
-//                    hidden:true,
-//                    labelWidth: 60,
-//                    width: 200,
-//                    hiddenLabel: false,
-//                    value: '',
-//                    listeners: {
-//                        change: 'btnSearch_stval'
-//                    }
-//                },
             ]
         }
     ]
