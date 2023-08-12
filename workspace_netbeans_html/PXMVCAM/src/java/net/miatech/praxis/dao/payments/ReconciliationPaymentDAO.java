@@ -3987,7 +3987,7 @@ public class ReconciliationPaymentDAO {
 
             //Añadir tickets para el desglose
             if (lstSendManual != null && lstSendManual.size() > 0) {
-                String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + "MP.SQP04727(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 cstmt01 = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstSendManual.size(); i++) {
                     beanDet = lstSendManual.get(i);
@@ -4022,6 +4022,7 @@ public class ReconciliationPaymentDAO {
                     cstmt01.setString(27, filter.AREFNBR.trim());
                     cstmt01.setString(28, filter.TDOC.trim());
                     cstmt01.setString(29, filter.PROCTYPESQ.trim());
+                    cstmt01.setInt(30, beanDet.forcescan?1:0);
                     if (!beanDet.STMANUAL.trim().equals("Blocked")) {
                         cstmt01.execute();
                     }

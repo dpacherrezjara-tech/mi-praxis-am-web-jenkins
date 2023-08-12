@@ -1,3 +1,5 @@
+/* global meDE */
+
 Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorTransactionReconciliationPaymentController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryErrorTransactionReconciliationPaymentController',
@@ -198,12 +200,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
         this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
         this.setValue('de-txtTRANSTYPE', this.beanResult.TRANSTYPE);
-        this.setValue('de-txtFVOID', this.beanResult.FVOID);
+        //this.setValue('de-txtFVOID', this.beanResult.FVOID);
+        this.setValue('de-txtFVOID', this.beanResult.descVOID);
         this.setValue('de-txtINVOIRN', this.beanResult.INVOIRN);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
         this.setValue('de-txtTGROSAMPAY', Ext.util.Format.number(this.beanResult.TGROSAMPAY, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
+        //console.log(this.beanResult.descVOID);
 
 //        if (this.beanResult.SMERCHID === '9353227755') {
 //            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
@@ -311,8 +315,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             this.lstAdjustment[i].STMANUAL = 'Adjustment';
             beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data);
         }
-
-        //console.log(beanTemp);
+        //beanTemp.forceblocked = Ext.getCmp(prototype.id + '-chkForceBlock').getValue();
+        console.log(beanTemp);
 
     },
     getData: function () {
@@ -911,11 +915,23 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
                     } else {
+                        let chkForceScan = Ext.getCmp(prototype.id + '-chkForceBlock');
                         for (var i = 0; i < res.lstInfo.length; i++) {
+                            res.lstInfo[i].forcescan = chkForceScan.getValue();
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
-                                meDE.lstBlocked.push(res.lstInfo[i]);
-                                flag_blocked = true;
+                                if(!chkForceScan.getValue()){
+                                    meDE.lstBlocked.push(res.lstInfo[i]);
+                                    flag_blocked = true;
+                                }else{
+                                    let existe = meDE.lstSendManual.filter(x=>x.A1531TKT===res.lstInfo[i].A1531TKT).length>0;
+                                    if(existe){
+                                        flag_dupli = true;
+                                    }else{
+                                        res.lstInfo[i].FDUPLIB = 0;
+                                        meDE.lstSendManual.push(res.lstInfo[i]);
+                                    }
+                                }
                             } else {
                                 for (var j = 0; j < meDE.lstSendManual.length; j++) {
                                     if (meDE.lstSendManual[j].A1531TKT === res.lstInfo[i].A1531TKT) {
@@ -1053,6 +1069,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 //rec.SADJUST = 0;
                 //rec.A720AGENTE = $('#menuUser').text(); Comentado para que tome el agente original (Cambio pedido por AM) 19/05/2023
                 rec.CERROR = '01';
+                rec.forcescan = Ext.getCmp(prototype.id + '-chkForceBlock').getValue();
                 this.lstAdjustment.push(rec);
                 Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
                         Ext.create('Ext.data.Store', {data: this.lstAdjustment, autoLoad: true})
