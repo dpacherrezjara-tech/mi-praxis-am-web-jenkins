@@ -43,12 +43,11 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     autoLoad: false,
                     fields: ['code', 'name'],
                     data: [
-                        ["", "None"],
                         ["0", "Disabled"],
                         ["1", "Enabled"],
                     ]
                 }));
-                cmbSTATUS.setValue('');
+                cmbSTATUS.setValue('0');
                 var cmbCANAL = Ext.getCmp(prototype.id + '-de-cmbCANAL');
                 cmbCANAL.bindStore(Ext.create('Ext.data.ArrayStore', {
                     autoLoad: false,
@@ -185,7 +184,6 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "None"],
                 ["0", "Disabled"],
                 ["1", "Enabled"],
             ]
@@ -303,7 +301,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     fn: function (btn) {
                         if (btn === 'yes') {
                             var beanTemp = {};
-                            
+
                             var msjResult = meDE.validacionUpdate(beanTemp);
                             if (msjResult === '') {
                                 meDE.llenarData(beanTemp);
@@ -541,6 +539,14 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 
             }
         });
+    },
+    onChangeStatusCmb: function (obj) {
+        let value = Ext.getCmp(prototype.id + '-de-cmbUNIOPE').getValue();
+        if (value !== '') {
+            Ext.getCmp(prototype.id + '-de-cmbSTATUS').setDisabled(false);
+        } else {
+            Ext.getCmp(prototype.id + '-de-cmbSTATUS').setDisabled(true);
+        }
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {

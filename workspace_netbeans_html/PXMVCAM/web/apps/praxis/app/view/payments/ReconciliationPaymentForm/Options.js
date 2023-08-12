@@ -249,10 +249,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Options', {
                         {
                             xtype:'button',
                             id: prototype.id+'-btnDisplay',
-                            icon: 'resources/img/botones/FalseChart.png',
-                            tooltip: 'Display Charts',
+                            icon: 'resources/img/botones/refresh.png',
+                            tooltip: 'Refresh Filters',
                             listeners: {
-                                click: 'btnDisplay_click'
+                                click: 'btnRefreshFilters'
                             }
                         },
                         {

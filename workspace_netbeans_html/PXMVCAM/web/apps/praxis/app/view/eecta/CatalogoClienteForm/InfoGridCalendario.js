@@ -43,8 +43,8 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridCalendario', {
                             id: prototype.id + '-gridData-GridCalendario',
                             columnLines: true,
                             autoScroll: true,
-                            width: '100%',
-                            height: 130,
+                            width: '100%',                            
+                            height: 190,
                             padding: '0px 5px 1px 5px',
 //                            plugins: {
 //                                ptype: 'cellediting',

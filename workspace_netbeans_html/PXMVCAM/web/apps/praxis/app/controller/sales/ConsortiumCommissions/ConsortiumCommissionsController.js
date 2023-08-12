@@ -98,7 +98,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiumCommissions.ConsortiumCommissi
         // <editor-fold defaultstate="collapsed" desc="asignación">
         searchParams = {
             nameFile: nameTxt,
-            nameLote: 'L80COMCONS',
+            //nameLote: 'L80COMCONS',
+            nameLote: 'A4094',
             strZona: '',
             strType: ''
         };
@@ -118,7 +119,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiumCommissions.ConsortiumCommissi
         
         searchParams = {
             nameFile: nameTxt2,
-            nameLote: 'L81COMCONS',
+            //nameLote: 'L81COMCONS',
+            nameLote: 'A4095',
             strZona: '',
             strType: type
         };

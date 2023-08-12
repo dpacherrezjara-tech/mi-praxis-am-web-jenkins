@@ -4,6 +4,7 @@ prototype.id01 = 'DataEntryADMManual';
 prototype.id1 = 'SeguimietoFormUnico';
 prototype.id5 = 'FormUnicoSeguimietoSubiArchivo';
 prototype.id6 = 'ADMSeguimietoSubiArchivo';
+prototype.idAccountingCTA = '-viewAccountingCTA';
 prototype.url2 = CONTEXTPATH + '/ADMReport';
 prototype.url = CONTEXTPATH + '/ADMManualForm';
 prototype.widthContenedor = 1395;
@@ -18,7 +19,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.ADMManualForm', {
         'Ext.Praxis.view.screens.ScrFormUnico',
         'Ext.Praxis.view.salesaudit.ADMReportForm.FormUnicoSeguimietoSubiArchivo',
         'Ext.Praxis.view.salesaudit.ADMReportForm.ADMSeguimietoSubiArchivo',
-        'Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual'
+        'Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual',
+        'Ext.Praxis.view.salesaudit.ADMManualForm.AccountingCTA'
     ],
 
     controller: 'ADMManualFormController',
@@ -791,7 +793,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.ADMManualForm', {
                                                 handler: 'onDeleteClick'
                                             }
                                         ]
-                                    },
+                                    }
                                             //
 
                                 ], listeners: {

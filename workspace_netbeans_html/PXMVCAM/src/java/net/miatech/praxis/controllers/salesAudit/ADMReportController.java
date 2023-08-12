@@ -328,7 +328,7 @@ public class ADMReportController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11,
-                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29,CH_30;
+                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29, CH_30;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -679,7 +679,7 @@ public class ADMReportController extends BaseController {
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true); 
+            sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
@@ -687,7 +687,7 @@ public class ADMReportController extends BaseController {
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
             //sheet.autoSizeColumn(17, true);
-            sheet.autoSizeColumn(18, true); 
+            sheet.autoSizeColumn(18, true);
             //sheet.autoSizeColumn(19, true);
             //sheet.autoSizeColumn(20, true);
             //sheet.autoSizeColumn(21, true);
@@ -1423,6 +1423,16 @@ public class ADMReportController extends BaseController {
                 map01.put("A2548SERVD", lst.lst_Ini.get(vi).A2548SERVD);
                 map01.put("A2548NETO", lst.lst_Ini.get(vi).A2548NETO);
                 map01.put("A2548NRCOR", lst.lst_Ini.get(vi).A2548NRCOR);
+
+                map01.put("A2548CIAF", lst.lst_Ini.get(vi).A2548CIAF);
+                map01.put("A2548UNID", lst.lst_Ini.get(vi).A2548UNID);
+                map01.put("A2548CECO", lst.lst_Ini.get(vi).A2548CECO);
+                map01.put("A2548UBICA", lst.lst_Ini.get(vi).A2548UBICA);
+                map01.put("A2548CUENT", lst.lst_Ini.get(vi).A2548CUENT);
+                map01.put("A2548SUBCU", lst.lst_Ini.get(vi).A2548SUBCU);
+                map01.put("A2548EQUI", lst.lst_Ini.get(vi).A2548EQUI);
+                map01.put("A2548ICIA", lst.lst_Ini.get(vi).A2548ICIA);
+                map01.put("A2548CLIE", lst.lst_Ini.get(vi).A2548CLIE);
 
                 lst_dataIni.add(map01);
             }

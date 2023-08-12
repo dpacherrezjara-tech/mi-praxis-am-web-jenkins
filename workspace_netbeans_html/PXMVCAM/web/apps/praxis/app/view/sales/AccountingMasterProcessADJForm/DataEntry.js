@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcessADJForm.DataEntry',{
                                 data: [
                                     ["", "(Select)"],
                                     ["PADJMA", "Manual Adjustment"],
-                                    ["PADJMV", "Massive Adjustment"]
+                                    ["PMASSIVE", "Massive Adjustment"]
                                 ]
                             }),
                             queryMode: 'local',

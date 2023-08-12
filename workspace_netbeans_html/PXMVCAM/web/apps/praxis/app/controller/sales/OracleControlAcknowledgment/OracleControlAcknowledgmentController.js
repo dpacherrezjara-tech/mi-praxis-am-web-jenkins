@@ -420,26 +420,35 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
             modal: true,
             fn: function(btn) {
                 if (btn === 'ok') {
-                    this.exportExcel();
+                    var IN_MODULO = Ext.getCmp(prototype.id + '-cboModulo').getValue();
+                    console.log(IN_MODULO);
+                    if (IN_MODULO === '') {
+                        global.Msg({
+                            msg: 'Please select module.'
+                        });
+                    }else this.exportExcel();
                 }
             }
         });
     },
     exportExcel: function() {
+        
+        this.setFormatParameter();
+        me.drillDown = [];
+        me.gridActual = '-gridData';
+        //this.showGridActual();
+        
+        global.getFile(prototype.url + '/getXLSX?IN_MODULO=' + searchParams.IN_MODULO
+        + '&IN_ENVIO=' + searchParams.IN_ENVIO
+        + '&IN_FECHA_PROCESO=' + searchParams.IN_FECHA_PROCESO
+        + '&IN_FECHA_ACUSE=' + searchParams.IN_FECHA_ACUSE
+        + '&A1955FUENT=' + searchParams.A1955FUENT
+        + '&A1955KEY2=' + searchParams.A1955KEY2
+        + '&A1955KEY3=' + searchParams.A1955KEY3
+        + '&A1955STATU=' + searchParams.A1955STATU
+        + '&A1955ACTIO=' + searchParams.A1955ACTIO
+        );
 
-        switch (me.gridActual) {
-            case  '-gridData':
-                global.getFile(prototype.url + '/getXLSX?IN_A1880CCUST=' + searchParams.IN_A1880CCUST
-                        + '&IN_A1880FECHA=' + searchParams.IN_A1880FECHA);
-                break;
-
-            case '-gridDataDetail':
-                global.getFile(prototype.url + '/getDetailXLSX?IN_A1881CCUST=' + me.paramsDetail.IN_A1881CCUST
-                        + '&IN_A1881NFACT=' + me.paramsDetail.IN_A1881NFACT
-                        + '&IN_A1881FECHA=' + me.paramsDetail.IN_A1881FECHA
-                        );
-                break;
-        }
     }
     ,
     btnFilter_click: function(obj) {

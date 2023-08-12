@@ -91,6 +91,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
             filter.IN_A2559CCUST = request.getParameter("IN_A2559CCUST");
             filter.IN_A2559MODO = request.getParameter("IN_A2559MODO");
             filter.IN_PARAM = request.getParameter("IN_PARAM");
+            filter.IN_FLAG = request.getParameter("IN_FLAG");
+            filter.IN_FLOWN_FINI = request.getParameter("IN_FLOWN_FINI");
+            filter.IN_FLOWN_FFIN = request.getParameter("IN_FLOWN_FFIN");
+            filter.IN_FLIGHT_FINI = request.getParameter("IN_FLIGHT_FINI");
+            filter.IN_FLIGHT_FFIN = request.getParameter("IN_FLIGHT_FFIN");
+            filter.IN_BILLING_DATEFINI = request.getParameter("IN_BILLING_DATEFINI");
+            filter.IN_BILLING_DATEFFIN = request.getParameter("IN_BILLING_DATEFFIN");
+            filter.IN_PERIOD = request.getParameter("IN_PERIOD");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -116,8 +124,8 @@ public class AccountedAmountsInvoicedController extends BaseController {
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Accounting Amount Vs Invoice : getXLSX");
-        String fileNameDownload = String.format("Accounting Amount Vs Invoice - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Accounted amounts vs invoiced amounts : getXLSX");
+        String fileNameDownload = String.format("Accounted amounts vs invoiced amounts - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
 
             Workbook workbook;
@@ -128,7 +136,7 @@ public class AccountedAmountsInvoicedController extends BaseController {
 
             workbook = new XSSFWorkbook();
 
-            Sheet sheet = workbook.createSheet("Accounting Amount Vs Invoice");
+            Sheet sheet = workbook.createSheet("Accounted amounts vs invoiced amounts");
 
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
@@ -187,6 +195,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
             Cell CH1_18 = row.createCell(18);
             Cell CH1_19 = row.createCell(19);
             Cell CH1_20 = row.createCell(20);
+            Cell CH1_21 = row.createCell(21);
+            Cell CH1_22 = row.createCell(22);
+            Cell CH1_23 = row.createCell(23);
+            Cell CH1_24 = row.createCell(24);
+            Cell CH1_25 = row.createCell(25);
+            Cell CH1_26 = row.createCell(26);
+            Cell CH1_27 = row.createCell(27);
+            Cell CH1_28 = row.createCell(28);
 
             CH1_00.setCellValue("Nbr");
             CH1_01.setCellValue("Cia");
@@ -200,15 +216,23 @@ public class AccountedAmountsInvoicedController extends BaseController {
             CH1_09.setCellValue("Airline Code");
             CH1_10.setCellValue("Accounting Date");
             CH1_11.setCellValue("Invoice Number");
-            CH1_12.setCellValue("Accounted");
-            CH1_13.setCellValue("");
-            CH1_14.setCellValue("");
-            CH1_15.setCellValue("Invoiced");
+            CH1_12.setCellValue("Accounting Date IXC");
+            CH1_13.setCellValue("Source Code");
+            CH1_14.setCellValue("Accounted");
+            CH1_15.setCellValue("");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
-            CH1_18.setCellValue("Differences");
-            CH1_19.setCellValue("");
+            CH1_18.setCellValue("");
+            CH1_19.setCellValue("Invoiced");
             CH1_20.setCellValue("");
+            CH1_21.setCellValue("");
+            CH1_22.setCellValue("");
+            CH1_23.setCellValue("");
+            CH1_24.setCellValue("Differences");
+            CH1_25.setCellValue("");
+            CH1_26.setCellValue("");
+            CH1_27.setCellValue("");
+            CH1_28.setCellValue("");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -231,6 +255,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
             CH1_18.setCellStyle(headerStyle);
             CH1_19.setCellStyle(headerStyle);
             CH1_20.setCellStyle(headerStyle);
+            CH1_21.setCellStyle(headerStyle);
+            CH1_22.setCellStyle(headerStyle);
+            CH1_23.setCellStyle(headerStyle);
+            CH1_24.setCellStyle(headerStyle);
+            CH1_25.setCellStyle(headerStyle);
+            CH1_26.setCellStyle(headerStyle);
+            CH1_27.setCellStyle(headerStyle);
+            CH1_28.setCellStyle(headerStyle);
             
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
@@ -244,9 +276,12 @@ public class AccountedAmountsInvoicedController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 14));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 17));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
+            
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 18));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 28));
             ++vj;
             //          ========================================================
             
@@ -273,6 +308,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
             Cell CH2_18 = row2.createCell(18);
             Cell CH2_19 = row2.createCell(19);
             Cell CH2_20 = row2.createCell(20);
+            Cell CH2_21 = row2.createCell(21);
+            Cell CH2_22 = row2.createCell(22);
+            Cell CH2_23 = row2.createCell(23);
+            Cell CH2_24 = row2.createCell(24);
+            Cell CH2_25 = row2.createCell(25);
+            Cell CH2_26 = row2.createCell(26);
+            Cell CH2_27 = row2.createCell(27);
+            Cell CH2_28 = row2.createCell(28);
 
             CH2_0.setCellValue("");
             CH2_1.setCellValue("");
@@ -286,15 +329,23 @@ public class AccountedAmountsInvoicedController extends BaseController {
             CH2_9.setCellValue("");
             CH2_10.setCellValue("");
             CH2_11.setCellValue("");
-            CH2_12.setCellValue("FARE");
-            CH2_13.setCellValue("TAX");
-            CH2_14.setCellValue("ISC");
-            CH2_15.setCellValue("FARE");
-            CH2_16.setCellValue("TAX");
-            CH2_17.setCellValue("ISC");
-            CH2_18.setCellValue("FARE");
-            CH2_19.setCellValue("TAX");
-            CH2_20.setCellValue("ISC");
+            CH2_12.setCellValue("");
+            CH2_13.setCellValue("");
+            CH2_14.setCellValue("FARE");
+            CH2_15.setCellValue("TAX");
+            CH2_16.setCellValue("ISC");
+            CH2_17.setCellValue("YQ");
+            CH2_18.setCellValue("TC");
+            CH2_19.setCellValue("FARE");
+            CH2_20.setCellValue("TAX");
+            CH2_21.setCellValue("ISC");
+            CH2_22.setCellValue("YQ");
+            CH2_23.setCellValue("TC");
+            CH2_24.setCellValue("FARE");
+            CH2_25.setCellValue("TAX");
+            CH2_26.setCellValue("ISC");
+            CH2_27.setCellValue("YQ");
+            CH2_28.setCellValue("TC");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -317,9 +368,15 @@ public class AccountedAmountsInvoicedController extends BaseController {
             CH2_18.setCellStyle(headerStyle);
             CH2_19.setCellStyle(headerStyle);
             CH2_20.setCellStyle(headerStyle);
+            CH2_21.setCellStyle(headerStyle);
+            CH2_22.setCellStyle(headerStyle);
+            CH2_23.setCellStyle(headerStyle);
+            CH2_24.setCellStyle(headerStyle);
+            CH2_25.setCellStyle(headerStyle);
+            CH2_26.setCellStyle(headerStyle);
+            CH2_27.setCellStyle(headerStyle);
+            CH2_28.setCellStyle(headerStyle);
 
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 16));
@@ -327,6 +384,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 25, 25));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 26, 26));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 27, 27));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 28, 28));
 
             ++vj;
             //============================================
@@ -356,6 +421,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
                 Cell rcell18 = row.createCell(18);
                 Cell rcell19 = row.createCell(19);
                 Cell rcell20 = row.createCell(20);
+                Cell rcell21 = row.createCell(21);
+                Cell rcell22 = row.createCell(22);
+                Cell rcell23 = row.createCell(23);
+                Cell rcell24 = row.createCell(24);
+                Cell rcell25 = row.createCell(25);
+                Cell rcell26 = row.createCell(26);
+                Cell rcell27 = row.createCell(27);
+                Cell rcell28 = row.createCell(28);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).A2559CIA);
@@ -369,15 +442,28 @@ public class AccountedAmountsInvoicedController extends BaseController {
                 rcell9.setCellValue(listaData.get(vi).A2559FACT);
                 rcell10.setCellValue(listaData.get(vi).A2559FCONT);
                 rcell11.setCellValue(listaData.get(vi).A2559FACTU);
-                rcell12.setCellValue(listaData.get(vi).A2559PFARE);
-                rcell13.setCellValue(listaData.get(vi).A2559PTAX);
-                rcell14.setCellValue(listaData.get(vi).A2559PISC);
-                rcell15.setCellValue(listaData.get(vi).A2559FFARE);
-                rcell16.setCellValue(listaData.get(vi).A2559FTAX);
-                rcell17.setCellValue(listaData.get(vi).A2559FISC);
-                rcell18.setCellValue(listaData.get(vi).A2559DFARE);
-                rcell19.setCellValue(listaData.get(vi).A2559DTAX);
-                rcell20.setCellValue(listaData.get(vi).A2559DISC);
+                
+                rcell12.setCellValue(listaData.get(vi).A2559FCOIC);
+                rcell13.setCellValue(listaData.get(vi).A2559TUSO);
+                
+                rcell14.setCellValue(listaData.get(vi).A2559PFARE);
+                rcell15.setCellValue(listaData.get(vi).A2559PTAX);
+                rcell16.setCellValue(listaData.get(vi).A2559PISC);
+                rcell17.setCellValue(listaData.get(vi).A2559YQ);
+                rcell18.setCellValue(listaData.get(vi).A2559TCAMB);
+                
+                rcell19.setCellValue(listaData.get(vi).A2559FFARE);
+                rcell20.setCellValue(listaData.get(vi).A2559FTAX);
+                rcell21.setCellValue(listaData.get(vi).A2559FISC);
+                rcell22.setCellValue(listaData.get(vi).A2559FYQ);
+                rcell23.setCellValue(listaData.get(vi).A2559TCAMF);
+                
+                rcell24.setCellValue(listaData.get(vi).A2559DFARE);
+                rcell25.setCellValue(listaData.get(vi).A2559DTAX);
+                rcell26.setCellValue(listaData.get(vi).A2559DISC);
+                rcell27.setCellValue(listaData.get(vi).DFQ);
+                rcell28.setCellValue(listaData.get(vi).DCAMB);
+                
 
                 iter.next();
                 ++vi;
@@ -405,6 +491,14 @@ public class AccountedAmountsInvoicedController extends BaseController {
             sheet.autoSizeColumn(18, true);
             sheet.autoSizeColumn(19, true);
             sheet.autoSizeColumn(20, true);
+            sheet.autoSizeColumn(21, true);
+            sheet.autoSizeColumn(22, true);
+            sheet.autoSizeColumn(23, true);
+            sheet.autoSizeColumn(24, true);
+            sheet.autoSizeColumn(25, true);
+            sheet.autoSizeColumn(26, true);
+            sheet.autoSizeColumn(27, true);
+            sheet.autoSizeColumn(28, true);
             
             /**
              * fileNameDownload = Nombre de descarga

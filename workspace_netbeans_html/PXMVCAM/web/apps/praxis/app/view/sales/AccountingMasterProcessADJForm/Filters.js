@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcessADJForm.Filters', {
                                         data: [
                                             ["", "(Select)"],
                                             ["PADJMA", "Manual Adjustment"],
-                                            ["PADJMV", "Massive Adjustment"]
+                                            ["PMASSIVE", "Massive Adjustment"]
                                         ]
                                     }),
                                     queryMode: 'local',

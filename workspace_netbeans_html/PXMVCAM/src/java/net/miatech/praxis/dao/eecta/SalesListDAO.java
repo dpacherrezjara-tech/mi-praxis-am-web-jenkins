@@ -177,12 +177,15 @@ public class SalesListDAO {
                 objRtn.tbl_client.A3953PLZCR = rs01.getInt("A3953PLZCR");
                 objRtn.tbl_client.A3953TORGN = rs01.getString("A3953TORGN");                                                                                                                      
                 //Fetch BLOB from DB
-                Blob blb= rs01.getBlob("LOGOBLOB");                
-                if( blb != null){
-                    byte barr[]=blb.getBytes(1,(int)blb.length());
-                    FileOutputStream fout=new FileOutputStream("/Dumps/"+ rs01.getString("A3953LOGO"));                
+                Blob blb= rs01.getBlob("LOGOBLOB");       
+                //blb = null; //temporal
+                if( blb != null && !rs01.getString("A3953LOGO").equals("")){
+                    byte barr[]=blb.getBytes(1,(int)blb.length());                                                                          
+                    String Rutatmp = session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";                     
+                    FileOutputStream fout=new FileOutputStream( Rutatmp + rs01.getString("A3953LOGO") );                
+                    //FileOutputStream fout=new FileOutputStream("/Dumps/"+ rs01.getString("A3953LOGO"));                                    
                     fout.write(barr);                
-                    fout.close();  
+                    fout.close();                    
                 }                                
                 lstRtn.add(objRtn);
             }

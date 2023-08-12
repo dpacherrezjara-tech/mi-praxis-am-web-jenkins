@@ -22,6 +22,10 @@ public class A2331Filter extends A2331 {
 
     public String IN_CARDN = "";
     public String IN_CARDC = "";
+    public String IN_PNR = "";
+    public String IN_SCARDN1 = "";
+    public String IN_SCARDN2 = "";
+    public String IN_AUTH = "";
     public String IN_STVAL = "";
     public String IN_MERCHN = "";
     public String IN_DATE = "";
@@ -36,6 +40,8 @@ public class A2331Filter extends A2331 {
     public String IN_SELECT = "";
     public String IN_TDOC = "";
     public String IN_COUNTRY = "";
+    public String IN_TKT = "";
+    public String COLOR = "";
 
     public String strDescription = "";
     public String strDescription1 = "";
@@ -84,10 +90,12 @@ public class A2331Filter extends A2331 {
     public String strDescBank = "";
     public String strFlag = "";
     public String strDescError = "";
+    public String descSTVAL = "";
     public String NOMTARHAB = "";
     public String COMMENT = "";
     public String DATE = "";
     public String TICKET = "";
+    public String TICKETX = "";
 
     public long lngQLINK = 0;
     public long lngQCARD = 0;
@@ -176,4 +184,5 @@ public class A2331Filter extends A2331 {
     
     public Pagination page = new Pagination();
 
+    
 }

@@ -384,14 +384,16 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                 Ext.getCmp(prototype.id + '-CatalogoClienteEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
+                    icon: objRtn.dbException.SQLCODE,
                     fn: function () {
                         //culmino PROCESO
+                        //console.log(objRtn.dbException.SQLCODE);
+                        if(objRtn.dbException.SQLCODE === '0')return;                        
                         Ext.getCmp(prototype.id + '-A3953CDCLI').setValue(objRtn.OU_A3953CDCLI);
                         //carga logo(pendiente)
 //                        Ext.getCmp(prototype.id + '-btn-upload').disable(true);
 //                        me.setuploadLogo();
-                        me.search_uatp(); //cagar desde la base de datos para generar STORE.
+                        me.search_uatp(); //cargar desde la base de datos para generar STORE.
                         me.search_identif();
                         me.handlerEvent_setDisabled(false);
                         //PARA ACTUALIZAR DESPUES DE INSERTAR

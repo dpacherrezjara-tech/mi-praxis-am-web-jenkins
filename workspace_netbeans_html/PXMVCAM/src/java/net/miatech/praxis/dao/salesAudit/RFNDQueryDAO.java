@@ -623,7 +623,6 @@ public class RFNDQueryDAO {
         A3647Filter lstGeneral = null;
         List<A3648> lst_DOCUMENTS = new ArrayList<A3648>(0);
         List<A3649> lst_RAZON = new ArrayList<A3649>(0);
-        List<A3649> lst_REMARCK = new ArrayList<A3649>(0);
 
         List<A3652> TEM_TAXESAGEN = new ArrayList<A3652>(0);
         List<A3652> TEM_TAXESAM = new ArrayList<A3652>(0);
@@ -636,7 +635,6 @@ public class RFNDQueryDAO {
         A3648 objlst_DOCUMENTS = null;
         A3649 objlst_RAZON = null;
         A3660 objlst_USOS = null;
-        A3649 objlst_REMARCK = null;
 
         A3652 objlst_TAXESAGEN = null;
         A3652 objlst_TAXESAM = null;
@@ -652,7 +650,6 @@ public class RFNDQueryDAO {
         ResultSet rs05 = null;
         ResultSet rs06 = null;
         ResultSet rs07 = null;
-        ResultSet rs08 = null;
 
         String SQLCLL01 = "{CALL PXRFNDESP.SQP03105(?,?,?,?,?,?,?,?)}";
 
@@ -671,48 +668,32 @@ public class RFNDQueryDAO {
             cstmt01.setString(8, filter.IN_CORRL);
 
             cstmt01.execute();
-            rs08 = cstmt01.getResultSet();
+            rs01 = cstmt01.getResultSet();
             ////LIST TAXES 
-            while (rs08.next()) {
-                objlst_REMARCK = new A3649();
-                objlst_REMARCK.A3649ERROR = rs08.getString("A3649ERROR");
-                objlst_REMARCK.A3649FREGI = rs08.getString("A3649FREGI");
-                objlst_REMARCK.A3649ARCHI = rs08.getString("A3649ARCHI");
-                objlst_REMARCK.A3649PREME = rs08.getString("A3647PREME");
-                objlst_REMARCK.A3649ANIO = rs08.getString("A3647ANIO");
-                objlst_REMARCK.A3649FLAG = rs08.getString("A3647FOLIO");
-                objlst_REMARCK.A3649CORRL = rs08.getString("A3649CORRL");
+            while (rs01.next()) {
+                objlst_TAXESAGEN = new A3652();
+                objlst_TAXESAGEN.A3652CCUST = rs01.getString("A3652CCUST");
+                objlst_TAXESAGEN.A3652CIA = rs01.getString("A3652CIA");
+                objlst_TAXESAGEN.A3652FORMA = rs01.getString("A3652FORMA");
+                objlst_TAXESAGEN.A3652SERIE = rs01.getString("A3652SERIE");
+                objlst_TAXESAGEN.A3652SEQ = rs01.getString("A3652SEQ");
+                objlst_TAXESAGEN.A3652CORRL = rs01.getString("A3652CORRL");
+                objlst_TAXESAGEN.A3652CDTAX = rs01.getString("A3652CDTAX");
+                //objlst_TAXESAGEN.A3652MONEQ = rs01.getString("A3652MONEQ");
+                objlst_TAXESAGEN.A3652MONED = rs01.getString("A3652MONED");
+                objlst_TAXESAGEN.A3652PAIS = rs01.getString("A3652PAIS");
+                objlst_TAXESAGEN.A3652TPTAX = rs01.getString("A3652TPTAX");
+                objlst_TAXESAGEN.A3652CTRL = rs01.getString("A3652CTRL");
+                objlst_TAXESAGEN.A3652APFC = rs01.getString("A3652APFC");
+                objlst_TAXESAGEN.A3652STAT = rs01.getString("A3652STAT");
+                objlst_TAXESAGEN.A3652ERROR = rs01.getString("A3652ERROR");
+                objlst_TAXESAGEN.A3652PREME = rs01.getString("A3652PREME");
+                objlst_TAXESAGEN.A3652ANIO = rs01.getString("A3652ANIO");
+                objlst_TAXESAGEN.A3652TYPE = rs01.getString("A3652TYPE");
+                objlst_TAXESAGEN.A3652TXMIA = rs01.getDouble("A3652TXMIA");
+                objlst_TAXESAGEN.A3652TXDIF = rs01.getDouble("A3652TXDIF");
 
-                lst_REMARCK.add(objlst_REMARCK);
-            }
-            // lsta de taxes 
-            if (cstmt01.getMoreResults()) {
-                rs01 = cstmt01.getResultSet();
-                while (rs01.next()) {
-                    objlst_TAXESAGEN = new A3652();
-                    objlst_TAXESAGEN.A3652CCUST = rs01.getString("A3652CCUST");
-                    objlst_TAXESAGEN.A3652CIA = rs01.getString("A3652CIA");
-                    objlst_TAXESAGEN.A3652FORMA = rs01.getString("A3652FORMA");
-                    objlst_TAXESAGEN.A3652SERIE = rs01.getString("A3652SERIE");
-                    objlst_TAXESAGEN.A3652SEQ = rs01.getString("A3652SEQ");
-                    objlst_TAXESAGEN.A3652CORRL = rs01.getString("A3652CORRL");
-                    objlst_TAXESAGEN.A3652CDTAX = rs01.getString("A3652CDTAX");
-                    //objlst_TAXESAGEN.A3652MONEQ = rs01.getString("A3652MONEQ");
-                    objlst_TAXESAGEN.A3652MONED = rs01.getString("A3652MONED");
-                    objlst_TAXESAGEN.A3652PAIS = rs01.getString("A3652PAIS");
-                    objlst_TAXESAGEN.A3652TPTAX = rs01.getString("A3652TPTAX");
-                    objlst_TAXESAGEN.A3652CTRL = rs01.getString("A3652CTRL");
-                    objlst_TAXESAGEN.A3652APFC = rs01.getString("A3652APFC");
-                    objlst_TAXESAGEN.A3652STAT = rs01.getString("A3652STAT");
-                    objlst_TAXESAGEN.A3652ERROR = rs01.getString("A3652ERROR");
-                    objlst_TAXESAGEN.A3652PREME = rs01.getString("A3652PREME");
-                    objlst_TAXESAGEN.A3652ANIO = rs01.getString("A3652ANIO");
-                    objlst_TAXESAGEN.A3652TYPE = rs01.getString("A3652TYPE");
-                    objlst_TAXESAGEN.A3652TXMIA = rs01.getDouble("A3652TXMIA");
-                    objlst_TAXESAGEN.A3652TXDIF = rs01.getDouble("A3652TXDIF");
-
-                    TEM_TAXESAGEN.add(objlst_TAXESAGEN);
-                }
+                TEM_TAXESAGEN.add(objlst_TAXESAGEN);
             }
             ////LIST Card Type
             if (cstmt01.getMoreResults()) {
@@ -888,7 +869,6 @@ public class RFNDQueryDAO {
             objRtnGeneral.lst_RAZON = lst_RAZON;
             objRtnGeneral.lst_USOS = lst_USOS;
             objRtnGeneral.lst_DOCUMENTS = lst_DOCUMENTS;
-            objRtnGeneral.lst_REMARCK = lst_REMARCK;
 
             lstGeneral = objRtnGeneral;
         } catch (SQLException e) {

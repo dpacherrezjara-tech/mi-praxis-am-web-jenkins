@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 880,
-    width: 1220,
+    width: 1170,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -161,13 +161,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idDetailTicket + '-txtAuthorise',
-                            fieldLabel: 'Autho/Reje date',
-                            labelWidth: 100,
-                            width: 180,
+                            id: prototype.idDetailTicket + '-txtRemarks',
+                            fieldLabel: 'Remarks',
+                            labelWidth: 50,
                             value: 'xxxxxx',
                             readOnly: true,
-                            fieldStyle: 'font-weight: bold; color: blue;'
+                            width: 350
                         },
                         {
                             xtype: 'button', hidden: true,
@@ -177,7 +176,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             listeners: {
                                 click: 'onImageViewClick'
                             }
-                        }
+                        },
                     ]
                 },
                 {
@@ -392,15 +391,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             width: 900
                         },
                         {
-                            xtype: 'textarea',
-                            id: prototype.idDetailTicket + '-txtRemarks',
-                            //fieldLabel:'Remarks',
-                            labelWidth:50,
-                            grow: true,
+                            xtype: 'textfield',
+                            id: prototype.idDetailTicket + '-txtAuthorise',
+                            fieldLabel: 'Autho/Reje date',
+                            labelWidth: 100,
+                            width: 180,
+                            value: 'xxxxxx',
                             readOnly: true,
-                            //anchor    : '100%',
-                            flex: 1,
-                            height: '100%'
+                            fieldStyle: 'font-weight: bold; color: blue;'
                         }
 
 
@@ -683,6 +681,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             height: 200,
                             width: 570
                         }
+
                     ]
                 },
                 {
@@ -758,7 +757,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                                 afterrender: 'OnLoadGridAfterrender'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 100},
                         {
                             xtype: 'grid',
                             id: prototype.idDetailTicket + '-gridRazonesTkt',
@@ -804,38 +803,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 150,
                             width: 440
-                        },
-                        {
-                            xtype: 'grid',
-                            id: prototype.idDetailTicket + '-gridRemarcks',
-                             height: 150,
-                            width: 300,
-                            columnLines: true,
-                            columns: {
-                                defaults: {
-                                    menuDisabled: true,
-                                    sortable: true,
-                                    align: 'center'
-                                },
-                                items: [
-                                    {text: 'Date', dataIndex: 'A3649FREGI', align: 'center', width: 70, sortable: false},
-                                    {text: 'Description', dataIndex: 'A3649ERROR', width: 220, align: 'left',
-                                        listeners: {
-                                            click: 'metadata_detalle'
-                                        },
-                                        renderer: function (value, metadata) {
-                                            metadata.tdAttr = 'data-qtip="' + value + '"';
-                                            return value;
-                                        }
-                                    }/*,
-                                    {
-                                        text: 'File',
-                                        dataIndex: 'A3649ARCHI',
-                                         width: 80,
-                                        renderer: 'OnColumnAuditorRenderer'
-                                    }*/
-                                ]
-                            }
                         }
                     ]
                 },

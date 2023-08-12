@@ -11,7 +11,9 @@ import net.miatech.praxis.exceptions.SpringException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import net.miatech.praxis.Sales.A4373;
 import net.miatech.praxis.Sales.A4373Filter;
+//import net.miatech.praxis.payment.A2289;
 import net.miatech.praxis.payment.filter.A2289Filter;
 import net.miatech.praxis.payment.filter.A4168Filter;
 import org.apache.log4j.Logger;
@@ -33,7 +35,7 @@ public class LoadPaymentDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A2289Filter> loadSQP00885(A2289Filter filter) throws SQLException, Exception {
         List<A2289Filter> list = new ArrayList<A2289Filter>();
         A2289Filter objRtn;
@@ -209,7 +211,7 @@ public class LoadPaymentDAO {
         return list;
     }
     
-        /*NUEVO RFTX*/
+    /*NUEVO RFTX*/
     public List<A4373Filter> loadSQP04826(A4373Filter filter) throws SQLException, Exception {
         List<A4373Filter> list = new ArrayList<A4373Filter>();
         A4373Filter objRtn;
@@ -378,7 +380,7 @@ public class LoadPaymentDAO {
 
         return list;
     }
-    
+
     public List<A4168Filter> loadSQP04467(A4168Filter filter) throws SQLException, Exception {
         List<A4168Filter> list = new ArrayList<A4168Filter>();
         A4168Filter objRtn;
@@ -553,8 +555,7 @@ public class LoadPaymentDAO {
 
         return list;
     }
-    
-    
+
     public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();

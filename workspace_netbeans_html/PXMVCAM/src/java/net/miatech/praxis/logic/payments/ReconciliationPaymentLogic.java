@@ -7,18 +7,16 @@ package net.miatech.praxis.logic.payments;
 
 import java.sql.SQLException;
 import java.util.List;
-import net.miatech.beans.A1691Filter;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ReconciliationPaymentDAO;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
-import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
-import net.miatech.praxis.payment.filter.A4124Filter;
+import net.miatech.praxis.payment.filter.SQP05004Filter;
 
 /**
  *
@@ -188,4 +186,8 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadPX606SQP04959(filter);
     }
     //-----------------------------------------------------------------------------------------
+    
+    public SQP05004Filter loadSQP05004Filter(SQP05004Filter filter){
+        return ReconciliationPaymentDAO.loadSQP05004Filter(filter);
+    }
 }

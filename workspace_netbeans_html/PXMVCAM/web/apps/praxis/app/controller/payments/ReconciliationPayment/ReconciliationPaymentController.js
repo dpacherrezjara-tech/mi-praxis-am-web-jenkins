@@ -116,12 +116,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             },
             '#ReconciliationPaymentForm-checkSettlement': {
                 change: this.checkEvent
-            },
+            }
         });
     },
     xpanel_afterrender: function (obj, e) {
         this.obtainData();
-        this.btnSearch_click();
+        //this.btnSearch_click();
     },
     eventKey: function (e, eOpts) {
         /*if (eOpts.getKey() === 13) {
@@ -131,8 +131,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    obtainData: function () {
-
+    //<editor-fold defaultstate="collapsed" desc="Data Combos">
+    obtainData: async function () {
+        const panelFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        panelFilters.mask('Loading Filters...');
         var month = this.fecha.getMonth() + 1;
 
         if (month < 10) {
@@ -176,289 +178,171 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             ]
         }));
         cmbDateSel.setValue("PRDA");
-
-        var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
-        cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["0", "Pending"],
-                ["1", "Match"],
-                ["2", "Sales Without Settlement"],
-                ["3", "Settlement Without Sales"],
-                ["4", "Match with Differences"],
-                ["5", "Match Manual"],
-                ["6", "Forced Match"],
-                ["7", "Compensation Match"],
-                ["8", "Pending RFND"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbSTVAL').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbSTVAL').setValue('');
-        Ext.getCmp(prototype.id + '-cmbSTVAL').resumeEvents();
-
-        var cmbSTVALCP = Ext.getCmp(prototype.id + '-cmbSTVALCP');
-        cmbSTVALCP.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["1", "Match"],
-                ["6", "Forced Match"],
-                ["8", "Pending RFND"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbSTVALCP').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbSTVALCP').setValue('');
-        Ext.getCmp(prototype.id + '-cmbSTVALCP').resumeEvents();
-
-        var cmbTDOC = Ext.getCmp(prototype.id + '-cmbTDOC');
-        cmbTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["S", "Sales"],
-                ["R", "Refund"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
-        Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
-
-        var cmbSummTDOC = Ext.getCmp(prototype.id + '-cmbSummTDOC');
-        cmbSummTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["S", "Sales"],
-                ["R", "Refund"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbSummTDOC').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbSummTDOC').setValue('');
-        Ext.getCmp(prototype.id + '-cmbSummTDOC').resumeEvents();
-
-        var cmbTDOCCP = Ext.getCmp(prototype.id + '-cmbTDOCCP');
-        cmbTDOCCP.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["S", "Sales"],
-                ["R", "Refund"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbTDOCCP').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbTDOCCP').setValue('');
-        Ext.getCmp(prototype.id + '-cmbTDOCCP').resumeEvents();
-
-        var cmbTDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError');
-        cmbTDOCError.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["S", "Sales"],
-                ["R", "Refund"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbTDOCError').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbTDOCError').setValue('S');
-        Ext.getCmp(prototype.id + '-cmbTDOCError').resumeEvents();
-
-        var cmbComplement = Ext.getCmp(prototype.id + '-cmbComplement');
-        cmbComplement.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["Y", "Complements"],
-                ["N", "No Complements"],
-                ["P", "Plusgrade"],
-                ["L", "Ligas"],
-                ["T", "Tablet"]
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbComplement').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbComplement').setValue('');
-        Ext.getCmp(prototype.id + '-cmbComplement').resumeEvents();
-
-        var cmbRecType = Ext.getCmp(prototype.id + '-cmbRecType');
-        cmbRecType.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["1", "Transact."],
-                ["2", "Chargeback"]
-            ]
-        }));
-        cmbRecType.setValue("");
-
-        /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
-         cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
-         autoLoad: false,
-         fields: ['CODE', 'NAME'],
-         data: [
-         ["", "All"],
-         ["81", "81"],
-         ["82", "82"]
-         ]
-         }));
-         cmbErrorCode.setValue("");*/
-
-        var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
-        cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["AMEX", "Amex"],
-                ["FIRSTD00", "First Data"],
-                ["PRISMA", "Prisma"],
-                ["WP00", "WorldPay"],
-                ["GETMEX00", "GetNetMex"],
-                ["ATCAN00", "Atcan"],
-            ]
-        }));
-        cmbProT.setValue("");
-
-        var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
-        cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["ARS", "ARS"],
-                ["CAD", "CAD"],
-                ["CLP", "CLP"],
-                ["EUR", "EUR"],
-                ["GBP", "GBP"],
-                ["JPY", "JPY"],
-                ["MXN", "MXN"],
-                ["USD", "USD"],
-            ]
-        }));
-        cmbCurr.setValue("");
-
-        var cmbSTVALErr = Ext.getCmp(prototype.id + '-cmbSTVALErr');
-        cmbSTVALErr.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['CODE', 'NAME'],
-            data: [
-                ["", "All"],
-                ["0", "Stand By"],
-                ["1", "Match"],
-                ["2", "Sales Without Settlement"],
-                ["3", "Settlement Without Sales"],
-                ["4", "Match with Differences"],
-                ["5", "Match Manual"],
-                ["6", "Forced Match"],
-                ["7", "Compensation Match"],
-                ["8", "Pending RFND"],
-            ]
-        }));
-        Ext.getCmp(prototype.id + '-cmbSTVALErr').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbSTVALErr').setValue('');
-        Ext.getCmp(prototype.id + '-cmbSTVALErr').resumeEvents();
-
+        await this.fillComboStores();
+        panelFilters.unmask();
+        //this.btnSearch_click();
+    },
+    fillComboStores: async function () {
+        const me = this;
+        const reqUrl = `${prototype.url}/getMasterTableInfo`;
+        let params = {
+            KEY1: 'SR'
+        };
+        const fillComboBox = async ({tipo,id}) => {
+            params.KEY2 = tipo;
+            const data = await me.httpGet({url: reqUrl, params: params});
+            const cmb = Ext.getCmp(prototype.id + id);
+            cmb.bindStore(me.createArrayStore({data: data.lst}));
+            return {combo:cmb};
+            //cmb.setValue("");
+        };
+        //<editor-fold defaultstate="collapsed" desc="Bean Warning">
         me.bean_warning = {};
         if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked')) {
             me.bean_warning.IN_WARNING = 'Y';
         } else {
             me.bean_warning.IN_WARNING = 'N';
         }
-        Ext.Ajax.request({
-            url: prototype.url + '/getErrorCodes',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(me.bean_warning)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbErrorCode').suspendEvents(false);
-                    Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
-                    Ext.getCmp(prototype.id + '-cmbErrorCode').resumeEvents();
-                }
+        //</editor-fold>
+        const fillErrorCodes = async () => {
+            const data = await me.httpGet({url: prototype.url + '/getErrorCodes', 
+                params: {
+                    beanString: JSON.stringify(me.bean_warning)
+                }});
+            const cmb = Ext.getCmp(prototype.id + '-cmbErrorCode');
+            cmb.suspendEvents(false);
+            cmb.bindStore(me.createStore({data: data.data}));
+            cmb.setValue('');
+            cmb.resumeEvents();
+            await me.llenarComboErrorIntegridad();
+        };
+        const fillZones = async () => {
+            const data = await me.httpGet({url: prototype.url + '/getZonas', 
+                params: {
+                    beanString: JSON.stringify(me.bean_warning)
+                }});
+            const cmbZones = [
+                Ext.getCmp(prototype.id + '-cmbZONAsett'),
+                Ext.getCmp(prototype.id + '-cmbZONAErr'),
+                Ext.getCmp(prototype.id + '-cmbZONASumm')
+            ];
+            cmbZones.forEach(cmb=>{
+                cmb.suspendEvents(false);
+                cmb.bindStore(me.createStore({data: data.data}));
+                cmb.setValue('');
+                cmb.resumeEvents();
+            });
+            await me.obtainGetCountries();
+        };
 
-                me.llenarComboErrorIntegridad();
-            }
+        await Promise.allSettled([
+            fillComboBox({tipo:'CMBPROC',id:'-cmbProT'}),
+            fillComboBox({tipo:'CMBSTS',id:'-cmbSTVAL'}),
+            fillComboBox({tipo:'CMBSTSER',id:'-cmbSTVALErr'}),
+            fillComboBox({tipo:'CMBMDA',id:'-cmbCurr'}),
+            fillComboBox({tipo:'CMBSTSCP',id:'-cmbSTVALCP'}),
+            fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOC'}),
+            fillComboBox({tipo:'CMBTDOC',id:'-cmbSummTDOC'}),
+            fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOCCP'}),
+            fillComboBox({tipo:'CMBTDOC',id:'-cmbTDOCError'}),
+            fillErrorCodes(),
+            fillZones(),
+            //se pusieron al final por ser dependientes de los combos anteriores
+            fillComboBox({tipo:'CMBRECT',id:'-cmbRecType'}),
+            fillComboBox({tipo:'CMBCOMPL',id:'-cmbComplement'})
+        ]).then(values => {
+            values.forEach(val => {
+               if(val.status === 'fulfilled'&&val.value){
+                   const cmb = val.value.combo;
+                   cmb.setValue('');
+               } 
+            });
         });
-
-        Ext.Ajax.request({
-            url: prototype.url + '/getZonas',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(me.bean_warning)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbZONAsett').suspendEvents(false);
-                    Ext.getCmp(prototype.id + '-cmbZONAErr').suspendEvents(false);
-                    Ext.getCmp(prototype.id + '-cmbZONASumm').suspendEvents(false);
-                    
-                    Ext.getCmp(prototype.id + '-cmbZONAsett').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbZONAsett').setValue('');
-
-                    Ext.getCmp(prototype.id + '-cmbZONAErr').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbZONAErr').setValue('');
-
-                    Ext.getCmp(prototype.id + '-cmbZONASumm').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbZONASumm').setValue('');
-                    
-                    Ext.getCmp(prototype.id + '-cmbZONAsett').resumeEvents();
-                    Ext.getCmp(prototype.id + '-cmbZONAErr').resumeEvents();
-                    Ext.getCmp(prototype.id + '-cmbZONASumm').resumeEvents();
-                    
-                    me.obtainGetCountries();
-
-                    /*me.obtenerPaisesSett();
-                    me.obtenerPaisesErr();
-                    me.obtenerPaisesSumm();*/
-
-                }
-            }
-        });
-
-        //me.btnSearch_click();
     },
-    obtainGetCountries: function () {
-        Ext.Ajax.request({
-            url: prototype.url + '/getCountries',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(this.dataObtain)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett').setValue('');
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr').setValue('');
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm').setValue('');
-                } else
-                    global.Msg({msg: res.sesion});
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Utils">
+    httpGet: async function ( {url, params}) {
+        return await fetch(`${url}?${new URLSearchParams(params)}`)
+                .then(async res => {
+                    if (res.ok) {
+                        return await res.json();
+                    } else {
+                        return null;
+                    }
+                }).catch(err => {
+            console.error(err);
+            global.Msg({msg: 'Data not found'});
+        });
+    },
+    httpPost: async function({url,body}){
+        return await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                })
+                .then(async res => {
+                    if (res.ok) {
+                        return await res.json();
+                    } else {
+                        return null;
+                    }
+                }).catch(err => {
+            console.error(err);
+            global.Msg({msg: 'Data not found'});
+        });
+    },
+    createArrayStore: function ( {data}){
+        let lst = data.map(obj=>{
+            return {
+                code:obj.a4451key3.trim(),
+                name:obj.a4451desc1
+            };
+        });
+        return Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            data: lst, // Los datos se cargarán posteriormente
+            proxy: {
+                type: 'memory',
+                reader: {
+                    type: 'json'
+                }
             }
         });
+    },
+    createStore: function({data}){
+        return Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            data: data,
+            proxy: {
+                type: 'memory',
+                reader: {
+                    type: 'json'
+                }
+            }
+        });
+    },
+    //</editor-fold>
+    obtainGetCountries: async function () {
+        const me = this;
+        const response = await me.httpPost({url: prototype.url + '/getCountries', 
+            body: {
+                beanString: JSON.stringify(me.dataObtain)
+            }});
+        const cmbsCountry = [
+            Ext.getCmp(prototype.id + '-cmbSCOUNTRYSett'),
+            Ext.getCmp(prototype.id + '-cmbSCOUNTRYErr'),
+            Ext.getCmp(prototype.id + '-cmbSCOUNTRYSumm')
+        ];
+        if(response){
+            cmbsCountry.forEach(cmb=> {
+                cmb.bindStore(me.createStore({data:response.data}));
+                cmb.setValue('');
+             });
+        }else{
+            global.Msg({msg: response.sesion});
+        }
     },
     obtenerPaisesSett: function () {
         var zona = Ext.getCmp(prototype.id + '-cmbZONAsett').getValue();
@@ -535,38 +419,23 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
             }
         });
     },
-    llenarComboErrorCode: function () {
-
-    },
-    llenarComboErrorIntegridad: function () {
+    llenarComboErrorIntegridad: async function () {
+        const me = this;
         me.bean_ErrorCodesRecSett = {};
         me.bean_ErrorCodesRecSett.IN_WARNING = '';
-        Ext.Ajax.request({
-            url: prototype.url + '/getErrorCodesRecSett',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(me.bean_ErrorCodesRecSett)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').suspendEvents(false);
-                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
-                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').resumeEvents();
-                    /*Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
-                     Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                     );
-                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');*/
-
-                }
-            }
-        });
+        const response = await me.httpPost({url: prototype.url + '/getErrorCodesRecSett', 
+            body: {
+                beanString: JSON.stringify(me.bean_ErrorCodesRecSett)
+            }});
+        const cmbErrCodInt = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett');
+        cmbErrCodInt.suspendEvents(false);
+        cmbErrCodInt.bindStore(me.createStore({data:response.data}));
+        cmbErrCodInt.setValue('');
+        cmbErrCodInt.resumeEvents();
     },
     checkEvent: function (obj, e) {
         //true : check ; false : uncheck
-        console.log('checkEvent')
+        //console.log('checkEvent')
         if (obj.getValue()) {
             this.optionCheck = 1;
 
@@ -609,12 +478,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         me.bean.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
         me.bean.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
-
-
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
-
-
-        console.log(me.bean);
+        //console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -885,7 +750,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                         global.Msg({msg: 'Data not found.'});
                     } else {
                         var data = obj.data.items[0].data;
-                        console.log(data);
+                        //console.log(data);
                         if (data.IN_DATE === "PAYDATE") {
                             Ext.getCmp(prototype.id + '-htPreDateErrorTransaction').setText('Payment');
                         } else {
@@ -1019,7 +884,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                         if (data.IN_DATE === "PAYDATE") {
                             Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain1').setText('Payment');
                             Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain2').setText('Processing');
-                            
+
                         } else {
                             Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain1').setText('Processing');
                             Ext.getCmp(prototype.id + '-htPreDateErrorTransactionMain2').setText('Payment');
@@ -1135,14 +1000,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         }
     },
     filterSettlement: function () {
-        if (Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '') {
-            this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
-            this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue(); //+ Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        } else {
-            this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
-            this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        }
-
+        //se busca con fecha especificada por user
+        this.beanFilterSettlement.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+        this.beanFilterSettlement.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        
         this.beanFilterSettlement.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         this.beanFilterSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanFilterSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
@@ -1188,9 +1049,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
                             msg: 'Data not found.'
                         });
                     } else {
-                        console.log(obj);
+                        //console.log(obj);
                         var data = obj.data.items[0].data;
-                        console.log(data);
+                        //console.log(data);
                         if (data.IN_DATE === "PAYDATE") {
                             Ext.getCmp(prototype.id + '-detSettDate').setText('Payment');
                             //Ext.getCmp(prototype.id + '-gridDetSettlement').setTitle('<center style="font-size:12px;">' + 'PAYMENT DATE: ' + data.DATE + ' - ' + ' MERCHANT: ' + data.IN_MERCHID + ' - ' + ' CURRENCY: ' + data.IN_PCURRENCY + '</center>');
@@ -2391,7 +2252,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     onViewPNR: function (a, b, c, d, e, rowData) {
 
 //        var rec = grid.getStore().getAt(rowIndex);
-        rowData.data.PNR = rowData.data.INVORNBR;
+        const {INVORNBR, PROCTYPESQ} = rowData.data;
+        if (PROCTYPESQ === 'BANORTE00') {
+            return;
+        }
+        rowData.data.PNR = INVORNBR;
         this.winDataEntry('', rowData);
     },
     winDataEntry: function (action, rec) {
@@ -2854,6 +2719,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     selectComboFromDay: function (obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
+    },
+    btnRefreshFilters : function(){
+        this.obtainData();
     },
     /*     
      * Funciones para la paginacion     

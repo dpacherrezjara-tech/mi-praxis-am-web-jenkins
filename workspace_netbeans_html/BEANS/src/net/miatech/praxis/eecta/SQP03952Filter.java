@@ -13,7 +13,8 @@ import net.miatech.beans.DBException;
  */
 public class SQP03952Filter extends A3959 {
     public String VP_ACTION ="";     
-    public String VP_TICKET_NC ="";    
+    public String VP_TICKET_NC ="";   
+    public String VP_NUM_RECIBO ="";   
     public String  VP_json_detail = "";   
     public DBException dbException = new DBException();
 }

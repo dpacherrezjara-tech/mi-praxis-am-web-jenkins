@@ -204,13 +204,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
 
-        if (this.beanResult.SMERCHID === '9353227755') {
-            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
-        } else if (this.beanResult.SMERCHID === '8133735688') {
-            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
-        } else if (this.beanResult.SMERCHID === '9352724851') {
-            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
-        }
+//        if (this.beanResult.SMERCHID === '9353227755') {
+//            this.setValue('de-txtSMERCHID', 'PLUS-' + this.beanResult.SMERCHID);
+//        } else if (this.beanResult.SMERCHID === '8133735688') {
+//            this.setValue('de-txtSMERCHID', 'LIG-' + this.beanResult.SMERCHID);
+//        } else if (this.beanResult.SMERCHID === '9352724851') {
+//            this.setValue('de-txtSMERCHID', 'TAB-' + this.beanResult.SMERCHID);
+//        }
+        this.setValue('de-txtSMERCHID', this.beanResult.SALES_MERCH_ID);
 
         this.setValue('de-txtBpoOBSERV-RO', this.beanResult.OBSERV_BPO);
         this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
@@ -404,6 +405,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     },
     getDataGrid: function (beanGrid) {
         var beanStringGrid = JSON.stringify(beanGrid);
+        //console.log('Bean String',beanStringGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionError',
             method: 'POST',
@@ -1266,8 +1268,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         });
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        var strTkt = rowData.data.ISREFNBR;
-
+        var obj = rowData.data;
         prototypeProgram.view = 'payments-reconciliation-payment-form';
         prototypeProgram.nprog = 'PX00000606';
         prototypeProgram.title = 'Reconciliation Payment';
@@ -1275,11 +1276,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
 
         var beanProMasterTicket = {};
 
-        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
-        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        beanProMasterTicket.IN_CIA = obj.A1531CIA;
+        beanProMasterTicket.IN_FORMA = obj.A1531FORMA;
+        beanProMasterTicket.IN_SERIE = obj.A1531SERIE;
 
-        console.log(beanProMasterTicket);
+        console.log('Iniciando View Ticket: ',beanProMasterTicket);
         Ext.getCmp(prototype.id + '-dataEntryError').close();
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },

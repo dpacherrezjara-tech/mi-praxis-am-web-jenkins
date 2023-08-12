@@ -936,8 +936,6 @@ public class DataRequestedByBankController extends BaseController {
             map.put("info", info);
             map.put("success", true);
         } catch (Exception ex) {
-            LogR("Exception : " + getFechaActual() + " - Hora : " + getHoraActual() + " Exception: " + ex.getMessage());
-            //LogR("Terminó Creacion de PDF : " + getFechaActual() + " - Hora : " + getHoraActual());
             logError.error("An error ocurred, pleas try again later.");
             map.put("success", false);
         }
@@ -1196,7 +1194,6 @@ public class DataRequestedByBankController extends BaseController {
             map.put("info", info);
             map.put("success", true);
         } catch (Exception ex) {
-            LogR("Exception : " + getFechaActual() + " - Hora : " + getHoraActual() + " Exception: " + ex.getMessage());
             logError.error("An error ocurred, pleas try again later.");
             map.put("success", false);
             map.put("msjError", msj + " - " + ex.getMessage());
@@ -4904,10 +4901,8 @@ public class DataRequestedByBankController extends BaseController {
         return existe;
     }
 
-    public void LogR(String Mensa){
-        try{
-        
-            File file = new File("\\\\WSFILE\\Documentos\\PAYMENT-CONTROL\\Log\\Log.txt");
+    public void LogR(String Mensa) throws IOException {
+        File file = new File("\\\\WSFILE\\Documentos\\PAYMENT-CONTROL\\Log\\Log.txt");
         // Si el archivo no existe es creado
         if (!file.exists()) {
             file.createNewFile();
@@ -4916,11 +4911,5 @@ public class DataRequestedByBankController extends BaseController {
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(Mensa + "\n");
         bw.close();
-        }
-        catch(Exception e)
-        {
-        
-        }
-        
     }
 }

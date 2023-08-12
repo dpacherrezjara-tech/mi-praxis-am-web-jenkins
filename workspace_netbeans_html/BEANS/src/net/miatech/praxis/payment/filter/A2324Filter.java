@@ -135,6 +135,7 @@ public class A2324Filter extends A2324 {
     public String NEW_SCOUNTRY = "";
     public String NEW_STVAL = "";
     public String NEW_SCURRENCY = "";
+    public String NEW_COMMENT = "";
     public long NEW_SVFOP = 0;
 
     //TABLA PNR

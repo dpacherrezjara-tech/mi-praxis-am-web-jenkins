@@ -9,10 +9,10 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Options', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id+'-boxPaginacion',
+            id: prototype.id + '-boxPaginacion',
             hidden: false,
-            width: 100,            
-            border: false,                        
+            width: 100,
+            border: false,
             items: [
                 {
                     xtype: 'toolbar',
@@ -56,11 +56,11 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',                            
+                            id: prototype.id + '-paggin',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
-                            hidden:true
+                            hidden: true
                         }
                     ]
                 }
@@ -83,6 +83,26 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Options', {
                                 click: 'btnSearch_click'
                             }
                         },
+
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-apl-batch',
+                            text: 'Aplicar masivo',
+                            icon: 'resources/img/icon/single_format.png',
+                            listeners: {
+                                click: 'btnAplPaymentBatch'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-apl-reporte',
+                            text: 'Aplicar por reporte',
+                            icon: 'resources/img/botones/check.png',
+                            listeners: {
+                                click: 'btnApl_pay_click'
+                            }
+                        },
+
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnFilter',
@@ -97,7 +117,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Options', {
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
-                            hidden:true,
+                            hidden: true,
                             listeners: {
                                 click: 'btnExcel_click'
                             }
@@ -111,15 +131,15 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Options', {
                                 click: 'btnClear_click'
                             }
                         },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnClear',
-                            iconCls: 'prx-icon-check',
-                            tooltip: 'Aplicar Pago',
-                            listeners: {
-                                click: 'btnApl_pay_click' 
-                            }
-                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btnClear',
+//                            iconCls: 'prx-icon-check',
+//                            tooltip: 'Aplicar Pago',
+//                            listeners: {
+//                                click: 'btnApl_pay_click'
+//                            }
+//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnBack',

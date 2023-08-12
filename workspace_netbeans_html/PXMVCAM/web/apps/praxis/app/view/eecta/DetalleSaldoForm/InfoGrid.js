@@ -90,10 +90,11 @@ Ext.define('Ext.Praxis.view.eecta.DetalleSaldoForm.InfoGrid', {
 //                                        }
                                     },                                                                        
                                     {text: 'Pax', dataIndex: 'A3958PAX', align: 'left', width: 200, locked: true},
+                                    {text: 'Origen y Destino', dataIndex: 'A3958RUTA', align: 'left', width: 200},                                                                        
                                     {text: 'PNR', dataIndex: 'A3958PNR', align: 'center', width: 60},
-                                    {text: 'Fecha<br>Emisión', dataIndex: 'A3958FEVTA', align: 'center', width: 70},
+                                    {text: 'Fecha Emisión', dataIndex: 'A3958FEVTA', align: 'center', width: 70},
                                     {text: 'Grupo', dataIndex: 'A3958GRUPO', align: 'left', width: 70},
-                                    {text: 'Fecha<br>Proceso', dataIndex: 'A3958FPROC', align: 'left', width: 70},                                                                       
+                                    {text: 'Fecha Proceso', dataIndex: 'A3958FPROC', align: 'left', width: 70},                                                                       
                                     {
                                         text: 'Tarifa', dataIndex: 'A3958FARE', width: 80, align: 'right',
                                         summaryType: 'sum',
@@ -175,13 +176,14 @@ Ext.define('Ext.Praxis.view.eecta.DetalleSaldoForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },                                     
-                                    {text: 'Id Contable<BR>Venta', dataIndex: 'A3958IDCON', align: 'left', width: 130},
-                                    {text: 'Per.<br>Contable Venta', dataIndex: 'A3958FCONT', align: 'center', width: 70},                                    
+                                    {text: 'Id Contable Venta', dataIndex: 'A3958IDCON', align: 'left', width: 130},
+                                    {text: 'Per. Contable Venta', dataIndex: 'A3958FCONT', align: 'center', width: 70},                                    
                                     {text: 'UUID', dataIndex: 'A3958CFDI', align: 'left', width: 130},
                                     {text: 'RFC', dataIndex: 'A3958RFC', align: 'left', width: 80},                                    
                                     {text: 'Fecha<br>Timbrado', dataIndex: 'A3958FECTB', align: 'left', width: 70},
                                     {text: 'Id Cliente', dataIndex: 'A3958CDCLI', align: 'left', width: 70},
                                     {text: 'Cliente', dataIndex: 'A3953RSOCI', align: 'left', width: 120}
+                                    //{text: 'camp00', dataIndex: 'xxx', align: 'left', width: 120, hidden:true }
                                     
                                 ],
                                 defaults: {

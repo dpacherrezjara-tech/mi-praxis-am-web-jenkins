@@ -217,7 +217,7 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.Filters', {
                                             margin: '5 0 0 5',
                                             icon: 'resources/img/icon/file.png',
                                             listeners: {
-                                                click: ''
+                                                click: 'onLoadClick'
                                             }
                                         }
                                     ]
