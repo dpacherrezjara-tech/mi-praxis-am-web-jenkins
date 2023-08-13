@@ -311,4 +311,6 @@ public class A4331Filter extends A4331 {
     public double totADJUSMENTP = 0.00;
     public String PWREF="";
     public String SALES_MERCH_ID = "";
+    
+    public Boolean forcescan = false;
 }
