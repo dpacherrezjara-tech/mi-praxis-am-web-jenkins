@@ -1866,7 +1866,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        Ext.getCmp(prototype.id + '-pagginAlliance').bindStore(storeGridDatas);
     },
     loadTNURE: function () {
-        win.lblUser_toolTip("Estructura: ");
+        win.lblUser_toolTip("Estructura: A4483 ");
          
         me.panelActual = '-boxTNURE';
         this.showGrid('-boxTNURE');
