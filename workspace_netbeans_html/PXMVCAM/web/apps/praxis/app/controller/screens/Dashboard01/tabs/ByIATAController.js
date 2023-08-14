@@ -60,8 +60,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ByIATAController', {
         
         meIATA.bean = {};
 
-        meIATA.bean.IN_ANIO_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
-        meIATA.bean.IN_ANIO_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue();
+        meIATA.bean.IN_ANIO_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear_IATA').getValue();
+        meIATA.bean.IN_ANIO_TO = Ext.getCmp(prototype.id + '-cmbDateFromYear_IATA').getValue();
 //        meIATA.bean.IN_TIPO = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
         
 //        meIATA.bean = {};
@@ -73,57 +73,29 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ByIATAController', {
     search: function() {
         console.log(' ByIATAController - search');
         console.log(prototype.url + '/searchIATA');
-        Ext.Ajax.request({
-            url: prototype.url + '/searchIATA',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getBody().mask('Loading...'),
-            params: {beanString:this.searchParams,dw_excel:false},
-            success: function(response, options) {
-                Ext.getBody().unmask('Loading...');
-                console.log(response);
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {url: prototype.url + '/searchIATA'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getBody().mask('Loading...'),
+                    obj.proxy.extraParams = {beanString: meIATA.searchParams,dw_excel:false};
+                },
+                load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getBody().unmask('Loading...');
+                    win.lblUser_toolTip("Estructura: A3264");
 
-                var res = Ext.JSON.decode(response.responseText);
-                console.log(res.lst);
-//                console.log(res.lstData[1]);
-//                console.log(res.lstData[2]);
-//                console.log(res.lstData[3]);
-//                console.log(res.lstData[4]);
-                var totals = res.lst; //P_SALES_PER_MONTH_TOTALS
-                var lstData = res.lst; //P_SALES_PER_MONTH_DATA
-//                Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
-                console.log(lstData);
-                var storeData = Ext.create('Ext.data.Store', {
-                    data: lstData,
-                    autoLoad: true
-                });
-                Ext.getCmp(prototype.id + '-gridDataByIATA').bindStore(storeData);
-//                
-//                Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
-//                Ext.getCmp(prototype.id + '-lblTotalAmount').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT, '0,000'));
-//                Ext.getCmp(prototype.id + '-totAVG').setText(Ext.util.Format.number(totals.totAVG, '0,000.00'));
-//                
-//                Ext.getCmp(prototype.id + '-lblTotalCpnON').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_ON, '0,000'));
-//                Ext.getCmp(prototype.id + '-lblTotalCpnONPerc').setText(Ext.util.Format.number(totals.CUPONS_ON_PERCENT, '0,000.00'));
-//                Ext.getCmp(prototype.id + '-lblTotalAmountON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON, '0,000'));
-//                Ext.getCmp(prototype.id + '-lblTotalAmountONPerc').setText(Ext.util.Format.number(totals.AMOUNT_ON_PERCENT, '0,000.00'));
-//                Ext.getCmp(prototype.id + '-lblTotalAvgON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON_AVG_RATE, '0,000.00'));
-//                
-//                Ext.getCmp(prototype.id + '-lblTotalCpnOFF').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_OFF, '0,000'));
-//                Ext.getCmp(prototype.id + '-lblTotalCpnOFFPerc').setText(Ext.util.Format.number(totals.CUPONS_OFF_PERCENT, '0,000.00'));
-//                Ext.getCmp(prototype.id + '-lblTotalAmountOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF, '0,000'));
-//                Ext.getCmp(prototype.id + '-lblTotalAmountOFFPerc').setText(Ext.util.Format.number(totals.AMOUNT_OFF_PERCENT, '0,000.00'));
-//                Ext.getCmp(prototype.id + '-lblTotalAvgOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF_AVG_RATE, '0,000.00'));
-//                
-//                Ext.getCmp(prototype.id + '-lblTotalQCPNSNR').setText(Ext.util.Format.number(totals.TOTAL_QCPNS0, '0,000'));
-//                Ext.getCmp(prototype.id + '-lblTotalAMOUNTNR').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT0, '0,000'));
-                
-                
+                    if (obj.data.length > 0) {
+                        var Objtemp = obj.data.items[0].data;
+
+                    } else {
+                        global.Msg({msg: 'Data not found'});
+                    }
+                }
             }
         });
-        
-//        meIATA.dw_excel = false;
-        
+        Ext.getCmp(prototype.id + '-gridDataByIATA').bindStore(storeGridDatas);
     },
     clickDetSales_colHandler: function(param,column, e, row, column, x, rowData) {
 //        console.log(param);

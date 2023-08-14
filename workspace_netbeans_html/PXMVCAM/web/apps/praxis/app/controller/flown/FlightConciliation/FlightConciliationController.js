@@ -981,6 +981,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
     },
     btnScanTicket_clickHandler: function () {
+        this.objFLIGHTMANIF.DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtFilterDatem').getValue(), 'Ymd');
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to Scan Tickets ?',
@@ -996,7 +997,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
 
-        //this.searchDetailFlightManifest(this.objFLIGHTMANIF);
     },
     //<editor-fold defaultstate="collapsed" desc="executeScanTicket">
     executeScanTicket: function (bean) {
@@ -1012,9 +1012,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 if (res.success) {
                     var msj = res.msjOption;
                     //global.Msg({msg: msj});   
-                    me.searchDetailFlightManifest(bean);
+//                    me.searchDetailFlightManifest(bean);
                 } else
                     global.Msg({msg: res.sesion});
+//                      global.Msg({msg: 'This File has not been created.'});
             },
             failure: function (response, opts) {
                 Ext.getCmp(prototype.id + '-boxPrincipal').unmask();
