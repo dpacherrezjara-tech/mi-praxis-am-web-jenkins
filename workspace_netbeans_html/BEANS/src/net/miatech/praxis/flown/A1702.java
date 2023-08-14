@@ -11,6 +11,7 @@ package net.miatech.praxis.flown;
 public class A1702 { 
     
     public String  CCUST ="";
+    public String  DFLIGHT ="";
     public String  EQUIPO ="";
     public String  MODELO ="";
     public String  NUMERO ="";
