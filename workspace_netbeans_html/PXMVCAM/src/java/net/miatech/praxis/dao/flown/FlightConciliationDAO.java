@@ -1296,17 +1296,24 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500006
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04753(?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04753(?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
+            cs.registerOutParameter(7, Types.VARCHAR);
+            
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.DFLIGHT);
             cs.setString(3, filter.NFLIGHT);
-            
+            cs.setString(4, session.getUserView().getCustomerInfo().USR.trim());
+            cs.setString(5, Functions.getFechaActual());
+            cs.setString(6, Functions.getHoraActual());
+            cs.setString(7, "");//INOUT 
             cs.execute();
 
+            strMsj = cs.getString(7).trim();
+            
         } catch (Exception e) {
             strMsj = e.getMessage();
             e.printStackTrace();

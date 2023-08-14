@@ -1011,7 +1011,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
                     var msj = res.msjOption;
-                    //global.Msg({msg: msj});   
+                    global.Msg({msg: msj});   
 //                    me.searchDetailFlightManifest(bean);
                 } else
                     global.Msg({msg: res.sesion});
