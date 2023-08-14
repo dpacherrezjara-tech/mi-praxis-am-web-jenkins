@@ -102,18 +102,18 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
         if (eOpts.getKey() === 13) {
             if (txtTicket.trim().length === 13) {
-                 if (me.panelActual === '-panelGridDataMain') {
-                     var date = '';
-                     var stval = '';
-                 }else{
-                     var date = me.beanEMD.IN_DATE
-                     var stval = '';
-                 }
+                if (me.panelActual === '-panelGridDataMain') {
+                    var date = '';
+                    var stval = '';
+                } else {
+                    var date = me.beanEMD.IN_DATE
+                    var stval = '';
+                }
                 me.bean = {};
                 me.bean.IN_TIPO = '1';
                 me.bean.IN_DATE = me.beanEMD.IN_DATE;
                 me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
-                
+
                 var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
                 if (txtTicket.trim().length > 0) {
                     if (txtTicket.trim().length === 13) {
@@ -128,12 +128,12 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                     bean: me.bean
                 };
                 this.setGridData(date, stval);
-                
+
             } else if (txtTicket.trim().length === 0) {
-                
+
                 this.setFormatParameter();
                 this.setMainData();
-                
+
             } else {
                 global.Msg({msg: 'Ticket Number must contain 13 digits.'});
             }
@@ -585,6 +585,33 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                         });
         }
 
+    },
+    btnTXT_click: function (obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    this.exportTXT();
+                }
+            }
+        });
+    },
+    exportTXT: function () {
+        this.setFormatParameter();
+        switch (me.panelActual) {
+            case  '-panelGridData':
+                global.getFile(prototype.url + '/getFileTxt?beanString=' + paramsDetailEMD.beanString);
+                break;
+            default:
+                global.Msg(
+                        {msg: 'Under Construction'
+                        });
+        }
     },
     onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.paramsDetail.beanString = JSON.stringify(rowData.data);

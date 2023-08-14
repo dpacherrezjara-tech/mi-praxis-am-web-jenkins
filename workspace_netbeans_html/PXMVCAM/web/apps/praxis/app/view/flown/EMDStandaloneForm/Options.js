@@ -94,6 +94,16 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnTxt',
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Export TXT',
+                            hidden:true,
+                            listeners: {
+                                click: 'btnTXT_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
