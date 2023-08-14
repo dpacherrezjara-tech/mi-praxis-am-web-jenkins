@@ -33,4 +33,8 @@ public class AircraftMasterLogic {
     public String loadPX102S03A1702(A1702 filter, String option) throws SQLException, Exception {
         return objDAO.loadPX102S03A1702(filter, option);
     }
+    
+    public String loadSQP04933(List<A1702Filter> listaTkt) throws SQLException, Exception {
+        return objDAO.loadSQP04933(listaTkt);
+    }
 }

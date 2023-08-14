@@ -3814,7 +3814,7 @@ public class FlightConciliationController extends BaseController {
     String updateCommA1816(ModelMap map, @RequestParam("excelfile_VLO") MultipartFile excelfile, HttpServletRequest request) {
         byte[] bytes = null;
         
-        String coment="",msj="No existen registros por actualizar";
+        String msj="No existen registros por actualizar";
         
 //        
         Integer cont = 0;
@@ -3854,8 +3854,9 @@ public class FlightConciliationController extends BaseController {
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            
-            msj = logic.loadSQP05035(lstManifiesto);
+            if(lstManifiesto.size()>0){
+                msj = logic.loadSQP05035(lstManifiesto);
+            }
             
             
             

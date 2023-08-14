@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1537,
+                width: 1557,
                 height: 500,
                 align: 'center'
             },
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.Info', {
                                 ]
                             },
                             {text: 'Carrier', dataIndex: 'CARRIER', width: 60},
-                            {text: 'Type', dataIndex: 'TIPO', width: 40},
+                            {text: 'Type', dataIndex: 'TIPO', width: 60},
                             {
                                 text: 'Manufacture',
                                 defaults: {
