@@ -127,6 +127,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
+                            hidden:true,
                             id: prototype.id + '-SpaProfitability_tab',
 //                            hidden:true,
                             title: 'Spa Profitability',

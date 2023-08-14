@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ByIATA', {
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataByIATA',
-                    width: 930,
+                    width: 945,
                     height: 392,
                     columnLines: true,
                     hidden: false,
@@ -87,53 +87,53 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ByIATA', {
                             align: 'center'
                         },
                         items: [
-                            {text: 'Year', dataIndex: 'QBNPAX', width: 90,
+                            {text: 'Year', dataIndex: 'YEAR', width: 90,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:center;background-color:#d5f4d5;";
+                                    metaData.style = "text-align:center;";
                                     return  value;
                                 },
                             },
-                            {text: 'Code', dataIndex: 'QBNPAX', width: 70,
+                            {text: 'Code', dataIndex: 'CODE', width: 70,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:center;background-color:#d5f4d5;";
+                                    metaData.style = "text-align:center;";
                                     return  value;
                                 },
                             },
-                            {text: 'Country', dataIndex: 'QBNPAX', width: 150,
+                            {text: 'Country', dataIndex: 'COUNTRY', width: 150,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:left;background-color:#d5f4d5;";
+                                    metaData.style = "text-align:left;";
                                     return  value;
                                 },
                             },
-                            {text: 'IATAS with Sales', dataIndex: 'QBNPAX', width: 150,
+                            {text: 'IATAS with Sales', dataIndex: 'SALES', width: 150,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                     value = Ext.util.Format.number(value, '0,000');
                                     return  value;
                                 },
                             },
-                            {text: 'IATAS Without Sales', dataIndex: 'QBNPAX', width: 150,
+                            {text: 'IATAS Without Sales', dataIndex: 'NOSALES', width: 150,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                     value = Ext.util.Format.number(value, '0,000');
                                     return  value;
                                 },
                             },
-                            {text: 'Total IATAS by Country', dataIndex: 'QBNPAX', width: 150,
+                            {text: 'Total IATAS by Country', dataIndex: 'ALLSALES', width: 150,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                     value = Ext.util.Format.number(value, '0,000');
                                     return  value;
                                 },
                             },
-                            {text: 'Efectivity', dataIndex: 'QBNPAX', width: 70,
+                            {text: 'Efectivity', dataIndex: 'EFFECTIVITY', width: 70,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                    metaData.style = "text-align:right;";
                                     value = Ext.util.Format.number(value, '00.00');
                                     return  value;
                                 },
                             },
-                            {text: 'AMOUNT $', dataIndex: 'QBNPAX', width: 100,
+                            {text: 'AMOUNT $', dataIndex: 'AMOUNT', width: 100,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
                                     value = Ext.util.Format.number(value, '0,000');

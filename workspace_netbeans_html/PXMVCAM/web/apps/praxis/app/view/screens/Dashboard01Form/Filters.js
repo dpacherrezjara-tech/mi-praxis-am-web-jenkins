@@ -1476,6 +1476,56 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                         }
                     ]
                 },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-byIata_filter',
+                    width: prototype.widthContenedor,
+                    layout: 'vbox',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    defaults: {
+                        anchor: '100%'
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            width: prototype.widthContenedor,
+                            layout: 'hbox',
+                            border: true,
+                            bodyStyle: 'background-color: #E3EAF9;',
+                            defaults: {
+                                anchor: '100%',
+                                padding: '6 0 6 0'
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 70},
+//                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'label',
+                                    html: 'Year',
+                                    fieldStyle: 'text-align: center;',
+                                    padding: '8px 7px 8px 0px'
+                                },
+                                {xtype: 'tbspacer', width: 4},
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateFromYear_IATA',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    forceSelection: true,
+                                    caseSensitive: false,
+                                    editable: false,
+                                    valueField: 'code', displayField: 'name',
+                                    width: 75,
+                                    typeAhead: true,
+                                    listConfig: {maxHeight: 111},
+                                },
+                            ]
+                        },
+                    ]
+                },
             ]
         }
     ]
