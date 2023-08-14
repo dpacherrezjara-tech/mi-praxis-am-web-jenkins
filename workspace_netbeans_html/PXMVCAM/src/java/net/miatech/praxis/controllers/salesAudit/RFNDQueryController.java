@@ -387,7 +387,7 @@ public class RFNDQueryController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25,CH_26;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -1067,7 +1067,7 @@ public class RFNDQueryController extends BaseController {
         A3647Filter lst;
         A3647Filter filter = new A3647Filter();
 
-        HashMap map01, map02, map03, map04, map05, map06, map07;
+        HashMap map01, map02, map03, map04, map05, map06, map07, map08;
         ArrayList<HashMap<String, String>> lst_RAZON = new ArrayList<>();
 
         ArrayList<HashMap<String, String>> lsta_TAXESAM = new ArrayList<>();
@@ -1076,6 +1076,7 @@ public class RFNDQueryController extends BaseController {
         ArrayList<HashMap<String, String>> lsta_HISTORY = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_USOS = new ArrayList<>();
         ArrayList<HashMap<String, String>> lsta_DOCUMENTS = new ArrayList<>();
+        ArrayList<HashMap<String, String>> lsta_REMARCK = new ArrayList<>();
 
         try {
             logic = new RFNDQueryLogic();
@@ -1267,13 +1268,27 @@ public class RFNDQueryController extends BaseController {
                 lsta_USOS.add(map06);
             }
             // </editor-fold>
-
             // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_DOCUMENTS">
             for (int vi = 0; vi < lst.lst_DOCUMENTS.size(); ++vi) {
                 map07 = new HashMap<>();
 
                 map07.put("A3648CCUST", lst.lst_DOCUMENTS.get(vi).A3648CCUST);
                 lsta_DOCUMENTS.add(map07);
+            }
+            // </editor-fold>
+            // <editor-fold defaultstate="collapsed" desc="ArrayList -> lsta_REMARCK">
+            for (int vi = 0; vi < lst.lst_REMARCK.size(); ++vi) {
+                map08 = new HashMap<>();
+
+                map08.put("A3649ERROR", lst.lst_REMARCK.get(vi).A3649ERROR);
+                map08.put("A3649FREGI", lst.lst_REMARCK.get(vi).A3649FREGI);
+                map08.put("A3649ARCHI", lst.lst_REMARCK.get(vi).A3649ARCHI);
+                map08.put("A3649PREME", lst.lst_REMARCK.get(vi).A3649PREME);
+                map08.put("A3649ANIO", lst.lst_REMARCK.get(vi).A3649ANIO);
+                map08.put("A3649FLAG", lst.lst_REMARCK.get(vi).A3649FLAG);
+                map08.put("A3649CORRL", lst.lst_REMARCK.get(vi).A3649CORRL);
+
+                lsta_REMARCK.add(map08);
             }
             // </editor-fold>
 
@@ -1289,6 +1304,7 @@ public class RFNDQueryController extends BaseController {
         map.put("lsta_COUPNS", lsta_COUPNS);
         map.put("lsta_HISTORY", lsta_HISTORY);
         map.put("lsta_DOCUMENTS", lsta_DOCUMENTS);
+        map.put("lsta_REMARCK", lsta_REMARCK);
 
         return new Gson().toJson(map);
     }
@@ -1357,6 +1373,7 @@ public class RFNDQueryController extends BaseController {
         String IN_PATH = path_config + "\\IMGTMPRFND\\";
         String IN_ANIO = request.getParameter("IN_ANIO").trim();
         String IN_PREME = request.getParameter("IN_PREME").trim();
+        String IN_DATE = request.getParameter("IN_DATE").trim();
 
         /*
          Se establece tiempo límite de conexión por 60 min
@@ -1369,8 +1386,9 @@ public class RFNDQueryController extends BaseController {
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_OPTION", IN_OPTION);
         bodyData.put("IN_PATH", IN_PATH);
-        bodyData.put("IN_ANIO", IN_ANIO);
+        bodyData.put("IN_ANIO", IN_ANIO);        
         bodyData.put("IN_PREME", IN_PREME);
+        // bodyData.put("IN_DATE", IN_DATE);
 //bsplink/download/rfnd/rfndirect/
         HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/rfndirect/")
                 .header("content-type", "application/json")
