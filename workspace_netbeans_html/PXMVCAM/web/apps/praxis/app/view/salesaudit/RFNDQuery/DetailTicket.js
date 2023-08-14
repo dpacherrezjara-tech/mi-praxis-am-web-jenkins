@@ -804,7 +804,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket', {
                             },
                             height: 150,
                             width: 440
-                        },
+                        }, 
                         {
                             xtype: 'grid',
                             id: prototype.idDetailTicket + '-gridRemarcks',
