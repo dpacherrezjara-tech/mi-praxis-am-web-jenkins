@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionFOBForm.Info', {
             region: 'center',
             id: prototype.id + '-regionCenterGrid01',
             //width: 1300,
-            width: '100%',            
+            width: '100%',
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionFOBForm.Info', {
                 border: false,
                 align: 'center'
             },
-            items: [                
+            items: [
                 {
                     xtype: 'grid',
                     padding: '20 0 0 0',
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionFOBForm.Info', {
                     height: 530,
                     border: true,
                     //width: 1262,
-                    width: '100%',            
+                    width: '100%',
                     columnLines: true,
                     resizable: false,
                     columns: {
@@ -52,67 +52,68 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionFOBForm.Info', {
                         items: [
                             {text: 'IATA', width: 70, dataIndex: 'A1757IATA'},
                             {text: 'IATA Name', width: 180, dataIndex: 'A003KEY3',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:left; margin-left:4px;';
                                     return value;
                                 }
                             },
                             {text: 'Invoice <br> Number', width: 150, dataIndex: 'A1757NFACT',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:left; margin-left:4px;';
                                     return value;
                                 }
                             },
                             {text: 'Invoice <br> Date', width: 90, dataIndex: 'A1757FFACT',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:left; margin-left:4px;';
                                     return value;
                                 }
                             },
                             {text: 'Currency', width: 70, dataIndex: 'A1757MONED',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:center; margin-left:4px;';
                                     return value;
                                 }
                             },
                             {text: 'Commission', width: 100, dataIndex: 'A1757COMM',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'IVA', width: 70, dataIndex: 'A1757IVA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'Commission + IVA', width: 120, dataIndex: 'A1757COMIV',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'Total Cash', width: 100, dataIndex: 'A1757TCASH',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
-                            {text: 'Total Cash - Commission', width: 160, dataIndex: 'A1757CAMCO',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                            {text: 'Total Cash - Commission', width: 160, dataIndex: 'A1757CAMCO',
+                            {text: 'Total', width: 160, dataIndex: 'A1757CAMCO',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'App.', width: 50, dataIndex: 'A1757INDAP',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:left; margin-left:4px;';
                                     return value;
                                 }
                             },
                             {text: 'Acc.', width: 50, dataIndex: 'A1757INDCO',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:left; margin-left:4px;';
                                     return value;
                                 }
