@@ -1316,12 +1316,12 @@ public class ForecastController extends BaseController {
             CH2_0.setCellValue("");
             CH2_1.setCellValue("Flight");
             CH2_2.setCellValue("REAL");
-            CH2_3.setCellValue("FUTURE");
+            CH2_3.setCellValue("FORECAST");
             CH2_4.setCellValue("REAL");
-            CH2_5.setCellValue("FUTURE");
+            CH2_5.setCellValue("FORECAST");
             CH2_6.setCellValue("Revenue USD");
             CH2_7.setCellValue("REAL");
-            CH2_8.setCellValue("FUTURE");
+            CH2_8.setCellValue("FORECAST");
             CH2_9.setCellValue("Revenue MXN");
             CH2_10.setCellValue("week Day");
             CH2_11.setCellValue("");
