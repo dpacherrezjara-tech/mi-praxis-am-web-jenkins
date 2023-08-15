@@ -301,9 +301,10 @@ Ext.define('Ext.Praxis.view.sales.ConsortiaForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'center',
-                                            width: 100,
+                                            width: 50,
                                             padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#0B333C;">Cash - Comm</strong>'
+                                            html: '<strong style="color:#0B333C;">Total</strong>'
+//                                            html: '<strong style="color:#0B333C;">Cash - Comm</strong>'
 
                                         },
                                         {

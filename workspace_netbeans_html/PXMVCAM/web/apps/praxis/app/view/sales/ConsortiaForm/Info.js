@@ -53,14 +53,14 @@ Ext.define('Ext.Praxis.view.sales.ConsortiaForm.Info', {
                                 listeners: {
                                     click: 'onViewDetailClick'
                                 },
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "color:#057ECB;";
                                     value = '<b>' + value + '</b>';
                                     return '<a href="#sales-consortia-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                 }
                             },
                             {text: 'FOB Name', width: 104, dataIndex: 'A003KEY3',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:left; margin-left:4px;';
                                     return value;
                                 }
@@ -69,37 +69,38 @@ Ext.define('Ext.Praxis.view.sales.ConsortiaForm.Info', {
                             {text: 'Close Date', width: 80, dataIndex: 'A2444FFIN'},
                             {text: 'Curr.', width: 49, dataIndex: 'A2444MDARV'},
                             {text: 'Fare/Ancillaries', width: 100, dataIndex: 'A2444FARE',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'Comm.', width: 80, dataIndex: 'A2444TCOM',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'IVA', width: 70, dataIndex: 'A2444TIVA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'Comm. + IVA', width: 90, dataIndex: 'A2444TCOMI',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {text: 'Total Cash ', width: 100, dataIndex: 'A2444TTCAS',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
-                            {text: 'Total Cash - <br> Commission', width: 100, dataIndex: 'A2444TCAMC',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                            {text: 'Total Cash - <br> Commission', width: 100, dataIndex: 'A2444TCAMC',
+                            {text: 'Total', width: 100, dataIndex: 'A2444TCAMC',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
