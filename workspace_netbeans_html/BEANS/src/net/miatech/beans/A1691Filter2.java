@@ -43,6 +43,7 @@ public class A1691Filter2 {
     public String strFormatDate3 = "";
     public int QCPNFI = 0;
     public int QCPNFRE = 0;
+    public int QCPHARB = 0;
     public String IN_OBS = "";
     public String yearFrom = "";
     public String monthFrom = "";
@@ -59,6 +60,7 @@ public class A1691Filter2 {
     public String strSQL = "";
     public int totQCPNFI = 0;
     public int totQCPNFRE = 0;
+    public int totQCPHARB = 0;
     
     public long lngQDIFF = 0;
     public double totDiff = 0;
