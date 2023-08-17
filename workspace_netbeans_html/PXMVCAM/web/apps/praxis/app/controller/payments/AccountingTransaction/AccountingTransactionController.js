@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
                 }
             };
             opts[obj.id.split('-').at(-1)]();
-        } catch {
+        } catch (error) {
             return;
         }
     },
