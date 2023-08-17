@@ -19,8 +19,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         panelFilters.mask('Loading Filters...');
         if (res.ok) {
             const data = await res.json();
-            const storeProcs = me.createComboStore({data: data.lstProcs, valueField: 'a4451key2', displayField: 'a4451desc1'});
+            //console.log(data);
+            const storeProcs = me.createComboStore({
+                data: data.lstProcs.filter(x=>x.a4451fech1.trim()==='P'), 
+                valueField: 'a4451key2', 
+                displayField: 'a4451desc1'
+            });
             Ext.getCmp(prototype.id + '-cmbProcessor').bindStore(storeProcs);
+            //Ext.getCmp(prototype.id + '-cmbTDOC').setValue('SALE');
             panelFilters.unmask();
         }
     },
@@ -31,9 +37,11 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         const me = this;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         mainPanel.removeAll();
+        let params = me.formatParameters();
+        console.log('Summary Grid Params: ',params);
         const summaryGrid = Ext.create('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid', {
             id: prototype.id + '-gridSummary',
-            searchParams: me.formatParameters(),
+            searchParams: params,
             url: me.url
         });
         mainPanel.add(summaryGrid);
@@ -46,6 +54,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         let mda = Ext.getCmp(prototype.id + '-cmbMDA');
         let tdoc = Ext.getCmp(prototype.id + '-cmbTDOC');
         let pnr = Ext.getCmp(prototype.id + '-txtPNR');
+        let idcon = Ext.getCmp(prototype.id + '-txtIDAC');
         return {
             IN_TFECHA: tfecha.getValue(),
             FECHA_FROM: Ext.Date.format(from.getValue(), 'Ym') + '01',
@@ -53,8 +62,29 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
             IN_PROCESADOR: procesador.getValue(),
             IN_MDA: mda.getValue(),
             IN_TDOC: tdoc.getValue(),
-            IN_PNR: pnr.getValue()
+            IN_PNR: pnr.getValue(),
+            IN_IDCON: idcon.getValue()
         };
+    },
+    onClickFilterBtn:function(){
+        const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
+        if (panelFilters.isVisible())
+            panelFilters.hide();
+        else
+            panelFilters.show();
+    },
+    onClickClearBtn:function(){
+        prototype.id = 'AccountingTransactionForm';
+        prototype.url = CONTEXTPATH + '/AccountingTransaction';
+        Ext.getCmp(prototype.id + '-txtPNR').setValue('');
+        Ext.getCmp(prototype.id + '-txtIDAC').setValue('');
+        Ext.getCmp(prototype.id + '-cmbMDA').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDate').setValue('P');
+        
+        Ext.getCmp(prototype.id + '-dateFrom').setValue(new Date(new Date().getFullYear(), 0, 1));
+        Ext.getCmp(prototype.id + '-dateTo').setValue(new Date());
+        
+        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('SALE');
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {

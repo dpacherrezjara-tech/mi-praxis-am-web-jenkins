@@ -20,6 +20,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             console.log(data.response.at(0));
             let firstObj = data.response.at((0));
             view.setTitle(`${view.title} - ${firstObj.proc_DESC} (${firstObj.scurrency})`);
+            //<editor-fold defaultstate="collapsed" desc="Tree Store">
             const tree = Object.entries(me.groupBy({data: data.response, key: keyDate})).map(obj => {
                 let procdesc = obj.at(1)[0].proc_DESC || '';
                 let childs = obj.at(1).map(x => {
@@ -50,6 +51,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             const storeTree = Ext.create('Ext.data.TreeStore', {
                 root: {text: '.', expanded: false, children: tree}
             });
+            //</editor-fold>
             Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Payment Date' : 'Sale Date');
             Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'Sale Date' : 'Payment Date');
             me.view.setStore(storeTree);
@@ -63,7 +65,6 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             global.Msg({msg: 'No data'});
             return;
         }
-        console.log(me.formatParameters({type: 'C', obj: record.data}));
         me.showGridDetail(me.formatParameters({type: 'C', obj: record.data}));
     },
     onClickPending: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -72,7 +73,6 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             global.Msg({msg: 'No data'});
             return;
         }
-        console.log(me.formatParameters({type: 'P', obj: record.data}));
         me.showGridDetail(me.formatParameters({type: 'P', obj: record.data}));
     },
     onClickTotal: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -86,7 +86,6 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             global.Msg({msg: 'No data'});
             return;
         }
-        console.log(me.formatParameters({type: 'A', obj: record.data}));
         me.showGridDetail(me.formatParameters({type: 'A', obj: record.data}));
     },
     showGridDetail:function(params){
@@ -106,12 +105,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         const me = this;
         const view = me.view;
         const viewParams = view.searchParams;
-        return {
+        let params = {
             FECHA_FROM_P: obj.date,
             FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['paydate'],
             IN_STCONL: type,
             ...viewParams
         };
+        console.log('Detail Params: ',params);
+        return params;
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     groupBy: function ( {data, key}){

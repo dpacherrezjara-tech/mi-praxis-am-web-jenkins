@@ -15,6 +15,7 @@ public class SQP05036Filter {
     private String IN_MDA;
     private String IN_TDOC;
     private String IN_PNR;
+    private String IN_IDCON;
     private List<A4331ATSumFilter> response =  new ArrayList<>();
 
     public String getIN_TFECHA() {
@@ -80,5 +81,12 @@ public class SQP05036Filter {
     public void setResponse(List<A4331ATSumFilter> response) {
         this.response = response;
     }
-    
+
+    public String getIN_IDCON() {
+        return IN_IDCON;
+    }
+
+    public void setIN_IDCON(String IN_IDCON) {
+        this.IN_IDCON = IN_IDCON;
+    }
 }

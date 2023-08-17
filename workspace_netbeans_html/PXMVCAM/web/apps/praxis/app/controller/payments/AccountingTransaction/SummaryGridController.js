@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
         const view = this.view;
 
         let params = me.formatMonthParameters(record.data);
-        console.log(params);
+        console.log('Summary Tree Params: ',params);
 
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         const drillDown = mainPanel.items.items;
@@ -48,17 +48,16 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
         mainPanel.add(treePanel);
     },
     formatMonthParameters: function (obj) {
-        let tfecha = Ext.getCmp(prototype.id + '-cmbDate');
-        let tdoc = Ext.getCmp(prototype.id + '-cmbTDOC');
-        let pnr = Ext.getCmp(prototype.id + '-txtPNR');
+        const viewParams = this.view.searchParams;
         return {
-            IN_TFECHA: tfecha.getValue(),
+            IN_TFECHA: viewParams.IN_TFECHA,
             FECHA_FROM: obj.fecha,
             IN_PROCTYPE: obj.proctype,
             IN_PROCTYPESQ: obj.proctypesq,
             IN_MDA: obj.scurrency,
-            IN_TDOC: tdoc.getValue(),
-            IN_PNR: pnr.getValue()
+            IN_TDOC: viewParams.IN_TDOC,
+            IN_PNR: viewParams.IN_PNR,
+            IN_IDCON: viewParams.IN_IDCON
         };
     }
 });

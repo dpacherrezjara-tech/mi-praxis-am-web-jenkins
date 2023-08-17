@@ -1,6 +1,9 @@
 Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
+    requires: [
+        'Ext.Praxis.view.widgets.MonthField'
+    ],
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '2px 0px 1px 0px',
@@ -53,12 +56,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                             value: 'P'
                         },
                         {
-                            xtype: 'datefield',
+                            xtype: 'monthfield',
                             fieldLabel: 'From',
                             format: 'Ym',
                             altFormats: 'm/Y',
                             editable: false, // Deshabilita la edición del campo
-                            showToday: false, // Oculta el botón "Hoy"
                             labelWidth: 50,
                             width: 150,
                             id: prototype.id + '-dateFrom',
@@ -69,12 +71,12 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                             }
                         },
                         {
-                            xtype: 'datefield',
+                            xtype: 'monthfield',
                             fieldLabel: 'To',
                             format: 'Ym',
                             altFormats: 'm',
                             editable: false, // Deshabilita la edición del campo
-                            showToday: false, // Oculta el botón "Hoy"
+                            lastDay:true,
                             labelWidth: 30,
                             width: 130,
                             id: prototype.id + '-dateTo',
@@ -101,20 +103,21 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                             id: prototype.id + '-cmbTDOC',
                             fieldLabel: 'Document',
                             labelWidth: 70,
-                            width: 150,
+                            width: 160,
                             displayField: 'name',
                             valueField: 'code',
+                            editable: false,
                             store: Ext.create('Ext.data.Store', {
                                 data: [
                                     {code: '', name: 'All'},
-                                    {code: 'SALE', name: 'SALE'},
-                                    {code: 'RFND', name: 'RFND'},
-                                    {code: 'CHBK', name: 'CHBK'},
-                                    {code: 'ADJU', name: 'ADJU'}
+                                    {code: 'SALE', name: 'Sale'},
+                                    {code: 'RFND', name: 'Refund'},
+                                    {code: 'CHBK', name: 'Chargeback'},
+                                    {code: 'ADJU', name: 'Adjustment'}
                                 ]
                             }),
                             queryMode: 'local',
-                            value: '',
+                            value: 'SALE',
                             listeners: {
                                 change: 'onClickSearchBtn'
                             }
@@ -157,10 +160,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                 ]
                             }),
                             queryMode: 'local',
-                            value: '',
-                            listeners: {
-                                change: 'onClickSearchBtn'
-                            }
+                            value: ''
                         },
                         {
                             xtype: 'textfield',
