@@ -1304,6 +1304,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="executeOption">
     executeOption: function (beanOption, strOption, wActual) {
+        console.log('EXECUTE OPTION');
         Ext.Ajax.request({
             url: prototype.url + '/executeOption',
             method: 'POST',
