@@ -1829,6 +1829,58 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         }).show();
 
+    },        
+    onClickFileLoad_VLO: function () {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: '¿Cargar archivo?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+//                    Ext.getCmp(prototype.id + '-btn-upload_VLO').disable(true);
+                    this.upload_VLO();
+                }
+            }
+        });
+    },
+    upload_VLO: function () {
+
+        var file = Ext.getCmp(prototype.id + '-file_VLO').getValue();
+        console.log(file);
+
+        if (file === '') {
+            Ext.MessageBox.alert('PRAXIS', "::: Select only one file. Please :::", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.id + '-file_VLO').focus();", 100);
+            });
+            return;
+        }
+
+        var form = Ext.getCmp(prototype.id + '-form-01_VLO').getForm();
+        form.submit({
+            url: prototype.url + '/updateCommA1816',
+            waitMsg: 'Uploading your sure to upload the file...',
+            params: {fileName: file},
+            success: function (fp, o) {
+                var res = Ext.decode(o.response.responseText);
+                console.log(res);
+
+                if (res.success) {
+                    var msjResult = res.msj;
+                    global.Msg({msg: msjResult});
+                } else {
+                    global.Msg({msg: "Error Excel Load"});
+                }
+//                Ext.getCmp(prototype.id+'-btn-upload_VLO').enable(true);
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+
     }
 
 

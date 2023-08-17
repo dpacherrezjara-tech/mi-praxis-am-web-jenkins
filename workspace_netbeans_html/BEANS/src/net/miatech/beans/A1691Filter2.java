@@ -10,6 +10,8 @@ public class A1691Filter2 {
     public String NFLIGHT = "";
     public String CARRI = "";
     public String DESCRIP = "";
+    public String DESCRIP2 = "";
+    public String TKTS = "";
     public String strDescFFLOW = "";
     public String CDEPART = "";
     public String CARRIVA = "";

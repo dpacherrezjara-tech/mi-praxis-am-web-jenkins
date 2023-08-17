@@ -438,8 +438,10 @@ public class FlightConciliationDAO {
                     beanCons.strSQL = strTipo;
 
                     beanCons.strDescripcion = strDesc;
+                    beanCons.TKTS = rst.getString("TKTS").trim();
                     beanCons.CARRI = rst.getString("CARRI").trim();
                     beanCons.DESCRIP = rst.getString("DESCRIP").trim();
+                    beanCons.DESCRIP2 = rst.getString("DESCRIP2").trim();
                     beanCons.FCLOFO = rst.getString("FCLOFO");
                     if (rst.getString("FCLOFO").trim().equals("1")) {
                         beanCons.strFCLOFO = "AUTOMATIC";
@@ -547,6 +549,74 @@ public class FlightConciliationDAO {
         return lstCons;
     }
 
+    public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
+        //REALIZA UPDATE COMENTARIOS EN LA TABLA A1816.
+
+        int QTY_UPDATE = 0;
+        String msj ="An Error ocurred";
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP05035(?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            for (int i = 0; i < listaTkt.size(); ++i) {
+
+                A1691Filter item = listaTkt.get(i);
+                try {
+                    cstmt.registerOutParameter(11, Types.INTEGER);
+
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt.setString(2, item.DFLIGHT);
+                    cstmt.setString(3, item.NFLIGHT);
+                    cstmt.setString(4, item.CDEPART);
+                    cstmt.setString(5, item.CARRIVA);
+                    cstmt.setString(6, item.strDescripcion);//BPO
+                    cstmt.setString(7, item.strDescripcion2);//SABRE
+                    cstmt.setString(8, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(9, Functions.getFechaActual());
+                    cstmt.setString(10, Functions.getHoraActual());
+                    cstmt.setInt(11, 0);
+
+                    cstmt.execute();
+
+                    QTY_UPDATE = QTY_UPDATE +cstmt.getInt(11);
+                    
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            msj = "Se actualizaron "+QTY_UPDATE +" resgistros.";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = e.getMessage();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+    
+    
     public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {
         List<A1691Filter> lstCons = new ArrayList<>(0);
         A1691Filter beanCons;
@@ -1094,6 +1164,17 @@ public class FlightConciliationDAO {
                 if (cs.getString(7) != null) {
                     beanCons.strDescripcion = cs.getString(7);
                 }
+                
+                beanCons.FEUP = rst.getString("FEUP").trim();
+                if(!beanCons.FEUP.equals("") && Integer.parseInt(beanCons.FEUP) <= 20230809 ){//A partir del 10 de agost se guardan en campos independientes
+                    /*Se guardaba  en un campo el comentario del BPO y de sabre  50/50 */
+                    beanCons.strDescripcion = Functions.fillString(beanCons.strDescripcion, 100);
+                    beanCons.strDescripcion = beanCons.strDescripcion.substring(0, 50);
+                    beanCons.strDescripcion2 = beanCons.strDescripcion.substring(50);
+                }else{
+                    /*Comentario de sabre se guarda separado*/
+                    beanCons.strDescripcion2 = rst.getString("DES2").trim();
+                }
                 beanCons.FSENDSS = rst.getString("FSENDSS").trim();
                 beanCons.CDEPART = rst.getString("CDEPART").trim();
                 if (hmAeropuertos.containsKey(rst.getString("CDEPART").trim().toUpperCase())) {
@@ -1147,7 +1228,7 @@ public class FlightConciliationDAO {
                 beanCons.FECR = rst.getString("FECR").trim();
                 beanCons.HOCR = Functions.ConvertedTime(rst.getString("HOCR").trim());
                 beanCons.USUP = rst.getString("USUP").trim();
-                beanCons.FEUP = rst.getString("FEUP").trim();
+//                beanCons.FEUP = rst.getString("FEUP").trim();
                 beanCons.HOUP = Functions.ConvertedTime(rst.getString("HOUP").trim());
             }
         } finally {
@@ -1229,7 +1310,7 @@ public class FlightConciliationDAO {
             strSQL = "{CALL " + session.getMainLibrary() + ".SQP04413(?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?"
-                    + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                    + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -1279,7 +1360,8 @@ public class FlightConciliationDAO {
             cs.setInt(43, Integer.parseInt(String.valueOf(filter.QCPINF)));
 
             cs.setString(44, filter.strDescripcion);
-            cs.setString(45, filter.FMULTI.trim());
+            cs.setString(45, filter.strDescripcion2);
+            cs.setString(46, filter.FMULTI.trim());
             cs.execute();
 
         } catch (Exception e) {
