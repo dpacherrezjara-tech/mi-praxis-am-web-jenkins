@@ -86,6 +86,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         
         Ext.getCmp(prototype.id + '-cmbTDOC').setValue('SALE');
     },
+    onClickBackBtn: function (obj) {
+        window.location.href = CONTEXTPATH;
+    },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {
         const me = this;
