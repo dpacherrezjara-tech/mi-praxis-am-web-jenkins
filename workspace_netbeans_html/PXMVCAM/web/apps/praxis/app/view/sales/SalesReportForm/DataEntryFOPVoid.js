@@ -98,4 +98,3 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid', {
     ]
 
 });
-

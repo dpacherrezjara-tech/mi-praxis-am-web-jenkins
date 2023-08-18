@@ -1093,6 +1093,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var ComboSource = Ext.getCmp(prototype.id01 + '-ComboSource').getValue();
         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
+        
+        //alert(ComboSource);
+        
         if(ComboSource===null){
             ComboSource='';
         }
@@ -1114,11 +1117,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
             Ext.Msg.alert('.: PRAXIS :.', 'Select Type');
             bvalida = false;
         }
-        if (ComboSource === '') {
+        if (Ext.String.trim(ComboSource) === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select Source');
             bvalida = false;
         }
-        if (ComboSource === 'ASR') {
+        if (Ext.String.trim(ComboSource) === 'ASR') {
             if (ComboChannel === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Select Channel');
                 bvalida = false;
