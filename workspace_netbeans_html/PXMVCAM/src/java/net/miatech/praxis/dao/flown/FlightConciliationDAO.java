@@ -1341,7 +1341,7 @@ public class FlightConciliationDAO {
             cs.setInt(24, Integer.parseInt(String.valueOf(filter.QCPNTOT)));
             cs.setInt(25, Integer.parseInt(String.valueOf(filter.QCPNOAL)));
 //            cs.setInt(26, Integer.parseInt(String.valueOf(filter.QCPHARB)));
-            cs.setInt(26, filter.QCPHARB);
+            cs.setLong(26, filter.QCPHARB);
             cs.setString(27, filter.FSENDFI.trim());
             cs.setInt(28, filter.QCPNFI);
             cs.setInt(29, filter.QCPNFRE);
