@@ -142,6 +142,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+'-txtFSENDFI').setValue('');
         Ext.getCmp(prototype.id+'-txtQCPNFI').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPNFRE').setValue('0');
+        Ext.getCmp(prototype.id+'-txtQCPHARB').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPTRA').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPAD').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPCHD').setValue('0');
@@ -242,6 +243,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+"-txtFSENDFI").setValue(bean.FSENDFI);
         Ext.getCmp(prototype.id+"-txtQCPNFI").setValue(bean.QCPNFI);
         Ext.getCmp(prototype.id+"-txtQCPNFRE").setValue(bean.QCPNFRE);
+        Ext.getCmp(prototype.id+"-txtQCPHARB").setValue(bean.QCPHARB);
         
         Ext.getCmp(prototype.id+"-cmbFSTAFI").setValue(bean.FSTAFI);
         /*if (bean.FSTAFI === '') {
@@ -404,6 +406,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             }
             if (Ext.getCmp(prototype.id+'-txtQCPNFRE').getErrors().length>0) {
                 msjResult = 'Invalid Physical File quantity coupons NR.';
+            }
+            if (Ext.getCmp(prototype.id+'-txtQCPHARB').getErrors().length>0) {
+                msjResult = 'Invalid Physical File quantity Inspectors.';
             }
             // </editor-fold>
             if(msjResult === ''){
@@ -604,15 +609,21 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             beanOption.QCPNFI = 0;
         }
         if (this.getValue("txtQCPNFRE").trim() !== '') {
-            console.log(beanOption.QCPNFRE);
             beanOption.QCPNFRE = Number(this.getValue('txtQCPNFRE').replace(',', '').trim());
         } else {
             beanOption.QCPNFRE = 0;
         }
         beanOption.FSTAFI = this.getValue('cmbFSTAFI');
+//        beanOption.QCPHARB = this.getValue('txtQCPHARB');
+        if (this.getValue("txtQCPHARB").trim() !== '') {
+            beanOption.QCPHARB = Number(this.getValue('txtQCPHARB').replace(',', '').trim());
+        } else {
+            beanOption.QCPHARB = 0;
+        }
         beanOption.FCLOSE = this.getValue('txtFCLOSE').trim();
         beanOption.QCPNVAL = Number(this.getValue('txtQCPNVAL').replace(',', '').trim());
         beanOption.FSTAPO = this.getValue('cmbFSTAPO');
+        console.log(beanOption);
     },
     //</editor-fold>
     setValue: function(id, txt) {

@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
     controller: 'DataEntryFlightConciliationController',
     title: 'Flight Manifest - Data Entry Form',
     header: true,
-    height: 720,
+    height: 740,
     width: 850,
     border: false,
     resizable: false,
@@ -1351,7 +1351,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     text: 'Qty Coupons',
                                     fieldStyle: 'text-align:center',
                                     style: 'font-weight:bold;color:#000;',
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'textfield',
@@ -1361,7 +1361,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     maskRe: /[0-9]/,
                                     maxLength: 5,
                                     value: '0',
-                                    width: 100
+                                    width: 80
                                 },
                                 {xtype: 'tbspacer', width: 20, height: 1},
                                 {
@@ -1379,9 +1379,26 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     maskRe: /[0-9]/,
                                     maxLength: 5,
                                     value: '0',
-                                    width: 100
+                                    width: 80
                                 },
-                                
+                                {xtype: 'tbspacer', width: 20, height: 1},
+                                {
+                                    xtype: 'label',
+                                    text: 'Qty Insp',
+                                    fieldStyle: 'text-align:center',
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 60
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtQCPHARB',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 5,
+                                    value: '0',
+                                    width: 80
+                                },
                             ]
                         },
                         {
