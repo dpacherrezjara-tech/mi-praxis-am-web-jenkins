@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
     title: 'AGENCY DEBIT MEMO / CHARGES DEBIT NOTE',
     header: true,
     height: 800,
-    width: 900,
+    width: 945,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -229,7 +229,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                                 afterrender: 'onCmbStatusAfterRender'
 
                             }
-                        },
+                        }
                         /*{
                          xtype: 'textfield',
                          id: prototype.id01 + '-txtCountry',
@@ -245,27 +245,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                          
                          }
                          },*/
-                        {
-                            xtype: 'combo',
-                            id: prototype.id01 + '-ComboCurrency',
-                            fieldLabel: 'Currency',
-                            queryMode: 'local',
-                            displayField: 'A006MONEDA',
-                            valueField: 'A006MONEDA',
-                            width: 120,
-                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                            labelWidth: 50,
-                            labelAlign: 'right',
-                            emptyText: '',
-                            listConfig: {
-                                minWidth: 200
-                            },
-                            listeners: {
-                                specialkey: 'onSearchkey',
-                                afterrender: 'onCmbCurrenAfterRender'
-
-                            }
-                        }
+                        
                         /*{
                          xtype: 'textfield',
                          id: prototype.id01 + '-ComboCurrency',
@@ -360,6 +340,27 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                             width: 200,
                             readOnly: true,
                             labelAlign: 'right'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id01 + '-ComboCurrency',
+                            fieldLabel: 'Currency',
+                            queryMode: 'local',
+                            displayField: 'A006MONEDA',
+                            valueField: 'A006MONEDA',
+                            width: 120,
+                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                            labelWidth: 50,
+                            labelAlign: 'right',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                afterrender: 'onCmbCurrenAfterRender'
+
+                            }
                         }
 
                     ]
@@ -387,18 +388,37 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtAgencia',
-                            fieldLabel: 'IATA NAME',
-                            labelWidth: 70,
-                            width: 400,
+                            fieldLabel: 'NAME',
+                            labelWidth: 35,
+                            width: 350,
                             readOnly: true
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtAdrres',
                             fieldLabel: 'Addres',
-                            labelWidth: 60,
+                            labelWidth: 45,
                             width: 300,
                             readOnly: true
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id01 + '-CmboADMAssoci',
+                            fieldLabel: 'Status',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 150,
+                            labelWidth: 50,
+                            labelAlign: 'right',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            hidden: true,
+                            listeners: {
+                                afterrender: 'onCmbStatusAfterRender'
+                            }
                         }
                     ]
                 },
@@ -496,11 +516,12 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                         },
                         //Boton AddCTA
                         {
-                            text: 'Add Cta',
+                           // text: 'Add Cta',
                             xtype: 'button',
                             id: prototype.id01 + '-btn-AddCta',
-                            iconCls: 'prx-icon-expanded',
+                            iconCls: 'prx-icon-add',
                             tooltip: 'Add Cta',
+                            //text: 'Add Cta',
                             listeners: {
                                 click: 'OnAddCta'
                             }
@@ -519,29 +540,12 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtPASSENGER',
                             fieldLabel: 'Passenger name',
-                            labelWidth: 110,
+                            labelWidth: 95,
                             readOnly: true,
                             width: 300
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id01 + '-CmboADMAssoci',
-                            fieldLabel: 'Status',
-                            queryMode: 'local',
-                            displayField: 'name',
-                            valueField: 'code',
-                            width: 150,
-                            labelWidth: 50,
-                            labelAlign: 'right',
-                            emptyText: '',
-                            listConfig: {
-                                minWidth: 200
-                            },
-                            hidden: true,
-                            listeners: {
-                                afterrender: 'onCmbStatusAfterRender'
-                            }
                         }
+                        
+                        
                     ]
                 },
                 {
