@@ -1462,6 +1462,7 @@ public class FlightConciliationController extends BaseController {
         }
     }
 
+//EL EXCEL GENERADO SE UTILIZA COMO LAYOUT EN EL PROCESO 'CIERRE DE VUELO'    
     @RequestMapping(value = "getXLSXDetail")
     public @ResponseBody
     void getXLSXDetail(HttpServletRequest request, HttpServletResponse response) {
@@ -1955,7 +1956,8 @@ public class FlightConciliationController extends BaseController {
             throw new SpringException(e);
         }
     }
-
+//EL EXCEL GENERADO SE UTILIZA COMO LAYOUT EN EL PROCESO 'CIERRE DE VUELO'
+    
     @RequestMapping(value = "getXLSXDetTkt2")
     public @ResponseBody
     void getXLSXDetTkt2(HttpServletRequest request, HttpServletResponse response) {
@@ -3854,8 +3856,14 @@ public class FlightConciliationController extends BaseController {
                         obj.NFLIGHT  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString().trim();
                         obj.CDEPART = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString().trim();
                         obj.CARRIVA = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString().trim();
-                        obj.strDescripcion = sheet.getCell(24)== null ? "" : sheet.getCell(24).toString().trim();
-                        obj.strDescripcion2 = sheet.getCell(25)== null ? "" : sheet.getCell(25).toString().trim();
+                        obj.strDescripcion = sheet.getCell(25)== null ? "" : sheet.getCell(25).toString().trim();
+                        if(obj.strDescripcion.length()>100){
+                            obj.strDescripcion = obj.strDescripcion.substring(0,100);
+                        }
+                        obj.strDescripcion2 = sheet.getCell(26)== null ? "" : sheet.getCell(26).toString().trim();
+                        if(obj.strDescripcion2.length()>100){
+                            obj.strDescripcion2 = obj.strDescripcion2.substring(0,100);
+                        }
                         
                         if(!obj.strDescripcion.trim().equals("")||!obj.strDescripcion2.trim().equals("") ){
                             lstManifiesto.add(obj);
