@@ -498,7 +498,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Pax<br>Type', dataIndex: 'TPAX', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
-                                                            value = Ext.util.Format.number(value, '0,000');
                                                             return value;
                                                         },
                                                     },

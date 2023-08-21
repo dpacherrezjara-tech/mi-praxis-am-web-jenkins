@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
         {
             xtype: 'panel',
             id: prototype.id + '-boxMainDataSpaProfitability',
-            width: '100%',
+            height: 560,
             hidden: false,
             layout: {
                 type: 'vbox',
@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataSpaProfitability',
                     width: 1582,
-                    height: 392,
+                    height: 550,
                     columnLines: true,
                     hidden: false,
                     margin: "5 0 0 0",
@@ -101,10 +101,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                 columns: [
                                     {
                                         text: 'Date', dataIndex: 'strDATE', width: 90,
-                                        listeners: {
-                                            click: 'viewDetFAFlight',
-                                            args: ['']
-                                        },
+//                                        listeners: {
+//                                            click: 'viewDetFAFlight',
+//                                            args: ['']
+//                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:left";
                                             return  value;
@@ -123,10 +123,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                 columns: [
                                     {
                                         text: 'Code', dataIndex: 'AIRLINE', width: 60,
-                                        listeners: {
-                                            click: 'onAirlineCode'
-//                                             click: 'viewDetFAFlight',
-                                        },
+//                                        listeners: {
+//                                            click: 'onAirlineCode'
+////                                             click: 'viewDetFAFlight',
+//                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;color:#057ECB;";
                                             value = '<b>' + value + '</b>';
