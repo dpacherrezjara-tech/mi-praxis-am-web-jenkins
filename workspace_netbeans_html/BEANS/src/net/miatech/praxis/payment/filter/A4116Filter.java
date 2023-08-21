@@ -298,4 +298,5 @@ public class A4116Filter extends A4116 {
 
     public Pagination page = new Pagination();
     
+    public String IN_TGRID = "";
 }

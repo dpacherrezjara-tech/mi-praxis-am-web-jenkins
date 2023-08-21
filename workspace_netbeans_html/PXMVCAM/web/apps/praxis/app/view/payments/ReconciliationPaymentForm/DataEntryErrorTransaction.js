@@ -1377,12 +1377,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
-                                    plugins: [
-                                        {
-                                            ptype: 'cellediting',
-                                            clicksToEdit: 1
-                                        }
-                                    ],
+//                                    plugins: [
+//                                        {
+//                                            ptype: 'cellediting',
+//                                            clicksToEdit: 1
+//                                        }
+//                                    ],
+                                    viewConfig: {
+                                        stripeRows: true,
+                                        enableTextSelection: true,
+                                        markDirty: false
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1451,7 +1456,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                         }
                                                     },
                                                     {text: 'Number', dataIndex: 'A1531NREF', width: 115,
-                                                        editor: {xtype: 'textfield', editable: false},
+                                                        //editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
 
@@ -1459,7 +1464,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                         }
                                                     },
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
-                                                        editor: {xtype: 'textfield', editable: false},
+                                                        //editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
 
@@ -1477,7 +1482,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
 //                                                }
 //                                            },
                                             {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
-                                                editor: {xtype: 'textfield', editable: false},
+                                                //editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1533,7 +1538,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                 //editor: {xtype: 'textfield', editable: false},
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
-                                                editor: {xtype: 'textfield', editable: false},
+                                                //editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 

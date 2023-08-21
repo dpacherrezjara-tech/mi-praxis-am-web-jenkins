@@ -277,17 +277,17 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
 
         beanTemp.SPNR = this.getValue("de-txtSPNR").trim();
         beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
-        
+
         if (this.lstSendManual.length > 0) {
-            if (beanTemp.SPNR==='' && beanTemp.TICKET === '') {
+            if (beanTemp.SPNR === '' && beanTemp.TICKET === '') {
                 beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
                 beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
-            } else if (beanTemp.TICKET.length > 0 && beanTemp.TICKET.substring(0, 3) === '000'&&beanTemp.SPNR === '') {
+            } else if (beanTemp.TICKET.length > 0 && beanTemp.TICKET.substring(0, 3) === '000' && beanTemp.SPNR === '') {
                 beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
                 beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
             }
         }
-        console.log('Datos de PNR y Ticket: ',beanTemp.SPNR,'-',beanTemp.TICKET);
+        console.log('Datos de PNR y Ticket: ', beanTemp.SPNR, '-', beanTemp.TICKET);
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
         beanTemp.OBSERV = this.getValue("de-txtOBSERV");
         beanTemp.lstSendManual = [];
@@ -920,14 +920,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                             res.lstInfo[i].forcescan = chkForceScan.getValue();
                             if (res.lstInfo[i].FDUPLIB > 0) {
                                 //Guardar aquí tkts usados
-                                if(!chkForceScan.getValue()){
+                                if (!chkForceScan.getValue()) {
                                     meDE.lstBlocked.push(res.lstInfo[i]);
                                     flag_blocked = true;
-                                }else{
-                                    let existe = meDE.lstSendManual.filter(x=>x.A1531TKT===res.lstInfo[i].A1531TKT).length>0;
-                                    if(existe){
+                                } else {
+                                    let existe = meDE.lstSendManual.filter(x => x.A1531TKT === res.lstInfo[i].A1531TKT).length > 0;
+                                    if (existe) {
                                         flag_dupli = true;
-                                    }else{
+                                    } else {
                                         res.lstInfo[i].FDUPLIB = 0;
                                         meDE.lstSendManual.push(res.lstInfo[i]);
                                     }
@@ -1152,8 +1152,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         }
     },
     addAdjustment_keyDownHandler: function () {
-        if (this.getValue('de-txtTICKET').trim() === '' || this.getValue('de-txtSPNR').trim() == '' || this.getValue('de-txtAdjAgent').trim() == '') {
+        if (this.getValue('de-txtTICKET').trim().length < 13 || this.getValue('de-txtSPNR').trim().length < 6 || this.getValue('de-txtAdjAgent').trim() === '') {
             global.Msg({msg: 'Please fill the Ticket or PNR or AGENT fields'});
+        } else if (this.getValue('de-txtTICKET').substr(0, 3) === '000') {
+            global.Msg({msg: 'The CIA of the ticket is not valid.'});
         } else {
             if (this.sumAmount === this.bean.TGROSAMPAY) {
                 global.Msg({msg: 'The sum amount is equal to transaction amount.'});
@@ -1228,7 +1230,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 var res = Ext.JSON.decode(response.responseText);
                 var flag_blocked = false;
                 meDE.beanInfo = res.lstInfo;
-                console.log(meDE.beanInfo);
+                console.log('gridTransactionErrorByTKT: ',meDE.beanInfo);
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
