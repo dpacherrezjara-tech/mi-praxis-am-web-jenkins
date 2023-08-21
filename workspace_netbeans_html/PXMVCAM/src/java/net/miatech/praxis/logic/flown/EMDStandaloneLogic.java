@@ -19,6 +19,10 @@ public class EMDStandaloneLogic {
         return EMDStandaloneDAO.loadPX529SQP04931(filter);
     }
     
+    public List<A1817Filter> loadPX529SQP04934(A1817Filter filter) throws SQLException, Exception {
+        return EMDStandaloneDAO.loadPX529SQP04934(filter);
+    }        
+            
     public List<A1817Filter> loadPX529SQP04924(A1817Filter filter) throws SQLException, Exception {
         return EMDStandaloneDAO.loadPX529SQP04924(filter);
     }

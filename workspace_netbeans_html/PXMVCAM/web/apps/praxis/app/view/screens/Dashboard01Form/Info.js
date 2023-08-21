@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
                     width: 1500,
-                    height: 750,//820
+                    height: 620,//820
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,
@@ -127,7 +127,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            hidden:true,
+//                            hidden:true,
                             id: prototype.id + '-SpaProfitability_tab',
 //                            hidden:true,
                             title: 'Spa Profitability',

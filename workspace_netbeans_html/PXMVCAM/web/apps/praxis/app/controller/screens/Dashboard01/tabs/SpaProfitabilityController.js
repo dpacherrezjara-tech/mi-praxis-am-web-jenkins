@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
     },
     search: function () {
         this.showGrid('-boxMainDataSpaProfitability');
-        meSPA.setWidthPie();
+//        meSPA.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/search_SPA'
@@ -101,7 +101,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
         });
         Ext.getCmp(prototype.id + '-gridDataSpaProfitability').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataSpaProfitability').setStore(storeGridDatas);
-                this.showPagination_clickHandler();
+//                this.showPagination_clickHandler();
         Ext.getCmp(prototype.id + '-paggin_searchSPA').bindStore(storeGridDatas);
     },
     onAirlineCode: function (obj, metaData, rowNum, columnNum, obj2, rowData) {

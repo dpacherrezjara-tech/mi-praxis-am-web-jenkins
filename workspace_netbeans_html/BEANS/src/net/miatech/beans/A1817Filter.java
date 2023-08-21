@@ -102,7 +102,7 @@ public class A1817Filter extends A1817 {
     public int QTYUSESP = 0;
     public int QTYEMDAU = 0;
     public int QTYEMDMA = 0;
-    public int CONTABIL = 0;
+    public int QTYEMDCT = 0;
     
     public int TOT_QTYSALED = 0;
     public int TOT_QTYUSESD = 0;
@@ -110,7 +110,7 @@ public class A1817Filter extends A1817 {
     public int TOT_QTYUSESP = 0;
     public int TOT_QTYEMDAU = 0;
     public int TOT_QTYEMDMA = 0;
-    public int TOT_CONTABIL = 0;
+    public int TOT_QTYEMDCT = 0;
     
     public Pagination page = new Pagination();
 }
