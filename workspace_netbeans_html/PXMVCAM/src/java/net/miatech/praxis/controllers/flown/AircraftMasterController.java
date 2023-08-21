@@ -4,6 +4,7 @@ package net.miatech.praxis.controllers.flown;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import net.miatech.praxis.logic.flown.AircraftMasterLogic;
 import net.miatech.utils.Functions;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -129,12 +131,15 @@ public class AircraftMasterController extends BaseController {
         try {
             List<A1702Filter> lstAircraft = new ArrayList<>(0);
             A1702Filter obj = new A1702Filter();
-
+            double prue = 0;
+            int prue2 = 0;
             String filename = excelfile.getOriginalFilename();
             XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
             //HSSFCell cell;
+            DataFormatter formatter = new DataFormatter(); 
+            
             while (iterator.hasNext()) {
 
                 cont++;
@@ -145,9 +150,9 @@ public class AircraftMasterController extends BaseController {
                         obj = new A1702Filter();
 //                        obj.DFLIGHT = sheet.getCell(1) == null ? "" : sheet.getCell(1).toString().trim();
                         obj.EQUIPO = sheet.getCell(1) == null ? "" : sheet.getCell(1).toString().trim();
-                        obj.MODELO = sheet.getCell(2) == null ? "" : sheet.getCell(2).toString().trim();
-                        obj.NUMERO = sheet.getCell(3) == null ? "" : sheet.getCell(3).toString().trim();
-                        obj.NUMERO = obj.NUMERO.replace(".0", "");
+                        obj.MODELO = formatter.formatCellValue(sheet.getCell(2));
+                        obj.NUMERO = formatter.formatCellValue(sheet.getCell(3));
+                        
                         obj.MATRIC = sheet.getCell(4) == null ? "" : sheet.getCell(4).toString().trim();
                         obj.CARRIER = sheet.getCell(5) == null ? "" : sheet.getCell(5).toString().trim();
                         obj.TIPO = sheet.getCell(6) == null ? "" : sheet.getCell(6).toString().trim();
