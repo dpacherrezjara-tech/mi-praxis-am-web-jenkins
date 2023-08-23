@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                     margin: "5 0 0 0",
                     features: [{
                             ftype: 'summary',
-                            dock: 'bottom'
+//                            dock: 'bottom'
                         }],
                     columns: {
                         defaults: {

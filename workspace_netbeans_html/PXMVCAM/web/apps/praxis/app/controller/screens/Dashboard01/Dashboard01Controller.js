@@ -384,8 +384,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             month = '0' + month;
         }
         
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth_SPA').setValue(month);
-        Ext.getCmp(prototype.id + '-cmbDateToMonth_SPA').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth_SPA').setValue('01');
+        Ext.getCmp(prototype.id + '-cmbDateToMonth_SPA').setValue('01');
 
         this.setValue('cmbDateFromYear_SPA', new Date().getFullYear());
         this.setValue('cmbDateToYear_SPA', new Date().getFullYear());
@@ -417,7 +417,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 this.setValue('cmbDateToYear_EXP', this.getValue("cmbDateFromYear_EXP"));
                 break
             case  prototype.id + '-SpaProfitability_tab':
-                this.setValue('cmbDateToYear_EXP', this.getValue("cmbDateFromYear_SPA"));
+                this.setValue('cmbDateToYear_SPA', this.getValue("cmbDateFromYear_SPA"));
                 break
         }
 
@@ -686,6 +686,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 Ext.getCmp(prototype.id + '-panelChartInterline').show();
                 isOK = true;
                 break;
+            case prototype.id + '-SpaProfitability_tab' :
+                Ext.getCmp(prototype.id + '-panelChartSpa').show();
+                isOK = true;
+                break;    
         }
 
         return isOK;
@@ -696,6 +700,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-panelChartInterline').hide();
         Ext.getCmp(prototype.id + '-panelChartSales').hide();
         Ext.getCmp(prototype.id + '-panelChartFlown').hide();
+        Ext.getCmp(prototype.id + '-panelChartSpa').hide();
 
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
