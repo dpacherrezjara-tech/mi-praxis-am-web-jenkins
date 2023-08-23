@@ -268,6 +268,10 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX241S01_D(filter);
     }
     
+    public List<A1971Filter> loadPX241S01_Charts(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S01_Charts(filter);
+    }
+    
     public List<A1971Filter> loadPX241SQP01404(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX241SQP01404(filter);
     }

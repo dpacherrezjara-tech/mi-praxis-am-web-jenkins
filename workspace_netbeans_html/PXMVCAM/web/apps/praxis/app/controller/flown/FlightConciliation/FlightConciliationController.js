@@ -556,7 +556,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-filter_3').hide();
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
-        Ext.getCmp(prototype.id + '-labelScanTicket').setVisible(false);
+//        Ext.getCmp(prototype.id + '-labelScanTicket').setVisible(false);
 //        Ext.getCmp(prototype.id + '-btnScanTicket').setVisible(false);
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
@@ -876,7 +876,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     searchDetailFlightManifest: function (objFLIGHTMANIF) {
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
-        Ext.getCmp(prototype.id + '-labelScanTicket').setVisible(true);
+//        Ext.getCmp(prototype.id + '-labelScanTicket').setVisible(true);
 //        Ext.getCmp(prototype.id + '-btnScanTicket').setVisible(true);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {

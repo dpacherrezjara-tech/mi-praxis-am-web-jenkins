@@ -56,6 +56,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
             id: prototype.id + '-boxMainDataSpaProfitability',
             height: 560,
             hidden: false,
+            border: false,
             layout: {
                 type: 'vbox',
                 align: 'center',
@@ -101,12 +102,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                 columns: [
                                     {
                                         text: 'Date', dataIndex: 'strDATE', width: 90,
-//                                        listeners: {
-//                                            click: 'viewDetFAFlight',
-//                                            args: ['']
-//                                        },
+                                        listeners: {
+                                            click: 'viewDetFAFlight',
+                                            args: ['']
+                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:left";
+                                            metaData.style = "text-align:center";
                                             return  value;
                                         }
                                     }
@@ -123,10 +124,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                 columns: [
                                     {
                                         text: 'Code', dataIndex: 'AIRLINE', width: 60,
-//                                        listeners: {
-//                                            click: 'onAirlineCode'
-////                                             click: 'viewDetFAFlight',
-//                                        },
+                                        listeners: {
+                                            click: 'onAirlineCode'
+//                                             click: 'viewDetFAFlight',
+                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;color:#057ECB;";
                                             value = '<b>' + value + '</b>';
@@ -391,7 +392,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataDetailSpaProfitability1',
-                    width: 1582,
+                    width: 1382,
                     height: 392,
                     columnLines: true,
                     hidden: false,
@@ -408,7 +409,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                         },
                         items: [
                             {
-                                text: 'Description', dataIndex: 'RN', width: 40,
+                                text: 'Description', dataIndex: 'RN', width: 120,
                             },
                             {
                                 text: 'Total',
@@ -575,7 +576,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataDetailSpaProfitability2',
-                    width: 1582,
+                    width: 502,
                     height: 392,
                     columnLines: true,
                     hidden: false,
@@ -610,7 +611,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                         },
                                         columns: [
                                             {
-                                                text: 'Reason for Rejection', dataIndex: 'AIRLINE', width: 60,
+                                                text: 'Reason for Rejection', dataIndex: 'AIRLINE', width: 120,
                                                 listeners: {
                                                     change: 'onAirlineCode'
                                                 },
