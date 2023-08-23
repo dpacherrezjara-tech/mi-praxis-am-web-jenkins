@@ -842,7 +842,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Qty Insp', dataIndex: 'QCPHARB', width: 60, sortable: true,
+                                                        text: 'Qty Insp', dataIndex: 'QCPHARB_ESP', width: 60, sortable: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#ccfaff;";
 //                                                            value = '<b>' + value + '</b>';
@@ -851,7 +851,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totQCPHARB, '0,000');
+                                                            return Ext.util.Format.number(data.totQCPHARB_ESP, '0,000');
                                                         }
                                                     }
                                                 ]

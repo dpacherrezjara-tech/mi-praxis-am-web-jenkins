@@ -243,7 +243,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+"-txtFSENDFI").setValue(bean.FSENDFI);
         Ext.getCmp(prototype.id+"-txtQCPNFI").setValue(bean.QCPNFI);
         Ext.getCmp(prototype.id+"-txtQCPNFRE").setValue(bean.QCPNFRE);
-        Ext.getCmp(prototype.id+"-txtQCPHARB").setValue(bean.QCPHARB);
+        Ext.getCmp(prototype.id+"-txtQCPHARB").setValue(bean.QCPHARB_ESP);
         
         Ext.getCmp(prototype.id+"-cmbFSTAFI").setValue(bean.FSTAFI);
         /*if (bean.FSTAFI === '') {
@@ -616,9 +616,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         beanOption.FSTAFI = this.getValue('cmbFSTAFI');
 //        beanOption.QCPHARB = this.getValue('txtQCPHARB');
         if (this.getValue("txtQCPHARB").trim() !== '') {
-            beanOption.QCPHARB = Number(this.getValue('txtQCPHARB').replace(',', '').trim());
+            beanOption.QCPHARB_ESP = Number(this.getValue('txtQCPHARB').replace(',', '').trim());
         } else {
-            beanOption.QCPHARB = 0;
+            beanOption.QCPHARB_ESP = 0;
         }
         beanOption.FCLOSE = this.getValue('txtFCLOSE').trim();
         beanOption.QCPNVAL = Number(this.getValue('txtQCPNVAL').replace(',', '').trim());
