@@ -497,7 +497,7 @@ public class FlightConciliationDAO {
                     beanCons.QCPNOD = rst.getLong("QCPNOD");
                     beanCons.QCPNFI = rst.getInt("QCPNFI");
                     beanCons.QCPNFRE = rst.getInt("QCPNFRE");
-                    beanCons.QCPHARB = rst.getInt("QCPHARB");
+                    beanCons.QCPHARB_ESP = rst.getInt("QCPHARB");
                     beanCons.QCPNOCR = rst.getLong("QCPNOCR");
                     beanCons.QCPNVC = rst.getLong("QCPNVC");
                     beanCons.QCPNLEG = rst.getLong("QCPNLEG");
@@ -527,7 +527,7 @@ public class FlightConciliationDAO {
                     beanCons.totQCPTRA = QCPTRA;
                     beanCons.totQCPNFI = QCPNFI;
                     beanCons.totQCPNFRE = QCPNFRE;
-                    beanCons.totQCPHARB = QCPHARB;
+                    beanCons.totQCPHARB_ESP = QCPHARB;
                     beanCons.totQCPNVAL = QCPNVAL;
                     beanCons.totQCPNVAL = QCPNVAL;
                     beanCons.totDIFFODSVCR = DIFFODSVCR;
@@ -1222,7 +1222,7 @@ public class FlightConciliationDAO {
                 beanCons.FSENDFI = rst.getString("FSENDFI").trim();
                 beanCons.QCPNFI = rst.getInt("QCPNFI");
                 beanCons.QCPNFRE = rst.getInt("QCPNFRE");
-                beanCons.QCPHARB = rst.getInt("QCPHARB");
+                beanCons.QCPHARB_ESP = rst.getInt("QCPHARB");
                 beanCons.FSTAFI = rst.getString("FSTAFI").trim();
                 beanCons.USCR = rst.getString("USCR").trim();
                 beanCons.FECR = rst.getString("FECR").trim();
@@ -1341,7 +1341,7 @@ public class FlightConciliationDAO {
             cs.setInt(24, Integer.parseInt(String.valueOf(filter.QCPNTOT)));
             cs.setInt(25, Integer.parseInt(String.valueOf(filter.QCPNOAL)));
 //            cs.setInt(26, Integer.parseInt(String.valueOf(filter.QCPHARB)));
-            cs.setLong(26, filter.QCPHARB);
+            cs.setInt(26, filter.QCPHARB_ESP);
             cs.setString(27, filter.FSENDFI.trim());
             cs.setInt(28, filter.QCPNFI);
             cs.setInt(29, filter.QCPNFRE);

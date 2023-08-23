@@ -62,21 +62,21 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
         console.log(meSPA.bean);
     },
     search: function () {
+        me.panelActual = '-boxMainDataSpaProfitability';
+
+        win.lblUser_toolTip("Estructura: WRF001");
         this.showGrid('-boxMainDataSpaProfitability');
-//        meSPA.setWidthPie();
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/search_SPA'
-            },
-            listeners: {
+            }, listeners: {
                 beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-boxMainDataSpaProfitability').mask('Loading...');
                     obj.proxy.extraParams = {beanString: meSPA.searchParams};
                 },
-                load: function (obj, obj2, success, response, obj5) {
+                load: function (obj) {
                     Ext.getCmp(prototype.id + '-boxMainDataSpaProfitability').unmask();
-                    win.lblUser_toolTip("Estructura: WRF001");
-                    
                     var pag = Ext.getCmp(prototype.id + '-paggin_searchSPA');
                     var pagData = pag.getPageData();
 
@@ -84,24 +84,19 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
-                    var res = Ext.JSON.decode(response._response.responseText);
-                    console.log(res);
-                    if (res.success) {
-                        if (obj.data.length > 0) {
-                            var obj = obj.data.items[0].data;
-                        } else {
-                            global.Msg({msg: 'Data not found'});
-                        }
-                    } else
-                        global.Msg({msg: res.sesion});
-//                    global.clear();
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                    }
                 }
-                                    
             }
         });
         Ext.getCmp(prototype.id + '-gridDataSpaProfitability').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataSpaProfitability').setStore(storeGridDatas);
-//                this.showPagination_clickHandler();
+        this.showPagination_clickHandler();
         Ext.getCmp(prototype.id + '-paggin_searchSPA').bindStore(storeGridDatas);
     },
     onAirlineCode: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
@@ -154,7 +149,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
         Ext.getCmp(prototype.id + '-gridDataDetailSpaProfitability2').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataDetailSpaProfitability1').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataDetailSpaProfitability2').setStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);paggin_searchSPA
+//        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     
     clickDetSales_colHandler: function(param,column, e, row, column, x, rowData) {
@@ -315,10 +310,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
     },
     showPagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        Ext.getCmp(prototype.id + '-espaciado').hide();
         Ext.getCmp(prototype.id + '-lblPagination').show();
     },
     hidePagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').hide();
+        Ext.getCmp(prototype.id + '-espaciado').show();
         Ext.getCmp(prototype.id + '-lblPagination').hide();
     },
     obtainCities: function () {
@@ -369,55 +366,55 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
         this.viewDetSales_colHandler();
     },
     
-    setWidthPie: function () {
-        console.log(meSPA.boxActual);
-        var ancho = Ext.getCmp(prototype.id + meSPA.boxActual).getWidth();
-        Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
-        Ext.getCmp(prototype.id + '-pie').setVisible(true);
-    },
-    getPaggin: function () {
-        meSPA.pagginActual = '';
-        switch (meSPA.boxActual) {
-            case  '-boxMainDataSpaProfitability':
-                meSPA.pagginActual = '-paggin_searchSPA';
-                break;
-//            case '-BoxDDTMCountryofSale':
-//                me.pagginActual = '-paggin2';
-//                break;
-//            case '-BoxDDTMDetailbyAgent':
-//                me.pagginActual = '-paggin3';
-//                break;
-//            case '-boxNoMatchData':
-//                me.pagginActual = '-paggin4';
-//                break;
-//            case '-boxUsosData':
-//                me.pagginActual = '-paggin5';
-//                break;
-//            case '-boxDetAvisos':
-//                me.pagginActual = '-paggin6';
-//                break;
-        }
-    },
-    pagFirst: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
-        pag.moveFirst();
-    }, pagPrevious: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
-        pag.movePrevious();
-    },
-    pagNext: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
-        pag.moveNext();
-    },
-    pagLast: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
-        pag.moveLast();
-    },
-    
+//    setWidthPie: function () {
+//        console.log(meSPA.boxActual);
+//        var ancho = Ext.getCmp(prototype.id + meSPA.boxActual).getWidth();
+//        Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
+//        Ext.getCmp(prototype.id + '-pie').setVisible(true);
+//    },
+//    getPaggin: function () {
+//        meSPA.pagginActual = '';
+//        switch (meSPA.boxActual) {
+////            case  '-boxMainDataSpaProfitability':
+////                meSPA.pagginActual = '-paggin_searchSPA';
+////                break;
+////            case '-BoxDDTMCountryofSale':
+////                me.pagginActual = '-paggin2';
+////                break;
+////            case '-BoxDDTMDetailbyAgent':
+////                me.pagginActual = '-paggin3';
+////                break;
+////            case '-boxNoMatchData':
+////                me.pagginActual = '-paggin4';
+////                break;
+////            case '-boxUsosData':
+////                me.pagginActual = '-paggin5';
+////                break;
+////            case '-boxDetAvisos':
+////                me.pagginActual = '-paggin6';
+////                break;
+//        }
+//    },
+//    pagFirst: function (obj, e) {
+//        this.getPaggin();
+//        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
+//        pag.moveFirst();
+//    }, pagPrevious: function (obj, e) {
+//        this.getPaggin();
+//        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
+//        pag.movePrevious();
+//    },
+//    pagNext: function (obj, e) {
+//        this.getPaggin();
+//        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
+//        pag.moveNext();
+//    },
+//    pagLast: function (obj, e) {
+//        this.getPaggin();
+//        var pag = Ext.getCmp(prototype.id + meSPA.pagginActual);
+//        pag.moveLast();
+//    },
+//    
     gridData_VIEWTKT_clickHandler: function(column, e, row, column, x, rowData) {
         var data = x.record.data;
         var strTkt = data.TICKET;

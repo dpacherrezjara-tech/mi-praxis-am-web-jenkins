@@ -1875,7 +1875,7 @@ public class FlightConciliationController extends BaseController {
                 cell70.setCellValue(listaData.get(vi).strFormatDate3);
                 cell71.setCellValue(listaData.get(vi).QCPNFI);
                 cell72.setCellValue(listaData.get(vi).QCPNFRE);
-                cell73.setCellValue(listaData.get(vi).QCPHARB);
+                cell73.setCellValue(listaData.get(vi).QCPHARB_ESP);
                 cell74.setCellValue(listaData.get(vi).lngQDIFF);
                 cell75.setCellValue(listaData.get(vi).DESCRIP);
                 cell76.setCellValue(listaData.get(vi).DESCRIP2);

@@ -838,10 +838,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     showPagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        Ext.getCmp(prototype.id + '-espaciado').hide();
         Ext.getCmp(prototype.id + '-lblPagination').show();
     },
     hidePagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').hide();
+        Ext.getCmp(prototype.id + '-espaciado').show();
         Ext.getCmp(prototype.id + '-lblPagination').hide();
     },
     onUpperValue: function (field, newValue, oldValue) {
