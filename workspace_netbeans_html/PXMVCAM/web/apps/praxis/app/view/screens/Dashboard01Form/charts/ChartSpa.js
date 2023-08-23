@@ -167,6 +167,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa', {
                     margin: '0 0 0 0',
                     hidden: false,
                     border: false,
+                    height: 700, //403
                     layout: {
                         type: 'hbox',
                         pack: 'center'
@@ -176,7 +177,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData_SPA',
-                            width: 560,
+                            width: 570,
                             height: 603, //403
                             columnLines: true,
                             margin: "5 0 0 0",
@@ -280,10 +281,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa', {
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxSPAGraphic',
-                            margin: '0 0 0 0',
-                            border: false,
+                            margin: '5 0 0 0',
+                            background: '#e0eff8',
+                            border: true,
+//                            width: 570,
+                            height: 603,
                             layout: {
-                                type: 'vbox',
+                                type: 'hbox',
                                 pack: 'center'
                             },
                             bodyStyle: 'background-color: transparent;',
@@ -293,10 +297,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa', {
                                     id: prototype.id + '-displaySPA',
                                     margin: '15 0 0 10 ',
                                     flipXY: true,
-                                    width: 620,
-                                    height: 647,
+                                    width: 570,
+                                    height: 603,
                                     insetPadding: '20 20',
-                                    background: '#E0F8F7',
+                                    background: '#e0eff8',
                                     captions: {
                                         title: {
                                             text: '',
@@ -326,8 +330,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa', {
 //                                                if (value > 1) {
 //                                                    return ' ' + Ext.util.Format.number((value / 1000000), '0,000') + 'M ';
 //                                                } else {
-                                                     value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
+                                                value = Ext.util.Format.number(value, '0,000');
+                                                return value;
 //                                                }
                                             }
                                         }, {
@@ -369,6 +373,47 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa', {
                                                 }
                                             }
                                         }]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-boxSPAGraphicDet',
+                                    margin: '0 0 0 0',
+                                    background: '#e0eff8',
+                                    border: false,
+                                    layout: {
+                                        type: 'vbox',
+                                        pack: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            html: '<strong style="color:#3399FF;">Top</strong>',
+                                            id: prototype.id + '-lblSelecas',
+                                            align: 'center',
+                                            fieldStyle: 'text-align: center;',
+                                            width: 60,   
+                                            padding: '15px 0px 0px 15px',
+                                            hidden: false
+                                        },
+                                        {
+                                            xtype: 'radiogroup',
+                                            id: prototype.id + '-Box_Chart_SPA',
+                                            margin: '15 0 0 10',
+                                            fieldLabel: '',
+                                            height: 603,
+                                            layout: 'vbox',
+                                            items: [
+                                                {boxLabel: '<strong style="color:#3399FF" >20 -</strong>', name: 'rb', inputValue: 'VE', width: 50, height: 50},
+                                                {boxLabel: '<strong style="color:#3399FF" >15 -</strong>', name: 'rb', inputValue: 'QU', width: 50, height: 50},
+                                                {boxLabel: '<strong style="color:#3399FF" >10 -</strong>', name: 'rb', inputValue: 'DI', width: 50, height: 50, checked: true},
+                                                {boxLabel: '<strong style="color:#3399FF" >5  -</strong>', name: 'rb', inputValue: 'CI', width: 50, height: 50}
+                                            ],
+                                            listeners: {
+                                                change: 'chooseRange_clickHandler'
+                                            }
+                                        },
+                                    ]
                                 },
                             ]
                         },

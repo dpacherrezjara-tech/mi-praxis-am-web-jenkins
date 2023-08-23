@@ -91,8 +91,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSpaController'
         panelChart.hide();
 
     },
-    loadSPAChart: function () {
-//        console.log('loadSPAChartMonth');
+    loadSPAChart: function (range) {
+
         win.lblUser_toolTip("Estructura: WRF001");
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -110,43 +110,29 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSpaController'
                             var obj = obj.data.items[0].data;
                             console.log(res.data.length);
 //                            
-//                            var lstTot_piePB = [];
-//                            var item_pie1PB = {};
-//                            for (var k = 0; k < res.data.length; k++){
-//                                item_pie1PB.VCPNB = res.data[k].VCPNB;
-//                                item_pie1PB.strValueB = res.data[k].strValueB;
-//                                lstTot_piePB.push(item_pie1PB);
-//                                item_pie1PB = {};
-//                            }
-//                            console.log(lstTot_piePB);
-//                             var storeDataTotales_piePB = Ext.create('Ext.data.Store', {
-//                                data: lstTot_piePB,
-//                                autoLoad: true
-//                            });
-////                            Ext.getCmp(prototype.id + '-displaySPAMonthPieBack').bindStore(storeDataTotales_piePB);
-//                           
-//                           var lstTot_pieP = [];
-//                            var item_pie1P = {};
-//                            for (var k = 0; k < res.data.length; k++){
-//                                item_pie1P.VCPN = res.data[k].VCPN;
-//                                item_pie1P.strValue = res.data[k].strValue;
-//                                lstTot_pieP.push(item_pie1P);
-//                                item_pie1P = {};
-//                            }
-//                            console.log(lstTot_pieP);
-//                             var storeDataTotales_pieP = Ext.create('Ext.data.Store', {
-//                                data: lstTot_pieP,
-//                                autoLoad: true
-//                            });
-////                            Ext.getCmp(prototype.id + '-displaySPAMonthPieNow').bindStore(storeDataTotales_pieP);
-//                           
-//                            Ext.getCmp(prototype.id + '-displaySPAMonthPieNow').setTitle('<center style="font-size:16px;"> SPA Total Amount USD - ' + obj.strYear + '</center>');
-//                            Ext.getCmp(prototype.id + '-displaySPAMonthPieBack').setTitle('<center style="font-size:16px;"> SPA Total Amount USD - ' + obj.strYearB + '</center>');
-//                            
-//                            var vsy = '<a style="color:#209938;">' + obj.strYear + '</a>'
-//                            var vsyb = '<a style="color:#1c50c9;">' + obj.strYearB + '</a>'
-//                            var vs = vsyb + ' vs ' + vsy;
-//                            Ext.getCmp(prototype.id + '-displaySPAMonthBared').setTitle('<center style="font-size:16px;"> SPA Total Amount USD - ' + vs + '</center>');
+                            var lstTot_piePB = [];
+                            var item_pie1PB = {};
+                            var k = 0;
+                            if(range>0){
+                                console.log('range es vacío');
+                                //nadine
+                            }else{
+                                console.log('range es 10');
+                                range = 9;
+                            }
+                            for ( k = range-1; k >= 0; k--) {
+                                item_pie1PB.QCUPON = res.data[k].QCUPON;
+                                item_pie1PB.strAirlineName = res.data[k].strAirlineName;
+                                lstTot_piePB.push(item_pie1PB);
+                                item_pie1PB = {};
+                            }
+                            console.log(lstTot_piePB);
+                            var storeDataTotales_piePB = Ext.create('Ext.data.Store', {
+                                data: lstTot_piePB,
+                                autoLoad: true
+                            });
+                            Ext.getCmp(prototype.id + '-displaySPA').bindStore(storeDataTotales_piePB);
+
                         } else {
                             global.Msg({msg: 'Data not found'});
                         }
@@ -158,10 +144,33 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSpaController'
         });
         Ext.getCmp(prototype.id + '-gridData_SPA').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridData_SPA').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-displaySPA').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-displaySPA').bindStore(storeGridDatas);
         me.storeGridDatas = storeGridDatas;
-
     },
+    chooseRange_clickHandler: function (obj, rb_new, rb_old, func) {
+        var range = 0;
+        var valueRadio = rb_new.rb;
+        switch (valueRadio) {
+            case 'VE':
+                console.log('rango por 20');
+                range = 20;
+                break;
+            case 'QU':
+                console.log('rango por 15');
+                range = 15;
+                break;
+            case 'DI':
+                console.log('rango por 10');
+                range = 10;
+                break;
+            case 'CI':
+                console.log('rango por 5');
+                range = 5;
+                break;
+        }
+        this.loadSPAChart(range);
+    },
+
     btnExcel_click: function (obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
