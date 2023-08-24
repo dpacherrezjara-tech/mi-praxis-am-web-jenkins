@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.ChargebackSabre
         let form = Ext.getCmp(prototype.id + '-formFilters');
         let cc1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
         let cc2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
-        let scard = cc2.length > 0 ? `${cc1}%${cc2}%` : cc1;
+        let scard = cc2.length > 0 ? `${cc1}%${cc2}%` : `${cc1}%`;
         let params = {
             IN_SCARDN: scard,
             ...form.getValues()
