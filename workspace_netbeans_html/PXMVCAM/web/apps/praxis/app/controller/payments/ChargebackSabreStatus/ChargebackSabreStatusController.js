@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.ChargebackSabre
                 }
             };
             opts[obj.id.split('-').at(-1)]();
-        } catch {
+        } catch (e) {
             return;
         }
     },
