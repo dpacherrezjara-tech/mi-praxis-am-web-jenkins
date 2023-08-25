@@ -156,6 +156,7 @@ public class AircraftMasterController extends BaseController {
                         obj.MATRIC = sheet.getCell(4) == null ? "" : sheet.getCell(4).toString().trim();
                         obj.CARRIER = sheet.getCell(5) == null ? "" : sheet.getCell(5).toString().trim();
                         obj.TIPO = sheet.getCell(6) == null ? "" : sheet.getCell(6).toString().trim();
+//                        obj.FECHA = sheet.getCell(7) == null ? "" : sheet.getCell(7).toString().trim();
                         obj.FECHA = sheet.getCell(7) == null ? "" : sheet.getCell(7).toString().trim();
                         System.out.println(obj.FECHA);
 
@@ -196,6 +197,43 @@ public class AircraftMasterController extends BaseController {
                         }
 
                         obj.FECHAOP = sheet.getCell(8) == null ? "" : sheet.getCell(8).toString().trim();
+                        System.out.println(obj.FECHAOP);
+
+                        if (obj.FECHAOP.contains("-")) {
+                            String[] fecha = obj.FECHAOP.split("-");
+                            String fecha2 = String.format("%0" + 4 + "d", Integer.valueOf(fecha[2]));
+                            String fecha1 = fecha[1];
+                            if (fecha1.equals("ene")) {
+                                fecha1 = "01";
+                            } else if (fecha1.equals("feb")) {
+                                fecha1 = "02";
+                            } else if (fecha1.equals("mar")) {
+                                fecha1 = "03";
+                            } else if (fecha1.equals("abr")) {
+                                fecha1 = "04";
+                            } else if (fecha1.equals("may")) {
+                                fecha1 = "05";
+                            } else if (fecha1.equals("jun")) {
+                                fecha1 = "06";
+                            } else if (fecha1.equals("jul")) {
+                                fecha1 = "07";
+                            } else if (fecha1.equals("ago")) {
+                                fecha1 = "08";
+                            } else if (fecha1.equals("sep")) {
+                                fecha1 = "09";
+                            } else if (fecha1.equals("oct")) {
+                                fecha1 = "10";
+                            } else if (fecha1.equals("nov")) {
+                                fecha1 = "11";
+                            } else if (fecha1.equals("dic")) {
+                                fecha1 = "12";
+                            }
+
+                            fecha1 = String.format("%0" + 2 + "d", Integer.valueOf(fecha1));
+                            String fecha0 = String.format("%0" + 2 + "d", Integer.valueOf(fecha[0]));
+                            System.out.println(fecha2 + fecha1 + fecha0);
+                            obj.FECHAOP = fecha2 + fecha1 + fecha0;
+                        }
                         obj.FECINICO = sheet.getCell(9) == null ? "" : sheet.getCell(9).toString().trim();
                         obj.FECFINCO = sheet.getCell(10) == null ? "" : sheet.getCell(10).toString().trim();
                         String HORAVLO = "", PAXF = "", PAXJ = "", PAXY = "", PAX = "", TOTMILL = "", TOTGALO = "", TOTCARG = "", PESO = "", PESOMAX = "";
