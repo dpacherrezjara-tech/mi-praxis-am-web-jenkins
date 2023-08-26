@@ -419,7 +419,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                 },
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                     var data = Ext.getCmp(prototype.id + '-gridDataDetailSpaProfitability1').getStore().getData().items[0].data;
-                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                    metaData.style = 'text-align:center; margin-right:3px ';
                                     value = 'TOTAL';
                                     return value;
                                 }
@@ -657,7 +657,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataDetailSpaProfitability2').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    metaData.style = 'text-align:center; margin-right:3px ';
                                                     value = 'TOTAL';
                                                     return value;
                                                 }
