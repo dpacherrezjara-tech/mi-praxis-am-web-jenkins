@@ -108,8 +108,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SpaProfitabilityContr
         this.beanDetSpaProfitability.IN_TUSO = rowData.data.IN_TUSO;
         this.beanDetSpaProfitability.IN_TDOC = rowData.data.IN_TDOC;
         this.beanDetSpaProfitability.IN_CURRENP = rowData.data.IN_CURRENP;
-//        this.beanDetSpaProfitability.FINVOICE = rowData.data.FINVOICE;
-        this.beanDetSpaProfitability.FINVOICE = '201601';
+        this.beanDetSpaProfitability.FINVOICE = rowData.data.FINVOICE;
+        //GUARDA ESTA FECHA PORQUE NO HAY INFORMACION
+//        this.beanDetSpaProfitability.FINVOICE = '201601';
         console.log(this.beanDetSpaProfitability);
         meSPA.paramsDetailSpaProfitability.beanString = JSON.stringify(this.beanDetSpaProfitability);
         this.searchTAGSPA();
