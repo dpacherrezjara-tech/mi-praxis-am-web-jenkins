@@ -14,21 +14,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.sql.DataSource;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.A4451MP;
+import net.miatech.praxis.payment.X3169;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4114Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
+import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
+import net.miatech.praxis.payment.filter.SQP05048Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
@@ -42,7 +47,9 @@ public class ReconciliationPaymentDAO {
     //<editor-fold defaultstate="collapsed" desc="Variables">
     private IServerSession session;
     private static final Logger logError = Logger.getLogger("errorLog");
+    private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall jdbcCall;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 //</editor-fold>
 
     public ReconciliationPaymentDAO() {
@@ -58,16 +65,17 @@ public class ReconciliationPaymentDAO {
         session = ss;
     }
 
-    public void setSession(IServerSession ss) {
+    public void setSession(IServerSession ss) throws Exception {
         session = ss;
-        this.setJdbcCall(ss);
+        this.setJdbcCall( new SingleConnectionDataSource(ss.getCNXIBMDB2().getIBMDB2Connection(), false));
     }
 
     //<editor-fold defaultstate="collapsed" desc="Stored Procedure Calls">
-    private void setJdbcCall(IServerSession ss) {
+    private void setJdbcCall(DataSource ds) {
         try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(ss.getCNXIBMDB2().getIBMDB2Connection(), false));
-            this.jdbcCall = new SimpleJdbcCall(jdbcTemplate);
+            this.jdbcTemplate = new JdbcTemplate(ds);
+            this.jdbcCall = new SimpleJdbcCall(this.jdbcTemplate);
+            this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(ds);
             System.out.println("Conexion JDBC Creada. ");
         } catch (Exception e) {
             System.out.println("Error al crear conexion JDBC: " + e.getMessage());
@@ -4106,60 +4114,6 @@ public class ReconciliationPaymentDAO {
         return msj;
     }
 
-    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
-
-        CallableStatement cstmt01 = null;
-        ResultSet rs01 = null;
-        //lstSendManual
-
-        String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04847(?,?,?,?,?,?,?,?,?,?,?)}";
-
-        Connection cnx = null;
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt01 = cnx.prepareCall(SQLCLL01);
-
-            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.PRDA.trim());
-            cstmt01.setString(3, filter.PAYDATE.trim());
-            cstmt01.setString(4, filter.SDATE.trim());
-            cstmt01.setString(5, filter.AREFNBR.trim());
-            cstmt01.setString(6, filter.TDOC.trim());
-            cstmt01.setString(7, filter.CERROR.trim());
-            cstmt01.setString(8, filter.SCOUNTRY.trim());
-            cstmt01.setString(9, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(10, Functions.getFechaActual());
-            cstmt01.setString(11, Functions.getHoraActual());
-
-            cstmt01.execute();
-
-        } catch (Exception e) {
-            msj = e.getMessage();
-        } finally {
-            if (rs01 != null) {
-                try {
-                    rs01.close();
-                } catch (SQLException e) {
-                    msj = e.getMessage();
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            if (cstmt01 != null) {
-                try {
-                    cstmt01.close();
-                } catch (SQLException e) {
-                    msj = e.getMessage();
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-
-        return msj;
-    }
-
     public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
 
         A4331Filter objRtn = new A4331Filter();
@@ -5270,5 +5224,38 @@ public class ReconciliationPaymentDAO {
             System.out.println("Error en Procedure SQP05004: " + e.getMessage());
         }
         return response;
+    }
+    
+    public SQP05048Filter loadSQP05048Filter(SQP05048Filter filter)throws Exception{
+        String sql = "INSERT INTO PRAXISMP.X3169 (CCUST, SCOUNTRY, SMERCHID, SCURRENCY, TDOC, FUENTE, CERROR, STVAL, PRDA, "
+                + "PMERCHID, PAYDATE, SCARDN, SAUTHOC, SVFOPS, SPNR, CCIA, FORMA, SERIE, SEQ, SAGENT, SDATE, "
+                + "FREGLA, AREFNBR, PROCTYPE, "
+                + "PROCTYPESQ, CORRL, FORCESCAN, STMANUAL,OBSERV) "
+                + "VALUES(:CCUST, :SCOUNTRY, :SMERCHID, :SCURRENCY, :TDOC, :FUENTE, :CERROR, :STVAL, :PRDA, "
+                + ":PMERCHID, :PAYDATE, :SCARDN, :SAUTHOC, :SVFOPS, :SPNR, :CCIA, :FORMA, :SERIE, :SEQ, :SAGENT, :SDATE, "
+                + ":FREGLA, :AREFNBR, :PROCTYPE, "
+                + ":PROCTYPESQ, :CORRL, :FORCESCAN, :STMANUAL,:OBSERV) ";
+        BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
+        for (int i = 0; i < filter.getDetail().size(); i++) {
+            insertParams[i] = new BeanPropertySqlParameterSource(filter.getDetail().get(i));
+        }
+        namedParameterJdbcTemplate.batchUpdate(sql, insertParams);
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05048");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+    
+    public SQP04847Filter loadPX606SQP04847(SQP04847Filter filter) throws Exception {
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP04847");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
     }
 }

@@ -108,8 +108,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         var rowIndex = this.p.rowIndex;
         if (this.p.rowIndex < 19) {
             rec = all.getAt(rowIndex + 1);
-            console.log("Nueva Transaccion:")
-            console.log(rec)
+            console.log("Nueva Transaccion:");
+            console.log(rec);
             this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
             if (this.p.rec === null) {
                 Ext.getCmp(prototype.id + '-dataEntryError').close();
@@ -248,76 +248,108 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
             return e;
         }
     },
-    llenarData: function (beanTemp) {
-
-        beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
-        beanTemp.PRDA = this.getValue("de-txtPRDA");
-        beanTemp.SDATE = this.getValue("de-txtSDATE");
-        beanTemp.PMERCHID = this.getValue("de-txtPMERCHID");
-        beanTemp.SMERCHID = this.beanResult.SMERCHID;
-        //beanTemp.PROCTYPE = this.getValue("de-txtPROCTYPE");
-        beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
-        beanTemp.SCARDN = this.getValue("de-txtSCARDN");
-        beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");
-        beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");
-        beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
-        beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
-        beanTemp.CERROR = this.getValue("txtCERROR");
-        beanTemp.TDOC = this.beanResult.TDOC;
-        beanTemp.ADJ_TYPE = this.getValue("cmbADJTYPE");
+    formatParameters: function () {
+        let params = {};
+        params.IN_CCUST = 139;
+        params.IN_PRDA = this.getValue("de-txtPRDA");
+        params.IN_MERCHID = this.getValue("de-txtPMERCHID");
+        params.IN_PAYDATE = this.getValue("de-txtPAYDATE");
+        params.IN_PCURRENCY = this.getValue("de-txtPCURRENCY");
+        params.IN_PROCTYPE = this.beanResult.PROCTYPE;
+        params.IN_SMERCHID = this.beanResult.SMERCHID;
+        params.IN_SDATE = this.getValue("de-txtSDATE");
+        params.IN_SCARDN = this.getValue("de-txtSCARDN");
+        params.IN_SAUTHOC = this.getValue("de-txtSAUTHOC");
+        params.IN_IDITEMS = this.getValue("de-txtIDITEMS");
+        params.IN_IDITEMT = this.getValue("de-txtIDITEMT");
+        params.IN_CERROR = this.getValue("txtCERROR");
+        params.IN_ADJ_TYPE = this.getValue("cmbADJTYPE");
+        params.IN_AREFNBR = this.beanResult.AREFNBR;
+        params.IN_TDOC = this.beanResult.TDOC;
+        params.IN_PROCTYPESQ = this.beanResult.PROCTYPESQ;
         if (this.getValue("de-txtTGROSAMPAY").trim() !== '') {
-            beanTemp.TGROSAMPAY = Number(this.getValue("de-txtTGROSAMPAY").trim().replaceAll(',', ''));
+            params.IN_TGROSAMPAY = Number(this.getValue("de-txtTGROSAMPAY").trim().replaceAll(',', ''));
         } else {
-            beanTemp.TGROSAMPAY = 0;
+            params.IN_TGROSAMPAY = 0;
         }
 
-        beanTemp.AREFNBR = this.beanResult.AREFNBR;
-        beanTemp.PROCTYPE = this.beanResult.PROCTYPE;
-        beanTemp.PROCTYPESQ = this.beanResult.PROCTYPESQ;
-
-        beanTemp.SPNR = this.getValue("de-txtSPNR").trim();
-        beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
+        params.IN_PNR = this.getValue("de-txtSPNR").trim();
+        params.IN_TKT = this.getValue("de-txtTICKET").trim();
 
         if (this.lstSendManual.length > 0) {
-            if (beanTemp.SPNR === '' && beanTemp.TICKET === '') {
-                beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
-                beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
-            } else if (beanTemp.TICKET.length > 0 && beanTemp.TICKET.substring(0, 3) === '000' && beanTemp.SPNR === '') {
-                beanTemp.SPNR = this.lstSendManual.at(0).A720PNR || '';
-                beanTemp.TICKET = this.lstSendManual.at(0).A1531TKT || '';
+            if (params.IN_PNR === '' && params.IN_TKT === '') {
+                params.IN_PNR = this.lstSendManual.at(0).A720PNR || '';
+                params.IN_TKT = this.lstSendManual.at(0).A1531TKT || '';
+            } else if (params.IN_TKT.length > 0 && params.IN_TKT.substring(0, 3) === '000' && params.IN_PNR === '') {
+                params.IN_PNR = this.lstSendManual.at(0).A720PNR || '';
+                params.IN_TKT = this.lstSendManual.at(0).A1531TKT || '';
             }
         }
-        console.log('Datos de PNR y Ticket: ', beanTemp.SPNR, '-', beanTemp.TICKET);
-        beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
-        beanTemp.OBSERV = this.getValue("de-txtOBSERV");
-        beanTemp.lstSendManual = [];
-        //console.log(this.lstSendManual);
+        console.log('Datos de PNR y Ticket: ', params.IN_PNR, '-', params.IN_TKT);
+        //beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
+        //beanTemp.OBSERV = this.getValue("de-txtOBSERV");
+        params.detail = [];
+
         for (var i = 0; i < this.lstSendManual.length; i++) {
             //console.log(this.lstSendManual[i]);
             if (this.lstSendManual[i].FDESGLOSE > 0 || this.lstSendManual[i].FDUPLIB > 0) {
                 continue
             } else {
-                beanTemp.lstSendManual.push(this.lstSendManual[i]);
+                let obj = this.lstSendManual[i];
+                //console.log(obj.A1531TKT,obj);
+                this.addDetailFromGrids(obj, params, params.detail, 'Sales');
             }
         }
 
-        var gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
-        for (var i = 0; i < gridDataAdjustment.data.length; i++) {
-            this.lstAdjustment[i].CERROR = gridDataAdjustment.data.items[i].data.CERROR;
-            this.lstAdjustment[i].A1531NREF = gridDataAdjustment.data.items[i].data.A1531NREF;
-            this.lstAdjustment[i].A1531CAPL = gridDataAdjustment.data.items[i].data.A1531CAPL;
-            this.lstAdjustment[i].A1531VFOP = gridDataAdjustment.data.items[i].data.A1531VFOP;
-            this.lstAdjustment[i].A720PNR = gridDataAdjustment.data.items[i].data.A720PNR;
-            this.lstAdjustment[i].A1531TKT = gridDataAdjustment.data.items[i].data.A1531TKT;
-            this.lstAdjustment[i].A720FECVTA = gridDataAdjustment.data.items[i].data.A720FECVTA;
-            this.lstAdjustment[i].A720SEQ = gridDataAdjustment.data.items[i].data.A720SEQ;
-            this.lstAdjustment[i].A720GRUPO = gridDataAdjustment.data.items[i].data.A720GRUPO;
-            this.lstAdjustment[i].STMANUAL = 'Adjustment';
-            beanTemp.lstSendManual.push(gridDataAdjustment.data.items[i].data);
-        }
-        //beanTemp.forceblocked = Ext.getCmp(prototype.id + '-chkForceBlock').getValue();
-        console.log(beanTemp);
-
+        let gridDataAdjustment = Ext.getCmp(prototype.id + '-gridDataAdjustment').getStore();
+        //console.log(gridDataAdjustment.data);
+        gridDataAdjustment.data.items.forEach(x => {
+            let obj = x.data;
+            //console.log(obj);
+            this.addDetailFromGrids(obj, params, params.detail, 'Adjustment');
+        });
+        params.IN_QTYTKT = params.detail.length;
+        console.log(params);
+        return params;
+    },
+    addDetailFromGrids: function (obj, objMain, detail, type) {
+        const me = this;
+        //CCUST, SCOUNTRY, SMERCHID, SCURRENCY, TDOC, FUENTE, CERROR, STVAL, PRDA, PMERCHID, PAYDATE, 
+        //SCARDN, SAUTHOC, SVFOPS, SPNR, CCIA, FORMA, SERIE, SEQ, FCONT, IDCON, SAGENT, 
+        //SDATE, SFEEAMOU, DISCRATE, DISCAMOUN, DISCAMOUNC, DISCAMOUNI, ACCEAMOU, IVACOM12, FREGLA, 
+        //FADM, AREFNBR, PROCTYPE, PROCTYPESQ, CORRL, FORCESCAN, STMANUAL, OBSERV, USCR, FECR, HOCR, PGMCR
+        let det = {
+            CCUST: 139,
+            SCOUNTRY: me.getValue('de-txtCountry'),
+            SMERCHID: objMain.IN_SMERCHID,
+            SCURRENCY: obj.A1531MFOP,
+            TDOC: obj.TDOC,
+            FUENTE: obj.A720ORIG,
+            CERROR: obj.CERROR,
+            STVAL: '5',
+            PRDA: objMain.IN_PRDA,
+            PMERCHID: objMain.IN_MERCHID,
+            PAYDATE: objMain.IN_PAYDATE,
+            SCARDN: obj.A1531NREF,
+            SAUTHOC: obj.A1531CAPL,
+            SVFOPS: obj.A1531VFOP,
+            SPNR: obj.A720PNR || obj.SPNR,
+            CCIA: obj.A1531TKT.substring(0, 3),
+            FORMA: obj.A1531TKT.substring(3, 7),
+            SERIE: obj.A1531TKT.substring(obj.A1531TKT.length - 6),
+            SEQ: obj.A720SEQ,
+            SAGENT: obj.A720AGENTE,
+            SDATE: obj.A720FECVTA,
+            FREGLA: '4',
+            AREFNBR: objMain.IN_AREFNBR,
+            PROCTYPE: objMain.IN_PROCTYPE,
+            PROCTYPESQ: objMain.IN_PROCTYPESQ,
+            CORRL: '',
+            FORCESCAN: obj.forcescan ? '1' : '0',
+            STMANUAL: type,
+            OBSERV: me.getValue("de-txtOBSERV")
+        };
+        detail.push(det);
     },
     getData: function () {
 
@@ -507,6 +539,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         return '';
     },
     onUpdateClick: function (btn) {
+        const me = this;
         if (this.flag_bporev === true) {
             this.transactionInStandBy(btn);
         } else {
@@ -519,10 +552,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 var txtMsjMontos = this.validacionMontos();
                 //var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
                 if (txtMsjDesglose + txtMsjMontos === '') {
-                    var beanTemp = {};
-                    this.llenarData(beanTemp);
-                    beanTemp.option = 'U';
                     //this.ValidateTicketPNR(beanTemp, btn);
+                    let bean = this.formatParameters();
                     Ext.Msg.show(
                             {
                                 title: '.:PRAXIS:.',
@@ -534,7 +565,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                                 modal: true,
                                 fn: function (btn) {
                                     if (btn === 'yes') {
-                                        meDE.MaintenanceA4331(beanTemp);
+                                        me.MaintenanceA4331(bean);
                                     }
                                 }
                             });
@@ -560,45 +591,41 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
     // </editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA4331: function (beanTemp) {
-//        console.log(beanTemp);
-        var beanString = JSON.stringify(beanTemp);
-//        console.log(beanString);
-        Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceErrorTransaction',
+    MaintenanceA4331: function (bean) {
+        //var beanString = JSON.stringify(beanTemp);
+        const me = this;
+        Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...');
+        fetch(prototype.url + '/maintenanceErrorTransactionBPO', {
             method: 'POST',
-            timeout: 60000000,
-            params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
-            success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-//                console.log(res);
-
-                if (res.success) {
-                    //global.Msg({msg: res.msjOption});
-                    Ext.getCmp(prototype.id + '-dataEntryError').unmask();
-                    //Ext.getCmp(prototype.id + '-dataEntryError').close();
-                    me.setGridDataMainErrorTransaction();
-                    //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                    meDE.lstSendManual = [];
-                    meDE.lstBlocked = [];
-                    meDE.lstAdjustment = [];
-                    meDE.flag_bporev = false;
-
-                    Ext.getCmp(prototype.id + '-gridDataAdjustment').bindStore(
-                            Ext.create('Ext.data.Store', {data: meDE.lstAdjustment, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-gridDataAdjustment').hide();
-                    Ext.getCmp(prototype.id + '-cmbADJTYPE').setValue('');
-                    Ext.getCmp(prototype.id + '-panelADJ').hide();
-                    meDE.onNextClick();
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bean)
+        }).then(async res => {
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+                const {status, response} = data;
+                if (status === 1) {
+                    Ext.toast({
+                        html: `<b>${response}</b>`,
+                        title: 'Notification',
+                        align: 't',
+                        closable: true,
+                        width: 300,
+                        timeout: 10000 // 10 segundos
+                    });
                 } else {
-                    global.Msg({msg: res.msjOption});
-                    //global.Msg({msg: 'Failed to Update Transaction'});
+                    Ext.MessageBox.show({
+                        title: 'Error',
+                        message: response,
+                        icon: Ext.MessageBox.ERROR,
+                        buttons: Ext.MessageBox.OK
+                    });
                 }
-
             }
+            Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().load();
+            me.view.close();
         });
     },
     ValidateTicketPNR: function (beanTemp, btn) {
@@ -1230,7 +1257,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                 var res = Ext.JSON.decode(response.responseText);
                 var flag_blocked = false;
                 meDE.beanInfo = res.lstInfo;
-                console.log('gridTransactionErrorByTKT: ',meDE.beanInfo);
+                console.log('gridTransactionErrorByTKT: ', meDE.beanInfo);
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
@@ -1260,8 +1287,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
         });
     },
     reverseMatch_keyDownHandler: function (btn) {
-        var beanTemp = {};
-        this.llenarData(beanTemp);
+        const me = this;
+        let bean = {
+            IN_CCUST: 139,
+            IN_AREFNBR: me.beanResult.AREFNBR,
+            IN_SCARDN: me.getValue("de-txtSCARDN"),
+            IN_SAUTHOC: me.getValue("de-txtSAUTHOC"),
+            IN_USER: me.getValue("txtUSUP")
+        };
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
@@ -1273,33 +1306,40 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            meDE.ReverseA4331(beanTemp);
+                            me.ReverseA4331(bean);
                         }
                     }
                 });
     },
-    ReverseA4331: function (beanTemp) {
-        var beanString = JSON.stringify(beanTemp);
-        Ext.Ajax.request({
-            url: prototype.url + '/ReverseTransaction',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
-            success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-dataEntryError').unmask();
-                    me.setGridDataMainErrorTransaction();
-                    Ext.getCmp(prototype.id + '-dataEntryError').close();
-                } else {
-                    global.Msg({msg: res.msjOption});
-                    //global.Msg({msg: 'Failed to Update Transaction'});
-                }
-
-            }
-        });
+    ReverseA4331: function (bean) {
+        const me = this;
+        Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...');
+        fetch(`${prototype.url}/ReverseTransaction?${new URLSearchParams(bean)}`)
+                .then(async res => {
+                    if (res.ok) {
+                        const data = await res.json();
+                        const {status, response} = data;
+                        if (status === 1) {
+                            Ext.toast({
+                                html: `<b>${response}</b>`,
+                                title: 'Notification',
+                                align: 't',
+                                closable: true,
+                                width: 300,
+                                timeout: 10000 // 10 segundos
+                            });
+                        } else {
+                            Ext.MessageBox.show({
+                                title: 'Error',
+                                message: response,
+                                icon: Ext.MessageBox.ERROR,
+                                buttons: Ext.MessageBox.OK
+                            });
+                        }
+                    }
+                    Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().load();
+                    me.view.close();
+                });
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var obj = rowData.data;
