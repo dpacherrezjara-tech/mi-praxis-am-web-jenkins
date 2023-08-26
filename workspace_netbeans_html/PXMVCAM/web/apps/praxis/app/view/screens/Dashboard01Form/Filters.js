@@ -374,7 +374,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             labelAlign: 'right',
                                             queryMode: 'local',
                                             triggerAction: 'all',
-                                            hidden:true,
+                                            hidden: true,
                                             editable: false,
                                             autoSelect: false,
                                             forceSelection: true,
@@ -1250,7 +1250,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                 {
                                     xtype: 'label',
                                     text: 'Biling Airline:',
-//                                    hidden: true,
+                                    hidden: true,
                                     padding: '8px 10px 0px 5px',
                                     width: 95
                                 },
@@ -1266,6 +1266,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     autoSelect: true,
                                     editable: false,
 //                                    listConfig: {maxHeight: 111},
+                                    hidden: true,
                                     width: 200,
                                     typeAhead: true,
                                     valueField: 'code',
@@ -1277,7 +1278,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                 {
                                     xtype: 'label',
                                     text: 'Source Code:',
-//                                    hidden: true,
+                                    hidden: true,
                                     padding: '8px 10px 0px 5px',
                                     width: 95
                                 },
@@ -1293,6 +1294,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     autoSelect: true,
                                     editable: false,
 //                                    listConfig: {maxHeight: 111},
+                                    hidden: true,
                                     width: 200,
                                     typeAhead: true,
                                     valueField: 'code',
@@ -1308,6 +1310,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                             width: prototype.widthContenedor,
                             layout: 'hbox',
                             border: true,
+                            hidden: true,
                             bodyStyle: 'background-color: #E3EAF9;',
                             defaults: {
                                 anchor: '100%',

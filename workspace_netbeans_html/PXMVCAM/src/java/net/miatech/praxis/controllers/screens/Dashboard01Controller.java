@@ -3413,22 +3413,22 @@ public class Dashboard01Controller extends BaseController {
 
         System.out.println("-------------- Dashboard01 : searchTAGSPA-------------");
 
+        List<A1971Filter> lst = this.getListsearchTAGSPA1(request, false);
+        List<A1971Filter> lstData = this.getListsearchTAGSPA2(request, false);
         map.put("success", true);
-        List<A1971Filter> lst = this.getListsearchTAGSPA(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
+        map.put("data1", lst);
+        map.put("data2", lstData);
         return new Gson().toJson(map);
-
     }
 
-    public List<A1971Filter> getListsearchTAGSPA(HttpServletRequest request, Boolean bExcel) {
+    public List<A1971Filter> getListsearchTAGSPA1(HttpServletRequest request, Boolean bExcel) {
 
         List<A1971Filter> lst= new ArrayList<>(0);
         List<A1971Filter> lstData = new ArrayList<>(0);
         A1971Filter filter = new A1971Filter();
         Gson gson = new Gson();
         String beanString = "";
+        HashMap hm = null;
 
         try {
             logic = new Dashboard01Logic();
@@ -3451,14 +3451,51 @@ public class Dashboard01Controller extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-
+            
             lst = logic.loadPX241SQP01404(filter);
-            lstData = logic.loadPX241SQP01398(filter, "N");
             
         } catch (Exception e) {
             throw new SpringException(e);
         }
         return lst;
+    }
+    public List<A1971Filter> getListsearchTAGSPA2(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+        HashMap hm = null;
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            
+            lstData = logic.loadPX241SQP01398(filter, "N");    
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lstData;
     }
     
     @RequestMapping(value = "searchDetTAGSPA")
@@ -3560,6 +3597,59 @@ public class Dashboard01Controller extends BaseController {
             }
 
             lst = logic.loadPX241S02_D(filter);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchDetail_SPANot")
+    public @ResponseBody
+    String searchDetail_SPANot(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchDetail_SPANot-------------");
+
+        map.put("success", true);
+        List<A1971Filter> lst = this.getListsearchDetail_SPANot(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1971Filter> getListsearchDetail_SPANot(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1971Filter> lst= new ArrayList<>(0);
+        List<A1971Filter> lstData = new ArrayList<>(0);
+        A1971Filter filter = new A1971Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1971Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX241S02_DNot(filter);
             
         } catch (Exception e) {
             throw new SpringException(e);
