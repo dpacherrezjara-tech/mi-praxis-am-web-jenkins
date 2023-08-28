@@ -440,7 +440,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case  prototype.id + '-ScrExpired_filter':
                 this.setValue('cmbDateToMonth_EXP', this.getValue("cmbDateFromMonth_EXP"));
                 break
-            case  prototype.id + '-SpaProfitability_filter':
+            case  prototype.id + '-SpaProfitability_tab':
                 this.setValue('cmbDateToMonth_SPA', this.getValue("cmbDateFromMonth_SPA"));
                 break
         }
@@ -689,6 +689,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case prototype.id + '-SpaProfitability_tab' :
                 Ext.getCmp(prototype.id + '-panelChartSpa').show();
                 isOK = true;
+                meSPA.inicio();
                 break;    
         }
 
@@ -768,6 +769,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-boxMainDataSpaProfitability':
                 me.pagginActual = '-paggin_searchSPA';
                 break;
+            case '-boxApliedSpaProfitability':
+                me.pagginActual = '-paggin_searchDetail_SPA';
+                break;    
         }
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
