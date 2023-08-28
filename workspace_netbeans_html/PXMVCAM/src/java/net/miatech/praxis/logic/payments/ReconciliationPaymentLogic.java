@@ -16,7 +16,9 @@ import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
+import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
+import net.miatech.praxis.payment.filter.SQP05048Filter;
 
 /**
  *
@@ -26,7 +28,7 @@ public class ReconciliationPaymentLogic {
 
     private final ReconciliationPaymentDAO ReconciliationPaymentDAO = new ReconciliationPaymentDAO();
 
-    public void setSession(IServerSession ss) {
+    public void setSession(IServerSession ss) throws Exception {
         ReconciliationPaymentDAO.setSession(ss);
     }
 
@@ -129,10 +131,6 @@ public class ReconciliationPaymentLogic {
     public String loadPX606SQP04960(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04960(filter);
     }
-
-    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04847(filter);
-    }
     
     public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04848(filter);
@@ -189,5 +187,13 @@ public class ReconciliationPaymentLogic {
     
     public SQP05004Filter loadSQP05004Filter(SQP05004Filter filter){
         return ReconciliationPaymentDAO.loadSQP05004Filter(filter);
+    }
+    
+    public SQP05048Filter loadSQP05048Filter(SQP05048Filter filter)throws Exception{
+        return ReconciliationPaymentDAO.loadSQP05048Filter(filter);
+    }
+    
+    public SQP04847Filter loadPX606SQP04847(SQP04847Filter filter) throws Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04847(filter);
     }
 }

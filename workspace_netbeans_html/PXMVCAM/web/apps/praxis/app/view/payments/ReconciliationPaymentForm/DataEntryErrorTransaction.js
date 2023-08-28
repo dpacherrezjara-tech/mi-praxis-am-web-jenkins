@@ -1916,6 +1916,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
+                                    viewConfig: {
+                                        stripeRows: true,
+                                        enableTextSelection: true,
+                                        markDirty: false
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
