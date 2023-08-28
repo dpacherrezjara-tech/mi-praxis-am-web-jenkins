@@ -288,6 +288,10 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX241S02_D(filter);
     }
     
+    public List<A1971Filter> loadPX241S02_DNot(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S02_DNot(filter);
+    }
+    
     public List<A1971Filter> loadPX241SQP01253(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX241SQP01253(filter);
     }
