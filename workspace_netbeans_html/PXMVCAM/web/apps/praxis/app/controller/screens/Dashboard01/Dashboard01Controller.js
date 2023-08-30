@@ -769,9 +769,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-boxMainDataSpaProfitability':
                 me.pagginActual = '-paggin_searchSPA';
                 break;
-            case '-boxApliedSpaProfitability':
-                me.pagginActual = '-paggin_searchDetail_SPA';
-                break;    
+            case '-boxApliedSpaProfitabilityS':
+                me.pagginActual = '-paggin_searchDetail_SPAS';
+                break;
+            case '-boxApliedSpaProfitabilityN':
+                me.pagginActual = '-paggin_searchDetail_SPAN';
+                break;
         }
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
