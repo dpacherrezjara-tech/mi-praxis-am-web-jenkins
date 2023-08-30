@@ -757,7 +757,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
         },
         {
             xtype: 'panel',
-            id: prototype.id + '-boxApliedSpaProfitability',
+            id: prototype.id + '-boxApliedSpaProfitabilityS',
             width: '100%',
             hidden: true,
             layout: {
@@ -774,7 +774,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
             items: [
                 {
                     xtype: 'grid',
-                    id: prototype.id + '-gridDataApliedSpaProfitability',
+                    id: prototype.id + '-gridDataApliedSpaProfitabilityS',
                     width: 852,
                     height: 'auto',
                     columnLines: true,
@@ -845,7 +845,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                     return  value;
                                 },
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                    var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitability').getStore().getData().items[0].data;
+                                    var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityS').getStore().getData().items[0].data;
                                     metaData.style = 'text-align:right; margin-right:3px ';
                                     return '<b>' + Ext.util.Format.number(data.dbVALSPA, '0,000.00') + '<b>';
                                 }
@@ -858,7 +858,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                     return  value;
                                 },
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                    var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitability').getStore().getData().items[0].data;
+                                    var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityS').getStore().getData().items[0].data;
                                     metaData.style = 'text-align:right; margin-right:3px ';
                                     return '<b>' + Ext.util.Format.number(data.dbVALSRP, '0,000.00') + '<b>';
                                 }
@@ -882,7 +882,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                             return  value;
                                         },
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitability').getStore().getData().items[0].data;
+                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityS').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.dbNETI, '0,000.00') + '<b>';
                                         }
@@ -908,7 +908,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                             return  value;
                                         },
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitability').getStore().getData().items[0].data;
+                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityS').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.lnQAUDI, '0,000.00') + '<b>';
                                         }
@@ -934,7 +934,198 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability', {
                                             return  value;
                                         },
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitability').getStore().getData().items[0].data;
+                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityS').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.dbNETO, '0,000.00') + '<b>';
+                                        }
+                                    },
+                                ]
+                            },
+                        ]
+                    }
+                },
+            ]
+        },
+        {
+            xtype: 'panel',
+            id: prototype.id + '-boxApliedSpaProfitabilityN',
+            width: '100%',
+            hidden: true,
+            layout: {
+                type: 'vbox',
+                align: 'center',
+                pack: 'center'
+            },
+            defaults: {
+                bodyStyle: 'background: transparent;',
+                border: false,
+                align: 'center',
+                margin: "0 15 0 0"  // (top, right, bottom, left)
+            },
+            items: [
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-gridDataApliedSpaProfitabilityN',
+                    width: 852,
+                    height: 'auto',
+                    columnLines: true,
+                    hidden: false,
+                    margin: "5 0 0 0",
+                    features: [{
+                            ftype: 'summary',
+                            dock: 'bottom'
+                        }],
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        items: [
+                            {
+                                text: 'Int.Seq',
+                                //                                                id: prototype.id + '-adgTitFecha',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Number', dataIndex: 'NROPRT', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center";
+                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;">' + value + '</a>';
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'Ticket', dataIndex: 'IN_TKT', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center";
+                                    return  value;
+                                },
+                            },
+                            {
+                                text: 'Sector', dataIndex: 'strFDWORK', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center";
+                                    return  value;
+                                },
+                            },
+                            {
+                                text: 'RM', dataIndex: 'strASIGNED', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center";
+                                    return  value;
+                                },
+                            },
+                            {
+                                text: 'Currency', dataIndex: 'CURRENP', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center";
+                                    return  value;
+                                },
+                            },
+                            {
+                                text: 'SPA', dataIndex: 'VALSPA', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return  value;
+                                },
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityN').getStore().getData().items[0].data;
+                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                    return '<b>' + Ext.util.Format.number(data.dbVALSPA, '0,000.00') + '<b>';
+                                }
+                            },
+                            {
+                                text: 'SRP', dataIndex: 'VALSRP', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return  value;
+                                },
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityN').getStore().getData().items[0].data;
+                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                    return '<b>' + Ext.util.Format.number(data.dbVALSRP, '0,000.00') + '<b>';
+                                }
+                            },
+                            {
+                                text: 'Invoice',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Net', dataIndex: 'NETI', width: 80,
+                                        listeners: {
+                                            change: 'onAirlineCode'
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityN').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.dbNETI, '0,000.00') + '<b>';
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                text: 'Accept',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Net', dataIndex: 'NETM', width: 80,
+                                        listeners: {
+                                            change: 'onAirlineCode'
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityN').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.lnQAUDI, '0,000.00') + '<b>';
+                                        }
+                                    },
+                                ]
+                            },
+                            {
+                                text: 'Total',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Net', dataIndex: 'NETO', width: 80,
+                                        listeners: {
+                                            change: 'onAirlineCode'
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridDataApliedSpaProfitabilityN').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.dbNETO, '0,000.00') + '<b>';
                                         }

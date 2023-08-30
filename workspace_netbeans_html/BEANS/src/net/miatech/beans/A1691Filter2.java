@@ -63,6 +63,7 @@ public class A1691Filter2 {
     public int totQCPNFI = 0;
     public int totQCPNFRE = 0;
     public int totQCPHARB_ESP = 0;
+    public int totQTYTOTPS = 0;
     
     public long lngQDIFF = 0;
     public double totDiff = 0;
@@ -73,6 +74,7 @@ public class A1691Filter2 {
     public String FSENDSS = "";
     public String LEGSEQ = "";
     public String DFLIGHT = "";
+    public int QTYTOTPS = 0;
     public String FOPERZUL = "";
     public String FSENDOD = "";
     public String FSENDVC = "";
