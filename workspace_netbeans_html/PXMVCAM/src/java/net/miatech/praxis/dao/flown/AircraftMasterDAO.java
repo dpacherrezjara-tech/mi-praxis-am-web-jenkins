@@ -285,12 +285,12 @@ public class AircraftMasterDAO {
         String msj = "An Error ocurred";
         CallableStatement cstmt = null;
         Connection cnx = null;
-        
+
         String SQL_DELETE = "DELETE FROM PRAXIS.A1702";
         cnx = session.getCNXIBMDB2().getIBMDB2Connection();
         cstmt = cnx.prepareCall(SQL_DELETE);
         cstmt.execute();
-        
+
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04933(?,?,?,?,?,?,?,?,?,"
                 + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try {
@@ -303,7 +303,7 @@ public class AircraftMasterDAO {
                 try {
                     cnx = session.getCNXIBMDB2().getIBMDB2Connection();
                     cstmt = cnx.prepareCall(SQLCLL01);
-                    System.out.println("Registro " + i + " : " + item.EQUIPO.trim() + item.MODELO.trim() + item.NUMERO.trim()+ item.MATRIC.trim());
+                    System.out.println("Registro " + i + " : " + item.EQUIPO.trim() + item.MODELO.trim() + item.NUMERO.trim() + item.MATRIC.trim());
                     cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
                     cstmt.setString(2, item.EQUIPO.trim());
                     cstmt.setString(3, item.MODELO.trim());

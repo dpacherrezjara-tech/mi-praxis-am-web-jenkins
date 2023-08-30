@@ -180,6 +180,7 @@ Ext.define('Ext.Praxis.controller.flown.AircraftMaster.AircraftMasterController'
                 if (res.success) {
                     var msjResult = res.msj;
                     global.Msg({msg: msjResult});
+                    this.onSearchClick();
                 } else {
                     global.Msg({msg: "Error Excel Load"});
                 }
