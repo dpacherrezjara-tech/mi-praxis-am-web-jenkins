@@ -20,6 +20,7 @@ public class A3729 {
     public String CUPON = "";
     
     public String NPAX = "";
+    public int QTYTOTPS = 0;
     public String FNAME = "";
     public String LNAME = "";
     public String SEQ = "";

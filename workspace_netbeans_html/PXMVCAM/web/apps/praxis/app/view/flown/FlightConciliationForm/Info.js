@@ -426,7 +426,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetail',
-                                    width: 1650,
+                                    width: 1770,
                                     height: 580,
                                     columnLines: true,
                                     features: [{
@@ -638,7 +638,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDVC', width: 90, sortable: true
+                                                                text: 'Date', dataIndex: 'strFormatFSENDVC', width: 80, sortable: true
                                                             }
                                                         ]
                                                     },
@@ -707,7 +707,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Total', dataIndex: 'QCPNTOT', width: 60, sortable: true,
+                                                text: 'Total', dataIndex: 'QCPNTOT', width: 50, sortable: true,
                                                 listeners: {
                                                     click: 'onViewDetTicketClick'
                                                 },
@@ -723,7 +723,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Coupons',
+                                                text: 'Cpns',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -762,7 +762,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 90,
+                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 75,
                                                                 listeners: {
                                                                     click: 'onViewFileClick',
                                                                 },
@@ -785,7 +785,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Flight Manifest',
+                                                text: 'Flight Manifest Coupons',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -801,7 +801,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 100, sortable: true,
+                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 80, sortable: true,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background:#ccfaff;";
                                                                     return value;
@@ -810,7 +810,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Qty', dataIndex: 'QCPNFI', width: 50, sortable: true,
+                                                        text: 'Qty<br>Detail', dataIndex: 'QCPNFI', width: 50, sortable: true,
                                                         listeners: {
                                                             click: 'onViewDetailFlightManifest'
                                                         },
@@ -826,7 +826,20 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Qty NR', dataIndex: 'QCPNFRE', width: 60, sortable: true,
+                                                        text: 'Qty<br>Total', dataIndex: 'QTYTOTPS', width: 50, sortable: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:#ccfaff;";
+//                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.totQTYTOTPS, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Qty NR', dataIndex: 'QCPNFRE', width: 55, sortable: true,
 //                                                        listeners: {
 //                                                            click: 'onViewDetailFlightManifest'
 //                                                        },
@@ -853,17 +866,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPHARB_ESP, '0,000');
                                                         }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Coupons',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
+                                                    },
                                                     {text: 'Diff', dataIndex: 'lngQDIFF', width: 50, sortable: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
@@ -1181,7 +1184,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            width: 1369,
+                                            width: 1439,
                                             id: prototype.id + '-setTitulo',
                                             height: '100%',
                                             layout: {
@@ -1194,11 +1197,20 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             items: [
                                                 {
-                                                    html: '<b> Quantity:</b>',
+                                                    html: '<b> Qty Detail:</b>',
+                                                    width: 70
+                                                },
+                                                {
+                                                    id: prototype.id + '-txtQtyD',
+                                                    text: '0',
+                                                    width: 40
+                                                },
+                                                {
+                                                    html: '<b> Qty Total:</b>',
                                                     width: 60
                                                 },
                                                 {
-                                                    id: prototype.id + '-txtQty',
+                                                    id: prototype.id + '-txtQtyT',
                                                     text: '0',
                                                     width: 40
                                                 },

@@ -902,9 +902,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 //                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +
 //                         '</center>'
 //                                );
+//                        Ext.getCmp(prototype.id + '-txtQtyT').setText(obj.data.QTYTOTPS);
+                        Ext.getCmp(prototype.id + '-txtQtyT').setText(beanTemp.QTYTOTPS);
+                        console.log(obj.data.QTYTOTPS);
+                        console.log(beanTemp.QTYTOTPS);
                         Ext.getCmp(prototype.id + '-FlightDate').setText(beanTemp.strFormatDate);
                         Ext.getCmp(prototype.id + '-FlightNumber').setText(beanTemp.NFLIGHT);
-                        Ext.getCmp(prototype.id + '-txtQty').setText(obj.data.length);
+                        Ext.getCmp(prototype.id + '-txtQtyD').setText(obj.data.length);
 //                          this.g_nflight = beanTemp.NFLIGHT;
                     } else {
                         global.Msg({msg: 'Data not found'});

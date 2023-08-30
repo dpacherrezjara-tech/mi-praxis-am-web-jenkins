@@ -342,7 +342,7 @@ public class FlightConciliationDAO {
         A1691Filter2 beanCons;
         String strDesc = "";
         long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0, QCPNLEG = 0, QCPNVAL = 0, DIFFODSVCR = 0;
-        int QCPNFI = 0, QCPNFRE = 0, QCPHARB = 0;
+        int QCPNFI = 0, QCPNFRE = 0, QCPHARB = 0, QTYTOTPS = 0;
         if (strTipo.equals("QPRO")) {
             strDesc = " Detail of Quantity Pending";
         } else if (strTipo.equals("QCLO")) {
@@ -415,6 +415,7 @@ public class FlightConciliationDAO {
                 QCPNFI = rst.getInt("QCPNFI");
                 QCPNFRE = rst.getInt("QCPNFRE");
                 QCPHARB = rst.getInt("QCPHARB");
+                QTYTOTPS = rst.getInt("QTYTOTPS");
 
                 QCPAD = rst.getLong("QCPAD");
                 QCPCHD = rst.getLong("QCPCHD");
@@ -491,6 +492,7 @@ public class FlightConciliationDAO {
                     beanCons.FSENDVC = rst.getString("FSENDVC").trim();
                     beanCons.strFormatFSENDVC = Functions.getMonthConvert(rst.getString("FSENDVC").trim());
 
+                    beanCons.QTYTOTPS = rst.getInt("QTYTOTPS");
                     beanCons.FOPERZUL = rst.getString("FOPERZUL");
                     beanCons.strFormatDate2 = Functions.getMonthConvert(beanCons.FOPERZUL);
                     beanCons.FMULTI = rst.getString("FMULTI").trim();
@@ -528,6 +530,7 @@ public class FlightConciliationDAO {
                     beanCons.totQCPNFI = QCPNFI;
                     beanCons.totQCPNFRE = QCPNFRE;
                     beanCons.totQCPHARB_ESP = QCPHARB;
+                    beanCons.totQTYTOTPS = QTYTOTPS;
                     beanCons.totQCPNVAL = QCPNVAL;
                     beanCons.totQCPNVAL = QCPNVAL;
                     beanCons.totDIFFODSVCR = DIFFODSVCR;
@@ -819,6 +822,7 @@ public class FlightConciliationDAO {
                 beanCons.strTicket = rst.getString("TICKET").trim();
 //                beanCons.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
 //                beanCons.NPAX = rst.getString("NPAX").trim();
+                beanCons.QTYTOTPS = rst.getInt("QTYTOTPS");
                 beanCons.FNAME = rst.getString("FNAME").trim();
                 beanCons.LNAME = rst.getString("LNAME").trim();
                 beanCons.SEQ = rst.getString("SEQ").trim();
