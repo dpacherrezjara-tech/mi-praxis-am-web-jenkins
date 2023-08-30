@@ -287,7 +287,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin_searchDetail_SPA',
+                            id: prototype.id + '-paggin_searchDetail_SPAS',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchDetail_SPAN',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
