@@ -680,14 +680,15 @@ public class OwnerlessCouponDAO {
     public String loadPX235SQP00257ENTRY(A1413Filter filter, String strOption) throws SQLException, Exception {
 
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1691.
-        String strMsj = "Operation was successful.";
+        String strMsj = "Error.";
 
         CallableStatement cstmt = null;
 
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00257ENTRY(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00257ENTRY(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(29, Types.VARCHAR);
 
             cstmt.setString(1, strOption.trim());
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -718,9 +719,11 @@ public class OwnerlessCouponDAO {
             cstmt.setString(26, session.getUserView().getUserInfo().USR);
             cstmt.setString(27, Functions.getFechaActual());
             cstmt.setString(28, Functions.getHoraActual());
+            cstmt.setString(29, "");
 
             cstmt.execute();
 
+            strMsj = cstmt.getString(29);
         } catch (Exception e) {
             strMsj = e.getMessage();
         } finally {
