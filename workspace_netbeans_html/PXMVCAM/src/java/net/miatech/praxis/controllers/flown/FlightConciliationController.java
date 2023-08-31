@@ -1537,6 +1537,7 @@ public class FlightConciliationController extends BaseController {
             Cell cell57, cell58, cell59, cell60, cell61, cell62, cell63;
             Cell cell64, cell65, cell66, cell67, cell68, cell69, cell70;
             Cell cell71, cell72, cell73, cell74, cell75, cell76, cell77;
+            Cell cell78;
 
             // <editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
@@ -1569,6 +1570,7 @@ public class FlightConciliationController extends BaseController {
             cell75 = row.createCell(25);
             cell76 = row.createCell(26);
             cell77 = row.createCell(27);
+            cell78 = row.createCell(28);
 
             cell50.setCellValue("SSIM Data");
             cell57.setCellValue("Information PAX ODS");
@@ -1581,8 +1583,7 @@ public class FlightConciliationController extends BaseController {
             cell68.setCellValue("Total");
             cell69.setCellValue("Coupons");
             cell70.setCellValue("Flight Manifest");
-            cell74.setCellValue("Coupons");
-            cell77.setCellValue("Tickets");
+            cell78.setCellValue("Tickets");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 10));
@@ -1593,9 +1594,8 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 23));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 26));
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 27, 27));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 27));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 28, 28));
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1625,6 +1625,7 @@ public class FlightConciliationController extends BaseController {
             cell75.setCellStyle(headerStyle);
             cell76.setCellStyle(headerStyle);
             cell77.setCellStyle(headerStyle);
+            cell78.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1659,6 +1660,7 @@ public class FlightConciliationController extends BaseController {
             cell75 = row.createCell(25);
             cell76 = row.createCell(26);
             cell77 = row.createCell(27);
+            cell78 = row.createCell(28);
 
             cell50.setCellValue("Flight");
             cell52.setCellValue("Carrier");
@@ -1678,12 +1680,13 @@ public class FlightConciliationController extends BaseController {
             cell67.setCellValue("Qty");
             cell69.setCellValue("Valued");
             cell70.setCellValue("Received");
-            cell71.setCellValue("Qty");
-            cell72.setCellValue("Qty NR");
-            cell73.setCellValue("Qty Insp");
-            cell74.setCellValue("Diff");
-            cell75.setCellValue("Obs. BPO");
-            cell76.setCellValue("Obs. SABRE");
+            cell71.setCellValue("Qty Detail");
+            cell72.setCellValue("Qty Total");
+            cell73.setCellValue("Qty NR");
+            cell74.setCellValue("Qty Insp");
+            cell75.setCellValue("Diff");
+            cell76.setCellValue("Obs. BPO");
+            cell77.setCellValue("Obs. SABRE");
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 1));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
@@ -1709,6 +1712,7 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 24, 24));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 25, 25));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 26, 26));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 27, 27));
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1738,6 +1742,7 @@ public class FlightConciliationController extends BaseController {
             cell75.setCellStyle(headerStyle);
             cell76.setCellStyle(headerStyle);
             cell77.setCellStyle(headerStyle);
+            cell78.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1772,6 +1777,7 @@ public class FlightConciliationController extends BaseController {
             cell75 = row.createCell(25);
             cell76 = row.createCell(26);
             cell77 = row.createCell(27);
+            cell78 = row.createCell(28);
 
             cell50.setCellValue("Date");
             cell51.setCellValue("Number");
@@ -1815,6 +1821,7 @@ public class FlightConciliationController extends BaseController {
             cell75.setCellStyle(headerStyle);
             cell76.setCellStyle(headerStyle);
             cell77.setCellStyle(headerStyle);
+            cell78.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1850,6 +1857,7 @@ public class FlightConciliationController extends BaseController {
                 cell75 = row.createCell(25);
                 cell76 = row.createCell(26);
                 cell77 = row.createCell(27);
+                cell78 = row.createCell(28);
 
                 cell50.setCellValue(listaData.get(vi).strFormatDate);
                 cell51.setCellValue(listaData.get(vi).NFLIGHT);
@@ -1874,12 +1882,13 @@ public class FlightConciliationController extends BaseController {
                 cell69.setCellValue(listaData.get(vi).QCPNVAL);
                 cell70.setCellValue(listaData.get(vi).strFormatDate3);
                 cell71.setCellValue(listaData.get(vi).QCPNFI);
-                cell72.setCellValue(listaData.get(vi).QCPNFRE);
-                cell73.setCellValue(listaData.get(vi).QCPHARB_ESP);
-                cell74.setCellValue(listaData.get(vi).lngQDIFF);
-                cell75.setCellValue(listaData.get(vi).DESCRIP);
-                cell76.setCellValue(listaData.get(vi).DESCRIP2);
-                cell77.setCellValue(listaData.get(vi).TKTS);
+                cell72.setCellValue(listaData.get(vi).QTYTOTPS);
+                cell73.setCellValue(listaData.get(vi).QCPNFRE);
+                cell74.setCellValue(listaData.get(vi).QCPHARB_ESP);
+                cell75.setCellValue(listaData.get(vi).lngQDIFF);
+                cell76.setCellValue(listaData.get(vi).DESCRIP);
+                cell77.setCellValue(listaData.get(vi).DESCRIP2);
+                cell78.setCellValue(listaData.get(vi).TKTS);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -1909,6 +1918,7 @@ public class FlightConciliationController extends BaseController {
                 cell75.setCellStyle(bodyStyle);
                 cell76.setCellStyle(bodyStyle);
                 cell77.setCellStyle(bodyStyle);
+                cell78.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -1943,6 +1953,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(25, true);
             sheet.autoSizeColumn(26, true);
             sheet.autoSizeColumn(27, true);
+            sheet.autoSizeColumn(28, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
@@ -3856,11 +3867,11 @@ public class FlightConciliationController extends BaseController {
                         obj.NFLIGHT  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString().trim();
                         obj.CDEPART = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString().trim();
                         obj.CARRIVA = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString().trim();
-                        obj.strDescripcion = sheet.getCell(25)== null ? "" : sheet.getCell(25).toString().trim();
+                        obj.strDescripcion = sheet.getCell(26)== null ? "" : sheet.getCell(25).toString().trim();
                         if(obj.strDescripcion.length()>100){
                             obj.strDescripcion = obj.strDescripcion.substring(0,100);
                         }
-                        obj.strDescripcion2 = sheet.getCell(26)== null ? "" : sheet.getCell(26).toString().trim();
+                        obj.strDescripcion2 = sheet.getCell(27)== null ? "" : sheet.getCell(26).toString().trim();
                         if(obj.strDescripcion2.length()>100){
                             obj.strDescripcion2 = obj.strDescripcion2.substring(0,100);
                         }
