@@ -59,7 +59,11 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                         width: 50,
                                         locked: true
                                     },
-                                    {text: 'Country', dataIndex: 'COUNTRY', width: 120, align: 'left', locked: true},
+                                    {text: 'Country', dataIndex: 'COUNTRY', width: 120, align: 'left', locked: true,
+                                        summaryType: function () {                                            
+                                            return  'Total HOT`s';
+                                        }
+                                    },
                                     {text: 'Code', dataIndex: 'COUNTRY_CODE', align: 'center', width: 50, locked: true},
                                     {text: 'Curr.', dataIndex: 'CURR', width: 50, align: 'center', locked: true},
                                     // <editor-fold defaultstate="collapsed" desc="dia1">  
@@ -80,7 +84,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL1') !== 'R' && record.get('FLG1') !=='Y' )
+                                                        if (record.get('STATUS1') !== '' && record.get('LABEL1') !== 'R' && record.get('FLG1') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
@@ -169,7 +173,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL2') !== 'R' && record.get('FLG2') !=='Y' )
+                                                        if (record.get('STATUS2') !== '' && record.get('LABEL2') !== 'R' && record.get('FLG2') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
@@ -256,7 +260,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL3') !== 'R' && record.get('FLG3') !=='Y')
+                                                        if (record.get('STATUS3') !== '' && record.get('LABEL3') !== 'R' && record.get('FLG3') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
@@ -343,7 +347,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL4') !== 'R' && record.get('FLG4') !=='Y')
+                                                        if (record.get('STATUS4') !== '' && record.get('LABEL4') !== 'R' && record.get('FLG4') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
@@ -430,7 +434,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL5') !== 'R' && record.get('FLG5') !=='Y')
+                                                        if (record.get('STATUS5') !== '' && record.get('LABEL5') !== 'R' && record.get('FLG5') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
@@ -517,7 +521,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL6') !== 'R' && record.get('FLG6') !=='Y')
+                                                        if (record.get('STATUS6') !== '' && record.get('LABEL6') !== 'R' && record.get('FLG6') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
@@ -604,7 +608,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                     var i = 0, total = 0, record;
                                                     for (; i < records.length; ++i) {
                                                         record = records[i];
-                                                        if (record.get('LABEL7') !== 'R' && record.get('FLG7') !=='Y')
+                                                        if (record.get('STATUS7') !== '' && record.get('LABEL7') !== 'R' && record.get('FLG7') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0000,00');
