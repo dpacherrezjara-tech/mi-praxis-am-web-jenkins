@@ -47,7 +47,7 @@ public class LoadControlReportDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXIS.SQP05015(?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP05015(?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -58,6 +58,9 @@ public class LoadControlReportDAO {
 //            cstmt01.registerOutParameter(11, Types.INTEGER);
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_FPROC1);
+            cstmt01.setString(3, filter.VP_FUEN);
+            cstmt01.setString(4, filter.VP_PAIS);
+            
 //            cstmt01.setInt(8, filter.page.PAGNUM);
 //            cstmt01.setInt(9, filter.page.PAGROW);
 //            cstmt01.setInt(10, filter.page.TOTPAG);
@@ -75,8 +78,9 @@ public class LoadControlReportDAO {
                 objRtn.COUNTRY = rs01.getString("COUNTRY");
                 objRtn.COUNTRY_CODE = rs01.getString("COUNTRY_CODE");
                 objRtn.CURR = rs01.getString("CURR");
-
+                
                 objRtn.PRDA1 = rs01.getString("PRDA1");
+                objRtn.PRDA1_ = rs01.getString("PRDA1_");
                 objRtn.STATUS1 = rs01.getString("STATUS1");
                 objRtn.ISSUDT1 = rs01.getString("ISSUDT1");
                 objRtn.SALE1 = rs01.getInt("SALE1");
@@ -85,8 +89,10 @@ public class LoadControlReportDAO {
                 objRtn.MEMO1 = rs01.getInt("MEMO1");
                 objRtn.VOID1 = rs01.getInt("VOID1");
                 objRtn.LABEL1 = rs01.getString("LABEL1");
+                objRtn.FLG1 = rs01.getString("FLG1");
 
                 objRtn.PRDA2 = rs01.getString("PRDA2");
+                objRtn.PRDA2_ = rs01.getString("PRDA2_");
                 objRtn.STATUS2 = rs01.getString("STATUS2");
                 objRtn.ISSUDT2 = rs01.getString("ISSUDT2");
                 objRtn.SALE2 = rs01.getInt("SALE2");
@@ -95,8 +101,10 @@ public class LoadControlReportDAO {
                 objRtn.MEMO2 = rs01.getInt("MEMO2");
                 objRtn.VOID2 = rs01.getInt("VOID2");
                 objRtn.LABEL2 = rs01.getString("LABEL2");
+                objRtn.FLG2 = rs01.getString("FLG2");
 
                 objRtn.PRDA3 = rs01.getString("PRDA3");
+                objRtn.PRDA3_ = rs01.getString("PRDA3_");
                 objRtn.STATUS3 = rs01.getString("STATUS3");
                 objRtn.ISSUDT3 = rs01.getString("ISSUDT3");
                 objRtn.SALE3 = rs01.getInt("SALE3");
@@ -105,8 +113,10 @@ public class LoadControlReportDAO {
                 objRtn.MEMO3 = rs01.getInt("MEMO3");
                 objRtn.VOID3 = rs01.getInt("VOID3");
                 objRtn.LABEL3 = rs01.getString("LABEL3");
+                objRtn.FLG3 = rs01.getString("FLG3");
 
                 objRtn.PRDA4 = rs01.getString("PRDA4");
+                objRtn.PRDA4_ = rs01.getString("PRDA4_");
                 objRtn.STATUS4 = rs01.getString("STATUS4");
                 objRtn.ISSUDT4 = rs01.getString("ISSUDT4");
                 objRtn.SALE4 = rs01.getInt("SALE4");
@@ -115,8 +125,10 @@ public class LoadControlReportDAO {
                 objRtn.MEMO4 = rs01.getInt("MEMO4");
                 objRtn.VOID4 = rs01.getInt("VOID4");
                 objRtn.LABEL4 = rs01.getString("LABEL4");
+                objRtn.FLG4 = rs01.getString("FLG4");
 
                 objRtn.PRDA5 = rs01.getString("PRDA5");
+                objRtn.PRDA5_ = rs01.getString("PRDA5_");
                 objRtn.STATUS5 = rs01.getString("STATUS5");
                 objRtn.ISSUDT5 = rs01.getString("ISSUDT5");
                 objRtn.SALE5 = rs01.getInt("SALE5");
@@ -125,8 +137,10 @@ public class LoadControlReportDAO {
                 objRtn.MEMO5 = rs01.getInt("MEMO5");
                 objRtn.VOID5 = rs01.getInt("VOID5");
                 objRtn.LABEL5 = rs01.getString("LABEL5");
+                objRtn.FLG5 = rs01.getString("FLG5");
 
                 objRtn.PRDA6 = rs01.getString("PRDA6");
+                objRtn.PRDA6_ = rs01.getString("PRDA6_");
                 objRtn.STATUS6 = rs01.getString("STATUS6");
                 objRtn.ISSUDT6 = rs01.getString("ISSUDT6");
                 objRtn.SALE6 = rs01.getInt("SALE6");
@@ -135,8 +149,10 @@ public class LoadControlReportDAO {
                 objRtn.MEMO6 = rs01.getInt("MEMO6");
                 objRtn.VOID6 = rs01.getInt("VOID6");
                 objRtn.LABEL6 = rs01.getString("LABEL6");
+                objRtn.FLG6 = rs01.getString("FLG6");
 
                 objRtn.PRDA7 = rs01.getString("PRDA7");
+                objRtn.PRDA7_ = rs01.getString("PRDA7_");
                 objRtn.STATUS7 = rs01.getString("STATUS7");
                 objRtn.ISSUDT7 = rs01.getString("ISSUDT7");
                 objRtn.SALE7 = rs01.getInt("SALE7");
@@ -145,7 +161,8 @@ public class LoadControlReportDAO {
                 objRtn.MEMO7 = rs01.getInt("MEMO7");
                 objRtn.VOID7 = rs01.getInt("VOID7");
                 objRtn.LABEL7 = rs01.getString("LABEL7");
-
+                objRtn.FLG7 = rs01.getString("FLG7");
+                
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
 //                objRtn.page.TOTPAG = filter.page.TOTPAG;

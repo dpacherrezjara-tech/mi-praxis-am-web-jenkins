@@ -38,8 +38,9 @@ public class LoadControlReportController extends BaseController {
 //        filter.page.LIMIT = 0;
         try {
             filter.VP_FPROC1 = request.getParameter("VP_FPROC1");           
-//            filter.VP_TIPO = request.getParameter("VP_TIPO");           
-//            filter.VP_Ticket = request.getParameter("VP_Ticket"); 
+            filter.VP_FUEN = request.getParameter("VP_FUEN");           
+            filter.VP_PAIS = request.getParameter("VP_PAIS"); 
+            
 //            filter.VP_Fecha1 = request.getParameter("VP_Fecha1");
 //            filter.VP_Fecha2 = request.getParameter("VP_Fecha2");
 //            filter.VP_StatusFormateo = request.getParameter("VP_StatusFormateo"); 
