@@ -8,7 +8,7 @@
 Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.LoadControlReportController',
-    beanXLS: {},       
+    beanXLS: {},
     me: '',
     setContext: function () {
         me = this;
@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
     btnBack_click: function () {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             global.showMenu();
-        }        
+        }
     },
     // </editor-fold>    
     onTxtFilterKeypress: function (obj, e, eOpts) {
@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
     },
     onTxtFilterTKTKeypress: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
-           // this.cmbfiltroSTS_clickHandler();
+            // this.cmbfiltroSTS_clickHandler();
         }
     },
     Onsearch: function () {
@@ -73,11 +73,9 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
         //Ext.getCmp(prototype.id + '-boxPaginacion').show();
         var bean = {};
         bean.VP_FPROC1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha01').getValue(), 'Ymd');
-//        bean.VP_TIPO = Ext.getCmp(prototype.id + '-cmbfiltro-tipo-tkt').getValue();
-//        bean.VP_Ticket = Ext.getCmp(prototype.id + '-TICKET-NUMBER').getValue();         
-//        bean.VP_Fecha1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha01').getValue(), 'Ymd');
-//        bean.VP_Fecha2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha02').getValue(), 'Ymd');                 
-//        bean.VP_StatusFormateo = Ext.getCmp(prototype.id + '-cmbfiltro-estado').getValue();               
+        bean.VP_FUEN = Ext.getCmp(prototype.id + '-FUEN').getValue();
+        bean.VP_PAIS = Ext.getCmp(prototype.id + '-PAIS').getValue();
+
         bean.limit = "-1";
         bean.page = "-1";
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {
@@ -100,18 +98,18 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
             }
         });
         Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin').setStore(storeGridDatas);      
+        // Ext.getCmp(prototype.id + '-paggin').setStore(storeGridDatas);
     },
     btnAdd_click: function () {
         this.winDataEntry('I');
-    },  
-    onEditClick: function(grid, rowIndex, colIndex) {
+    },
+    onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('U', rec);
     },
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;        
+        rec = rec === null || rec === undefined ? {} : rec;
         Ext.create('Ext.Praxis.view.sales.LoadControlReportForm.LoadControlReportFormCrud', {
             id: prototype.id01 + '-LoadControlReportFormCrud',
             params: {
@@ -119,7 +117,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
                 rec: rec
             }
         }).show();
-    },  
+    },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function (obj, e) {
@@ -160,6 +158,18 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
         if (e.getKey() === e.ENTER) {
             this.btnSearch_click();
         }
+    },
+    onChangeExportToExcel: function (obj, newValue, oldValue, eOpts) {
+//       console.log(newValue);
+        if (newValue) {
+            Ext.getCmp(prototype.id + '-fecha01-excel').enable();
+            Ext.getCmp(prototype.id + '-fecha02-excel').enable();
+            Ext.getCmp(prototype.id + '-fecha01-excel').focus();
+        } else{
+            Ext.getCmp(prototype.id + '-fecha01-excel').disable();
+            Ext.getCmp(prototype.id + '-fecha02-excel').disable();            
+        }
+
     }
-    
+
 });

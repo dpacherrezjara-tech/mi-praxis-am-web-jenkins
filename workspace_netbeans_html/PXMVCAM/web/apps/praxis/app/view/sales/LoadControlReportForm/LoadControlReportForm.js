@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-prototype.widthContenedor = 1100;
+prototype.widthContenedor = 1300;
 prototype.widthGrid = '100%';
 prototype.id01 = 'LoadControlReport';
 
@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.LoadControlReportForm', 
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',
-                                            height: 550,
+                                            height: 600,
                                             layout: 'fit',
                                             items: [
                                                 // <editor-fold defaultstate="collapsed" desc="setGridData">
