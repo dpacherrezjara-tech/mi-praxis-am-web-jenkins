@@ -732,7 +732,7 @@ public class OwnerlessCouponDAO {
             cstmt.setString(29, Functions.getHoraActual());
             cstmt.setString(30, "");
 
-//            cstmt.execute();
+            cstmt.execute();
 
             strMsj = cstmt.getString(30);
         } catch (Exception e) {
