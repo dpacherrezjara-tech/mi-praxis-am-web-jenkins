@@ -483,6 +483,11 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         this.winDataEntry('U', rec, all, rowIndex);
+        
+        console.log('onEditClickkkkkkk');
+        
+        console.log(rowIndex);
+        console.log(rec);
 
     },
     winDataEntry: function(action, rec, all, rowIndex) {
@@ -518,10 +523,10 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
     setFormatParameter_load: function() {
         
         me.bean = {};
-        me.bean.A1413FVLOB = Ext.getCmp(prototype.id + '-txtA1413FVLOB').getValue();
-        me.bean.A1413NVLOB = Ext.getCmp(prototype.id + '-txtA1413NVLOB').getValue();
-        me.bean.A1413FROM = Ext.getCmp(prototype.id + '-txtA1413FROM').getValue();
-        me.bean.A1413TO = Ext.getCmp(prototype.id + '-txtA1413TO').getValue();
+        me.bean.A1413FVLOB = Ext.getCmp(prototype.id + '-txtA1413FVLOBFiltro').getValue();
+        me.bean.A1413NVLOB = Ext.getCmp(prototype.id + '-txtA1413NVLOBFiltro').getValue();
+        me.bean.A1413FROM = Ext.getCmp(prototype.id + '-txtA1413FROMFiltro').getValue();
+        me.bean.A1413TO = Ext.getCmp(prototype.id + '-txtA1413TOFiltro').getValue();
                 
         var beanString = JSON.stringify(me.bean);
         searchParams_load = {
