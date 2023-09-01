@@ -187,6 +187,15 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.DataEntry', {
                             listeners: {
                                 change: 'onUpperValue'
                             }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtA1413NENV',
+                            fieldLabel: '',
+                            hidden:true,
+                            width: 100,
+                            readOnly: true
+
                         }
                     ]
                 },

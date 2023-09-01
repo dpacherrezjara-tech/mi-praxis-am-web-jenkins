@@ -89,6 +89,8 @@ public class OwnerlessCouponController extends BaseController {
         filter.A1413CIA = request.getParameter("A1413CIA");
         filter.A1413FORSE = request.getParameter("A1413FORSE");
         filter.A1413CUPON = request.getParameter("A1413CUPON");
+        filter.A1413NENV = request.getParameter("A1413NENV");
+        filter.A1413SEC = request.getParameter("A1413SEC");
 
         try {
 
@@ -1100,6 +1102,7 @@ public class OwnerlessCouponController extends BaseController {
 
             filter.A1413DATE = request.getParameter("A1413DATE");
             filter.A1413SEC = request.getParameter("A1413SEC");
+            filter.A1413NENV = request.getParameter("A1413NENV");
             filter.A1413DATA = request.getParameter("A1413DATA");
             filter.A1413STATU = request.getParameter("A1413STATU");
             filter.A1413CIA = request.getParameter("A1413CIA");
