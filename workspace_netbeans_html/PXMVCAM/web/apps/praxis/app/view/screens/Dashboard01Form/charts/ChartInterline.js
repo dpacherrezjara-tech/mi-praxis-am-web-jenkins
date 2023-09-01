@@ -1504,259 +1504,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                             },
                             bodyStyle: 'background-color: transparent;',
                             items: [
-                                // GRAFICO
-                                {
-                                    xtype: 'panel',
-                                    margin: '5 0 5 0',
-                                    border: false,
-                                    layout: {
-                                        type: 'hbox',
-                                        pack: 'center'
-                                    },
-                                    bodyStyle: 'background-color: transparent;',
-                                    items: [
-                                        // Grafico Lineas
-                                        {
-                                            xtype: 'panel',
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            padding: '5 0 0 20',
-                                            width: 800,
-                                            height: 400,
-                                            border: false,
-                                            layout: {
-                                                type: 'vbox'
-                                            },
-                                            items: [
-//                                                {
-//                                                    xtype: 'label',
-//                                                    labelAlign: 'center',
-//                                                    style: 'color:#3C3C3D;font-size:16px;font-weight:bold',
-//                                                    align: 'center',
-//                                                    margin: '5 0 0 450',
-//                                                    text: 'Passenger by Market'
-//                                                },
-                                                {
-                                                    xtype: 'cartesian',
-                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
-                                                    id: prototype.id + '-graficLine',
-                                                    width: 750,
-                                                    margin: '80 0 0 0',
-                                                    border: false,
-                                                    height: 300,
-                                                    background: '#E3EAEF',
-                                                    interactions: ['itemhighlight'],
-                                                    legend: {
-                                                        docked: 'bottom',
-                                                        background: '#E3EAEF'
-                                                    },
-                                                    axes: [{
-                                                            type: 'numeric',
-                                                            position: 'left',
-                                                            grid: true,
-                                                            renderer: function (obj, value) {
-                                                                if (value > 1) {
-                                                                    if ((value / 1000).toString().length > 3) {
-                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
-                                                                    } else {
-                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
-                                                                    }
-                                                                } else {
-                                                                    return '';
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            type: 'category',
-                                                            position: 'bottom',
-                                                            visibleRange: [0, 1]
-                                                        }],
-                                                        series: [
-                                                            {
-                                                                type: 'line',
-                                                                xField: 'strDescripcion',
-                                                                yField: 'totAud1',
-                                                                title: 'Audited',
-                                                                fill: true,
-                                                                highlight: true,
-                                                                tooltip: {
-                                                                    trackMouse: true,
-                                                                    height: 28,
-                                                                    renderer: function(toolTip, record, ctx) {
-                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000'));
-                                                                    }
-                                                                },
-//                                                                tooltip: {
-//                                                                    trackMouse: true,
-//                                                                    style: 'background: #FFF',
-//                                                                    height: 20,
-//                                                                    showDelay: 0,
-//                                                                    dismissDelay: 0,
-//                                                                    hideDelay: 0,
-//                                                                    renderer: function (toolTip, record, ctx) {
-//                                                                        toolTip.setHtml('Total Coupons : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
-//                                                                    }
-//                                                                },
-                                                                style: {
-                                                                    smooth: true,
-                                                                    fill: '#fcfcfc',    // punto
-                                                                    stroke: '#33bdda',
-                                                                    
-                                                                    fillOpacity: 0.1,
-                                                                    miterLimit: 3,
-                                                                    lineCap: 'miter',
-                                                                    lineWidth: 2
-                                                                },
-                                                                marker: {
-                                                                    type: 'circle',
-                                                                    radius: 4,
-                                                                    lineWidth: 2,
-                                                                    stroke: "#33bdda",
-                                                                    fill: 'white'
-                                                                },
-//                                                                label: {
-//                                                                    field: 'Aud1',
-//                                                                    display: 'over',
-//                                                                    renderer: function (value, b, callout) {
-//                                                                        callout.calloutVertical = false;
-//                                                                        //return Ext.util.Format.number(value, '0')
-//                                                                        return ''
-//                                                                    }
-//                                                                },
-//                                                                markerConfig: {
-//                                                                    radius: 4
-//                                                                },
-//                                                                highlight: {
-//                                                                    fill: '#fcfcfc',
-//                                                                    radius: 5,
-//                                                                    'stroke-width': 2,
-//                                                                    stroke: '#fff'
-//                                                                },
-                                                                //renderer: 'onColumnRender'
-                                                            },
-                                                            {
-                                                                type: 'line',
-//                                                                id: prototype.id + '-leyendLastG1',
-                                                                xField: 'strDescripcion',
-                                                                yField: 'totRej1',
-                                                                title: 'Rejected',
-                                                                fill: true,
-                                                                highlight: true,
-                                                                tooltip: {
-                                                                    trackMouse: true,
-                                                                    height: 28,
-                                                                    renderer: function(toolTip, record, ctx) {
-                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000'));
-                                                                    }
-                                                                },
-                                                                style: {
-                                                                    smooth: true,
-                                                                    fill: "#FAB347",
-                                                                    stroke: "#FAB347",
-                                                                    fillOpacity: 0.1,
-                                                                    miterLimit: 3,
-                                                                    lineCap: 'miter',
-                                                                    lineWidth: 2
-                                                                },
-                                                                marker: {
-                                                                    type: 'circle',
-                                                                    radius: 4,
-                                                                    lineWidth: 1,
-                                                                    stroke: "#FAB347",
-                                                                    fill: 'white'
-                                                                }
-                                                            }
-                                                            
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        
-                                        // Grafico Barras
-                                        {
-                                            xtype: 'panel',
-//                                            hidden: true,
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            padding: '5 0 0 20',
-                                            width: 800,
-                                            height: 400,
-                                            border: false,
-                                            layout: {
-                                                type: 'vbox'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'cartesian',
-                                                    id: prototype.id + '-byWork_WK_barras',
-                                                    width: 780,
-                                                    height: 380,
-                                                    background: '#E3EAF9',
-                                                    captions: {
-                                                        title: {text: 'Total Reject in USD', alignTo: 'chart'}
-                                                    },
-                                                    animation: {duration: 200},
-                                                    interactions: ['itemhighlight'],
-                                                    axes: [
-                                                        {
-                                                            type: 'numeric3d',
-                                                            position: 'left',
-                                                            yField: ['totNETO'],
-                                                            grid: true,
-                                                            title: '',
-                                                            renderer: function (obj, value) {
-                                                                if (value > 1) {
-                                                                    return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
-                                                                } else {
-                                                                    return '';
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            type: 'category3d',
-                                                            position: 'bottom',
-                                                            fields: 'strDescripcion',
-                                                            grid: true,
-//                                                            title: {
-//                                                                text: 'Date',
-//                                                                translationX: -30
-//                                                            }
-                                                            label: {
-                                                                rotate: {
-                                                                    degrees: -45
-                                                                }
-                                                            }
-                                                        }
-                                                    ],
-                                                    series: [{
-                                                            type: 'bar3d',
-                                                            stacked: false,
-                                                            title: [''],
-                                                            colors: ['#38A0F0', ],
-                                                            xField: 'strDescripcion',
-                                                            yField: ['totNETO'],
-                                                            highlight: true,
-                                                            style: {
-                                                                inGroupGapWidth: -7
-                                                            },
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-
-                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
-                                                                }
-                                                            },
-                                                            renderer: 'onColumnRender_WK'
-                                                        }
-
-                                                    ]
-                                                },
-//                                                hidden: true,
-//                                                id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
-                                            ]
-                                        }
-                                    ]
-                                },
-                                
                                 // GRID
                                 {
                                     xtype: 'panel',
@@ -2067,6 +1814,257 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                     }
                                                 ]
                                             }
+                                        }
+                                    ]
+                                },
+                                // GRAFICO
+                                {
+                                    xtype: 'panel',
+                                    margin: '5 0 5 0',
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        // Grafico Lineas
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            padding: '5 0 0 20',
+                                            width: 800,
+                                            height: 400,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+//                                                {
+//                                                    xtype: 'label',
+//                                                    labelAlign: 'center',
+//                                                    style: 'color:#3C3C3D;font-size:16px;font-weight:bold',
+//                                                    align: 'center',
+//                                                    margin: '5 0 0 450',
+//                                                    text: 'Passenger by Market'
+//                                                },
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-graficLine',
+                                                    width: 750,
+                                                    margin: '80 0 0 0',
+                                                    border: false,
+                                                    height: 300,
+                                                    background: '#E3EAEF',
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric',
+                                                            position: 'left',
+                                                            grid: true,
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            type: 'category',
+                                                            position: 'bottom',
+                                                            visibleRange: [0, 1]
+                                                        }],
+                                                        series: [
+                                                            {
+                                                                type: 'line',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totAud1',
+                                                                title: 'Audited',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000'));
+                                                                    }
+                                                                },
+//                                                                tooltip: {
+//                                                                    trackMouse: true,
+//                                                                    style: 'background: #FFF',
+//                                                                    height: 20,
+//                                                                    showDelay: 0,
+//                                                                    dismissDelay: 0,
+//                                                                    hideDelay: 0,
+//                                                                    renderer: function (toolTip, record, ctx) {
+//                                                                        toolTip.setHtml('Total Coupons : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+//                                                                    }
+//                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: '#fcfcfc',    // punto
+                                                                    stroke: '#33bdda',
+                                                                    
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 2,
+                                                                    stroke: "#33bdda",
+                                                                    fill: 'white'
+                                                                },
+//                                                                label: {
+//                                                                    field: 'Aud1',
+//                                                                    display: 'over',
+//                                                                    renderer: function (value, b, callout) {
+//                                                                        callout.calloutVertical = false;
+//                                                                        //return Ext.util.Format.number(value, '0')
+//                                                                        return ''
+//                                                                    }
+//                                                                },
+//                                                                markerConfig: {
+//                                                                    radius: 4
+//                                                                },
+//                                                                highlight: {
+//                                                                    fill: '#fcfcfc',
+//                                                                    radius: 5,
+//                                                                    'stroke-width': 2,
+//                                                                    stroke: '#fff'
+//                                                                },
+                                                                //renderer: 'onColumnRender'
+                                                            },
+                                                            {
+                                                                type: 'line',
+//                                                                id: prototype.id + '-leyendLastG1',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totRej1',
+                                                                title: 'Rejected',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000'));
+                                                                    }
+                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: "#FAB347",
+                                                                    stroke: "#FAB347",
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 1,
+                                                                    stroke: "#FAB347",
+                                                                    fill: 'white'
+                                                                }
+                                                            }
+                                                            
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        // Grafico Barras
+                                        {
+                                            xtype: 'panel',
+//                                            hidden: true,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            padding: '5 0 0 20',
+                                            width: 800,
+                                            height: 400,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    id: prototype.id + '-byWork_WK_barras',
+                                                    width: 780,
+                                                    height: 380,
+                                                    background: '#E3EAF9',
+                                                    captions: {
+                                                        title: {text: 'Total Reject in USD', alignTo: 'chart'}
+                                                    },
+                                                    animation: {duration: 200},
+                                                    interactions: ['itemhighlight'],
+                                                    axes: [
+                                                        {
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            yField: ['totNETO'],
+                                                            grid: true,
+                                                            title: '',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+                                                            fields: 'strDescripcion',
+                                                            grid: true,
+//                                                            title: {
+//                                                                text: 'Date',
+//                                                                translationX: -30
+//                                                            }
+                                                            label: {
+                                                                rotate: {
+                                                                    degrees: -45
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: [''],
+                                                            colors: ['#38A0F0', ],
+                                                            xField: 'strDescripcion',
+                                                            yField: ['totNETO'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+
+                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            },
+                                                            renderer: 'onColumnRender_WK'
+                                                        }
+
+                                                    ]
+                                                },
+//                                                hidden: true,
+//                                                id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
+                                            ]
                                         }
                                     ]
                                 }
