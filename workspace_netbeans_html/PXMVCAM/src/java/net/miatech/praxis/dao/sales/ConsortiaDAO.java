@@ -269,7 +269,7 @@ public class ConsortiaDAO {
         SQP00794Filter objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL LIBSAP50.SQP01189(?,?,?)}";
+        String SQLCLL01 = "{CALL SQP01189(?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -325,7 +325,7 @@ public class ConsortiaDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP50.SQP01189(?,?,?)}";
+        String SQLCLL01 = "{CALL SQP01189(?,?,?)}";
         Connection cnx = null; //session.getCNXIBMDB2().open();
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
