@@ -3840,7 +3840,7 @@ public class FlightConciliationController extends BaseController {
     public @ResponseBody
     String updateCommA1816(ModelMap map, @RequestParam("excelfile_VLO") MultipartFile excelfile, HttpServletRequest request) {
         byte[] bytes = null;
-        
+        boolean formatoCorrecto =false;
         String msj="No existen registros por actualizar";
         
 //        
@@ -3859,7 +3859,19 @@ public class FlightConciliationController extends BaseController {
                 cont++;
                 Row sheet = iterator.next();
                 //Iterator<Cell> cellIterator = currentRow.iterator();
-                if (cont > 3) {
+                /*Validar orden de las cabeceras*/
+                if(cont==2){
+                    String cabecera1 = sheet.getCell(26)== null ? "" : sheet.getCell(26).toString().trim();
+                    String cabecera2 = sheet.getCell(27)== null ? "" : sheet.getCell(27).toString().trim();
+                    if(cabecera1.contains("BPO") && cabecera2.contains("SABRE")){
+                        formatoCorrecto = true;
+                    }else{
+                        System.out.println("Formato Incorrecto");
+                        break;
+                    }
+                }
+                        
+                if (formatoCorrecto && cont > 3) {
                     if (sheet.getCell(0) != null) {            
                         obj = new A1691Filter();                   
                         obj.DFLIGHT = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString().trim();
@@ -3867,11 +3879,11 @@ public class FlightConciliationController extends BaseController {
                         obj.NFLIGHT  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString().trim();
                         obj.CDEPART = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString().trim();
                         obj.CARRIVA = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString().trim();
-                        obj.strDescripcion = sheet.getCell(26)== null ? "" : sheet.getCell(25).toString().trim();
+                        obj.strDescripcion = sheet.getCell(26)== null ? "" : sheet.getCell(26).toString().trim();
                         if(obj.strDescripcion.length()>100){
                             obj.strDescripcion = obj.strDescripcion.substring(0,100);
                         }
-                        obj.strDescripcion2 = sheet.getCell(27)== null ? "" : sheet.getCell(26).toString().trim();
+                        obj.strDescripcion2 = sheet.getCell(27)== null ? "" : sheet.getCell(27).toString().trim();
                         if(obj.strDescripcion2.length()>100){
                             obj.strDescripcion2 = obj.strDescripcion2.substring(0,100);
                         }
@@ -3887,10 +3899,13 @@ public class FlightConciliationController extends BaseController {
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            if(lstManifiesto.size()>0){
-                msj = logic.loadSQP05035(lstManifiesto);
+            if(!formatoCorrecto){
+                msj = "Formato Incorrecto";
+            }else{
+                if(lstManifiesto.size()>0){
+                    msj = logic.loadSQP05035(lstManifiesto);
+                }
             }
-            
             
             
             map.put("success", true);
