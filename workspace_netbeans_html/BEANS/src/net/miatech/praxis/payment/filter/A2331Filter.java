@@ -173,6 +173,13 @@ public class A2331Filter extends A2331 {
     public double totper = 0;
     public double totper1 = 0;
     public double totper2 = 0;
+    
+    public String DATAPLICA = "";
+    public String FSELECX = "";
+    public String STUSOSX = "";
+    public String INDCPNX = "";
+    public String INDCPNSX = "";
+    public String INDCPNSLX = "";
 
     /*A2343*/
     public int QTYGDSB = 0;
