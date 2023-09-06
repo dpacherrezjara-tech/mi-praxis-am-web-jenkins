@@ -25,9 +25,17 @@ import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
+import net.miatech.praxis.payment.filter.A4331BPOFilter;
+import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
+import net.miatech.praxis.payment.filter.SQP05052Filter;
+import net.miatech.praxis.payment.filter.SQP05054Filter;
+import net.miatech.praxis.payment.filter.SQP05055Filter;
+import net.miatech.praxis.payment.filter.SQP05056Filter;
+import net.miatech.praxis.payment.filter.SQP05057Filter;
+import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -5227,21 +5235,22 @@ public class ReconciliationPaymentDAO {
     }
     
     public SQP05048Filter loadSQP05048Filter(SQP05048Filter filter)throws Exception{
-        String sql = "INSERT INTO PRAXISMP.X3169 (CCUST, SCOUNTRY, SMERCHID, SCURRENCY, TDOC, FUENTE, CERROR, STVAL, PRDA, "
-                + "PMERCHID, PAYDATE, SCARDN, SAUTHOC, SVFOPS, SPNR, CCIA, FORMA, SERIE, SEQ, SAGENT, SDATE, "
-                + "FREGLA, AREFNBR, PROCTYPE, "
-                + "PROCTYPESQ, CORRL, FORCESCAN, STMANUAL,OBSERV) "
-                + "VALUES(:CCUST, :SCOUNTRY, :SMERCHID, :SCURRENCY, :TDOC, :FUENTE, :CERROR, :STVAL, :PRDA, "
-                + ":PMERCHID, :PAYDATE, :SCARDN, :SAUTHOC, :SVFOPS, :SPNR, :CCIA, :FORMA, :SERIE, :SEQ, :SAGENT, :SDATE, "
-                + ":FREGLA, :AREFNBR, :PROCTYPE, "
-                + ":PROCTYPESQ, :CORRL, :FORCESCAN, :STMANUAL,:OBSERV) ";
+        //,CARDTYPE,SCARDCOD,FVOID
+        String sql = "INSERT INTO PRAXISMP.X3169 (CCUST,AREFNBR,CCIA,FORMA,SERIE,SEQ,CORRL,TDOC,PRDA,SVFOPS,SCARDN,SAUTHOC,"
+                + "TRNCU,STVAL,PMERCHID,SMERCHID,PAYDATE,PROCTYPE,PROCTYPESQ,"
+                + "FREGLA,CERROR,FORCESCAN,OBSERV,STMANUAL,"
+                + "FUENTE,FVOID,CARDTYPE,SAGENT,SCARDCOD,SCURRENCY,SCOUNTRY,SDATE,SPNR) "
+                + "VALUES(:CCUST,:AREFNBR,:CCIA,:FORMA,:SERIE,:SEQ,:CORRL,:TDOC,:PRDA,:SVFOPS,:SCARDN,:SAUTHOC,"
+                + ":TRNCU,:STVAL,:PMERCHID,:SMERCHID,:PAYDATE,:PROCTYPE,:PROCTYPESQ,"
+                + ":FREGLA,:CERROR,:FORCESCAN,:OBSERV,:STMANUAL,"
+                + ":FUENTE,:FVOID,:CARDTYPE,:SAGENT,:SCARDCOD,:SCURRENCY,:SCOUNTRY,:SDATE,:SPNR) ";
         BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
         for (int i = 0; i < filter.getDetail().size(); i++) {
             insertParams[i] = new BeanPropertySqlParameterSource(filter.getDetail().get(i));
         }
         namedParameterJdbcTemplate.batchUpdate(sql, insertParams);
         SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
-                .withProcedureName("SQP05048");
+                .withProcedureName("SQP05048V2");
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
@@ -5252,6 +5261,56 @@ public class ReconciliationPaymentDAO {
     public SQP04847Filter loadPX606SQP04847(SQP04847Filter filter) throws Exception {
         SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
                 .withProcedureName("SQP04847");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+    
+    public SQP05052Filter loadSQP05052Filter(SQP05052Filter filter)throws Exception{
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05052")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331BPOFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setResponse(((List<A4331BPOFilter>) spRes.get("result")).get(0));
+        return filter;
+    }
+    
+    public SQP05054Filter loadSQP05054Filter(SQP05054Filter filter)throws Exception{
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05054")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(ScannerFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setResponse(((List<ScannerFilter>) spRes.get("result")));
+        return filter;
+    }
+    
+    public SQP05055Filter loadSQP05055Filter(SQP05055Filter filter)throws Exception{
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05055")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4335Filter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setResponse(((List<A4335Filter>) spRes.get("result")));
+        return filter;
+    }
+    
+    public SQP05056Filter loadSQP05056Filter(SQP05056Filter filter)throws Exception{
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05056");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+
+    public SQP05057Filter SQP05057Filter(SQP05057Filter filter) {
+        SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
+                .withProcedureName("SQP05057");
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));

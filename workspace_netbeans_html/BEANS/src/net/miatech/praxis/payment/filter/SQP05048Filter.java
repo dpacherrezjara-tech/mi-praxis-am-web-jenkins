@@ -14,11 +14,15 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SQP05048Filter {
-    private String IN_CCUST,IN_PRDA,IN_MERCHID,IN_PAYDATE,IN_PCURRENCY,IN_PROCTYPE,IN_SMERCHID,IN_SDATE,IN_SCARDN,
-            IN_SAUTHOC,IN_IDITEMS,IN_IDITEMT,IN_PNR,IN_TKT,IN_CERROR,IN_ADJ_TYPE,IN_AREFNBR,IN_TDOC,IN_PROCTYPESQ,
-            SQLMSG;
-    private Double IN_TGROSAMPAY;
-    private Integer IN_QTYTKT,SQLRES;
+    private String IN_CCUST,IN_PRDA,IN_TDOC,IN_AREFNBR,IN_PMERCHID
+            ,IN_PAYDATE,IN_PROCTYPE,IN_PROCTYPESQ
+            ,IN_SDATE,IN_SCARDN,IN_SAUTHOC,IN_SPNR,IN_TICKET,
+            IN_SCURRENCY,IN_CERROR,IN_CODADJU,IN_FVOID;
+    private Double IN_SVFOPS;
+    private Integer IN_QTYTKT;
+    //respuesta
+    private Integer SQLRES;
+    private String SQLMSG;
     
     private List<X3169> detail = new ArrayList<>();
 
@@ -38,12 +42,28 @@ public class SQP05048Filter {
         this.IN_PRDA = IN_PRDA;
     }
 
-    public String getIN_MERCHID() {
-        return IN_MERCHID;
+    public String getIN_TDOC() {
+        return IN_TDOC;
     }
 
-    public void setIN_MERCHID(String IN_MERCHID) {
-        this.IN_MERCHID = IN_MERCHID;
+    public void setIN_TDOC(String IN_TDOC) {
+        this.IN_TDOC = IN_TDOC;
+    }
+
+    public String getIN_AREFNBR() {
+        return IN_AREFNBR;
+    }
+
+    public void setIN_AREFNBR(String IN_AREFNBR) {
+        this.IN_AREFNBR = IN_AREFNBR;
+    }
+
+    public String getIN_PMERCHID() {
+        return IN_PMERCHID;
+    }
+
+    public void setIN_PMERCHID(String IN_PMERCHID) {
+        this.IN_PMERCHID = IN_PMERCHID;
     }
 
     public String getIN_PAYDATE() {
@@ -54,14 +74,6 @@ public class SQP05048Filter {
         this.IN_PAYDATE = IN_PAYDATE;
     }
 
-    public String getIN_PCURRENCY() {
-        return IN_PCURRENCY;
-    }
-
-    public void setIN_PCURRENCY(String IN_PCURRENCY) {
-        this.IN_PCURRENCY = IN_PCURRENCY;
-    }
-
     public String getIN_PROCTYPE() {
         return IN_PROCTYPE;
     }
@@ -70,12 +82,12 @@ public class SQP05048Filter {
         this.IN_PROCTYPE = IN_PROCTYPE;
     }
 
-    public String getIN_SMERCHID() {
-        return IN_SMERCHID;
+    public String getIN_PROCTYPESQ() {
+        return IN_PROCTYPESQ;
     }
 
-    public void setIN_SMERCHID(String IN_SMERCHID) {
-        this.IN_SMERCHID = IN_SMERCHID;
+    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
+        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
     }
 
     public String getIN_SDATE() {
@@ -102,36 +114,28 @@ public class SQP05048Filter {
         this.IN_SAUTHOC = IN_SAUTHOC;
     }
 
-    public String getIN_IDITEMS() {
-        return IN_IDITEMS;
+    public String getIN_SPNR() {
+        return IN_SPNR;
     }
 
-    public void setIN_IDITEMS(String IN_IDITEMS) {
-        this.IN_IDITEMS = IN_IDITEMS;
+    public void setIN_SPNR(String IN_SPNR) {
+        this.IN_SPNR = IN_SPNR;
     }
 
-    public String getIN_IDITEMT() {
-        return IN_IDITEMT;
+    public String getIN_TICKET() {
+        return IN_TICKET;
     }
 
-    public void setIN_IDITEMT(String IN_IDITEMT) {
-        this.IN_IDITEMT = IN_IDITEMT;
+    public void setIN_TICKET(String IN_TICKET) {
+        this.IN_TICKET = IN_TICKET;
     }
 
-    public String getIN_PNR() {
-        return IN_PNR;
+    public String getIN_SCURRENCY() {
+        return IN_SCURRENCY;
     }
 
-    public void setIN_PNR(String IN_PNR) {
-        this.IN_PNR = IN_PNR;
-    }
-
-    public String getIN_TKT() {
-        return IN_TKT;
-    }
-
-    public void setIN_TKT(String IN_TKT) {
-        this.IN_TKT = IN_TKT;
+    public void setIN_SCURRENCY(String IN_SCURRENCY) {
+        this.IN_SCURRENCY = IN_SCURRENCY;
     }
 
     public String getIN_CERROR() {
@@ -142,52 +146,20 @@ public class SQP05048Filter {
         this.IN_CERROR = IN_CERROR;
     }
 
-    public String getIN_ADJ_TYPE() {
-        return IN_ADJ_TYPE;
+    public String getIN_CODADJU() {
+        return IN_CODADJU;
     }
 
-    public void setIN_ADJ_TYPE(String IN_ADJ_TYPE) {
-        this.IN_ADJ_TYPE = IN_ADJ_TYPE;
+    public void setIN_CODADJU(String IN_CODADJU) {
+        this.IN_CODADJU = IN_CODADJU;
     }
 
-    public String getIN_AREFNBR() {
-        return IN_AREFNBR;
+    public Double getIN_SVFOPS() {
+        return IN_SVFOPS;
     }
 
-    public void setIN_AREFNBR(String IN_AREFNBR) {
-        this.IN_AREFNBR = IN_AREFNBR;
-    }
-
-    public String getIN_TDOC() {
-        return IN_TDOC;
-    }
-
-    public void setIN_TDOC(String IN_TDOC) {
-        this.IN_TDOC = IN_TDOC;
-    }
-
-    public String getIN_PROCTYPESQ() {
-        return IN_PROCTYPESQ;
-    }
-
-    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
-        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
-    }
-
-    public String getSQLMSG() {
-        return SQLMSG;
-    }
-
-    public void setSQLMSG(String SQLMSG) {
-        this.SQLMSG = SQLMSG;
-    }
-
-    public Double getIN_TGROSAMPAY() {
-        return IN_TGROSAMPAY;
-    }
-
-    public void setIN_TGROSAMPAY(Double IN_TGROSAMPAY) {
-        this.IN_TGROSAMPAY = IN_TGROSAMPAY;
+    public void setIN_SVFOPS(Double IN_SVFOPS) {
+        this.IN_SVFOPS = IN_SVFOPS;
     }
 
     public Integer getIN_QTYTKT() {
@@ -206,6 +178,14 @@ public class SQP05048Filter {
         this.SQLRES = SQLRES;
     }
 
+    public String getSQLMSG() {
+        return SQLMSG;
+    }
+
+    public void setSQLMSG(String SQLMSG) {
+        this.SQLMSG = SQLMSG;
+    }
+
     public List<X3169> getDetail() {
         return detail;
     }
@@ -213,4 +193,14 @@ public class SQP05048Filter {
     public void setDetail(List<X3169> detail) {
         this.detail = detail;
     }
+
+    public String getIN_FVOID() {
+        return IN_FVOID;
+    }
+
+    public void setIN_FVOID(String IN_FVOID) {
+        this.IN_FVOID = IN_FVOID;
+    }
+
+    
 }

@@ -36,6 +36,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingGridC
             }
         });
         view.setStore(store);
+    },
+    downloadExcel: function () {
     }
 });
 

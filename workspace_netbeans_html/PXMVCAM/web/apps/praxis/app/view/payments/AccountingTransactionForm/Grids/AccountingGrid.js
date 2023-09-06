@@ -232,9 +232,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                 scale: 'small',
                 tooltip: 'Export to Excel',
                 listeners: {
-                    click: function (obj) {
-                        obj.up().up().downloadGrid();
-                    }
+                    click: 'downloadExcel'
                 }
             },
             {
