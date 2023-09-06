@@ -153,6 +153,13 @@ public class A2331Filter extends A2331 {
     public long lngTotQTYBANKN = 0;
     public double dblTotAMTBANK = 0;
     public double dblTotAMTBANKU = 0;
+    
+    public String DATAPLICA = "";
+    public String FSELECX = "";
+    public String STUSOSX = "";
+    public String INDCPNX = "";
+    public String INDCPNSX = "";
+    public String INDCPNSLX = "";
 
     public double perAnsw = 0;
     public double perNoAnsw = 0;
