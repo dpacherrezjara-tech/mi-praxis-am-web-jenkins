@@ -422,7 +422,8 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="setGridDataLog">
     setGridDataLog: function () {
-        win.lblUser_toolTip("Estructura: A3757 A2331");
+//        win.lblUser_toolTip("Estructura: A3757 A2331");
+        win.lblUser_toolTip("Estructura: A3759");
         me.panelActual = '-panelGridDataLog';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 //        me.setWidthPie();
@@ -479,9 +480,22 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
         this.setGridDataDetTicketLog();
     },
+    onGridDetTicketLogOChar: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataDetTicketLog';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanLog.FECR = rowData.data.DCREATION;
+        this.beanLog.TDOC = 'T';
+        console.log(this.beanEMD);
+
+        me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
+        this.setGridDataDetTicketLog();
+    },
     // <editor-fold defaultstate="collapsed" desc="setGridDataDetTicketLog">
     setGridDataDetTicketLog: function () {
-        win.lblUser_toolTip("Estructura: A3757 A2331");
+        win.lblUser_toolTip("Estructura: A3755 A2331");
         me.panelActual = '-panelGridDataDetTicketLog';
         me.setWidthPie();
         var msj = this.validateFields();
@@ -515,6 +529,8 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                                     tipo = 'ChargeBack';
                                 } else if (obj.TDOC === '3') {
                                     tipo = 'Reverse ChargeBack';
+                                } else if (obj.TDOC === 'T') {
+                                    tipo = 'Others';
                                 }
                                 Ext.getCmp(prototype.id + '-panelGridDataDetTicketLog').setTitle('<center style="font-size:12px;"> Create Date ' + obj.strFormatDate + ' - ' + tipo + '</center>');
 
