@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1400,
+                width: 1550,
                 height: 650,
                 align: 'center'
             },
@@ -1044,10 +1044,13 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                         },
                                                         columns: [
                                                             {text: 'Qty', dataIndex: 'CHGBACK', width: 100,
+                                                                listeners: {
+                                                                    click: 'onGridDetTicketLogChar'
+                                                                },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return value;
+                                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
@@ -1056,13 +1059,10 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                                 }
                                                             },
                                                             {text: 'USD', dataIndex: 'CHGBACK_AMT', width: 100,
-                                                                listeners: {
-                                                                    click: 'onGridDetTicketLogChar'
-                                                                },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
                                                                     value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                    return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
@@ -1080,10 +1080,13 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                         },
                                                         columns: [
                                                             {text: 'Qty', dataIndex: 'REVERSE', width: 100,
+                                                                listeners: {
+                                                                    click: 'onGridDetTicketLogRChar'
+                                                                },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
                                                                     value = Ext.util.Format.number(value, '0,000');
-                                                                    return value;
+                                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
@@ -1092,13 +1095,10 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                                 }
                                                             },
                                                             {text: 'USD', dataIndex: 'REVERSE_AMT', width: 100,
-                                                                listeners: {
-                                                                    click: 'onGridDetTicketLogRChar'
-                                                                },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
                                                                     value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                    return value;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
@@ -1108,16 +1108,19 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                             },
                                                         ]
                                                     },
-                                                    {text: 'Other', dataIndex: 'OTHER', width: 100,
+                                                    {text: 'Others', dataIndex: 'OTHER', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetTicketLogOChar'
+                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return '<a href="#payments-emd-tracking-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataLog').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totOTHER, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totOTHER, '0,000') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -1134,7 +1137,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                             padding: '1',
                             border: false,
                             height: 700,
-                            width: 1235,
+                            width: 1535,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -1146,7 +1149,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 680,
-                                    width: 1230,
+                                    width: 1530,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -1175,6 +1178,12 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                     return value;
                                                 },
                                             },
+                                            {text: 'Status', dataIndex: 'STVAL', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
                                             {text: 'Bank<br>Date', dataIndex: 'strFormatDate2', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
@@ -1193,7 +1202,7 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                     return value;
                                                 },
                                             },
-                                            {text: 'Card Number', dataIndex: 'CARDNBR', width: 160,
+                                            {text: 'Card Number', dataIndex: 'CARDNBR', width: 150,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -1256,7 +1265,13 @@ Ext.define('Ext.Praxis.view.payments.EMDTrackingForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Passenger', dataIndex: 'PAX', width: 250,
+                                            {text: 'Passenger', dataIndex: 'PAX', width: 230,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Msj Error', dataIndex: 'MSGERR', width: 230,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left;";
                                                     return value;

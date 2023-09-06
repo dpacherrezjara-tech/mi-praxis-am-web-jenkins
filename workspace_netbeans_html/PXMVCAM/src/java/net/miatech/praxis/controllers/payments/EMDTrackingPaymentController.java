@@ -1660,21 +1660,25 @@ public class EMDTrackingPaymentController extends BaseController {
             Cell CH1_11 = row1.createCell(11);
             Cell CH1_12 = row1.createCell(12);
             Cell CH1_13 = row1.createCell(13);
+            Cell CH1_14 = row1.createCell(14);
+            Cell CH1_15 = row1.createCell(15);
 
             CH1_0.setCellValue("Ticket");
             CH1_1.setCellValue("Sale");
-            CH1_2.setCellValue("Bank");
+            CH1_2.setCellValue("Status");
             CH1_3.setCellValue("Bank");
-            CH1_4.setCellValue("Card");
+            CH1_4.setCellValue("Bank");
             CH1_5.setCellValue("Card");
-            CH1_6.setCellValue("Auth");
-            CH1_7.setCellValue("Curr.");
-            CH1_8.setCellValue("Amount");
-            CH1_9.setCellValue("Status Cpn");
-            CH1_10.setCellValue("");
+            CH1_6.setCellValue("Card");
+            CH1_7.setCellValue("Auth");
+            CH1_8.setCellValue("Curr.");
+            CH1_9.setCellValue("Amount");
+            CH1_10.setCellValue("Status Cpn");
             CH1_11.setCellValue("");
             CH1_12.setCellValue("");
-            CH1_13.setCellValue("Passenger");
+            CH1_13.setCellValue("");
+            CH1_14.setCellValue("Passenger");
+            CH1_15.setCellValue("Msj Error");
             
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1690,22 +1694,23 @@ public class EMDTrackingPaymentController extends BaseController {
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 15, 15));
             ++vj;
             //============================================
 
@@ -1725,21 +1730,25 @@ public class EMDTrackingPaymentController extends BaseController {
             Cell CH2_11 = row2.createCell(11);
             Cell CH2_12 = row2.createCell(12);
             Cell CH2_13 = row2.createCell(13);
+            Cell CH2_14 = row2.createCell(14);
+            Cell CH2_15 = row2.createCell(15);
 
             CH2_0.setCellValue("");
             CH2_1.setCellValue("Date");
-            CH2_2.setCellValue("Date");
-            CH2_3.setCellValue("Code");
+            CH2_2.setCellValue("");
+            CH2_3.setCellValue("Date");
             CH2_4.setCellValue("Code");
-            CH2_5.setCellValue("");
+            CH2_5.setCellValue("Code");
             CH2_6.setCellValue("");
             CH2_7.setCellValue("");
             CH2_8.setCellValue("");
-            CH2_9.setCellValue("1");
-            CH2_10.setCellValue("2");
-            CH2_11.setCellValue("3");
-            CH2_12.setCellValue("4");
-            CH2_13.setCellValue("");
+            CH2_9.setCellValue("");
+            CH2_10.setCellValue("1");
+            CH2_11.setCellValue("2");
+            CH2_12.setCellValue("3");
+            CH2_13.setCellValue("4");
+            CH2_14.setCellValue("");
+            CH2_15.setCellValue("");
             
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -1755,16 +1764,18 @@ public class EMDTrackingPaymentController extends BaseController {
             CH2_11.setCellStyle(headerStyle);
             CH2_12.setCellStyle(headerStyle);
             CH2_13.setCellStyle(headerStyle);
+            CH2_14.setCellStyle(headerStyle);
+            CH2_15.setCellStyle(headerStyle);
            
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 13));
             ++vj;
             //============================================
             
@@ -1784,21 +1795,25 @@ public class EMDTrackingPaymentController extends BaseController {
                 Cell rcell11 = row1.createCell(11);
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
+                Cell rcell14 = row1.createCell(14);
+                Cell rcell15 = row1.createCell(15);
 
                 rcell0.setCellValue(listaData.get(vi).strTicket);
                 rcell1.setCellValue(listaData.get(vi).strFormatDate1);
-                rcell2.setCellValue(listaData.get(vi).strFormatDate2);
-                rcell3.setCellValue(listaData.get(vi).CODEBANK);
-                rcell4.setCellValue(listaData.get(vi).SCARCOD);
-                rcell5.setCellValue(listaData.get(vi).CARDNBR);
-                rcell6.setCellValue(listaData.get(vi).AUTHNBR);
-                rcell7.setCellValue(listaData.get(vi).MFOP);
-                rcell8.setCellValue(listaData.get(vi).VFOP);
-                rcell9.setCellValue(listaData.get(vi).strDescUsoCpn1);
-                rcell10.setCellValue(listaData.get(vi).strDescUsoCpn2);
-                rcell11.setCellValue(listaData.get(vi).strDescUsoCpn3);
-                rcell12.setCellValue(listaData.get(vi).strDescUsoCpn4);
-                rcell13.setCellValue(listaData.get(vi).PAX);
+                rcell2.setCellValue(listaData.get(vi).STVAL);
+                rcell3.setCellValue(listaData.get(vi).strFormatDate2);
+                rcell4.setCellValue(listaData.get(vi).CODEBANK);
+                rcell5.setCellValue(listaData.get(vi).SCARCOD);
+                rcell6.setCellValue(listaData.get(vi).CARDNBR);
+                rcell7.setCellValue(listaData.get(vi).AUTHNBR);
+                rcell8.setCellValue(listaData.get(vi).MFOP);
+                rcell9.setCellValue(listaData.get(vi).VFOP);
+                rcell10.setCellValue(listaData.get(vi).strDescUsoCpn1);
+                rcell11.setCellValue(listaData.get(vi).strDescUsoCpn2);
+                rcell12.setCellValue(listaData.get(vi).strDescUsoCpn3);
+                rcell13.setCellValue(listaData.get(vi).strDescUsoCpn4);
+                rcell14.setCellValue(listaData.get(vi).PAX);
+                rcell15.setCellValue(listaData.get(vi).MSGERR);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1820,6 +1835,8 @@ public class EMDTrackingPaymentController extends BaseController {
             Cell CH1_11_T = rowTotal.createCell(11);
             Cell CH1_12_T = rowTotal.createCell(12);
             Cell CH1_13_T = rowTotal.createCell(13);
+            Cell CH1_14_T = rowTotal.createCell(14);
+            Cell CH1_15_T = rowTotal.createCell(15);
             
 //            CH1_0_T.setCellValue(listaData.get(0).totSVFOPUSD);
             
@@ -1837,6 +1854,8 @@ public class EMDTrackingPaymentController extends BaseController {
             CH1_11_T.setCellValue("");
             CH1_12_T.setCellValue("");
             CH1_13_T.setCellValue("");
+            CH1_14_T.setCellValue("");
+            CH1_15_T.setCellValue("");
             
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
@@ -1852,6 +1871,8 @@ public class EMDTrackingPaymentController extends BaseController {
             CH1_11_T.setCellStyle(totalStyle);
             CH1_12_T.setCellStyle(totalStyle);
             CH1_13_T.setCellStyle(totalStyle);
+            CH1_14_T.setCellStyle(totalStyle);
+            CH1_15_T.setCellStyle(totalStyle);
             
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -1867,6 +1888,8 @@ public class EMDTrackingPaymentController extends BaseController {
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

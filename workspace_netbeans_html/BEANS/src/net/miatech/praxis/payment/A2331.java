@@ -31,6 +31,7 @@ public class A2331 {
     public String SCOUNTRY = "";
 
     public String AUTHNBR = "";
+    public String MSGERR = "";
     public String CODMOTI = "";
     public String CLINAME = "";
 
