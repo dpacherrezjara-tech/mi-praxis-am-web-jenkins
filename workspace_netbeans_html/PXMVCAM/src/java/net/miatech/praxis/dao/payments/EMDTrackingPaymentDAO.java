@@ -589,6 +589,8 @@ public class EMDTrackingPaymentDAO {
                     bean.SCARCOD  = rst.getString("SCARCOD");
                     bean.CARDNBR  = rst.getString("CARDNBR");
                     bean.AUTHNBR  = rst.getString("AUTHNBR");
+                    bean.MSGERR  = rst.getString("MSGERR");
+                    bean.STVAL  = rst.getString("STVAL");
                     bean.MFOP  = rst.getString("MFOP");
                     bean.VFOP  = rst.getDouble("VFOP");
                     bean.STUSOS  = rst.getString("STUSOS");
