@@ -40,6 +40,7 @@ public class A2331 {
     public String SERIE = "";
     public String TDOC = "";
     public String FLAGC = "";
+    public String IN_TKT = "";
 
     public int TOTCUP = 0;
     public String AGENTE = "";
