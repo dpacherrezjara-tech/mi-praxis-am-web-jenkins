@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     beanResultSet01: {},
     actionCode: win.DE_ACT_VIEW,
     actionCode2: '',
+    actionPurge: 0,
     nPosition1: 0,
     nPosition2: 0,
     nPosition3: 0,
@@ -59,7 +60,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                 console.log('Access:'+PERMC);
             }
         });
-        
+        Ext.getCmp(prototype.id+'-btnPurge').hide();
+        Ext.getCmp(prototype.id+'-vskDataPurge').hide();
         if (this.params.actionCode !== undefined && this.params.bean !== undefined) {
             this.actionCode = this.params.actionCode;
             this.bean = this.params.bean;
@@ -372,6 +374,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     btnAccounting_clickHandler: function () {
         win.selectedChild('vskData', 'gridDataAccounting');
         this.get_load_Accounting();
+    },
+    btnButtonPurge_clickHandler: function () {
+        this.get_AccountingPurge();
     },
     btnFacsimil_clickHandler: function () {
         console.log('FACSIMIL');
@@ -813,6 +818,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     get_load_Accounting: function () {
         if (win.getValue('txtFilterTicketFormSer').trim().length === 10) {
             win.removeAll('gridDataAccounting');
+            win.removeAll('gridDataPurge');
             this.beanAccounting.VP_A1716CCUST = '139';
             this.beanAccounting.VP_A1716CIA = win.getValue('txtFilterTicketCia');
             this.beanAccounting.VP_A1716FORMA = win.getValue('txtFilterTicketFormSer').substring(0, 4);
@@ -824,6 +830,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.beanAccounting.VP_A1716SEQI = this.filterTKT.VP_A1716SEQI;	
             this.beanAccounting.VP_A1716SEQA = this.filterTKT.VP_A1716SEQA;	
             
+            Ext.getCmp(prototype.id+'-vskDataPurge').hide();
+            Ext.getCmp(prototype.id+'-vskDataPurge').hide();
             this.loadAccountig(this.beanAccounting);
         }
     },
@@ -1007,12 +1015,21 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
             this.bean.IN_FORMA  = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
             this.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
+            Ext.getCmp(prototype.id+'-btnPurge').hide();
+            Ext.getCmp(prototype.id+'-vskDataPurge').hide();
+            Ext.getCmp(prototype.id+'-gridDataAccounting').hide();
             this.loadTicketSeq(this.bean);
         }
         else if(this.bean.IN_FORMA !== null && this.bean.IN_FORMA.length === 4 && this.bean.IN_SERIE !== null && this.bean.IN_SERIE.length === 6) {
+            Ext.getCmp(prototype.id+'-btnPurge').hide();
+            Ext.getCmp(prototype.id+'-vskDataPurge').hide();
+            Ext.getCmp(prototype.id+'-gridDataAccounting').hide();
             this.loadTicketSeq(this.bean);
         }
-        else {    
+        else {
+            Ext.getCmp(prototype.id+'-btnPurge').hide();
+            Ext.getCmp(prototype.id+'-vskDataPurge').hide();
+            Ext.getCmp(prototype.id+'-gridDataAccounting').hide();
             this.execSearch();
         }
         this.controlLight();
@@ -3660,7 +3677,38 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             success: function (response, opts) {
                 Ext.getBody().unmask();
                 var res = Ext.JSON.decode(response.responseText);
-                if (res.success) me01.onResultLoadAccountig(res.lst_Accounting);
+                if (res.success){
+                    me01.onResultLoadAccountig(res.lst_Accounting);
+                    // loadPurge
+                    Ext.Ajax.request({
+                        url: prototype.url+'/loadPurge',
+                        method: 'POST',
+                        timeout: 60000000,
+                        params: {beanString: JSON.stringify(beanAccounting)},
+                        success: function (response, opts) {
+                            Ext.getBody().unmask();
+                            var res1 = Ext.JSON.decode(response.responseText);
+                            if (res1.success){
+                                console.log(res1.lst_PurgeAccounting);
+                                console.log(res1.total);
+                                
+                                if(res1.total > 0){
+                                    console.log("entro");
+                                    Ext.getCmp(prototype.id+'-btnPurge').show();
+                                    Ext.getCmp(prototype.id+'-gridDataPurge').bindStore(
+                                    Ext.create("Ext.Praxis.store.program.GridData", { data: res1.lst_PurgeAccounting })
+                                    );
+                                };
+                            } 
+                            else global.Msg({msg: "Bad Request"});
+                        },
+                        failure: function (response, opts) {
+                            Ext.getBody().unmask();
+                            console.log('server-side failure with status code '+response.status);
+                        }
+                    });
+                    //
+                } 
                 else global.Msg({msg: "Bad Request"});
             },
             failure: function (response, opts) {
@@ -3670,6 +3718,31 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         });
     },
     //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="get_AccountingPurge">
+    get_AccountingPurge: function () {
+        
+        console.log("");
+        if (this.actionPurge === 0){
+            
+            this.actionPurge = 1;
+            Ext.getCmp(prototype.id+'-vskDataPurge').show();
+            Ext.getCmp(prototype.id+'-gridDataAccounting').hide();
+            Ext.getCmp(prototype.id+'-vskDataPurge').el.setStyle({height: '100%'});
+            Ext.getCmp(prototype.id+'-gridDataPurge').el.setStyle({height: '50px'});
+            win.selectedChild('vskDataPurge', 'gridDataPurge');
+            
+        }
+        else if (this.actionPurge === 1){
+            
+            this.actionPurge = 0;
+            Ext.getCmp(prototype.id+'-vskDataPurge').hide();
+            Ext.getCmp(prototype.id+'-gridDataAccounting').show();
+        }
+        
+    },
+    //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="searchDelivery">
     searchDelivery: function (bean) {
         prototype.url = URL_VIEWTICKET;

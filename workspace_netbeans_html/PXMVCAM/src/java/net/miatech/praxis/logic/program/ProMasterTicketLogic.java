@@ -3,6 +3,7 @@ package net.miatech.praxis.logic.program;
 // <editor-fold defaultstate="collapsed" desc="import">
 import java.sql.SQLException;
 import java.util.List;
+import net.miatech.beans.A4474Filter;
 import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.PX040S01A720Filter;
 import net.miatech.beans.PX040S02A720Filter;
@@ -42,6 +43,10 @@ public class ProMasterTicketLogic {
         return objDAO.loadPX040S01A1716(filter);
     }
 
+    public List<A4474Filter> loadSQP05045(A4474Filter filter) throws SQLException, Exception {
+        return objDAO.loadSQP05045(filter);
+    }
+    
     public List<A720> loadPX040S02A720(PX040S02A720Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S02A720(filter);
     }

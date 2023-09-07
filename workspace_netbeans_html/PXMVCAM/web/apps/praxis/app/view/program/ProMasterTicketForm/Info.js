@@ -1475,9 +1475,144 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                             ]
                         }
                     ]
+                } 
+            ]
+            
+        },
+        {
+            xtype: 'panel',
+            id: prototype.id + '-vskOpcionPurge',
+            border: true,
+            margin: '2 0 0 0',
+            activeTab: 1,
+            fieldStyle: 'text-align:right;',
+            //overflowY: 'scroll',
+            resizable: {
+                handles: 's'
+            },
+            defaults: {
+                bodyStyle: 'background-color: #E3EAF9;',
+//                border: true,
+                height: 25
+            },
+            layout: {
+                type: 'hbox',
+                pack: 'end'
+            },
+            items: [
+                
+                {
+                    xtype: 'button',
+                    id: prototype.id + '-btnPurge',
+                    margin: '0 30 0 0',
+                    text: '<strong style="color:white;">Purge<strong>',
+                    cls: 'x-btn-sent',
+                    overCls: 'x-btn-sent-over',
+                    width: 100,
+                    listeners: {
+                        click: 'btnButtonPurge_clickHandler'
+                    }
                 }
+                  
             ]
         },
+        // <editor-fold defaultstate="collapsed" desc="gridDataPurge">
+        {
+            xtype: 'panel',
+            id: prototype.id + '-vskDataPurge',
+            border: true,
+            margin: '2 0 0 0',
+            activeTab: 1,
+            //overflowY: 'scroll',
+            resizable: {
+                handles: 's'
+            },
+            defaults: {
+                bodyStyle: 'background-color: #E3EAF9;',
+//                border: true,
+                height: 50
+            },
+            items: [
+                
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-gridDataPurge',
+                    width: 1752,
+                    height: 50,
+                    layout: 'fit',
+                    resizable: {
+                        handles: 's'
+                    },
+                    border: true,
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        items: [
+                            {
+                                text: 'MODE', dataIndex: 'A4474MODO', width: 60,
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var data = record.data;
+                                            metaData.style = 'text-align:center;';                                                   
+
+                                            var rtn = '';
+                                            switch(data.A4474MODO.trim()){
+                                                    case 'S': rtn = 'SALE'; break;
+                                                    case 'M': rtn = 'MEMO'; break;
+                                                    case 'J': rtn = 'EXCH'; break;
+                                                    case 'I': rtn = 'TAXC'; break;
+                                                    case 'R': 
+                                                                if(data.A4474MODO.trim() === 'RFTX')
+                                                                    rtn = 'RFTX';
+                                                                else
+                                                                    rtn = 'RFND';
+                                                                break;                                                        
+                                                    case 'F': rtn = 'FLWN'; break;
+                                                    case 'C': rtn = 'COMM'; break;
+                                                    case 'L': rtn = 'IPAY'; break;
+                                                    case 'A': 
+                                                                if(data.A4474MODO.trim() === 'R')
+                                                                    rtn = 'PYMR';
+                                                                else if(data.A4474MODO.trim() === 'S')
+                                                                    rtn = 'PYMS';
+                                                                else
+                                                                    rtn = 'PYMT';
+                                                                break;
+                                                    case 'K': rtn = 'PYMT'; break;
+                                                    case 'P': rtn = 'PLSG'; break;
+                                                    case 'B': rtn = 'CBCK'; break;
+                                                    case 'O': rtn = 'COMM'; break;
+                                                    default: rtn = data.A4474MODO.trim();
+                                            }
+
+                                            return rtn;
+                                        }
+                            },
+                            {
+                                text: 'PROCESS DATE', dataIndex: 'A4474FPROC', width: 120
+                            },
+                            {
+                                text: 'CIA', dataIndex: 'A4474CIA', width: 80
+                            },
+                            {
+                                text: 'FORMA', dataIndex: 'A4474FORMA', width: 80
+                            },
+                            {
+                                text: 'SERIE', dataIndex: 'A4474SERIE', width: 80
+                            },
+                            {
+                                text: 'SEQ', dataIndex: 'A4474SEQRO', width: 80
+                            }
+                        ]
+                    }
+                }
+                  
+            ]
+        },
+        // </editor-fold> 
         {
             xtype: 'panel',
             id: prototype.id + '-vskData',

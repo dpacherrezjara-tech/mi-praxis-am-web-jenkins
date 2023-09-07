@@ -63,6 +63,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+import net.miatech.beans.A4474Filter;
 import net.miatech.beans.PX0094S01A007Filter;
 import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
@@ -165,6 +166,37 @@ public class ProMasterTicketController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/loadPurge")
+    public @ResponseBody
+    String loadPurge(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- loadPurge -------------");
+        try {
+            A4474Filter filter = new A4474Filter();
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<A4474Filter> lst_Accounting = logic.loadSQP05045(filter);
+            
+            map.put("success", true);
+            map.put("lst_PurgeAccounting", lst_Accounting);
+            map.put("total", lst_Accounting.size() > 0 ? lst_Accounting.size() : 0);
+        }catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+        //List<PX040S01A1716Filter> lst = this.getList(request, false);
+        //System.out.println("Total : " + lst.size());
+        //map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        //map.put("data", lst);
+        //return new Gson().toJson(map);
     }
     
     @RequestMapping(value = "/loadSabre")
