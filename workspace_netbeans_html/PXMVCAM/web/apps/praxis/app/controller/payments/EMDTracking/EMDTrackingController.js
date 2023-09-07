@@ -220,14 +220,29 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
         };
     },
     btnSearch_click: function (obj, e) {
-
         if ($(Ext.getCmp(prototype.id + '-chkLog')).prop('checked')) {
-            this.setFormatParameter2();
-            Ext.getCmp(prototype.id + '-pie').setVisible(false);
-            Ext.getCmp(prototype.id + '-txtTICKET').setVisible(false);
-            console.log('es vacío');
-            this.setGridDataLog();
 
+            Ext.getCmp(prototype.id + '-txtTICKET').setVisible(true);
+            if (Ext.getCmp(prototype.id + '-txtTICKET').getValue().trim() !== '') {
+                console.log('2');
+                me.drillDown.push(me.panelActual);
+                me.panelActual = '-panelGridDataDetTicketLog';
+                global.selectedChild(me.childs, prototype.id + me.panelActual);
+                this.beanLog.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                this.beanLog.TDOC = '';
+                this.beanLog.FECR = '';
+                var a = 'N';
+                console.log(this.beanLog);
+
+                me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
+                this.setGridDataDetTicketLog(a);
+            } else {
+                this.setFormatParameter2();
+                Ext.getCmp(prototype.id + '-pie').setVisible(false);
+                Ext.getCmp(prototype.id + '-txtTICKET').setVisible(true);
+                console.log('es log');
+                this.setGridDataLog();
+            }
         } else {
             Ext.getCmp(prototype.id + '-txtTICKET').setVisible(true);
             this.setFormatParameter();
@@ -244,7 +259,7 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                 this.setGridDataDetEMDTicket();
             } else {
                 Ext.getCmp(prototype.id + '-pie').setVisible(false);
-                console.log('es vacío');
+                console.log('es nrl');
                 this.setGridData();
             }
         }
@@ -462,10 +477,11 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 
         this.beanLog.FECR = rowData.data.DCREATION;
         this.beanLog.TDOC = '2';
+        this.beanLog.IN_TKT = '';
         console.log(this.beanEMD);
-
+        var a = '';
         me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
-        this.setGridDataDetTicketLog();
+        this.setGridDataDetTicketLog(a);
     },
     onGridDetTicketLogRChar: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -475,26 +491,27 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
 
         this.beanLog.FECR = rowData.data.DCREATION;
         this.beanLog.TDOC = '3';
+        this.beanLog.IN_TKT = '';
         console.log(this.beanEMD);
-
+        var a = '';
         me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
-        this.setGridDataDetTicketLog();
+        this.setGridDataDetTicketLog(a);
     },
     onGridDetTicketLogOChar: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataDetTicketLog';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-
         this.beanLog.FECR = rowData.data.DCREATION;
         this.beanLog.TDOC = 'T';
+        this.beanLog.IN_TKT = '';
         console.log(this.beanEMD);
-
+        var a = '';
         me.paramsDetailTicketLog.beanString = JSON.stringify(this.beanLog);
-        this.setGridDataDetTicketLog();
+        this.setGridDataDetTicketLog(a);
     },
     // <editor-fold defaultstate="collapsed" desc="setGridDataDetTicketLog">
-    setGridDataDetTicketLog: function () {
+    setGridDataDetTicketLog: function (a) {
         win.lblUser_toolTip("Estructura: A3755 A2331");
         me.panelActual = '-panelGridDataDetTicketLog';
         me.setWidthPie();
@@ -526,14 +543,21 @@ Ext.define('Ext.Praxis.controller.payments.EMDTracking.EMDTrackingController', {
                                 var obj = obj.data.items[0].data;
                                 var tipo = '';
                                 if (obj.TDOC === '2') {
-                                    tipo = 'ChargeBack';
+                                    tipo = ' - ChargeBack';
                                 } else if (obj.TDOC === '3') {
-                                    tipo = 'Reverse ChargeBack';
+                                    tipo = ' - Reverse ChargeBack';
                                 } else if (obj.TDOC === 'T') {
-                                    tipo = 'Others';
+                                    tipo = ' - Others';
                                 }
-                                Ext.getCmp(prototype.id + '-panelGridDataDetTicketLog').setTitle('<center style="font-size:12px;"> Create Date ' + obj.strFormatDate + ' - ' + tipo + '</center>');
-
+                                if (a === 'N') {
+                                    //NADINE
+                                } else {
+                                    if (obj.TDOC !== '' && obj.TDOC !== null) {
+                                        Ext.getCmp(prototype.id + '-panelGridDataDetTicketLog').setTitle('<center style="font-size:12px;"> Create Date ' + obj.strFormatDate + tipo + '</center>');
+                                    } else {
+                                        Ext.getCmp(prototype.id + '-panelGridDataDetTicketLog').setTitle('<center style="font-size:12px;"> Create Date ' + obj.strFormatDate + '</center>');
+                                    }
+                                }
 
                             } else {
                                 global.Msg({msg: 'Data not found'});
