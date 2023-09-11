@@ -264,7 +264,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         me.bean.IN_DATEF = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
         me.bean.IN_DATET = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
+        me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue()||'';
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
 
@@ -545,11 +545,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         }
     },
     exportExcel: function () {
-
+        console.log(me.panelActual);
         this.setFormatParameter();
         switch (me.panelActual) {
-            case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+            case  '-boxAdjustment':
+                global.getFile(`${prototype.url}/searchAdjustmentXLSX?${new URLSearchParams(JSON.parse(searchParams.beanString))}`);
                 break;
             default:
                 global.Msg(

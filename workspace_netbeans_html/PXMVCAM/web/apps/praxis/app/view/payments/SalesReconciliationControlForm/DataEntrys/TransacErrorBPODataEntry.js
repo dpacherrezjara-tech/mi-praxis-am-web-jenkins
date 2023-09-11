@@ -1,12 +1,13 @@
-prototype.idDE = prototype.id + '-DataEntryTransacErrorBPO';
+prototype.idDE = prototype.id + '-TransacErrorBPODataEntry';
 
-Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacErrorBPO', {
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryTransacErrorBPOController',
+    alias: 'widget.TransacErrorBPODataEntry',
     requires: [
-        'Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransacErrorBPOController'
+        'Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErrorBPODataEntryController',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry'
     ],
-    controller: 'DataEntryTransacErrorBPOController',
+    controller: 'TransacErrorBPODataEntryController',
     title: 'Transaction Error - Form',
     header: true,
     height: 850,
@@ -138,7 +139,18 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                     name: 'fcompl',
                                     fieldLabel: 'Flag Complement',
                                     labelWidth: 120,
-                                    width: 200
+                                    width: 230,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                '1': 'Plusgrade',
+                                                '2': 'Ligas',
+                                                '3': 'Tablet',
+                                                '4': 'BPO'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -259,6 +271,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                     name: 'desc_ADJU',
                                     fieldLabel: 'Description',
                                     labelWidth: 100,
+                                    width: 380
+                                },
+                                {
+                                    name: 'adjucoment',
+                                    fieldLabel: 'BPO Comment',
+                                    labelWidth: 110,
+                                    fieldStyle: 'text-align:left;',
+                                    padding:'5 0 5 0',
                                     width: 400
                                 }
                             ]
@@ -283,7 +303,16 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                     name: 'fselec',
                                     fieldLabel: 'Flag Selection',
                                     labelWidth: 110,
-                                    width: 200
+                                    width: 200,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                'L': 'Load',
+                                                'D': 'Duplicated'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
                                 },
                                 {
                                     name: 'cerror',
@@ -295,7 +324,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                     name: 'desc_ERROR',
                                     fieldLabel: 'Description',
                                     labelWidth: 100,
-                                    width: 400
+                                    width: 380
                                 }
                             ]
                         }
@@ -538,7 +567,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             iconCls: 'prx-icon-update',
                                             tooltip: 'MSI Tracking',
                                             listeners: {
-                                                click: 'msiTracking_keyDownHandler'
+                                                click: 'onClickMSITracking'
                                             }
                                         }
                                     ]
@@ -575,7 +604,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                     fieldLabel: 'Ref. Ticket',
                                     labelWidth: 120,
                                     width: 250,
-                                    editable: true
+                                    editable: false
 
                                 },
                                 {
@@ -583,7 +612,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                     fieldLabel: 'Ref. PNR',
                                     labelWidth: 120,
                                     width: 190,
-                                    editable: true
+                                    editable: false
                                 }
                             ]
                         },
@@ -644,10 +673,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                 //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="Scanner">
                 {
-                    xtype: 'form',
+                    xtype: 'panel',
                     width: '98%',
                     border: false,
-                    id: prototype.idDE + '-scannerForm',
+                    id: prototype.idDE + '-scannerPanel',
                     layout: {
                         type: 'vbox',
                         align: 'center'
@@ -667,105 +696,178 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                             style: {
                                 backgroundColor: '#EFE3D2' // Cambiar el color de fondo a gris claro (#f0f0f0)
                             },
-                            defaults: {
-                                xtype: 'textfield',
-                                margin: '3 5 3 5',
-                                fieldStyle: 'text-align:center;font-weight: bolder;'
-                            },
                             items: [
                                 {
-                                    fieldLabel: 'Add Ticket',
-                                    name: 'addTicket',
-                                    labelWidth: 70,
-                                    width: 180
-                                },
-                                {
-                                    fieldLabel: 'Add C. Card',
-                                    labelWidth: 70,
-                                    name: 'addBin',
-                                    width: 180
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: '*****(*)'
-                                },
-                                {
-                                    width: 70
-                                },
-                                {
-                                    fieldLabel: 'Auth. Code',
-                                    name: 'addAuth',
-                                    labelWidth: 70,
-                                    width: 180
-                                },
-                                {
-                                    xtype: 'datefield',
-                                    fieldLabel: 'Sale Date',
-                                    name: 'addSaleDate',
-                                    labelWidth: 70,
-                                    width: 170,
-                                    format: 'Ymd',
-                                    editable: false,
-                                    value: new Date()
-                                },
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    iconCls: 'prx-icon-add',
-                                    tooltip: 'Add',
-                                    listeners: {
-                                        click: 'addCreditCard_keyDownHandler'
-                                    }
-
-                                },
-                                {
-                                    xtype: 'checkbox',
-                                    id: prototype.idDE + '-chkForceBlock',
-                                    //tooltip: 'Force add Blocked',
-                                    inputValue: true,
-                                    listeners: {
-                                        change: function (checkbox, newValue, oldValue, eOpts) {
-                                            if (!newValue) {
-                                                return;
-                                            }
-                                            // Mostrar una ventana de confirmación al hacer clic
-                                            Ext.Msg.confirm('Confirm', '¿Do you want to force scan?', function (buttonId) {
-                                                if (buttonId === 'yes') {
-                                                    // Continuar con el cambio
-                                                    checkbox.setValue(newValue);
-                                                } else {
-                                                    // Cancelar el cambio
-                                                    checkbox.setValue(oldValue);
+                                    xtype: 'form',
+                                    id: prototype.idDE + '-scannerForm',
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    width: '100%',
+                                    border: false,
+                                    bodyStyle: 'background: transparent',
+                                    defaults: {
+                                        xtype: 'textfield',
+                                        margin: '2 5 2 5',
+                                        labelStyle: 'text-align:right;font-weight: bolder;',
+                                        fieldStyle: 'text-align:center;'
+                                    },
+                                    items: [
+                                        {
+                                            fieldLabel: 'Ticket',
+                                            name: 'IN_TICKET',
+                                            labelWidth: 60,
+                                            width: 155,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 13,
+                                            enforceMaxLength: true,
+                                            validator: function (value) {
+                                                if (value.length < 13 && value.length !== 0) {
+                                                    return 'Invalid Ticket Number';
                                                 }
-                                            });
+                                                return true;
+                                            }
                                         },
-                                        render: function (checkbox) {
-                                            checkbox.getEl().set({
-                                                'data-qtip': 'Force add Blocked'
-                                            });
+                                        {
+                                            fieldLabel: 'PNR',
+                                            name: 'IN_SPNR',
+                                            labelWidth: 40,
+                                            width: 120,
+                                            maxLength: 6,
+                                            enforceMaxLength: true,
+                                            maskRe: /[a-zA-Z0-9]/,
+                                            validator: function (value) {
+                                                if (value.length < 6 && value.length !== 0) {
+                                                    return 'Invalid PNR';
+                                                }
+                                                return true;
+                                            },
+                                            listeners: {
+                                                change: function (field, newValue, oldValue) {
+                                                    field.setValue(newValue.toUpperCase());
+                                                }
+                                            }
+                                        },
+                                        {
+                                            fieldLabel: 'C. Card',
+                                            labelWidth: 55,
+                                            name: 'creditcard',
+                                            width: 125,
+                                            maxLength: 6,
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9]/
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            text: '*****(*)'
+                                        },
+                                        {
+                                            width: 50,
+                                            name: 'creditcard',
+                                            maxLength: 4,
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9]/
+                                        },
+                                        {
+                                            fieldLabel: 'Auth',
+                                            name: 'IN_SAUTHOC',
+                                            labelWidth: 45,
+                                            width: 115,
+                                            maxLength: 6,
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9]/
+                                        },
+                                        {
+                                            fieldLabel: 'Agent',
+                                            name: 'IN_SAGENT',
+                                            labelWidth: 50,
+                                            width: 130,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 10,
+                                            enforceMaxLength: true
+                                        },
+                                        {
+                                            xtype: 'datefield',
+                                            fieldLabel: 'Sale Date',
+                                            name: 'IN_SDATE',
+                                            labelWidth: 65,
+                                            width: 145,
+                                            format: 'Ymd',
+                                            editable: false,
+                                            value: new Date()
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            iconCls: 'prx-icon-add',
+                                            tooltip: 'Add',
+                                            listeners: {
+                                                click: 'onAddCreditCardClick'
+                                            }
+
+                                        },
+                                        {
+                                            xtype: 'checkbox',
+                                            id: prototype.idDE + '-chkForceBlock',
+                                            //tooltip: 'Force add Blocked',
+                                            inputValue: true,
+                                            listeners: {
+                                                change: function (checkbox, newValue, oldValue, eOpts) {
+                                                    if (!newValue) {
+                                                        return;
+                                                    }
+                                                    // Mostrar una ventana de confirmación al hacer clic
+                                                    Ext.Msg.confirm('Confirm', '¿Do you want to force scan?', function (buttonId) {
+                                                        if (buttonId === 'yes') {
+                                                            // Continuar con el cambio
+                                                            checkbox.setValue(newValue);
+                                                        } else {
+                                                            // Cancelar el cambio
+                                                            checkbox.setValue(oldValue);
+                                                        }
+                                                    });
+                                                },
+                                                render: function (checkbox) {
+                                                    checkbox.getEl().set({
+                                                        'data-qtip': 'Force add Blocked'
+                                                    });
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            iconCls: 'prx-icon-clear',
+                                            tooltip: 'Clean',
+                                            listeners: {
+                                                click: 'onClearScannerInputs'
+                                            }
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 110,
+                                            text: 'Add Duplicated',
+                                            iconCls: 'prx-icon-add',
+                                            tooltip: 'Duplicated',
+                                            listeners: {
+                                                click: 'onAddDuplicated'
+                                            }
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            iconCls: 'prx-icon-bpo-comment',
+                                            tooltip: 'Open BPO Comment',
+                                            listeners: {
+                                                click: 'onOpenComments'
+                                            }
+
                                         }
-                                    }
+                                    ]
                                 },
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    iconCls: 'prx-icon-clear',
-                                    tooltip: 'Clean',
-                                    listeners: {
-                                        click: 'clear_keyDownHandler'
-                                    }
-
-                                },
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    iconCls: 'prx-icon-bpo-comment',
-                                    tooltip: 'Open BPO Comment',
-                                    listeners: {
-                                        click: 'onOpenComments'
-                                    }
-
-                                }
                             ]
                         },
                         {
@@ -867,9 +969,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             maxHeight: 160,
                                             width: '100%',
                                             emptyText: 'No cards available',
-//                                            features: [{
-//                                                    ftype: 'summary',
-//                                                }],
                                             columns: {
                                                 defaults: {
                                                     align: 'center',
@@ -1014,7 +1113,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                 labelWidth: 100,
                                                 submitValue: false,
                                                 width: 150,
-                                                value: '0'
+                                                value: '0',
+                                                //reset:false
                                             },
                                             {
                                                 id: prototype.idDE + '-totAmount',
@@ -1022,7 +1122,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                 labelWidth: 100,
                                                 submitValue: false,
                                                 width: 180,
-                                                value: '0.00'
+                                                value: '0.00',
+                                                //reset:false
                                             },
                                             {
                                                 xtype: 'button',
@@ -1031,6 +1132,15 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                 tooltip: 'Reload Grid',
                                                 listeners: {
                                                     click: 'reloadGridBPO'
+                                                }
+                                            },
+                                            {
+                                                xtype: 'button',
+                                                width: 25,
+                                                iconCls: 'prx-icon-delete',
+                                                tooltip: 'Clean Grid',
+                                                listeners: {
+                                                    click: 'cleanGridBPO'
                                                 }
                                             }
                                         ]
@@ -1057,7 +1167,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             columnLines: true,
                                             autoScroll: true,
                                             minHeight: 100,
+                                            height: 'auto',
+                                            maxHeight: 160,
                                             width: '100%',
+                                            emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
                                                     align: 'center',
@@ -1095,7 +1208,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'scarcod', width: 50
+                                                                text: 'Cod', dataIndex: 'scardcod', width: 50
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'scardn', width: 130
@@ -1138,7 +1251,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         }
                                                     },
                                                     {
-                                                        text: 'Corrl', width: 50, dataIndex: 'corrl'
+                                                        text: 'Qty<br>Uses', width: 50, dataIndex: 'duplicates'
                                                     },
                                                     {
                                                         text: 'Void', width: 50, dataIndex: 'fvoid'
@@ -1160,7 +1273,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                         }, // Distribución horizontal
                                         defaults: {
                                             xtype: 'textfield',
-                                            margin: '3 0 3 5',
+                                            margin: '3 2 3 5',
                                             labelStyle: 'text-align:right;font-weight: bolder;',
                                             fieldStyle: 'text-align:right;',
                                             editable: false
@@ -1420,7 +1533,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                 defaults: {
                                     align: 'center',
                                     menuDisabled: true,
-                                    sortable: true
+                                    sortable: false
                                 },
                                 items: [
                                     {text: 'Status', width: 80,
@@ -1474,7 +1587,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             return value;
                                         }
                                     },
-                                    {header: 'Amount', dataIndex: 'svfops', width: 100, xtype: 'gridcolumn',
+                                    {header: 'Amount', dataIndex: 'svfops', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#F0FA8F";
 
@@ -1504,10 +1617,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                         }
                                     },
                                     {
-                                        text: 'Corrl', dataIndex: 'corrl',width: 50
+                                        text: 'Corrl', dataIndex: 'corrl', width: 50
                                     },
                                     {
-                                        text: 'FVoid', dataIndex: 'fvoid',width: 50
+                                        text: 'FVoid', dataIndex: 'fvoid', width: 50
                                     },
                                     {text: 'Agent', dataIndex: 'sagent', width: 62,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
