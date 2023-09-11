@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 ]
 
             },
-            {text:'User<br>Update',dataIndex:'usup',width:80},
+            {text:'User<br>Update',dataIndex:'usup',width:100},
             {text:'Date<br>Update',dataIndex:'feup',width:80},
             {
                 sortable: false,
