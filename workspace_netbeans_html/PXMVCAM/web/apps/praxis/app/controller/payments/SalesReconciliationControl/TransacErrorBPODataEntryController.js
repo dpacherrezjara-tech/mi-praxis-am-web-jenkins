@@ -466,6 +466,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                             ...data.response.at(0)
                         };
                         adju.trncu = 'ADJU';
+                        adju.svfops = adju.tgrosamoun;
                         adjuStore.insert(0, adju);
                         adjuPanel.show();
                         console.log(data.response.at(0));
