@@ -372,13 +372,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         if (params.creditcard.at(0) !== '' && params.creditcard.at(1) !== '') {
             params.IN_SCARDN = `${params.creditcard.at(0)}%${params.creditcard.at(1)}%`;
         }
-
-        if (params.IN_TICKET === '' || !params.IN_SCARDN) {
+        console.log(params);
+        if (params.IN_TICKET === '' || params.IN_SCARDN ==='undefined') {
             global.Msg({msg: 'Invalid Parameters'});
             scannerPanel.unmask();
             return;
         }
-        console.log(params);
         const forceScan = Ext.getCmp(prototype.idDE + '-chkForceBlock').getValue();
         const bpoStore = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
         const dataStore = bpoStore.getData().getRange();
@@ -466,6 +465,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                             ...data.response.at(0)
                         };
                         adju.trncu = 'ADJU';
+                        adju.svfops = adju.tgrosamoun;
                         adjuStore.insert(0, adju);
                         adjuPanel.show();
                         console.log(data.response.at(0));
