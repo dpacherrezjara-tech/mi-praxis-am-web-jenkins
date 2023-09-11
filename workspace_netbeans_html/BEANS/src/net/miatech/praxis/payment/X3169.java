@@ -61,6 +61,16 @@ public class X3169 {
         return TDOC;
     }
 
+    private String TRNCU;
+
+    public void setTRNCU(String TRNCU) {
+        this.TRNCU = TRNCU;
+    }
+
+    public String getTRNCU() {
+        return TRNCU;
+    }
+
     private String FUENTE;
 
     public void setFUENTE(String FUENTE) {
@@ -119,6 +129,26 @@ public class X3169 {
 
     public String getPAYDATE() {
         return PAYDATE;
+    }
+
+    private String CARDTYPE;
+
+    public void setCARDTYPE(String CARDTYPE) {
+        this.CARDTYPE = CARDTYPE;
+    }
+
+    public String getCARDTYPE() {
+        return CARDTYPE;
+    }
+
+    private String SCARDCOD;
+
+    public void setSCARDCOD(String SCARDCOD) {
+        this.SCARDCOD = SCARDCOD;
+    }
+
+    public String getSCARDCOD() {
+        return SCARDCOD;
     }
 
     private String SCARDN;
@@ -199,6 +229,26 @@ public class X3169 {
 
     public String getSEQ() {
         return SEQ;
+    }
+
+    private String CORRL;
+
+    public void setCORRL(String CORRL) {
+        this.CORRL = CORRL;
+    }
+
+    public String getCORRL() {
+        return CORRL;
+    }
+
+    private String FVOID;
+
+    public void setFVOID(String FVOID) {
+        this.FVOID = FVOID;
+    }
+
+    public String getFVOID() {
+        return FVOID;
     }
 
     private String FCONT;
@@ -359,16 +409,6 @@ public class X3169 {
 
     public String getPROCTYPESQ() {
         return PROCTYPESQ;
-    }
-
-    private String CORRL;
-
-    public void setCORRL(String CORRL) {
-        this.CORRL = CORRL;
-    }
-
-    public String getCORRL() {
-        return CORRL;
     }
 
     private String FORCESCAN;

@@ -1,17 +1,11 @@
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
@@ -20,23 +14,17 @@ import net.miatech.praxis.logic.payments.ReconciliationDoublePaymentLogic;
 import net.miatech.praxis.logic.payments.SalesReconciliAmexLogic;
 import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
+import net.miatech.praxis.payment.filter.A4331NEWFilter;
 import net.miatech.praxis.payment.filter.SQP04955Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05043Filter;
+import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -52,6 +40,10 @@ public class ReconciliationDoublePaymentController extends BaseController {
     private static final Logger logError = Logger.getLogger("errorLog");
     private ReconciliationDoublePaymentLogic logic;
     private MasterDAO masterDAO;
+    private static String controllerName = "Reconciliation Double Payment";
+    
+    @Autowired
+    private ExportUtils exportUtils;
 
     @RequestMapping(method = RequestMethod.POST)
     public String index(ModelMap map) {
@@ -65,7 +57,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
     String searchAdjustment(@ModelAttribute SQP04955Filter filter) {
         ModelMap map = new ModelMap();
         try {
-            System.out.println("-------------- SalesReconciliAmex : searchAdjustment-------------");
+            System.out.println("-------------- Reconc. Double Payment : searchAdjustment-------------");
             logic = new ReconciliationDoublePaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
             filter = logic.getSQP04955Filter(filter);
@@ -77,6 +69,74 @@ public class ReconciliationDoublePaymentController extends BaseController {
             System.out.println("Error: " + e.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "searchAdjustmentXLSX")
+    public ResponseEntity<?> searchAdjustmentXLSX(@ModelAttribute SQP04955Filter filter) {
+        try {
+            System.out.println("-------------- Reconc. Double Payment : searchAdjustmentXLSX-------------");
+            logic = new ReconciliationDoublePaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            filter.setExcel(Boolean.TRUE);
+            filter = logic.getSQP04955Filter(filter);
+            List<Object[]> data = new ArrayList<>();
+            Object[] header = new Object[21];
+            header[0] = "Payment Date";
+            header[1] = "Payment Merchant ID";
+            header[2] = "Settl. VS Sales";
+            header[3] = "Refund";
+            header[4] = "Doc. Type";
+            header[5] = "Sales Merchant ID";
+            header[6] = "Description";
+            header[7] = "Invoice Ref. Number PNR";
+            header[8] = "PNR";
+            header[9] = "Indust. Speci. Ref. Number TKT";
+            header[10] = "Card Account Number";
+            header[11] = "Approval Code";
+            header[12] = "Sales Date";
+            header[13] = "Transaction Amount";
+            header[14] = "Payments Tickets";
+            header[15] = "Error Code";
+            header[16] = "Error Description";
+            header[17] = "Refund Bank Date";
+            header[18] = "Refund Bank Operation";
+            header[19] = "Refund Bank Agent";
+            header[20] = "Refund Bank Auth";
+            data.add(header);
+            for(A4331NEWFilter obj : filter.getResponse()){
+                Object[] row = new Object[21];
+                row[0] = obj.getPaydate();
+                row[1] = obj.getPmerchid();
+                row[2] = Arrays.asList("1","5","6","7").contains(obj.getStval())?"Match":"Pending";
+                row[3] = obj.getStrfnd();
+                row[4] = obj.getTranstype();
+                row[5] = obj.getSmerchid();
+                row[6] = obj.getDES_SMERCHANT();
+                row[7] = obj.getInvoirn();
+                row[8] = obj.getSpnr();
+                row[9] = obj.getTicket();
+                row[10] = obj.getScardn();
+                row[11] = obj.getSauthoc();
+                row[12] = obj.getSdate();
+                row[13] = obj.getTgrosamoun();
+                row[14] = obj.getQtytkt();
+                row[15] = obj.getCerror();
+                row[16] = obj.getDES_CERROR();
+                row[17] = obj.getRfdate();
+                row[18] = obj.getRfoperb();
+                row[19] = obj.getRfaudit();
+                row[20] = obj.getRfautor();
+                data.add(row);
+            }
+            String fileName = controllerName + " - " + 
+                    (filter.getIN_TGRID().equals("V")?"Void":"Double Payment") + 
+                    " " + Functions.getFechaActual();
+            
+            return exportUtils.createExcel(data,fileName);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     
     @RequestMapping(value = "searchTicketsSettlement")

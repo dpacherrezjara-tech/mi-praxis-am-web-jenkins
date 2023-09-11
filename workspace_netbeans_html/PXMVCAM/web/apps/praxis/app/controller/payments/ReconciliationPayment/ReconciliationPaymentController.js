@@ -2567,10 +2567,21 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
         console.log(rec);
         this.winDataEntryError('U', rec, all, rowIndex);
     },
+    onEditClick2: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        //console.log(rec);
+        this.winDataEntryError2(rec);
+    },
+    winDataEntryError2: function(rec){
+        Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacErrorBPO', {
+            id: prototype.id + '-dataEntryTransacErrorBPO',
+            obj:rec.data
+        }).show();
+    },
     winDataEntryError: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-
+        
         Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTransaction', {
             id: prototype.id + '-dataEntryError',
             params: {

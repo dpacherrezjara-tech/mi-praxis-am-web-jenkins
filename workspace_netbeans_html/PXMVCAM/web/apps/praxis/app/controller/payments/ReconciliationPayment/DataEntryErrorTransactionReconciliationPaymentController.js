@@ -623,6 +623,13 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                         buttons: Ext.MessageBox.OK
                     });
                 }
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Error',
+                    message: 'Transaction not saved',
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.MessageBox.OK
+                });
             }
             Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().load();
             me.view.close();
