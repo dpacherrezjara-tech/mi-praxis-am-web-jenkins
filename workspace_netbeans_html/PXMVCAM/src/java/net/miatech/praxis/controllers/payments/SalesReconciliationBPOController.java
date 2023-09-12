@@ -1,6 +1,5 @@
 package net.miatech.praxis.controllers.payments;
 
-import net.miatech.praxis.logic.payments.ReconciliationPaymentLogic;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -14,6 +13,8 @@ import net.miatech.praxis.payment.filter.SQP05059Filter;
 import net.miatech.praxis.payment.filter.SQP05060Filter;
 import net.miatech.praxis.payment.filter.SQP05061Filter;
 import net.miatech.praxis.payment.filter.SQP05062Filter;
+import net.miatech.praxis.payment.filter.SQP05063Filter;
+import net.miatech.praxis.payment.filter.SQP05065Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -192,6 +193,30 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingInfo-------------");
         try {
             SQP05061Filter filter = logic.loadSQP05061Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "maintenanceReverseMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceReverseMSITracking(@RequestBody SQP05063Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceReverseMSITracking-------------");
+        try {
+            SQP05063Filter filter = logic.loadSQP05063Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "maintenanceMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05065Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceMSITracking-------------");
+        try {
+            SQP05065Filter filter = logic.loadSQP05065Filter(params);
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
