@@ -30,6 +30,7 @@ import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
+import net.miatech.praxis.payment.filter.SQP05048OLDFilter;
 import net.miatech.praxis.payment.filter.SQP05052Filter;
 import net.miatech.praxis.payment.filter.SQP05054Filter;
 import net.miatech.praxis.payment.filter.SQP05055Filter;
@@ -5234,23 +5235,23 @@ public class ReconciliationPaymentDAO {
         return response;
     }
     
-    public SQP05048Filter loadSQP05048Filter(SQP05048Filter filter)throws Exception{
+    public SQP05048OLDFilter loadSQP05048Filter(SQP05048OLDFilter filter)throws Exception{
         //,CARDTYPE,SCARDCOD,FVOID
-        String sql = "INSERT INTO PRAXISMP.X3169 (CCUST,AREFNBR,CCIA,FORMA,SERIE,SEQ,CORRL,TDOC,PRDA,SVFOPS,SCARDN,SAUTHOC,"
-                + "TRNCU,STVAL,PMERCHID,SMERCHID,PAYDATE,PROCTYPE,PROCTYPESQ,"
-                + "FREGLA,CERROR,FORCESCAN,OBSERV,STMANUAL,"
-                + "FUENTE,FVOID,CARDTYPE,SAGENT,SCARDCOD,SCURRENCY,SCOUNTRY,SDATE,SPNR) "
-                + "VALUES(:CCUST,:AREFNBR,:CCIA,:FORMA,:SERIE,:SEQ,:CORRL,:TDOC,:PRDA,:SVFOPS,:SCARDN,:SAUTHOC,"
-                + ":TRNCU,:STVAL,:PMERCHID,:SMERCHID,:PAYDATE,:PROCTYPE,:PROCTYPESQ,"
-                + ":FREGLA,:CERROR,:FORCESCAN,:OBSERV,:STMANUAL,"
-                + ":FUENTE,:FVOID,:CARDTYPE,:SAGENT,:SCARDCOD,:SCURRENCY,:SCOUNTRY,:SDATE,:SPNR) ";
+         String sql = "INSERT INTO PRAXISMP.X3169 (CCUST, SCOUNTRY, SMERCHID, SCURRENCY, TDOC, FUENTE, CERROR, STVAL, PRDA, "
+                + "PMERCHID, PAYDATE, SCARDN, SAUTHOC, SVFOPS, SPNR, CCIA, FORMA, SERIE, SEQ, SAGENT, SDATE, "
+                + "FREGLA, AREFNBR, PROCTYPE, "
+                + "PROCTYPESQ, CORRL, FORCESCAN, STMANUAL,OBSERV) "
+                + "VALUES(:CCUST, :SCOUNTRY, :SMERCHID, :SCURRENCY, :TDOC, :FUENTE, :CERROR, :STVAL, :PRDA, "
+                + ":PMERCHID, :PAYDATE, :SCARDN, :SAUTHOC, :SVFOPS, :SPNR, :CCIA, :FORMA, :SERIE, :SEQ, :SAGENT, :SDATE, "
+                + ":FREGLA, :AREFNBR, :PROCTYPE, "
+                + ":PROCTYPESQ, :CORRL, :FORCESCAN, :STMANUAL,:OBSERV) ";
         BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
         for (int i = 0; i < filter.getDetail().size(); i++) {
             insertParams[i] = new BeanPropertySqlParameterSource(filter.getDetail().get(i));
         }
         namedParameterJdbcTemplate.batchUpdate(sql, insertParams);
         SimpleJdbcCall spCall = jdbcCall.withSchemaName("PRAXISMP")
-                .withProcedureName("SQP05048V2");
+                .withProcedureName("SQP05048");
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));

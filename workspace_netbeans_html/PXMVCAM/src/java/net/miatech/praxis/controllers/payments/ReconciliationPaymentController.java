@@ -40,6 +40,7 @@ import net.miatech.praxis.classes.ZipFiles;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
+import net.miatech.praxis.payment.filter.SQP05048OLDFilter;
 import net.miatech.praxis.payment.filter.SQP05052Filter;
 import net.miatech.praxis.payment.filter.SQP05054Filter;
 import net.miatech.praxis.payment.filter.SQP05055Filter;
@@ -9224,13 +9225,13 @@ public class ReconciliationPaymentController extends BaseController {
     }
     
     @RequestMapping(value = "maintenanceErrorTransactionBPO",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> maintenanceErrorTransaction(@RequestBody SQP05048Filter params){
+    public ResponseEntity<?> maintenanceErrorTransaction(@RequestBody SQP05048OLDFilter params){
         System.out.println("-------------- ReconciliationPayment : maintenanceErrorTransactionBPO-------------");
         ModelMap model = new ModelMap();
         try {
             logic = new ReconciliationPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
-            SQP05048Filter filter = logic.loadSQP05048Filter(params);
+            SQP05048OLDFilter filter = logic.loadSQP05048Filter(params);
             model.put("status", filter.getSQLRES());
             model.put("response", filter.getSQLMSG());
             return new ResponseEntity<>(model,HttpStatus.OK);

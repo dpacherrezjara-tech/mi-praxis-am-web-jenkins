@@ -19,6 +19,7 @@ import net.miatech.praxis.payment.filter.A4118Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
+import net.miatech.praxis.payment.filter.SQP05048OLDFilter;
 import net.miatech.praxis.payment.filter.SQP05052Filter;
 import net.miatech.praxis.payment.filter.SQP05054Filter;
 import net.miatech.praxis.payment.filter.SQP05055Filter;
@@ -194,7 +195,7 @@ public class ReconciliationPaymentLogic {
         return ReconciliationPaymentDAO.loadSQP05004Filter(filter);
     }
     
-    public SQP05048Filter loadSQP05048Filter(SQP05048Filter filter)throws Exception{
+    public SQP05048OLDFilter loadSQP05048Filter(SQP05048OLDFilter filter)throws Exception{
         return ReconciliationPaymentDAO.loadSQP05048Filter(filter);
     }
     
