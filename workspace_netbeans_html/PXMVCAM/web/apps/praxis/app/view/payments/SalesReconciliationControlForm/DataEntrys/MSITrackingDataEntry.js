@@ -33,6 +33,30 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             height: 'auto',
             maxHeight: 400,
             width: '100%',
+            selModel: {
+                type: 'checkboxmodel',
+                checkboxSelect: false,
+                checkOnly: true, // Solo permitir selección a través de casillas de verificación
+                listeners: {
+                    selectionchange: function (sm, seleccionados) {
+                        if (seleccionados.length > 3) {
+                            // Desseleccionar los registros adicionales si se supera el límite de 3
+                            sm.deselect(seleccionados.slice(3));
+                        }
+                    },
+                    beforedeselect: function (selModel, record, index) {
+                        if (record.data.main) {
+                            return false;
+                        }
+                    },
+                    beforeselect: function (selModel, record, index) {
+                        const match = ['1', '5', '6', '7'];
+                        if (match.some(x => record.data.stval === x)) {
+                            return false;
+                        }
+                    }
+                }
+            },
             columns: {
                 defaults: {
                     align: 'center',
@@ -109,6 +133,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     },
                     {
                         text: 'Auth Code', dataIndex: 'sauthoc', width: 100
+                    },
+                    {
+                        text: 'Match Reference', dataIndex: 'observa', width: 150,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;color:red;";
+                            return value;
+                        }
                     }
                 ]
             }
@@ -130,10 +161,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             items: [
                 {
                     text: 'Update',
-                    id: prototype.idMSI + '-btn-update',
+                    id: prototype.idMSI + '-btn-update-msi',
                     iconCls: 'prx-icon-update',
                     listeners: {
-                        click: 'onUpdateClick'
+                        click: 'onUpdateMSI'
+                    }
+                },
+                {
+                    text: 'Update Reverse MSI',
+                    id: prototype.idMSI + '-btn-update-rmsi',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateReverseMSI'
                     }
                 },
                 {

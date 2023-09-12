@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     bean: {},
     init: function (view) {
     },
-    afterRender: async function (obj, e) {
+    afterRender: async function () {
         //console.log(this.view.obj);
         this.view.mask('Loading...');
         await this.getCodeAdjustments();
@@ -373,7 +373,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             params.IN_SCARDN = `${params.creditcard.at(0)}%${params.creditcard.at(1)}%`;
         }
         console.log(params);
-        if (params.IN_TICKET === '' || params.IN_SCARDN ==='undefined') {
+        if (params.IN_TICKET === '' || params.IN_SCARDN === 'undefined') {
             global.Msg({msg: 'Invalid Parameters'});
             scannerPanel.unmask();
             return;
@@ -560,17 +560,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onClickMSITracking: function () {
         const me = this;
         let params = {
-            IN_CCUST:'139',
-            IN_TGROSAMOUN:me.bean.tgrosamoun
+            IN_CCUST: '139',
+            IN_TGROSAMOUN: me.bean.tgrosamoun
         };
-        if(me.bean.proctype==='BANORTE00'){
-            params.IN_SCARDN =`${me.bean.scardn.slice(0,6)}%${me.bean.scardn.slice(-2)}%` ;
-        }else{
-            params.IN_SCARDN =`${me.bean.scardn.slice(0,6)}%${me.bean.scardn.slice(-4)}%` ;
+        if (me.bean.proctype === 'BANORTE00') {
+            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-2)}%`;
+        } else {
+            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
         }
         const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
             id: prototype.idDE + '-MSITrackingDataEntry',
-            searchParams:params
+            searchParams: params,
+            obj: me.bean
         });
         dataEntryMSI.show();
     },

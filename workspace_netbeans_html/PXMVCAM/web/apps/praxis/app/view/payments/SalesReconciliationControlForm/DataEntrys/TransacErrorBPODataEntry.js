@@ -776,7 +776,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             width: 115,
                                             maxLength: 6,
                                             enforceMaxLength: true,
-                                            maskRe: /[0-9]/
+                                            maskRe: /[a-zA-Z0-9]/
                                         },
                                         {
                                             fieldLabel: 'Agent',
