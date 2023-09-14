@@ -2574,7 +2574,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.ReconciliationP
     },
     winDataEntryError2: function(rec){
         Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacErrorBPO', {
-            id: prototype.id + '-dataEntryTransacErrorBPO',
+            id: prototype.id + '-ByPaymentDetailGrid-1',
             obj:rec.data
         }).show();
     },

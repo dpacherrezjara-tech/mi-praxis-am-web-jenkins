@@ -480,4 +480,35 @@ public class X3169 {
     public String getPGMCR() {
         return PGMCR;
     }
+    
+    private String GRUPO;
+
+    public String getGRUPO() {
+        return GRUPO;
+    }
+
+    public void setGRUPO(String GRUPO) {
+        this.GRUPO = GRUPO;
+    }
+    
+    private String CODEPR;
+
+    public String getCODEPR() {
+        return CODEPR;
+    }
+
+    public void setCODEPR(String CODEPR) {
+        this.CODEPR = CODEPR;
+    }
+    
+    private String CANAL;
+
+    public String getCANAL() {
+        return CANAL;
+    }
+
+    public void setCANAL(String CANAL) {
+        this.CANAL = CANAL;
+    }
+    
 }

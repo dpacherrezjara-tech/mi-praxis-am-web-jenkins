@@ -5,9 +5,10 @@ package net.miatech.praxis.payment.filter;
  * @author Dvicente
  */
 public class ScannerFilter {
-    private String TRNCU,SPNR,SDATE,SAGENT,FUENTE,
+    private String CCUST,TRNCU,SPNR,SDATE,SAGENT,FUENTE,
             SEQ,CCIA,FORMA,SERIE,CORRL,
-            CARDTYPE,SCARDCOD,SCURRENCY,SCARDN,SAUTHOC,FVOID;
+            CARDTYPE,SCARDCOD,SCURRENCY,SCARDN,SAUTHOC,FVOID,
+            CODEPR,GRUPO,CANAL;
     private Double SVFOPS,TGROSAMOUN;
     private Integer DUPLICATES;
 
@@ -161,5 +162,37 @@ public class ScannerFilter {
 
     public void setCORRL(String CORRL) {
         this.CORRL = CORRL;
+    }
+
+    public String getCCUST() {
+        return CCUST;
+    }
+
+    public void setCCUST(String CCUST) {
+        this.CCUST = CCUST;
+    }
+
+    public String getCODEPR() {
+        return CODEPR;
+    }
+
+    public void setCODEPR(String CODEPR) {
+        this.CODEPR = CODEPR;
+    }
+
+    public String getGRUPO() {
+        return GRUPO;
+    }
+
+    public void setGRUPO(String GRUPO) {
+        this.GRUPO = GRUPO;
+    }
+
+    public String getCANAL() {
+        return CANAL;
+    }
+
+    public void setCANAL(String CANAL) {
+        this.CANAL = CANAL;
     }
 }
