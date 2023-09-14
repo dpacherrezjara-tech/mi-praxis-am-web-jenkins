@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackingDataEntryController', {
+Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.MSITrackingDataEntryController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.MSITrackingDataEntryController',
+    alias: 'controller.MSITrackingDataEntryController2',
     url: CONTEXTPATH + '/SalesReconciliationBPO',
     init: function (view) {
     },
@@ -104,8 +104,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
     //<editor-fold defaultstate="collapsed" desc="Maintenance">
     maintenanceMSITracking: async function (grid, seleccionados) {
         const me = this;
-        const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
-        const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
+        const dataEntry = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
+        const gridDet = Ext.getCmp(prototype.id + '-gridMainErrorTransaction');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
         let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE');
@@ -141,25 +141,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                 me.getData();
                 dataEntry.getController().afterRender();
                 gridDet.getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+                me.view.close();
             }
             grid.getView().unmask();
         } else {
             Ext.toast({
-                    html: `<b>Invalid Transactions</b>`,
-                    title: 'Notification',
-                    align: 't',
-                    closable: true,
-                    iconCls: 'prx-icon-image-log',
-                    width: 300,
-                    timeout: 10000 // 10 segundos
-                });
+                html: `<b>Invalid Transactions</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                iconCls: 'prx-icon-image-log',
+                width: 300,
+                timeout: 10000 // 10 segundos
+            });
             grid.getView().unmask();
         }
     },
     maintenanceReverseMSITracking: async function (grid, seleccionados) {
         const me = this;
-        const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
-        const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
+        const dataEntry = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
+        const gridDet = Ext.getCmp(prototype.id + '-gridMainErrorTransaction');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
         let msi = seleccionados.find(x => x.data.transtype.trim() === 'SALE'
@@ -207,6 +210,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                 me.getData();
                 dataEntry.getController().afterRender();
                 gridDet.getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+                me.view.close();
             }
         } else {
             global.Msg({msg: 'Invalid Transactions'});

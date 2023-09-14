@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryErrorT
                         Ext.getCmp(prototype.id + '-openBpoObserv').fireEvent('click', {});
                     }
                 }
-                if (this.bean.TDOC == 'S') {
+                if (this.bean.TDOC === 'S') {
                     Ext.getCmp(prototype.id + '-btn-update-tdoc').setText('Change to Refund');
                 } else {
                     Ext.getCmp(prototype.id + '-btn-update-tdoc').setText('Change to Sales');

@@ -290,7 +290,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.MainErr
                     {
                         sortable: false,
                         xtype: 'actioncolumn',
-                        width: 40,
+                        width: 60,
                         text: 'Edit v2',
                         align: 'center',
                         items: [
