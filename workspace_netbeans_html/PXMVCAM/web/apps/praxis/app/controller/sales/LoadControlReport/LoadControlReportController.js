@@ -31,19 +31,24 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
             option.show();
     },
     btnExcel_click: function (obj, e) {
-//        Ext.Msg.show({
-//            title: '.:PRAXIS:.',
-//            msg: 'Download Excel ?',
-//            buttons: Ext.MessageBox.OKCANCEL,
-//            scope: this,
-//            icon: Ext.MessageBox.QUESTION,
-//            modal: true,
-//            fn: function(btn) {
-//                if (btn === 'ok') {
-//                    global.getFile(prototype.url + '/getXLSXAPI?beanString=' + encodeURI(JSON.stringify(this.beanXLS)));
-//                }
-//            }
-//        });
+        var beanXLS = {};
+        
+        beanXLS.VP_FPROC1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha01-excel').getValue(), 'Ymd');
+        beanXLS.VP_FPROC2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha02-excel').getValue(), 'Ymd');
+                
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    global.getFile(prototype.url + '/LoadControlReportExcel?beanString=' + encodeURI(JSON.stringify(beanXLS)));
+                }
+            }
+        });
     },
     btnClear_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
@@ -160,7 +165,6 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
         }
     },
     onChangeExportToExcel: function (obj, newValue, oldValue, eOpts) {
-//       console.log(newValue);
         if (newValue) {
             Ext.getCmp(prototype.id + '-fecha01-excel').enable();
             Ext.getCmp(prototype.id + '-fecha02-excel').enable();

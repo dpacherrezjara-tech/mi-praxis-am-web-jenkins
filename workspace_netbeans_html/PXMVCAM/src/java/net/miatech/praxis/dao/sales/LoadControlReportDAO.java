@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.SQP05015Filter;
+import net.miatech.beans.SQP05068Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import static net.miatech.praxis.dao.sales.LoadControlReportDAO.pasarGarbageCollector;
 import org.apache.log4j.Logger;
@@ -191,4 +192,85 @@ public class LoadControlReportDAO {
 
         return lstRtn;
     }
+    
+    //excel
+    public List<SQP05068Filter> getSQP05068Filter(SQP05068Filter filter) throws SQLException, Exception {
+        List<SQP05068Filter> lstRtn = new ArrayList<SQP05068Filter>(0);
+        SQP05068Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP05068(?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+//            cstmt01.registerOutParameter(8, Types.INTEGER);
+//            cstmt01.registerOutParameter(9, Types.INTEGER);
+//            cstmt01.registerOutParameter(10, Types.INTEGER);
+//            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_FPROC1);
+            cstmt01.setString(3, filter.VP_FPROC2);            
+            
+//            cstmt01.setInt(8, filter.page.PAGNUM);
+//            cstmt01.setInt(9, filter.page.PAGROW);
+//            cstmt01.setInt(10, filter.page.TOTPAG);
+//            cstmt01.setInt(11, filter.page.TOTROW);
+            cstmt01.execute();
+//            filter.page.PAGNUM = cstmt01.getInt(8);
+//            filter.page.PAGROW = cstmt01.getInt(9);
+//            filter.page.TOTPAG = cstmt01.getInt(10);
+//            filter.page.TOTROW = cstmt01.getInt(11);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SQP05068Filter();
+                objRtn.A4493CCUST = rs01.getString("A4493CCUST");
+                objRtn.A4493PRDA = rs01.getString("A4493PRDA");
+                objRtn.A4493HOTN = rs01.getInt("A4493HOTN");
+                objRtn.A4493FUENT = rs01.getString("A4493FUENT");                
+                objRtn.A4493PAIS = rs01.getString("A4493PAIS");                
+                objRtn.A4493PAISD = rs01.getString("A4493PAISD");
+                objRtn.A4493MDA = rs01.getString("A4493MDA");                                              
+                                
+                objRtn.A4493STAT = rs01.getString("A4493STAT");
+                objRtn.A4493ISSUD = rs01.getString("A4493ISSUD");
+                objRtn.A4493SALE = rs01.getInt("A4493SALE");
+                objRtn.A4493EXCH = rs01.getInt("A4493EXCH");
+                objRtn.A4493RFND = rs01.getInt("A4493RFND");
+                objRtn.A4493MEMO = rs01.getInt("A4493MEMO");
+                objRtn.A4493VOID = rs01.getInt("A4493VOID");
+                objRtn.A4493LABEL = rs01.getString("A4493LABEL");
+                objRtn.A4493FLAG = rs01.getString("A4493FLAG");
+                
+//                objRtn.page.PAGNUM = filter.page.PAGNUM;
+//                objRtn.page.PAGROW = filter.page.PAGROW;
+//                objRtn.page.TOTPAG = filter.page.TOTPAG;
+//                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
 }

@@ -93,7 +93,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Filters', {
                                             fieldLabel: 'Date from:', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
                                             width: 170, height: 26, fieldStyle: 'text-align:center;font-size:13px;',
                                             format: 'Ymd',
-                                            value: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                                            value: new Date(),
                                             //minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Filters', {
                                                 //change: 'CmbDate_clickHandler'
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        // Ext.getCmp(prototype.id + '-fecha02').focus();
+                                                        // Ext.getCmp(prototype.id + '-fecha02').focus();                                                        
                                                     }
                                                 }
                                             }
@@ -127,6 +127,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Filters', {
                                             maxLength: 3,
                                             //height: 24,
                                             listeners: {
+                                                change: 'onUpperValue',
                                                 keypress: 'onTxtFilterKeypress'
                                             }
                                         },
@@ -142,6 +143,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Filters', {
                                             enforceMaxLength: true,
                                             maxLength: 2,
                                             listeners: {
+                                                change: 'onUpperValue',
                                                 keypress: 'onTxtFilterKeypress'
                                             }
                                         },
