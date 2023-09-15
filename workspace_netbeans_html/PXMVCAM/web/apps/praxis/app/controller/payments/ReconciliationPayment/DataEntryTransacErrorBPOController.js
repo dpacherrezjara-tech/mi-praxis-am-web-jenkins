@@ -54,6 +54,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
 
         Ext.getCmp(prototype.idDE + '-panelAdjustments').hide();
         Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore().removeAll();
+        Ext.getCmp(prototype.idDE + '-codAdjustment').setValue('');
+        Ext.getCmp(prototype.idDE + '-observAdjustment').setValue('');
 
         const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
         const btnReverse = Ext.getCmp(prototype.idDE + '-reverseTrnx');
@@ -618,6 +620,49 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
             obj: me.bean
         });
         dataEntryMSI.show();
+    },
+    onFilterBPOGrid: async function () {
+        const obj = this.bean;
+        const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
+        grid.getView().mask('Loading...');
+        const data = grid.getStore().getData().items;
+        if (data.length === 0) {
+            global.Msg({msg: 'No data in Scanner'});
+            return;
+        }
+        const existeMonto = data.some(x =>
+            x.data.tgrosamoun === obj.tgrosamoun);
+        const existeAutorizacion = data.some(x =>
+            x.data.sauthoc === obj.sauthoc);
+
+        let foundRegis = {};
+
+        if (existeMonto) {
+            foundRegis = grid.getStore().queryBy(function (registro) {
+                return registro.get('tgrosamoun') === obj.tgrosamoun;
+            });
+            grid.getStore().removeAll();
+            foundRegis.items.forEach(x => {
+                grid.getStore().add(x);
+            });
+            let amt = grid.getStore().sum('svfops');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
+        } else if (existeAutorizacion&&!existeMonto) {
+            foundRegis = grid.getStore().queryBy(function (registro) {
+                return registro.get('sauthoc') === obj.sauthoc;
+            });
+            grid.getStore().removeAll();
+            foundRegis.items.forEach(x => {
+                grid.getStore().add(x);
+            });
+            let amt = grid.getStore().sum('svfops');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
+        } else {
+            global.Msg({msg: 'Not found'});
+        }
+        grid.getView().unmask();
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">

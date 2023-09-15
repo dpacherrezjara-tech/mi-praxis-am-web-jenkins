@@ -664,7 +664,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             style: 'font-weight:bold;color:#0B333C;',
                                             name: 'ticket',
                                             fieldStyle: 'text-align:center;',
-                                            editable:false,
+                                            editable: false,
                                             width: 100,
                                             maskRe: /[0-9]/,
                                             enforceMaxLength: true,
@@ -686,7 +686,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             name: 'spnr',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            editable:false,
+                                            editable: false,
                                             enforceMaxLength: true,
                                             maxLength: 6,
                                             width: 100
@@ -1153,6 +1153,16 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                                 click: 'onClearScannerInputs'
                                                             }
 
+                                                        },
+                                                        {
+                                                            xtype: 'button',
+                                                            width: 25,
+                                                            iconCls: 'prx-icon-search',
+                                                            tooltip: 'Find Exact',
+                                                            listeners: {
+                                                                click: 'onFilterBPOGrid'
+                                                            }
+
                                                         }
                                                     ]
                                                 },
@@ -1220,11 +1230,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
 
                                                         }
                                                     ]
-                                                },
+                                                }
                                             ]
-                                        },
+                                        }
                                     ]
                                 },
+                                //<editor-fold defaultstate="collapsed" desc="Stand By Comment">
                                 {
                                     xtype: 'fieldset',
                                     id: prototype.idDE + '-bpoComments',
@@ -1286,6 +1297,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                         }
                                     ]
                                 },
+                                //</editor-fold>
+                                //<editor-fold defaultstate="collapsed" desc="Adju Comment">
                                 {
                                     xtype: 'fieldset',
                                     id: prototype.idDE + '-bpoComments2',
@@ -1315,6 +1328,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                         },
                                     ]
                                 }
+                                //</editor-fold>
                             ]
                         },
 
@@ -1704,13 +1718,13 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                 },
                                                 items: [
                                                     {
-                                                        text: 'Status', width: 80,
+                                                        text: 'Status', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return 'Concil.';
                                                         }
                                                     },
                                                     {
-                                                        text: 'Source', dataIndex: 'fuente', width: 60,
+                                                        text: 'Src', dataIndex: 'fuente', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             const opts = {
                                                                 'S': 'ASR',
@@ -1722,7 +1736,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         }
                                                     },
                                                     {
-                                                        text: 'Doc.<br>Type', dataIndex: 'trncu', width: 80
+                                                        text: 'Doc.<br>Type', dataIndex: 'trncu', width: 60
                                                     },
                                                     {
                                                         text: 'Credit Card',
@@ -1733,13 +1747,13 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'scarcod', width: 50
+                                                                text: 'Cod', dataIndex: 'scarcod', width: 45
                                                             },
                                                             {
-                                                                text: 'Number', dataIndex: 'scardn', width: 150
+                                                                text: 'Number', dataIndex: 'scardn', width: 130
                                                             },
                                                             {
-                                                                text: 'Auth', dataIndex: 'sauthoc', width: 80
+                                                                text: 'Auth', dataIndex: 'sauthoc', width: 55
                                                             },
                                                         ]
                                                     },
@@ -1757,7 +1771,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         text: 'Sales<br>Date', dataIndex: 'sdate', width: 80
                                                     },
                                                     {
-                                                        text: 'PNR', dataIndex: 'spnr', width: 80
+                                                        text: 'PNR', dataIndex: 'spnr', width: 70
                                                     },
                                                     {
                                                         text: 'Ticket', width: 120,
@@ -1769,10 +1783,10 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         }
                                                     },
                                                     {
-                                                        text: 'Corrl', width: 50, dataIndex: 'corrl'
+                                                        text: 'Corrl', width: 45, dataIndex: 'corrl'
                                                     },
                                                     {
-                                                        text: 'Void', width: 50, dataIndex: 'fvoid'
+                                                        text: 'Void', width: 40, dataIndex: 'fvoid'
                                                     },
                                                     {
                                                         text: 'Agent', dataIndex: 'sagent', width: 80
@@ -1895,6 +1909,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             }
                                         ]
                                     },
+                                    plugins: {
+                                        // Agrega el plugin de edición para habilitar la edición en la columna
+                                        ptype: 'cellediting',
+                                        clicksToEdit: 2 // 1 clic para editar
+                                    },
                                     columns: {
                                         defaults: {
                                             align: 'center',
@@ -1954,6 +1973,14 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                 }
                                             },
                                             {header: 'Amount', dataIndex: 'svfops', width: 100,
+                                                editor: {
+                                                    xtype: 'numberfield',
+                                                    allowBlank: false,
+                                                    hideTrigger: true, // Oculta las flechas para incrementar/decrementar
+                                                    keyNavEnabled: false, // Desactiva la navegación con teclado
+                                                    mouseWheelEnabled: false, // Desactiva la rueda del mouse para cambiar el valor
+                                                    maskRe: /[0-9]/
+                                                },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#F0FA8F";
 
