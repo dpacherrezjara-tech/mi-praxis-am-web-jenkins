@@ -615,7 +615,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         } else {
             params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
         }
-        const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEntry', {
+        const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
             id: prototype.idDE + '-MSITrackingDataEntry',
             searchParams: params,
             obj: me.bean
@@ -670,9 +670,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     formatParameters: function (obj) {
         let params = {
             IN_CCUST: '139',
-            IN_PRDA: obj.PRDA,
-            IN_TDOC: obj.TDOC,
-            IN_AREFNBR: obj.AREFNBR
+            IN_PRDA: obj.prda,
+            IN_TDOC: obj.tdoc,
+            IN_AREFNBR: obj.arefnbr
         };
         return params;
     },
