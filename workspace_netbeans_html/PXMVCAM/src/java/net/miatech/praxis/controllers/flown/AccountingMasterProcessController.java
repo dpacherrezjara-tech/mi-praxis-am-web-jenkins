@@ -256,7 +256,7 @@ public class AccountingMasterProcessController extends BaseController {
             
             if(strOption.equals("D")){                
                 switch(filter.A1955MODUL){
-                    case "PFLOWN" :
+                    case "PFLOWNPRE" :
                         logic.reversaFlown(filter);
                         break;
                 }                

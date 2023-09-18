@@ -194,7 +194,7 @@ public class AccountingMasterProcessDAO {
         String STR_RESULT = "";        
         
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00902(?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05071(?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
