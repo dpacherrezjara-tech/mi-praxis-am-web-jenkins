@@ -41,7 +41,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
                 }
             }
         });
-        view.bindStore(store);
+        view.setStore(store);
+        //view.bindStore(store);
     },
     onClickBPO:function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
         const obj = record.data;

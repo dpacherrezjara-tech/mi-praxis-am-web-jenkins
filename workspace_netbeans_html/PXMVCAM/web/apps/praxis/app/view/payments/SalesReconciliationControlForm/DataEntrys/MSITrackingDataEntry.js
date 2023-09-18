@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 },
                 items: [
                     {
-                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden:true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;";
                             return value;
@@ -135,7 +135,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         text: 'Auth Code', dataIndex: 'sauthoc', width: 100
                     },
                     {
-                        text: 'Match Reference', dataIndex: 'observa', width: 150,
+                        text: 'Match Reference', dataIndex: 'observa', width: 150, hidden:true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;color:red;";
                             return value;

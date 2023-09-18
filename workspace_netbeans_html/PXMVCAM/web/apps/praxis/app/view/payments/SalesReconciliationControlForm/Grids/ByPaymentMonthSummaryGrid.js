@@ -1,28 +1,31 @@
-prototype.idTree = prototype.id + '-byPaymentSummaryTree';
-Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentSummaryTree', {
-    extend: 'Ext.tree.Panel', // Extendemos la clase Ext.tree.Panel
-    alias: 'widget.' + prototype.id + '-byPaymentSummaryTree', // Alias para usar en el xtype
+//width: 1370,
+prototype.idGrid = prototype.id + '-byPaymentMonthSummaryGrid';
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid', {
+    extend: 'Ext.grid.Panel',
+    alias: 'widget.' + prototype.id + '-byPaymentMonthSummaryGrid', // Alias para usar en el xtype
     requires: [
-        'Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentSummaryTreeController'
+        'Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentMonthSummaryGridController'
     ],
-    controller: 'ByPaymentSummaryTreeController',
+    controller: 'ByPaymentMonthSummaryGridController',
     title: 'By Payment Summary',
     titleAlign: 'center',
-    height: '98%',
+    height: 'auto',
+    minHeight: 300,
+    maxHeight: prototype.height,
     width: 1370,
-    anchor: '100%',
-    reserveScrollbar: false,
-    scrollable: true,
-    useArrows: true,
-    rootVisible: false,
-    multiSelect: false,
-    columnLines: true,
-    rowLines: true,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
-        markDirty: false
+        markDirty: false,
+        stickyHeader: true
     },
+    scrollable: true,
+    columnLines: true,
+    features: [
+        {
+            ftype: 'summary' // Agrega la característica de resumen al grid
+        }
+    ],
     columns: {
         defaults: {
             menuDisabled: true,
@@ -31,48 +34,29 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
         },
         items: [
             {
-                xtype: 'treecolumn',
-                text: '',
-                id: prototype.idTree + '-colFechaP',
-                dataIndex: 'month',
-                width: 230,
-                enableTextSelection: false,
+                text: 'Processing<br>Date',
+                //id: prototype.idGrid + '-summaryTFECHA',
+                flex: 1,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
-                    switch (record.data.type) {
-                        case 'month':
-                            metaData.style = "text-align:left;font-weight:bold;color:#0000FF;";
-                            break;
-                        case 'processor':
-                            metaData.style = "text-align:left;font-weight:bold;color:#008000;";
-                            value = record.data.proc;
-                            break;
-                        case 'trncu':
-                            metaData.style = "text-align:left;font-weight:bold;color:#8B5199;";
-                            value = record.data.trncu;
-                            break;
+                    metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
+                    if (record.data.paydate) {
+                        value = record.data.paydate;
+                    } else {
+                        value = record.data.prda;
                     }
                     return value;
                 }
             },
             {
-                text: 'Total General', width: 300,
+                text: 'Total General', 
+                //width: 400,
                 defaults: {
                     menuDisabled: true,
                     sortable: true,
                     align: 'center',
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        metaData.style = "text-align:center;background-color:#8EDFB3;text-decoration:underline;cursor:pointer;";
-                        switch (record.data.type) {
-                            case 'month':
-                                metaData.style += "font-weight:bolder;color:#0000FF;";
-                                break;
-                            case 'processor':
-                                metaData.style += "font-weight:bold;color:#316D0A;";
-                                break;
-                            case 'trncu':
-                                metaData.style += "font-weight:bold;color:#8B5199;";
-                                break;
-                        }
+                        metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
+                        metaData.style += "font-weight:bolder;color:#057ECB;";
                         return value;
                     }
                 },
@@ -80,19 +64,51 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     {
                         text: 'Total', dataIndex: 'total', align: 'center', width: 100,
                         listeners: {
-                            click: 'onClickDetail'
+                            click: 'onClickTotal'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
                         }
                     },
                     {
                         text: 'Match', dataIndex: 'total_MATCH', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
                         }
                     },
                     {
                         text: 'Pending', dataIndex: 'total_PENDING', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: '%', align: 'center', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;color:red;";
+                            value = (record.data.total_PENDING / record.data.total) * 100;
+                            return value.toFixed(2) + '%';
+                        },
+                        summaryType: 'customPercent',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            let atributos = Object.keys(summaryData);
+                            let total = atributos[1];
+                            let pending = atributos[3];
+                            let percent = (summaryData[pending] / summaryData[total]) * 100;
+                            return percent.toFixed(2) + '%';
                         }
                     }
                 ]
@@ -104,18 +120,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     sortable: true,
                     align: 'center',
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        metaData.style = "text-align:center;background-color:#94DAF0;text-decoration:underline;cursor:pointer;";
-                        switch (record.data.type) {
-                            case 'month':
-                                metaData.style += "font-weight:bolder;color:#0000FF;";
-                                break;
-                            case 'processor':
-                                metaData.style += "font-weight:bold;color:#316D0A;";
-                                break;
-                            case 'trncu':
-                                metaData.style += "font-weight:bold;color:#8B5199;";
-                                break;
-                        }
+                        metaData.style = "text-align:center;background-color:#BDE1FF;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                        return value;
+                    },
+                    summaryType: 'sum',
+                    summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                        metaData.style = "text-align:center;font-weight:bold;";
                         return value;
                     }
                 },
@@ -145,18 +155,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         sortable: true,
                         align: 'center',
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:center;background-color:#E5F094;text-decoration:underline;cursor:pointer;";
-                            switch (record.data.type) {
-                                case 'month':
-                                    metaData.style += "font-weight:bolder;color:#0000FF;";
-                                    break;
-                                case 'processor':
-                                    metaData.style += "font-weight:bold;color:#316D0A;";
-                                    break;
-                                case 'trncu':
-                                    metaData.style += "font-weight:bold;color:#8B5199;";
-                                    break;
-                            }
+                            metaData.style = "text-align:center;background-color:#FFFFCD;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
                             return value;
                         }
                     }
@@ -166,14 +170,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         text: 'Plusgrade', width: 200,
                         columns: [
                             {
-                                text: 'Match', dataIndex: 'compl_PG_MATCH', align: 'center', width: 100,
+                                text: 'Match', dataIndex: 'total_PG_MATCH', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
 
                             },
                             {
-                                text: 'Pending', dataIndex: 'compl_PG_PENDING', align: 'center', width: 100,
+                                text: 'Pending', dataIndex: 'total_PG_PENDING', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
@@ -184,13 +188,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         text: 'Ligas', width: 200,
                         columns: [
                             {
-                                text: 'Match', dataIndex: 'compl_LIG_MATCH', align: 'center', width: 100,
+                                text: 'Match', dataIndex: 'total_LIG_MATCH', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
                             },
                             {
-                                text: 'Pending', dataIndex: 'compl_LIG_PENDING', align: 'center', width: 100,
+                                text: 'Pending', dataIndex: 'total_LIG_PENDING', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
@@ -201,13 +205,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         text: 'Tablets', width: 200,
                         columns: [
                             {
-                                text: 'Match', dataIndex: 'compl_TAB_MATCH', align: 'center', width: 100,
+                                text: 'Match', dataIndex: 'total_TAB_MATCH', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
                             },
                             {
-                                text: 'Pending', dataIndex: 'compl_TAB_PENDING', align: 'center', width: 100,
+                                text: 'Pending', dataIndex: 'total_TAB_PENDING', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
@@ -234,37 +238,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 listeners: {
                     click: 'downloadExcel'
                 }
-            }
-        ]
-    },
-    lbar: {
-        border: false,
-        items: [
-            {
-                xtype: 'button',
-                icon: 'resources/img/botones/expanded.png',
-                tooltip: 'Expand the tree',
-                id: prototype.idTree + '-btnExpandTree',
-                listeners: {
-                    click: function (button) {
-                        button.up().up().expandAll();
-                    }
-                }
             },
             {
                 xtype: 'button',
-                icon: 'resources/img/botones/collaped.png',
-                tooltip: 'Collapse the tree',
-                id: prototype.idTree + '-btnCollapseTree',
+                scale: 'small',
+                iconCls: 'prx-icon-back',
+                width: 25,
+                tooltip: 'Back',
                 listeners: {
-                    click: function (button) {
-                        button.up().up().collapseAll();
+                    click: function (btn) {
+                        const panel = btn.up().up().up();
+                        const views = panel.items.items;
+                        views.at(-1).destroy();
+                        views.at(-1).show();
                     }
                 }
             }
         ]
     }
-    //store: 'MyTreeStore', // Aquí debes usar el nombre de tu tienda (store)
-
-    // Otras configuraciones y propiedades del TreePanel
 });

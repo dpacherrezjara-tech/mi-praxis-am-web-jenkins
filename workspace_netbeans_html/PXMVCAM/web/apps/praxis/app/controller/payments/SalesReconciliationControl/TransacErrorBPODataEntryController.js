@@ -18,18 +18,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const res = await fetch(`${me.url}/loadErrorTransactionBPOInfo?${new URLSearchParams(params)}`);
         if (res.ok) {
             const data = await res.json();
-            const form = Ext.getCmp(prototype.idDE + '-mainForm').getForm();
-            const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
-            scannerForm.reset();
+            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
             me.limpiaObjetoPX(data.response);
             me.bean = data.response;
             form.reset();
             form.setValues(me.bean);
-            const difference = Ext.getCmp(prototype.idDE + '-amtDifference');
-            let diff = me.bean.tgrosamoun - me.bean.svfops;
-            difference.setValue(Ext.util.Format.number(diff, '0,000.00'));
             me.changePerspective();
-            //console.log('Objecto: ', me.bean);
         }
     },
     getCodeAdjustments: async function () {
@@ -48,47 +42,51 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         const match = ["1", "5", "6", "7"];
         const status = me.bean.stval;
-        //console.log('Status', status);
+        const {tgrosamoun, svfops} = me.bean;
+        Ext.getCmp(prototype.idDE + '-de-txtDIFF_AMOUNT').setValue(Ext.util.Format.number(tgrosamoun - svfops, '0,000.00'));
+
         const bpo = Ext.getCmp(prototype.idDE + '-tabBPO');
         const blocked = Ext.getCmp(prototype.idDE + '-tabBlocked');
         const desglose = Ext.getCmp(prototype.idDE + '-tabDesglose');
-
-        const scannerInputs = Ext.getCmp(prototype.idDE + '-scannerInputs');
-        const standByBpo = Ext.getCmp(prototype.idDE + '-bpoComments');
-        const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
-        const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
-        const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
-        const reverseTrnx = Ext.getCmp(prototype.idDE + '-reverseTrnx');
+        const scanner = Ext.getCmp(prototype.idDE + '-scannerInputs');
+        let adj = me.bean.codadju.trim() === '' ? false : true;
+        const adjucoment = Ext.getCmp(prototype.idDE + '-bpoComments2');
 
         Ext.getCmp(prototype.idDE + '-panelAdjustments').hide();
         Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore().removeAll();
+        Ext.getCmp(prototype.idDE + '-codAdjustment').setValue('');
+        Ext.getCmp(prototype.idDE + '-observAdjustment').setValue('');
 
         const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
+        const btnReverse = Ext.getCmp(prototype.idDE + '-reverseTrnx');
+        const btnMSI = Ext.getCmp(prototype.idDE + '-MatchMSITracking');
 
         //transacciones match
         if (match.includes(status)) {
             bpo.setDisabled(true);
             blocked.setDisabled(true);
             desglose.setDisabled(false);
-            standByBpo.hide();
-            revStandBy.hide();
-            scannerInputs.hide();
-            reverseTrnx.show();
+            scanner.hide();
+            me.showStandBy(false);
+            btnReverse.show();
             btnUpdate.hide();
+            btnMSI.show();
             me.setDesgloseGrid();
-
+            if (adj) {
+                Ext.getCmp(prototype.idDE + '-adjucoment').setValue(me.bean.adjucoment);
+                adjucoment.show();
+            }
             //transacciones stand by    
         } else if (status === '0') {
-            addStandBy.show();
-            revStandBy.show();
             bpo.setDisabled(false);
             blocked.setDisabled(false);
-            scannerInputs.hide();
-            standByBpo.show();
-            hideStandBy.hide();
             desglose.setDisabled(true);
-            reverseTrnx.hide();
+            scanner.hide();
+            me.showStandBy(true);
+            btnReverse.hide();
             btnUpdate.hide();
+            btnMSI.show();
+            adjucoment.hide();
             me.scanCreditCard(me.bean);
 
             //transacciones pendientes
@@ -96,12 +94,60 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             bpo.setDisabled(false);
             blocked.setDisabled(false);
             desglose.setDisabled(true);
-            scannerInputs.show();
-            standByBpo.hide();
-            reverseTrnx.hide();
+            scanner.show();
+            me.showStandBy(false);
+            btnReverse.hide();
             btnUpdate.show();
+            btnMSI.hide();
+            adjucoment.hide();
             me.scanCreditCard(me.bean);
         }
+        me.changeTrnxView(me.bean.transtype);
+        me.setUserInformation(me.bean);
+    },
+    changeTrnxView: function (trnx) {
+        const smerchid = Ext.getCmp(prototype.idDE + '-txtFromDateSMERCHID');
+        const trnxInfo = Ext.getCmp(prototype.idDE + '-txtFromDateTITULO');
+        const saleDate = Ext.getCmp(prototype.idDE + '-txtFromDateBSUMDATE');
+        const salesAmt = Ext.getCmp(prototype.idDE + '-txtFromDateSVFOPS');
+        if (trnx === 'RFND') {
+            smerchid.setText('Refund Merchant ID');
+            trnxInfo.setText('Refund Information');
+            saleDate.setText('Refund Date');
+            salesAmt.setText('Refund Amount');
+        } else {
+            smerchid.setText('Sale Merchant ID');
+            trnxInfo.setText('Sale Information');
+            saleDate.setText('Sale Date');
+            salesAmt.setText('Sale Amount');
+        }
+    },
+    setUserInformation: function (bean) {
+        const {uscr, fecr, hocr, usup, feup, houp} = bean;
+        Ext.getCmp(prototype.idDE + '-txtUSCR').setValue(uscr);
+        Ext.getCmp(prototype.idDE + '-txtFECR').setValue(fecr);
+        Ext.getCmp(prototype.idDE + '-txtHOCR').setValue(hocr);
+        Ext.getCmp(prototype.idDE + '-txtUSUP').setValue(usup);
+        Ext.getCmp(prototype.idDE + '-txtFEUP').setValue(feup);
+        Ext.getCmp(prototype.idDE + '-txtHOUP').setValue(houp);
+    },
+    showStandBy: function (show) {
+        const standByBpo = Ext.getCmp(prototype.idDE + '-bpoComments');
+        const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
+        const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
+        const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
+        if (show) {
+            addStandBy.show();
+            revStandBy.show();
+            hideStandBy.hide();
+            standByBpo.show();
+        } else {
+            addStandBy.hide();
+            revStandBy.hide();
+            hideStandBy.show();
+            standByBpo.hide();
+        }
+        Ext.getCmp(prototype.idDE + '-bpocoment').setValue(this.bean.bpocoment);
     },
     scanCreditCard: async function (obj) {
         const me = this;
@@ -112,9 +158,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const res = await fetch(`${me.url}/loadErrorTransactionBPOScanner?${new URLSearchParams(scanParams)}`);
         if (res.ok) {
             const data = await res.json();
+            console.log(data);
             me.setBPOGrid(data.response);
             me.setBlockedGrid(data.response);
-            //console.log(data);
             panelScan.unmask();
         }
     },
@@ -132,8 +178,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onAddAdjustment: function (grid, rowIndex, colIndex) {
         let registro = grid.getStore().getAt(0).data;
 
-        const transacAmt = Ext.getCmp(prototype.idDE + '-amtTransac').getValue().replace(',', '');
-        const gridAmt = Ext.getCmp(prototype.idDE + '-totAmount').getValue().replace(',', '');
+        const transacAmt = this.bean.tgrosamoun;
+        const gridAmt = Ext.getCmp(prototype.idDE + '-totAmount').getValue().replace(/,/g, "");
+        console.log(transacAmt, '-', gridAmt);
         const objClon = Object.assign({}, registro);
         objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
         objClon.trncu = 'ADJU';
@@ -150,6 +197,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         gridAdju.setStore(Ext.create('Ext.data.Store', {
             data: [objClon]
         }));
+
+        this.view.center();
     },
     onDeleteAdjustment: function () {
         const panelAdju = Ext.getCmp(prototype.idDE + '-panelAdjustments');
@@ -163,9 +212,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onChangeStandBy: function () {
         const me = this;
         me.view.mask('Loading...');
-        const mainForm = Ext.getCmp(prototype.idDE + '-mainForm');
+        const bpoComent = Ext.getCmp(prototype.idDE + '-bpocoment');
         //console.log(mainForm.getValues());
-        let params = me.formatStandByParams(me.bean, mainForm.getValues().bpocoment);
+        let params = me.formatStandByParams(me.bean, bpoComent.getValue());
         fetch(`${me.url}/errorTransactionBPOsetStandBy?${new URLSearchParams(params)}`)
                 .then(async res => {
                     if (res.ok) {
@@ -188,9 +237,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onReverseStandBy: function () {
         const me = this;
         me.view.mask('Loading...');
-        const mainForm = Ext.getCmp(prototype.idDE + '-mainForm');
-        //console.log(mainForm.getValues());
-        let params = me.formatStandByParams(me.bean, mainForm.getValues().bpocoment);
+        const bpoComent = Ext.getCmp(prototype.idDE + '-bpocoment');
+        let params = me.formatStandByParams(me.bean, bpoComent.getValue());
         fetch(`${me.url}/errorTransactionBPOreverseStandBy?${new URLSearchParams(params)}`)
                 .then(async res => {
                     if (res.ok) {
@@ -301,12 +349,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     });
                 }
             } else {
-                Ext.MessageBox.show({
-                    title: 'Error',
-                    message: 'Transaction not saved',
-                    icon: Ext.MessageBox.ERROR,
-                    buttons: Ext.MessageBox.OK
-                });
+                global.Msg({msg: 'Error'});
+                me.view.close();
             }
             me.reloadErrorGrid();
             me.view.unmask();
@@ -344,6 +388,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                                 buttons: Ext.MessageBox.OK
                             });
                         }
+                    } else {
+                        global.Msg({msg: 'Error'});
+                        me.view.close();
                     }
                     me.reloadErrorGrid();
                     me.view.unmask();
@@ -373,7 +420,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             params.IN_SCARDN = `${params.creditcard.at(0)}%${params.creditcard.at(1)}%`;
         }
         console.log(params);
-        if (params.IN_TICKET === '' || params.IN_SCARDN === 'undefined') {
+        if (!params.hasOwnProperty("IN_SCARDN") && params.IN_TICKET === '') {
             global.Msg({msg: 'Invalid Parameters'});
             scannerPanel.unmask();
             return;
@@ -568,21 +615,64 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         } else {
             params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
         }
-        const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
+        const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEntry', {
             id: prototype.idDE + '-MSITrackingDataEntry',
             searchParams: params,
             obj: me.bean
         });
         dataEntryMSI.show();
     },
+    onFilterBPOGrid: async function () {
+        const obj = this.bean;
+        const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
+        grid.getView().mask('Loading...');
+        const data = grid.getStore().getData().items;
+        if (data.length === 0) {
+            global.Msg({msg: 'No data in Scanner'});
+            return;
+        }
+        const existeMonto = data.some(x =>
+            x.data.tgrosamoun === obj.tgrosamoun);
+        const existeAutorizacion = data.some(x =>
+            x.data.sauthoc === obj.sauthoc);
+
+        let foundRegis = {};
+
+        if (existeMonto) {
+            foundRegis = grid.getStore().queryBy(function (registro) {
+                return registro.get('tgrosamoun') === obj.tgrosamoun;
+            });
+            grid.getStore().removeAll();
+            foundRegis.items.forEach(x => {
+                grid.getStore().add(x);
+            });
+            let amt = grid.getStore().sum('svfops');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
+        } else if (existeAutorizacion&&!existeMonto) {
+            foundRegis = grid.getStore().queryBy(function (registro) {
+                return registro.get('sauthoc') === obj.sauthoc;
+            });
+            grid.getStore().removeAll();
+            foundRegis.items.forEach(x => {
+                grid.getStore().add(x);
+            });
+            let amt = grid.getStore().sum('svfops');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
+        } else {
+            global.Msg({msg: 'Not found'});
+        }
+        grid.getView().unmask();
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">
     formatParameters: function (obj) {
         let params = {
             IN_CCUST: '139',
-            IN_PRDA: obj.prda,
-            IN_TDOC: obj.tdoc,
-            IN_AREFNBR: obj.arefnbr
+            IN_PRDA: obj.PRDA,
+            IN_TDOC: obj.TDOC,
+            IN_AREFNBR: obj.AREFNBR
         };
         return params;
     },
@@ -665,7 +755,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         OBSERV: observADJU,
                         CERROR: x.STMANUAL === 'Adjustment' ? codADJU : obj.cerror,
                         ...x
-                    }));
+                    })).map(o => {
+            //nueva validacion de fuente
+            o.FUENTE = o.FUENTE === 'ASR' ? 'S' : o.FUENTE.slice(0, 1);
+            return o;
+        });
         const conteo_void = details.filter(x => x.FVOID === 'V').length;
         //console.log(conteo_void);
 
@@ -695,27 +789,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     onCancelClick: function () {
-        this.view.close();
-    },
-    onViewTicket: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if (record.data.ticket.trim() === '') {
-            return;
-        }
-        const obj = record.data.ticket;
-        prototypeProgram.view = 'payments-chargeback-sabre-status-form';
-        prototypeProgram.nprog = 'PX00000635';
-        prototypeProgram.title = 'Chargeback Sabre Status';
-        prototypeProgram.modulo = '';
-
-        var beanProMasterTicket = {};
-
-        beanProMasterTicket.IN_CIA = obj.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = obj.substr(3, 4);
-        beanProMasterTicket.IN_SERIE = obj.substr(7, 6);
-
-        console.log(beanProMasterTicket);
-
-        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
         this.view.close();
     },
     limpiaObjetoPX: function (obj) {
