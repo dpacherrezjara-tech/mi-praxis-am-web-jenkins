@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     controller: 'TransacErrorBPODataEntryController',
     title: 'Transaction Error - Form',
     header: true,
-    width: 1320,
+    width: 1075,
     resizable: false,
     layout: 'fit',
     modal: true,
