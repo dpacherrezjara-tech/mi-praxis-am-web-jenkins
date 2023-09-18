@@ -579,8 +579,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
             qty.setValue(data.response.length);
             amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
-            panelScan.unmask();
         }
+        panelScan.unmask();
     },
     reloadErrorGrid: function () {
         const grid = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
