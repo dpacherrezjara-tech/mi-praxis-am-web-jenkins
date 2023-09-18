@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     init: function (view) {
     },
     afterRender: async function (obj, e) {
+        win.lblUser_toolTip('Estructura: A4331');
         const me = this;
         await me.fillFilters();
         me.onClickSearchBtn();
@@ -18,49 +19,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         if (res.ok) {
             const data = await res.json();
             //console.log(data);
-            const storeProc = me.createComboStore({data: data.procesadores.filter(x => x.a4451fech1.trim() === 'P')
-                , valueField: 'a4451key2', displayField: 'a4451desc1'});
-
+            const procesadores = data.procesadores.filter(x => x.a4451fech1.trim() === 'P');
+            const errores = data.cerror.map(x=>({name:`${x.a4451key3.trim()} - ${x.a4451desc1}`,code:x.a4451key3}));
+            //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
-            cmbProcesadores.suspendEvents(false);
-            cmbProcesadores.bindStore(storeProc);
-            cmbProcesadores.setValue('');
-            cmbProcesadores.resumeEvents();
-            //console.log(cmbProcesadores.getStore());
+            me.setComboStore({cmp: cmbProcesadores, data: procesadores,
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbProcesadoresf = Ext.getCmp(prototype.id + '-cmbProctypef');
-            cmbProcesadoresf.suspendEvents(false);
-            cmbProcesadoresf.bindStore(storeProc);
-            cmbProcesadoresf.setValue('');
-            cmbProcesadoresf.resumeEvents();
+            me.setComboStore({cmp: cmbProcesadoresf, data: procesadores,
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaises');
-            cmbPaises.suspendEvents(false);
-            cmbPaises.bindStore(me.createComboStore({data: data.paises
-                , valueField: 'code', displayField: 'name'}));
-            cmbPaises.setValue('');
-            cmbPaises.resumeEvents();
+            me.setComboStore({cmp: cmbPaises, data: data.paises,
+                valueField: 'code', displayField: 'name', value: ''});
 
             const cmbPaisesf = Ext.getCmp(prototype.id + '-cmbPaisesf');
-            cmbPaisesf.suspendEvents(false);
-            cmbPaisesf.bindStore(me.createComboStore({data: data.paises
-                , valueField: 'code', displayField: 'name'}));
-            cmbPaisesf.setValue('');
-            cmbPaisesf.resumeEvents();
+            me.setComboStore({cmp: cmbPaisesf, data: data.paises,
+                valueField: 'code', displayField: 'name', value: ''});
 
             const cmbCerror = Ext.getCmp(prototype.id + '-cmbCerror');
-            cmbCerror.suspendEvents(false);
-            cmbCerror.bindStore(me.createComboStore({data: data.cerror
-                , valueField: 'a4451key3', displayField: 'a4451desc1'}));
-            cmbCerror.setValue('');
-            cmbCerror.resumeEvents();
+            me.setComboStore({cmp: cmbCerror, data: errores,
+                valueField: 'code', displayField: 'name', value: ''});
 
             const cmbCodadju = Ext.getCmp(prototype.id + '-cmbCodadju');
-            cmbCodadju.suspendEvents(false);
-            cmbCodadju.bindStore(me.createComboStore({data: data.codadju
-                , valueField: 'a4451key3', displayField: 'a4451desc1'}));
-            cmbCodadju.setValue('');
-            cmbCodadju.resumeEvents();
+            me.setComboStore({cmp: cmbCodadju, data: data.codadju,
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+
+            const cmbCerrorSum = Ext.getCmp(prototype.id + '-cmbCerrorSum');
+            me.setComboStore({cmp: cmbCerrorSum, data: errores,
+                valueField: 'code', displayField: 'name', value: ''});
+
+            const cmbCodadjuSum = Ext.getCmp(prototype.id + '-cmbCodadjuSum');
+            me.setComboStore({cmp: cmbCodadjuSum, data: data.codadju,
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+            //</editor-fold>
         }
         filterPanel.unmask();
     },
@@ -69,8 +62,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const obj = formFilters.getValues();
         let params = {
             IN_CCUST: '139',
-            IN_DATEFROM: obj.month.at(0) + '01',
-            IN_DATETO: obj.month.at(1) + '31',
+            IN_TDATE: 'M',
+            IN_DATEFROM: obj.month.at(0),
+            IN_DATETO: obj.month.at(1),
             ...obj
         };
         return params;
@@ -96,8 +90,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const tfilter = Ext.getCmp(prototype.id + '-cmbFiltersBp').getValue();
             if (tfilter === 'S') {
                 let params = me.formatByPaymentSummaryParams();
-                const panelTree = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentSummaryTree', {
-                    id: prototype.id + '-ByPaymentSummaryTree-1',
+                console.log(params);
+                const panelTree = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid', {
+                    id: prototype.id + '-ByPaymentMonthSummaryGrid-1',
                     url: prototype.url,
                     searchParams: params
                 });
@@ -151,7 +146,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {
-        
+
     },
     validaFecha: function (value) {
         // Validar la fecha aquí
@@ -170,6 +165,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);
+    },
+    setComboStore: function ( {cmp, data, valueField, displayField, value}){
+        const me = this;
+        cmp.suspendEvents(false);
+        cmp.bindStore(me.createComboStore({data: data
+            , valueField: valueField, displayField: displayField}));
+        cmp.setValue(value);
+        cmp.resumeEvents();
     },
     createComboStore: function ( {data, valueField, displayField}) {
         //crea record vacio

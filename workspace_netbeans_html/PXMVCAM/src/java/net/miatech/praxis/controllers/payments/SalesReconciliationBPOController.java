@@ -65,6 +65,7 @@ public class SalesReconciliationBPOController {
             model.put("cerror", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("89");
             model.put("codadju", logic.getSQP05004Filter(filter).getLst());
+            System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -121,6 +122,7 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionBPOInfo-------------");
         try {
             SQP05052Filter filter = logic.loadSQP05052Filter(params);
+            System.out.println("Item Found: " + filter.getResponse().getArefnbr());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -133,6 +135,7 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionBPOScanner-------------");
         try {
             SQP05054Filter filter = logic.loadSQP05054Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -145,6 +148,7 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionBPODesglose-------------");
         try {
             SQP05055Filter filter = logic.loadSQP05055Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -181,6 +185,7 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadScannerManual-------------");
         try {
             SQP05062Filter filter = logic.loadSQP05062Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -193,6 +198,7 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingInfo-------------");
         try {
             SQP05061Filter filter = logic.loadSQP05061Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

@@ -33,6 +33,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -93,6 +94,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         return filter;
     }
 
+    @Transactional
     @Override
     public SQP05048Filter loadSQP05048Filter(SQP05048Filter filter) throws Exception {
         NamedParameterJdbcTemplate npjt = jdbcUtils.getNamedParameter();

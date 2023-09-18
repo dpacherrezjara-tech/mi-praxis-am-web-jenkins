@@ -5,12 +5,13 @@ package net.miatech.praxis.payment.filter;
  * @author Dvicente
  */
 public class A4331SRFilter {
-    private String PRDA,PAYDATE,TRANSTYPE,PROCTYPE,PROCTYPESQ,DESC_PROCTYPE;
-    private Integer TOTAL,TOTAL_MATCH,TOTAL_PENDING,
+    private String PRDA,PAYDATE,DESC_PROCTYPE;
+    private Integer TOTAL,
+            TOTAL_MATCH,TOTAL_PENDING,
             TOTAL_NC_MATCH,TOTAL_NC_PENDING,
-            COMPL_PG_MATCH,COMPL_PG_PENDING,
-            COMPL_LIG_MATCH,COMPL_LIG_PENDING,
-            COMPL_TAB_MATCH,COMPL_TAB_PENDING;
+            TOTAL_PG_MATCH,TOTAL_PG_PENDING,
+            TOTAL_LIG_MATCH,TOTAL_LIG_PENDING,
+            TOTAL_TAB_MATCH,TOTAL_TAB_PENDING;
 
     public String getPRDA() {
         return PRDA;
@@ -26,30 +27,6 @@ public class A4331SRFilter {
 
     public void setPAYDATE(String PAYDATE) {
         this.PAYDATE = PAYDATE;
-    }
-
-    public String getTRANSTYPE() {
-        return TRANSTYPE;
-    }
-
-    public void setTRANSTYPE(String TRANSTYPE) {
-        this.TRANSTYPE = TRANSTYPE;
-    }
-
-    public String getPROCTYPE() {
-        return PROCTYPE;
-    }
-
-    public void setPROCTYPE(String PROCTYPE) {
-        this.PROCTYPE = PROCTYPE;
-    }
-
-    public String getPROCTYPESQ() {
-        return PROCTYPESQ;
-    }
-
-    public void setPROCTYPESQ(String PROCTYPESQ) {
-        this.PROCTYPESQ = PROCTYPESQ;
     }
 
     public String getDESC_PROCTYPE() {
@@ -100,52 +77,52 @@ public class A4331SRFilter {
         this.TOTAL_NC_PENDING = TOTAL_NC_PENDING;
     }
 
-    public Integer getCOMPL_PG_MATCH() {
-        return COMPL_PG_MATCH;
+    public Integer getTOTAL_PG_MATCH() {
+        return TOTAL_PG_MATCH;
     }
 
-    public void setCOMPL_PG_MATCH(Integer COMPL_PG_MATCH) {
-        this.COMPL_PG_MATCH = COMPL_PG_MATCH;
+    public void setTOTAL_PG_MATCH(Integer TOTAL_PG_MATCH) {
+        this.TOTAL_PG_MATCH = TOTAL_PG_MATCH;
     }
 
-    public Integer getCOMPL_PG_PENDING() {
-        return COMPL_PG_PENDING;
+    public Integer getTOTAL_PG_PENDING() {
+        return TOTAL_PG_PENDING;
     }
 
-    public void setCOMPL_PG_PENDING(Integer COMPL_PG_PENDING) {
-        this.COMPL_PG_PENDING = COMPL_PG_PENDING;
+    public void setTOTAL_PG_PENDING(Integer TOTAL_PG_PENDING) {
+        this.TOTAL_PG_PENDING = TOTAL_PG_PENDING;
     }
 
-    public Integer getCOMPL_LIG_MATCH() {
-        return COMPL_LIG_MATCH;
+    public Integer getTOTAL_LIG_MATCH() {
+        return TOTAL_LIG_MATCH;
     }
 
-    public void setCOMPL_LIG_MATCH(Integer COMPL_LIG_MATCH) {
-        this.COMPL_LIG_MATCH = COMPL_LIG_MATCH;
+    public void setTOTAL_LIG_MATCH(Integer TOTAL_LIG_MATCH) {
+        this.TOTAL_LIG_MATCH = TOTAL_LIG_MATCH;
     }
 
-    public Integer getCOMPL_LIG_PENDING() {
-        return COMPL_LIG_PENDING;
+    public Integer getTOTAL_LIG_PENDING() {
+        return TOTAL_LIG_PENDING;
     }
 
-    public void setCOMPL_LIG_PENDING(Integer COMPL_LIG_PENDING) {
-        this.COMPL_LIG_PENDING = COMPL_LIG_PENDING;
+    public void setTOTAL_LIG_PENDING(Integer TOTAL_LIG_PENDING) {
+        this.TOTAL_LIG_PENDING = TOTAL_LIG_PENDING;
     }
 
-    public Integer getCOMPL_TAB_MATCH() {
-        return COMPL_TAB_MATCH;
+    public Integer getTOTAL_TAB_MATCH() {
+        return TOTAL_TAB_MATCH;
     }
 
-    public void setCOMPL_TAB_MATCH(Integer COMPL_TAB_MATCH) {
-        this.COMPL_TAB_MATCH = COMPL_TAB_MATCH;
+    public void setTOTAL_TAB_MATCH(Integer TOTAL_TAB_MATCH) {
+        this.TOTAL_TAB_MATCH = TOTAL_TAB_MATCH;
     }
 
-    public Integer getCOMPL_TAB_PENDING() {
-        return COMPL_TAB_PENDING;
+    public Integer getTOTAL_TAB_PENDING() {
+        return TOTAL_TAB_PENDING;
     }
 
-    public void setCOMPL_TAB_PENDING(Integer COMPL_TAB_PENDING) {
-        this.COMPL_TAB_PENDING = COMPL_TAB_PENDING;
+    public void setTOTAL_TAB_PENDING(Integer TOTAL_TAB_PENDING) {
+        this.TOTAL_TAB_PENDING = TOTAL_TAB_PENDING;
     }
     
 }

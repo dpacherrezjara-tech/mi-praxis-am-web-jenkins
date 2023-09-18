@@ -8,11 +8,23 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05059Filter {
-    private String IN_CCUST,IN_DATE,IN_DATEFROM,IN_DATETO,
-            IN_PROCTYPE,IN_PROCTYPESQ,IN_PMERCHID,IN_TRANSTYPE,IN_SCOUNTRY,IN_FVOID;
+
+    private String IN_CCUST,
+            IN_DATE,
+            IN_TDATE,
+            IN_DATEFROM,
+            IN_DATETO,
+            IN_PROCTYPESQ,
+            IN_SMERCHID,
+            IN_TRANSTYPE,
+            IN_SCOUNTRY,
+            IN_FVOID,
+            IN_STVAL,
+            IN_CERROR,
+            IN_CODADJU;
 
     private List<A4331SRFilter> response = new ArrayList<>();
-    
+
     public String getIN_CCUST() {
         return IN_CCUST;
     }
@@ -27,6 +39,14 @@ public class SQP05059Filter {
 
     public void setIN_DATE(String IN_DATE) {
         this.IN_DATE = IN_DATE;
+    }
+
+    public String getIN_TDATE() {
+        return IN_TDATE;
+    }
+
+    public void setIN_TDATE(String IN_TDATE) {
+        this.IN_TDATE = IN_TDATE;
     }
 
     public String getIN_DATEFROM() {
@@ -45,14 +65,6 @@ public class SQP05059Filter {
         this.IN_DATETO = IN_DATETO;
     }
 
-    public String getIN_PROCTYPE() {
-        return IN_PROCTYPE;
-    }
-
-    public void setIN_PROCTYPE(String IN_PROCTYPE) {
-        this.IN_PROCTYPE = IN_PROCTYPE;
-    }
-
     public String getIN_PROCTYPESQ() {
         return IN_PROCTYPESQ;
     }
@@ -61,12 +73,12 @@ public class SQP05059Filter {
         this.IN_PROCTYPESQ = IN_PROCTYPESQ;
     }
 
-    public String getIN_PMERCHID() {
-        return IN_PMERCHID;
+    public String getIN_SMERCHID() {
+        return IN_SMERCHID;
     }
 
-    public void setIN_PMERCHID(String IN_PMERCHID) {
-        this.IN_PMERCHID = IN_PMERCHID;
+    public void setIN_SMERCHID(String IN_SMERCHID) {
+        this.IN_SMERCHID = IN_SMERCHID;
     }
 
     public String getIN_TRANSTYPE() {
@@ -93,6 +105,30 @@ public class SQP05059Filter {
         this.IN_FVOID = IN_FVOID;
     }
 
+    public String getIN_STVAL() {
+        return IN_STVAL;
+    }
+
+    public void setIN_STVAL(String IN_STVAL) {
+        this.IN_STVAL = IN_STVAL;
+    }
+
+    public String getIN_CERROR() {
+        return IN_CERROR;
+    }
+
+    public void setIN_CERROR(String IN_CERROR) {
+        this.IN_CERROR = IN_CERROR;
+    }
+
+    public String getIN_CODADJU() {
+        return IN_CODADJU;
+    }
+
+    public void setIN_CODADJU(String IN_CODADJU) {
+        this.IN_CODADJU = IN_CODADJU;
+    }
+
     public List<A4331SRFilter> getResponse() {
         return response;
     }
@@ -100,4 +136,6 @@ public class SQP05059Filter {
     public void setResponse(List<A4331SRFilter> response) {
         this.response = response;
     }
+
+    
 }

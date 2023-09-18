@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             },
             columnLines: true,
             autoScroll: true,
-            minHeight: 300,
+            minHeight: 180,
             height: 'auto',
             maxHeight: 400,
             width: '100%',
@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 },
                 items: [
                     {
-                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;";
                             return value;
@@ -73,12 +73,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     },
                     {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-                    {text: 'PNR', dataIndex: 'spnr', width: 80},
-                    {text: 'Doc. Type', dataIndex: 'transtype', width: 80},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 250},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 200},
+                    {text: 'PNR', dataIndex: 'spnr', width: 70},
+                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+                    {text: 'Error Description', dataIndex: 'des_CERROR', flex: 1},
+                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180},
                     {
-                        text: 'Status', dataIndex: 'stval', width: 100,
+                        text: 'Status', dataIndex: 'stval', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             const opts = {
@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                             {text: 'Number', dataIndex: 'instanbr', width: 60}
                         ]
                     },
-                    {text: 'Currency', dataIndex: 'scurrency', width: 60},
+                    {text: 'Curr', dataIndex: 'scurrency', width: 60},
                     {
                         text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -129,13 +129,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         }
                     },
                     {
-                        text: 'Card Number', dataIndex: 'scardn', width: 180
+                        text: 'Card Number', dataIndex: 'scardn', width: 130
                     },
                     {
-                        text: 'Auth Code', dataIndex: 'sauthoc', width: 100
+                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
                     },
                     {
-                        text: 'Match Reference', dataIndex: 'observa', width: 150,
+                        text: 'Match Reference', dataIndex: 'observa', width: 150, hidden: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;color:red;";
                             return value;

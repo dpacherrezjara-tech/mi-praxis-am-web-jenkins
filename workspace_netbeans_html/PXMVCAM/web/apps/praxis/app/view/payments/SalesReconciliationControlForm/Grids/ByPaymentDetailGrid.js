@@ -5,7 +5,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
         'Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentDetailGridController'
     ],
     controller: 'ByPaymentDetailGridController',
-    height: prototype.height,
+    maxHeight: prototype.height,
+    minHeight: 200,
+    height: 'auto',
     width: prototype.width,
     viewConfig: {
         stripeRows: true,
@@ -21,19 +23,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
         },
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
-
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Edit',
+                locked: true,
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-detail',
+                        tooltip: 'Open Detail',
+                        handler: 'onClickBPO'
+                    }
+                ]
+            },
             {
                 text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                hidden: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;";
                     return value;
                 }
             },
-            {text: 'Processing<br>Date', dataIndex: 'prda', width: 100},
-            {text: 'Payment<br>Date', dataIndex: 'paydate', width: 100},
+            {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
+            {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
             {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 160},
-            {text: 'Country', dataIndex: 'scountry', width: 80},
-            {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 100},
+            {text: 'Country', dataIndex: 'scountry', width: 60},
+            //metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
+            {
+                text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    const info = record.data;
+                    if (info.des_MERCHANT && info.des_MERCHANT !== '') {
+                        metaData.tdAttr = 'data-qtip="' + info.des_MERCHANT + '"';
+                    }
+                    return value;
+                }
+            },
             {
                 text: 'Status<br>Settl. VS Sales', dataIndex: 'stval', width: 150,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -52,10 +79,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     return opts[value] || '';
                 }
             },
-            {text: 'Doc. Type', dataIndex: 'transtype', width: 80},
-            {text: 'Void', dataIndex: 'fvoid', width: 50},
+            {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+            {text: 'Void', dataIndex: 'fvoid', width: 45},
             {
-                text: 'Transaction', width: 1100,
+                text: 'Transaction',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
@@ -68,17 +95,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 columns: [
                     {text: 'Sales<br> Merchant ID', dataIndex: 'smerchid', width: 100},
                     {text: 'Sales Merchant<br>Description', dataIndex: 'des_SMERCHANT', width: 200},
-                    {
-                        text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'invoirn', width: 130
-                    },
-                    {text: 'PNR', dataIndex: 'spnr', width: 80},
-                    {
-                        text: 'Ticket', dataIndex: 'ticket', width: 110,
-                        renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;background-color:#F0D094;font-weight:bold;";
-                            return value;
-                        }
-                    },
+                    {text: 'Sale Date', dataIndex: 'sdate', width: 80},
+                    {text: 'Card Number', dataIndex: 'scardn', width: 130},
+                    {text: 'Auth.<br>Code', dataIndex: 'sauthoc', width: 70},
                     {
                         text: 'Installment', width: 120,
                         defaults: {
@@ -95,13 +114,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                             {text: 'Number', dataIndex: 'instanbr', width: 60}
                         ]
                     },
-                    {text: 'Card Number', dataIndex: 'scardn', flex: 1},
-                    {text: 'Auth. Code', dataIndex: 'sauthoc', width: 100},
-                    {text: 'Sale Date', dataIndex: 'sdate', width: 100}
+                    {
+                        text: 'Ticket', dataIndex: 'ticket', width: 110,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;background-color:#F0D094;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {text: 'PNR', dataIndex: 'spnr', width: 80},
+                    {
+                        text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'invoirn', width: 130
+                    }
+
                 ]
             },
             {
-                text: 'Currency', dataIndex: 'scurrency', width: 80,
+                text: 'Curr', dataIndex: 'scurrency', width: 60,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#B2DAFA";
                     return value;
@@ -116,7 +144,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 }
             },
             {
-                text: 'Qty<br>Tkts', dataIndex: 'qtytkt', width: 70,
+                text: 'Qty<br>Tkts', dataIndex: 'qtytkt', width: 50,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#B2DAFA";
                     return value;
@@ -147,22 +175,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 ]
 
             },
-            {text:'User<br>Update',dataIndex:'usup',width:100},
-            {text:'Date<br>Update',dataIndex:'feup',width:80},
-            {
-                sortable: false,
-                xtype: 'actioncolumn',
-                width: 40,
-                text: 'Edit',
-                align: 'center',
-                items: [
-                    {
-                        iconCls: 'prx-icon-detail',
-                        tooltip: 'Open Detail',
-                        handler: 'onClickBPO'
-                    }
-                ]
-            }
+            {text: 'User<br>Update', dataIndex: 'usup', width: 100},
+            {text: 'Date<br>Update', dataIndex: 'feup', width: 80}
             //</editor-fold>
         ]
     },

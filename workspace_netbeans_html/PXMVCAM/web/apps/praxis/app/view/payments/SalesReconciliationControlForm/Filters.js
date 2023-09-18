@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                 fields: ['code', 'name'],
                 data: [
                     ['S', 'Summary'],
-                    ['F', 'Filters']
+                    ['F', 'Browser']
                 ]
             }),
             labelWidth: 75,
@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     listeners: {
                                         change: 'onChangeMonthBtn'
                                     },
-                                    name:'month'
+                                    name: 'month'
                                 },
                                 {
                                     xtype: 'monthfield',
@@ -119,7 +119,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     listeners: {
                                         change: 'onChangeMonthBtn'
                                     },
-                                    name:'month'
+                                    name: 'month'
                                 },
                                 {
                                     xtype: 'combo',
@@ -201,12 +201,81 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     fieldLabel: 'Merchant',
                                     labelWidth: 70,
                                     width: 185,
-                                    hidden: true,
-                                    name: 'IN_PMERCHID',
+                                    name: 'IN_SMERCHID',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 15, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                }
+                            ]
+                        }
+                        ,
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items:[
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STVAL',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['0', 'Stand By'],
+                                            ['1', 'Match'],
+                                            ['2', 'Sales Without Settl.'],
+                                            ['3', 'Settl. Without Sales'],
+                                            ['4', 'Match Diff.'],
+                                            ['5', 'Manual Match'],
+                                            ['6', 'Forced Match'],
+                                            ['7', 'Compensation Match'],
+                                            ['8', 'Pending RFND']
+                                        ]
+                                    }),
+                                    labelWidth: 55,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbCerrorSum',
+                                    fieldLabel: 'Error Code',
+                                    name: 'IN_CERROR',
+                                    labelWidth: 80,
+                                    width: 290,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Adj. Code',
+                                    id: prototype.id + '-cmbCodadjuSum',
+                                    name: 'IN_CODADJU',
+                                    labelWidth: 70,
+                                    width: 230,
+                                    displayField: 'a4451desc1',
+                                    valueField: 'a4451key3',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
                                 }
                             ]
                         }
@@ -368,6 +437,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Ref. Number',
+                                    hidden: true,
                                     labelWidth: 80,
                                     width: 250,
                                     name: 'IN_AREFNBR',
@@ -493,8 +563,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     name: 'IN_CERROR',
                                     labelWidth: 80,
                                     width: 290,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
+                                    displayField: 'name',
+                                    valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''

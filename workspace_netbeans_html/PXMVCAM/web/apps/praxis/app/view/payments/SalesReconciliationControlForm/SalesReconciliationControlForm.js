@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
         'Ext.Praxis.controller.payments.SalesReconciliationControl.SalesReconciliationControlController',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Options',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentSummaryTree',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentDetailGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry'
     ],
@@ -65,7 +65,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-mainContent',
-                                            height:prototype.height,
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
                                             layout: {
                                                 type: 'vbox',
                                                 align: 'center'
