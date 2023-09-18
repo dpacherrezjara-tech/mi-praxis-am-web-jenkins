@@ -161,8 +161,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             console.log(data);
             me.setBPOGrid(data.response);
             me.setBlockedGrid(data.response);
-            panelScan.unmask();
+        }else{
+            global.Msg({msg:'Error on scan'});
         }
+        panelScan.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
