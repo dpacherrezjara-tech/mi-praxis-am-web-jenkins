@@ -229,6 +229,7 @@ public class LoadControlReportController extends BaseController {
                 Cell cel23 = row.createCell(12);
                 String value5 = oList.get(vi).A4493LABEL;
                 String value6 = oList.get(vi).A4493FLAG;
+                String value7 = oList.get(vi).A4493STAT.trim();
                 String etiqueta = "";
 
                 if (value5.equals("R")) {
@@ -239,8 +240,8 @@ public class LoadControlReportController extends BaseController {
                     etiqueta = "Weekend file";
                 }
 
-                if (!value5.equals("R") && value6.equals("Y")) {
-                    etiqueta = "Additional currency file";
+                if (value7.equals("") && value6.equals("Y")) {
+                    etiqueta = "Currency File not reported";
                 }
 
                 cel23.setCellValue(etiqueta);
