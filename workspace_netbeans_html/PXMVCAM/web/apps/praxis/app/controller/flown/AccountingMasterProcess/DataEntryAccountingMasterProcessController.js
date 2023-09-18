@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWNPRE", "Flown Pre Accounting"],
+                ["PFLOWNPRE", "Flown Accounting"],
                 ["PPFLOWN", "Flown Accounting Pending"]
             ]}));
         cbxModulo.setValue("");
@@ -131,7 +131,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         var cbxModulo = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
         
         switch (cbxModulo) {
-            case "PFLOWN" : 
+            case "PFLOWNPRE" : 
                 dataentryParams = {};
                 dataentryParams.IN_MODULO = 'FLOWN';
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
