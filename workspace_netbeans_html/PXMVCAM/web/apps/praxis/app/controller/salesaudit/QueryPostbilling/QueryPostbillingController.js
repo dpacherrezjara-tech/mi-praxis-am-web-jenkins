@@ -75,7 +75,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
                 {"code": "DAA", "name": "DISAGREE WITH AIRLINE"},
                 {"code": "AAG", "name": "AGREE WITH AGENT"},
                 {"code": "AAA", "name": "AGREE WITH AIRLINE"},
-                {"code": "PRS", "name": "PBD REASON SENT"}
+                {"code": "PRG", "name": "AGENT COMMENTED"},
+                {"code": "PRS", "name": "AIRLINE COMMENTED"},
                 //{"code": "PRA", "name": "ASK AGENCY QUESTIONS"}
             ]
         }));
