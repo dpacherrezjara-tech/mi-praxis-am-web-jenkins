@@ -91,7 +91,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.PostbillingController',
                 //{"code": "DAG", "name": "DISAGREE WITH AGENT"},
                 {"code": "DAA", "name": "DISAGREE WITH AIRLINE"},
                 //{"code": "PRS", "name": "NEW REASON RECEIVED"},
-                {"code": "PRS", "name": "PBD REASON SENT"},
+                {"code": "PRG", "name": "AGENT COMMENTED"},
+                {"code": "PRS", "name": "AIRLINE COMMENTED"},
                 {"code": "PAG", "name": "PENDING AGENT"},
                 {"code": "PAA", "name": "PENDING AIRLINE"}
                 //{"code": "PRA", "name": "ASK AGENCY QUESTIONS"}
