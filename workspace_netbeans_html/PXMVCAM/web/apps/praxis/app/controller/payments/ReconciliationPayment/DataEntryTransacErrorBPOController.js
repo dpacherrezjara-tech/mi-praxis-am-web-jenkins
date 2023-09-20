@@ -43,7 +43,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         const match = ["1", "5", "6", "7"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
-        Ext.getCmp(prototype.idDE + '-de-txtDIFF_AMOUNT').setValue(Ext.util.Format.number(tgrosamoun - svfops, '0,000.00'));
+        let diff = tgrosamoun - svfops;
+        if (me.bean.transtype === 'CHBK') {
+            diff = tgrosamoun + svfops;
+        }
+        Ext.getCmp(prototype.idDE + '-de-txtDIFF_AMOUNT').setValue(Ext.util.Format.number(diff, '0,000.00'));
 
         const bpo = Ext.getCmp(prototype.idDE + '-tabBPO');
         const blocked = Ext.getCmp(prototype.idDE + '-tabBlocked');
@@ -121,6 +125,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
             saleDate.setText('Sale Date');
             salesAmt.setText('Sale Amount');
         }
+        
+        if (trnx === 'CHBK') {
+            Ext.getCmp(prototype.idDE + '-specialPanel').show();
+            Ext.getCmp(prototype.idDE + '-specialTitle').setText('CHARGEBACK');
+        } else if (trnx === 'ADJU') {
+            Ext.getCmp(prototype.idDE + '-specialPanel').show();
+            Ext.getCmp(prototype.idDE + '-specialTitle').setText('ADJUSTMENT');
+        }
     },
     setUserInformation: function (bean) {
         const {uscr, fecr, hocr, usup, feup, houp} = bean;
@@ -161,8 +173,10 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
             console.log(data);
             me.setBPOGrid(data.response);
             me.setBlockedGrid(data.response);
-            panelScan.unmask();
+        } else {
+            global.Msg({msg: 'Error on scan'});
         }
+        panelScan.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
@@ -564,21 +578,41 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         const panelScan = Ext.getCmp(prototype.idDE + '-tabMain');
         panelScan.setActiveTab('M');
         panelScan.mask('Scanning...');
-        const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            //console.log(data);
-            const gridDesglose = Ext.getCmp(prototype.idDE + '-gridDesglose');
-            const storeDesglose = Ext.create('Ext.data.Store', {
-                data: data.response
-            });
-            gridDesglose.setStore(storeDesglose);
-            const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
-            const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
-            qty.setValue(data.response.length);
-            amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
-            panelScan.unmask();
+        const gridDesglose = Ext.getCmp(prototype.idDE + '-gridDesglose');
+        const gridDesgloseCHBK = Ext.getCmp(prototype.idDE + '-gridDesgloseCHBK');
+        if (me.bean.transtype === 'CHBK') {
+            gridDesglose.hide();
+            gridDesgloseCHBK.show();
+            const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+                const storeDesglose = Ext.create('Ext.data.Store', {
+                    data: data.response
+                });
+                gridDesgloseCHBK.setStore(storeDesglose);
+                const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
+                const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
+                qtyc.setValue(data.response.length);
+                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('vfop'), '0,000.00'));
+            }
+        } else {
+            gridDesglose.show();
+            gridDesgloseCHBK.hide();
+            const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
+            if (res.ok) {
+                const data = await res.json();
+                const storeDesglose = Ext.create('Ext.data.Store', {
+                    data: data.response
+                });
+                gridDesglose.setStore(storeDesglose);
+                const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
+                const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
+                qty.setValue(data.response.length);
+                amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
+            }
         }
+        panelScan.unmask();
     },
     reloadErrorGrid: function () {
         Ext.getCmp(prototype.id + '-gridMainErrorTransaction').getStore().load();
@@ -628,6 +662,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         const data = grid.getStore().getData().items;
         if (data.length === 0) {
             global.Msg({msg: 'No data in Scanner'});
+            grid.getView().unmask();
             return;
         }
         const existeMonto = data.some(x =>
@@ -648,7 +683,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
             let amt = grid.getStore().sum('svfops');
             Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
             Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-        } else if (existeAutorizacion&&!existeMonto) {
+        } else if (existeAutorizacion && !existeMonto) {
             foundRegis = grid.getStore().queryBy(function (registro) {
                 return registro.get('sauthoc') === obj.sauthoc;
             });
@@ -700,11 +735,23 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         return params;
     },
     formatDesgloseParams: function (obj) {
-        let params = {
-            IN_CCUST: obj.ccust,
-            IN_PRDA: obj.prda,
-            IN_AREFNBR: obj.arefnbr
-        };
+        let params = {};
+        if (obj.transtype === 'CHBK') {
+            params = {
+                IN_CCUST: obj.ccust,
+                IN_TDOC: obj.tdoc,
+                IN_SDATE: obj.sdate,
+                IN_NBRLIQUID: obj.nbrliquid,
+                IN_SCARDN: obj.scardn
+            };
+        } else {
+            params = {
+                IN_CCUST: obj.ccust,
+                IN_PRDA: obj.prda,
+                IN_AREFNBR: obj.arefnbr
+            };
+        }
+        console.log('Desglose: ', params);
         return params;
     },
     formatStandByParams: function (obj, comment) {
@@ -728,9 +775,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
 
         const codADJU = (Ext.getCmp(prototype.idDE + '-codAdjustment').getValue() || '').trim();
         const observADJU = Ext.getCmp(prototype.idDE + '-observAdjustment').getValue();
-
         //diferencia conciliacion manual
-        const difference = obj.tgrosamoun - (gridBPO.sum('svfops') + gridADJU.sum('svfops'));
+        let difference = 0;
+        if (me.bean.transtype === 'CHBK') {
+            //suma en caso de ser Chargeback
+            difference = obj.tgrosamoun + (gridBPO.sum('svfops') + gridADJU.sum('svfops'));
+        } else {
+            difference = obj.tgrosamoun - (gridBPO.sum('svfops') + gridADJU.sum('svfops'));
+        }
 
         //obtiene detalle para desglosado
         const details = [
@@ -753,6 +805,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
                         FREGLA: '4',
                         OBSERV: observADJU,
                         CERROR: x.STMANUAL === 'Adjustment' ? codADJU : obj.cerror,
+                        NBRLIQUID: obj.nbrliquid,
+                        CODCHGBACK: obj.codchgback,
+                        CHGBNUM: obj.chgbnum,
                         ...x
                     })).map(o => {
             //nueva validacion de fuente
@@ -769,7 +824,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         //clona ticket
         if (details.length > 0) {
             const first = details.at(0);
-            if (params.IN_TICKET === '' && params.IN_SPNR === '') {
+            if (params.IN_TICKET === '' || params.IN_SPNR === '') {
                 params.IN_TICKET = first.CCIA + first.FORMA + first.SERIE;
                 params.IN_SPNR = first.SPNR;
             } else if (params.IN_TICKET.substring(0, 3) === '000') {

@@ -1,6 +1,6 @@
 prototype.id = 'SalesReconciliationControlForm';
 prototype.url = CONTEXTPATH + '/SalesReconciliationBPO';
-prototype.width = 1750;
+prototype.width = 1850;
 prototype.height = 630;
 
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconciliationControlForm', {

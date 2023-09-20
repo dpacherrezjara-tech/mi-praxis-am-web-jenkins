@@ -12,7 +12,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
-        markDirty: false
+        markDirty: false,
+        listeners: {
+            refresh: function (dataview) {
+                Ext.each(dataview.panel.columns, function (column) {
+                    if (column.autoSizeColumn === true)
+                        column.autoSize();
+                });
+            }
+        }
     },
     columnLines: true,
     columns: {
@@ -46,13 +54,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     return value;
                 }
             },
-            {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
-            {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-            {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 160},
+            {text: 'Processing<br>Date', dataIndex: 'prda', width: 75},
+            {text: 'Payment<br>Date', dataIndex: 'paydate', width: 75},
+            {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 160,autoSizeColumn: true},
             {text: 'Country', dataIndex: 'scountry', width: 60},
             //metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
             {
-                text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 100,
+                text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 100, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     const info = record.data;
                     if (info.des_MERCHANT && info.des_MERCHANT !== '') {
@@ -62,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 }
             },
             {
-                text: 'Status<br>Settl. VS Sales', dataIndex: 'stval', width: 150,
+                text: 'Status<br>Settl. VS Sales', dataIndex: 'stval', width: 150, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                     const opts = {
@@ -71,7 +79,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         '2': 'Sales Without Settl.',
                         '3': 'Settl. Without Sales',
                         '4': 'Match Diff.',
-                        '5': 'Manual Match',
+                        '5': 'Match Manual',
                         '6': 'Forced Match',
                         '7': 'Compensation Match',
                         '8': 'Pending RFND'
@@ -79,7 +87,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     return opts[value] || '';
                 }
             },
-            {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+            {
+                text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60,
+                 renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    if(record.data.transtype==='CHBK' || record.data.transtype==='ADJU'){
+                        metaData.style = "font-weight:bold;color:red;";
+                        metaData.tdAttr = 'data-qtip="' + (record.data.transtype==='CHBK'?'CHARGEBACK':'ADJUSTMENT') + '"';
+                    }
+                    return value;
+                }
+            },
             {text: 'Void', dataIndex: 'fvoid', width: 45},
             {
                 text: 'Transaction',
@@ -93,13 +110,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     }
                 },
                 columns: [
-                    {text: 'Sales<br> Merchant ID', dataIndex: 'smerchid', width: 100},
+                    {text: 'Sales<br> Merchant ID', dataIndex: 'smerchid', width: 90},
                     {text: 'Sales Merchant<br>Description', dataIndex: 'des_SMERCHANT', width: 200},
-                    {text: 'Sale Date', dataIndex: 'sdate', width: 80},
+                    {text: 'Sale Date', dataIndex: 'sdate', width: 75},
                     {text: 'Card Number', dataIndex: 'scardn', width: 130},
-                    {text: 'Auth.<br>Code', dataIndex: 'sauthoc', width: 70},
+                    {text: 'Auth.<br>Code', dataIndex: 'sauthoc', width: 65},
                     {
-                        text: 'Installment', width: 120,
+                        text: 'Installment',
                         defaults: {
                             align: 'center',
                             menuDisabled: true,
@@ -110,8 +127,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                             }
                         },
                         columns: [
-                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
-                            {text: 'Number', dataIndex: 'instanbr', width: 60}
+                            {text: 'Plan', dataIndex: 'nbrinsta', width: 50},
+                            {text: 'Nbr', dataIndex: 'instanbr', width: 50}
                         ]
                     },
                     {
