@@ -8,7 +8,11 @@ public class ScannerFilter {
     private String CCUST,TRNCU,SPNR,SDATE,SAGENT,FUENTE,
             SEQ,CCIA,FORMA,SERIE,CORRL,
             CARDTYPE,SCARDCOD,SCURRENCY,SCARDN,SAUTHOC,FVOID,
-            CODEPR,GRUPO,CANAL;
+            CODEPR,GRUPO,CANAL,
+            CIAP,FORMAP,SERIEP,
+            RUTA0,RUTA1,RUTA2,RUTA3,RUTA4,
+            FVLO1,FVLO2,FVLO3,FVLO4,
+            TOTCUP,CPUI,PAX,FLAG,STDOC;
     private Double SVFOPS,TGROSAMOUN;
     private Integer DUPLICATES;
 
@@ -194,5 +198,141 @@ public class ScannerFilter {
 
     public void setCANAL(String CANAL) {
         this.CANAL = CANAL;
+    }
+
+    public String getCIAP() {
+        return CIAP;
+    }
+
+    public void setCIAP(String CIAP) {
+        this.CIAP = CIAP;
+    }
+
+    public String getFORMAP() {
+        return FORMAP;
+    }
+
+    public void setFORMAP(String FORMAP) {
+        this.FORMAP = FORMAP;
+    }
+
+    public String getSERIEP() {
+        return SERIEP;
+    }
+
+    public void setSERIEP(String SERIEP) {
+        this.SERIEP = SERIEP;
+    }
+
+    public String getRUTA0() {
+        return RUTA0;
+    }
+
+    public void setRUTA0(String RUTA0) {
+        this.RUTA0 = RUTA0;
+    }
+
+    public String getRUTA1() {
+        return RUTA1;
+    }
+
+    public void setRUTA1(String RUTA1) {
+        this.RUTA1 = RUTA1;
+    }
+
+    public String getRUTA2() {
+        return RUTA2;
+    }
+
+    public void setRUTA2(String RUTA2) {
+        this.RUTA2 = RUTA2;
+    }
+
+    public String getRUTA3() {
+        return RUTA3;
+    }
+
+    public void setRUTA3(String RUTA3) {
+        this.RUTA3 = RUTA3;
+    }
+
+    public String getRUTA4() {
+        return RUTA4;
+    }
+
+    public void setRUTA4(String RUTA4) {
+        this.RUTA4 = RUTA4;
+    }
+
+    public String getFVLO1() {
+        return FVLO1;
+    }
+
+    public void setFVLO1(String FVLO1) {
+        this.FVLO1 = FVLO1;
+    }
+
+    public String getFVLO2() {
+        return FVLO2;
+    }
+
+    public void setFVLO2(String FVLO2) {
+        this.FVLO2 = FVLO2;
+    }
+
+    public String getFVLO3() {
+        return FVLO3;
+    }
+
+    public void setFVLO3(String FVLO3) {
+        this.FVLO3 = FVLO3;
+    }
+
+    public String getFVLO4() {
+        return FVLO4;
+    }
+
+    public void setFVLO4(String FVLO4) {
+        this.FVLO4 = FVLO4;
+    }
+
+    public String getTOTCUP() {
+        return TOTCUP;
+    }
+
+    public void setTOTCUP(String TOTCUP) {
+        this.TOTCUP = TOTCUP;
+    }
+
+    public String getCPUI() {
+        return CPUI;
+    }
+
+    public void setCPUI(String CPUI) {
+        this.CPUI = CPUI;
+    }
+
+    public String getPAX() {
+        return PAX;
+    }
+
+    public void setPAX(String PAX) {
+        this.PAX = PAX;
+    }
+
+    public String getFLAG() {
+        return FLAG;
+    }
+
+    public void setFLAG(String FLAG) {
+        this.FLAG = FLAG;
+    }
+
+    public String getSTDOC() {
+        return STDOC;
+    }
+
+    public void setSTDOC(String STDOC) {
+        this.STDOC = STDOC;
     }
 }

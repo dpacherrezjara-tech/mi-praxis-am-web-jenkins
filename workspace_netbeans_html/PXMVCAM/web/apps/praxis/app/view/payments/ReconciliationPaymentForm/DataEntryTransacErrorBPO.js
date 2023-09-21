@@ -46,14 +46,45 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                             border: false,
                             items: [
                                 {
-                                    xtype: 'label',
-                                    text: 'General Information',
-                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                                    bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    width: 234,
-                                    height: 20,
-                                    margin: '4 2 4 8'
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    margin: '4 2 4 8',
+                                    width: '100%',
+                                    defaults: {
+                                        anchor: '100%'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'General Information',
+                                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                                            bodyStyle: 'background:#E5ECEF;',
+                                            fontSize: '11',
+                                            width: 234,
+                                            height: 20
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            layout: {
+                                                type: 'hbox',
+                                                pack: 'end'
+                                            },
+                                            flex: 1,
+                                            id: prototype.idDE + '-specialPanel',
+                                            border: false,
+                                            hidden: true,
+                                            items: [
+                                                {
+                                                    xtype: 'label',
+                                                    width: 'auto',
+                                                    id: prototype.idDE + '-specialTitle',
+                                                    margin: '0 8 0 0',
+                                                    style: 'color:red;font-weight:bold;font-size:16px;'
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 {
                                     xtype: 'panel',
@@ -752,7 +783,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         '2': 'Sales Without Sett.',
                                                         '3': 'Settl. Without Sales',
                                                         '4': 'Match Diff.',
-                                                        '5': 'Manual Match',
+                                                        '5': 'Match Manual',
                                                         '6': 'Forced Match',
                                                         '7': 'Compensation Match',
                                                         '8': 'Pending RFND'
@@ -1819,6 +1850,141 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                     },
                                                     {
                                                         id: prototype.idDE + '-totDAmount',
+                                                        fieldLabel: 'Sum Amount',
+                                                        submitValue: false,
+                                                        labelWidth: 100,
+                                                        width: 180,
+                                                        value: '0.00'
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                        ,
+                                        {
+                                            xtype: 'grid',
+                                            border: false,
+                                            hidden: true,
+                                            id: prototype.idDE + '-gridDesgloseCHBK',
+                                            viewConfig: {
+                                                stripeRows: true,
+                                                enableTextSelection: true,
+                                                markDirty: false
+                                            },
+                                            columnLines: true,
+                                            autoScroll: true,
+                                            minHeight: 100,
+                                            height: 'auto',
+                                            maxHeight: 150,
+                                            width: '100%',
+                                            emptyText: 'No cards available',
+                                            columns: {
+                                                defaults: {
+                                                    align: 'center',
+                                                    menuDisabled: true,
+                                                    sortable: true
+                                                },
+                                                items: [
+                                                    {
+                                                        text: 'Status', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            const {stval} = record.data;
+                                                            const opts = {
+                                                                '5': 'Chargeback',
+                                                                '6': 'Reverse Chbk'
+                                                            };
+                                                            return opts[stval] || '';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Credit Card',
+                                                        defaults: {
+                                                            align: 'center',
+                                                            menuDisabled: true,
+                                                            sortable: true
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Cod', dataIndex: 'codebank', width: 45
+                                                            },
+                                                            {
+                                                                text: 'Number', dataIndex: 'cardnbr', width: 130
+                                                            },
+                                                            {
+                                                                text: 'Auth', dataIndex: 'authnbr', width: 55
+                                                            },
+                                                            {
+                                                                text: 'Curr', dataIndex: 'mfop', width: 50
+                                                            },
+                                                            {
+                                                                text: 'Auth<br>Amount', dataIndex: 'autamount', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Amount', dataIndex: 'vfop', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Doc.<br>Type', width: 70, dataIndex: 'tpdoc'
+                                                    },
+                                                    {
+                                                        text: 'Ticket', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                            const {ccia, forma, serie} = record.data;
+                                                            const ticket = ccia + forma + serie;
+                                                            return ticket;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'PNR', width: 60, dataIndex: 'pnr'
+                                                    },
+                                                    {
+                                                        text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
+                                                    },
+                                                    {
+                                                        text: 'Usages', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            const {usopxcp1, usopxcp2, usopxcp3, usopxcp4} = record.data;
+                                                            const usages = usopxcp1 + usopxcp2 + usopxcp3 + usopxcp4;
+                                                            return usages;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            bbar: {
+                                                xtype: 'panel',
+                                                border: false,
+                                                width: '98%',
+                                                layout: {
+                                                    type: 'hbox',
+                                                    pack: 'end'
+                                                }, // Distribución horizontal
+                                                defaults: {
+                                                    xtype: 'textfield',
+                                                    margin: '3 5 3 5',
+                                                    labelStyle: 'text-align:right;font-weight: bolder;',
+                                                    fieldStyle: 'text-align:right;',
+                                                    editable: false
+                                                },
+                                                items: [
+                                                    {
+                                                        id: prototype.idDE + '-totDCTickets',
+                                                        fieldLabel: 'Total Tickets',
+                                                        submitValue: false,
+                                                        labelWidth: 100,
+                                                        width: 150,
+                                                        value: '0'
+                                                    },
+                                                    {
+                                                        id: prototype.idDE + '-totDCAmount',
                                                         fieldLabel: 'Sum Amount',
                                                         submitValue: false,
                                                         labelWidth: 100,

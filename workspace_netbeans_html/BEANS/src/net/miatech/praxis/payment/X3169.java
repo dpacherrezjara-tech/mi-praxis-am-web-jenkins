@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class X3169 {
 
-    private String CCUST;
+        private String CCUST;
 
     public void setCCUST(String CCUST) {
         this.CCUST = CCUST;
@@ -79,6 +79,16 @@ public class X3169 {
 
     public String getFUENTE() {
         return FUENTE;
+    }
+
+    private String CANAL;
+
+    public void setCANAL(String CANAL) {
+        this.CANAL = CANAL;
+    }
+
+    public String getCANAL() {
+        return CANAL;
     }
 
     private String CERROR;
@@ -181,6 +191,16 @@ public class X3169 {
         return SVFOPS;
     }
 
+    private Double TGROSAMOUN;
+
+    public void setTGROSAMOUN(Double TGROSAMOUN) {
+        this.TGROSAMOUN = TGROSAMOUN;
+    }
+
+    public Double getTGROSAMOUN() {
+        return TGROSAMOUN;
+    }
+
     private String SPNR;
 
     public void setSPNR(String SPNR) {
@@ -229,6 +249,56 @@ public class X3169 {
 
     public String getSEQ() {
         return SEQ;
+    }
+
+    private String CIAP;
+
+    public void setCIAP(String CIAP) {
+        this.CIAP = CIAP;
+    }
+
+    public String getCIAP() {
+        return CIAP;
+    }
+
+    private String FORMAP;
+
+    public void setFORMAP(String FORMAP) {
+        this.FORMAP = FORMAP;
+    }
+
+    public String getFORMAP() {
+        return FORMAP;
+    }
+
+    private String SERIEP;
+
+    public void setSERIEP(String SERIEP) {
+        this.SERIEP = SERIEP;
+    }
+
+    public String getSERIEP() {
+        return SERIEP;
+    }
+
+    private String FLAG;
+
+    public void setFLAG(String FLAG) {
+        this.FLAG = FLAG;
+    }
+
+    public String getFLAG() {
+        return FLAG;
+    }
+
+    private String STDOC;
+
+    public void setSTDOC(String STDOC) {
+        this.STDOC = STDOC;
+    }
+
+    public String getSTDOC() {
+        return STDOC;
     }
 
     private String CORRL;
@@ -289,6 +359,26 @@ public class X3169 {
 
     public String getSDATE() {
         return SDATE;
+    }
+
+    private String GRUPO;
+
+    public void setGRUPO(String GRUPO) {
+        this.GRUPO = GRUPO;
+    }
+
+    public String getGRUPO() {
+        return GRUPO;
+    }
+
+    private String CODEPR;
+
+    public void setCODEPR(String CODEPR) {
+        this.CODEPR = CODEPR;
+    }
+
+    public String getCODEPR() {
+        return CODEPR;
     }
 
     private Double SFEEAMOU;
@@ -359,6 +449,156 @@ public class X3169 {
 
     public Double getIVACOM12() {
         return IVACOM12;
+    }
+
+    private String RUTA0;
+
+    public void setRUTA0(String RUTA0) {
+        this.RUTA0 = RUTA0;
+    }
+
+    public String getRUTA0() {
+        return RUTA0;
+    }
+
+    private String RUTA1;
+
+    public void setRUTA1(String RUTA1) {
+        this.RUTA1 = RUTA1;
+    }
+
+    public String getRUTA1() {
+        return RUTA1;
+    }
+
+    private String RUTA2;
+
+    public void setRUTA2(String RUTA2) {
+        this.RUTA2 = RUTA2;
+    }
+
+    public String getRUTA2() {
+        return RUTA2;
+    }
+
+    private String RUTA3;
+
+    public void setRUTA3(String RUTA3) {
+        this.RUTA3 = RUTA3;
+    }
+
+    public String getRUTA3() {
+        return RUTA3;
+    }
+
+    private String RUTA4;
+
+    public void setRUTA4(String RUTA4) {
+        this.RUTA4 = RUTA4;
+    }
+
+    public String getRUTA4() {
+        return RUTA4;
+    }
+
+    private String FVLO1;
+
+    public void setFVLO1(String FVLO1) {
+        this.FVLO1 = FVLO1;
+    }
+
+    public String getFVLO1() {
+        return FVLO1;
+    }
+
+    private String FVLO2;
+
+    public void setFVLO2(String FVLO2) {
+        this.FVLO2 = FVLO2;
+    }
+
+    public String getFVLO2() {
+        return FVLO2;
+    }
+
+    private String FVLO3;
+
+    public void setFVLO3(String FVLO3) {
+        this.FVLO3 = FVLO3;
+    }
+
+    public String getFVLO3() {
+        return FVLO3;
+    }
+
+    private String FVLO4;
+
+    public void setFVLO4(String FVLO4) {
+        this.FVLO4 = FVLO4;
+    }
+
+    public String getFVLO4() {
+        return FVLO4;
+    }
+
+    private String TOTCUP;
+
+    public void setTOTCUP(String TOTCUP) {
+        this.TOTCUP = TOTCUP;
+    }
+
+    public String getTOTCUP() {
+        return TOTCUP;
+    }
+
+    private String CPUI;
+
+    public void setCPUI(String CPUI) {
+        this.CPUI = CPUI;
+    }
+
+    public String getCPUI() {
+        return CPUI;
+    }
+
+    private String PAX;
+
+    public void setPAX(String PAX) {
+        this.PAX = PAX;
+    }
+
+    public String getPAX() {
+        return PAX;
+    }
+
+    private String NBRLIQUID;
+
+    public void setNBRLIQUID(String NBRLIQUID) {
+        this.NBRLIQUID = NBRLIQUID;
+    }
+
+    public String getNBRLIQUID() {
+        return NBRLIQUID;
+    }
+
+    private String CODCHGBACK;
+
+    public void setCODCHGBACK(String CODCHGBACK) {
+        this.CODCHGBACK = CODCHGBACK;
+    }
+
+    public String getCODCHGBACK() {
+        return CODCHGBACK;
+    }
+
+    private String CHGBNUM;
+
+    public void setCHGBNUM(String CHGBNUM) {
+        this.CHGBNUM = CHGBNUM;
+    }
+
+    public String getCHGBNUM() {
+        return CHGBNUM;
     }
 
     private String FREGLA;
@@ -480,35 +720,4 @@ public class X3169 {
     public String getPGMCR() {
         return PGMCR;
     }
-    
-    private String GRUPO;
-
-    public String getGRUPO() {
-        return GRUPO;
-    }
-
-    public void setGRUPO(String GRUPO) {
-        this.GRUPO = GRUPO;
-    }
-    
-    private String CODEPR;
-
-    public String getCODEPR() {
-        return CODEPR;
-    }
-
-    public void setCODEPR(String CODEPR) {
-        this.CODEPR = CODEPR;
-    }
-    
-    private String CANAL;
-
-    public String getCANAL() {
-        return CANAL;
-    }
-
-    public void setCANAL(String CANAL) {
-        this.CANAL = CANAL;
-    }
-    
 }

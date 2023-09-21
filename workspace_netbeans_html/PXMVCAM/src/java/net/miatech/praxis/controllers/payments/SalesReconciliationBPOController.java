@@ -15,6 +15,7 @@ import net.miatech.praxis.payment.filter.SQP05061Filter;
 import net.miatech.praxis.payment.filter.SQP05062Filter;
 import net.miatech.praxis.payment.filter.SQP05063Filter;
 import net.miatech.praxis.payment.filter.SQP05065Filter;
+import net.miatech.praxis.payment.filter.SQP05072Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -148,6 +149,19 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionBPODesglose-------------");
         try {
             SQP05055Filter filter = logic.loadSQP05055Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "loadErrorTransactionBPODesgloseCHBK")
+    public ResponseEntity<?> loadErrorTransactionBPODesgloseCHBK(@ModelAttribute SQP05072Filter params){
+        System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionBPODesgloseCHBK-------------");
+        try {
+            SQP05072Filter filter = logic.loadSQP05072Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
