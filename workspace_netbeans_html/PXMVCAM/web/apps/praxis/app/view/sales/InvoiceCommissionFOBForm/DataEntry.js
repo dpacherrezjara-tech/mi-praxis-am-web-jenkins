@@ -696,7 +696,8 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionFOBForm.DataEntry', {
                                             labelAlign: 'right',
                                             width: 100,
                                             padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Cash - Comm:</strong>'
+//                                            html: '<strong style="color:#000;">Cash - Comm:</strong>'
+                                            html: '<strong style="color:#000;">Total:</strong>'
 
                                         },
                                         {

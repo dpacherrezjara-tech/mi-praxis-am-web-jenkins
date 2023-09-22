@@ -565,7 +565,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     readOnly: true,
                                     width: 105
                                 },
-                                //{xtype: 'tbspacer', width: 5}
+                                        //{xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -608,7 +608,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     width: 100,
                                     maskRe: /[0-9]/,
                                     enforceMaxLength: true,
-                                    maxLength: 15
+                                    maxLength: 13
                                 },
                                 {xtype: 'tbspacer', width: 30},
                                 {
@@ -1010,7 +1010,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     width: 85,
                                     enableKeyEvents: true,
                                 },
-                                
+
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'panel',
@@ -1191,6 +1191,36 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                 },
                                 {xtype: 'tbspacer', width: 5},
                                 {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-chkForceBlock',
+                                    //tooltip: 'Force add Blocked',
+                                    inputValue: true,
+                                    listeners: {
+                                        change: function (checkbox, newValue, oldValue, eOpts) {
+                                            //console.log(newValue);
+                                            if (!newValue) {
+                                                return;
+                                            }
+                                            // Mostrar una ventana de confirmación al hacer clic
+                                            Ext.Msg.confirm('Confirm', '¿Do you want to force scan?', function (buttonId) {
+                                                if (buttonId === 'yes') {
+                                                    // Continuar con el cambio
+                                                    checkbox.setValue(newValue);
+                                                } else {
+                                                    // Cancelar el cambio
+                                                    checkbox.setValue(oldValue);
+                                                }
+                                            });
+                                        },
+                                        render: function (checkbox) {
+                                            checkbox.getEl().set({
+                                                'data-qtip': 'Force add Blocked'
+                                            });
+                                        }
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
                                     xtype: 'button',
                                     width: 25,
                                     //margin: '4 4 4 4',
@@ -1347,12 +1377,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     height: 180,
 //                                    hidden: false,
                                     columnLines: true,
-                                    plugins: [
-                                        {
-                                            ptype: 'cellediting',
-                                            clicksToEdit: 1
-                                        }
-                                    ],
+//                                    plugins: [
+//                                        {
+//                                            ptype: 'cellediting',
+//                                            clicksToEdit: 1
+//                                        }
+//                                    ],
+                                    viewConfig: {
+                                        stripeRows: true,
+                                        enableTextSelection: true,
+                                        markDirty: false
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1368,7 +1403,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                      }*/
 
                                                     value = 'Sales';
-                                                    
+
                                                     if (record.data.FDUPLIB > 0) {
                                                         value = 'Blocked'
                                                     }
@@ -1421,7 +1456,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                         }
                                                     },
                                                     {text: 'Number', dataIndex: 'A1531NREF', width: 115,
-                                                        editor: {xtype: 'textfield', editable: false},
+                                                        //editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
 
@@ -1429,7 +1464,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                         }
                                                     },
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
-                                                        editor: {xtype: 'textfield', editable: false},
+                                                        //editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
 
@@ -1447,7 +1482,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
 //                                                }
 //                                            },
                                             {text: 'Curr', dataIndex: 'A1531MFOP', width: 45,
-                                                editor: {xtype: 'textfield', editable: false},
+                                                //editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1477,11 +1512,17 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return value;
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 62,
-                                                editor: {xtype: 'textfield', editable: false},
+                                            {text: 'PNR',
+                                                //dataIndex: 'A720PNR', 
+                                                width: 62,
+                                                //editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-
+                                                    if (record.data.A720PNR) {
+                                                        value = record.data.A720PNR;
+                                                    } else {
+                                                        value = record.data.SPNR || '';
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -1497,7 +1538,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                 //editor: {xtype: 'textfield', editable: false},
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
-                                                editor: {xtype: 'textfield', editable: false},
+                                                //editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1590,16 +1631,16 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     }
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Select',
-                                             xtype: 'checkcolumn',
-                                             id: prototype.id + '-id_checkManual',
-                                             width: 50,
-                                             dataIndex: 'false',
-                                             listeners: {
-                                             checkchange: 'checkManual'
-                                             },
-                                             },*/
+                                                    /*{
+                                                     text: 'Select',
+                                                     xtype: 'checkcolumn',
+                                                     id: prototype.id + '-id_checkManual',
+                                                     width: 50,
+                                                     dataIndex: 'false',
+                                                     listeners: {
+                                                     checkchange: 'checkManual'
+                                                     },
+                                                     },*/
                                         ]
                                     }
                                 },
@@ -1827,31 +1868,31 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                                     return '';
                                                 }
                                             },
-                                            /*{text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
-                                             renderer: function (value, meta, record, row, col) {
-                                             meta.style = "background-color:#fae2a0;";
-                                             switch (value) {
-                                             case '':
-                                             return 'DIFERENCIA LIQUIDACION VS SALE';
-                                             case '01':
-                                             return 'DIFERENCIA LIQUIDACION VS SALE';
-                                             case '02':
-                                             return 'PAGO DUPLICADO';
-                                             case '03':
-                                             return 'ADM/AVISOS DE CARGO';
-                                             default:
-                                             return 'DIFERENCIA LIQUIDACION VS SALE';
-                                             }
-                                             },
-                                             editor: {
-                                             xtype: 'combo',
-                                             store: storeComboAdj,
-                                             editable: false,
-                                             valueField: 'code',
-                                             displayField: 'name',
-                                             value: '',
-                                             }
-                                             },*/
+                                                    /*{text: 'Adjustment Type', width: 170, dataIndex: 'CERROR',
+                                                     renderer: function (value, meta, record, row, col) {
+                                                     meta.style = "background-color:#fae2a0;";
+                                                     switch (value) {
+                                                     case '':
+                                                     return 'DIFERENCIA LIQUIDACION VS SALE';
+                                                     case '01':
+                                                     return 'DIFERENCIA LIQUIDACION VS SALE';
+                                                     case '02':
+                                                     return 'PAGO DUPLICADO';
+                                                     case '03':
+                                                     return 'ADM/AVISOS DE CARGO';
+                                                     default:
+                                                     return 'DIFERENCIA LIQUIDACION VS SALE';
+                                                     }
+                                                     },
+                                                     editor: {
+                                                     xtype: 'combo',
+                                                     store: storeComboAdj,
+                                                     editable: false,
+                                                     valueField: 'code',
+                                                     displayField: 'name',
+                                                     value: '',
+                                                     }
+                                                     },*/
                                         ]
                                     }
                                 },
@@ -1875,6 +1916,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryErrorTra
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
+                                    viewConfig: {
+                                        stripeRows: true,
+                                        enableTextSelection: true,
+                                        markDirty: false
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,

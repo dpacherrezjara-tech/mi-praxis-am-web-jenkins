@@ -37,7 +37,15 @@ import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.classes.ZipFiles;
+import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
+import net.miatech.praxis.payment.filter.SQP05048Filter;
+import net.miatech.praxis.payment.filter.SQP05048OLDFilter;
+import net.miatech.praxis.payment.filter.SQP05052Filter;
+import net.miatech.praxis.payment.filter.SQP05054Filter;
+import net.miatech.praxis.payment.filter.SQP05055Filter;
+import net.miatech.praxis.payment.filter.SQP05056Filter;
+import net.miatech.praxis.payment.filter.SQP05057Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -53,6 +61,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -1041,8 +1050,8 @@ public class ReconciliationPaymentController extends BaseController {
         filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationPaymentLogic();
-        logic.setSession(this.serverSession.getServerSession());
         try {
+            logic.setSession(this.serverSession.getServerSession());
             result = logic.loadPX606SQP04720(filter);
 //            lstInfo = logic.loadPX606SQP04722(result);
             map.put("result", result);
@@ -1068,9 +1077,8 @@ public class ReconciliationPaymentController extends BaseController {
         filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationPaymentLogic();
-        logic.setSession(this.serverSession.getServerSession());
         try {
-
+            logic.setSession(this.serverSession.getServerSession());
             lstInfo = logic.loadPX606SQP04722(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
@@ -1095,9 +1103,8 @@ public class ReconciliationPaymentController extends BaseController {
         filter = gson.fromJson(beanString, A4331Filter.class);
 
         logic = new ReconciliationPaymentLogic();
-        logic.setSession(this.serverSession.getServerSession());
         try {
-
+            logic.setSession(this.serverSession.getServerSession());
             lstInfo = logic.loadPX606SQP04754(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
@@ -1256,43 +1263,6 @@ public class ReconciliationPaymentController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    @RequestMapping(value = "ReverseTransaction")
-    public @ResponseBody
-    String ReverseTransaction(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Sales Reconciliation by AMEX : ReverseTransaction-------------");
-        String msj = "";
-        try {
-            Gson gson = new Gson();
-            A4331Filter filter = new A4331Filter();
-            A4331Filter result = new A4331Filter();
-
-            String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4331Filter.class);
-
-            logic = new ReconciliationPaymentLogic();
-            logic.setSession(this.serverSession.getServerSession());
-
-            msj = logic.loadPX606SQP04847(filter);
-            map.put("result", result);
-
-            if (msj.equals("")) {
-                map.put("success", true);
-            } else {
-                map.put("success", false);
-            }
-        } catch (SQLException e) {
-            msj = e.getMessage();
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error. " + e.getMessage());
-        } catch (Exception e) {
-            msj = e.getMessage();
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error. " + e.getMessage());
-        }
-        map.put("msjOption", msj);
-        return new Gson().toJson(map);
-    }
-
     @RequestMapping(value = "MaintenanceMsi")
     public @ResponseBody
     String MaintenanceMsi(ModelMap map, HttpServletRequest request) {
@@ -1381,8 +1351,9 @@ public class ReconciliationPaymentController extends BaseController {
         filter = gson.fromJson(beanString, A4118Filter.class);
 
         logic = new ReconciliationPaymentLogic();
-        logic.setSession(this.serverSession.getServerSession());
+        
         try {
+            logic.setSession(this.serverSession.getServerSession());
             result = logic.loadPX606SQP04466(filter);
 //            lstInfo = logic.loadPX606SQP04722(result);
             map.put("result", result);
@@ -9251,6 +9222,110 @@ public class ReconciliationPaymentController extends BaseController {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    @RequestMapping(value = "maintenanceErrorTransactionBPO",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceErrorTransaction(@RequestBody SQP05048OLDFilter params){
+        System.out.println("-------------- ReconciliationPayment : maintenanceErrorTransactionBPO-------------");
+        ModelMap model = new ModelMap();
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05048OLDFilter filter = logic.loadSQP05048Filter(params);
+            model.put("status", filter.getSQLRES());
+            model.put("response", filter.getSQLMSG());
+            return new ResponseEntity<>(model,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "ReverseTransaction")
+    public ResponseEntity<?> ReverseTransaction(@ModelAttribute SQP04847Filter params) {
+        System.out.println("-------------- ReconciliationPayment : ReverseTransaction-------------");
+        ModelMap model = new ModelMap();
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04847Filter filter = logic.loadPX606SQP04847(params);
+            model.put("status", filter.getSQLRES());
+            model.put("response", filter.getSQLMSG());
+            return new ResponseEntity<>(model,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
+    }
+    
+    @RequestMapping(value = "loadErrorTransactionBPOInfo")
+    public ResponseEntity<?> loadErrorTransactionBPOInfo(@ModelAttribute SQP05052Filter params) {
+        System.out.println("-------------- ReconciliationPayment : loadErrorTransactionBPOInfo-------------");
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05052Filter filter = logic.loadSQP05052Filter(params);
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
+    }
+    
+    @RequestMapping(value = "loadErrorTransactionBPOScanner")
+    public ResponseEntity<?> loadErrorTransactionBPOScanner(@ModelAttribute SQP05054Filter params) {
+        System.out.println("-------------- ReconciliationPayment : loadErrorTransactionBPOScanner-------------");
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05054Filter filter = logic.loadSQP05054Filter(params);
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
+    }
+    
+    @RequestMapping(value = "loadErrorTransactionBPODesglose")
+    public ResponseEntity<?> loadErrorTransactionBPODesglose(@ModelAttribute SQP05055Filter params) {
+        System.out.println("-------------- ReconciliationPayment : loadErrorTransactionBPODesglose-------------");
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05055Filter filter = logic.loadSQP05055Filter(params);
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
+    }
+    
+    @RequestMapping(value = "errorTransactionBPOsetStandBy")
+    public ResponseEntity<?> errorTransactionBPOsetStandBy(@ModelAttribute SQP05056Filter params) {
+        System.out.println("-------------- ReconciliationPayment : errorTransactionBPOsetStandBy-------------");
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05056Filter filter = logic.loadSQP05056Filter(params);
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
+    }
+    
+    @RequestMapping(value = "errorTransactionBPOreverseStandBy")
+    public ResponseEntity<?> errorTransactionBPOreverseStandBy(@ModelAttribute SQP05057Filter params) {
+        System.out.println("-------------- ReconciliationPayment : errorTransactionBPOreverseStandBy-------------");
+        try {
+            logic = new ReconciliationPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05057Filter filter = logic.loadSQP05057Filter(params);
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
     }
     
 }

@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWN", "Flown Accounting"],
+                ["PFLOWNPRE", "Flown Accounting"],
                 ["PPFLOWN", "Flown Accounting Pending"]
             ]}));
         cbxModulo.setValue("");
@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         
         if (msj === '') {
             switch (module) {
-                case "PFLOWN" : 
+                case "PFLOWNPRE" : 
                     Ext.Msg.show({
                         title: '.:PRAXIS:.',
                         msg: 'Are you sure to insert?',
@@ -131,7 +131,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         var cbxModulo = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
         
         switch (cbxModulo) {
-            case "PFLOWN" : 
+            case "PFLOWNPRE" : 
                 dataentryParams = {};
                 dataentryParams.IN_MODULO = 'FLOWN';
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
@@ -203,6 +203,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     crud: function(){
         var rec = this.p.rec;
         var strOption = this.p.action;
+        console.log(strOption);
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
@@ -228,7 +229,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     crudPending: function() {
         var rec = this.p.rec;
         var strOption = this.p.action;
-        //console.log('opcion : ' + strOption);
+        console.log('opcion : ' + strOption);
         Ext.Ajax.request({
             url: this.url + '/MaintancePendingFlown',
             method: 'POST',

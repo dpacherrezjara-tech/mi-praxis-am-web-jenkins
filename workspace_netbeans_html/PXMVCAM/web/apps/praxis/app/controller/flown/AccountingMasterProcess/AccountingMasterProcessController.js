@@ -73,7 +73,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.AccountingMaster
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWN", "Flown Accounting"],
+                ["PFLOWNPRE", "Flown Accounting"],
+                ["PFLOWN", "Flown Accounting (History)"],
                 ["PPFLOWN", "Flown Accounting Pending"]
             ]}));
         cboModulo.setValue("");
@@ -119,6 +120,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.AccountingMaster
             case 'PSALES':
             case 'PADJMA':
             case 'PFLOWN':
+            case 'PFLOWNPRE':
             case 'PPFLOWN':
                 IN_FECHA_PROCESO = IN_FINI;
                 IN_FECHA_ACUSE = IN_FFIN;

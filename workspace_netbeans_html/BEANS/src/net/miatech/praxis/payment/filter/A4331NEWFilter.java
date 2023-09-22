@@ -1,0 +1,69 @@
+package net.miatech.praxis.payment.filter;
+
+import net.miatech.praxis.payment.A4331NEW;
+
+/**
+ *
+ * @author Dvicente
+ */
+public class A4331NEWFilter extends A4331NEW{
+    private String DESC_ERROR,DES_MERCHANT,DES_SMERCHANT,DES_CERROR,DESC_CODADJU,DESC_PROCTYPE;
+    private A4331NSUMFilter summary;
+
+    public String getDESC_ERROR() {
+        return DESC_ERROR;
+    }
+
+    public void setDESC_ERROR(String DESC_ERROR) {
+        this.DESC_ERROR = DESC_ERROR;
+    }
+
+    public String getDES_MERCHANT() {
+        return DES_MERCHANT;
+    }
+
+    public void setDES_MERCHANT(String DES_MERCHANT) {
+        this.DES_MERCHANT = DES_MERCHANT;
+    }
+
+    public String getDES_SMERCHANT() {
+        return DES_SMERCHANT;
+    }
+
+    public void setDES_SMERCHANT(String DES_SMERCHANT) {
+        this.DES_SMERCHANT = DES_SMERCHANT;
+    }
+
+    public String getDES_CERROR() {
+        return DES_CERROR;
+    }
+
+    public void setDES_CERROR(String DES_CERROR) {
+        this.DES_CERROR = DES_CERROR;
+    }
+
+    public String getDESC_CODADJU() {
+        return DESC_CODADJU;
+    }
+
+    public void setDESC_CODADJU(String DESC_CODADJU) {
+        this.DESC_CODADJU = DESC_CODADJU;
+    }
+
+    public String getDESC_PROCTYPE() {
+        return DESC_PROCTYPE;
+    }
+
+    public void setDESC_PROCTYPE(String DESC_PROCTYPE) {
+        this.DESC_PROCTYPE = DESC_PROCTYPE;
+    }
+
+    public A4331NSUMFilter getSummary() {
+        return summary;
+    }
+
+    public void setSummary(A4331NSUMFilter summary) {
+        this.summary = summary;
+    }
+    
+}

@@ -99,7 +99,7 @@ Ext.define('Ext.Praxis.view.sales.FOBForm.Info', {
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
-                            {text: 'Total Cash - <br> Comm.', width: 80, dataIndex: 'A1728TCAMC',
+                            {text: 'Total', width: 80, dataIndex: 'A1728TCAMC',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-align:right; margin-right:4px;';
                                     return Ext.util.Format.number(value, '0,000.00');
