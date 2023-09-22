@@ -110,7 +110,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "QR", "name": "QUERYS"},
                 {"code": "MS", "name": "MASSIVE"},
-                {"code": "UP", "name": "UPFRONT"}
+                {"code": "UP", "name": "UPFRONT"},
+                {"code": "MP", "name": "PAYMENT CONCILIATION"}
             ]
         }));
 
