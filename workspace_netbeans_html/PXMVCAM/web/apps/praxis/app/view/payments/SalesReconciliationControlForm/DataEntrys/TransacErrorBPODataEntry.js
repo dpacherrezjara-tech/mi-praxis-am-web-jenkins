@@ -5,7 +5,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     alias: 'widget.TransacErrorBPODataEntry',
     requires: [
         'Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErrorBPODataEntryController',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry'
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry'
     ],
     controller: 'TransacErrorBPODataEntryController',
     title: 'Transaction Error - Form',
@@ -2367,6 +2368,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onClickMSITracking'
+                    }
+                },
+                {
+                    text: 'Show Chargeback Tracking',
+                    hidden: true,
+                    id: prototype.idDE + '-ChargebackTracking',
+                    iconCls: 'prx-icon-refresh',
+                    listeners: {
+                        click: 'onClickChbkTracking'
                     }
                 },
                 {

@@ -24,7 +24,15 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEn
             viewConfig: {
                 stripeRows: true,
                 enableTextSelection: true,
-                markDirty: false
+                markDirty: false,
+                listeners: {
+                    refresh: function (dataview) {
+                        Ext.each(dataview.panel.columns, function (column) {
+                            if (column.autoSizeColumn === true)
+                                column.autoSize();
+                        });
+                    }
+                }
             },
             columnLines: true,
             autoScroll: true,
@@ -64,7 +72,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEn
                 },
                 items: [
                     {
-                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,hidden:true,
+                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;";
                             return value;
@@ -74,8 +82,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEn
                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'PNR', dataIndex: 'spnr', width: 70},
                     {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', flex:1},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180},
+                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 180, autoSizeColumn: true},
+                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180, autoSizeColumn: true},
+                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
                     {
                         text: 'Status', dataIndex: 'stval', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -86,7 +95,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEn
                                 '2': 'Sales Without Settl.',
                                 '3': 'Settl. Without Sales',
                                 '4': 'Match Diff.',
-                                '5': 'Manual Match',
+                                '5': 'Match Manual',
                                 '6': 'Forced Match',
                                 '7': 'Compensation Match',
                                 '8': 'Pending RFND'
@@ -134,7 +143,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEn
                         text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
                     },
                     {
-                        text: 'Match Reference', dataIndex: 'observa', width: 150,hidden:true,
+                        text: 'Match Reference', dataIndex: 'observa', width: 150, hidden: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;color:red;";
                             return value;
@@ -149,7 +158,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.MSITrackingDataEn
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
-            border:true,
+            border: true,
             margin: '5 0 5 0',
             layout: {
                 pack: 'center'

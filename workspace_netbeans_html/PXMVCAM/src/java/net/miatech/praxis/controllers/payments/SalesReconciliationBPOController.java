@@ -16,6 +16,8 @@ import net.miatech.praxis.payment.filter.SQP05062Filter;
 import net.miatech.praxis.payment.filter.SQP05063Filter;
 import net.miatech.praxis.payment.filter.SQP05065Filter;
 import net.miatech.praxis.payment.filter.SQP05072Filter;
+import net.miatech.praxis.payment.filter.SQP05077Filter;
+import net.miatech.praxis.payment.filter.SQP05081Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -206,7 +208,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+    //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
     @RequestMapping(value = "loadMSITrackingInfo")
     public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingInfo-------------");
@@ -244,4 +246,33 @@ public class SalesReconciliationBPOController {
         }
     }
     //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="ChargeBackTracking">
+    @RequestMapping(value = "loadChargebackTrackingInfo")
+    public ResponseEntity<?> loadChargebackTrackingInfo(@ModelAttribute SQP05081Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadChargebackTrackingInfo-------------");
+        try {
+            SQP05081Filter filter = logic.loadSQP05081Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @RequestMapping(value = "maintenanceChargebackTracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceChargebackTracking(@RequestBody SQP05077Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackTracking-------------");
+        try {
+            SQP05077Filter filter = logic.loadSQP05077Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    //</editor-fold>
+    
+//</editor-fold>
 }

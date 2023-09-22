@@ -125,10 +125,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
             saleDate.setText('Sale Date');
             salesAmt.setText('Sale Amount');
         }
-        
+
+        Ext.getCmp(prototype.idDE + '-ChargebackTracking').hide();
         if (trnx === 'CHBK') {
             Ext.getCmp(prototype.idDE + '-specialPanel').show();
             Ext.getCmp(prototype.idDE + '-specialTitle').setText('CHARGEBACK');
+            Ext.getCmp(prototype.idDE + '-ChargebackTracking').show();
         } else if (trnx === 'ADJU') {
             Ext.getCmp(prototype.idDE + '-specialPanel').show();
             Ext.getCmp(prototype.idDE + '-specialTitle').setText('ADJUSTMENT');
@@ -735,22 +737,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         return params;
     },
     formatDesgloseParams: function (obj) {
-        let params = {};
-        if (obj.transtype === 'CHBK') {
-            params = {
-                IN_CCUST: obj.ccust,
-                IN_TDOC: obj.tdoc,
-                IN_SDATE: obj.sdate,
-                IN_NBRLIQUID: obj.nbrliquid,
-                IN_SCARDN: obj.scardn
-            };
-        } else {
-            params = {
-                IN_CCUST: obj.ccust,
-                IN_PRDA: obj.prda,
-                IN_AREFNBR: obj.arefnbr
-            };
-        }
+        let params = {
+            IN_CCUST: obj.ccust,
+            IN_TDOC: obj.tdoc,
+            IN_PRDA: obj.prda,
+            IN_AREFNBR: obj.arefnbr
+        };
         console.log('Desglose: ', params);
         return params;
     },
