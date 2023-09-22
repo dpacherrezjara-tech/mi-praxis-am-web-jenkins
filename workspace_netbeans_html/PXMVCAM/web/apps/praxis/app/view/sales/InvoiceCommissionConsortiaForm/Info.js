@@ -98,8 +98,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-//                                    {text: 'Total Cash - Commission', width: 160, dataIndex: 'A2447CAMCO',
-                                        {text: 'Total', width: 160, dataIndex: 'A2447CAMCO',
+                                    {text: 'Total Cash - Commission', width: 160, dataIndex: 'A2447CAMCO',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = 'text-align:right; margin-right:4px;';
                                             return Ext.util.Format.number(value, '0,000.00');

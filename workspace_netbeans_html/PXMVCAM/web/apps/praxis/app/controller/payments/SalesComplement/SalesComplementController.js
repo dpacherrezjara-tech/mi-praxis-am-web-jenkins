@@ -322,7 +322,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             return;
         }
         prototypeProgram.view = 'payments-sales-complement-form';
-        prototypeProgram.nprog = 'PX00000627';
+        prototypeProgram.nprog = 'PX00000627'
         prototypeProgram.title = 'Sales Complement';
         prototypeProgram.modulo = '';
 
@@ -350,6 +350,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         } else {
             panelFilter.show();
         }
+    },
+    onClickExcelBtn: function (obj) {
+        alert('Funcion en Construccion');
     },
     onChangeFechaBtn: function (obj) {
         const me = this;
@@ -396,25 +399,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
 
         opts[obj.id.split('-').at(-1)]();
         //console.log(obj.getValue());
-    },
-    onClickExcelBtn:function(){
-        const me = this;
-        let params = Object.assign({},me.searchParams);
-        params.excel = true;
-        const opts = {
-            'P': () => {
-                global.getFile(`${me.url}/downloadPlusgradeInfo?${new URLSearchParams(params)}`);
-            },
-            'L': () => {
-                global.getFile(`${me.url}/downloadLigasInfo?${new URLSearchParams(params)}`);
-            },
-            'T': () => {
-                global.getFile(`${me.url}/downloadTabletInfo?${new URLSearchParams(params)}`);
-            }
-        };
-        if(opts[me.gridType]){
-            opts[me.gridType]();
-        }
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){

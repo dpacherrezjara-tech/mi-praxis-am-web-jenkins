@@ -7,9 +7,6 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ReconciliationDoublePaymentDAO;
 import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
-import net.miatech.praxis.payment.filter.SQP04955Filter;
-import net.miatech.praxis.payment.filter.SQP05004Filter;
-import net.miatech.praxis.payment.filter.SQP05043Filter;
 
 public class ReconciliationDoublePaymentLogic {
 
@@ -22,10 +19,6 @@ public class ReconciliationDoublePaymentLogic {
 
     public List<A4116Filter> loadPX622SQP04955(A4116Filter filter) throws SQLException, Exception {
         return ReconciliationDoublePaymentDAO.loadPX622SQP04955(filter);
-    }
-    
-    public SQP04955Filter getSQP04955Filter(SQP04955Filter filter) throws Exception{
-        return ReconciliationDoublePaymentDAO.getSQP04955Filter(filter);
     }
 
     public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
@@ -47,12 +40,5 @@ public class ReconciliationDoublePaymentLogic {
     public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
         return ReconciliationDoublePaymentDAO.loadSQP00697(filter);
     }
-    
-    public SQP05043Filter getSQP05043Filter(SQP05043Filter filter) throws Exception{
-        return ReconciliationDoublePaymentDAO.getSQP05043Filter(filter);
-    }
-    
-    public SQP05004Filter getSQP05004Filter(SQP05004Filter filter)throws Exception{
-        return ReconciliationDoublePaymentDAO.getSQP05004Filter(filter);
-    }
+
 }

@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                                 },
                                 columns: [
                                     {
-                                        text: 'Offer', dataIndex: 'curoffer', width: 80,
+                                        text: 'Partner', dataIndex: 'currpartn', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#8ac6eb";
                                             return value;

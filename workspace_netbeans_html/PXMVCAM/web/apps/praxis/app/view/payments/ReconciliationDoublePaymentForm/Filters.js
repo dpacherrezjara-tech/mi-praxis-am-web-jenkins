@@ -183,31 +183,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 20},
                         {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbTypeGrid',
-                            fieldLabel: 'Type',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: false,
-                            valueField: 'CODE',
-                            displayField: 'NAME',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 50,
-                            width: 180,
-                            store:Ext.create('Ext.data.Store',{
-                                data:[
-                                    {CODE:'DP',NAME:'Double Payment'},
-                                    {CODE:'V',NAME:'Void'}
-                                ]
-                            }),
-                            value:'DP',
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 20},
-                        {
                             xtype: 'label',
                             text: 'PNR:',
                             padding: '8px 1px 2px 1px',

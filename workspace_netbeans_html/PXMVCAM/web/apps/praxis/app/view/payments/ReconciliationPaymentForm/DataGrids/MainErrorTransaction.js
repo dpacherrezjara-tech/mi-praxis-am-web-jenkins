@@ -6,9 +6,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.MainErr
     height: 'auto',
     width: 1865,
     margin: '0 0 0 0 ',
-    requires:[
-        'Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacErrorBPO'
-    ],
     layout: {
         type: 'vbox',
         align: 'center'
@@ -284,20 +281,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataGrids.MainErr
                                 iconCls: 'prx-icon-edit',
                                 tooltip: 'Edit',
                                 handler: 'onEditClick'
-                            }
-                        ]
-                    },
-                    {
-                        sortable: false,
-                        xtype: 'actioncolumn',
-                        width: 60,
-                        text: 'Edit v2',
-                        align: 'center',
-                        items: [
-                            {
-                                iconCls: 'prx-icon-detail',
-                                tooltip: 'Detail',
-                                handler: 'onEditClick2'
                             }
                         ]
                     },

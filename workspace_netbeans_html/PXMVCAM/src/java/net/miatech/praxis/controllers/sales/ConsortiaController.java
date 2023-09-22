@@ -483,8 +483,7 @@ public class ConsortiaController extends BaseController {
             CH1_07.setCellValue("IVA");
             CH1_08.setCellValue("Comm. +  IVA");
             CH1_09.setCellValue("Total Cash");
-//            CH1_10.setCellValue("Total Cash - Commission");
-            CH1_10.setCellValue("Total");
+            CH1_10.setCellValue("Total Cash - Commission");
             CH1_11.setCellValue("Send to FOB");
             CH1_13.setCellValue("Acuse");
             CH1_14.setCellValue("Received From FOB");

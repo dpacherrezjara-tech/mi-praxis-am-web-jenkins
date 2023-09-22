@@ -5,6 +5,7 @@
  */
 package net.miatech.praxis.controllers.sales;
 
+import net.miatech.praxis.controllers.flown.*;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,20 +15,32 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.A1952Filter;
+import net.miatech.beans.PX019S01A004Filter;
+import net.miatech.beans.PX019S01A823Filter;
+import net.miatech.beans.SQP00796Filter;
 import net.miatech.beans.SQP00801Filter;
 import net.miatech.beans.SQP00802Filter;
 import net.miatech.beans.SQP00804Filter;
+import net.miatech.beans.SQP00806Filter;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.libmiatec.A722;
 import net.miatech.praxis.SQP04749Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.logic.flown.CatalogueFlightLogic;
+import net.miatech.praxis.logic.sales.FptfAirlineLogic;
+import net.miatech.praxis.logic.sales.FptfBestPracticeLogic;
 import net.miatech.praxis.logic.sales.InvoiceCommissionConsortiaLogic;
+import net.miatech.praxis.logic.sales.InvoiceCommissionConsortiaLogic;
+import net.miatech.praxis.logic.sales.ProvisosTextLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -37,6 +50,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -282,8 +296,7 @@ public class InvoiceCommissionConsortiaController extends BaseController {
             CH1_06.setCellValue("IVA");
             CH1_07.setCellValue("Commission+IVA");
             CH1_08.setCellValue("Total Cash");
-//            CH1_09.setCellValue("Total Cash - Commision");
-            CH1_09.setCellValue("Total");
+            CH1_09.setCellValue("Total Cash - Commision");
             CH1_10.setCellValue("App.");
             CH1_11.setCellValue("Acc.");
 

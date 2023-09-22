@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'PAYDATE', width: 80,
+                                                        text: 'Date', dataIndex: 'DATE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             return value;
@@ -93,11 +93,11 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 80,
+                                                    {text: 'Merchant ID', dataIndex: 'MERCHID', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;";
-                                                            metaData.tdAttr = 'data-qtip="' + data.PMERCHID + '"';
+                                                            metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
                                                             return value;
                                                         }
                                                     }
@@ -111,15 +111,15 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'STVAL', width: 85,
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 85,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            //var data = record.data;
+                                                            var data = record.data;
                                                             metaData.style = "text-align:center;background-color:#B2FAC6;";
-                                                            const sts = ['1', '5', '6', '7'];
-                                                            return sts.includes(value) ? 'Match' : 'Pending';
+                                                            metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
+                                                            return value;
                                                         }
                                                     },
-                                                    {text: 'Refund', dataIndex: 'STRFND', width: 85,
+                                                    {text: 'Refund', dataIndex: 'descSTRFND', width: 85,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             //metaData.style = "text-align:center;background-color:#B2FAC6;";
@@ -129,7 +129,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Document<br>Type', dataIndex: 'TRANSTYPE', width: 70,
+                                            {text: 'Document<br>Type', dataIndex: 'descTDOC', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     value = '<b>' + value + '</b>';
                                                     return value;
@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVOIRN', width: 90,
+                                                    {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 90,
                                                         listeners: {
                                                             click: 'onViewPNR'
                                                         },
@@ -185,7 +185,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'Indust.Speci. <br> Ref.Nbr<br>TKT', dataIndex: 'TICKET', width: 120,
+                                                    {text: 'Indust.Speci. <br> Ref.Nbr<br>TKT', dataIndex: 'ISREFNBR', width: 120,
                                                         listeners: {
                                                             click: 'viewTicket'
                                                         },
@@ -581,7 +581,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 width: 40,
                                                 text: 'Edit',
                                                 align: 'center',
-                                                hidden: false,
+                                                hidden:false,
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-edit',
@@ -634,7 +634,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'PAYDATE', width: 85,
+                                                        text: 'Date', dataIndex: 'DATE', width: 85,
                                                     }
                                                 ]
                                             },
@@ -647,7 +647,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'SDATE', width: 85,
+                                                        text: 'Date', dataIndex: 'TRANSDATE', width: 85,
                                                     }
                                                 ]
                                             },
@@ -660,7 +660,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'PRDA', width: 85,
+                                                        text: 'Date', dataIndex: 'AXPRODAT', width: 85,
                                                     }
                                                 ]
                                             },
@@ -672,7 +672,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'CERROR', width: 100,
+                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.CERROR === '') {
                                                                 metaData.style = "text-align:center;background-color:#C6E5B1;";
@@ -683,12 +683,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'STVAL', width: 90,
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            const sts = ['1','5','6','7'];
+                                                            var data = record.data;
                                                             metaData.style = "text-align:center;";
-                                                            metaData.tdAttr = 'data-qtip="' + (sts.includes(value)?'Match':'Pending') + '"';
-                                                            return sts.includes(value)?'Match':'Pending';
+                                                            metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
+                                                            return value;
                                                         }
                                                     },
                                                 ]
@@ -702,16 +702,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Document', dataIndex: 'TDOC', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
-                                                            const opts = {
-                                                                'S':'Sale',
-                                                                'R':'Refund',
-                                                                'A':'Adjustment'
-                                                            };
-                                                            return '<b>'+opts[value]||value+'</b>';
-                                                        }
+                                                        text: 'Type', dataIndex: 'RECTYPE', width: 100,
                                                     }
                                                 ]
                                             },
@@ -721,7 +712,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + (value || '') + '</a>';
+//                                                            value = '<br>' + value + '<br>';
+                                                    return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {text: 'PNR', dataIndex: 'SPNR', width: 80,
@@ -734,7 +726,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                     return '<a href="#payments-reconciliation-double-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'TKT', width: 120,
+                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
                                                 listeners: {
                                                     click: 'viewTicket'
                                                 },
@@ -759,7 +751,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 },
                                             },
                                             {
-                                                text: 'Amount<br>Total Transact.', dataIndex: 'SVFOPS_TOTAL', width: 100, hidden: true,
+                                                text: 'Amount<br>Total Transact.', dataIndex: 'TGROSAMOUC', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -779,7 +771,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                  }*/
                                             },
                                             {
-                                                text: 'Transaction <br> Amount', dataIndex: 'SVFOPS', width: 100,
+                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -1177,7 +1169,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Currency<br>Settlement', dataIndex: 'SCURRENCY', width: 80,
+                                                text: 'Currency<br>Settlement', dataIndex: 'IN_PCURRENCY', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     //metaData.style = "text-align:center;background-color:#FCF6DC";
                                                     return value;
@@ -1201,7 +1193,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info', {
                                 }
                             ]
                         },
-
+                        
+                        
+                        
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pie',

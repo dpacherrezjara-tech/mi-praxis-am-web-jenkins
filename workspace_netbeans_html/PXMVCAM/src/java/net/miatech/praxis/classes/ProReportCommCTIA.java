@@ -362,8 +362,7 @@ public class ProReportCommCTIA {
 
             // TOTAL CASH - COMM                    
             PoxT = PoxT + 12;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cash - Comm. : ", subFontT)), PoxT, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total: ", subFontT)), PoxT, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cash - Comm. : ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 130;
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444TCAMC), NORMAL), PoxT, PYi, 0);
 

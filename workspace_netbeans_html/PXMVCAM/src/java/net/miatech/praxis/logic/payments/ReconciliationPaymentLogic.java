@@ -16,15 +16,7 @@ import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
-import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
-import net.miatech.praxis.payment.filter.SQP05048Filter;
-import net.miatech.praxis.payment.filter.SQP05048OLDFilter;
-import net.miatech.praxis.payment.filter.SQP05052Filter;
-import net.miatech.praxis.payment.filter.SQP05054Filter;
-import net.miatech.praxis.payment.filter.SQP05055Filter;
-import net.miatech.praxis.payment.filter.SQP05056Filter;
-import net.miatech.praxis.payment.filter.SQP05057Filter;
 
 /**
  *
@@ -34,7 +26,7 @@ public class ReconciliationPaymentLogic {
 
     private final ReconciliationPaymentDAO ReconciliationPaymentDAO = new ReconciliationPaymentDAO();
 
-    public void setSession(IServerSession ss) throws Exception {
+    public void setSession(IServerSession ss) {
         ReconciliationPaymentDAO.setSession(ss);
     }
 
@@ -137,6 +129,10 @@ public class ReconciliationPaymentLogic {
     public String loadPX606SQP04960(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04960(filter);
     }
+
+    public String loadPX606SQP04847(A4331Filter filter) throws SQLException, Exception {
+        return ReconciliationPaymentDAO.loadPX606SQP04847(filter);
+    }
     
     public String loadPX606SQP04848(A4331Filter filter) throws SQLException, Exception {
         return ReconciliationPaymentDAO.loadPX606SQP04848(filter);
@@ -193,33 +189,5 @@ public class ReconciliationPaymentLogic {
     
     public SQP05004Filter loadSQP05004Filter(SQP05004Filter filter){
         return ReconciliationPaymentDAO.loadSQP05004Filter(filter);
-    }
-    
-    public SQP05048OLDFilter loadSQP05048Filter(SQP05048OLDFilter filter)throws Exception{
-        return ReconciliationPaymentDAO.loadSQP05048Filter(filter);
-    }
-    
-    public SQP04847Filter loadPX606SQP04847(SQP04847Filter filter) throws Exception {
-        return ReconciliationPaymentDAO.loadPX606SQP04847(filter);
-    }
-    
-    public SQP05052Filter loadSQP05052Filter(SQP05052Filter filter)throws Exception{
-        return ReconciliationPaymentDAO.loadSQP05052Filter(filter);
-    }
-    
-    public SQP05054Filter loadSQP05054Filter(SQP05054Filter filter)throws Exception{
-        return ReconciliationPaymentDAO.loadSQP05054Filter(filter);
-    }
-    
-    public SQP05055Filter loadSQP05055Filter(SQP05055Filter filter)throws Exception{
-        return ReconciliationPaymentDAO.loadSQP05055Filter(filter);
-    }
-    
-    public SQP05056Filter loadSQP05056Filter(SQP05056Filter filter)throws Exception{
-        return ReconciliationPaymentDAO.loadSQP05056Filter(filter);
-    }
-
-    public SQP05057Filter loadSQP05057Filter(SQP05057Filter filter) {
-        return ReconciliationPaymentDAO.SQP05057Filter(filter);
     }
 }

@@ -7,7 +7,6 @@ package net.miatech.praxis.payment.filter;
 public class SQP04974Filter {
     //INPUTS
     private String TIPO;
-    private String NPROCESADOR;
     private String FECHA_FROM;
     private String FECHA_TO;
     
@@ -126,13 +125,4 @@ public class SQP04974Filter {
     public void setNOMBREPROC(String NOMBREPROC) {
         this.NOMBREPROC = NOMBREPROC;
     }
-
-    public String getNPROCESADOR() {
-        return NPROCESADOR;
-    }
-
-    public void setNPROCESADOR(String NPROCESADOR) {
-        this.NPROCESADOR = NPROCESADOR;
-    }
-    
 }

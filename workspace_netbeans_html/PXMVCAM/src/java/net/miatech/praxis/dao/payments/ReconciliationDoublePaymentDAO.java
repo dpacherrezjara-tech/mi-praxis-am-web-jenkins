@@ -8,31 +8,14 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.miatech.beans.SQP00697Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.classes.CurrentSession;
 import static net.miatech.praxis.dao.payments.SalesReconciliAmexDAO.pasarGarbageCollector;
-import net.miatech.praxis.payment.A4451;
-import net.miatech.praxis.payment.A4451MP;
 import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
-import net.miatech.praxis.payment.filter.A4331NSUMFilter;
-import net.miatech.praxis.payment.filter.A4335Filter;
-import net.miatech.praxis.payment.filter.SQP04955Filter;
-import net.miatech.praxis.payment.filter.SQP05004Filter;
-import net.miatech.praxis.payment.filter.SQP05043Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 public class ReconciliationDoublePaymentDAO {
 
@@ -58,15 +41,7 @@ public class ReconciliationDoublePaymentDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
-    //<editor-fold defaultstate="collapsed" desc="jdbc">
-    private JdbcTemplate getConnection() throws Exception {
-        Connection cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(cnx, false));
-        return jdbcTemplate;
-    }
-    //</editor-fold>
-    
+
     public List<A4116Filter> loadPX622SQP04955(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
@@ -123,17 +98,17 @@ public class ReconciliationDoublePaymentDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04955(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + "MP.SQP04955(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
+            cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
-            cstmt.registerOutParameter(20, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -150,18 +125,17 @@ public class ReconciliationDoublePaymentDAO {
             cstmt.setString(13, filter.IN_TKT);
             cstmt.setString(14, filter.IN_SCOUNTRY.trim());
             cstmt.setString(15, filter.IN_PCURRENCY.trim());
-            cstmt.setString(16, filter.IN_TGRID.trim());
-            cstmt.setInt(17, filter.page.PAGNUM);
-            cstmt.setInt(18, filter.page.PAGROW);
-            cstmt.setInt(19, filter.page.TOTPAG);
-            cstmt.setInt(20, filter.page.TOTROW);
+            cstmt.setInt(16, filter.page.PAGNUM);
+            cstmt.setInt(17, filter.page.PAGROW);
+            cstmt.setInt(18, filter.page.TOTPAG);
+            cstmt.setInt(19, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(17);
-            filter.page.PAGROW = cstmt.getInt(18);
-            filter.page.TOTPAG = cstmt.getInt(19);
-            filter.page.TOTROW = cstmt.getInt(20);
+            filter.page.PAGNUM = cstmt.getInt(16);
+            filter.page.PAGROW = cstmt.getInt(17);
+            filter.page.TOTPAG = cstmt.getInt(18);
+            filter.page.TOTROW = cstmt.getInt(19);
 
             cstmt.execute();
 
@@ -365,29 +339,6 @@ public class ReconciliationDoublePaymentDAO {
         }
 
         return lstTkts;
-    }
-    
-    
-    public SQP04955Filter getSQP04955Filter(SQP04955Filter filter) throws Exception{
-        try {
-           SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
-                    .withSchemaName("PRAXISMP")
-                    .withProcedureName("SQP04955")
-                    .returningResultSet("summary", new BeanPropertyRowMapper<>(A4331NSUMFilter.class))
-                    .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
-            filter.setPage();
-            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-            Map<String, Object> obj = jdbcCall.execute(params);
-            List<A4331NSUMFilter> summary = (List<A4331NSUMFilter>) obj.get("summary");
-            filter.setResponse((List<A4331NEWFilter>) obj.get("result"));
-            for(A4331NEWFilter bean : filter.getResponse()){
-                bean.setSummary(summary.get(0));
-            }
-            filter.setPageOut(obj);
-        } catch (Exception e) {
-            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-        }
-        return filter;
     }
 
     public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
@@ -1141,27 +1092,5 @@ public class ReconciliationDoublePaymentDAO {
             pasarGarbageCollector();
         }
         return lstRtn;
-    }
-    
-    public SQP05043Filter getSQP05043Filter(SQP05043Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
-                        .withSchemaName("PRAXISMP")
-                        .withProcedureName("SQP05043")
-                        .returningResultSet("result", new BeanPropertyRowMapper(A4335Filter.class));
-        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setResponse((List<A4335Filter>) obj.get("result"));
-        return filter;
-    }
-    
-    public SQP05004Filter getSQP05004Filter(SQP05004Filter filter)throws Exception{
-        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
-                        .withSchemaName("PRAXISMP")
-                        .withProcedureName("SQP05004")
-                        .returningResultSet("result", new BeanPropertyRowMapper(A4451MP.class));
-        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setLst((List<A4451MP>) obj.get("result"));
-        return filter;
     }
 }

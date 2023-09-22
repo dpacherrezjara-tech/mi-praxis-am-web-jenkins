@@ -9,7 +9,6 @@ public class A4451 {
     private String A051KEY2;
     private String A051DESCR1;
     private String A051STATUS;
-    private String A4451FECH1;
 
     public String getA051KEY1() {
         return A051KEY1;
@@ -42,13 +41,6 @@ public class A4451 {
     public void setA051STATUS(String A051STATUS) {
         this.A051STATUS = A051STATUS;
     }
-
-    public String getA4451FECH1() {
-        return A4451FECH1;
-    }
-
-    public void setA4451FECH1(String A4451FECH1) {
-        this.A4451FECH1 = A4451FECH1;
-    }   
+    
     
 }

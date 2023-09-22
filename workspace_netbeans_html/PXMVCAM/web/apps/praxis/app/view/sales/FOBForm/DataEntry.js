@@ -299,9 +299,9 @@ Ext.define('Ext.Praxis.view.sales.FOBForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'center',
-                                            width: 50,
+                                            width: 100,
                                             padding: '0px 0px 0px 10px',
-                                            html: '<strong style="color:#0B333C;">Total</strong>'
+                                            html: '<strong style="color:#0B333C;">Cash - Comm</strong>'
 
                                         },
                                         {

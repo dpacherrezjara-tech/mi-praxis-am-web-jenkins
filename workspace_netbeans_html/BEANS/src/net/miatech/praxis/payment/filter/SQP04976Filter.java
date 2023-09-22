@@ -26,7 +26,6 @@ public class SQP04976Filter {
 
     private List<A4305> lstReceived = new ArrayList<>();
     private List<A4344> lstLoaded = new ArrayList<>();
-    private List<A4305> lstExonerados = new ArrayList<>();
     private Integer total;
 
     public String getPROCESADOR() {
@@ -116,14 +115,4 @@ public class SQP04976Filter {
     public void setTotal(Integer total) {
         this.total = total;
     }
-
-    public List<A4305> getLstExonerados() {
-        return lstExonerados;
-    }
-
-    public void setLstExonerados(List<A4305> lstExonerados) {
-        this.lstExonerados = lstExonerados;
-    }
-    
-    
 }

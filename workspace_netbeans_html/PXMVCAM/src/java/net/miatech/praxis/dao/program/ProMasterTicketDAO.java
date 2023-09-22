@@ -714,6 +714,7 @@ public class ProMasterTicketDAO {
                                                                             objRtn15.fileA1747.A4373CUPN2 = rs15.getString("A4373CUPN2");
                                                                             objRtn15.fileA1747.A4373CUPN3 = rs15.getString("A4373CUPN3");
                                                                             objRtn15.fileA1747.A4373CUPN4 = rs15.getString("A4373CUPN4");
+                                                                            
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
@@ -936,60 +937,6 @@ public class ProMasterTicketDAO {
         return lstRtn;
     };
     
-    
-    public List<A4474Filter> loadSQP05045(A4474Filter filter) throws SQLException, Exception {
-        List<A4474Filter> lstRtn = new ArrayList<A4474Filter>(0);
-        A4474Filter objRtn;
-
-        CallableStatement cstmt01 = null;
-        ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXIS.SQP05045(?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX040S01A1716
-        //String SQLCLL01 = "{CALL PRAXIS.SQP00362(?,?,?,?)}";
-        Connection cnx = null;
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt01 = cnx.prepareCall(SQLCLL01);
-
-            cstmt01.setString(1, filter.VP_A1716CCUST);
-            cstmt01.setString(2, filter.VP_A1716CIA);
-            cstmt01.setString(3, filter.VP_A1716FORMA);
-            cstmt01.setString(4, filter.VP_A1716SERIE);
-            cstmt01.setString(5, filter.VP_A1716SEQT);
-//            
-            cstmt01.setString(6, filter.VP_A1716SEQR);
-            cstmt01.setString(7, filter.VP_A1716SEQF);
-            cstmt01.setString(8, filter.VP_A1716SEQI);
-            cstmt01.setString(9, filter.VP_A1716SEQA);
-            cstmt01.execute();
-
-            rs01 = cstmt01.getResultSet();
-            while (rs01.next()) {
-                objRtn = new A4474Filter();
-                objRtn.A4474CCUST = rs01.getString("A4474CCUST");
-                objRtn.A4474CIA = rs01.getString("A4474CIA");
-                objRtn.A4474FORMA = rs01.getString("A4474FORMA");
-                objRtn.A4474SERIE = rs01.getString("A4474SERIE");
-                objRtn.A4474SEQT = rs01.getString("A4474SEQT");
-                objRtn.A4474SQREG = rs01.getString("A4474SQREG");
-                objRtn.A4474FPROC = rs01.getString("A4474FPROC");
-                objRtn.A4474MODO = rs01.getString("A4474MODO");
-                objRtn.A4474SEQRO = rs01.getString("A4474SEQRO");
-                objRtn.A4474UREGI = rs01.getString("A4474UREGI");
-
-                objRtn.A4474FREGI = rs01.getString("A4474FREGI");
-                objRtn.A4474HREGI = rs01.getString("A4474HREGI");
-
-                lstRtn.add(objRtn);
-            }
-        } 
-        catch(Exception e){
-            
-        };
-        return lstRtn;
-    };
-        
-            
-            
     @Deprecated
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         List<PX040S01A1716Filter> lstRtn = new ArrayList<PX040S01A1716Filter>(0);

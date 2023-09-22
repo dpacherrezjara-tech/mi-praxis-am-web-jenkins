@@ -351,24 +351,24 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.Filters', {
                         hidden: false
                     },
                     items: [
-//                        {
-//                            xtype: 'combo',
-//                            fieldLabel: 'Rec. Type',
-//                            id: prototype.id + '-cmbRecType',
-//                            queryMode: 'local',
-//                            triggerAction: 'all',
-//                            valueField: 'code',
-//                            displayField: 'name',
-//                            emptyText: 'All',
-//                            //maxLength: 3,
-//                            editable:false,
-//                            labelWidth: 70,
-//                            width: 150,
-//                            hiddenLabel: false,
-//                            listeners: {
-//                                change: 'rbChangeType'
-//                            }
-//                        },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Rec. Type',
+                            id: prototype.id + '-cmbRecType',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            editable:false,
+                            labelWidth: 70,
+                            width: 150,
+                            hiddenLabel: false,
+                            listeners: {
+                                change: 'rbChangeType'
+                            }
+                        },
                         {
                             xtype: 'combo',
                             fieldLabel: 'Reconcil. Sett.',
