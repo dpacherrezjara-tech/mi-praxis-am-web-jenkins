@@ -13,6 +13,9 @@ import net.miatech.praxis.flown.A1817;
 public class A1817Filter extends A1817 {
 
     public int RN = 0;
+    public String DATE = "";
+    public String IN_TYPE = "";
+    public String DRILL = "";
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
     public String strFormatDate = "";
@@ -20,6 +23,7 @@ public class A1817Filter extends A1817 {
     public String strFormatDate3 = "";
     public String strFormatDate4 = "";
     public String strFormatDate5 = "";
+    public String strFormatDate6 = "";
     public String IN_TKT = "";
     public String IN_SEQRO = "";
     public String strTicket = "";
@@ -37,30 +41,38 @@ public class A1817Filter extends A1817 {
     public String AGENTE = "";
     public String ORIG = "";
     public String DEST = "";
-    public String CLASS = "";
+    public String CLAS = "";
     public String PERIODO = "";
     public String SEQ = "";
     public String SEQRO = "";
+    public String SEQROP = "";
     public String CARR = "";
-    public String FPOLIZA = "";
-    public String STOCK = "";
-    public String MATRIC = "";
-    public String EQUI = "";
-    public String PERIOP = "";
+    public String FCONTFL = "";
+    public String FSTOCK = "";
+    public String MATRICUL = "";
+    public String EQUIPO = "";
+    public String FOPER = "";
     
     //Informacion del CCD
     public String PAXNAME = "";
-    public String PNR = "";
+    public String SPNR = "";
     public String CRPNRL = "";
-    public String FNACIM = "";
-    public String TIDOCT = "";
+    public String FNAC = "";
+    public String DOCIDEN = "";
     public String NDOCIDEN = "";
-    public String COUNTRY = "";
+    public String CCOUNTRY = "";
     public String TTRANS = "";
+    public String ETIQUETA = "";
     public String COMMENTS = "";
     public String RUTA = "";
     
     public double TAXAMOUNT = 0;
+    public String FARECAL = "";
+    public String ARGUME = "";
+    public String STATAX = "";
+    public String MONTAX = "";
+    public double VALTAX = 0;
+    public String RESTAX = "";
     public double TOT_TAXAMOUNT = 0;
     public int TOT_QTYPAX = 0;
     public double VCPN = 0;
@@ -111,6 +123,13 @@ public class A1817Filter extends A1817 {
     public int TOT_QTYEMDAU = 0;
     public int TOT_QTYEMDMA = 0;
     public int TOT_QTYEMDCT = 0;
+    //NRT-MEX
+    public int QTYPEND = 0;
+    public int QTYCONC = 0;
+    public int QTYTOT = 0;
+    public int QTYAPLI = 0;
+    public int QTYEXON = 0;
+    public int QTYTAT = 0;
     
     public Pagination page = new Pagination();
 }

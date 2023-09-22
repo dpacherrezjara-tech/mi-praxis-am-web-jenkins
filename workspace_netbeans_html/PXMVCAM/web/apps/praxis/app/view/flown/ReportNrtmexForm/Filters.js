@@ -27,12 +27,23 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Filters', {
             },
             items: [
                 {
-                    xtype: 'label',
-                    html: '<strong style="color:#000;">Sale Date</strong>',
-                    align: 'left',
-                    fieldStyle: 'text-align: left;',
-                    padding: '8px 5px 0px 15px',
-                    hidden: false
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbSearch',
+                    fieldLabel: '<strong style="color:#000;">Search By</strong>',
+                    labelAlign: 'right',
+                    queryMode: 'local',
+                    editable: false,
+                    triggerAction: 'all',
+                    autoSelect: false,
+                    enableKeyEvents: true,
+                    caseSensitive: true,
+                    value: 'Open',
+                    valueField: 'code',
+                    displayField: 'name',
+                    emptyText: 'All',
+                    labelWidth: 100,
+                    width: 200,
+                    anchor: '100%'
                 },
                 {
                     xtype: 'combo',
@@ -113,7 +124,23 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Filters', {
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    hidden:false,
+                    hidden: false,
+                    maskRe: /[0-9]/,
+                    maxLength: 15,
+                    labelWidth: 60,
+                    width: 190,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'filterTicket'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Ticket:',
+                    id: prototype.id + '-txtTICKET',
+                    fieldStyle: 'text-align:center',
+                    enforceMaxLength: true,
+                    hidden: true,
                     maskRe: /[0-9]/,
                     maxLength: 15,
                     labelWidth: 60,

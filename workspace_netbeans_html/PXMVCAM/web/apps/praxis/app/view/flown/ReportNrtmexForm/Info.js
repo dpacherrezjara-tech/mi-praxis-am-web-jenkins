@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1900,
+                width: 'auto',
                 height: 600,
                 align: 'center'
             },
@@ -39,12 +39,12 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                         //-----------------------------------------------------------------
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelGridData',
+                            id: prototype.id + '-panelGridMainData',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            padding: '1',
+                            padding: '10 0 0 0',
                             border: false,
                             height: 560,
-                            width: 1880,
+                            width: 720,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -52,11 +52,11 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                             items: [
                                 {
                                     xtype: 'grid',
-                                    id: prototype.id + '-gridData',
+                                    id: prototype.id + '-gridMainData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 550,
-                                    width: 1835,
+                                    width: 680,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -69,7 +69,134 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Period', dataIndex: 'strFormatDate', width: 80,
+                                            {text: 'Flight<br>Date', dataIndex: 'strFormatDate', width: 80,
+                                                listeners: {
+                                                    click: 'onGridDetail'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                },
+                                            },
+                                            {text: 'Flight Information',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Total Cpns', dataIndex: 'QTYTOT', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetail'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                    },
+                                                    {text: 'Pending', dataIndex: 'QTYPEND', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetailPE'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                    },
+                                                    {text: 'Conciliated', dataIndex: 'QTYCONC', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetailCO'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Tax',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Applied', dataIndex: 'QTYAPLI', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetailAP'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                    },
+                                                    {text: 'Not Applied', dataIndex: 'QTYAPLI', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetailNA'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                    },
+                                                    {text: 'Exonerated', dataIndex: 'QTYEXON', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetailEX'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        // --------------------------   GRID DETAIL DATA---------------------
+                        //-----------------------------------------------------------------
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridData',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '10 0 0 0',
+                            border: false,
+                            height: 570,
+                            width: 1295,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridData',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    border: false,
+                                    height: 555,
+                                    width: 1285,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Period', dataIndex: 'strFormatDate2', width: 80,
 //                                                        listeners: {
 //                                                            click: 'onGridDetEMD'
 //                                                        },
@@ -102,19 +229,19 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Orig', dataIndex: 'ORIG', width: 40,
+                                                    {text: 'Orig', dataIndex: 'CDEPART', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Dest', dataIndex: 'DEST', width: 45,
+                                                    {text: 'Dest', dataIndex: 'CARRIVA', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Service<br>Clas', dataIndex: 'CLASS', width: 60,
+                                                    {text: 'Service<br>Clas', dataIndex: 'CLAS', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -126,7 +253,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Stock', dataIndex: 'STOCK', width: 45,
+                                                    {text: 'Stock', dataIndex: 'FSTOCK', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -138,13 +265,13 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Equip', dataIndex: 'EQUI', width: 50,
+                                                    {text: 'Equip', dataIndex: 'EQUIPO', width: 50,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Matric', dataIndex: 'MATRIC', width: 65,
+                                                    {text: 'Matric', dataIndex: 'MATRICUL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -201,7 +328,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'PNR', dataIndex: 'PNR', width: 65,
+                                                    {text: 'PNR', dataIndex: 'SPNR', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -213,7 +340,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Brithday', dataIndex: 'FNACIM', width: 70,
+                                                    {text: 'Brithday', dataIndex: 'FNAC', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -225,13 +352,13 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Doc.<br>Nbr', dataIndex: 'NDOCIDEN', width: 70,
+                                                    {text: 'Doc.<br>Nbr', dataIndex: 'DOCIDEN', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Country', dataIndex: 'COUNTRY', width: 65,
+                                                    {text: 'Country', dataIndex: 'CCOUNTRY', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -263,12 +390,12 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                     return '<b>' + Ext.util.Format.number(data.TOT_TAXAMOUNT, '0,000.00') + '<b>';
                                                 }
                                             },
-                                            {text: 'Ruta', dataIndex: 'RUTA', width: 120,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;background-color:#";
-                                                    return value;
-                                                },
-                                            },
+//                                            {text: 'Ruta', dataIndex: 'RUTA', width: 120,
+//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    metaData.style = "text-align:center;background-color:#";
+//                                                    return value;
+//                                                },
+//                                            },
 //                                            {
 //                                                text: 'Edit',
 //                                                sortable: false,
