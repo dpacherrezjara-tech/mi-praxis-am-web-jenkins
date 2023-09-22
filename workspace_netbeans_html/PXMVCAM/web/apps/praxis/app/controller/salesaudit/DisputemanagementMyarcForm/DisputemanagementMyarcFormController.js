@@ -147,7 +147,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "MS", "name": "MASSIVE"},
                 {"code": "QR", "name": "QUERYS"},
-                {"code": "UP", "name": "UPFRONT"}
+                {"code": "UP", "name": "UPFRONT"},
+                {"code": "MP", "name": "PAYMENT CONCILIATION"}
 
             ]
         }));
