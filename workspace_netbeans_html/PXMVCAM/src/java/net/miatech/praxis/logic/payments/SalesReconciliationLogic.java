@@ -17,6 +17,8 @@ import net.miatech.praxis.payment.filter.SQP05062Filter;
 import net.miatech.praxis.payment.filter.SQP05063Filter;
 import net.miatech.praxis.payment.filter.SQP05065Filter;
 import net.miatech.praxis.payment.filter.SQP05072Filter;
+import net.miatech.praxis.payment.filter.SQP05077Filter;
+import net.miatech.praxis.payment.filter.SQP05081Filter;
 
 /**
  *
@@ -57,4 +59,8 @@ public interface SalesReconciliationLogic {
     //Mantenimiento MSI Tracking
     SQP05063Filter loadSQP05063Filter(SQP05063Filter filter) throws Exception;
     SQP05065Filter loadSQP05065Filter(SQP05065Filter filter) throws Exception;
+    
+    //Mantenimiento ChargebackTracking
+    SQP05081Filter loadSQP05081Filter(SQP05081Filter filter) throws Exception;
+    SQP05077Filter loadSQP05077Filter(SQP05077Filter filter) throws Exception;
 }

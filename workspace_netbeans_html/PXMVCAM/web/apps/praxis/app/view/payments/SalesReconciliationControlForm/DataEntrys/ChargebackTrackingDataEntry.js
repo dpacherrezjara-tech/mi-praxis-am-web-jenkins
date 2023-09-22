@@ -1,12 +1,12 @@
-prototype.idMSI = prototype.id + '-MSITrackingDataEntry';
-Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
+prototype.idCHBK = prototype.id + '-CHBKTrackingDataEntry';
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry', {
     extend: 'Ext.window.Window',
-    alias: 'widget.MSITrackingDataEntry',
+    alias: 'widget.ChargebackTrackingDataEntry',
     requires: [
-        'Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackingDataEntryController'
+        'Ext.Praxis.controller.payments.SalesReconciliationControl.ChargebackTrackingDataEntryController'
     ],
-    controller: 'MSITrackingDataEntryController',
-    title: 'MSI Tracking - Form',
+    controller: 'ChargebackTrackingDataEntryController',
+    title: 'Chargeback Tracking - Form',
     header: true,
     height: 400,
     width: 1550,
@@ -21,7 +21,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
         {
             xtype: 'grid',
             border: false,
-            id: prototype.idMSI + '-gridMSITracking',
+            id: prototype.idCHBK + '-gridCHBKTracking',
             viewConfig: {
                 stripeRows: true,
                 enableTextSelection: true,
@@ -47,9 +47,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 checkOnly: true, // Solo permitir selección a través de casillas de verificación
                 listeners: {
                     selectionchange: function (sm, seleccionados) {
-                        if (seleccionados.length > 3) {
+                        if (seleccionados.length > 2) {
                             // Desseleccionar los registros adicionales si se supera el límite de 3
-                            sm.deselect(seleccionados.slice(3));
+                            sm.deselect(seleccionados.slice(2));
                         }
                     },
                     beforedeselect: function (selModel, record, index) {
@@ -58,8 +58,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         }
                     },
                     beforeselect: function (selModel, record, index) {
-                        const match = ['1', '5', '6', '7'];
-                        if (match.some(x => record.data.stval === x)) {
+                        if(record.data.stval==='6'){
                             return false;
                         }
                     }
@@ -142,13 +141,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     },
                     {
                         text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
-                    },
-                    {
-                        text: 'Match Reference', dataIndex: 'observa', width: 150, hidden: true,
-                        renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;color:red;";
-                            return value;
-                        }
                     }
                 ]
             }
@@ -171,23 +163,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             items: [
                 {
                     text: 'Update',
-                    id: prototype.idMSI + '-btn-update-msi',
+                    id: prototype.idCHBK + '-btn-update',
                     iconCls: 'prx-icon-update',
                     listeners: {
-                        click: 'onUpdateMSI'
-                    }
-                },
-                {
-                    text: 'Update Reverse MSI',
-                    id: prototype.idMSI + '-btn-update-rmsi',
-                    iconCls: 'prx-icon-update',
-                    listeners: {
-                        click: 'onUpdateReverseMSI'
+                        click: 'onUpdateCHBK'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.idMSI + '-btn-cancel',
+                    id: prototype.idCHBK + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

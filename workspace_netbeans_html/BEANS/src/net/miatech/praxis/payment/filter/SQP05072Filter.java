@@ -8,18 +8,10 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05072Filter {
-    private String IN_CCUST,IN_TDOC,IN_SDATE,IN_NBRLIQUID,IN_SCARDN;
+    private String IN_CCUST,IN_TDOC,IN_PRDA,IN_AREFNBR;
     
     private List<A4482Filter> response = new ArrayList<>();
 
-    public List<A4482Filter> getResponse() {
-        return response;
-    }
-
-    public void setResponse(List<A4482Filter> response) {
-        this.response = response;
-    }
-    
     public String getIN_CCUST() {
         return IN_CCUST;
     }
@@ -36,28 +28,27 @@ public class SQP05072Filter {
         this.IN_TDOC = IN_TDOC;
     }
 
-    public String getIN_SDATE() {
-        return IN_SDATE;
+    public String getIN_PRDA() {
+        return IN_PRDA;
     }
 
-    public void setIN_SDATE(String IN_SDATE) {
-        this.IN_SDATE = IN_SDATE;
+    public void setIN_PRDA(String IN_PRDA) {
+        this.IN_PRDA = IN_PRDA;
     }
 
-    public String getIN_NBRLIQUID() {
-        return IN_NBRLIQUID;
+    public String getIN_AREFNBR() {
+        return IN_AREFNBR;
     }
 
-    public void setIN_NBRLIQUID(String IN_NBRLIQUID) {
-        this.IN_NBRLIQUID = IN_NBRLIQUID;
+    public void setIN_AREFNBR(String IN_AREFNBR) {
+        this.IN_AREFNBR = IN_AREFNBR;
     }
 
-    public String getIN_SCARDN() {
-        return IN_SCARDN;
+    public List<A4482Filter> getResponse() {
+        return response;
     }
 
-    public void setIN_SCARDN(String IN_SCARDN) {
-        this.IN_SCARDN = IN_SCARDN;
+    public void setResponse(List<A4482Filter> response) {
+        this.response = response;
     }
-    
 }
