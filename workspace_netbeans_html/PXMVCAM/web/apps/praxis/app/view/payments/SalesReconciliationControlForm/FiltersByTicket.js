@@ -152,7 +152,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         data: [
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
-                                            ['RFND', 'Refund']
+                                            ['RFND', 'Refund'],
+                                            ['EXCH', 'Exchange']
                                         ]
                                     }),
                                     labelWidth: 80,

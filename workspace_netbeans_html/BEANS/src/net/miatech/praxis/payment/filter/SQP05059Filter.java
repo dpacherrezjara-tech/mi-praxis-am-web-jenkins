@@ -14,7 +14,7 @@ public class SQP05059Filter {
             IN_TDATE,
             IN_DATEFROM,
             IN_DATETO,
-            IN_PROCTYPESQ,
+            IN_PROCTYPE,
             IN_SMERCHID,
             IN_TRANSTYPE,
             IN_SCOUNTRY,
@@ -65,12 +65,12 @@ public class SQP05059Filter {
         this.IN_DATETO = IN_DATETO;
     }
 
-    public String getIN_PROCTYPESQ() {
-        return IN_PROCTYPESQ;
+    public String getIN_PROCTYPE() {
+        return IN_PROCTYPE;
     }
 
-    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
-        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
+    public void setIN_PROCTYPE(String IN_PROCTYPE) {
+        this.IN_PROCTYPE = IN_PROCTYPE;
     }
 
     public String getIN_SMERCHID() {

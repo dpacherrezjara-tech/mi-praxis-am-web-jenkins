@@ -16,6 +16,7 @@ import net.miatech.praxis.payment.filter.SQP05062Filter;
 import net.miatech.praxis.payment.filter.SQP05063Filter;
 import net.miatech.praxis.payment.filter.SQP05065Filter;
 import net.miatech.praxis.payment.filter.SQP05072Filter;
+import net.miatech.praxis.payment.filter.SQP05074Filter;
 import net.miatech.praxis.payment.filter.SQP05077Filter;
 import net.miatech.praxis.payment.filter.SQP05081Filter;
 import net.miatech.praxis.payment.filter.SQP05088Filter;
@@ -86,6 +87,19 @@ public class SalesReconciliationBPOController {
             filter = logic.getSQP05060Filter(filter);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "processTransactionsBatch",method = RequestMethod.POST)
+    public ResponseEntity<?> processTransactionsBatch(@RequestBody SQP05074Filter params){
+        try {
+            System.out.println("---------------SalesReconciliationBPO:processTransactionsBatch-------------");
+            logic.loadSQP05074Filter(params);
+            System.out.println("Process Successfull");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

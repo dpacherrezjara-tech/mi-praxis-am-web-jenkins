@@ -6,9 +6,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     init: function (view) {
     },
     afterRender: async function (obj, e) {
-        win.lblUser_toolTip('Estructura: A4331');
         const me = this;
         await me.fillFilters();
+        me.showProcessBtn();
     },
     fillFilters: async function () {
         const me = this;
@@ -23,11 +23,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
             me.setComboStore({cmp: cmbProcesadores, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
 
             const cmbProcesadoresf = Ext.getCmp(prototype.id + '-cmbProctypef');
             me.setComboStore({cmp: cmbProcesadoresf, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
 
             const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaisesBP');
             me.setComboStore({cmp: cmbPaises, data: data.paises,
@@ -63,6 +63,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             //</editor-fold>
         }
         filterPanel.unmask();
+    },
+    showProcessBtn: function () {
+        const userName = $('#menuUser').text();
+        const btn = Ext.getCmp(prototype.id + '-btnProcess');
+        const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
+        if (activeFilter.isVisible()) {
+            if (userName.slice(0, 3) === 'SAP') {
+                btn.show();
+            } else if (userName === 'PLOPEZT' || userName === 'IMONTOYAT') {
+                btn.show();
+            } else {
+                btn.hide();
+            }
+        } else {
+            btn.hide();
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Format Params">
     formatByPaymentSummaryParams: function () {
@@ -119,6 +135,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const me = this;
         const rb = Ext.getCmp(prototype.id + '-viewOption').getValue().opcion;
         if (rb === 'P') {
+            win.lblUser_toolTip('Estructura: A4331');
             const tfilter = Ext.getCmp(prototype.id + '-cmbFiltersBP').getValue();
             const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
             mainPanel.removeAll();
@@ -142,6 +159,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 mainPanel.add(panelDetail);
             }
         } else {
+            win.lblUser_toolTip('Estructura: A4496');
             const tfilter = Ext.getCmp(prototype.id + '-cmbFiltersBT').getValue();
             const mainPanel = Ext.getCmp(prototype.id + '-mainContent2');
             mainPanel.removeAll();
@@ -178,6 +196,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent2').show();
             Ext.getCmp(prototype.id + '-mainContent').hide();
         }
+        this.showProcessBtn();
+    },
+    onClickProcessBtn: function () {
+        const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
+            id: prototype.id + '-TransactionProcessDataEntry-1'
+        });
+        processWin.show();
     },
     onChangeFiltersBP: function (obj) {
         const filtroSumm = Ext.getCmp(prototype.id + '-formFiltersBP-1');
